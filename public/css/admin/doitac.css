@@ -212,3 +212,26 @@ input.form-control.m-1.w-auto.search_city {
     margin-left: 0 !important;
   }
 }
+
+.control-label .required, .form-group .required {
+  color: #e02222;
+  font-size: 12px;
+  padding-left: 2px;
+}
+
+/* PRODUCT CATEGORY */
+table tbody tr.child-category {
+  display: none;
+}
+
+table .click-cell {
+  cursor: pointer;
+}
+
+tr.selected {
+  background: #f5f8fd !important;
+}
+
+.hide-select-option {
+  display: none !important;
+}
