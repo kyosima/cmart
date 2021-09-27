@@ -1,0 +1,256 @@
+    .card-left {
+        margin: 50px 0;
+    }
+    
+    .card-information {
+        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+    }
+    
+    .card-information-body {
+        display: flex;
+    }
+    
+    .card-information-header {
+        padding: 10px 10px 0 10px;
+    }
+    
+    .card-information-header h3 {
+        font-size: 16px !important;
+        font-weight: 600;
+        color: #333942;
+        text-transform: uppercase;
+    }
+    
+    label {
+        transform: translate(0, -3.5px) scale(0.9);
+        transform-origin: top left;
+        color: #BB0029;
+    }
+    
+    .form-control {
+        border-radius: 0;
+        margin: -9px 0 20px;
+        padding: 8px 0;
+        border: 0;
+        border-bottom: 1px solid #DEE5EE;
+        box-shadow: none;
+        height: 38px;
+        font-size: 13px !important;
+        /* font-weight: 500 !important; */
+        color: #333;
+        width: 100%;
+    }
+    /* ------------------ */
+    
+    .phuongthuc-thanhtoan {
+        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+        margin-top: 20px;
+    }
+    
+    .phuongthuc-thanhtoan-card-header {
+        padding: 10px 10px 0 10px;
+    }
+    
+    .phuongthuc-thanhtoan-card-header h3 {
+        font-size: 16px !important;
+        font-weight: 600;
+        color: #333942;
+        text-transform: uppercase;
+    }
+    
+    .phuongthuc-thanhtoan-card-body {
+        padding: 0 20px;
+    }
+    
+    .chuyenkhoan,
+    .thanhtoantructuyen,
+    .thanhtoankhigiaohang {
+        display: table;
+        box-sizing: border-box;
+        width: 100%;
+        position: relative;
+        padding: 1em;
+    }
+    
+    .thanhtoankhigiaohang i {
+        right: 35px;
+        position: absolute;
+    }
+    
+    .thanhtoantructuyen img {
+        width: 100px;
+        right: 35px;
+        position: absolute;
+    }
+    
+    .thanhtoankhigiaohang input,
+    .thanhtoantructuyen input,
+    .chuyenkhoan input {
+        margin-right: 10px;
+    }
+    
+    .chuyenkhoan {}
+    
+    .chuyenkhoan span {
+        align-items: baseline;
+    }
+    
+    .tk-nganhang {
+        margin-top: 20px;
+        display: none;
+    }
+    /* -------- */
+    
+    .card-left {}
+    
+    .makhuyenmai {
+        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+    }
+    
+    .makhuyenmai-header {
+        padding: 10px 10px 0 10px;
+    }
+    
+    .makhuyenmai-header h3 {
+        font-size: 16px !important;
+        font-weight: 600;
+        color: #333942;
+        text-transform: uppercase;
+    }
+    
+    .makhuyenmai-body {
+        padding: 0px 10px 15px 10px;
+    }
+    
+    .makhuyenmai-body-input {
+        min-height: 34px;
+        height: 34px;
+        border-radius: 17px 0 0 17px;
+        border: 1px solid #DEE5EE;
+        font-size: 13px !important;
+        /* font-weight: 500 !important; */
+        color: #333942;
+        width: 238px;
+        padding-left: 10px;
+    }
+    
+    .makhuyenmai-body-input:focus {
+        outline: none
+    }
+    
+    .btn.btn-primary {
+        border-radius: 0 17px 17px 0;
+        border: 1px solid #BB0029;
+        background-color: #BB0029;
+        min-width: 84px;
+        height: 34px;
+        font-size: 13px !important;
+        font-weight: 400 !important;
+        color: #fff;
+        margin-bottom: 3px;
+        margin-left: -4px;
+    }
+    /* -------------- */
+    
+    .donhang {
+        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+        margin-top: 10px;
+    }
+    
+    .donhang-header {
+        display: flex;
+        align-items: center;
+        padding: 10px 10px 0 10px;
+    }
+    
+    .donhang-header h3 {
+        font-size: 16px !important;
+        font-weight: unset !important;
+        color: #333942;
+        text-transform: uppercase;
+    }
+    
+    .donhang-header span {
+        font-size: 13px !important;
+        font-weight: 400 !important;
+        color: #333942;
+        margin-bottom: 8px;
+        margin-left: 3px;
+    }
+    
+    .table thead th {
+        border-bottom: 1px dashed #666;
+    }
+    
+    tr th {
+        padding: 15px 0;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        color: #333942;
+    }
+    
+    tr .title {
+        padding: 10px;
+        width: 219px;
+        height: 72px;
+        line-height: 1.8;
+        vertical-align: top;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        text-overflow: ellipsis;
+    }
+    
+    .table td {
+        border-top: 0;
+    }
+    /* ---------------- */
+    
+    .donhang-footer {
+        border-top: 1px dashed#666;
+    }
+    
+    .card-body {
+        padding: 10px;
+    }
+    
+    .tamtinh {
+        justify-content: space-between;
+        display: flex;
+    }
+    
+    .total {
+        margin-top: 10px;
+        justify-content: space-between;
+        display: flex;
+    }
+    
+    .total-price,
+    .tamtinh-price {
+        color: #bb0029;
+    }
+    
+    .btn-dathang {
+        font-size: 13px !important;
+        font-weight: 400 !important;
+        color: #FFFFFF;
+        background-color: #BB0029;
+        border: 1px solid #BB0029;
+        padding: 9px 0;
+        border-radius: 17px !important;
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+        margin-top: 10px;
+    }
+    
+    .btn-dathang:hover {
+        background-color: #FFFFFF !important;
+        color: #BB0029 !important;
+        border: 1px solid #BB0029 !important;
+    }
+    
+    .btn-dathang:focus {
+        outline: none;
+    }

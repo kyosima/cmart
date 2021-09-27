@@ -1,0 +1,332 @@
+
+    .ship-f,
+    .socials-footer,
+    .bct-f {
+        display: none;
+    }
+
+    @media (max-width: 991px) {
+
+        .middle-footer,
+        .social-pc,
+        .title-time,
+        .time-des,
+        iframe {
+            display: none;
+        }
+
+        .ship-f,
+        .socials-footer,
+        .bct-f {
+            display: block;
+        }
+
+
+
+    }
+
+    @media (max-width: 1024px) {
+        .info-company .title-info {
+            color: #bb0029 !important;
+            font-size: 4.5vw;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .title-client {
+
+            text-transform: none !important;
+        }
+
+       
+
+        .info-company .des,
+        .info-company .des span,
+        .list-support ul li a,
+        .box-hotline-f .time-des,
+        .box-hotline-f .title-time {
+            color: #222 !important;
+
+        }
+
+        .info-company .des {
+            padding-bottom: 0px !important;
+        }
+
+
+        .title-custom {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 0;
+            text-transform: uppercase !important;
+
+        }
+
+        .bct-f .title-custom {
+            margin: 15px 0;
+        }
+
+        .icon-bct-m {
+            background-position: -768px -100px !important;
+            width: 200px;
+            height: 75px;
+            margin-top: -9px;
+        }
+
+        .icon-ship1 {
+            background-position: -550px -103px !important;
+            width: 100px;
+        }
+
+        .icon-ship2 {
+            background-position: -445px -103px !important;
+            width: 60px;
+        }
+
+        .icon-ship3 {
+            background-position: -672px -108px !important;
+            width: 83px;
+        }
+
+        .icon-ship1,
+        .icon-ship2,
+        .icon-ship3 {
+            height: 55px;
+        }
+
+        .icon-ship1,
+        .icon-ship2,
+        .icon-ship3,
+        .icon-bct-m {
+            background-size: 1000px !important;
+        }
+
+
+        .socials-footer ul li {
+            margin: 0 10px;
+        }
+
+        .socials-footer {
+            border-top: 1px solid #e3e3e3;
+        }
+
+        .socials-footer>.col-box>ul {
+            padding: 10px 10px 5px;
+            width: 100%;
+        }
+
+        .icon-s1 {
+            background-position: -488px -22px !important;
+        }
+
+        .icon-s2 {
+            background-position: -539px -22px !important;
+        }
+
+        .icon-s3 {
+            background-position: -589px -22px !important;
+        }
+
+        .icon-s4 {
+            background-position: -640px -22px !important;
+        }
+
+        .icon-s1,
+        .icon-s2,
+        .icon-s3,
+        .icon-s4 {
+            width: 40px;
+            height: 40px;
+            background-size: 700px !important;
+        }
+
+
+        .icon-m {
+            background: url(https://japana.vn/assets/mobile/assets/images/icon-m3.png) no-repeat;
+            display: inline-block;
+        }
+
+    }
+
+
+    @media (min-width: 1024px) {
+        .socials-footer {
+            display: none;
+        }
+    }
+
+    .info-company .title-info,
+    .title-info {
+        font-weight: 500;
+        color: #333;
+        font-size: 16px;
+        text-transform: uppercase;
+        margin-bottom: 19px;
+
+    }
+
+    .info-company .des {
+        padding-bottom: 9px;
+
+    }
+
+    .des {
+        line-height: 1.5;
+
+
+    }
+
+    .title-time {
+        font-family: 'Roboto';
+        font-weight: 500;
+        font-size: 14px;
+        color: #333;
+        margin-top: 20px;
+    }
+
+    .info-company p span {
+        color: #333;
+
+        font-weight: 500;
+    }
+
+    .info-company i {
+        margin-right: 4px;
+        width: 14px;
+    }
+
+    .info-company .des,
+    .info-company .des span,
+    .list-support ul li a,
+    .box-hotline-f .time-des,
+    .box-hotline-f .title-time {
+        color: #608293
+    }
+
+    .list-support ul li {
+        padding: 0 0 17px;
+    }
+
+    ul,
+    ol {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .time-des {
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 14px;
+        color: #666;
+        margin-top: 8px;
+        line-height: 1.5;
+    }
+
+    .hotline-f {
+
+        font-size: 16px;
+        font-weight: 500;
+        color: #9e1836 !important;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .fas.fa-phone-alt {
+        padding-right: 17px;
+    }
+
+    .socials-f {
+        width: 55%;
+    }
+
+    .socials-f li a i {
+        font-size: 30px;
+        color: #222
+    }
+
+    .site-footer {
+        margin-top: 30px;
+        background: #f9f9f9;
+
+    }
+
+    .icon-ship1-new {
+        display: inline-block;
+        background-position: -34px -715px !important;
+        width: 110px !important;
+        height: 65px !important;
+        position: relative;
+        top: -30px;
+    }
+
+    .icon-all-new,
+    .icon-desktop {
+        background: url(https://japana.vn/assets/frontend/assets/images/icons_new.png) no-repeat;
+    }
+
+    .icon-ship2-new {
+        display: inline-block;
+        background-position: -12px -779px !important;
+        width: 150px !important;
+        height: 70px !important;
+        position: relative;
+        top: -30px;
+    }
+
+    .dmca-icon {
+        background-position: 0 0;
+        width: 55px;
+        height: 56px;
+        display: inline-block;
+    }
+
+    .box-icon-all2 {
+        background: url(https://japana.vn/assets/images/icon-pc2.png) no-repeat;
+    }
+
+    .icon-certified {
+        display: inline-block;
+        background-position: -17px -533px !important;
+        width: 180px !important;
+        height: 65px !important;
+        position: relative;
+        top: -20px;
+    }
+
+
+    .icon-payment-01 {
+        display: inline-block;
+        background-position: -34px -666px !important;
+        width: 110px !important;
+        height: 75px !important;
+        position: relative;
+        top: -25px;
+        left: -22px;
+    }
+
+    .icon-all-new,
+    .icon-desktop {
+        background: url(https://japana.vn/assets/frontend/assets/images/icons_new.png) no-repeat;
+    }
+
+    .icon-payment-02 {
+        display: inline-block;
+        background-position: -34px -608px !important;
+        width: 110px !important;
+        height: 75px !important;
+        position: relative;
+        top: -25px;
+        left: -72px;
+    }
+
+    .middle-footer {
+        margin-top: 20px;
+        border-top: 2px solid #eff3f7;
+        padding: 28px 0 0;
+    }

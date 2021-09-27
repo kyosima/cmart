@@ -1,0 +1,129 @@
+.btn {
+  box-shadow: none !important;
+}
+
+#col_find_button button {
+  font-size: 14px;
+  width: 220px;
+  text-align: left;
+  background: #11101d;
+  border: 1px solid black;
+  color: white;
+  margin-right: 10px;
+}
+
+ul.dropdown-menu.show {
+  width: 220px;
+}
+
+#col_find_button .dropdown-toggle::after {
+  margin-left: 0;
+  float: right;
+  margin-top: 8px;
+}
+
+#info_month i.fa {
+  color: #11101d;
+}
+
+.amcharts-graph-g1 .amcharts-graph-stroke {
+  stroke-dasharray: 3px 3px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  -webkit-animation: am-moving-dashes 1s linear infinite;
+  animation: am-moving-dashes 1s linear infinite;
+}
+
+@-webkit-keyframes am-moving-dashes {
+  100% {
+    stroke-dashoffset: -30px;
+  }
+}
+@keyframes am-moving-dashes {
+  100% {
+    stroke-dashoffset: -30px;
+  }
+}
+
+.lastBullet {
+  -webkit-animation: am-pulsating 1s ease-out infinite;
+  animation: am-pulsating 1s ease-out infinite;
+}
+@-webkit-keyframes am-pulsating {
+  0% {
+    stroke-opacity: 1;
+    stroke-width: 0px;
+  }
+  100% {
+    stroke-opacity: 0;
+    stroke-width: 50px;
+  }
+}
+@keyframes am-pulsating {
+  0% {
+    stroke-opacity: 1;
+    stroke-width: 0px;
+  }
+  100% {
+    stroke-opacity: 0;
+    stroke-width: 50px;
+  }
+}
+
+.amcharts-graph-column-front {
+  -webkit-transition: all 0.3s 0.3s ease-out;
+  transition: all 0.3s 0.3s ease-out;
+}
+.amcharts-graph-column-front:hover {
+  fill: #496375;
+  stroke: #496375;
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.amcharts-graph-g2 {
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: 500%;
+  stroke-dasharray: 0 \0/; /* fixes IE prob */
+  stroke-dashoffset: 0 \0/; /* fixes IE prob */
+  -webkit-animation: am-draw 40s;
+  animation: am-draw 40s;
+}
+@-webkit-keyframes am-draw {
+  0% {
+    stroke-dashoffset: 500%;
+  }
+  100% {
+    stroke-dashoffset: 0px;
+  }
+}
+@keyframes am-draw {
+  0% {
+    stroke-dashoffset: 500%;
+  }
+  100% {
+    stroke-dashoffset: 0px;
+  }
+}
+
+#tablecharts text {
+  fill: #11101d;
+}
+
+
+
+@media only screen and (max-device-width: 768px) {
+  #col_find_button {
+    text-align-last: center !important;
+    padding-bottom: 5px;
+  }
+
+  #title_tinhhinh .text {
+    font-size: 20px;
+  }
+
+  #title_tinhhinh {
+    text-align-last: center;
+  }
+}

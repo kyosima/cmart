@@ -1,0 +1,80 @@
+@media (max-width: 700px) {
+  .icon_menu-mobile,
+  .sidebar-mobile {
+    display: block;
+  }
+  .sidebar.open ~ .home-section {
+    left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 378px) {
+  .team-mobile-btn {
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  .team-mobile-btn .mx-1 {
+    margin: 0.5rem 0 !important;
+  }
+  .team-mobile-btn button {
+    width: 90%;
+  }
+  .filter__status {
+    text-align: center !important;
+  }
+}
+@media (max-width: 362px) {
+  .filter__status button:last-child {
+    margin-top: 0.5rem !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .team__filter-right {
+    margin-top: 0.5rem;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  .pani {
+    margin-top: 0 !important;
+  }
+}
+@media (max-width: 700px) {
+  .team-mobile {
+    flex-direction: column;
+  }
+  .team-mobile-btn {
+    margin: 0.6rem 0;
+  }
+  .team-title {
+    margin-right: 0 !important;
+  }
+  .w-200 {
+    width: 49%;
+  }
+  .sidebar {
+    display: none;
+  }
+  .home-section {
+    left: 0;
+    width: 100%;
+  }
+  .team {
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
+  }
+  .m-3 {
+    margin: 0.5rem !important;
+  }
+}
+/* end scroll top */
+
+@media (max-width: 464px) {
+  .w-200 {
+    width: 100% !important;
+  }
+}

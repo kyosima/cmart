@@ -1,0 +1,697 @@
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body {
+    background: #f8f8f8;
+    color: #000;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    line-height: 1;
+    -webkit-backface-visibility: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+a,
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+li {
+    list-style-type: none;
+}
+/* header pc */
+.toolbar2 {
+    display: none;
+}
+
+@media all and (min-width: 1025px) {
+    #navbarNavDropdown ul li a{
+        color: #727272;
+    }
+    .gach:before {
+        content: "";
+        height: 70%;
+        width: 2px;
+        border-left: 1px solid #c1cbd9;
+        padding-right: 10px;
+    }
+    #navbarNavDropdown ul li a i {
+        padding-left: 10px;
+        color: #222;
+    }
+    .has-sub a:hover {
+        color: #fff !important;
+    }
+    .has-sub ul li a {
+        color: #666 !important;
+    }
+    .list-group-menu li:hover a {
+        color: #fff;
+    }
+    .has-sub ul li a:hover,
+    .list-group-menu li a:hover {
+        color: #fff;
+    }
+    .has-sub ul li:hover,
+    .list-group-menu li:hover {
+        background: #ffba00;
+    }
+    .list-group-menu li a i {
+        float: right;
+    }
+    .has-sub:hover ul {
+        display: block;
+    }
+    .has-sub:focus-within ul {
+        display: block;
+    }
+    .has-sub ul {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        height: 400px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        width: 120%;
+    }
+    .has-sub ul {
+        background: #fff;
+        z-index: 1;
+    }
+    .list-group-menu {
+        z-index: 99;
+    }
+
+    .header-tablet-mobile {
+        display: none;
+    }
+
+    .navbar-nav li:hover > ul.dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+    }
+
+    /* rotate caret on hover */
+    .dropdown-menu > li > a:hover:after {
+        text-decoration: underline;
+        transform: rotate(-90deg);
+    }
+
+    .header-site {
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    .cate-menu .title-cate {
+        background: #ffba00 !important;
+        border-radius: 6px;
+        margin: 0;
+        font-size: 16px;
+
+        color: #fff;
+        padding: 8px 16px;
+        height: 38px;
+        align-items: center;
+    }
+
+    .cate-menu {
+        width: 230px !important;
+
+        margin-right: 0px;
+        position: relative;
+        margin-left: 30px;
+    }
+
+    .list-group-menu {
+        width: 100%;
+        position: absolute;
+        background: #fff;
+    }
+
+    .fas.fa-bars {
+        margin-left: 10px;
+        font-size: 20px;
+        color: #fff;
+    }
+
+    .list-group-menu li {
+        display: inline-block;
+        width: 100%;
+        border-bottom: 1px solid #e3e3e3;
+        height: 36px;
+    }
+
+    .list-group-menu li a img {
+        height: 20px;
+        position: absolute;
+    }
+
+    .list-group-menu li a span {
+        display: inline-block;
+        width: 100%;
+        padding-left: 30px;
+    }
+
+    .list-group-menu li a {
+        width: 100%;
+        padding: 8px 15px;
+        color: #666;
+        font-size: 14px;
+        line-height: 20px;
+        position: absolute;
+    }
+
+    .bottom-header .search-menu {
+        width: 450px !important;
+        margin-left: 30px;
+    }
+
+    .box-search {
+        position: relative;
+        margin-top: 10px;
+        width: 90%;
+        top: 12px;
+    }
+
+    .icon-search {
+        position: absolute;
+        top: 3px;
+        right: 0;
+        border: 0;
+        background: 0 0;
+        font-size: 20px;
+        padding: 0 10px;
+    }
+
+    .ipt-search {
+        border-radius: 6px;
+        height: 34px;
+        border: thin;
+        font-size: 13px !important;
+        font-weight: 400 !important;
+        color: #333942;
+    }
+
+    .fas.fa-search {
+        color: gray;
+
+        padding-top: 5px;
+    }
+
+    .form-control:focus {
+        color: #495057;
+        background-color: none !important;
+        border-color: none !important;
+        outline: 0;
+        box-shadow: none;
+        outline: none;
+    }
+
+    .tag-top {
+        position: relative;
+        top: 9px;
+        text-transform: capitalize;
+        padding-bottom: 5px;
+        left: -9px;
+    }
+
+    .tag-top ul li a {
+        border-right: 1px solid #fff !important;
+        font-size: 12px;
+        padding: 0 10px;
+    }
+
+    .text-color-white {
+        color: #fff !important;
+    }
+
+    .bottom-header .item-follow-order {
+        position: relative;
+
+        top: -4px;
+        left: 30px;
+    }
+    .follow-order.other {
+        width: 60px;
+    }
+    .nofollow {
+        position: relative;
+    }
+
+    .icon-all-new,
+    .icon-desktop {
+        background: url(https://japana.vn/assets/frontend/assets/images/icons_new.png)
+            no-repeat;
+    }
+
+    .icon-follow-header {
+        width: 48px !important;
+        height: 36px !important;
+        display: inline-block;
+        background-position: -50px -157px !important;
+        background-size: 145px !important;
+        position: absolute;
+        top: 15px;
+        left: -54px;
+        transform: translate(0, -50%);
+    }
+
+    .bottom-header .follow-order span {
+        color: #666;
+        font-size: 12.5px;
+        font-family: "Open Sans", sans-serif;
+        font-weight: 400;
+
+        line-height: 1.3;
+        padding-top: 10px;
+    }
+
+    .icon-all-new,
+    .icon-desktop {
+        background: url(https://japana.vn/assets/frontend/assets/images/icons_new.png)
+            no-repeat;
+    }
+
+    .icon-cart-header {
+        width: 40px !important;
+        height: 40px !important;
+        display: inline-block !important;
+        background-position: -62px -221px !important;
+        background-size: 145px !important;
+        position: absolute;
+        top: -12px;
+        left: 44px;
+        transform: translate(0, -50%);
+    }
+
+    .bottom-header .cart {
+        position: relative;
+        margin-left: 30px !important;
+    }
+
+    .bottom-header .cart .number-cart {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-size: 11px !important;
+        font-weight: 400 !important;
+        color: #fff;
+        min-width: 24px;
+        height: 15px;
+        background-color: #41a02d;
+        border-radius: 8px;
+        position: absolute;
+        top: -21px;
+        right: -55px;
+    }
+
+    .top-header {
+        font-size: 11px !important;
+        font-weight: 400 !important;
+        color: #333942;
+
+        padding: 0;
+        background-color: #f0f3f7;
+    }
+    /* .top-header > .container {
+        height: 26px;
+    } */
+    .time-top > .fas.fa-clock {
+        padding-right: 5px;
+    }
+    /* .item.item-custom {
+        padding-top: 17px;
+    } */
+    .navbar.navbar-expand-lg {
+        height: 100%;
+    }
+    .bottom-header {
+        background-color: #c90005;
+        padding-bottom: 10px;
+    }
+    .logo-header img {
+        height: auto;
+        width: 100%;
+    }
+    .logo-header {
+        width: 206px;
+
+        padding-top: 4px;
+        padding-left: 0px;
+    }
+    body.offcanvas-active {
+        overflow: hidden;
+    }
+
+    .offcanvas-header {
+        display: none;
+    }
+}
+/* header-tablet-mobile */
+@media (max-width: 991px) {
+}
+@media (max-width: 1024px) {
+    .top-header {
+        padding-top: 10px;
+    }
+    .top-header .container {
+        max-width: 100%;
+    }
+    .toolbar2 {
+        display: block;
+        position: fixed !important;
+        background: #fff;
+
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: 500;
+        height: auto;
+        border-top: 1px solid #cbcbcb;
+    }
+
+    .offcanvas-header {
+        display: block;
+    }
+
+    .mobile-offcanvas {
+        visibility: hidden;
+        transform: translateX(-100%);
+        border-radius: 0;
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 1200;
+        width: 80%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .mobile-offcanvas.show {
+        visibility: visible;
+        transform: translateX(0);
+    }
+
+    .mobile-offcanvas .container,
+    .mobile-offcanvas .container-fluid {
+        display: block;
+    }
+    .header-site {
+        display: none;
+    }
+
+    .banner-header img {
+        width: 100%;
+    }
+
+    .header-tablet-mobile {
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #dc0000;
+        z-index: 999;
+        position: -webkit-sticky;
+        position: sticky;
+    }
+
+    .header-tablet-mobile .top-header .container .logo-nav {
+        width: 130px;
+    }
+
+    .fas.fa-bars {
+        color: #fff;
+        font-size: 20px;
+    }
+
+    .icon-2020.icon-cart-2020 {
+        width: 28px;
+        height: 28px;
+        display: inline-block;
+        background-position: -62px -221px !important;
+        background-size: 145px !important;
+    }
+
+    .icon-2020.icon-cart-2020 {
+        background: url(https://japana.vn/assets/frontend/assets/images/icons_new.png)
+            no-repeat;
+        display: inline-block;
+    }
+
+    .number-cart {
+        position: relative;
+    }
+
+    .count-item.count-giohang {
+        align-items: center;
+        position: absolute;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        bottom: 5px;
+        right: -5px;
+        min-width: 20px;
+        height: 15px;
+        color: #fff;
+        font-size: 10px;
+        background: #41a02d;
+        border-radius: 8px;
+        display: flex;
+    }
+
+    .header-search {
+        position: relative;
+    }
+
+    .form-search {
+        padding-bottom: 10px;
+    }
+
+    .form-control {
+        border: thin;
+        padding-left: 40px;
+    }
+
+    .fas.fa-search {
+        left: 10px;
+        position: absolute;
+        top: 9px;
+        font-size: 20px;
+
+        color: gray;
+    }
+    .box-item ul {
+        padding: 0;
+    }
+
+    .box-item ul li a .fas,
+    .box-item ul li a .far {
+        font-size: 23px;
+    }
+
+    .box-item ul li a span {
+        margin-left: 10px;
+    }
+
+    .box-item ul li {
+        padding: 15px;
+    }
+
+    .box-item ul li a {
+        font-size: 4vw;
+        color: #333;
+        width: 100%;
+        font-family: Roboto, sans-serif;
+        font-weight: 400;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .box-tab .menu-mobile .item .title a img {
+        width: 18px;
+        margin-right: 10px;
+    }
+
+    .box-tab .menu-mobile .item .sub-nav li a .icon-child-m {
+        background-position: -460px -144px;
+        width: 25px;
+        height: 25px;
+        display: inline-block;
+        background-size: 800px;
+    }
+
+    .icon-m {
+        background: url(https://japana.vn/assets/mobile/assets/images/icon-m3.png)
+            no-repeat;
+        display: inline-block;
+    }
+
+    .menu-mobile .item .sub-nav li {
+        padding-bottom: 25px;
+    }
+
+    .menu-mobile .item .sub-nav li a {
+        position: static;
+        height: auto;
+        font-size: 4vw;
+        color: #333;
+        left: 15px;
+        line-height: 1.5;
+        font-family: Roboto, sans-serif;
+        font-weight: 400;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .box-tab .menu-mobile .item .title {
+        font-size: 20px;
+        font-weight: 500;
+
+        outline: 0;
+        border: thin;
+        background: none;
+        width: 100%;
+    }
+
+    .menu-mobile .item {
+        position: relative;
+    }
+
+    .fas.fa-angle-right {
+        position: absolute;
+        right: 12px;
+        top: 9px;
+        color: gray;
+    }
+
+    .screen-darken {
+        height: 100%;
+        width: 0%;
+        z-index: 30;
+        position: fixed;
+        top: 0;
+        right: 0;
+        opacity: 0;
+        visibility: hidden;
+        background-color: rgba(34, 34, 34, 0.6);
+        transition: opacity 0.2s linear, visibility 0.2s, width 2s ease-in;
+    }
+
+    .screen-darken.active {
+        z-index: 10;
+        transition: opacity 0.3s ease, width 0s;
+        opacity: 1;
+        width: 100%;
+        visibility: visible;
+    }
+
+    .box-tab .menu-mobile .item {
+        width: 100%;
+        border-bottom: 1px solid #cbcbcb;
+        display: inline-block;
+    }
+
+    .menu-mobile .item .title {
+        position: relative;
+        margin: 0;
+        background: #fff;
+        padding: 0;
+    }
+
+    .box-tab .menu-mobile .item .title a {
+        font-size: 4vw;
+        color: #333;
+        left: 15px;
+        height: 46px;
+
+        font-family: Roboto, sans-serif;
+        font-weight: 400;
+
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    .nav.nav-tabs .nav-item a {
+        color: #222;
+        font-size: 3.5vw;
+    }
+
+    .nav.nav-tabs .nav-item a:focus-within {
+        border-bottom: 2px solid #cf0656;
+    }
+    .nav.nav-tabs .nav-item {
+        width: 50%;
+        text-align: center;
+    }
+    .icon-2020.icon-home-2020 {
+        width: 28px;
+        height: 20px;
+        display: inline-block;
+        background-position: -61px -1228px;
+        background-size: 145px;
+    }
+    .icon-2020.icon-phone-2020 {
+        width: 28px;
+        height: 20px;
+        display: inline-block;
+        background-position: -61px -1200px;
+        background-size: 145px;
+    }
+    .icon-2020.icon-zalo-2020 {
+        width: 44px;
+        height: 20px;
+        display: inline-block;
+        background-position: -52px -1174px;
+        background-size: 145px;
+    }
+    .icon-2020.icon-facebook-2020 {
+        width: 28px;
+        height: 20px;
+        display: inline-block;
+        background-position: -61px -1147px;
+        background-size: 145px;
+    }
+    .icon-2020 {
+        background: url(https://japana.vn/assets/images/Icons2020.png) no-repeat;
+        display: inline-block;
+    }
+    .toolbar2 ul li {
+        text-align: center;
+    }
+    .toolbar2 ul li a span {
+        color: #222;
+        padding-top: 5px;
+    }
+}

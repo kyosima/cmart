@@ -1,0 +1,223 @@
+
+
+body{
+    font-family: 'Roboto', sans-serif;
+
+
+
+
+  }
+   /*phan navigation cua trnag*/
+
+
+
+
+   /*phan bóng va mau của thanh navigation*/
+   .navigation{
+     background-color: white;
+   }
+
+
+   .shadow-bottom {
+    box-shadow: 0 5px 5px -5px #333;
+  }
+  /*phan noi dung cua navigation*/
+
+  /*  thẻ a trang chủ*/
+
+
+  .tchu{
+    color:#333;
+  }
+  .cs{
+    color:#0F82FF;
+  }
+  .cs:hover{
+    color:#0F82FF;
+  }
+  .tchu:hover{
+    color:#0F82FF;
+  }
+
+
+  .content-nav a{
+    text-decoration: none;
+
+
+  }
+
+
+
+
+   /*Phan css của slider left ( chuyên mục thông tin )*/
+   .modal .modal-dialog {
+      position: fixed;
+      margin: auto;
+      width: 60%;
+      height: 100%;
+      transform: translate3d(0%, 0, 0);
+  }
+  .modal .modal-content {
+      height: 100%;
+      overflow-y: auto;
+  }
+  .modal .modal-body {
+      padding: 15px 15px 80px;
+  }
+  .modal.left.fade .modal-dialog {
+      left: -320px;
+      transition: opacity 0.1s linear, left 0.1s ease-out;
+  }
+  .modal.left.fade.show .modal-dialog {
+      left: 0;
+  }
+  .modal.right.fade .modal-dialog {
+      right: -320px;
+      transition: opacity 0.1s linear, right 0.1s ease-out;
+  }
+  .modal.right.fade.show .modal-dialog {
+      right: 0;
+  }
+
+  /* ----- MODAL STYLE ----- */
+  .modal-content {
+      border-radius: 0;
+      border: none;
+  }
+  .modal-header {
+      border-bottom-color: #eeeeee;
+      background-color: #fafafa;
+  }
+  /*phan mở css của slidervar*/
+  .list-group{
+    font-size: 14px;
+  }
+  .content-list{
+    margin-top: -10px;
+  }
+
+  .content-hover-border{
+    color: #333333;
+    background-color:#F1F1F1;
+    transition-property: color;
+    transition-duration: 0.5s;
+    font-size: 14px;
+  }
+  .content-hover-border:hover{
+    color:white;
+    background-color:#bb0029;
+  }
+  .content-hover-border:focus{
+    color:white;
+    background-color:#bb0029;
+  }
+
+  .content-hover{
+    background:white;
+    color:#333333;
+    transition-property: color;
+    transition-duration: 1s;
+    font-size: 14px;
+  }
+  /*phan css hiệu ứng khi rê chuột vào*/
+  .content-hover:hover{
+    color:#bb0029 ;
+    background-color:white;
+    transition: .25s all ease;
+    transition-delay: .25s;
+  }
+  .content-hover:focus{
+    background-color:white;
+    color:#bb0029
+  }
+  /*phan kết thúc css sliderbar*/
+
+
+  /*phan mo css cua content**/
+  .static-detail .title {
+      text-transform: uppercase;
+      font-family: 'Roboto',sans-serif;
+      color: #111;
+      border-bottom: 2px solid #bb0029;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+
+  }
+  /*phan css  noi dung chính của trang*/
+.detail-static{
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  line-height:1.5
+}
+  .detail-static a{
+    text-decoration: none;
+    color: #bb0029;
+  }
+
+  .detail-static h2{
+    font-size: 15px;
+    line-height:1.8;
+    color: #000;
+    font-weight: 500;
+  }
+
+  .detail-static p{
+    font-weight: 400;
+    font-size: 14px;
+    color: #000;
+
+
+    font-family: 'Roboto', sans-serif;
+  }
+  .detail-static h3{
+    font-size: 16px;
+  }
+  .detail-static ul>li{
+    list-style: none;
+
+  }
+  .title
+  {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-family: 'Roboto',sans-serif;
+    color: #111;
+  }
+  /*ẩn nút btn*/
+  .btn {
+      display: none;
+      background-color:white;
+      color: #333;
+
+  }
+
+
+  /*phan giu mau khi chon vao dương link*/
+  .active-cs{
+    background-color:#bb0029;
+    color:white;
+  }
+  .active-csv{
+    color: #bb0029;
+  }
+
+
+
+
+  /*dùng để ẩn slidebar*/
+  @media screen and ( max-width:767px){
+  /*dùng để ẩn nút button cua slider*/
+  .btn
+  {
+    display:inline;
+
+  }
+  .card
+  {
+    display:none;
+  }
+
+  /*dùng để ẩn slidebar*/
+
+    }
+
