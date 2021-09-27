@@ -186,6 +186,15 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Đơn giá thị trường<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <input type="number" step="1" min="1" name="product_market_price"
+                                            class="form-control" required
+                                            value="{{ old('product_market_price') }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-md-12 control-label text-left">Đơn giá bán lẻ<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
@@ -204,11 +213,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12 control-label text-left">Giá shock khuyến mãi<span
-                                            class="required" aria-required="true">(*)</span>:</label>
+                                        class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <input type="number" step="1" min="1" name="product_shock_price"
-                                            class="form-control" required
+                                            class="form-control" 
                                             value="{{ old('product_shock_price') }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Tích lũy (C)<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <input type="number" step="1" min="1" name="cpoint"
+                                            class="form-control" required value="{{ old('cpoint') }}">
                                     </div>
                                 </div>
                             </div>

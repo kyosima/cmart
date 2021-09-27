@@ -65,9 +65,11 @@ class ProductController extends Controller
                 ]);
 
                 $productPrice = new ProductPrice();
+                $productPrice->market_price = $request->product_market_price;
                 $productPrice->regular_price = $request->product_regular_price;
                 $productPrice->wholesale_price = $request->product_wholesale_price;
                 $productPrice->shock_price = $request->product_shock_price;
+                $productPrice->cpoint = $request->cpoint;
 
                 $product->productPrice()->save($productPrice);
 
@@ -114,9 +116,11 @@ class ProductController extends Controller
                 ]);
 
                 ProductPrice::where('id_ofproduct', $id)->update([
+                    'market_price' => $request->product_market_price,
                     'regular_price' => $request->product_regular_price,
                     'wholesale_price' => $request->product_wholesale_price,
                     'shock_price' => $request->product_shock_price,
+                    'cpoint' => $request->cpoint,
                 ]);
 
                 return redirect()->route('san-pham.edit', $id)->with('success', 'Cập nhật sản phẩm thành công');

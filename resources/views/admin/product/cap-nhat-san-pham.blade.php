@@ -37,14 +37,14 @@
                                 <img src="{{$product->feature_img}}">
                             </div>
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-1" type="text" name="feature_img" class="form-control" value="{{old('feature_img', $product->feature_img)}}" readonly required>
+                                <input id="ckfinder-input-1" type="hidden" name="feature_img" class="form-control" value="{{old('feature_img', $product->feature_img)}}" readonly required>
                                 <a style="cursor: pointer;" id="ckfinder-popup-1" class="btn btn-success">Chọn ảnh</a>
                             </div>
                         </div>
 
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-2" type="text" name="gallery_img"
+                                <input id="ckfinder-input-2" type="hidden" name="gallery_img"
                                 data-type="multiple" data-hasid="{{$product->id}}"
                                 readonly class="form-control"
                                 value="{{old('gallery_img', $product->gallery)}}">
@@ -253,7 +253,16 @@
                                 </div>
 
                             </div>
-                            {{-- <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Đơn giá thị trường<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <input type="number" step="1" min="1" name="product_market_price"
+                                            class="form-control" required
+                                            value="{{ old('product_market_price', $product->productPrice->market_price) }}">
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-md-12 control-label text-left">Đơn giá bán lẻ<span
                                             class="required" aria-required="true">(*)</span>:</label>
@@ -264,77 +273,34 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Điểm Vpoint bán lẻ<span
+                                    <label class="col-md-12 control-label text-left">Đơn giá bán buôn<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="number" step="0.1" min="0.1" name="product_vpoint"
-                                            class="form-control" required value="{{ old('product_vpoint', $product->productPrice->vpoint_retail) }}">
+                                        <input type="number" step="1" min="1" name="product_wholesale_price"
+                                            class="form-control" required
+                                            value="{{ old('product_wholesale_price', $product->productPrice->wholesale_price) }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Chiết khấu cổ đông 2<span
+                                    <label class="col-md-12 control-label text-left">Giá shock khuyến mãi<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="number" step="0.1" min="0.1" name="product_discount_2"
+                                        <input type="number" step="1" min="1" name="product_shock_price"
                                             class="form-control" required
-                                            value="{{ old('product_discount_2', $product->productPrice->vpoint_2_star) }}">
+                                            value="{{ old('product_shock_price', $product->productPrice->shock_price) }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Chiết khấu cổ đông 1<span
+                                    <label class="col-md-12 control-label text-left">Tích lũy (C)<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="number" step="0.1" min="0.1" name="product_discount_1"
+                                        <input type="number" step="1" min="1" name="cpoint"
                                             class="form-control" required
-                                            value="{{ old('product_discount_1', $product->productPrice->vpoint_1_star) }}">
+                                            value="{{ old('cpoint', $product->productPrice->cpoint) }}">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Chiết khấu Platinum<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="number" step="0.1" min="0.1" name="product_discount_platinum"
-                                            class="form-control" required
-                                            value="{{ old('product_discount_platinum',$product->productPrice->vpoint_platinum) }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Chiết khấu Diamond<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="number" step="0.1" min="0.1" name="product_discount_diamond"
-                                            class="form-control" required
-                                            value="{{ old('product_discount_diamond', $product->productPrice->vpoint_diamond) }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Chiết khấu Gold<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="number" step="0.1" min="0.1" name="product_discount_gold"
-                                            class="form-control" required
-                                            value="{{ old('product_discount_gold', $product->productPrice->vpoint_gold) }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Chiết khấu Silver<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="number" step="0.1" min="0.1" name="product_discount_silver"
-                                            class="form-control" required
-                                            value="{{ old('product_discount_silver', $product->productPrice->vpoint_silver) }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Chiết khấu Member<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="number" step="0.1" min="0.1" name="product_discount_member"
-                                            class="form-control" required
-                                            value="{{ old('product_discount_member', $product->productPrice->vpoint_member) }}">
-                                    </div>
-                                </div>
-                            </div> --}}
+                                
+                            </div>
                         </div>
                     </div>
 

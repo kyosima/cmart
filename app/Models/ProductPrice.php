@@ -10,5 +10,4 @@ class ProductPrice extends Model
     use HasFactory;
     protected $table = 'product_price';
     protected $guarded = [];
-
 }
