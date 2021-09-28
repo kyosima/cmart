@@ -100,79 +100,26 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Nhóm ngành hàng<span
+                                    <label class="col-md-12 control-label text-left">Danh mục sản phẩm<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <select class="selectpicker form-control selectCategory nhomhang" name="category_parent"
-                                            required data-placeholder="Nhóm ngành hàng" data-type="megaParent">
-                                            <option value="-1">Nhóm ngành hàng</option>
-                                            @if ( $product->productCategory->typeof_category == 2 )
-                                                @foreach ($nganhHang as $item)
-                                                    <option value="{{ $item->id }}" {{$item->id == $product->productCategory->parentCategories->megaParentCategories->id ? 'selected' : ''}}>{{ $item->name }}</option>
-                                                @endforeach
-                                            @else
-                                                @foreach ($nganhHang as $item)
-                                                    <option value="{{ $item->id }}" {{$item->id == $product->productCategory->parentCategories->id ? 'selected' : ''}}>{{ $item->name }}</option>
-                                                @endforeach
-                                            @endif
-                                            
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Nhóm sản phẩm<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <select class="selectpicker form-control selectCategory nhomsp" name="category_parent"
-                                            required data-placeholder="Nhóm sản phẩm" data-type="parent">
-                                            <option value="-1">Chọn nhóm sản phẩm</option>
-                                            @if ( $product->productCategory->typeof_category == 2 )
-                                                @php
-                                                    $cates = \App\Models\ProductCategory::where('category_parent', $product->productCategory->parentCategories->megaParentCategories->id)
-                                                                                            ->where('typeof_category', 1)
-                                                                                            ->get(); 
-                                                @endphp
-                                                @foreach ($cates as $item)
-                                                    <option value="{{ $item->id }}" {{$item->id == $product->productCategory->parentCategories->id ? 'selected' : ''}}>{{ $item->name }}</option>
-                                                @endforeach
-                                            @else
-                                                @php
-                                                    $cates = \App\Models\ProductCategory::where('category_parent', $product->productCategory->parentCategories->id)
-                                                                                            ->where('typeof_category', 1)
-                                                                                            ->get(); 
-                                                @endphp
-                                                @foreach ($cates as $item)
-                                                    <option value="{{ $item->id }}" {{ $item->id == $product->category_id ? 'selected' : ''}}>{{ $item->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Nhóm sản phẩm con:</label>
-                                    <div class="col-md-12">
-                                        <select class="selectpicker form-control nhomspcon" name="child_category"
-                                            data-placeholder="Nhóm sản phẩm con">
-                                            <option value="-1">Chọn nhóm sản phẩm con</option>
-                                            @if ( $product->productCategory->typeof_category == 2 )
-                                                @php
-                                                    $cates = \App\Models\ProductCategory::where('category_parent', $product->productCategory->parentCategories->id)
-                                                                                            ->where('typeof_category', 2)
-                                                                                            ->get(); 
-                                                @endphp
-                                                @foreach ($cates as $item)
-                                                    <option value="{{ $item->id }}" {{$item->id == $product->productCategory->id ? 'selected' : ''}}>{{ $item->name }}</option>
-                                                @endforeach
-                                            @else
-                                                @php
-                                                    $cates = \App\Models\ProductCategory::where('typeof_category', 2)
-                                                                                        ->where('category_parent', $product->productCategory->id)
-                                                                                            ->get(); 
-                                                @endphp
-                                                @foreach ($cates as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                                @endforeach
-                                            @endif
+                                            required data-placeholder="Chọn danh mục sản phẩm" data-type="megaParent">
+                                            <option value="0" selected>None</option>
+                                            @foreach ($nganhHang as $item)
+                                                <option value="{{ $item->id }}"
+                                                    {{ $product->category_id == $item->id ? 'selected' : ''}}
+                                                    >{{ $item->name }}</option>
+                                                @if (count($item->childrenCategories) > 0)
+                                                    @foreach ($item->childrenCategories as $childCategory)
+                                                        @include('admin.productCategory.selectChildProduct', [
+                                                            'child_category' => $childCategory,
+                                                            'prefix' => '&nbsp;&nbsp;&nbsp;',
+                                                            'productCategory' => $product->category_id
+                                                            ])
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -457,44 +404,6 @@
             }
             in_value.val(newValue);
             t.parent().remove();
-        });
-
-        $('select.selectCategory').change(function(e) {
-            e.preventDefault();
-            let html = '';
-            var type = $(this).data('type');
-            $.ajax({
-                type: "GET",
-                url: "{{ route('san-pham.getCategory') }}",
-                data: {
-                    id: $(this).val()
-                },
-                success: function(response) {
-                    if (response.data.length > 0) {
-                        if ( type == 'megaParent') {
-                            html = `<option value="-1" selected>Chọn nhóm sản phẩm</option>`;
-                            $.each(response.data, function(idx, val) {
-                                html += `<option value="${val.id}">${val.name}</option>`
-                            });
-                            $('select.nhomsp').html('').append(html);
-                            $('select.nhomspcon').html('');
-                        } else {
-                            html = "<option value='-1' selected>Chọn nhóm sản phẩm con</option>";
-                            $.each(response.data, function(idx, val) {
-                                html += `<option value="${val.id}">${val.name}</option>`
-                            });
-                            $('select.nhomspcon').html('').append(html);
-                        }
-                    } else {
-                        if ( type == 'megaParent') {
-                            $('select.nhomsp').html('').append(html);
-                            $('select.nhomspcon').html('');
-                        } else {
-                            $('select.nhomsp').html('').append(html);
-                        }
-                    }
-                }
-            });
         });
 
     });

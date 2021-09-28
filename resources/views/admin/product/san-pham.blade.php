@@ -44,13 +44,7 @@
                                 Thương hiệu
                             </th>
                             <th class="title-text">
-                                Nhóm sản phẩm con
-                            </th>
-                            <th class="title-text">
-                                Nhóm sản phẩm
-                            </th>
-                            <th class="title-text">
-                                Ngành hàng
+                                Danh mục sản phẩm
                             </th>
                             <th class="title-text">
                                 Đơn vị tính
@@ -81,23 +75,7 @@
                                 <td><a style="text-decoration: none;"
                                         href="{{ route('san-pham.edit', $item->id) }}">{{ $item->name }}</a></td>
                                 <td>{{ $item->productBrand->name }}</td>
-                                <td>{{ $item->productCategory->typeof_category == 2 ? $item->productCategory->name : '' }}
-                                </td>
-                                <td>
-                                    <!-- Nhom san pham -->
-                                    @if ($item->productCategory->typeof_category == 1)
-                                        {{ $item->productCategory->name }}
-                                    @elseif($item->productCategory->parentCategories != null && $item->productCategory->typeof_category == 2)
-                                        {{ $item->productCategory->parentCategories->name }}
-                                    @endif
-                                </td>
-                                <td>
-                                    <!-- Nganh hang -->
-                                    @if ($item->productCategory->parentCategories->typeof_category == 0)
-                                        {{ $item->productCategory->parentCategories->name }}
-                                    @elseif($item->productCategory->parentCategories->megaParentCategories != null)
-                                        {{ $item->productCategory->parentCategories->megaParentCategories->name }}
-                                    @endif
+                                <td>{{ $item->productCategory->name }}
                                 </td>
                                 <td>{{ $item->productCalculationUnit->name }}</td>
                                 <td>{{ $item->weight }} gam</td>
@@ -123,10 +101,10 @@
 <script>
     $('#table-product').DataTable({
         ordering: false,
+        lengthMenu: [ [25 ,50, -1], [25, 50, "All"] ],
         columnDefs: [
-            { "type": "string", "targets": [1, 3] },
-            { "type": "html", "targets": [4, 5, 6, 7] },
-            { "orderable": false, "targets": 1 },
+            { "type": "string", "targets": [1] },
+            { "type": "html", "targets": [2, 3, 4, 5] },
         ],
 		searchBuilder: {
 			conditions: {

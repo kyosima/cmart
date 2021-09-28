@@ -1,20 +1,17 @@
-<tr class="child-category {{ count($child_category->categories) > 0 ? 'has-child' : '' }}"
+<tr class="child-category {{ count($child_category->childrenCategories) > 0 ? 'has-child' : '' }}"
     data-categoryid="{{ $child_category->id }}" data-parentcat="{{ $child_category->category_parent }}">
-    <td>@if (count($child_category->categories) > 0) <i class="fa fa-plus click-cell" aria-hidden="true"> @endif</td>
-    <td>{{ $child_category->code }}</td>
     <td><a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
             data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
-            data-unitid="{{ $child_category->id }}">{{ $child_category->name }}</a></td>
-    <td><button class="btn btn-circle">{{ count($child_category->categories) }}</button></td>
+            data-unitid="{{ $child_category->id }}">{{ $prefix }} {{ $child_category->name }}</a></td>
+    <td>{{ $child_category->slug }}</td>
     <td>
         <div class="input-group" style="min-width: 108px;">
             @if ($child_category->status == 1)
                 <span style=" max-width: 82px;min-width: 82px;" type="text"
                     class="form-control form-control-sm font-size-s text-white active text-center"
                     aria-label="Text input with dropdown button">Hoạt động</span>
-                <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
-                        aria-hidden="true"></i></button>
+                <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
                         <form action="{{ route('nganh-nhom-hang.updateStatus', $child_category->id) }}"
@@ -38,9 +35,8 @@
                 <span style=" max-width: 82px;min-width: 82px;" type="text"
                     class="form-control form-control-sm font-size-s text-white stop text-center"
                     aria-label="Text input with dropdown button">Ngừng</span>
-                <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
-                        aria-hidden="true"></i></button>
+                <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
                         <form action="{{ route('nganh-nhom-hang.updateStatus', $child_category->id) }}"
@@ -65,8 +61,8 @@
         </div>
     </td>
 </tr>
-@if (count($child_category->categories) > 0)
-    @foreach ($child_category->categories as $childCategory)
-        @include('admin.productCategory.child_category', ['child_category' => $childCategory])
+@if (count($child_category->childrenCategories) > 0)
+    @foreach ($child_category->childrenCategories as $childCategory)
+        @include('admin.productCategory.child', ['child_category' => $childCategory, 'prefix' => $prefix.'—'])
     @endforeach
 @endif

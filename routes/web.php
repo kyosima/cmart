@@ -1,15 +1,17 @@
 <?php
 
+use App\Admin\Controllers\AdminProductCategoryController;
+use App\Admin\Controllers\AdminProductController;
 use App\Admin\Controllers\BlogCategoryController;
 use App\Admin\Controllers\BlogController;
 use App\Admin\Controllers\BrandController;
 use App\Admin\Controllers\CalculationUnitController;
-use App\Admin\Controllers\ProductCategoryController;
-use App\Admin\Controllers\ProductController;
 use App\Admin\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,22 +57,23 @@ Route::prefix('admin')->group(function () {
     Route::delete('/don-vi-tinh', [CalculationUnitController::class, 'destroy'])->name('don-vi-tinh.delete');
 
     // PRODUCT CATEGORIES
-    Route::get('/nganh-nhom-hang', [ProductCategoryController::class, 'index'])->name('nganh-nhom-hang.index');
-    Route::post('/nganh-nhom-hang', [ProductCategoryController::class, 'store'])->name('nganh-nhom-hang.store');
-    Route::get('/nganh-nhom-hang/modal-edit', [ProductCategoryController::class, 'modalEdit'])->name('nganh-nhom-hang.modalEdit');
-    Route::put('/nganh-nhom-hang/update/{id}', [ProductCategoryController::class, 'update'])->name('nganh-nhom-hang.update');
-    Route::put('/nganh-nhom-hang/{id}', [ProductCategoryController::class, 'updateStatus'])->name('nganh-nhom-hang.updateStatus');
-    Route::delete('/nganh-nhom-hang/{id}', [ProductCategoryController::class, 'destroy'])->name('nganh-nhom-hang.delete');
-    Route::get('/nganh-nhom-hang/get-category', [ProductCategoryController::class, 'getCategory'])->name('nganh-nhom-hang.getCategory');
+    Route::get('/nganh-nhom-hang', [AdminProductCategoryController::class, 'index'])->name('nganh-nhom-hang.index');
+    Route::post('/nganh-nhom-hang', [AdminProductCategoryController::class, 'store'])->name('nganh-nhom-hang.store');
+    Route::get('/nganh-nhom-hang/modal-edit', [AdminProductCategoryController::class, 'modalEdit'])->name('nganh-nhom-hang.modalEdit');
+    Route::put('/nganh-nhom-hang/update/{id}', [AdminProductCategoryController::class, 'update'])->name('nganh-nhom-hang.update');
+    Route::put('/nganh-nhom-hang/{id}', [AdminProductCategoryController::class, 'updateStatus'])->name('nganh-nhom-hang.updateStatus');
+    Route::delete('/nganh-nhom-hang/{id}', [AdminProductCategoryController::class, 'destroy'])->name('nganh-nhom-hang.delete');
+    Route::get('/nganh-nhom-hang/get-category', [AdminProductCategoryController::class, 'getCategory'])->name('nganh-nhom-hang.getCategory');
+    // Route::get('/nganh-nhom-hang/test/{id}/{status}/{levelChange}', [AdminProductCategoryController::class, 'recursive'])->name('nganh-nhom-hang.recursive');
 
     // PRODUCT
-    Route::get('/san-pham', [ProductController::class, 'index'])->name('san-pham.index');
-    Route::get('/tao-san-pham', [ProductController::class, 'create'])->name('san-pham.create');
-    Route::post('/san-pham', [ProductController::class, 'store'])->name('san-pham.store');
-    Route::get('/san-pham/edit/{id}', [ProductController::class, 'edit'])->name('san-pham.edit');
-    Route::put('/san-pham/update/{id}', [ProductController::class, 'update'])->name('san-pham.update');
-    Route::delete('/san-pham/delete/{id}', [ProductController::class, 'destroy'])->name('san-pham.delete');
-    Route::get('/san-pham/get-category', [ProductController::class, 'getCategory'])->name('san-pham.getCategory');
+    Route::get('/san-pham', [AdminProductController::class, 'index'])->name('san-pham.index');
+    Route::get('/tao-san-pham', [AdminProductController::class, 'create'])->name('san-pham.create');
+    Route::post('/san-pham', [AdminProductController::class, 'store'])->name('san-pham.store');
+    Route::get('/san-pham/edit/{id}', [AdminProductController::class, 'edit'])->name('san-pham.edit');
+    Route::put('/san-pham/update/{id}', [AdminProductController::class, 'update'])->name('san-pham.update');
+    Route::delete('/san-pham/delete/{id}', [AdminProductController::class, 'destroy'])->name('san-pham.delete');
+    Route::get('/san-pham/get-category', [AdminProductController::class, 'getCategory'])->name('san-pham.getCategory');
 
     // BRAND
     Route::get('/thuong-hieu', [BrandController::class, 'index'])->name('thuong-hieu.index');
@@ -110,9 +113,8 @@ Route::prefix('admin')->group(function () {
 });
 // END ADMIN
 
-
-// Route::get('/product', [ProductController::class, 'product']);
-// Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'getdanhmucsanpham']);
+Route::get('/product', [ProductController::class, 'product']);
+Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'getdanhmucsanpham']);
 
 Route::get('/chinh-sach-van-chuyen', [PolicyController::class, 'csvc'])->name('policy.van-chuyen');
 Route::get('/dieu-khoan-giao-dich', [PolicyController::class, 'dkgd'])->name('policy.giao-dich');

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
-class ProductController extends Controller
+class AdminProductController extends Controller
 {
     public function index()
     {
@@ -24,19 +24,12 @@ class ProductController extends Controller
 
     public function create()
     {
-        $nganhHang = ProductCategory::where('typeof_category', 0)->get();
+        $nganhHang = ProductCategory::where('category_parent', 0)
+                                ->with('childrenCategories')
+                                ->get();
         $calculationUnits = CalculationUnit::all();
         $brands = Brand::all();
         return view('admin.product.tao-san-pham', compact('nganhHang', 'calculationUnits', 'brands'));
-    }
-
-    public function getCategory(Request $request)
-    {
-        $cate = ProductCategory::where('category_parent', $request->id)
-                                ->get();
-        return response()->json([
-            'data' => $cate,
-        ], 200);
     }
 
     public function store(Request $request)
@@ -51,7 +44,7 @@ class ProductController extends Controller
                     'slug' => $slug,
                     'feature_img' => $request->feature_img,
                     'gallery' => rtrim($request->gallery_img, ", "),
-                    'category_id' => $request->child_category != "-1" ? $request->category_parent : $request->child_category,
+                    'category_id' => $request->category_parent,
                     'calculation_unit' => $request->product_calculation_unit,
                     // 'quantity' => $request->product_quantity,
                     'weight' => $request->product_weight,
@@ -84,7 +77,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $nganhHang = ProductCategory::where('typeof_category', 0)->get();
+        $nganhHang = ProductCategory::where('category_parent', 0)
+                                ->with('childrenCategories')
+                                ->get();
         $calculationUnits = CalculationUnit::all();
         $brands = Brand::all();
         return view('admin.product.cap-nhat-san-pham', compact('product', 'nganhHang', 'calculationUnits', 'brands'));
@@ -102,7 +97,7 @@ class ProductController extends Controller
                     'slug' => $slug,
                     'feature_img' => $request->feature_img,
                     'gallery' => rtrim($request->gallery_img, ", "),
-                    'category_id' => $request->child_category == "-1" ? $request->category_parent : $request->child_category,
+                    'category_id' => $request->category_parent,
                     'calculation_unit' => $request->product_calculation_unit,
                     // 'quantity' => $request->product_quantity,
                     'weight' => $request->product_weight,
