@@ -38,6 +38,11 @@ class AdminProductController extends Controller
             try {
                 $slug = Str::slug($request->product_name, '-');
 
+                if(Product::whereSlug($slug)->exists()){
+                    $int = random_int(1, 99999999);
+                    $slug .= '-'.$int;
+                }
+
                 $product = Product::create([
                     'sku' => $request->product_sku,
                     'name' => $request->product_name,
@@ -90,6 +95,11 @@ class AdminProductController extends Controller
         return DB::transaction(function () use ($request, $id) {
             try {
                 $slug = Str::slug($request->product_name, '-');
+        
+                if(Product::whereSlug($slug)->exists()){
+                    $int = random_int(1, 99999999);
+                    $slug .= '-'.$int;
+                }
 
                 Product::where('id', $id)->update([
                     'sku' => $request->product_sku,

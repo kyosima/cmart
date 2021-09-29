@@ -44,19 +44,21 @@ class BlogCategoryController extends Controller
 
     public function store(Request $request)
     {
-        if($request->unitSlug == null) {
+        if($request->unitSlug == '') {
             $slug = Str::slug($request->unitName, '-');
-            $blogCategory = BlogCategory::create([
-                'name' => $request->unitName,
-                'slug' => $slug,
-            ]);
+        } else {
+            $slug = Str::slug($request->unitSlug, '-');
         }
-        else {
-            $blogCategory = BlogCategory::create([
-                'name' => $request->unitName,
-                'slug' => $request->unitSlug,
-            ]);
+
+        if(BlogCategory::whereSlug($slug)->exists()){
+            $int = random_int(1, 99999999);
+            $slug .= '-'.$int;
         }
+        
+        $blogCategory = BlogCategory::create([
+            'name' => $request->unitName,
+            'slug' => $slug,
+        ]);
 
         if($blogCategory){
             return response()->json([
@@ -75,19 +77,21 @@ class BlogCategoryController extends Controller
 
     public function update(Request $request)
     {
-        if($request->unitSlug == null) {
+        if($request->unitSlug == '') {
             $slug = Str::slug($request->unitName, '-');
-            $blogCategory = BlogCategory::where('id', $request->id)->update([
-                'name' => $request->unitName,
-                'slug' => $slug
-            ]);
+        } else {
+            $slug = Str::slug($request->unitSlug, '-');
         }
-        else {
-            $blogCategory = BlogCategory::where('id', $request->id)->update([
-                'name' => $request->unitName,
-                'slug' => $request->unitSlug
-            ]);
+
+        if(BlogCategory::whereSlug($slug)->exists()){
+            $int = random_int(1, 99999999);
+            $slug .= '-'.$int;
         }
+
+        $blogCategory = BlogCategory::where('id', $request->id)->update([
+            'name' => $request->unitName,
+            'slug' => $slug
+        ]);
 
         if($blogCategory){
             return response()->json([

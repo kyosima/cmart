@@ -80,7 +80,6 @@
                                     <div class="col-md-12">
                                         <select class="selectpicker form-control selectCategory nhomhang" name="category_parent"
                                             required data-placeholder="Chọn danh mục sản phẩm" data-type="megaParent">
-                                            <option value="0" selected>None</option>
                                             @foreach ($nganhHang as $item)
                                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @if (count($item->childrenCategories) > 0)

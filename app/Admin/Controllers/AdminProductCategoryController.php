@@ -20,7 +20,16 @@ class AdminProductCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $slug = Str::slug($request->proCatName, '-');
+        if($request->proCatSlug == '') {
+            $slug = Str::slug($request->proCatName, '-');
+        } else {
+            $slug = Str::slug($request->proCatSlug, '-');
+        }
+
+        if(ProductCategory::whereSlug($slug)->exists()){
+            $int = random_int(1, 99999999);
+            $slug .= '-'.$int;
+        }
 
         if ($request->proCatParent == 0) {
             ProductCategory::create([
@@ -47,7 +56,16 @@ class AdminProductCategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $slug = Str::slug($request->proCatName, '-');
+        if($request->proCatSlug == '') {
+            $slug = Str::slug($request->proCatName, '-');
+        } else {
+            $slug = Str::slug($request->proCatSlug, '-');
+        }
+
+        if(ProductCategory::whereSlug($slug)->exists()){
+            $int = random_int(1, 99999999);
+            $slug .= '-'.$int;
+        }
 
         if ($request->proCatParent == 0) {
             ProductCategory::where('id', $id)->update([
@@ -83,17 +101,47 @@ class AdminProductCategoryController extends Controller
                 ProductCategory::where('id', $child->id)->update([
                     'level' => $levelChange,
                 ]);
-                $this->recursive($child->id, $status, $levelChange + 1);
+                $this->recursive($child->id, 0, $levelChange + 1);
             }
-        } else {
+        }
+        elseif ($status == 1) {
             // Trường hợp chuyển Category thành con của 1 Category bất kì (level > 0)
             foreach ($current->childrenCategories as $child) {
                 ProductCategory::where('id', $child->id)->update([
                     'level' => $current->level + 1,
                 ]);
+                $this->recursive($child->id, 1, 0);
+            }
+        } 
+        else {
+            // Trường hợp xóa Category rồi dồn level lên
+            foreach ($current->childrenCategories as $child) {
+                if($child->level - $current->level == 1) {
+                    ProductCategory::where('id', $child->id)->update([
+                        'category_parent' => $current->category_parent, 
+                        'level' => $child->level - 1,
+                    ]);
+                } else {
+                    ProductCategory::where('id', $child->id)->update([
+                        'level' => $child->level - 1,
+                    ]);
+                }
                 $this->recursive($child->id, $status, 0);
             }
         }
+    }
+
+    public function destroy($id)
+    {
+        if($id == 1) {
+            // Không được xóa Uncategorized
+            return redirect()->route('nganh-nhom-hang.index');
+        } else {
+            $this->recursive($id, 2, 0);
+            Product::where('category_id', $id)->update(['category_id' => 1]);
+            ProductCategory::destroy($id);
+        }
+        return redirect()->route('nganh-nhom-hang.index');
     }
 
     public function modalEdit(Request $request)
@@ -116,12 +164,6 @@ class AdminProductCategoryController extends Controller
             'status' => $request->unitStatus
         ]);
 
-        return redirect()->route('nganh-nhom-hang.index');
-    }
-
-    public function destroy($id)
-    {
-        ProductCategory::destroy($id);
         return redirect()->route('nganh-nhom-hang.index');
     }
 }

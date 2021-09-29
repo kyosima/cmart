@@ -47,6 +47,13 @@
                             </div>
                         </div>
                         <div class="form-group d-flex mb-2">
+                            <label class="col-md-3 control-label">Đường dẫn (có thể để trống)</label>
+                            <div class="col-md-9">
+                                <input type="text" name="proCatSlug" class="form-control" required
+                                    value="{{ old('proCatSlug', $proCat->slug) }}">
+                            </div>
+                        </div>
+                        <div class="form-group d-flex mb-2">
                             <label class="col-md-3 control-label">Miêu tả</label>
                             <div class="col-md-9">
                                 <textarea class="form-control" name="proCatDescription"

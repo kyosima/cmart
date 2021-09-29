@@ -32,6 +32,12 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $slug = Str::slug($request->blog_title, '-');
+
+        if(Blog::whereSlug($slug)->exists()){
+            $int = random_int(1, 99999999);
+            $slug .= '-'.$int;
+        }
+
         $blog = Blog::create([
             'id_ofcategory' => $request->blog_category,
             'feature_img' => $request->feature_img,
@@ -52,6 +58,12 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {
         $slug = Str::slug($request->blog_title, '-');
+
+        if(Blog::whereSlug($slug)->exists()){
+            $int = random_int(1, 99999999);
+            $slug .= '-'.$int;
+        }
+
         $blog = Blog::where('id', $id)->update([
             'id_ofcategory' => $request->blog_category,
             'feature_img' => $request->feature_img,

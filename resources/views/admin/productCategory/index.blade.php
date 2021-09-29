@@ -28,13 +28,13 @@
                                     <select name="proCatParent" class="form-control proCatType">
                                         <option value="0" selected>None</option>
                                         @foreach ($categories as $item)
-                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                             @if (count($item->childrenCategories) > 0)
                                                 @foreach ($item->childrenCategories as $childCategory)
                                                     @include('admin.productCategory.selectChild', [
-                                                        'child_category' => $childCategory,
-                                                        'prefix' => '&nbsp;&nbsp;&nbsp;',
-                                                        ])
+                                                    'child_category' => $childCategory,
+                                                    'prefix' => '&nbsp;&nbsp;&nbsp;',
+                                                    ])
                                                 @endforeach
                                             @endif
                                         @endforeach
@@ -47,6 +47,13 @@
                                 <div class="col-md-9">
                                     <input type="text" name="proCatName" class="form-control" required
                                         value="{{ old('proCatName') }}">
+                                </div>
+                            </div>
+                            <div class="form-group d-flex mb-2">
+                                <label class="col-md-3 control-label">Đường dẫn (có thể để trống)</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="proCatSlug" class="form-control" required
+                                        value="{{ old('proCatSlug') }}">
                                 </div>
                             </div>
                             <div class="form-group d-flex mb-2">
@@ -105,78 +112,87 @@
                         <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
                             @foreach ($categories as $category)
                                 <tr>
-                                    <td><a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
-                                        data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
-                                        data-unitid="{{ $category->id }}">{{ $category->name }}</a></td>
+                                    <td>
+                                        @if ($category->slug != 'uncategorized')
+                                            <a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
+                                                data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
+                                                data-unitid="{{ $category->id }}">{{ $category->name }}</a>
+                                        @else 
+                                            {{ $category->name }}
+                                        @endif
+                                        </td>
                                     <td>{{ $category->slug }}</td>
                                     <td>
-                                        <div class="input-group" style="min-width: 108px;">
-                                            @if ($category->status == 1)
-                                                <span style=" max-width: 82px;min-width: 82px;" type="text"
-                                                    class="form-control form-control-sm font-size-s text-white active text-center"
-                                                    aria-label="Text input with dropdown button">Hoạt động</span>
-                                                <button class="btn bg-status-drop border-0 text-white py-0 px-2"
-                                                    type="button" data-bs-toggle="dropdown" aria-expanded="false"><i
-                                                        class="fa fa-angle-down" aria-hidden="true"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <form
-                                                            action="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('put')
-                                                            <input type="hidden" name="unitStatus" value="0">
-                                                            <button type="submit" class="dropdown-item">Ngừng</button>
-                                                        </form>
-                                                    </li>
-                                                    <li>
-                                                        <form
-                                                            action="{{ route('nganh-nhom-hang.delete', $category->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="dropdown-item"
-                                                                onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
-                                                        </form>
-                                                    </li>
-                                                </ul>
-                                            @else
-                                                <span style=" max-width: 82px;min-width: 82px;" type="text"
-                                                    class="form-control form-control-sm font-size-s text-white stop text-center"
-                                                    aria-label="Text input with dropdown button">Ngừng</span>
-                                                <button class="btn bg-status-drop border-0 text-white py-0 px-2"
-                                                    type="button" data-bs-toggle="dropdown" aria-expanded="false"><i
-                                                        class="fa fa-angle-down" aria-hidden="true"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <form
-                                                            action="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('put')
-                                                            <input type="hidden" name="unitStatus" value="1">
-                                                            <button type="submit" class="dropdown-item">Hoạt
-                                                                động</button>
-                                                        </form>
-                                                    </li>
-                                                    <li>
-                                                        <form
-                                                            action="{{ route('nganh-nhom-hang.delete', $category->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="dropdown-item"
-                                                                onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
-                                                        </form>
-                                                    </li>
-                                                </ul>
-                                            @endif
-                                        </div>
+                                        @if ($category->slug != 'uncategorized')
+                                            <div class="input-group" style="min-width: 108px;">
+                                                @if ($category->status == 1)
+                                                    <span style=" max-width: 82px;min-width: 82px;" type="text"
+                                                        class="form-control form-control-sm font-size-s text-white active text-center"
+                                                        aria-label="Text input with dropdown button">Hoạt động</span>
+                                                    <button class="btn bg-status-drop border-0 text-white py-0 px-2"
+                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                            class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li>
+                                                            <form
+                                                                action="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('put')
+                                                                <input type="hidden" name="unitStatus" value="0">
+                                                                <button type="submit" class="dropdown-item">Ngừng</button>
+                                                            </form>
+                                                        </li>
+                                                        <li>
+                                                            <form
+                                                                action="{{ route('nganh-nhom-hang.delete', $category->id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button type="submit" class="dropdown-item"
+                                                                    onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                @else
+                                                    <span style=" max-width: 82px;min-width: 82px;" type="text"
+                                                        class="form-control form-control-sm font-size-s text-white stop text-center"
+                                                        aria-label="Text input with dropdown button">Ngừng</span>
+                                                    <button class="btn bg-status-drop border-0 text-white py-0 px-2"
+                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                            class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li>
+                                                            <form
+                                                                action="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('put')
+                                                                <input type="hidden" name="unitStatus" value="1">
+                                                                <button type="submit" class="dropdown-item">Hoạt
+                                                                    động</button>
+                                                            </form>
+                                                        </li>
+                                                        <li>
+                                                            <form
+                                                                action="{{ route('nganh-nhom-hang.delete', $category->id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button type="submit" class="dropdown-item"
+                                                                    onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                @endif
+                                            </div>
+                                        @endif
                                     </td>
                                 </tr>
                                 @if (count($category->childrenCategories) > 0)
                                     @foreach ($category->childrenCategories as $childCategory)
-                                        @include('admin.productCategory.child', ['child_category' => $childCategory, 'prefix' => '—'])
+                                        @include('admin.productCategory.child', ['child_category' => $childCategory,
+                                        'prefix' => '—'])
                                     @endforeach
                                 @endif
                             @endforeach
@@ -200,7 +216,10 @@
         $(document).ready(function() {
             var table = $('#table-product-category').DataTable({
                 ordering: false,
-                lengthMenu: [ [50, -1], [50, "All"] ],
+                lengthMenu: [
+                    [50, -1],
+                    [50, "All"]
+                ],
                 language: {
                     search: "Tìm kiếm:",
                     lengthMenu: "Hiển thị _MENU_ kết quả",
@@ -218,7 +237,7 @@
                 dom: '<"wrapper d-flex justify-content-between mb-3"lf>tip',
             });
 
-            $(window).on('load', function(){
+            $(window).on('load', function() {
                 $('#formCreateProductCategory select.proCatType').select2({
                     width: '100%',
                     dropdownParent: $('#formCreateProductCategory'),
