@@ -16,7 +16,6 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-
 // ADMIN
 
 Route::prefix('admin')->group(function () {
