@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 28, 2021 lúc 05:35 AM
+-- Thời gian đã tạo: Th10 01, 2021 lúc 04:53 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.10
 
@@ -24,6 +24,31 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `admins`
+--
+
+CREATE TABLE `admins` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `update_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `admins`
+--
+
+INSERT INTO `admins` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `update_at`) VALUES
+(4, 'dienmaynhanngoc', 'dienmaynhanngoc@gmail.com', '$2y$10$mM4hnJbTlJWHYjIx0x07..tsKgYkzzp25EtY/Jc1R/l4nSxLD2Mke', NULL, '2021-01-15 14:16:33', '2021-01-15 14:16:33'),
+(5, 'mevivu', 'mevivu@gmail.com', '$2y$10$.Mroo2uZgFDzPSbuUdB73OMz6TZ9jKB60/D/7Z0Jg0cPBIOgSqlBq', NULL, '2021-01-15 14:30:40', '2021-01-15 14:30:40'),
+(6, 'test', 'admin@gmail.com', '$2y$10$IBGFMbOUDbv7VyedfcYssOsuf6eP4xbiBJeLDLxkGK9Y7UY1VcGq2', NULL, '2021-01-15 14:51:52', '2021-01-15 14:51:52');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `users`
 --
 
@@ -33,6 +58,7 @@ CREATE TABLE `users` (
   `password` varchar(500) CHARACTER SET utf8mb4 NOT NULL,
   `email` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `level` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -63,6 +89,12 @@ CREATE TABLE `user_info` (
 --
 
 --
+-- Chỉ mục cho bảng `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
@@ -78,6 +110,12 @@ ALTER TABLE `user_info`
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
+
+--
+-- AUTO_INCREMENT cho bảng `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `users`

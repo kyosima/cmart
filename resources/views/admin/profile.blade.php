@@ -122,8 +122,9 @@
     <div class="footer text-center">
         <spans style="font-size: 12px; color: #333;">Copyright©2005-2021 . All rights reserved</spans>
     </div>
+    
 @endsection
 
 @push('scripts')
-    
+
 @endpush
