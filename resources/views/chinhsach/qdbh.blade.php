@@ -11,7 +11,7 @@
         <div class="container">
             <div class="content-nav">
                 <a href="#" class="tchu">Trang Chủ</a>
-                <a href="# " class="cs">/Quy Định Bán Hàng Trên Website japana.vn</a>
+                <a href="# " class="cs">/Quy Định Bán Hàng Trên Website C-Mart</a>
             </div>
         </div>
     </section>
