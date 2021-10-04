@@ -127,3 +127,78 @@
     padding-top: 8px;
   }
 }
+
+/* MINH CSS */
+.error {
+  color: red !important;
+  border-color: red;
+}
+
+.select2-container .select2-selection--single{
+  padding: .375rem .75rem;
+    height: 38px;
+    line-height: 1.5;
+}
+
+.control-label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.form-group {
+  margin-bottom: 5px;
+}
+
+.control-label .required {
+  color: #e02222;
+  font-size: 12px;
+  padding-left: 2px;
+}
+
+.custom-export-button button.dt-button {
+  padding: 4px 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #fff;
+  background-color: #11101d;
+  border-radius: 25px;
+}
+
+.custom-export-button button.dt-button:hover {
+  color: #fff;
+  background-color: #1fb6c4;
+  border-color: #1fb6c4;
+}
+
+.buttons-csv::before, .buttons-excel::before {
+  content: "\f1c3";
+  margin-right: 5px;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.buttons-pdf::before {
+  content: "\f1c1";
+  margin-right: 5px;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.buttons-print::before {
+  content: "\f02f";
+  margin-right: 5px;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
