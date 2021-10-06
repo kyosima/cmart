@@ -113,8 +113,6 @@ Route::prefix('admin')->group(function () {
 });
 // END ADMIN
 
-Route::get('/product', [ProductController::class, 'product']);
-Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'getdanhmucsanpham']);
 Route::get('/', [HomeController::class, 'home']);
 
 
@@ -163,3 +161,9 @@ Route::get('/tai-khoan', function () {
 Route::get('/quen-mat-khau', function () {
     return view('account.quen-mat-khau');
 });
+
+Route::resources([
+    'danh-muc-san-pham' => ProductCategoryController::class,
+    'san-pham' => ProductController::class
+]);
+Route::get('/product', [ProductController::class, 'product']);
