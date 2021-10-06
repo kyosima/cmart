@@ -49,7 +49,7 @@
                         <div class="form-group d-flex mb-2">
                             <label class="col-md-3 control-label">Đường dẫn (có thể để trống)</label>
                             <div class="col-md-9">
-                                <input type="text" name="proCatSlug" class="form-control" required
+                                <input type="text" name="proCatSlug" class="form-control"
                                     value="{{ old('proCatSlug', $proCat->slug) }}">
                             </div>
                         </div>

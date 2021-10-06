@@ -8,6 +8,7 @@
 
 
 @section('content')
+
     <!-- breadcrumbs -->
 <section id="breadcrumbs">
     <div class="page-title shop-page-title">
@@ -15,7 +16,17 @@
             <nav class="breadcrumbs">
                 <a href="#">Trang chủ</a>
                 <span class="divider">/</span>
-                <a href="#" class="active">Chăm Sóc Sức Khỏe</a>
+                @if($proCat->parents != null)
+                    @if ($proCat->parents->categories != null)
+                        <a href="{{ route('proCat.index', $proCat->parents->categories->slug) }}">{{ $proCat->parents->categories->name }}</a>
+                        <span class="divider">/</span>
+                    @endif
+                    <a href="{{ route('proCat.index', $proCat->parents->slug) }}">{{ $proCat->parents->name }}</a>
+                    <span class="divider">/</span>
+                    <span class="active">{{$proCat->name}}</span>
+                @else
+                    <span class="active">{{$proCat->name}}</span>
+                @endif
             </nav>
         </div>
     </div>
@@ -50,260 +61,124 @@
         <div class="row">
             <!-- bên trái -->
             <div id="shopsidebar" class="shop-sidebar col-lg-3 col-md-12 col-sm-12">
-                <!-- danh mục -->
-                <aside class="widget danhmuc">
-                    <h3 class="widget-title">Danh mục</h3>
-                    <div class="widget-search">
-                        <input type="text" class="form-control input_search" placeholder="Tìm kiếm...">
-                        <button type="button">
-                            <i class="search-icon"></i>
-                        </button>
-                    </div>
-                    <div class="scrollbar">
-                        <div class="widget-product-categories">
-                            <label class="check-custom">
-                                Chăm Sóc Hệ Tiêu Hóa
-                                <span class="count-item"> (30)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Chăm Sóc Mắt
-                                <span class="count-item"> (22)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Hỗ Trợ Não & Trí Nhớ
-                                <span class="count-item"> (17)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Hỗ Trợ Xương Khớp
-                                <span class="count-item"> (30)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Hỗ Trợ Điều Trị Tai Biến
-                                <span class="count-item"> (10)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Hỗ Trợ Điều Trị Ung Thư
-                                <span class="count-item"> (21)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Nấm Linh Chi
-                                <span class="count-item"> (3)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Sức Khỏe & Sinh Lý Nam
-                                <span class="count-item"> (29)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Sức Khỏe & Sinh Lý Nữ
-                                <span class="count-item"> (18)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Tảo Xoắn
-                                <span class="count-item"> (11)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Thải Độc Gan
-                                <span class="count-item"> (34)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Vitamin Tổng Hợp
-                                <span class="count-item"> (42)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Điều Trị Khác
-                                <span class="count-item"> (36)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                    </div>
-                </aside>
-
-                <!-- lọc giá -->
-                <aside class="widget">
-                    <div class="title-box d-lg-none">
-                        <span>Bộ lọc</span>
-                        <button class="close-filter" onclick="closeSidebar()"></button>
-                    </div>
-
-                    <div class="slider-price">
-                        <h3 class="widget-title">Giá</h3>
-                        <div class="widget-filter-price">
-                            <div class="price-range-slider">
-                                <div id="slider-range" class="range-bar"></div>
+                <form action="{{'http://localhost:85/cmart/'.Request::path()}}" method="get" id="filter_form">
+                    <!-- danh mục -->
+                    @if (count($proCat->childrenCategories) > 0)
+                        <aside class="widget danhmuc">
+                            <h3 class="widget-title">Danh mục</h3>
+                            <div class="widget-search">
+                                <input type="text" class="form-control input_search" placeholder="Tìm kiếm...">
+                                <button type="button">
+                                    <i class="search-icon"></i>
+                                </button>
                             </div>
-                        </div>
-                        <div class="widget-price">
-                            <div class="form-group trai">
-                                <p class="title-range">Min</p>
-                                <div class="box-input">
-                                    <input type="text" class="form-control" id="amount1" disabled="">
-                                    <span>đ</span>
+                            <div class="scrollbar">
+                                <div class="widget-product-categories">
+                                    @foreach ($proCat->childrenCategories as $item)
+                                        <label class="check-custom">
+                                            {{$item->name}}
+                                            <span class="count-item"> ({{count($item->products)}})</span>
+                                            <input name="category[]" class="submit_click" type="checkbox" value="{{$item->id}}">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    @endforeach
                                 </div>
                             </div>
-                            <div class="form-group phai">
-                                <p class="title-range">Max</p>
-                                <div class="box-input">
-                                    <input type="text" class="form-control" id="amount2" disabled="">
-                                    <span>đ</span>
+                        </aside>
+                    @endif
+                    
+
+                    <!-- lọc giá -->
+                    <aside class="widget">
+                        <div class="title-box d-lg-none">
+                            <span>Bộ lọc</span>
+                            <button class="close-filter" onclick="closeSidebar()"></button>
+                        </div>
+
+                        <div class="slider-price">
+                            <h3 class="widget-title">Giá</h3>
+                            <div class="widget-filter-price">
+                                <div class="price-range-slider">
+                                    <div id="slider-range" class="range-bar"></div>
                                 </div>
                             </div>
+                            <div class="widget-price">
+                                <div class="form-group trai">
+                                    <p class="title-range">Min</p>
+                                    <div class="box-input">
+                                        <input type="text" class="form-control" id="amount1" disabled="">
+                                        <span>đ</span>
+                                    </div>
+                                </div>
+                                <div class="form-group phai">
+                                    <p class="title-range">Max</p>
+                                    <div class="box-input">
+                                        <input type="text" class="form-control" id="amount2" disabled="">
+                                        <span>đ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-price" type="button">Áp dụng</button>
                         </div>
-                        <button class="btn-price" type="button">Áp dụng</button>
-                    </div>
-                </aside>
+                    </aside>
 
-                <!-- thương hiệu -->
-                <aside class="widget thuonghieu">
-                    <h3 class="widget-title">Thương hiệu</h3>
-                    <div class="widget-search">
-                        <input type="text" class="form-control input_search" placeholder="Tìm kiếm...">
-                        <button type="button">
-                            <i class="search-icon"></i>
-                        </button>
-                    </div>
-                    <div class="scrollbar">
-                        <div class="widget-product-categories">
-                            <label class="check-custom">
-                                Ably
-                                <span class="count-item"> (3)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                AFC
-                                <span class="count-item"> (1)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                AFC Efushi Group
-                                <span class="count-item"> (1)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Aojiru
-                                <span class="count-item"> (1)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                API
-                                <span class="count-item"> (1)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Asahi
-                                <span class="count-item"> (3)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Ashirira
-                                <span class="count-item"> (2)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                B3
-                                <span class="count-item"> (1)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Beauty Mirai
-                                <span class="count-item"> (1)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Beauty Rose Crystal
-                                <span class="count-item"> (1)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Bella Fora
-                                <span class="count-item"> (1)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Cosmic Pharmaceutical Inc
-                                <span class="count-item"> (2)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="check-custom">
-                                Daiichi Sankyo
-                                <span class="count-item"> (36)</span>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
+                    <!-- thương hiệu -->
+                    <aside class="widget thuonghieu">
+                        <h3 class="widget-title">Thương hiệu</h3>
+                        <div class="widget-search">
+                            <input type="text" class="form-control input_search" placeholder="Tìm kiếm...">
+                            <button type="button">
+                                <i class="search-icon"></i>
+                            </button>
                         </div>
-                    </div>
-                    <div class="footer-filter d-lg-none">
-                        <button type="button" class="clear_filter">Xóa lọc</button>
-                        <button type="button" class="submit_click">Áp dụng</button>
-                    </div>
-                </aside>
+                        <div class="scrollbar">
+                            <div class="widget-product-categories">
+                                @foreach ($brands as $item)
+                                    <label class="check-custom">
+                                        {{$item->name}}
+                                        <span class="count-item"> ()</span>
+                                        <input name="id_brand[]" class="submit_click" type="checkbox" value="{{$item->id}}">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="footer-filter d-lg-none">
+                            <button type="button" class="clear_filter">Xóa lọc</button>
+                            <button type="button" class="submit_click">Áp dụng</button>
+                        </div>
+                    </aside>
+                    <input type="hidden" id="order" name="order" value="">
+                    <input type="hidden" id="sale" name="sale" value="">
+                </form>
             </div>
 
             <!-- bên phải -->
             <div class="shop-container col-lg-9 col-md-12 col-sm-12">
                 <div class="shop-container-inner">
                     <!-- TITLE -->
-                    <h2 class="title-filter d-none d-lg-block">Collagen <span>(67 sản phẩm)</span></h2>
+                    <h2 class="title-filter d-none d-lg-block">{{$proCat->name}} <span>({{count($products)}} sản phẩm)</span></h2>
                     <!-- Bộ lọc -->
                     <div class="filter-cate">
                         <ul>
                             <li class="d-lg-inline d-none">Sắp xếp theo:</li>
                             <li>
-                                <a href="#" class="active">Mặc định</a>
+                                <a href="javascript:order();" class="active">Mặc định</a>
                             </li>
                             <li>
-                                <a href="#"
+                                <a href="javascript:order('regular_price desc');"
                                     class="">Giá cao</a>
                                 </li>
                                 <li>
-                                    <a href="
-                                    #"
+                                    <a href="javascript:order('regular_price asc');"
                                     class="">Giá thấp</a>
                                 </li>
                                 <li>
-                                    <a href="
-                                    #"
+                                    <a href="javascript:order('name asc');"
                                     class="">A-z</a>
                                 </li>
                                 <li>
-                                    <a href="
-                                    #"
+                                    <a href="javascript:sale('2');"
                                     class="">Sale</a>
                                 </li>
                                 <li class="
@@ -315,252 +190,49 @@
 
                     <!-- SẢN PHẨM -->
                     <div class="products">
-                        <div class="item">
-                            <div class="product-box row">
-                                <div class="box-image col-lg-12 col-md-4 col-4">
-                                    <div class="image-cover">
-                                        <a href="#">
-                                            <img src="{{ asset('image/product/1.jpg') }}" alt="">
-                                        </a>
+                        @foreach ($products as $item)
+                            <div class="item">
+                                <div class="product-box row">
+                                    <div class="box-image col-lg-12 col-md-4 col-4">
+                                        <div class="image-cover">
+                                            <a href="#">
+                                                <img src="{{ $item->feature_img }}" alt="">
+                                            </a>
+                                        </div>
+                                        @if ($item->shock_price != null || $item->shock_price != 0)
+                                            @php
+                                                $percent = (1 - ($item->shock_price/$item->regular_price))*100;
+                                            @endphp
+                                            <div class="block-sale">
+                                                <img alt="" src="{{ asset('image/bg-sale.png') }}">
+                                                <span class="sale">-{{round($percent)}}%</span>
+                                            </div>
+                                        @endif
                                     </div>
-                                </div>
-                                <div class="box-text col-lg-12 col-md-8 col-8">
-                                    <div class="title-wrapper">
-                                        <a href="#">
-                                            <p class="product-title">Nước uống Collagen Venus Charge 20,000mg (Hộp 10
-                                                chai x 50ml)</p>
-                                        </a>
-                                    </div>
-                                    <div class="price-wrapper">
-                                        <span class="price">
-                                            <span class="amount">490.000 đ</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="product-box row">
-                                <div class="box-image col-lg-12 col-md-4 col-4">
-                                    <div class="image-cover">
-                                        <a href="#">
-                                            <img src="{{ asset('image/product/2.jpg') }}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="block-sale">
-                                        <img alt="" src="{{ asset('image/bg-sale.png') }}">
-                                        <span class="sale">-13%</span>
-                                    </div>
-                                </div>
-                                <div class="box-text col-lg-12 col-md-8 col-8">
-                                    <div class="title-wrapper">
-                                        <a href="#">
-                                            <p class="product-title">Nước uống Collagen Venus Charge 20,000mg (Hộp 10
-                                                chai x 50ml)</p>
-                                        </a>
-                                    </div>
-                                    <div class="price-wrapper">
-                                        <span class="price">
-                                            <span class="amount">490.000 đ</span>
-                                        </span>
-                                        <span class="price-old">
-                                            <span class="amount">500.000 đ</span>
-                                        </span>
+                                    <div class="box-text col-lg-12 col-md-8 col-8">
+                                        <div class="title-wrapper">
+                                            <a href="#">
+                                                <p class="product-title">{{$item->name}}</p>
+                                            </a>
+                                        </div>
+                                        <div class="price-wrapper">
+                                            @if ($item->shock_price != null || $item->shock_price != 0)
+                                                <span class="price">
+                                                    <span class="amount">{{$item->shock_price}}</span>
+                                                </span>
+                                                <span class="price-old">
+                                                    <span class="amount">{{$item->regular_price}}</span>
+                                                </span>
+                                            @else
+                                                <span class="price">
+                                                    <span class="amount">{{$item->regular_price}}</span>
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <div class="product-box row">
-                                <div class="box-image col-lg-12 col-md-4 col-4">
-                                    <div class="image-cover">
-                                        <a href="#">
-                                            <img src="{{ asset('image/product/3.jpg') }}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="block-sale">
-                                        <img alt="" src="{{ asset('image/bg-sale.png') }}">
-                                        <span class="sale">-13%</span>
-                                    </div>
-                                    <div class="block-sale2">
-                                        <img alt="" src="{{ asset('image/bg-sale2.png') }}">
-                                    </div>
-                                </div>
-                                <div class="box-text col-lg-12 col-md-8 col-8">
-                                    <div class="title-wrapper">
-                                        <a href="#">
-                                            <p class="product-title">Nước uống Collagen Venus Charge 20,000mg (Hộp 10
-                                                chai x 50ml)</p>
-                                        </a>
-                                    </div>
-                                    <div class="price-wrapper">
-                                        <span class="price">
-                                            <span class="amount">490.000 đ</span>
-                                        </span>
-                                        <span class="price-old">
-                                            <span class="amount">500.000 đ</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="product-box row">
-                                <div class="box-image col-lg-12 col-md-4 col-4">
-                                    <div class="image-cover">
-                                        <a href="#">
-                                            <img src="{{ asset('image/product/6.jpg') }}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="block-sale">
-                                        <img alt="" src="{{ asset('image/bg-sale.png') }}">
-                                        <span class="sale">-13%</span>
-                                    </div>
-                                    <div class="block-sale2">
-                                        <img alt="" src="{{ asset('image/bg-sale2.png') }}">
-                                    </div>
-                                </div>
-                                <div class="box-text col-lg-12 col-md-8 col-8">
-                                    <div class="title-wrapper">
-                                        <a href="#">
-                                            <p class="product-title">Bộ đôi nâng hạng nhan sắc Collagen Venus Charge
-                                                và tăng cường sinh lý nam Josephine Oyster Extract</p>
-                                        </a>
-                                    </div>
-                                    <div class="price-wrapper">
-                                        <span class="price">
-                                            <span class="amount">490.000 đ</span>
-                                        </span>
-                                        <span class="price-old">
-                                            <span class="amount">500.000 đ</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="product-box row">
-                                <div class="box-image col-lg-12 col-md-4 col-4">
-                                    <div class="image-cover">
-                                        <a href="#">
-                                            <img src="{{ asset('image/product/4.jpg') }}" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="box-text col-lg-12 col-md-8 col-8">
-                                    <div class="title-wrapper">
-                                        <a href="#">
-                                            <p class="product-title">Nước uống Collagen Venus Charge 20,000mg (Hộp 10
-                                                chai x 50ml)</p>
-                                        </a>
-                                    </div>
-                                    <div class="price-wrapper">
-                                        <span class="price">
-                                            <span class="amount">490.000 đ</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="product-box row">
-                                <div class="box-image col-lg-12 col-md-4 col-4">
-                                    <div class="image-cover">
-                                        <a href="#">
-                                            <img src="{{ asset('image/product/5.jpg') }}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="block-sale">
-                                        <img alt="" src="{{ asset('image/bg-sale.png') }}">
-                                        <span class="sale">-13%</span>
-                                    </div>
-                                </div>
-                                <div class="box-text col-lg-12 col-md-8 col-8">
-                                    <div class="title-wrapper">
-                                        <a href="#">
-                                            <p class="product-title">Nước uống Collagen Venus Charge 20,000mg (Hộp 10
-                                                chai x 50ml)</p>
-                                        </a>
-                                    </div>
-                                    <div class="price-wrapper">
-                                        <span class="price">
-                                            <span class="amount">490.000 đ</span>
-                                        </span>
-                                        <span class="price-old">
-                                            <span class="amount">500.000 đ</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="product-box row">
-                                <div class="box-image col-lg-12 col-md-4 col-4">
-                                    <div class="image-cover">
-                                        <a href="#">
-                                            <img src="{{ asset('image/product/7.jpg') }}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="block-sale">
-                                        <img alt="" src="{{ asset('image/bg-sale.png') }}">
-                                        <span class="sale">-13%</span>
-                                    </div>
-                                    <div class="block-sale2">
-                                        <img alt="" src="{{ asset('image/bg-sale2.png') }}">
-                                    </div>
-                                </div>
-                                <div class="box-text col-lg-12 col-md-8 col-8">
-                                    <div class="title-wrapper">
-                                        <a href="#">
-                                            <p class="product-title">Nước uống Collagen Venus Charge 20,000mg (Hộp 10
-                                                chai x 50ml)</p>
-                                        </a>
-                                    </div>
-                                    <div class="price-wrapper">
-                                        <span class="price">
-                                            <span class="amount">490.000 đ</span>
-                                        </span>
-                                        <span class="price-old">
-                                            <span class="amount">500.000 đ</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="product-box row">
-                                <div class="box-image col-lg-12 col-md-4 col-4">
-                                    <div class="image-cover">
-                                        <a href="#">
-                                            <img src="{{ asset('image/product/8.jpg') }}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="block-sale">
-                                        <img alt="" src="{{ asset('image/bg-sale.png') }}">
-                                        <span class="sale">-13%</span>
-                                    </div>
-                                    <div class="block-sale2">
-                                        <img alt="" src="{{ asset('image/bg-sale2.png') }}">
-                                    </div>
-                                </div>
-                                <div class="box-text col-lg-12 col-md-8 col-8">
-                                    <div class="title-wrapper">
-                                        <a href="#">
-                                            <p class="product-title">Nước uống Collagen Venus Charge 20,000mg (Hộp 10
-                                                chai x 50ml)</p>
-                                        </a>
-                                    </div>
-                                    <div class="price-wrapper">
-                                        <span class="price">
-                                            <span class="amount">490.000 đ</span>
-                                        </span>
-                                        <span class="price-old">
-                                            <span class="amount">500.000 đ</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
 
                     <!-- Pagination -->
@@ -584,6 +256,11 @@
                             <i class="fa fa-caret-down"></i>
                         </div>
                     </div>
+
+                    <div class="nav-pager">
+                        {{ $products->links() }}
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -715,4 +392,38 @@
         }
     </script>
 <script src="{{ asset('js/danhmucsanpham.js') }}"></script>
+
+<script>
+    function order(id) {
+        $("#sale").val('');
+        $("#order").val(id);
+        $("#filter_form").submit()
+    }
+    function sale(id){
+        $("#order").val('');
+    	$("#sale").val(id);
+    	$("#filter_form").submit();
+    }
+
+    $(document).ready(function () {
+        $(".submit_click").click(function () {
+            $("#filter_form").submit()
+        });
+
+        category.forEach(element => {
+            $('.submit_click[value="'+element+'"]').prop('checked', true)
+        });
+
+        $('div.filter-cate > ul > li').each(element => {
+            console.log($(this))
+        });
+    });
+
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    var category = urlSearchParams.getAll("category[]");
+
+</script>
+
+
+
 @endpush

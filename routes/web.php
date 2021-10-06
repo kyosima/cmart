@@ -114,7 +114,7 @@ Route::prefix('admin')->group(function () {
 // END ADMIN
 
 Route::get('/product', [ProductController::class, 'product']);
-Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'getdanhmucsanpham']);
+Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
 
 Route::get('/chinh-sach-van-chuyen', [PolicyController::class, 'csvc'])->name('policy.van-chuyen');
 Route::get('/dieu-khoan-giao-dich', [PolicyController::class, 'dkgd'])->name('policy.giao-dich');

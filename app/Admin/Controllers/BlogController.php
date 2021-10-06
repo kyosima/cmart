@@ -45,6 +45,8 @@ class BlogController extends Controller
             'slug' => $slug,
             'content' => $request->description,
             'status' => $request->blog_status,
+            'meta_desc' => $request->meta_description,
+            'meta_keyword' => $request->meta_keyword,
         ]);
 
         if($blog) {
@@ -53,7 +55,6 @@ class BlogController extends Controller
             return redirect()->back()->withErrors(['error' => "Đã có lỗi xảy ra, vui lòng nhập đúng dữ liệu"]);
         }
     }
-
 
     public function update(Request $request, $id)
     {
@@ -71,6 +72,8 @@ class BlogController extends Controller
             'slug' => $slug,
             'content' => $request->description,
             'status' => $request->blog_status,
+            'meta_desc' => $request->meta_description,
+            'meta_keyword' => $request->meta_keyword,
         ]);
 
         if($blog) {

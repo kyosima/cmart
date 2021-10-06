@@ -174,6 +174,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
 
     ],
 
@@ -228,7 +229,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'SEOMeta'       => Artesaos\SEOTools\src\SEOTools\Facades\SEOMeta::class,
+        'OpenGraph'     => Artesaos\SEOTools\src\SEOTools\Facades\OpenGraph::class,
+        'Twitter'       => Artesaos\SEOTools\src\SEOTools\Facades\TwitterCard::class,
+        'JsonLd'        => Artesaos\SEOTools\src\SEOTools\Facades\JsonLd::class,
+        'JsonLdMulti'   => Artesaos\SEOTools\src\SEOTools\Facades\JsonLdMulti::class,
+        'SEO' => Artesaos\SEOTools\src\SEOTools\Facades\SEOTools::class,
     ],
 
 ];

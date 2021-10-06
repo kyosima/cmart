@@ -60,6 +60,8 @@ class AdminProductController extends Controller
                     'status' => $request->product_status,
                     'short_desc' => $request->short_description,
                     'long_desc' => $request->description,
+                    'meta_desc' => $request->meta_description,
+                    'meta_keyword' => $request->meta_keyword,
                 ]);
 
                 $productPrice = new ProductPrice();
@@ -118,6 +120,8 @@ class AdminProductController extends Controller
                     'status' => $request->product_status,
                     'short_desc' => $request->short_description,
                     'long_desc' => $request->description,
+                    'meta_desc' => $request->meta_description,
+                    'meta_keyword' => $request->meta_keyword,
                 ]);
 
                 ProductPrice::where('id_ofproduct', $id)->update([
