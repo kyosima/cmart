@@ -35,6 +35,7 @@ class ProductCategory extends Model
         return $this->hasManyThrough(Product::class, ProductCategory::class, 'category_parent', 'category_id');
     }
 
+    // RECURSIVE PARENT (ĐỂ LÀM BREADCUMBS)
     public function parents() {
         return $this->belongsTo(ProductCategory::class, 'category_parent')->with('categories');
     }

@@ -58,6 +58,7 @@ Route::prefix('admin')->group(function () {
 
     // PRODUCT CATEGORIES
     Route::get('/nganh-nhom-hang', [AdminProductCategoryController::class, 'index'])->name('nganh-nhom-hang.index');
+    Route::get('/nganh-nhom-hang/edit/{id}', [AdminProductCategoryController::class, 'edit'])->name('nganh-nhom-hang.edit');
     Route::post('/nganh-nhom-hang', [AdminProductCategoryController::class, 'store'])->name('nganh-nhom-hang.store');
     Route::get('/nganh-nhom-hang/modal-edit', [AdminProductCategoryController::class, 'modalEdit'])->name('nganh-nhom-hang.modalEdit');
     Route::put('/nganh-nhom-hang/update/{id}', [AdminProductCategoryController::class, 'update'])->name('nganh-nhom-hang.update');
@@ -113,7 +114,7 @@ Route::prefix('admin')->group(function () {
 });
 // END ADMIN
 
-Route::get('/product', [ProductController::class, 'product']);
+Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
 Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
 
 Route::get('/chinh-sach-van-chuyen', [PolicyController::class, 'csvc'])->name('policy.van-chuyen');

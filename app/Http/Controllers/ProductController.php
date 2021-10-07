@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\URL;
 class ProductController extends Controller
 {
     //
-    public function product(){
-        $product = Product::find(10);
+    public function product($slug){
+        $product = Product::where('slug', '=', $slug)->firstOrFail();
         SEOMeta::setTitle($product->name);
         SEOMeta::addMeta('robots', 'noindex, nofollow');
         SEOMeta::addMeta('name', $product->name, 'itemprop');

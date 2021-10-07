@@ -1,8 +1,7 @@
 <tr class="child-category {{ count($child_category->childrenCategories) > 0 ? 'has-child' : '' }}"
     data-categoryid="{{ $child_category->id }}" data-parentcat="{{ $child_category->category_parent }}">
     <td><a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
-            data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
-            data-unitid="{{ $child_category->id }}">{{ $prefix }} {{ $child_category->name }}</a></td>
+        href="{{route('nganh-nhom-hang.edit', $category->id)}}">{{ $prefix }} {{ $child_category->name }}</a></td>
     <td>{{ $child_category->slug }}</td>
     <td>
         <div class="input-group" style="min-width: 108px;">
@@ -59,6 +58,13 @@
                 </ul>
             @endif
         </div>
+    </td>
+    <td>
+        @if ($child_category->slug != 'uncategorized')
+            <a style="text-decoration: none; cursor: pointer;" class="btn btn-warning modal-edit-proCat"
+            data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
+            data-unitid="{{ $child_category->id }}"><i class="fa fa-pencil"></i></a>
+        @endif 
     </td>
 </tr>
 @if (count($child_category->childrenCategories) > 0)

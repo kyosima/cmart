@@ -107,6 +107,8 @@
                                     Đường dẫn</th>
                                 <th class="title title-text">
                                     Trạng thái</th>
+                                <th class="title title-text">
+                                    Thao tác</th>
                             </tr>
                         </thead>
                         <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
@@ -115,12 +117,11 @@
                                     <td>
                                         @if ($category->slug != 'uncategorized')
                                             <a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
-                                                data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
-                                                data-unitid="{{ $category->id }}">{{ $category->name }}</a>
+                                                href="{{route('nganh-nhom-hang.edit', $category->id)}}">{{ $category->name }}</a>
                                         @else 
                                             {{ $category->name }}
                                         @endif
-                                        </td>
+                                    </td>
                                     <td>{{ $category->slug }}</td>
                                     <td>
                                         @if ($category->slug != 'uncategorized')
@@ -187,6 +188,13 @@
                                                 @endif
                                             </div>
                                         @endif
+                                    </td>
+                                    <td>
+                                        @if ($category->slug != 'uncategorized')
+                                            <a style="text-decoration: none; cursor: pointer;" class="btn btn-warning modal-edit-proCat"
+                                            data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
+                                            data-unitid="{{ $category->id }}"><i class="fa fa-pencil"></i></a>
+                                        @endif 
                                     </td>
                                 </tr>
                                 @if (count($category->childrenCategories) > 0)
