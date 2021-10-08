@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 01, 2021 lúc 08:37 AM
+-- Thời gian đã tạo: Th10 08, 2021 lúc 12:48 PM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.10
 
@@ -34,17 +34,16 @@ CREATE TABLE `admins` (
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `admins`
 --
 
-INSERT INTO `admins` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `update_at`) VALUES
-(4, 'dienmaynhanngoc', 'dienmaynhanngoc@gmail.com', '$2y$10$mM4hnJbTlJWHYjIx0x07..tsKgYkzzp25EtY/Jc1R/l4nSxLD2Mke', NULL, '2021-01-15 14:16:33', '2021-01-15 14:16:33'),
-(5, 'mevivu', 'mevivu@gmail.com', '$2y$10$.Mroo2uZgFDzPSbuUdB73OMz6TZ9jKB60/D/7Z0Jg0cPBIOgSqlBq', NULL, '2021-01-15 14:30:40', '2021-01-15 14:30:40'),
-(6, 'test', 'admin@gmail.com', '$2y$10$IBGFMbOUDbv7VyedfcYssOsuf6eP4xbiBJeLDLxkGK9Y7UY1VcGq2', NULL, '2021-01-15 14:51:52', '2021-01-15 14:51:52');
+INSERT INTO `admins` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(7, 'admin', 'admin@gmail.com', '$2y$10$drtc8/RCNronPROYztCFJOkt/A0cDqYrMs0LV.ImX3GlfqoKK/FEq', NULL, '2021-10-01 07:40:56', '2021-10-01 07:40:56'),
+(8, 'NV1', 'nv1@gmail.com', '$2y$10$7Brn85PzYeb7sjAQtP4r9.fYfiiga6sfK5zJERPHeZQwPn2gGfVhO', NULL, '2021-10-08 10:10:39', '2021-10-08 10:10:39');
 
 -- --------------------------------------------------------
 
@@ -90,6 +89,14 @@ CREATE TABLE `model_has_roles` (
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `model_has_roles`
+--
+
+INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
+(2, 'App\\Models\\Admin', 7),
+(4, 'App\\Models\\Admin', 8);
+
 -- --------------------------------------------------------
 
 --
@@ -103,6 +110,16 @@ CREATE TABLE `permissions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
+(1, 'All Permissions', 'admin', '2021-10-06 06:36:38', '2021-10-06 06:36:38'),
+(7, 'Xem kho', 'admin', '2021-10-06 08:31:27', '2021-10-08 10:46:06'),
+(9, 'Xem HSKH', 'admin', '2021-10-06 08:31:51', '2021-10-06 08:31:51'),
+(10, 'Duyệt HSKH', 'admin', '2021-10-07 04:48:56', '2021-10-07 04:49:06');
 
 -- --------------------------------------------------------
 
@@ -136,6 +153,15 @@ CREATE TABLE `roles` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
+(2, 'Boss', 'admin', '2021-10-01 00:31:25', '2021-10-07 06:44:41'),
+(3, 'Manager', 'admin', '2021-10-01 00:36:41', '2021-10-07 04:50:00'),
+(4, 'NV', 'admin', '2021-10-01 00:36:59', '2021-10-07 04:50:47');
+
 -- --------------------------------------------------------
 
 --
@@ -146,6 +172,21 @@ CREATE TABLE `role_has_permissions` (
   `permission_id` bigint(20) UNSIGNED NOT NULL,
   `role_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `role_has_permissions`
+--
+
+INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
+(1, 2),
+(7, 2),
+(7, 3),
+(9, 2),
+(9, 3),
+(9, 4),
+(10, 2),
+(10, 3),
+(10, 4);
 
 -- --------------------------------------------------------
 
@@ -163,6 +204,13 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `password`, `email`, `phone`, `level`, `created_at`, `updated_at`) VALUES
+(1, 'truong', '$2y$10$GpRjtByq.8BL20XQ8aXWP.jD6P/EDOYzILU9BlIYNx.E1U1Tjd9Hq', 'truong@gmail.com', NULL, 0, '2021-10-01 02:27:58', '2021-10-01 02:27:58');
 
 -- --------------------------------------------------------
 
@@ -265,7 +313,7 @@ ALTER TABLE `user_info`
 -- AUTO_INCREMENT cho bảng `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
@@ -277,7 +325,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT cho bảng `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `personal_access_tokens`
@@ -289,13 +337,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `user_info`

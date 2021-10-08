@@ -5,6 +5,7 @@ use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\HomeController;
 use App\Admin\Controllers\AdminHomeController;
+use App\Admin\Controllers\AdminRolesController;
 
 /*
 |--------------------------------------------------------------------------

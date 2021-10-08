@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div class="sidebar open">
     <div class="logo-details">
         <div class="logo_name"><h3>C-Mart</h3></div>
         <i class='fa fa-bars' id="btn" ></i>
@@ -43,6 +43,17 @@
              <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Tồn kho <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropbtn">
+             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <span class="links_name w-100 align-items-center d-flex">Manager Admin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            </a>
+            <span class="dropdown-content">
+                <a href="{{route('roles.index')}}">Roles</a>
+                <a href="{{route('permissions.index')}}">Permission</a>
+                <a href="{{route('manager-admin.index')}}">List Admin</a>
+            </span>
          </li>
          <li class="dropdown">
             <a href="setting.html" class="dropbtn">
