@@ -3,14 +3,8 @@
 @section('title', 'Chi tiết sản phẩm')
 
 @push('css')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-<link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
-<link rel="stylesheet" href="{{asset('css/style.css')}}">
-    <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
-    
-
+    <link rel="stylesheet" href="{{ asset('public/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('public/css/fotorama.css')}}">
 @endpush
 
     @section('content')
@@ -28,18 +22,31 @@
         <!-- search-mobile-fixed -->
             <div class="search">
                 <div class="search_d">
-                    <img src="./image/icon/arrow-prev.png" alt="">
+                    <img src="{{asset('public/image/icon/arrow-prev.jpg')}}" alt="">
                     <input type="text" placeholder="Tìm sản phẩm bạn mong muốn ..." id="search" name="search">
-                    <img src="./image/icon/shopping-cart.png" alt="">
+                    <img src="{{asset('public/image/icon/shopping-cart.jpg')}}" alt="">
                 </div>
             </div>
         <section class="product__detail">
             <div class="container">
                 <div class="row row-detail">
                     <div class="col-sm-12 col-md-12 col-lg-6">
-                        <div class="fotorama" data-width="100%"
-                        data-ratio="3/2" data-nav="thumbs" data-fit="cover" data-allowfullscreen="true">
-                            <img src="{{asset('public/storage/images/712429a965766d45ef23e20d963e70c6.jpg')}}" alt="">
+                        <div class="fotorama" data-width="700" data-ratio="3/2" data-nav="thumbs" data-thumbheight="48">
+                            <a href="{{asset('public/image/collagen-1.jpg')}}">
+                                <img src="{{asset('public/image/collagen-1.jpg')}}" width="144" height="96">
+                            </a>
+                            <a href="{{asset('public/image/collagen-2.jpg')}}">
+                                <img src="{{asset('public/image/collagen-2.jpg')}}" width="144" height="96">
+                            </a>
+                            <a href="{{asset('public/image/collagen-3.jpg')}}">
+                                <img src="{{asset('public/image/collagen-3.jpg')}}" width="144" height="96">
+                            </a>
+                            <a href="{{asset('public/image/collagen-4.jpg')}}">
+                                <img src="{{asset('public/image/collagen-4.jpg')}}" width="144" height="96">
+                            </a>
+                            <a href="{{asset('public/image/collagen-5.jpg')}}">
+                                <img src="{{asset('public/image/collagen-5.jpg')}}" width="144" height="96">
+                            </a>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6">
@@ -69,11 +76,11 @@
                             </div>
                             <div class="star-mobile">
                                 <div class="star">
-                                    <img src="./image/icon/star.svg" alt="">
-                                    <img src="./image/icon/star.svg" alt="">
-                                    <img src="./image/icon/star.svg" alt="">
-                                    <img src="./image/icon/star.svg" alt="">
-                                    <img src="./image/icon/star.svg" alt="">
+                                    <img src="{{asset('public/image/icon/star.svg')}}" alt="">
+                                    <img src="{{asset('public//image/icon/star.svg')}}" alt="">
+                                    <img src="{{asset('public//image/icon/star.svg')}}" alt="">
+                                    <img src="{{asset('public//image/icon/star.svg')}}" alt="">
+                                    <img src="{{asset('public//image/icon/star.svg')}}" alt="">
                                     <span>5</span>
                                 </div>
                                 <div class="sold">
@@ -81,24 +88,27 @@
                                 </div>
                             </div>
                             <div class="quantity">
-                                <input type="number" class="card-quality-input" value="1">
-                                <div class="quantity_btn add-cart">
-                                    <p>Thêm vào giỏ</p>
-                                </div>
+                                <form id="form-add-to-cart" method="POST" action="{{route('cart.add')}}">
+                                    <input type="hidden" class="card-quality-input" name="product_id" value="{{$product->id}}">
+                                    <input type="number" class="card-quality-input" name="qty" value="1">
+                                    <button class="quantity_btn add-cart" type="submit">
+                                        <p>Thêm vào giỏ</p>
+                                    </button>
+                                </form>
                             </div>
-                            {{-- <div class="product_bonus">
+                            <div class="product_bonus">
                                 <div class="title">
                                     <h2>Mua cùng giảm thêm</h2>
                                 </div>
                                 <div class="product_bonus-d">
                                     <input type="checkbox" name="vehicle1" value="Bike">
-                                    <img src="./image/product-small-1.jpg" alt="">
+                                    <img src="{{asset('public/image/product-small-1.jpg')}}" alt="">
                                     <p>Viên uống rau củ DHC Nhật Bản 240 Viên</p>
                                     <p class="price">335.000 đ</p>
                                 </div>
                                 <div class="product_bonus-d">
                                     <input type="checkbox" name="vehicle1" value="Bike">
-                                    <img src="./image/product-small-1.jpg" alt="">
+                                    <img src="{{asset('public/image/product-small-1.jpg')}}" alt="">
                                     <p>Viên uống rau củ DHC Nhật Bản 240 Viên</p>
                                     <p class="price">335.000 đ</p>
                                 </div>
@@ -108,25 +118,25 @@
                                         <span>Thêm tất cả vào giỏ hàng</span>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 freeship">
                         <div class="freeship_d">
-                            <img src="./image/car.png" alt="">
+                            <img src="{{asset('public/image/car.jpg')}}" alt="">
                             <p>Miễn phí vận chuyển cho đơn từ 1.500.000đ</p>
                         </div>
                     </div>
                     <div class="ads-mobile">
-                        <img src="./image/ads-mobile.png" alt="">
+                        <img src="{{asset('public/image/ads-mobile.jpg')}}" alt="">
                     </div>
                     <div class="quality">
                         <div class="quality-control">
-                            <img src="./image/icon/quality-star.png" alt="">
+                            <img src="{{asset('public/image/icon/quality-star.jpg')}}" alt="">
                             <p>100% sản phẩm được kiểm soát chất lượng</p>
                         </div>
                         <div class="commit">
-                            <img src="./image/icon/circle-return.png" alt="">
+                            <img src="{{asset('public/image/icon/circle-return.jpg')}}" alt="">
                             <p>Cam kết 90 ngày đổi trả miễn phí</p>
                         </div>
                     </div>
@@ -150,7 +160,7 @@
                                     <h2>Viên uống Collagen yến tươi – Giữ gìn nét đẹp thanh xuân</h2>
                                     <div class="see-more">
                                         <p>Xem thêm</p>
-                                        <img src="./image/icon/arrow-down.png" alt="">
+                                        <img src="{{asset('public/image/icon/arrow-down.jpg')}}" alt="">
                                     </div>
                                     <div class="text-more">
                                         <h3>Điểm nổi bật của Collagen tươi Nhật Bản</h3>
@@ -206,7 +216,7 @@
                                         <div class="row">
                                             <div class="col-sm-12 col-md-4 col-lg-4">
                                                 <div class="item">
-                                                    <img src="./image/chinhhang.png" alt="">
+                                                    <img src="{{asset('public/image/chinhhang.jpg')}}" alt="">
                                                     <div class="item__info">
                                                         <p class="p1">Chính hãng</p>
                                                         <p class="p2">100%</p>
@@ -215,7 +225,7 @@
                                             </div>
                                             <div class="col-sm-12 col-md-4 col-lg-4">
                                                 <div class="item">
-                                                    <img src="./image/doitra.png" alt="">
+                                                    <img src="{{asset('public/image/doitra.jpg')}}" alt="">
                                                     <div class="item__info">
                                                         <p class="p1">Miễn phí đổi trả</p>
                                                         <p class="p2">LÊN ĐẾN 90 NGÀY</p>
@@ -224,7 +234,7 @@
                                             </div>
                                             <div class="col-sm-12 col-md-4 col-lg-4">
                                                 <div class="item">
-                                                    <img src="./image/giaohanh.png" alt="">
+                                                    <img src="{{asset('public/image/giaohanh.jpg')}}" alt="">
                                                     <div class="item__info">
                                                         <p class="p1">Giao hàng</p>
                                                         <p class="p2">NHANH CHÓNG</p>
@@ -244,7 +254,7 @@
                                     <div class="col-sm-12 col-md-3 col-lg-3">
                                         <div class="product product1">
                                             <div class="product1_img">
-                                                <img src="./image/product-2.jpeg" alt="">
+                                                <img src="{{asset('public/image/product-2.jpeg')}}" alt="">
                                             </div>
                                             <div class="product1_text">
                                                 <p>Viên uống bổ sung Collagen Maihada 180 viên</p>
@@ -255,11 +265,11 @@
                                     <div class="col-sm-12 col-md-12 col-lg-12">
                                         <div class="contact">
                                             <div class="contact_item fb">
-                                                <img src="./image/icon/facebook.png" alt="">
+                                                <img src="{{asset('public/image/icon/facebook.jpg')}}" alt="">
                                                 <a href="https://www.facebook.com/japana.sieuthinhat/"> https://www.facebook.com/japana.sieuthinhat/ </a>
                                             </div>
                                             <div class="contact_item phone">
-                                                <img src="./image/icon/telephone.png" alt="">
+                                                <img src="{{asset('public/image/icon/telephone.jpg')}}" alt="">
                                                 <p>(028) 7108 8889 - 0935 600 800</p>
                                             </div>
                                         </div>
@@ -268,7 +278,7 @@
                                 <div class="evaluate evaluate-navigation">
                                     <div class="col-sm-12 col-md-12 col-lg-12">
                                         <div class="evaluate__title">
-                                            <img src="./image/icon/arrow-prev.png" alt="">
+                                            <img src="{{asset('public/image/icon/arrow-prev.jpg')}}" alt="">
                                             <h3>Khách hàng đánh giá</h3>
                                         </div>
                                     </div>
@@ -277,11 +287,11 @@
                                             <span>5</span>
                                         </div>
                                         <div class="evaluate__star-icon">
-                                            <img src="./image/icon/star.svg" alt="">
-                                            <img src="./image/icon/star.svg" alt="">
-                                            <img src="./image/icon/star.svg" alt="">
-                                            <img src="./image/icon/star.svg" alt="">
-                                            <img src="./image/icon/star.svg" alt="">
+                                            <img src="{{asset('public/image/icon/star.svg')}}" alt="">
+                                            <img src="{{asset('public/image/icon/star.svg')}}" alt="">
+                                            <img src="{{asset('public/image/icon/star.svg')}}" alt="">
+                                            <img src="{{asset('public/image/icon/star.svg')}}" alt="">
+                                            <img src="{{asset('public/image/icon/star.svg')}}" alt="">
                                         </div>
                                         <div class="evaluate__star-text">
                                             <p>1 đánh giá</p>
@@ -290,27 +300,27 @@
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6 col-lg-6 evaluate__number">
                                             <div class="evaluate__number-d">
-                                                <p><span>5</span><img src="./image/icon/star.svg" alt=""></p>
+                                                <p><span>5</span><img src="{{asset('public/image/icon/star.svg')}}" alt=""></p>
                                                 <span id="span-line"></span>
                                                 <p class="number-small">1</p>
                                             </div>
                                             <div class="evaluate__number-d">
-                                                <p><span>4</span><img src="./image/icon/star.svg" alt=""></p>
+                                                <p><span>4</span><img src="{{asset('public/image/icon/star.svg')}}" alt=""></p>
                                                 <span id="span-line" class="line-1"></span>
                                                 <p class="number-small">0</p>
                                             </div>
                                             <div class="evaluate__number-d">
-                                                <p><span>3</span><img src="./image/icon/star.svg" alt=""></p>
+                                                <p><span>3</span><img src="{{asset('public/image/icon/star.svg')}}" alt=""></p>
                                                 <span id="span-line" class="line-1"></span>
                                                 <p class="number-small">0</p>
                                             </div>
                                             <div class="evaluate__number-d">
-                                                <p><span>2</span><img src="./image/icon/star.svg" alt=""></p>
+                                                <p><span>2</span><img src="{{asset('public/image/icon/star.svg')}}" alt=""></p>
                                                 <span id="span-line" class="line-1"></span>
                                                 <p class="number-small">0</p>
                                             </div>
                                             <div class="evaluate__number-d">
-                                                <p><span>1</span><img src="./image/icon/star.svg" alt=""></p>
+                                                <p><span>1</span><img src="{{asset('public/image/icon/star.svg')}}" alt=""></p>
                                                 <span id="span-line" class="line-1"></span>
                                                 <p class="number-small">0</p>
                                             </div>
@@ -318,7 +328,7 @@
                                         <div class="col-sm-12 col-md-6 col-lg-6 evaluate__img">
                                             <div class="evaluate__img-content">
                                                 <p>Tất cả hình ảnh (1)</p>
-                                                <img src="./image/evaluate-img.jpg" alt="">
+                                                <img src="{{asset('public/image/evaluate-img.jpg')}}" alt="">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-12 col-lg0-12 tab_navigation">
@@ -328,11 +338,11 @@
                                                         <p>Lọc xem theo:</p>
                                                     </div>
                                                     <ul>
-                                                        <li class="active"><span>5</span><img src="./image/icon/star.svg" alt=""></li>
-                                                        <li><span>4</span><img src="./image/icon/star.svg" alt=""></li>
-                                                        <li><span>3</span><img src="./image/icon/star.svg" alt=""></li>
-                                                        <li><span>2</span><img src="./image/icon/star.svg" alt=""></li>
-                                                        <li><span>1</span><img src="./image/icon/star.svg" alt=""></li>
+                                                        <li class="active"><span>5</span><img src="{{asset('public/image/icon/star.svg')}}" alt=""></li>
+                                                        <li><span>4</span><img src="{{asset('public/image/icon/star.svg')}}" alt=""></li>
+                                                        <li><span>3</span><img src="{{asset('public/image/icon/star.svg')}}" alt=""></li>
+                                                        <li><span>2</span><img src="{{asset('public/image/icon/star.svg')}}" alt=""></li>
+                                                        <li><span>1</span><img src="{{asset('public/image/icon/star.svg')}}" alt=""></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -346,11 +356,11 @@
                                                         </div>
                                                         <div class="sup item">
                                                             <p>Support</p>
-                                                            <img src="./image/icon/star.svg" alt="">
-                                                            <img src="./image/icon/star.svg" alt="">
-                                                            <img src="./image/icon/star.svg" alt="">
-                                                            <img src="./image/icon/star.svg" alt="">
-                                                            <img src="./image/icon/star.svg" alt="">
+                                                            <img src="{{asset('public/image/icon/star.svg')}}" alt="">
+                                                            <img src="{{asset('public/image/icon/star.svg')}}" alt="">
+                                                            <img src="{{asset('public/image/icon/star.svg')}}" alt="">
+                                                            <img src="{{asset('public/image/icon/star.svg')}}" alt="">
+                                                            <img src="{{asset('public/image/icon/star.svg')}}" alt="">
                                                         </div>
                                                         <div class="date item">
                                                             <p>(08/09/2021)</p>
@@ -363,14 +373,14 @@
                                                         </p>
                                                     </div>
                                                     <div class="image">
-                                                        <img src="./image/evaluate-img.jpg" alt="">
+                                                        <img src="{{asset('public/image/evaluate-img.jpg')}}" alt="">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-12 col-lg-12 tab_comment comment" id="4-star">
                                                 <div class="comment-item tab-item">
                                                     <div class="image ">
-                                                        <img src="./image/sad.png" alt="" id="iconSad">
+                                                        <img src="{{asset('public/image/sad.jpg')}}" alt="" id="iconSad">
                                                     </div>
                                                     <div class="content">
                                                         <p>Không tìm thấy nhận xét phù hợp</p>
@@ -380,7 +390,7 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 tab_comment comment" id="3-star">
                                                 <div class="comment-item tab-item">
                                                     <div class="image ">
-                                                        <img src="./image/sad.png" alt="" id="iconSad">
+                                                        <img src="{{asset('public/image/sad.jpg')}}" alt="" id="iconSad">
                                                     </div>
                                                     <div class="content">
                                                         <p>Không tìm thấy nhận xét phù hợp</p>
@@ -390,7 +400,7 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 tab_comment comment" id="2-star">
                                                 <div class="comment-item tab-item">
                                                     <div class="image ">
-                                                        <img src="./image/sad.png" alt="" id="iconSad">
+                                                        <img src="{{asset('public/image/sad.jpg')}}" alt="" id="iconSad">
                                                     </div>
                                                     <div class="content">
                                                         <p>Không tìm thấy nhận xét phù hợp</p>
@@ -400,7 +410,7 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 tab_comment comment" id="1-star">
                                                 <div class="comment-item tab-item">
                                                     <div class="image ">
-                                                        <img src="./image/sad.png" alt="" id="iconSad">
+                                                        <img src="{{asset('public/image/sad.jpg')}}" alt="" id="iconSad">
                                                     </div>
                                                     <div class="content">
                                                         <p>Không tìm thấy nhận xét phù hợp</p>
@@ -428,7 +438,7 @@
                             </div>
                             <div class="product">
                                 <div class="product_img">
-                                    <img src="./image/product-1.png" alt="">
+                                    <img src="{{asset('public/image/product-1.jpg')}}" alt="">
                                 </div>
                                 <div class="product_text">
                                     <p>Viên uống đẹp da Fine Pure Collagen Q 375 viên</p>
@@ -437,7 +447,7 @@
                             </div>
                             <div class="product">
                                 <div class="product_img">
-                                    <img src="./image/product-2.jpeg" alt="">
+                                    <img src="{{asset('public/image/product-2.jpeg')}}" alt="">
                                 </div>
                                 <div class="product_text">
                                     <p>Viên uống bổ sung Collagen Maihada 180 viên</p>
@@ -446,7 +456,7 @@
                             </div>
                             <div class="product">
                                 <div class="product_img">
-                                    <img src="./image/product-3.jpeg" alt="">
+                                    <img src="{{asset('public/image/product-3.jpeg')}}" alt="">
                                 </div>
                                 <div class="product_text">
                                     <p>Viên uống Collagen DHC 2.05mg 360 viên (60 ngày)</p>
@@ -456,7 +466,7 @@
                             </div>
                             <div class="product">
                                 <div class="product_img">
-                                    <img src="./image/product-4.jpeg" alt="">
+                                    <img src="{{asset('public/image/product-4.jpeg')}}" alt="">
                                 </div>
                                 <div class="product_text">
                                     <p>Viên nhai bổ sung Collagen Orihiro Most Chewable 180 viên</p>
@@ -465,7 +475,7 @@
                             </div>
                             <div class="product">
                                 <div class="product_img">
-                                    <img src="./image/product-5.jpeg" alt="">
+                                    <img src="{{asset('public/image/product-5.jpeg')}}" alt="">
                                 </div>
                                 <div class="product_text">
                                     <p>Viên uống Collagen DHC 2.050mg 540 viên (90 ngày)</p>
@@ -489,7 +499,7 @@
                                 <div class="col-sm-12 col-md-3 col-lg-2">
                                     <div class="product">
                                         <div class="product_img">
-                                            <img src="./image/product-2.jpeg" alt="">
+                                            <img src="{{asset('public/image/product-2.jpeg')}}" alt="">
                                         </div>
                                         <div class="product_text">
                                             <p>Viên uống bổ sung Collagen Maihada 180 viên</p>
@@ -500,7 +510,7 @@
                                 <div class="col-sm-12 col-md-3 col-lg-2">
                                     <div class="product">
                                         <div class="product_img">
-                                            <img src="./image/product-2.jpeg" alt="">
+                                            <img src="{{asset('public/image/product-2.jpeg')}}" alt="">
                                         </div>
                                         <div class="product_text">
                                             <p>Viên uống bổ sung Collagen Maihada 180 viên</p>
@@ -511,7 +521,7 @@
                                 <div class="col-sm-12 col-md-3 col-lg-2">
                                     <div class="product">
                                         <div class="product_img">
-                                            <img src="./image/product-2.jpeg" alt="">
+                                            <img src="{{asset('public/image/product-2.jpeg')}}" alt="">
                                         </div>
                                         <div class="product_text">
                                             <p>Viên uống bổ sung Collagen Maihada 180 viên</p>
@@ -524,7 +534,7 @@
                                 <div class="col-sm-12 col-md-3 col-lg-2">
                                     <div class="product">
                                         <div class="product_img">
-                                            <img src="./image/product-2.jpeg" alt="">
+                                            <img src="{{asset('public/image/product-2.jpeg')}}" alt="">
                                         </div>
                                         <div class="product_text">
                                             <p>Viên uống bổ sung Collagen Maihada 180 viên</p>
@@ -535,7 +545,7 @@
                                 <div class="col-sm-12 col-md-3 col-lg-2">
                                     <div class="product">
                                         <div class="product_img">
-                                            <img src="./image/product-2.jpeg" alt="">
+                                            <img src="{{asset('public/image/product-2.jpeg')}}" alt="">
                                         </div>
                                         <div class="product_text">
                                             <p>Viên uống bổ sung Collagen Maihada 180 viên</p>
@@ -546,7 +556,7 @@
                                 <div class="col-sm-12 col-md-3 col-lg-2">
                                     <div class="product">
                                         <div class="product_img">
-                                            <img src="./image/product-2.jpeg" alt="">
+                                            <img src="{{asset('public/image/product-2.jpeg')}}" alt="">
                                         </div>
                                         <div class="product_text">
                                             <p>Viên uống bổ sung Collagen Maihada 180 viên</p>
@@ -564,7 +574,8 @@
     @endsection
 
 
-@push('javascript')
-    <script src="{{ asset('js/jquery.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
+@push('scripts')
+    <script src="{{ asset('public/js/jquery.js') }}"></script>
+    <script src="{{ asset('public/js/fotorama.js')}}"></script>
+    <script src="{{ asset('public/js/main.js') }}"></script>
 @endpush

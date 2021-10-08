@@ -12,6 +12,8 @@ use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,13 +132,22 @@ Route::get('/khuyen-mai', function () {
     return view('cart.khuyenmai');
 });
 
-Route::get('/gio-hang', function () {
-    return view('cart.giohang');
+Route::prefix('gio-hang')->group(function () {
+    Route::get('/', [CartController::Class, 'index'])->name('cart.index');
+    Route::post('add', [CartController::Class, 'addCart'])->name('cart.add');
+    Route::post('update', [CartController::Class, 'updateCart'])->name('cart.update');
+    Route::post('delete', [CartController::Class, 'deleteCart'])->name('cart.delete');
 });
 
-Route::get('/thanh-toan', function () {
-    return view('cart.thanhtoan');
+Route::prefix('thanh-toan')->group(function () {
+    Route::get('/', [CheckoutController::Class, 'index'])->name('checkout.index');
+    Route::post('post', [CheckoutController::Class, 'postOrder'])->name('checkout.post');
+    Route::get('thanh-cong', [CheckoutController::Class, 'orderSuccess'])->name('checkout.orderSuccess');
+
 });
+
+
+
 
 //Route - Theo dõi đơn hàng
 Route::get('/theo-doi-don-hang', function () {
