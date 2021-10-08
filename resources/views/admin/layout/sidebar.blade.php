@@ -56,6 +56,12 @@
             </span>
          </li>
          <li class="dropdown">
+            <a href="{{URL::to('/admin/log-viewer/logs')}}" class="dropbtn">
+             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <span class="links_name w-100 align-items-center d-flex">Follow Action Admin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            </a>
+         </li>
+         <li class="dropdown">
             <a href="setting.html" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name">Setting</span>

@@ -13,6 +13,14 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('/test', [AdminHomeController::class,'test']);
     });
     Route::get('/', [AdminHomeController::class,'dashboard']);
+    //quản lý admins
+
+    Route::resource('roles', AdminRolesController::class);
+
+    Route::resource('permissions', AdminPermissionsController::class);
+    Route::resource('manager-admin', AdminManagerAdminController::class);
+
+    //quản lý admins
 });
 
 
@@ -47,11 +55,4 @@ Route::get('/ton-kho', function () {
     return view('admin.ton-kho');
 });
 
-//quản lý admins
 
-Route::resource('roles', AdminRolesController::class);
-
-Route::resource('permissions', AdminPermissionsController::class);
-Route::resource('manager-admin', AdminManagerAdminController::class);
-
-//quản lý admins
