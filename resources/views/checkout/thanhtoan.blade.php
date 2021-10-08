@@ -27,11 +27,21 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="">Tỉnh/ Thành phố:</label>
-                                        <input type="text" class="form-control" placeholder="Chọn tỉnh, thành phố">
+                                        <select name="sel_province" class="form-control select2"
+                                            data-placeholder="---Chọn tỉnh thành---" required>
+                                            <option value="">---Chọn tỉnh thành---</option>
+                                            @foreach ($province as $value)
+                                                <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Phường/ Xã:</label>
-                                        <input type="text" class="form-control" placeholder="Chọn phường, xã">
+                                        <select class="form-control select2" name="sel_ward"
+                                            data-placeholder="---Chọn phường xã---" required>
+                                            <option value="">---Chọn phường xã---</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Email</label>
@@ -45,7 +55,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="">Quận/ Huyện</label>
-                                        <input type="text" class="form-control" placeholder="Chọn quận, huyện">
+                                        <select class="form-control select2" name="sel_district"
+                                            data-placeholder="---Chọn quận huyên---" required>
+                                            <option value="">---Chọn quận huyên---</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Địa chỉ</label>
@@ -65,15 +78,15 @@
                             <hr>
                             <div class="phuongthuc-thanhtoan-card-body">
                                 <div class="thanhtoankhigiaohang">
-                                    <input type="radio" name="optradio"> <span>COD</span>
+                                    <input type="radio" name="payment_method" checked="checked" value="1"> <span>COD</span>
                                     <i class="fa fa-money"></i>
                                 </div>
                                 <div class="thanhtoantructuyen">
-                                    <input type="radio" name="optradio"> <span>Chuyển khoản qua ngân hàng</span>
+                                    <input type="radio" name="payment_method" value="2"> <span>Chuyển khoản qua ngân hàng</span>
                                     <img src="{{ asset('assets/image/vnpay.png') }}">
                                 </div>
                                 <div class="chuyenkhoan">
-                                    <input type="radio" name="optradio"> <span>Chuyển khoản qua ngân hàng</span>
+                                    <input type="radio" name="payment_method" value="3"> <span>Chuyển khoản qua ngân hàng</span>
                                     <div class="tk-nganhang">
                                         <p>Doanh nghiệp: Công ty cổ phần</p>
                                         <p>TK ngân hàng: Công ty cổ phần</p>
@@ -144,6 +157,8 @@
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('public/js/shipping.js') }}"></script>
+
     <script>
         window.addEventListener("load", function() {
             const slider = document.querySelector(".slider");

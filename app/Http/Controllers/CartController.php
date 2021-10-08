@@ -21,7 +21,7 @@ class CartController extends Controller
         $product_id = $_POST['product_id'];
         $qty = $_POST['qty'];
         $product = Product::whereId($product_id)->firstOrFail();
-        Cart::instance('shopping')->add(['id'=> $product->id,'name'=> $product->name, 'price'=> $product->productPrice()->value('market_price'), 'qty'=>$qty])->associate('App\Models\Product');
+        Cart::instance('shopping')->add(['id'=> $product->id,'name'=> $product->name, 'price'=> $product->productPrice()->value('shock_price'), 'qty'=>$qty])->associate('App\Models\Product');
         return response()->json([
             Cart::instance('shopping')->subtotal(),
             Cart::instance('shopping')->count()

@@ -129,7 +129,7 @@ class ProductCategoryController extends Controller
         // VALUE = SỐ LƯỢNG SP THUỘC BRAND
         $countBrand = array_count_values($brandIds);                                    
 
-        return view('danhmucsanpham', compact('proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory'));
+        return view('product.category', compact('proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory'));
     }
 
 }

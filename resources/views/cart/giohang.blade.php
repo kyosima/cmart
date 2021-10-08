@@ -24,14 +24,14 @@
                             <div class="product-main-item">
                                 <div class="product-main-item-box">
                                     <div class="product-main-item-box-img ">
-                                        <a href="{{ url('san-pham/' . $row->slug) }}">
+                                        <a href="{{ route('san-pham.show', $row->model->slug)}}">
                                             <img src="{{ asset('assets/image/product-cart2.jpeg') }}" alt=""
                                                 class="product-main-item-box-img-item">
                                         </a>
                                     </div>
                                     <div class="product-main-item-box-detail">
                                         <div class="product-main-item-box-detail-title">
-                                            <a href="{{ url('san-pham/' . $row->slug) }}">{{ $row->name }}</a>
+                                            <a href="{{ route('san-pham.show', $row->model->slug)}}">{{ $row->name }}</a>
                                         </div>
                                         <div class="product-main-item-box-detail-btn-delete"><a class="remove"
                                                 onclick="removeRowCart(this)" data-url="{{ route('cart.delete') }}"

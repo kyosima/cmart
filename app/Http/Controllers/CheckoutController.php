@@ -31,7 +31,7 @@ class CheckoutController extends Controller
                 'province' => $province
             ]);
         }else{
-            return redirect()->route('danh-muc-san-pham.index');
+            return redirect()->route('cart.index');
         }
     }
 

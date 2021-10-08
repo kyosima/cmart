@@ -7,11 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="url-home" content="{{ URL::to('/') }}" />
 
     <link href="{{ asset('public/css/boostrap/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/header.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/footer.css') }}" rel="stylesheet" type="text/css">
-    <script src="{{ asset('public/js/jquery.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -14,6 +14,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\shippingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -191,3 +192,8 @@ Route::get('/quen-mat-khau', function () {
 Route::resources([
     'san-pham' => ProductController::class
 ]);
+
+
+Route::get('lay-quan-huyen-theo-tinh-thanh', [ShippingController::class, 'districtOfProvince']);
+
+Route::get('lay-phuong-xa-theo-quan-huyen', [ShippingController::class, 'wardOfDistrict']);

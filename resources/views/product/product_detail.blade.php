@@ -5,6 +5,10 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('public/css/style.css')}}">
     <link rel="stylesheet" href="{{ asset('public/css/fotorama.css')}}">
+
+    {!! SEOMeta::generate() !!}
+    {!! OpenGraph::generate() !!}
+
 @endpush
 
     @section('content')
@@ -13,9 +17,11 @@
             <div class="container">
                 <ul>
                     <li><a href="#">Trang chủ</a></li>
-                    <li><a href="#">Collagen</a></li>
-                    <li><a href="#">Collagen Dạng Viên Uống</a></li>
-                    <li><a href="#">Viên uống Collagen tươi chiết xuất tổ yến Nhật Bản 30 viên</a></li>
+                    @foreach ( $categoryIds as $category_id)
+                    <?php $category = App\Models\ProductCategory::find($category_id); ?>
+                        <li><a href="{{route('proCat.index',$category->slug)}}">{{$category->name}} </a></li>
+                    @endforeach
+                    <li class="ml-1"> {{$product->name}}</li>
                 </ul>
             </div>
         </div>
@@ -32,21 +38,11 @@
                 <div class="row row-detail">
                     <div class="col-sm-12 col-md-12 col-lg-6">
                         <div class="fotorama" data-width="700" data-ratio="3/2" data-nav="thumbs" data-thumbheight="48">
-                            <a href="{{asset('public/image/collagen-1.jpg')}}">
-                                <img src="{{asset('public/image/collagen-1.jpg')}}" width="144" height="96">
-                            </a>
-                            <a href="{{asset('public/image/collagen-2.jpg')}}">
-                                <img src="{{asset('public/image/collagen-2.jpg')}}" width="144" height="96">
-                            </a>
-                            <a href="{{asset('public/image/collagen-3.jpg')}}">
-                                <img src="{{asset('public/image/collagen-3.jpg')}}" width="144" height="96">
-                            </a>
-                            <a href="{{asset('public/image/collagen-4.jpg')}}">
-                                <img src="{{asset('public/image/collagen-4.jpg')}}" width="144" height="96">
-                            </a>
-                            <a href="{{asset('public/image/collagen-5.jpg')}}">
-                                <img src="{{asset('public/image/collagen-5.jpg')}}" width="144" height="96">
-                            </a>
+                            <img src="{{asset($product->feature_img)}}" alt="">
+                            @foreach ( explode(',',$product->gallery) as $item)
+                            <img src="{{asset($item)}}" alt="">
+
+                            @endforeach
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6">
@@ -68,11 +64,15 @@
                                 <p><span>Sản xuất tại:</span>Nhật Bản</p>
                             </div>
                             <div class="all-price">
-                                <p class="new-price">349.000 đ</p>
-                                <p class="old-price">399.000 đ</p>
+                                @if ($product->shock_price != null || $product->shock_price != 0)
+                                    <p class="new-price">{{formatPrice($product->shock_price)}}</p>
+                                    <p class="old-price"></p>
+                            @else
+                                    <p class="new-price">{{formatPrice($product->regular_price)}}</p>
+                            @endif
                             </div>
                             <div class="promo-intro">
-                                <p class="title-promo">Tiết kiệm 50,000 Ngay Hôm Nay !</p>
+                                <p class="title-promo">Tiết kiệm {{formatPrice($product->regular_price - $product->shock_price)}} Ngay Hôm Nay !</p>
                             </div>
                             <div class="star-mobile">
                                 <div class="star">
@@ -89,7 +89,7 @@
                             </div>
                             <div class="quantity">
                                 <form id="form-add-to-cart" method="POST" action="{{route('cart.add')}}">
-                                    <input type="hidden" class="card-quality-input" name="product_id" value="{{$product->id}}">
+                                    <input type="hidden" class="card-quality-input" name="product_id" value="{{$product->id_ofproduct}}">
                                     <input type="number" class="card-quality-input" name="qty" value="1">
                                     <button class="quantity_btn add-cart" type="submit">
                                         <p>Thêm vào giỏ</p>
@@ -155,46 +155,8 @@
                                 </ul>
                             </div>
                             <div class="text">
-                                <div class="text_d text-pc tab_mobile-detail">
-                                    <p>Viên uống Collagen tươi Nhật Bản có sự kết hợp giữa chiết xuất yến sào, sụn vi cá mập giúp bồi bổ cơ thể và nuôi dưỡng làn da trẻ đẹp, mịn màng nhanh chóng.</p>
-                                    <h2>Viên uống Collagen yến tươi – Giữ gìn nét đẹp thanh xuân</h2>
-                                    <div class="see-more">
-                                        <p>Xem thêm</p>
-                                        <img src="{{asset('public/image/icon/arrow-down.jpg')}}" alt="">
-                                    </div>
-                                    <div class="text-more">
-                                        <h3>Điểm nổi bật của Collagen tươi Nhật Bản</h3>
-                                    <ul>
-                                        <li><a href="">Collagen tươi Nhật Bản ứng dụng công nghệ sản xuất đạt tiêu chuẩn ATTP cao nhất thế giới, từ đó các phân tử Collagen có kích thước siêu nhỏ và thẩm thấu vào cơ thể nhanh hơn.</a></li>
-                                        <li><a href="">Sản phẩm chứa Collagen tươi chiết xuất sụn vi cá mập có lượng Collagen hòa tan cao gấp 43 lần so với Collagen thông thường, giúp mang lại hiệu quả cho làn da nhanh hơn.</a></li>
-                                        <li><a href="">Chứa Acid sialic (chiết xuất yến sào) có độ đậm đặc gấp 200 lần so với sữa ong chúa, làm tăng khả năng làm đẹp và bồi bổ cho da.</a></li>
-                                    </ul>
-                                    <h3>Công dụng của Collagen yến tươi Nhật</h3>
-                                    <ul>
-                                        <li><a href="">Nuôi dưỡng làn da tươi trẻ, mịn màng và tràn đầy sức sống nhờ bổ sung đủ hàm lượng Collagen bị thiếu hụt.</a></li>
-                                        <li><a href="">Cải thiện độ đàn hồi cho da, làm mờ các nếp nhăn cho da căng mịn trẻ trung.</a></li>
-                                        <li><a href="">Bổ sung và gìn giữ độ ẩm tự nhiên cho da căng mướt, làm chậm sự xuất hiện của các dấu hiệu lão hóa da như nhăn, chùng nhão, chảy xệ…</a></li>
-                                    </ul>
-                                    <h3>Thành phần viên uống Collagen yến tươi</h3>
-                                    <ul>
-                                        <li><a href="">Thành phần bao gồm: Dầu hoa hướng dương, Gelatin, Collagen Peptide mềm (bao gồm Gelatin), dầu ô liu, chiết xuất sụn cá mập, Dextrin, tổ yến (Dextrin, tổ yến đã qua xử lý bằng Enzyme), nhau thai heo (kể cả thịt heo)/Glycerin, sáp ong, Este Axit béo Glycerin, VE, Axit Hyaluronic…</a></li>
-                                    </ul>
-                                    <h3>Hướng dẫn sử dụng viên uống Collagen yến tươi</h3>
-                                    <ul>
-                                        <li><a href="">Uống 1 đến 2 viên mỗi ngày với nước hoặc nước ấm.</a></li>
-                                        <li><a href="">Nên uống liên tục trong 3 tháng để có kết quả tốt nhất.</a></li></ul>
-                                    <h3>Lưu ý</h3>
-                                    <ul>
-                                        <li><a href="">Tùy theo cơ địa của người dùng mà có hiệu quả khác nhau.</a></li>
-                                        <li><a href="">Sản phẩm này không phải là thuốc, không có tác dụng thay thế thuốc chữa bệnh.</a></li>
-                                    </ul>
-                                    <h3>Cách bảo quản</h3>
-                                    <ul>
-                                        <li><a href="">Để xa tầm tay trẻ em.</a></li>
-                                        <li><a href="">Bảo quản nơi khô ráo, thoáng mát.</a></li>
-                                        <li><a href="">Tránh ánh nắng chiếu trực tiếp, nơi có nhiệt độ cao.</a></li>
-                                    </ul>
-                                    </div>
+                                <div class="text_d p-4">
+                                    {!! $product->long_desc !!}
                                 </div>
                                 <div class="text-mb tab_mobile-detail">
                                     <div class="code info-detail">
@@ -244,7 +206,7 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12">
                                                 <div class="note_list">
                                                     <ul><li><a href="#">* Bạn có thể mua hàng ngay tại website bằng cách nhấn vào nút Mua Ngay, hoặc liên hệ với chúng tôi qua các thông tin bên dưới.</a></li>
-                                                        <li><a href="#">* JAPANA.VN cam kết bán hàng chính hãng từ Nhật Bản. Những thông tin bên trên được nhà sản xuất đưa ra, các sản phẩm làm đẹp và sức khỏe tùy vào cơ địa của mỗi khách hàng sẽ có hiệu quả tương thích.</a></li>
+                                                        <li><a href="#">*cam kết bán hàng chính hãng từ Nhật Bản. Những thông tin bên trên được nhà sản xuất đưa ra, các sản phẩm làm đẹp và sức khỏe tùy vào cơ địa của mỗi khách hàng sẽ có hiệu quả tương thích.</a></li>
                                                         <li><a href="#">* Mẫu mã của sản phẩm có thể được thay đổi khi bạn mua hàng.</a></li>
                                                     </ul>
                                                 </div>
@@ -254,11 +216,11 @@
                                     <div class="col-sm-12 col-md-3 col-lg-3">
                                         <div class="product product1">
                                             <div class="product1_img">
-                                                <img src="{{asset('public/image/product-2.jpeg')}}" alt="">
+                                                <img src="{{asset($product->feature_img)}}" alt="">
                                             </div>
                                             <div class="product1_text">
-                                                <p>Viên uống bổ sung Collagen Maihada 180 viên</p>
-                                                <h5>450.000 đ</h5>
+                                                <p>{{$product->name}}</p>
+                                                <h5>{{formatPrice($product->regular_price)}}</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -266,11 +228,9 @@
                                         <div class="contact">
                                             <div class="contact_item fb">
                                                 <img src="{{asset('public/image/icon/facebook.jpg')}}" alt="">
-                                                <a href="https://www.facebook.com/japana.sieuthinhat/"> https://www.facebook.com/japana.sieuthinhat/ </a>
                                             </div>
                                             <div class="contact_item phone">
                                                 <img src="{{asset('public/image/icon/telephone.jpg')}}" alt="">
-                                                <p>(028) 7108 8889 - 0935 600 800</p>
                                             </div>
                                         </div>
                                     </div>

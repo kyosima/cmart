@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\Brand;
 
 class ProductController extends Controller
 {
@@ -16,7 +17,14 @@ class ProductController extends Controller
     public function index()
     {
         //
-        return redirect('/danh-muc-san-pham');
+        $products = Product::latest()->paginate(12);
+        $subcategory = ProductCategory::latest()->get();
+        $brandIds = $products->pluck('brand')->toArray();
+        $brands = array_unique($brandIds);
+        $brands = Brand::whereIn('id', $brands)->get();
+        $countBrand = array_count_values($brandIds);                                    
+
+        return view('product.category', compact('products', 'subcategory', 'brands', 'countBrand'));
     
     }
 
@@ -51,7 +59,7 @@ class ProductController extends Controller
     {
         {
             //
-            $product = Product::whereSlug($slug)->firstorfail();
+            $product = Product::whereSlug($slug)->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')->firstorfail();
             $categoryIds = ProductCategory::where('id', $parentId = ProductCategory::where('id', $product->category_id)
             ->pluck('category_parent')->toArray())
             ->pluck('category_parent')
