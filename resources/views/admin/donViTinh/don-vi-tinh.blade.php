@@ -8,8 +8,10 @@
 @endpush
 
 @section('content')
-     <!-- Modal -->
-     <div class="modal fade" id="calculation_unit_create" tabindex="-1" aria-hidden="true">
+
+@if(auth()->guard('admin')->user()->can('Thêm đơn vị tính'))
+    <!-- Modal -->
+    <div class="modal fade" id="calculation_unit_create" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -55,8 +57,12 @@
             </div>
         </div>
     </div>
-
     <!-- END MODAL -->
+@else
+    <div class="modal fade" id="calculation_unit_create" tabindex="-1" aria-hidden="true"></div>
+@endif
+
+
     <div class="m-3">
         <div class="wrapper bg-white p-4">
             <div class="portlet-title d-flex justify-content-between align-items-center">
@@ -67,38 +73,18 @@
                             DANH SÁCH CÁC ĐƠN VỊ TÍNH </span>
                         <span class="caption-helper"></span>
                     </div>
+                    @if(auth()->guard('admin')->user()->can('Thêm đơn vị tính'))
                     <div class="ps-5">
                         <a href="#calculation_unit_create" data-toggle="modal" class="btn btn-add"><i
                                 class="fa fa-plus"></i>
                             Thêm mới </a>
                     </div>
+                    @endif
                 </div>
 
             </div>
             <hr>
             <div class="portlet-body">
-                {{-- <div class="row">
-                    <div class="col-lg-10">
-                        <div class="col-md-12 flex-row gap-2">
-                            <select class="form-select fs-14" aria-label="Default select example">
-                                <option selected>10</option>
-                                <option value="1">25</option>
-                                <option value="2">50</option>
-                                <option value="3">100</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="col-md-12">
-                            <div class="input-group" style="width: 100%;">
-                                <input type="text" class="form-control" placeholder="Tìm kiếm"
-                                    aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"
-                                        aria-hidden="true"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
                 <div class="pt-3" style="overflow-x: auto;">
                     <table id="table-calculation-unit" class="table table-hover table-main">
                         <thead class="thead1" style="vertical-align: middle;">
@@ -113,12 +99,10 @@
                                 <th class="title-text title3">
                                     Ghi chú</th>
                                 <th class="title-text title4">
-                                    Trạng thái</th>
+                                    Thao tác</th>
                             </tr>
                         </thead>
-                        <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
-                            {{-- @include('admin.donViTinh.indexTable') --}}
-                        </tbody>
+                        <tbody style="color: #748092; font-size: 14px; vertical-align: middle;"></tbody>
                     </table>
                 </div>
 
@@ -135,6 +119,7 @@
 <script>
     $(document).ready(function() {
 
+    @if(auth()->guard('admin')->user()->can('Thêm đơn vị tính'))
         // CREATE NEW CALCULATION UNIT
         $("#formCreateUnit").submit(function (e) {
             e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -191,7 +176,9 @@
                 }
             });
         });
+    @endif
 
+    @if(auth()->guard('admin')->user()->can('Chỉnh sửa đơn vị tính'))
         // UPDATE STATUS
         $(document).on('click', '.changeStatus', function () {
             var id = $(this).data('unitid')
@@ -213,6 +200,9 @@
                 }
             });
         })
+    @endif
+
+    @if(auth()->guard('admin')->user()->can('Xóa đơn vị tính'))
         // DELETE
         $(document).on('click', '.item-delete', function () {
             var id = $(this).data('unitid')
@@ -234,6 +224,7 @@
                 });
             }
         })
+    @endif
 
         var table = $('#table-calculation-unit').DataTable({
             ordering: false,
@@ -256,6 +247,7 @@
             columns: [{
                     data: 'id'
                 },
+                @if(auth()->guard('admin')->user()->can('Chỉnh sửa đơn vị tính'))
                 {
                     data: 'code',
                     render: function(data, type, row) {
@@ -272,15 +264,84 @@
                         data-unitid="${row.id}" class="modal-edit-unit">${row.name}</a>`
                     }
                 },
+                @else
+                {
+                    data: 'code',
+                    render: function(data, type, row) {
+                        return `${row.code}`
+                    }
+                },
+                {
+                    data: 'name',
+                    render: function(data, type, row) {
+                        return `${row.name}`
+                    }
+                },
+                @endif
+                
                 {
                     data: 'note'
                 },
+
+                @if(auth()->guard('admin')->user()->can('Chỉnh sửa đơn vị tính') && auth()->guard('admin')->user()->cannot('Xóa đơn vị tính'))
                 {
                     data: 'status',
                     render: function(data, type, row){
                         var id = row.id 
                         if(data == 1) {
-                            return `<span style=" max-width: 82px;min-width: 82px;" type="text"
+                            return `<span type="text"
+                                    class="form-control form-control-sm font-size-s text-white active text-center d-inline">Hoạt động</span>
+                                <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
+                                        aria-hidden="true"></i></button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                <li><button class="dropdown-item item-deactive changeStatus" data-unitid="${row.id}" data-status="0">Ngừng</button></li>
+                            </ul>`
+                        } else {
+                            return `<span type="text"
+                                class="form-control form-control-sm font-size-s text-white stop text-center d-inline">Ngừng</span>
+                            <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
+                                    aria-hidden="true"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><button class="dropdown-item item-active changeStatus" data-unitid="${row.id}" data-status="1">Hoạt động</button></li>
+                            </ul>`
+                        }
+                    }
+                },
+                @elseif(auth()->guard('admin')->user()->can('Xóa đơn vị tính') && auth()->guard('admin')->user()->cannot('Chỉnh sửa đơn vị tính'))
+                {
+                    data: 'status',
+                    render: function(data, type, row){
+                        var id = row.id 
+                        if(data == 1) {
+                            return `<span type="text"
+                                    class="form-control form-control-sm font-size-s text-white active text-center d-inline">Hoạt động</span>
+                                <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
+                                        aria-hidden="true"></i></button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                <li><button class="dropdown-item item-delete" data-unitid="${row.id} onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button></li>
+                            </ul>`
+                        } else {
+                            return `<span type="text"
+                                class="form-control form-control-sm font-size-s text-white stop text-center d-inline">Ngừng</span>
+                            <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
+                                    aria-hidden="true"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><button class="dropdown-item item-delete" data-unitid="${row.id} onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button></li>
+                            </ul>`
+                        }
+                    }
+                },
+                @elseif(auth()->guard('admin')->user()->can('Xóa đơn vị tính') && auth()->guard('admin')->user()->can('Chỉnh sửa đơn vị tính'))
+                {
+                    data: 'status',
+                    render: function(data, type, row){
+                        var id = row.id 
+                        if(data == 1) {
+                            return `<span type="text"
                                     class="form-control form-control-sm font-size-s text-white active text-center d-inline">Hoạt động</span>
                                 <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
@@ -290,7 +351,7 @@
                                 <li><button class="dropdown-item item-delete" data-unitid="${row.id} onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button></li>
                             </ul>`
                         } else {
-                            return `<span style=" max-width: 82px;min-width: 82px;" type="text"
+                            return `<span type="text"
                                 class="form-control form-control-sm font-size-s text-white stop text-center d-inline">Ngừng</span>
                             <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
@@ -302,6 +363,14 @@
                         }
                     }
                 },
+                @else 
+                {
+                    data: 'status',
+                    render: function(data, type, row) {
+                        return ``;
+                    }
+                },
+                @endif
             ]
         });
     });

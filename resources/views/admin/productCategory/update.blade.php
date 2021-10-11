@@ -53,13 +53,6 @@
                                     value="{{ old('proCatSlug', $proCat->slug) }}">
                             </div>
                         </div>
-                        <div class="form-group d-flex mb-2">
-                            <label class="col-md-3 control-label">Miêu tả</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" name="proCatDescription"
-                                    rows="3">{{ old('proCatDescription', $proCat->description) }}</textarea>
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal"

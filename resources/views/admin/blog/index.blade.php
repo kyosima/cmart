@@ -19,11 +19,13 @@
                         DANH SÁCH CÁC BÀI VIẾT </span>
                     <span class="caption-helper"></span>
                 </div>
+                @if(auth()->guard('admin')->user()->can('Thêm bài viết'))
                 <div class="ps-5">
                     <a href="{{route('baiviet.create')}}" class="btn btn-add"><i
                             class="fa fa-plus"></i>
                         Thêm mới </a>
                 </div>
+                @endif
             </div>
 
         </div>
@@ -53,9 +55,13 @@
                                 <td>{{$item->id}}</td>
                                 <td><img src="{{$item->feature_img}}" alt=""></td>
                                 <td>
+                                    @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
                                     <a class="text-decoration-none" href="{{route('baiviet.edit', $item->id)}}">
                                         {{$item->name}}
                                     </a>
+                                    @else 
+                                    {{$item->name}}
+                                    @endif
                                 </td>
                                 <td>{{$item->blogCategory->name}}</td>
                                 @if ($item->status == 1)
@@ -67,6 +73,7 @@
                                                 aria-hidden="true"></i></button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li>
+                                                @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
                                                 <form
                                                     action="{{ route('baiviet.updateStatus', $item->id) }}"
                                                     method="post">
@@ -76,8 +83,10 @@
                                                     <button type="submit"
                                                         class="dropdown-item">Ngừng</button>
                                                 </form>
+                                                @endif
                                             </li>
                                             <li>
+                                                @if(auth()->guard('admin')->user()->can('Xóa bài viết'))
                                                 <form
                                                     action="{{ route('baiviet.delete', $item->id) }}"
                                                     method="post">
@@ -86,8 +95,10 @@
                                                     <button type="submit" class="dropdown-item"
                                                         onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
                                                 </form>
+                                                @endif
                                             </li>
                                         </ul>
+                                        
                                     </td>
                                 @else
                                     <td>
@@ -98,6 +109,7 @@
                                                 aria-hidden="true"></i></button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li>
+                                                @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
                                                 <form
                                                     action="{{ route('baiviet.updateStatus', $item->id) }}"
                                                     method="post">
@@ -107,8 +119,10 @@
                                                     <button type="submit"
                                                         class="dropdown-item">Hoạt động</button>
                                                 </form>
+                                                @endif
                                             </li>
                                             <li>
+                                                @if(auth()->guard('admin')->user()->can('Xóa bài viết'))
                                                 <form
                                                     action="{{ route('baiviet.delete', $item->id) }}"
                                                     method="post">
@@ -117,6 +131,7 @@
                                                     <button type="submit" class="dropdown-item"
                                                         onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
                                                 </form>
+                                                @endif
                                             </li>
                                         </ul>
                                     </td>

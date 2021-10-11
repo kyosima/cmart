@@ -10,6 +10,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductPrice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 
@@ -17,8 +18,12 @@ class AdminProductController extends Controller
 {
     public function index()
     {
+        // dump(auth()->guard('admin')->user()->name);
+        // dump(auth()->guard('admin')->user()->getRoleNames());
+        // dd(auth()->guard('admin')->user()->getAllPermissions());
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
+        Log::info($message);
         $products = Product::all();
-
         return view('admin.product.san-pham', compact('products'));
     }
 
@@ -29,6 +34,10 @@ class AdminProductController extends Controller
                                 ->get();
         $calculationUnits = CalculationUnit::all();
         $brands = Brand::all();
+
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang tạo mới sản phẩm';
+        Log::info($message);
+
         return view('admin.product.tao-san-pham', compact('nganhHang', 'calculationUnits', 'brands'));
     }
 
@@ -73,6 +82,9 @@ class AdminProductController extends Controller
 
                 $product->productPrice()->save($productPrice);
 
+                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới sản phẩm ' . $product->name;
+                Log::info($message);
+
                 return redirect()->route('san-pham.edit', $product->id)->with('success', 'Cập nhật sản phẩm thành công');
             } catch (\Throwable $th) {
                 throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
@@ -89,6 +101,10 @@ class AdminProductController extends Controller
                                 ->get();
         $calculationUnits = CalculationUnit::all();
         $brands = Brand::all();
+
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' truy cập trang cập nhật sản phẩm';
+        Log::info($message);
+
         return view('admin.product.cap-nhat-san-pham', compact('product', 'nganhHang', 'calculationUnits', 'brands'));
     }
 
@@ -132,6 +148,9 @@ class AdminProductController extends Controller
                     'cpoint' => $request->cpoint,
                 ]);
 
+                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật sản phẩm ' . $request->product_name;
+                Log::info($message);
+
                 return redirect()->route('san-pham.edit', $id)->with('success', 'Cập nhật sản phẩm thành công');
             } catch (\Throwable $th) {
                 throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
@@ -142,7 +161,12 @@ class AdminProductController extends Controller
 
     public function destroy($id)
     {
+        $product = Product::findOrFail($id);
         Product::destroy($id);
+
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name;
+        Log::info($message);
+
         return redirect()->route('san-pham.index');
     }
 }

@@ -8,6 +8,7 @@
 @endpush
 
 @section('content')
+@if(auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
     <!-- Modal -->
     <div class="modal fade" id="product_category_create" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
@@ -75,6 +76,9 @@
         </div>
     </div>
     <!-- END MODAL -->
+@else 
+    <div class="modal fade" id="product_category_create" tabindex="-1" aria-hidden="true"></div>
+@endif
 
     <div class="m-3">
         <div class="wrapper bg-white p-4">
@@ -86,11 +90,13 @@
                             DANH MỤC SẢN PHẨM </span>
                         <span class="caption-helper"></span>
                     </div>
+                    @if(auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
                     <div class="ps-5">
                         <a href="#product_category_create" data-toggle="modal" class="btn btn-add"><i
                                 class="fa fa-plus"></i>
                             Thêm mới </a>
                     </div>
+                    @endif
                 </div>
 
             </div>
@@ -115,7 +121,7 @@
                             @foreach ($categories as $category)
                                 <tr>
                                     <td>
-                                        @if ($category->slug != 'uncategorized')
+                                        @if ($category->slug != 'uncategorized' && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
                                             <a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
                                                 href="{{route('nganh-nhom-hang.edit', $category->id)}}">{{ $category->name }}</a>
                                         @else 
@@ -135,6 +141,7 @@
                                                             class="fa fa-angle-down" aria-hidden="true"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                         <li>
+                                                            @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
                                                             <form
                                                                 action="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}"
                                                                 method="post">
@@ -143,8 +150,10 @@
                                                                 <input type="hidden" name="unitStatus" value="0">
                                                                 <button type="submit" class="dropdown-item">Ngừng</button>
                                                             </form>
+                                                            @endif
                                                         </li>
                                                         <li>
+                                                            @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
                                                             <form
                                                                 action="{{ route('nganh-nhom-hang.delete', $category->id) }}"
                                                                 method="post">
@@ -153,6 +162,7 @@
                                                                 <button type="submit" class="dropdown-item"
                                                                     onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
                                                             </form>
+                                                            @endif
                                                         </li>
                                                     </ul>
                                                 @else
@@ -164,6 +174,7 @@
                                                             class="fa fa-angle-down" aria-hidden="true"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                         <li>
+                                                            @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
                                                             <form
                                                                 action="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}"
                                                                 method="post">
@@ -173,8 +184,10 @@
                                                                 <button type="submit" class="dropdown-item">Hoạt
                                                                     động</button>
                                                             </form>
+                                                            @endif
                                                         </li>
                                                         <li>
+                                                            @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
                                                             <form
                                                                 action="{{ route('nganh-nhom-hang.delete', $category->id) }}"
                                                                 method="post">
@@ -183,6 +196,7 @@
                                                                 <button type="submit" class="dropdown-item"
                                                                     onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
                                                             </form>
+                                                            @endif
                                                         </li>
                                                     </ul>
                                                 @endif
@@ -190,7 +204,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($category->slug != 'uncategorized')
+                                        @if ($category->slug != 'uncategorized' && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
                                             <a style="text-decoration: none; cursor: pointer;" class="btn btn-warning modal-edit-proCat"
                                             data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
                                             data-unitid="{{ $category->id }}"><i class="fa fa-pencil"></i></a>
@@ -272,6 +286,8 @@
         });
     </script>
 
+@if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
     <script type="text/javascript" src="{{ asset('/js/admin/adminProductCategory.js') }}"></script>
+@endif
 
 @endpush
