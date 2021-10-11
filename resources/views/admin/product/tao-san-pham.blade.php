@@ -350,7 +350,8 @@
                             var files = evt.data.files;
                             var chosenFiles = $(`#${elementId}`).val();
                             files.forEach( function(file, idx, array) {
-                                chosenFiles += file.getUrl() + ', ';
+                                chosenFiles += new URL(file.getUrl()).pathname + ', ';
+
                                 $('.fileinput-gallery .row').append(`<div class="col-md-3">
                                     <span style="cursor: pointer;" data-id='' data-url="${file.getUrl()}" class="delete_gallery">
                                         <i class="fas fa-times"></i>
@@ -363,7 +364,7 @@
                         } else {
                             var file = evt.data.files.first();
                             var output = document.getElementById(elementId);
-                            output.value = file.getUrl();
+                            output.value = new URL(file.getUrl()).pathname;
                             $('.fileinput-new.thumbnail img').attr('src', file.getUrl())
                         }
                     });

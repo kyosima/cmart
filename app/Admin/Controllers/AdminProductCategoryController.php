@@ -34,10 +34,10 @@ class AdminProductCategoryController extends Controller
             $slug = Str::slug($request->proCatSlug, '-');
         }
 
-        if(ProductCategory::whereSlug($slug)->exists()){
-            $int = random_int(1, 99999999);
-            $slug .= '-'.$int;
-        }
+        // if(ProductCategory::whereSlug($slug)->exists()){
+        //     $int = random_int(1, 99999999);
+        //     $slug .= '-'.$int;
+        // }
 
         if ($request->proCatParent == 0) {
             ProductCategory::create([

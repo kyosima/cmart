@@ -199,12 +199,12 @@
                     finder.on('files:choose', function(evt) {
                         var file = evt.data.files.first();
                         var output = document.getElementById(elementId);
-                        output.value = file.getUrl();
+                        output.value = new URL(file.getUrl()).pathname;
                         $('.fileinput-new.thumbnail img').attr('src', file.getUrl())
                     });
                     finder.on('file:choose:resizedImage', function(evt) {
                         var output = document.getElementById(elementId);
-                        output.value = evt.data.resizedUrl;
+                        output.value = new URL(evt.data.resizedUrl).pathname;
                         $('.fileinput-new img').attr('src', evt.data.resizedUrl)
                     });
                 }
