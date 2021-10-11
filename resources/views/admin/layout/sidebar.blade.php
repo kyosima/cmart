@@ -14,12 +14,23 @@
          <li class="dropdown">
             <a href="#" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <span class="links_name w-100 align-items-center d-flex">Quản lý bài viết <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            </a>
+            <span class="dropdown-content">
+                <a href="{{route('chuyenmuc-baiviet.index')}}">Chuyên mục bài viết</a>
+                <a href="{{route('baiviet.index')}}">Bài viết</a>
+            </span>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropbtn">
+             <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Quản lý sản phẩm <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             <span class="dropdown-content">
-                <a href="nganh-nhom-hang.html">Ngành/Nhóm hàng</a>
-                <a href="don-vi-tinh.html">Đơn vị tính</a>
-                <a href="san-pham.html">Thông tin sản phẩm</a>
+                <a href="{{route('nganh-nhom-hang.index')}}">Ngành/Nhóm hàng</a>
+                <a href="{{route('thuong-hieu.index')}}">Thương hiệu</a>
+                <a href="{{route('don-vi-tinh.index')}}">Đơn vị tính</a>
+                <a href="{{route('san-pham.index')}}">Thông tin sản phẩm</a>
             </span>
          </li>
          <li class="dropdown">
@@ -39,7 +50,7 @@
             </a>
          </li>
          <li class="dropdown">
-            <a href="#" class="dropbtn">
+            <a href="{{route('warehouse.index')}}" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Tồn kho <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>

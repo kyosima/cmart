@@ -1,5 +1,14 @@
 
-    .carousel-indicators .carousel-pc .active .pager-item,
+   .carousel-control-next, .carousel-control-prev {
+    
+    
+    bottom: 50px;
+    
+    width: 6%;
+    color: #fff;
+    
+}
+   .carousel-indicators .carousel-pc .active .pager-item,
     .pager-item:hover {
         color: #333 !important;
     }
@@ -226,7 +235,6 @@
 
     .detail .box-price li.old-price {
         font-size: 14px;
-
         color: #aab5c3;
         margin-top: 0px;
         text-decoration: line-through;
