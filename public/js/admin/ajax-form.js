@@ -4,7 +4,7 @@ var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas);
 
 myOffcanvas.addEventListener('hide.bs.offcanvas', function () {
     $(this).find('form').removeClass('was-validated');
-    $(".clear-option").empty();
+    // $(".clear-option").empty();
 });
 
 function action(element,data, type){
@@ -27,9 +27,13 @@ function startAjax(element){
 }
 
 function endAjax(element, text){
+
+    element.find('.select2-selection__rendered').empty();
     element = element.find('button[type="submit"]');
     element.removeClass('disabled');
     element.html(text);
+    
+    // $('.select2-selection__rendered').empty();
 }
 
 $(document).on('submit', '.ajax-form-post', function(e){
