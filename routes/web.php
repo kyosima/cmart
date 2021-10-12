@@ -1,9 +1,17 @@
 <?php
+
+use App\Admin\Controllers\AdminProductCategoryController;
+use App\Admin\Controllers\AdminProductController;
+use App\Admin\Controllers\BlogCategoryController;
+use App\Admin\Controllers\BlogController;
+use App\Admin\Controllers\BrandController;
+use App\Admin\Controllers\CalculationUnitController;
+use App\Admin\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PolicyController;
-use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
 use App\Admin\Controllers\AdminHomeController;
 use App\Admin\Controllers\AdminRolesController;
 
@@ -18,8 +26,8 @@ use App\Admin\Controllers\AdminRolesController;
 |
 */
 
-Route::get('/product', [ProductController::class, 'product']);
-Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'getdanhmucsanpham']);
+Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
+Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
 Route::get('/', [HomeController::class, 'home']);
 
 

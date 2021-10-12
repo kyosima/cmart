@@ -6,6 +6,11 @@
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
 }
+
+img, svg {
+  max-width: 100%;
+}
+
 .sidebar {
   position: fixed;
   left: 0;
@@ -230,7 +235,7 @@
   left: 78px;
   width: calc(100% - 78px);
   transition: all 0.5s ease;
-  z-index: 2;
+  /* z-index: 2; */
   background-color: #eef1f5;
 }
 .sidebar.open ~ .home-section {

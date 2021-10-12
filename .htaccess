@@ -2,10 +2,10 @@
     <IfModule mod_negotiation.c>
         Options -MultiViews
     </IfModule>
-<Files .env>
-            Order Allow,Deny
-            Deny from all
-        </Files>
+    <Files .env>
+        Order Allow,Deny
+        Deny from all
+    </Files>
     RewriteEngine On
 
     RewriteCond %{REQUEST_FILENAME} -d [OR]

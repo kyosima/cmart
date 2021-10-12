@@ -6,6 +6,10 @@
 <link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
+
+    {!! SEOMeta::generate() !!}
+    {!! OpenGraph::generate() !!}
+
 @endpush
 
     @section('content')
@@ -31,30 +35,65 @@
         <section class="product__detail">
             <div class="container">
                 <div class="row row-detail">
-                    <div class="col-sm-12 col-md-12 col-lg-6">
-                        <div class="fotorama" data-width="700" data-ratio="3/2" data-nav="thumbs" data-thumbheight="48">
-                            <a href="./image/collagen-1.jpg">
-                                <img src="./image/collagen-1.jpg" width="144" height="96">
-                            </a>
-                            <a href="./image/collagen-2.jpg">
-                                <img src="./image/collagen-2.jpg" width="144" height="96">
-                            </a>
-                            <a href="./image/collagen-3.jpg">
-                                <img src="./image/collagen-3.jpg" width="144" height="96">
-                            </a>
-                            <a href="./image/collagen-4.jpg">
-                                <img src="./image/collagen-4.jpg" width="144" height="96">
-                            </a>
-                            <a href="./image/collagen-5.jpg">
-                                <img src="./image/collagen-5.jpg" width="144" height="96">
-                            </a>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="row row_big">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="carousel carousel-main carousel_big" data-flickity>
+                                    <div class="carousel-cell">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <img src="{{$product->feature_img}}" alt="{{$product->name}}">
+                                                <div class="sale">
+                                                    <p>13%</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if ($product->gallery != '' || $product->gallery != null)
+                                        @foreach ($product->gallery as $item)
+                                            <div class="carousel-cell">
+                                                <div class="row">
+                                                    <div class="col-12 col-md-12 col-lg-12">
+                                                        <img src="{{$item}}" alt="{{$product->name}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row_small">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="row">
+                                    <div class="carousel carousel-nav carousel_small"
+                                data-flickity='{ "asNavFor": ".carousel-main", "contain": true, "pageDots": false }'>
+                                        <div class="carousel-cell carousel-small col-sm-4 col-md-4 col-lg-4">
+                                            <img src="{{$product->feature_img}}" alt="{{$product->name}}">
+                                        </div>
+                                        @if ($product->gallery != '' || $product->gallery != null)
+                                            @foreach ($product->gallery as $item)
+                                                <div class="carousel-cell carousel-small col-sm-4 col-md-4 col-lg-4">
+                                                    <img src="{{$item}}" alt="{{$product->name}}">
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6">
                         <div class="short-desc">
                             <div class="title">
-                                <h2>Viên uống Collagen tươi chiết xuất tổ yến Nhật Bản 30 viên</h2>
+                                <h2>{{$product->name}}</h2>
                             </div>
+                            <div class="code">
+                                <p><span>SKU:</span>{{$product->sku}}</p>
+                                <p><span>Quy cách:</span>{{$product->productCalculationUnit->name}}</p>
+                            </div>
+                            <div class="trademark">
+                                <p><span>Thương hiệu:</span>{{$product->productBrand->name}}</p>
                             <div class="code info-detail">
                                 <p><span>SKU:</span>001AB1496</p>
                                 <p class="quycach"><span>Quy cách:</span>Gói</p>
@@ -69,8 +108,8 @@
                                 <p><span>Sản xuất tại:</span>Nhật Bản</p>
                             </div>
                             <div class="all-price">
-                                <p class="new-price">349.000 đ</p>
-                                <p class="old-price">399.000 đ</p>
+                                <p class="new-price">{{$product->productPrice->regular_price}}</p>
+                                <p class="old-price">{{$product->productPrice->shock_price}}</p>
                             </div>
                             <div class="promo-intro">
                                 <p class="title-promo">Tiết kiệm 50,000 Ngay Hôm Nay !</p>
@@ -153,61 +192,8 @@
                                 </ul>
                             </div>
                             <div class="text">
-                                <div class="text_d text-pc tab_mobile-detail">
-                                    <p>Viên uống Collagen tươi Nhật Bản có sự kết hợp giữa chiết xuất yến sào, sụn vi cá mập giúp bồi bổ cơ thể và nuôi dưỡng làn da trẻ đẹp, mịn màng nhanh chóng.</p>
-                                    <h2>Viên uống Collagen yến tươi – Giữ gìn nét đẹp thanh xuân</h2>
-                                    <div class="see-more">
-                                        <p>Xem thêm</p>
-                                        <img src="./image/icon/arrow-down.png" alt="">
-                                    </div>
-                                    <div class="text-more">
-                                        <h3>Điểm nổi bật của Collagen tươi Nhật Bản</h3>
-                                    <ul>
-                                        <li><a href="">Collagen tươi Nhật Bản ứng dụng công nghệ sản xuất đạt tiêu chuẩn ATTP cao nhất thế giới, từ đó các phân tử Collagen có kích thước siêu nhỏ và thẩm thấu vào cơ thể nhanh hơn.</a></li>
-                                        <li><a href="">Sản phẩm chứa Collagen tươi chiết xuất sụn vi cá mập có lượng Collagen hòa tan cao gấp 43 lần so với Collagen thông thường, giúp mang lại hiệu quả cho làn da nhanh hơn.</a></li>
-                                        <li><a href="">Chứa Acid sialic (chiết xuất yến sào) có độ đậm đặc gấp 200 lần so với sữa ong chúa, làm tăng khả năng làm đẹp và bồi bổ cho da.</a></li>
-                                    </ul>
-                                    <h3>Công dụng của Collagen yến tươi Nhật</h3>
-                                    <ul>
-                                        <li><a href="">Nuôi dưỡng làn da tươi trẻ, mịn màng và tràn đầy sức sống nhờ bổ sung đủ hàm lượng Collagen bị thiếu hụt.</a></li>
-                                        <li><a href="">Cải thiện độ đàn hồi cho da, làm mờ các nếp nhăn cho da căng mịn trẻ trung.</a></li>
-                                        <li><a href="">Bổ sung và gìn giữ độ ẩm tự nhiên cho da căng mướt, làm chậm sự xuất hiện của các dấu hiệu lão hóa da như nhăn, chùng nhão, chảy xệ…</a></li>
-                                    </ul>
-                                    <h3>Thành phần viên uống Collagen yến tươi</h3>
-                                    <ul>
-                                        <li><a href="">Thành phần bao gồm: Dầu hoa hướng dương, Gelatin, Collagen Peptide mềm (bao gồm Gelatin), dầu ô liu, chiết xuất sụn cá mập, Dextrin, tổ yến (Dextrin, tổ yến đã qua xử lý bằng Enzyme), nhau thai heo (kể cả thịt heo)/Glycerin, sáp ong, Este Axit béo Glycerin, VE, Axit Hyaluronic…</a></li>
-                                    </ul>
-                                    <h3>Hướng dẫn sử dụng viên uống Collagen yến tươi</h3>
-                                    <ul>
-                                        <li><a href="">Uống 1 đến 2 viên mỗi ngày với nước hoặc nước ấm.</a></li>
-                                        <li><a href="">Nên uống liên tục trong 3 tháng để có kết quả tốt nhất.</a></li></ul>
-                                    <h3>Lưu ý</h3>
-                                    <ul>
-                                        <li><a href="">Tùy theo cơ địa của người dùng mà có hiệu quả khác nhau.</a></li>
-                                        <li><a href="">Sản phẩm này không phải là thuốc, không có tác dụng thay thế thuốc chữa bệnh.</a></li>
-                                    </ul>
-                                    <h3>Cách bảo quản</h3>
-                                    <ul>
-                                        <li><a href="">Để xa tầm tay trẻ em.</a></li>
-                                        <li><a href="">Bảo quản nơi khô ráo, thoáng mát.</a></li>
-                                        <li><a href="">Tránh ánh nắng chiếu trực tiếp, nơi có nhiệt độ cao.</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                <div class="text-mb tab_mobile-detail">
-                                    <div class="code info-detail">
-                                        <p><span>SKU:</span>001AB1496</p>
-                                        <p><span>Quy cách:</span>Gói</p>
-                                    </div>
-                                    <div class="trademark info-detail">
-                                        <p><span>Thương hiệu:</span>Pasode</p>
-                                    </div>
-                                    <div class="origin info-detail">
-                                        <p><span>Xuất xứ:</span>Nhật Bản</p>
-                                    </div>
-                                    <div class="manufacture info-detail">
-                                        <p><span>Sản xuất tại:</span>Nhật Bản</p>
-                                    </div>
+                                <div class="text_d">
+                                    {!! $product->long_desc !!}
                                 </div>
                                 <div class="row row-mobile">
                                     <div class="col-sm-12 col-md-9 col-lg-9">
