@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
@@ -50,6 +51,11 @@ class AdminPermissionsController extends Controller
             return response($validator->errors(), 400);
         }
         $permission = Permission::create(['guard_name' => 'admin', 'name' => $request->in_name]);
+
+        $roles = Permission::where('name', 'All Permissions')->first()->roles;
+        foreach ($roles as $value){
+            $value->givePermissionTo($permission);
+        }
         $type = 'permission';
         $html = view('admin.template-render.render', compact('permission', 'type'))->render();
         return $html;
