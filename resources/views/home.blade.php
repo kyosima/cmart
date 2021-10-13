@@ -155,7 +155,1102 @@
                     </a>
                 </div>
             </div>
-            <div class="product-block">
+            {{-- START HERE --}}
+            <div class="product-block bg-white p-2">
+                <div class="row">
+                    <div class="col col-12">
+                        <div class="section-title-container">
+                            <p class="section-title section-title-normal">
+                                <b></b>
+                                <span class="section-title-main" style="color:rgb(54, 53, 51);">Danh mục sản phẩm</span>
+                                <b></b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-12 col-lg-3 d-none d-md-block">
+                        <div class="banner row">
+                            <div class="col col-12">
+                                <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="Chắm sóc sức khỏe">
+                                    <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="Chắm sóc sức khỏe">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-12 col-lg-9">
+                        <div class="row">
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-12">
+                        <div class="text-center mt-2">
+                            <button class="btn btn-success">Xem thêm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-block bg-white p-2">
+                <div class="row">
+                    <div class="col col-12">
+                        <div class="section-title-container">
+                            <p class="section-title section-title-normal">
+                                <b></b>
+                                <span class="section-title-main" style="color:rgb(54, 53, 51);">Danh mục sản phẩm</span>
+                                <b></b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-12 col-lg-3 d-none d-md-block">
+                        <div class="banner row">
+                            <div class="col col-12">
+                                <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="Chắm sóc sức khỏe">
+                                    <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="Chắm sóc sức khỏe">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-12 col-lg-9">
+                        <div class="row">
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-12">
+                        <div class="text-center mt-2">
+                            <button class="btn btn-success">Xem thêm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-block bg-white p-2">
+                <div class="row">
+                    <div class="col col-12">
+                        <div class="section-title-container">
+                            <p class="section-title section-title-normal">
+                                <b></b>
+                                <span class="section-title-main" style="color:rgb(54, 53, 51);">Danh mục sản phẩm</span>
+                                <b></b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-12 col-lg-3 d-none d-md-block">
+                        <div class="banner row">
+                            <div class="col col-12">
+                                <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="Chắm sóc sức khỏe">
+                                    <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="Chắm sóc sức khỏe">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-12 col-lg-9">
+                        <div class="row">
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-12">
+                        <div class="text-center mt-2">
+                            <button class="btn btn-success">Xem thêm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-block bg-white p-2">
+                <div class="row">
+                    <div class="col col-12">
+                        <div class="section-title-container">
+                            <p class="section-title section-title-normal">
+                                <b></b>
+                                <span class="section-title-main" style="color:rgb(54, 53, 51);">Danh mục sản phẩm</span>
+                                <b></b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-12 col-lg-3 d-none d-md-block">
+                        <div class="banner row">
+                            <div class="col col-12">
+                                <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="Chắm sóc sức khỏe">
+                                    <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="Chắm sóc sức khỏe">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-12 col-lg-9">
+                        <div class="row">
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6 col-lg-3">
+                                <div class="sp">
+                                    <div class="box3item">
+                                        <div class="box-img">
+                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
+                                            </a>
+                                            <div class="block-sale">
+                                                <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
+                                                <span class="sale">-40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="detail">
+                                            <h3 class="title">
+                                                <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
+                                                    Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
+                                            </h3>
+                                            <ul class="box-price">
+                                                <li class="price">
+                                                    <span>1.260.000đ</span>
+                                                </li>
+    
+                                                <li class="old-price">
+                                                    <span>2.099.000 đ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-12">
+                        <div class="text-center mt-2">
+                            <button class="btn btn-success">Xem thêm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {{-- <div class="product-block">
                 <div class="banner row">
                     <div class="col-12">
                         <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="Chắm sóc sức khỏe">
@@ -511,1792 +1606,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="product-block">
-                <div class="banner row">
-                    <div class="col-12">
-                        <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="Chắm sóc sức khỏe">
-                            <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="Chắm sóc sức khỏe">
-                        </a>
-                    </div>
-                </div>
-                <!--san pham on-pc -->
-                <div class="product-pc">
-                    <div class="silder-product-1">
-                        <div class="items">
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--on-mobile -->
-                <div class="product-mobile">
-                    <div class="sp-mb row ">
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="product-block">
-                <div class="banner row">
-                    <div class="col-12">
-                        <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="Chắm sóc sức khỏe">
-                            <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="Chắm sóc sức khỏe">
-                        </a>
-                    </div>
-                </div>
-                <!--san pham on-pc -->
-                <div class="product-pc">
-                    <div class="silder-product-1">
-                        <div class="items">
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--on-mobile -->
-                <div class="product-mobile">
-                    <div class="sp-mb row ">
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="product-block">
-                <div class="banner row">
-                    <div class="col-12">
-                        <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="Chắm sóc sức khỏe">
-                            <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="Chắm sóc sức khỏe">
-                        </a>
-                    </div>
-                </div>
-                <!--san pham on-pc -->
-                <div class="product-pc">
-                    <div class="silder-product-1">
-                        <div class="items">
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--on-mobile -->
-                <div class="product-mobile">
-                    <div class="sp-mb row ">
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="product-block">
-                <div class="banner row">
-                    <div class="col-12">
-                        <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="Chắm sóc sức khỏe">
-                            <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="Chắm sóc sức khỏe">
-                        </a>
-                    </div>
-                </div>
-                <!--san pham on-pc -->
-                <div class="product-pc">
-                    <div class="silder-product-1">
-                        <div class="items">
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--on-mobile -->
-                <div class="product-mobile">
-                    <div class="sp-mb row ">
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="product-block">
-                <div class="banner row">
-                    <div class="col-12">
-                        <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="Chắm sóc sức khỏe">
-                            <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="Chắm sóc sức khỏe">
-                        </a>
-                    </div>
-                </div>
-                <!--san pham on-pc -->
-                <div class="product-pc">
-                    <div class="silder-product-1">
-                        <div class="items">
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp">
-                                <div class="box3item">
-                                    <div class="box-img">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                        </a>
-                                        <div class="block-sale">
-                                            <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                            <span class="sale">-40%</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail">
-                                        <h3 class="title">
-                                            <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                                Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                        </h3>
-                                        <ul class="box-price">
-                                            <li class="price">
-                                                <span>1.260.000đ</span>
-                                            </li>
-
-                                            <li class="old-price">
-                                                <span>2.099.000 đ</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--on-mobile -->
-                <div class="product-mobile">
-                    <div class="sp-mb row ">
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp col-6">
-                            <div class="box3item">
-                                <div class="box-img">
-                                    <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                        <img src="https://japana.vn/uploads/product/2020/04/02/268x268-1585836448-coidan-30-vien-sieu-thi-nhat-ban-japana-0-(2).jpeg" alt="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên">
-                                    </a>
-                                    <div class="block-sale">
-                                        <img alt="hình" src="https://japana.vn/uploads/promotion/2021/03/11/1615432601-icon-giam-gia-2-02.png">
-                                        <span class="sale">-40%</span>
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h3 class="title">
-                                        <a href="{{url('/product')}}" title="Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan 30 viên" tabindex="0">
-                                            Viên uống hỗ trợ điều trị ung thư Fine Japan Fucoidan... </a>
-                                    </h3>
-                                    <ul class="box-price">
-                                        <li class="price">
-                                            <span>1.260.000đ</span>
-                                        </li>
-
-                                        <li class="old-price">
-                                            <span>2.099.000 đ</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div> --}}
             <div class="brand">
                 <div class="brand-header">
 

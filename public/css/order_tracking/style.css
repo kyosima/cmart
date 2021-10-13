@@ -1,13 +1,5 @@
 /* -----------------------------------defaults page----------------------------------- */
 
-
-html {
-    box-sizing: border-box;
-}
-
-body {
-    background-color: #F8F8F8;
-}
 h1 {
     font-size: 2em;
     margin: 0.67em 0;
@@ -17,10 +9,10 @@ h1 {
 /* Thanh sidebar */
 .check-order {
     background: #f1f1f1;
-    width: 270px;
+    /* width: 270px; */
     margin-top: 0;
     border: 1px solid #e3e3e3;
-    float: left;
+    /* float: left; */
     margin-top: 10px;
 }
 
@@ -102,8 +94,8 @@ h1 {
 /* Tra cứu đơn hàng */
 .checkorder {
     background: #f1f1f1;
-    width: 810px;
-    float: right;
+    /* width: 810px; */
+    /* float: right; */
     padding: 25px;
     margin-top: 10px;
 }
@@ -473,22 +465,6 @@ textarea.form-control {
     font-family: 'Roboto',sans-serif;
     color: #111;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .custom_modal {
     width: 450px;
     display: block;
@@ -703,7 +679,7 @@ textarea.form-control {
 span{
     color: #777;
     font-size: 15px;
-    bottom: 68px;
+    /* bottom: 68px; */
 }
 #login{
     left: 50px;
