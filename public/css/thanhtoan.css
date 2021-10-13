@@ -9,7 +9,13 @@
     .card-information-body {
         display: flex;
     }
-    
+    .order-complete-info ul li{
+        margin-bottom: 5px;
+    }
+    .order-complete-info b{
+        margin-bottom: 10px;
+        display: block;
+    }
     .card-information-header {
         padding: 10px 10px 0 10px;
     }
@@ -27,7 +33,7 @@
         color: #BB0029;
     }
     
-    .form-control {
+    .card-information .form-control {
         border-radius: 0;
         margin: -9px 0 20px;
         padding: 8px 0;
@@ -178,7 +184,7 @@
         margin-left: 3px;
     }
     
-    .table thead th {
+    .donhang-body .table thead th {
         border-bottom: 1px dashed #666;
     }
     

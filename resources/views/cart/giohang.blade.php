@@ -3,8 +3,8 @@
 @section('title', 'Giỏ hàng')
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/giohang.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/giohang.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/responsive.css') }}">
 @endpush
 
 @section('content')
@@ -25,7 +25,7 @@
                                 <div class="product-main-item-box">
                                     <div class="product-main-item-box-img ">
                                         <a href="{{ route('san-pham.show', $row->model->slug)}}">
-                                            <img src="{{ asset('assets/image/product-cart2.jpeg') }}" alt=""
+                                            <img src="{{ asset($row->model->feature_img) }}" alt=""
                                                 class="product-main-item-box-img-item">
                                         </a>
                                     </div>

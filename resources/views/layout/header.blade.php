@@ -12,7 +12,7 @@
           <div class="logo-header ">
             <h1 title="Siêu thị Nhật Bản Japapa.vn" style="margin: 0;">
               <a href="{{url('/')}}" title="Siêu thị Nhật Bản Japana.vn">
-                <img src="https://japana.vn/uploads/system/1549872401-logo.svg" alt="Siêu thị Nhật Bản Japana.vn">
+                <img src="{{asset('public/image/logo-c.png')}}" alt="Siêu Thị C-Mart">
               </a>
             </h1>
 
@@ -31,7 +31,7 @@
             </div>
             <div class="menu-demuc d-flex justify-content-between">
               <div class="cate-menu" id="main-menu">
-                <a href="{{url('/danh-muc-san-pham')}}">
+                <a href="{{route('san-pham.index')}}">
                   <p class="title-cate"> Danh mục sản phẩm <i class="fas fa-bars"></i></p>
                 </a>
                 <!-- <p class="title-cate"> Danh mục sản phẩm <a href="#sub-menu" data-toggle="collapse" data-parent="#main-menu" class="fas fa-bars" aria-expanded="false" aria-haspopup="true"></a></p> -->
@@ -272,7 +272,7 @@
           </div>
           <div class="logo-nav">
             <a rel="nofollow" href="{{url('/')}}" title="Siêu thị Nhật Bản Japana.vn">
-              <img src="https://japana.vn/uploads/system/1549872401-logo.svg" alt="Siêu thị Nhật Bản Japana.vn">
+              <img src="{{asset('public/image/logo-c-v.png')}}" alt="Siêu thị Nhật Bản Japana.vn">
             </a>
 
           </div>

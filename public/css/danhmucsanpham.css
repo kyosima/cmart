@@ -16,9 +16,7 @@ a{
 a:hover, a:focus {
     text-decoration: none;
 }
-.container{
-    max-width: 1200px;
-}
+
 ::placeholder {
     color: #999 !important;
     opacity: 1;

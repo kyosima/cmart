@@ -3,8 +3,8 @@
 @section('title', 'Thanh toán')
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/thanhtoan.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/thanhtoan.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/responsive.css') }}">
 @endpush
 
 @section('content')
@@ -19,14 +19,23 @@
                                 <h3>THÔNG TIN GIAO HÀNG</h3>
                             </div>
                             <hr>
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                             <div class="card-information-body">
                                 <div class="col-xl-6 ">
                                     <div class="form-group">
-                                        <label for="">Tên:</label>
-                                        <input type="text" class="form-control " placeholder="Bạn chưa nhập họ tên">
+                                        <label for="">Tên đẩy đủ<sup class="text-danger">*</sup></label>
+                                        <input type="text" class="form-control" name="fullname" placeholder="Họ và tên" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Tỉnh/ Thành phố:</label>
+                                        <label for="">Tỉnh/ Thành phố<sup class="text-danger">*</sup></label>
                                         <select name="sel_province" class="form-control select2"
                                             data-placeholder="---Chọn tỉnh thành---" required>
                                             <option value="">---Chọn tỉnh thành---</option>
@@ -37,36 +46,36 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Phường/ Xã:</label>
+                                        <label for="">Phường/ Xã<sup class="text-danger">*</sup></label>
                                         <select class="form-control select2" name="sel_ward"
                                             data-placeholder="---Chọn phường xã---" required>
                                             <option value="">---Chọn phường xã---</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Email</label>
-                                        <input type="email" class="form-control" placeholder="Nhập email">
+                                        <label for="">Email<sup class="text-danger">*</sup></label>
+                                        <input type="email" class="form-control" name="email" placeholder="Nhập email">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 ">
                                     <div class="form-group">
-                                        <label for="">Số điện thoại</label>
-                                        <input type="text" class="form-control" placeholder="Bạn chưa nhập số điện thoại">
+                                        <label for="">Số điện thoại<sup class="text-danger">*</sup></label>
+                                        <input type="text" class="form-control" name="phone" placeholder="Số điện thoại" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Quận/ Huyện</label>
+                                        <label for="">Quận/ Huyện<sup class="text-danger">*</sup></label>
                                         <select class="form-control select2" name="sel_district"
                                             data-placeholder="---Chọn quận huyên---" required>
                                             <option value="">---Chọn quận huyên---</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Địa chỉ</label>
-                                        <input type="text" class="form-control" placeholder="Ban chưa nhập địa chỉ">
+                                        <label for="">Địa chỉ<sup class="text-danger">*</sup></label>
+                                        <input type="text" name="address" class="form-control" placeholder="Địa chỉ" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Ghi chú</label>
-                                        <input type="text" class="form-control" placeholder="Nhập ghi chú đơn hàng">
+                                        <input type="text" name="note" class="form-control" placeholder="Nhập ghi chú đơn hàng">
                                     </div>
                                 </div>
                             </div>
@@ -78,15 +87,15 @@
                             <hr>
                             <div class="phuongthuc-thanhtoan-card-body">
                                 <div class="thanhtoankhigiaohang">
-                                    <input type="radio" name="payment_method" checked="checked" value="1"> <span>COD</span>
+                                    <input type="radio" name="payment_method" checked="checked" value="1"> <span>COD(Thanh toán nhận hàng)</span>
                                     <i class="fa fa-money"></i>
                                 </div>
                                 <div class="thanhtoantructuyen">
-                                    <input type="radio" name="payment_method" value="2"> <span>Chuyển khoản qua ngân hàng</span>
+                                    <input type="radio" name="payment_method" value="2" readonly="readonly" disabled> <span>Chuyển khoản qua ngân hàng</span>
                                     <img src="{{ asset('assets/image/vnpay.png') }}">
                                 </div>
                                 <div class="chuyenkhoan">
-                                    <input type="radio" name="payment_method" value="3"> <span>Chuyển khoản qua ngân hàng</span>
+                                    <input type="radio" name="payment_method" value="3" readonly="readonly" disabled> <span>Chuyển khoản qua ngân hàng</span>
                                     <div class="tk-nganhang">
                                         <p>Doanh nghiệp: Công ty cổ phần</p>
                                         <p>TK ngân hàng: Công ty cổ phần</p>

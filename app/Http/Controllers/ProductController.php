@@ -67,8 +67,10 @@ class ProductController extends Controller
             ->merge($product->category_id)
             ->toArray();
             $categoryIds = array_diff( $categoryIds, [0] );
-            $new_products = Product::latest()->paginate(3);
-            return view('product.product_detail', ['product' => $product, 'categoryIds' => $categoryIds, 'new_products'=>$new_products]);
+            $new_products = Product::latest()->paginate(5);
+            $lastview_product = Product::latest()->paginate(10);
+
+            return view('product.product_detail', ['product' => $product, 'categoryIds' => $categoryIds, 'new_products'=>$new_products, 'lastview_product'=>$lastview_product]);
         }
     }
 

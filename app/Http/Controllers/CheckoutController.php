@@ -36,8 +36,6 @@ class CheckoutController extends Controller
     }
 
     public function postOrder(Request $request){
-        Cart::instance('shopping')->destroy();
-        return redirect()->route('checkout.orderSuccess');
         $cart = Cart::instance('shopping')->content();
         $validation = $request->validate([
             'fullname' => 'required',
@@ -47,14 +45,14 @@ class CheckoutController extends Controller
             'sel_district' => 'required',
             'sel_ward' => 'required',
             'address' => 'required',
-            'shipping_method' => 'required',
+            // 'shipping_method' => 'required',
         ]);
-        return DB::transaction(function () use ($request, $cart) {
-            try {
+        // return DB::transaction(function () use ($request, $cart) {
+        //     try {
                 $order = Order::create([
                     'note' => $request->note,
-                    'shipping_method' => $request->shipping_method,
-                    'shipping_total' => $request->in_shipping,
+                    // 'shipping_method' => $request->shipping_method,
+                    'shipping_total' => 0,
                     'sub_total' => intval(str_replace(",", "", Cart::instance('shopping')->subtotal())),
                     'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()))
                 ]);
@@ -64,7 +62,6 @@ class CheckoutController extends Controller
                 $order_address->id_district = $request->sel_district;
                 $order_address->id_ward = $request->sel_ward;
                 $order_address->address = $request->address;
-                $order_address->address_full = $request->address.', '.Ward::where('maphuongxa', $request->sel_ward)->first()->tenphuongxa.', '.District::where('maquanhuyen', $request->sel_district)->first()->tenquanhuyen.', '.Province::where('matinhthanh', $request->sel_province)->first()->tentinhthanh;
                 $order->order_address()->save($order_address);
 
                 $order_info = new OrderInfo();
@@ -84,20 +81,23 @@ class CheckoutController extends Controller
                 }
                 Cart::instance('shopping')->destroy();
                 return redirect()->route('checkout.orderSuccess', ['id' => $order]);
-            } catch (\Throwable $th) {
-                throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
-                return redirect()->back()->withErrors(['error' => $th->getMessage()]);
-            }
-        });
+        //     } catch (\Throwable $th) {
+        //         throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
+        //         return redirect()->back()->withErrors(['error' => $th->getMessage()]);
+        //     }
+        // });
     }
 
+
     public function orderSuccess(Request $request){
-        // if(!$request->id || !$order = Order::find($request->id)){
-        //     return redirect('/');
-        // }
-        // $order_info = $order->order_info()->first();
-        // $order_address = $order->order_address()->first()->address_full;
-        // return view('checkout.thanhcong', ['order' => $order, 'address' => $order_address, 'order_info' => $order_info]);
+        if(!$request->id || !$order = Order::find($request->id)){
+            return redirect('/');
+        }
+        $order_info = $order->order_info()->first();
+        $order_address = $order->order_address()->first();
+        $products = $order->order_products()->get();
+
+        return view('checkout.thanhcong', ['order' => $order, 'address' => $order_address, 'order_info' => $order_info, 'products'=>$products]);
         return view('checkout.thanhcong');
     }
 

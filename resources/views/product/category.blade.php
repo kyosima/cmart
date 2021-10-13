@@ -1,8 +1,8 @@
 @extends('layout.master')
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/danhmucsanpham.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/danhmucsanpham.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/pagination.css') }}">
 
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
@@ -314,7 +314,7 @@
             document.body.style.overflow = "auto";
         }
     </script>
-    <script src="{{ asset('js/danhmucsanpham.js') }}"></script>
+    <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script>
 
     <script>
         function order(id) {
