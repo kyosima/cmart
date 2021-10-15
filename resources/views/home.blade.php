@@ -3,7 +3,7 @@
 @section('title', 'Trang chủ')
 
 @push('css')
-    <link href="{{ asset('public/css/home.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/home.css') }}" rel="stylesheet" type="text/css">
     
 @endpush
     

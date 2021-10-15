@@ -2,107 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\ProductCategory;
-use App\Models\Brand;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-        $products = Product::latest()->paginate(12);
-        $subcategory = ProductCategory::latest()->get();
-        $brandIds = $products->pluck('brand')->toArray();
-        $brands = array_unique($brandIds);
-        $brands = Brand::whereIn('id', $brands)->get();
-        $countBrand = array_count_values($brandIds);                                    
+    //
+    public function product($slug){
+        $product = Product::where('slug', '=', $slug)->firstOrFail();
+        SEOMeta::setTitle($product->name);
+        SEOMeta::addMeta('robots', 'noindex, nofollow');
+        SEOMeta::addMeta('name', $product->name, 'itemprop');
+        SEOMeta::setDescription($product->meta_desc);
+        SEOMeta::addKeyword(explode(",", $product->meta_keyword));
 
-        return view('product.category', compact('products', 'subcategory', 'brands', 'countBrand'));
-    
-    }
+        OpenGraph::setTitle($product->name)
+            // ->setDescription('Some Article')
+            ->setSiteName('cmart.vn')
+            ->setType('product')
+            ->setUrl(URL::current())
+            ->setDescription($product->meta_desc)
+            ->addImage($product->feature_img)
+            ->addProperty('og:image:secure_url', $product->feature_img)
+            ->addProperty('locale', 'vi_VN')
+            ->addProperty('og:image:width', 600)
+            ->addProperty('og:image:height', 600);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($slug)
-    {
-        {
-            //
-            $product = Product::whereSlug($slug)->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')->firstorfail();
-            $categoryIds = ProductCategory::where('id', $parentId = ProductCategory::where('id', $product->category_id)
-            ->pluck('category_parent')->toArray())
-            ->pluck('category_parent')
-            ->merge($parentId)
-            ->merge($product->category_id)
-            ->toArray();
-            $categoryIds = array_diff( $categoryIds, [0] );
-            $new_products = Product::latest()->paginate(3);
-            return view('product.product_detail', ['product' => $product, 'categoryIds' => $categoryIds, 'new_products'=>$new_products]);
-        }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('product', compact('product'));
     }
 }

@@ -221,7 +221,6 @@
                                             <th class="title">Model</th>
                                             <th class="title">Tên sản phẩm</th>
                                             <th class="title">Đơn vị tính</th>
-                                            <th class="title">Nhóm sản phẩm</th>
                                             <th class="title">Ngành hàng</th>
                                             <th class="title">Số lượng tồn kho</th>
                                             <th class="title">Thời gian</th>
@@ -239,13 +238,7 @@
                                                 <td>PerfectCream01</td>
                                                 <td>{{$product->name}}</td>
                                                 <td>{{$product->productCalculationUnit->name}}</td>
-                                                @if ($product->productCategory->typeof_category == 2)
-                                                    <td>{{$product->productCategory->parentCategories->name}}</td>
-                                                    <td>{{$product->productCategory->parentCategories->megaParentCategories->name}}</td>
-                                                @else
-                                                    <td>{{$product->productCategory->name}}</td>
-                                                    <td>{{$product->productCategory->parentCategories->name}}</td>
-                                                @endif
+                                                <td>{{$product->productCategory->name}}</td>
                                                 <td>{{$product->getOriginal('pivot_quantity')}}</td>
                                                 <td>{{$product->getOriginal('pivot_created_at')}}</td>
                                                 <td>

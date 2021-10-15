@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Ho_Chi_Minh',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'vi',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,9 +161,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
-
 
         /*
          * Package Service Providers...
@@ -177,7 +174,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -231,9 +231,13 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+        'SEOMeta'       => Artesaos\SEOTools\src\SEOTools\Facades\SEOMeta::class,
+        'OpenGraph'     => Artesaos\SEOTools\src\SEOTools\Facades\OpenGraph::class,
+        'Twitter'       => Artesaos\SEOTools\src\SEOTools\Facades\TwitterCard::class,
+        'JsonLd'        => Artesaos\SEOTools\src\SEOTools\Facades\JsonLd::class,
+        'JsonLdMulti'   => Artesaos\SEOTools\src\SEOTools\Facades\JsonLdMulti::class,
+        'SEO' => Artesaos\SEOTools\src\SEOTools\Facades\SEOTools::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-
     ],
 
 ];

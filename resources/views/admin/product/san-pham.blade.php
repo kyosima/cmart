@@ -17,10 +17,12 @@
                         SẢN PHẨM </span>
                     <span class="caption-helper"></span>
                 </div>
+                @if(auth()->guard('admin')->user()->can('Thêm sản phẩm'))
                 <div class="ps-5">
                     <a href="{{ route('san-pham.create') }}" class="btn btn-add"><i class="fa fa-plus"></i>
                         Thêm mới </a>
                 </div>
+                @endif
             </div>
         </div>
         <hr>
@@ -72,8 +74,14 @@
                                 <td>{{ $item->id }}</td>
                                 <td><img src="{{ $item->feature_img }}" width="70" height="60" alt=""></td>
                                 <td>{{ $item->sku }}</td>
-                                <td><a style="text-decoration: none;"
-                                        href="{{ route('san-pham.edit', $item->id) }}">{{ $item->name }}</a></td>
+                                <td>
+                                    @if(auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+                                        <a style="text-decoration: none;"
+                                        href="{{ route('san-pham.edit', $item->id) }}">{{ $item->name }}</a>
+                                    @else
+                                    {{ $item->name }}
+                                    @endif
+                                </td>
                                 <td>{{ $item->productBrand->name }}</td>
                                 <td>{{ $item->productCategory->name }}
                                 </td>

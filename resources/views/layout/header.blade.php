@@ -1,8 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+  <link href="public/css/header.css" rel="stylesheet">
+
+  <title>Document</title>
+</head>
+
+<body>
 
   <!-- Pc -->
   <header class="header-site" id="top">
     <div id="button"> <i class="fas fa-chevron-up"></i></div>
+
 
     <!-- Some content to fill up the page -->
 
@@ -239,7 +260,7 @@
             <div class="cart other">
               <a rel="nofollow" href="{{url('/gio-hang')}}" title="Giỏ hàng">
                 <i class="icon-all-new icon-cart icon-cart-header"></i>
-                <span class="number-cart"><abbr class="count-giohang">{{ Cart::instance('shopping')->count() > 0 ? Cart::instance('shopping')->count() : '0' }}</abbr></span>
+                <span class="number-cart"><abbr class="count-giohang">0</abbr></span>
               </a>
             </div>
           </div>
@@ -280,8 +301,9 @@
 
             <a class="number-cart" rel="nofollow" href="{{url('/gio-hang')}}" title="giỏ hàng">
               <i class="icon-2020 icon-cart-2020"></i>
-              <span class="count-item count-giohang">{{ Cart::instance('shopping')->count() > 0 ? Cart::instance('shopping')->count() : '0' }}</span>
+              <span class="count-item count-giohang">0</span>
             </a>
+
 
           </div>
         </div>

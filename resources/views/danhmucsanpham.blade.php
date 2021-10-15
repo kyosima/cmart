@@ -74,7 +74,7 @@
         <div class="row">
             <!-- bên trái -->
             <div id="shopsidebar" class="shop-sidebar col-lg-3 col-md-12 col-sm-12">
-                <form action="{{'http://localhost:8080/cmart/'.Request::path()}}" method="get" id="filter_form">
+                <form action="{{'http://localhost:85/cmart/'.Request::path()}}" method="get" id="filter_form">
                     <!-- danh mục -->
                     @if (count($subcategory) > 0)
                         <aside class="widget danhmuc">
@@ -228,7 +228,7 @@
                                     </div>
                                     <div class="box-text col-lg-12 col-md-8 col-8">
                                         <div class="title-wrapper">
-                                            <a href="{{route('san-pham.show', $item->slug)}}">
+                                            <a href="{{route('product.index', $item->slug)}}">
                                                 <p class="product-title">{{$item->name}}</p>
                                             </a>
                                         </div>

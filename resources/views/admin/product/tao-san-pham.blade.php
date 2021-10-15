@@ -222,6 +222,24 @@
 
                     <div class="col-md-12 mb-3">
                         <div class="form-group mb-2">
+                            <label class="col-md-12 control-label vertical text-left">Meta keyword (cách nhau bởi dấu phẩy)</label>
+                            <div class="col-md-12">
+                                <textarea name="meta_keyword" id="meta_keyword" class="form-control" rows="2"
+                                    placeholder="Ví dụ: từ khóa 1, từ khóa 2,..">{{ old('meta_keyword') }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="col-md-12 control-label vertical text-left">Meta description:</label>
+                            <div class="col-md-12">
+                                <textarea name="meta_description" id="meta_description" class="form-control" rows="3"
+                                            placeholder="Meta description tối đa 150 - 160 ký tự" maxlength="160">{{ old('meta_description') }}</textarea>
+                                <div id="the-count">
+                                    <span id="current">0</span>
+                                    <span id="maximum">/ 160</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-2">
                             <label class="col-md-12 control-label vertical text-left">Mô tả ngắn:</label>
                             <div class="col-md-12">
                                 <textarea name="short_description" id="short_description" class="form-control" rows="2"
@@ -259,6 +277,24 @@
 <script>
     $(document).ready(function() {
         $('select.selectpicker').select2();
+
+        $('#meta_description').keyup(function() {
+            var characterCount = $(this).val().length,
+                current = $('#current'),
+                maximum = $('#maximum'),
+                theCount = $('#the-count');
+            
+            current.text(characterCount);
+
+            if (characterCount >= 140) {
+                maximum.css('color', '#8f0001');
+                current.css('color', '#8f0001');
+                theCount.css('font-weight','bold');
+            } else {
+                maximum.css('color','#666');
+                theCount.css('font-weight','normal');
+            }
+        })
 
         CKEDITOR.replace('description', {
             toolbar :
@@ -314,7 +350,8 @@
                             var files = evt.data.files;
                             var chosenFiles = $(`#${elementId}`).val();
                             files.forEach( function(file, idx, array) {
-                                chosenFiles += file.getUrl() + ', ';
+                                chosenFiles += new URL(file.getUrl()).pathname + ', ';
+
                                 $('.fileinput-gallery .row').append(`<div class="col-md-3">
                                     <span style="cursor: pointer;" data-id='' data-url="${file.getUrl()}" class="delete_gallery">
                                         <i class="fas fa-times"></i>
@@ -327,7 +364,7 @@
                         } else {
                             var file = evt.data.files.first();
                             var output = document.getElementById(elementId);
-                            output.value = file.getUrl();
+                            output.value = new URL(file.getUrl()).pathname;
                             $('.fileinput-new.thumbnail img').attr('src', file.getUrl())
                         }
                     });

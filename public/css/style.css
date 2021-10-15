@@ -381,7 +381,7 @@ body {
 
 .product__des-content .text_d p {
   color: var(--color-a);
-  font-size: 14px;
+  font-size: var(--font-size-a);
 }
 
 .product__des-content .text_d h2 {
@@ -556,7 +556,7 @@ body {
   text-decoration: none;
   pointer-events: none;
   color: var(--color-a);
-  font-size: var(--fontSize-a);
+  font-size: var(--font-size-a);
 }
 
 .product__des .product1 {
