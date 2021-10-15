@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Cập nhật sản phẩm')
+@section('title', 'Sửa sản phẩm')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/quanlysanpham.css') }}" type="text/css">
@@ -10,7 +10,7 @@
 <div class="m-3">
     <div class="wrapper bg-white p-4">
         @if (session('success'))
-            <div class="portlet-status">
+            <div class="portlet-status mb-2">
                 <div class="caption bg-success p-3">
                     <span class="caption-subject bold uppercase text-light">{{session('success')}}</span>
                 </div>
@@ -21,7 +21,7 @@
                 <div class="caption">
                     <i class="fa fa-product-hunt icon-drec" aria-hidden="true"></i>
                     <span class="caption-subject bold uppercase">
-                        Thông tin sản phẩm</span>
+                        Chỉnh sửa sản phẩm</span>
                 </div>
             </div>
         </div>

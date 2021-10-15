@@ -58,10 +58,22 @@
                                 </div>
                             </div>
                             <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Miêu tả</label>
+                                <label class="col-md-3 control-label">Liên kết tới danh mục khác</label>
                                 <div class="col-md-9">
-                                    <textarea class="form-control" name="proCatDescription" rows="3"
-                                        value="{{ old('proCatDescription') }}"></textarea>
+                                    <select name="linkProCat" class="form-control proCatType">
+                                        <option value="0" selected>None</option>
+                                        @foreach ($categories as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @if (count($item->childrenCategories) > 0)
+                                                @foreach ($item->childrenCategories as $childCategory)
+                                                    @include('admin.productCategory.selectChild', [
+                                                    'child_category' => $childCategory,
+                                                    'prefix' => '&nbsp;&nbsp;&nbsp;',
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>

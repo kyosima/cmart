@@ -45,7 +45,8 @@ class AdminProductCategoryController extends Controller
                 'level' => 0,
                 'slug' => $slug,
                 'name' => $request->proCatName,
-                'description' => $request->proCatDescription
+                'description' => $request->proCatDescription,
+                'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
             ]);
         } else {
             $catPar = ProductCategory::where('id', $request->proCatParent)->first();
@@ -55,7 +56,8 @@ class AdminProductCategoryController extends Controller
                     'level' => $catPar->level + 1,
                     'slug' => $slug,
                     'name' => $request->proCatName,
-                    'description' => $request->proCatDescription
+                    'description' => $request->proCatDescription,
+                    'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
                 ]);
             }
         }
@@ -85,7 +87,8 @@ class AdminProductCategoryController extends Controller
                 'gallery' => rtrim($request->gallery_img, ", "),
                 'meta_desc' => $request->meta_description,
                 'meta_keyword' => $request->meta_keyword,
-                'description' => $request->proCatDescription
+                'description' => $request->proCatDescription,
+                'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
             ]);
             $this->recursive($id, 0, 1);
         } else {
@@ -100,7 +103,8 @@ class AdminProductCategoryController extends Controller
                     'gallery' => rtrim($request->gallery_img, ", "),
                     'meta_desc' => $request->meta_description,
                     'meta_keyword' => $request->meta_keyword,
-                    'description' => $request->proCatDescription
+                    'description' => $request->proCatDescription,
+                    'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
                 ]);
                 $this->recursive($id, 1, 0);
             }

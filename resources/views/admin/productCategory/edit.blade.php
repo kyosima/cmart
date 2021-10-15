@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Tạo bài viết mới')
+@section('title', 'Sửa danh mục sản phẩm')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/quanlysanpham.css') }}" type="text/css">
@@ -10,7 +10,7 @@
 <div class="m-3">
     <div class="wrapper bg-white p-4">
         @if (session('success'))
-            <div class="portlet-status">
+            <div class="portlet-status mb-2">
                 <div class="caption bg-success p-3">
                     <span class="caption-subject bold uppercase text-light">{{session('success')}}</span>
                 </div>
@@ -21,7 +21,7 @@
                 <div class="caption">
                     <i class="fa fa-product-hunt icon-drec" aria-hidden="true"></i>
                     <span class="caption-subject bold uppercase">
-                        Thông tin bài viết</span>
+                        Chỉnh sửa danh mục sản phẩm</span>
                 </div>
             </div>
         </div>
@@ -122,6 +122,34 @@
                                                                 'child_category' => $childCategory,
                                                                 'prefix' => '&nbsp;&nbsp;&nbsp;',
                                                                 'proCat' => $proCat,
+                                                                'isLinked' => false,
+                                                                ])
+                                                        @endforeach
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Liên kết tới danh mục khác:</label>
+                                    <div class="col-md-12">
+                                        <select class="selectpicker form-control" name="linkProCat"
+                                            required>
+                                            <option value="0" selected>None</option>
+                                            @foreach ($categories as $item)
+                                                @if ($proCat->id != $item->id && $item->slug != 'uncategorized')
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $item->id == $proCat->link_to_category ? 'selected' : '' }}>
+                                                        {{ $item->name }}
+                                                    </option>
+                                                    @if (count($item->childrenCategories) > 0)
+                                                        @foreach ($item->childrenCategories as $childCategory)
+                                                            @include('admin.productCategory.selectChildUpdate', [
+                                                                'child_category' => $childCategory,
+                                                                'prefix' => '&nbsp;&nbsp;&nbsp;',
+                                                                'proCat' => $proCat,
+                                                                'isLinked' => true,
                                                                 ])
                                                         @endforeach
                                                     @endif

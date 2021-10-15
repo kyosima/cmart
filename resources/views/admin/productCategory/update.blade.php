@@ -30,6 +30,7 @@
                                                         'child_category' => $childCategory,
                                                         'prefix' => '&nbsp;&nbsp;&nbsp;',
                                                         'proCat' => $proCat,
+                                                        'isLinked' => false,
                                                         ])
                                                 @endforeach
                                             @endif
@@ -51,6 +52,32 @@
                             <div class="col-md-9">
                                 <input type="text" name="proCatSlug" class="form-control"
                                     value="{{ old('proCatSlug', $proCat->slug) }}">
+                            </div>
+                        </div>
+                        <div class="form-group d-flex mb-2">
+                            <label class="col-md-3 control-label">Liên kết tới danh mục khác</label>
+                            <div class="col-md-9">
+                                <select name="linkProCat" class="form-control proCatType">
+                                    <option value="0" selected>None</option>
+                                    @foreach ($categories as $item)
+                                        @if ($proCat->id != $item->id && $item->slug != 'uncategorized')
+                                            <option value="{{ $item->id }}"
+                                                {{ $item->id == $proCat->link_to_category ? 'selected' : '' }}>
+                                                {{ $item->name }}
+                                            </option>
+                                            @if (count($item->childrenCategories) > 0)
+                                                @foreach ($item->childrenCategories as $childCategory)
+                                                    @include('admin.productCategory.selectChildUpdate', [
+                                                        'child_category' => $childCategory,
+                                                        'prefix' => '&nbsp;&nbsp;&nbsp;',
+                                                        'proCat' => $proCat,
+                                                        'isLinked' => true,
+                                                        ])
+                                                @endforeach
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
