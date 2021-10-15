@@ -48,7 +48,7 @@
 /* Styles for the content section */
 
 @media (min-width: 500px) {
-    .content {
+    footer .content {
         width: 43%;
     }
     #button {

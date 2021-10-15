@@ -38,7 +38,7 @@
             <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                 <div class="alert alert-light order-complete-info  text-dark">
                     <b>Thông tin đơn hàng</b>
-                    <table class="table table-responsive table-bordered">
+                    <table class="table table-bordered">
                         <thead>
                             <th>Tên sản phẩm</th>
                             <th>Số lượng</th>

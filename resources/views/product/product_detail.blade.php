@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('public/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/fotorama.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/lastview_product.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
 
@@ -247,182 +247,25 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="evaluate evaluate-navigation">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <div class="evaluate__title">
-                                            <img src="{{ asset('public/image/icon/arrow-prev.jpg') }}" alt="">
-                                            <h3>Khách hàng đánh giá</h3>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12 evaluate__star">
-                                        <div class="evaluate__star-number">
-                                            <span>5</span>
-                                        </div>
-                                        <div class="evaluate__star-icon">
-                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                        </div>
-                                        <div class="evaluate__star-text">
-                                            <p>1 đánh giá</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-6 col-lg-6 evaluate__number">
-                                            <div class="evaluate__number-d">
-                                                <p><span>5</span><img src="{{ asset('public/image/icon/star.svg') }}"
-                                                        alt=""></p>
-                                                <span id="span-line"></span>
-                                                <p class="number-small">1</p>
-                                            </div>
-                                            <div class="evaluate__number-d">
-                                                <p><span>4</span><img src="{{ asset('public/image/icon/star.svg') }}"
-                                                        alt=""></p>
-                                                <span id="span-line" class="line-1"></span>
-                                                <p class="number-small">0</p>
-                                            </div>
-                                            <div class="evaluate__number-d">
-                                                <p><span>3</span><img src="{{ asset('public/image/icon/star.svg') }}"
-                                                        alt=""></p>
-                                                <span id="span-line" class="line-1"></span>
-                                                <p class="number-small">0</p>
-                                            </div>
-                                            <div class="evaluate__number-d">
-                                                <p><span>2</span><img src="{{ asset('public/image/icon/star.svg') }}"
-                                                        alt=""></p>
-                                                <span id="span-line" class="line-1"></span>
-                                                <p class="number-small">0</p>
-                                            </div>
-                                            <div class="evaluate__number-d">
-                                                <p><span>1</span><img src="{{ asset('public/image/icon/star.svg') }}"
-                                                        alt=""></p>
-                                                <span id="span-line" class="line-1"></span>
-                                                <p class="number-small">0</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 evaluate__img">
-                                            <div class="evaluate__img-content">
-                                                <p>Tất cả hình ảnh (1)</p>
-                                                <img src="{{ asset('public/image/evaluate-img.jpg') }}" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-12 col-lg0-12 tab_navigation">
-                                            <div class="col-sm-12 col-md-12 col-lg-12 evaluate__img">
-                                                <div class="evaluate__img-tab">
-                                                    <div class="title">
-                                                        <p>Lọc xem theo:</p>
-                                                    </div>
-                                                    <ul>
-                                                        <li class="active"><span>5</span><img
-                                                                src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                                        </li>
-                                                        <li><span>4</span><img
-                                                                src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                                        </li>
-                                                        <li><span>3</span><img
-                                                                src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                                        </li>
-                                                        <li><span>2</span><img
-                                                                src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                                        </li>
-                                                        <li><span>1</span><img
-                                                                src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-12 col-lg0-12 tab_comment-area">
-                                            <div class="col-sm-12 col-md-12 col-lg-12 tab_comment comment" id="5-star">
-                                                <div class="comment-item">
-                                                    <div class="customer">
-                                                        <div class="avar item">
-                                                            <p>S</p>
-                                                        </div>
-                                                        <div class="sup item">
-                                                            <p>Support</p>
-                                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                                        </div>
-                                                        <div class="date item">
-                                                            <p>(08/09/2021)</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="content">
-                                                        <p>Cảm ơn ac đã ủng hộ siêu thị nhật bản japana bên em ạ.
-                                                            Dịch quá các shiper không đi giao đc bên em cố gắng dùng xe
-                                                            riêng đi giao cho khách yêu ạ.
-                                                            Nhưng chỉ giao đc ít nơi k bị rào chắn, các nơi bị chắn rào xe
-                                                            không vào đc mong ac mình chờ thêm ạ.
-                                                        </p>
-                                                    </div>
-                                                    <div class="image">
-                                                        <img src="{{ asset('public/image/evaluate-img.jpg') }}" alt="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-12 col-lg-12 tab_comment comment" id="4-star">
-                                                <div class="comment-item tab-item">
-                                                    <div class="image ">
-                                                        <img src="{{ asset('public/image/sad.jpg') }}" alt=""
-                                                            id="iconSad">
-                                                    </div>
-                                                    <div class="content">
-                                                        <p>Không tìm thấy nhận xét phù hợp</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-12 col-lg-12 tab_comment comment" id="3-star">
-                                                <div class="comment-item tab-item">
-                                                    <div class="image ">
-                                                        <img src="{{ asset('public/image/sad.jpg') }}" alt=""
-                                                            id="iconSad">
-                                                    </div>
-                                                    <div class="content">
-                                                        <p>Không tìm thấy nhận xét phù hợp</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-12 col-lg-12 tab_comment comment" id="2-star">
-                                                <div class="comment-item tab-item">
-                                                    <div class="image ">
-                                                        <img src="{{ asset('public/image/sad.jpg') }}" alt=""
-                                                            id="iconSad">
-                                                    </div>
-                                                    <div class="content">
-                                                        <p>Không tìm thấy nhận xét phù hợp</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-12 col-lg-12 tab_comment comment" id="1-star">
-                                                <div class="comment-item tab-item">
-                                                    <div class="image ">
-                                                        <img src="{{ asset('public/image/sad.jpg') }}" alt=""
-                                                            id="iconSad">
-                                                    </div>
-                                                    <div class="content">
-                                                        <p>Không tìm thấy nhận xét phù hợp</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="comment-review">
-                                            <div class="btn btn-showall">
-                                                <p>Xem tất cả đánh giá</p>
-                                            </div>
-                                            <div class="btn btn-write">
-                                                <p>Viết đánh giá</p>
-                                            </div>
-                                        </div>
+                                
+                            </div>
+                            <div class="product-comment">
+                                <h5>Hỏi đáp & đánh giá sản phẩm</h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-5 col-lg-5">
+                                       <div class="star-score">
+                                        5.0
+                                        </div> 
+                                        
+
+                         
+
                                     </div>
                                 </div>
                             </div>
                         </div>
+                       
                     </div>
                     <div class="col-sm-12 col-md-2 col-lg-2 category">
                         <div>

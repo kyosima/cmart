@@ -40,7 +40,7 @@ li {
     .bannercmart {
         line-height: 1.5;
     }
-    .text {
+    .bannercmart .text {
         color: transparent;
         font-size: 1.8em;
         display: inline-block;
