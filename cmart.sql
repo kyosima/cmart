@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 12, 2021 lúc 05:33 AM
--- Phiên bản máy phục vụ: 10.4.11-MariaDB
--- Phiên bản PHP: 7.4.3
+-- Thời gian đã tạo: Th10 15, 2021 lúc 07:59 AM
+-- Phiên bản máy phục vụ: 10.4.14-MariaDB
+-- Phiên bản PHP: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -44,8 +43,7 @@ CREATE TABLE `admins` (
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (7, 'admin', 'admin@gmail.com', '$2y$10$drtc8/RCNronPROYztCFJOkt/A0cDqYrMs0LV.ImX3GlfqoKK/FEq', NULL, '2021-10-01 07:40:56', '2021-10-01 07:40:56'),
-(8, 'NV1', 'nv1@gmail.com', '$2y$10$7Brn85PzYeb7sjAQtP4r9.fYfiiga6sfK5zJERPHeZQwPn2gGfVhO', NULL, '2021-10-08 10:10:39', '2021-10-08 10:10:39'),
-(10, 'test', 'test@gmail.com', '$2y$10$YccaNoHCQtkeRukwpeQ13eB23tFf6gtubueJr2dXkSLR.xzo5MNly', NULL, '2021-10-11 07:36:52', '2021-10-11 07:36:52');
+(8, 'NV1', 'nv1@gmail.com', '$2y$10$H.bKlf8udq16TNkAiVKf2OKCVsjr.kZ.Z635YBWf/88yGgG1Z946C', NULL, '2021-10-08 10:10:39', '2021-10-13 03:22:55');
 
 -- --------------------------------------------------------
 
@@ -917,6 +915,22 @@ INSERT INTO `district` (`id`, `maquanhuyen`, `tenquanhuyen`, `matinhthanh`, `cre
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `info_combany`
+--
+
+CREATE TABLE `info_combany` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `migrations`
 --
 
@@ -964,9 +978,7 @@ CREATE TABLE `model_has_roles` (
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (2, 'App\\Models\\Admin', 7),
-(4, 'App\\Models\\Admin', 8),
-(4, 'App\\Models\\Admin', 9),
-(24, 'App\\Models\\Admin', 10);
+(4, 'App\\Models\\Admin', 8);
 
 -- --------------------------------------------------------
 
@@ -991,8 +1003,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `payment_method`, `shipping_method`, `shipping_total`, `sub_total`, `total`, `status`, `updated_at`, `created_at`) VALUES
-(5, 1, 'shipping-ems', 131300, 25, 30, 0, '2021-09-14 00:56:17', '2021-09-14 00:56:17'),
-(6, 1, 'shipping-ems', 42086, 25, 30, 0, '2021-09-14 01:02:19', '2021-09-14 01:02:19');
+(5, 1, 'ems', 23, 23, 23, 0, '2021-10-13 08:31:01', '2021-10-13 08:31:01');
 
 -- --------------------------------------------------------
 
@@ -1016,7 +1027,7 @@ CREATE TABLE `order_address` (
 --
 
 INSERT INTO `order_address` (`id`, `id_order`, `id_province`, `id_district`, `id_ward`, `address`, `updated_at`, `created_at`) VALUES
-(1, 5, 44, 4532, 45325, '28, đường số 27, phường Tân Quy', '2021-09-14 00:56:17', '2021-09-14 00:56:17'),
+(1, 5, 44, 4532, 45325, '28, đường số 27, phường Tân Quy', '2021-10-13 06:42:16', '2021-09-14 00:56:17'),
 (2, 6, 70, 7200, 71650, '28, đường số 27, phường Tân Quy', '2021-09-14 01:02:19', '2021-09-14 01:02:19');
 
 -- --------------------------------------------------------
@@ -1041,7 +1052,7 @@ CREATE TABLE `order_info` (
 --
 
 INSERT INTO `order_info` (`id`, `id_order`, `fullname`, `phone`, `email`, `note`, `updated_at`, `created_at`) VALUES
-(1, 5, 'Nguyễn Chính Hưng', '0338927456', 'nc.hung0806@gmail.com', NULL, '2021-09-14 00:56:17', '2021-09-14 00:56:17'),
+(1, 5, 'Nguyễn Chính Hưng', '0338927456', 'nc.hung0806@gmail.com', 'hello', '2021-10-13 06:42:16', '2021-09-14 00:56:17'),
 (2, 6, 'Nguyễn Chính Hưng', '0338927456', 'nc.hung0806@gmail.com', NULL, '2021-09-14 01:02:19', '2021-09-14 01:02:19');
 
 -- --------------------------------------------------------
@@ -1091,30 +1102,17 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (7, 'Xem kho', 'admin', '2021-10-06 08:31:27', '2021-10-08 10:46:06'),
 (9, 'Xem HSKH', 'admin', '2021-10-06 08:31:51', '2021-10-06 08:31:51'),
 (10, 'Duyệt HSKH', 'admin', '2021-10-07 04:48:56', '2021-10-07 04:49:06'),
-(11, 'Thêm bài viết', 'admin', '2021-10-11 06:08:01', '2021-10-11 06:08:01'),
-(12, 'Chỉnh sửa bài viết', 'admin', '2021-10-11 06:08:19', '2021-10-11 06:08:19'),
-(13, 'Xóa bài viết', 'admin', '2021-10-11 06:08:36', '2021-10-11 06:08:36'),
-(14, 'Thêm sản phẩm', 'admin', '2021-10-11 06:08:45', '2021-10-11 06:08:45'),
-(15, 'Chỉnh sửa sản phẩm', 'admin', '2021-10-11 06:09:01', '2021-10-11 06:09:01'),
-(16, 'Xóa sản phẩm', 'admin', '2021-10-11 06:09:13', '2021-10-11 06:09:13'),
-(17, 'Xem sản phẩm', 'admin', '2021-10-11 06:15:52', '2021-10-11 06:15:52'),
-(18, 'Xem bài viết', 'admin', '2021-10-11 06:16:00', '2021-10-11 06:20:06'),
-(19, 'Xem danh mục sản phẩm', 'admin', '2021-10-11 06:16:12', '2021-10-11 06:16:12'),
-(20, 'Xóa danh mục sản phẩm', 'admin', '2021-10-11 06:16:32', '2021-10-11 06:16:32'),
-(21, 'Chỉnh sửa danh mục sản phẩm', 'admin', '2021-10-11 06:16:53', '2021-10-11 06:16:53'),
-(22, 'Thêm danh mục sản phẩm', 'admin', '2021-10-11 06:17:13', '2021-10-11 06:17:13'),
-(23, 'Thêm danh mục bài viết', 'admin', '2021-10-11 06:17:31', '2021-10-11 06:17:31'),
-(24, 'Xóa danh mục bài viết', 'admin', '2021-10-11 06:17:38', '2021-10-11 06:17:38'),
-(25, 'Chỉnh sửa danh mục bài viết', 'admin', '2021-10-11 06:17:48', '2021-10-11 06:17:48'),
-(26, 'Xem danh mục bài viết', 'admin', '2021-10-11 06:18:10', '2021-10-11 06:18:10'),
-(27, 'Thêm thương hiệu', 'admin', '2021-10-11 06:18:33', '2021-10-11 06:18:33'),
-(28, 'Xem thương hiệu', 'admin', '2021-10-11 06:18:43', '2021-10-11 06:18:43'),
-(29, 'Xóa thương hiệu', 'admin', '2021-10-11 06:18:51', '2021-10-11 06:18:51'),
-(30, 'Chỉnh sửa thương hiệu', 'admin', '2021-10-11 06:19:00', '2021-10-11 06:19:00'),
-(31, 'Thêm đơn vị tính', 'admin', '2021-10-11 06:19:11', '2021-10-11 06:19:11'),
-(32, 'Xem đơn vị tính', 'admin', '2021-10-11 06:19:26', '2021-10-11 06:21:15'),
-(33, 'Chỉnh sửa đơn vị tính', 'admin', '2021-10-11 06:19:33', '2021-10-11 06:19:33'),
-(34, 'Xóa đơn vị tính', 'admin', '2021-10-11 06:19:45', '2021-10-11 06:19:45');
+(12, 'Xem sản phẩm', 'admin', '2021-10-11 08:49:33', '2021-10-11 08:49:33'),
+(13, 'Hủy đơn hàng', 'admin', '2021-10-11 08:50:22', '2021-10-11 08:50:22'),
+(15, 'Tạo sản phẩm', 'admin', '2021-10-11 08:52:17', '2021-10-11 08:52:17'),
+(16, 'Xem DS đơn hàng', 'admin', '2021-10-12 04:16:34', '2021-10-13 03:10:22'),
+(17, 'Xem đơn hàng', 'admin', '2021-10-13 04:31:11', '2021-10-13 04:31:11'),
+(18, 'Xem bài viết', 'admin', '2021-10-13 04:35:34', '2021-10-13 04:35:34'),
+(19, 'Xem danh mục bài viết', 'admin', '2021-10-13 04:35:50', '2021-10-13 04:35:50'),
+(20, 'Xem danh mục sản phẩm', 'admin', '2021-10-13 04:37:21', '2021-10-13 04:37:21'),
+(21, 'Xem thương hiệu', 'admin', '2021-10-13 04:37:27', '2021-10-13 04:37:27'),
+(22, 'Xem đơn vị tính', 'admin', '2021-10-13 04:37:39', '2021-10-13 04:37:39'),
+(23, 'Xóa đơn hàng', 'admin', '2021-10-13 08:07:33', '2021-10-13 08:07:33');
 
 -- --------------------------------------------------------
 
@@ -1428,10 +1426,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(2, 'Boss', 'admin', '2021-10-01 00:31:25', '2021-10-11 08:12:30'),
+(2, 'Boss', 'admin', '2021-10-01 00:31:25', '2021-10-13 03:54:48'),
 (3, 'Manager', 'admin', '2021-10-01 00:36:41', '2021-10-07 04:50:00'),
-(4, 'NV', 'admin', '2021-10-01 00:36:59', '2021-10-07 04:50:47'),
-(24, 'only xem', 'admin', '2021-10-11 07:24:43', '2021-10-11 09:42:03');
+(4, 'NV', 'admin', '2021-10-01 00:36:59', '2021-10-13 08:07:47');
 
 -- --------------------------------------------------------
 
@@ -1454,40 +1451,22 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (7, 3),
 (9, 2),
 (9, 3),
-(9, 4),
 (10, 2),
 (10, 3),
-(10, 4),
-(11, 2),
 (12, 2),
 (13, 2),
-(14, 2),
+(13, 4),
 (15, 2),
 (16, 2),
-(17, 2),
-(17, 24),
+(16, 4),
+(17, 4),
 (18, 2),
-(18, 24),
 (19, 2),
-(19, 24),
 (20, 2),
 (21, 2),
 (22, 2),
 (23, 2),
-(24, 2),
-(25, 2),
-(26, 2),
-(26, 24),
-(27, 2),
-(28, 2),
-(28, 24),
-(29, 2),
-(30, 2),
-(31, 2),
-(32, 2),
-(32, 24),
-(33, 2),
-(34, 2);
+(23, 4);
 
 -- --------------------------------------------------------
 
@@ -12703,62 +12682,6 @@ INSERT INTO `ward` (`id`, `maphuongxa`, `tenphuongxa`, `maquanhuyen`, `created_a
 (11138, 17237, 'An Thượng', 1710, NULL, NULL),
 (11139, 17235, 'Ái Quốc', 1710, NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `warehouse`
---
-
-CREATE TABLE `warehouse` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `id_province` int(11) NOT NULL,
-  `id_district` int(11) NOT NULL,
-  `id_ward` int(11) NOT NULL,
-  `address` text COLLATE utf8_unicode_ci NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `warehouse`
---
-
-INSERT INTO `warehouse` (`id`, `name`, `code`, `id_province`, `id_district`, `id_ward`, `address`, `updated_at`, `created_at`) VALUES
-(1, 'Perfectone Ha Noi', 'VINMART_MB', 10, 1270, 12730, 'TP. Hồ Chí Minh', '2021-09-19 23:48:25', '2021-09-13 06:21:25'),
-(5, 'Perfectone Sai Gon', 'VINMART_MN', 0, 0, 0, 'kh biet', '2021-09-13 01:47:01', '2021-09-13 01:47:01'),
-(7, 'Perfectone Da Nang', 'VINMART_MT', 0, 0, 0, 'Cau Rong', '2021-09-13 02:07:01', '2021-09-13 02:07:01'),
-(9, 'Coop extra', 'COOPMART_MN', 70, 7270, 72740, 'Gò Vấp', '2021-09-19 21:36:12', '2021-09-19 21:36:12'),
-(11, 'Da Huong Sai Gon', 'VINMART_MN', 70, 7270, 72710, 'Quang Trung', '2021-09-19 23:45:10', '2021-09-19 21:58:13');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `warehouse_product`
---
-
-CREATE TABLE `warehouse_product` (
-  `id` int(11) NOT NULL,
-  `warehouse_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `warehouse_product`
---
-
-INSERT INTO `warehouse_product` (`id`, `warehouse_id`, `product_id`, `quantity`, `updated_at`, `created_at`) VALUES
-(1, 1, 10, 99, '2021-09-13 06:23:20', '2021-09-13 06:23:20'),
-(2, 1, 8, 50, '2021-09-13 06:58:13', '2021-09-13 06:58:13'),
-(3, 5, 13, 18, '2021-09-13 08:47:01', '2021-09-13 08:47:01'),
-(4, 7, 18, 19, '2021-09-13 09:07:01', '2021-09-13 09:07:01'),
-(5, 11, 10, 456, '2021-09-20 05:02:18', '2021-09-20 05:02:18'),
-(6, 1, 13, 68, '2021-09-20 06:48:06', '2021-09-20 06:48:06');
-
 --
 -- Chỉ mục cho các bảng đã đổ
 --
@@ -12770,58 +12693,12 @@ ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `blogs`
+-- Chỉ mục cho bảng `info_combany`
 --
-ALTER TABLE `blogs`
+ALTER TABLE `info_combany`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `slug` (`slug`),
-  ADD KEY `blog_category_fk` (`id_ofcategory`);
-
---
--- Chỉ mục cho bảng `blog_category`
---
-ALTER TABLE `blog_category`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `slug` (`slug`);
-
---
--- Chỉ mục cho bảng `coupons`
---
-ALTER TABLE `coupons`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `coupon_category_fk` (`type_category`);
-
---
--- Chỉ mục cho bảng `coupon_category`
---
-ALTER TABLE `coupon_category`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `coupon_condition`
---
-ALTER TABLE `coupon_condition`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `coupon_condition_fk` (`id_ofcoupon`);
-
---
--- Chỉ mục cho bảng `coupon_promo`
---
-ALTER TABLE `coupon_promo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `coupon_promo_fk` (`id_ofcoupon`);
-
---
--- Chỉ mục cho bảng `courses`
---
-ALTER TABLE `courses`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `district`
---
-ALTER TABLE `district`
-  ADD PRIMARY KEY (`id`);
+  ADD KEY `type` (`type`);
 
 --
 -- Chỉ mục cho bảng `migrations`
@@ -12844,34 +12721,6 @@ ALTER TABLE `model_has_roles`
   ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
 
 --
--- Chỉ mục cho bảng `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `order_address`
---
-ALTER TABLE `order_address`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_order_id_adress` (`id_order`);
-
---
--- Chỉ mục cho bảng `order_info`
---
-ALTER TABLE `order_info`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_order_id_info` (`id_order`);
-
---
--- Chỉ mục cho bảng `order_products`
---
-ALTER TABLE `order_products`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_order_id` (`id_order`),
-  ADD KEY `fk_product_id` (`id_product`);
-
---
 -- Chỉ mục cho bảng `permissions`
 --
 ALTER TABLE `permissions`
@@ -12885,43 +12734,6 @@ ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
-
---
--- Chỉ mục cho bảng `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `slug` (`slug`),
-  ADD KEY `product_brand_fk` (`brand`),
-  ADD KEY `product_unit_fk` (`calculation_unit`),
-  ADD KEY `product_category_fk` (`category_id`);
-
---
--- Chỉ mục cho bảng `product_brand`
---
-ALTER TABLE `product_brand`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `slug` (`slug`);
-
---
--- Chỉ mục cho bảng `product_calculation_unit`
---
-ALTER TABLE `product_calculation_unit`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `product_categories`
---
-ALTER TABLE `product_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `slug` (`slug`);
-
---
--- Chỉ mục cho bảng `product_price`
---
-ALTER TABLE `product_price`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_product_price_fk` (`id_ofproduct`);
 
 --
 -- Chỉ mục cho bảng `province`
@@ -12963,20 +12775,6 @@ ALTER TABLE `ward`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `warehouse`
---
-ALTER TABLE `warehouse`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `warehouse_product`
---
-ALTER TABLE `warehouse_product`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id_fk` (`product_id`),
-  ADD KEY `warehouse_id_fk` (`warehouse_id`);
-
---
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 
@@ -12984,31 +12782,13 @@ ALTER TABLE `warehouse_product`
 -- AUTO_INCREMENT cho bảng `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT cho bảng `blogs`
+-- AUTO_INCREMENT cho bảng `info_combany`
 --
-ALTER TABLE `blogs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT cho bảng `blog_category`
---
-ALTER TABLE `blog_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT cho bảng `courses`
---
-ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT cho bảng `district`
---
-ALTER TABLE `district`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=709;
+ALTER TABLE `info_combany`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
@@ -13017,70 +12797,16 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `orders`
---
-ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT cho bảng `order_address`
---
-ALTER TABLE `order_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT cho bảng `order_info`
---
-ALTER TABLE `order_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT cho bảng `order_products`
---
-ALTER TABLE `order_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT cho bảng `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT cho bảng `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT cho bảng `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
-
---
--- AUTO_INCREMENT cho bảng `product_brand`
---
-ALTER TABLE `product_brand`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT cho bảng `product_calculation_unit`
---
-ALTER TABLE `product_calculation_unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT cho bảng `product_categories`
---
-ALTER TABLE `product_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- AUTO_INCREMENT cho bảng `product_price`
---
-ALTER TABLE `product_price`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT cho bảng `province`
@@ -13092,7 +12818,7 @@ ALTER TABLE `province`
 -- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
@@ -13113,44 +12839,8 @@ ALTER TABLE `ward`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11141;
 
 --
--- AUTO_INCREMENT cho bảng `warehouse`
---
-ALTER TABLE `warehouse`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT cho bảng `warehouse_product`
---
-ALTER TABLE `warehouse_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- Các ràng buộc cho các bảng đã đổ
 --
-
---
--- Các ràng buộc cho bảng `blogs`
---
-ALTER TABLE `blogs`
-  ADD CONSTRAINT `blog_category_fk` FOREIGN KEY (`id_ofcategory`) REFERENCES `blog_category` (`id`);
-
---
--- Các ràng buộc cho bảng `coupons`
---
-ALTER TABLE `coupons`
-  ADD CONSTRAINT `coupon_category_fk` FOREIGN KEY (`type_category`) REFERENCES `coupon_category` (`id`);
-
---
--- Các ràng buộc cho bảng `coupon_condition`
---
-ALTER TABLE `coupon_condition`
-  ADD CONSTRAINT `coupon_condition_fk` FOREIGN KEY (`id_ofcoupon`) REFERENCES `coupons` (`id`);
-
---
--- Các ràng buộc cho bảng `coupon_promo`
---
-ALTER TABLE `coupon_promo`
-  ADD CONSTRAINT `coupon_promo_fk` FOREIGN KEY (`id_ofcoupon`) REFERENCES `coupons` (`id`);
 
 --
 -- Các ràng buộc cho bảng `model_has_permissions`
@@ -13163,39 +12853,6 @@ ALTER TABLE `model_has_permissions`
 --
 ALTER TABLE `model_has_roles`
   ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
-
---
--- Các ràng buộc cho bảng `order_address`
---
-ALTER TABLE `order_address`
-  ADD CONSTRAINT `fk_order_id_adress` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id`);
-
---
--- Các ràng buộc cho bảng `order_info`
---
-ALTER TABLE `order_info`
-  ADD CONSTRAINT `fk_order_id_info` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id`);
-
---
--- Các ràng buộc cho bảng `order_products`
---
-ALTER TABLE `order_products`
-  ADD CONSTRAINT `fk_order_id` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id`),
-  ADD CONSTRAINT `fk_product_id` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`);
-
---
--- Các ràng buộc cho bảng `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `product_brand_fk` FOREIGN KEY (`brand`) REFERENCES `product_brand` (`id`),
-  ADD CONSTRAINT `product_category_fk` FOREIGN KEY (`category_id`) REFERENCES `product_categories` (`id`),
-  ADD CONSTRAINT `product_unit_fk` FOREIGN KEY (`calculation_unit`) REFERENCES `product_calculation_unit` (`id`);
-
---
--- Các ràng buộc cho bảng `product_price`
---
-ALTER TABLE `product_price`
-  ADD CONSTRAINT `id_product_price_fk` FOREIGN KEY (`id_ofproduct`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `role_has_permissions`

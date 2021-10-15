@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\Rule;
 
+
 class AdminManagerAdminController extends Controller
 {
     /**

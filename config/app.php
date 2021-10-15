@@ -177,6 +177,7 @@ return [
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -236,6 +237,7 @@ return [
         'JsonLd'        => Artesaos\SEOTools\src\SEOTools\Facades\JsonLd::class,
         'JsonLdMulti'   => Artesaos\SEOTools\src\SEOTools\Facades\JsonLdMulti::class,
         'SEO' => Artesaos\SEOTools\src\SEOTools\Facades\SEOTools::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

@@ -1,11 +1,16 @@
 
 var myOffcanvas = document.getElementById('offcanvas_edit');
-var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas);
 
-myOffcanvas.addEventListener('hide.bs.offcanvas', function () {
-    $(this).find('form').removeClass('was-validated');
-    // $(".clear-option").empty();
-});
+if(myOffcanvas)
+{
+    var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas);
+    myOffcanvas.addEventListener('hide.bs.offcanvas', function () {
+        $(this).find('form').removeClass('was-validated');
+        // $(".clear-option").empty();
+    });
+}
+
+
 
 function action(element,data, type){
     if(type == 'POST'){

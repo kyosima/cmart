@@ -11,21 +11,53 @@ use App\Admin\Controllers\BlogController;
 use App\Admin\Controllers\BrandController;
 use App\Admin\Controllers\CalculationUnitController;
 use App\Admin\Controllers\WarehouseController;
+use App\Admin\Controllers\AdminOrderController;
+use App\Admin\Controllers\InfoCompanyController;
 
 Route::group(['middleware' => ['admin']], function () {
 
+    Route::get('logout', [AdminHomeController::class, 'logout'])->name('logout');
+
     Route::group(['middleware' => ['role_or_permission:Boss,admin']], function () {
         //
-        Route::get('/test', [AdminHomeController::class,'test']);
+        Route::resource('roles', AdminRolesController::class);
+        Route::resource('permissions', AdminPermissionsController::class);
+        Route::resource('manager-admin', AdminManagerAdminController::class);
     });
     Route::get('/', [AdminHomeController::class,'dashboard'])->name('admin.index');
     //quản lý admins
 
-    Route::resource('roles', AdminRolesController::class);
+    //đơn hàng
+    // xem ds đơn Hàng
+    Route::get('don-hang', [AdminOrderController::class, 'index'])->name('order.index')->middleware('permission:Xem DS đơn hàng,admin');
 
-    Route::resource('permissions', AdminPermissionsController::class);
-    Route::resource('manager-admin', AdminManagerAdminController::class);
+    // Xem đơn Hàng
+    Route::get('chi-tiet-don-hang/{order:id}', [AdminOrderController::class, 'show'])->name('order.show')->middleware('permission:Xem đơn hàng,admin');
+    // sửa đơn Hàng
+    Route::put('sua-don-hang/{order:id}', [AdminOrderController::class, 'update'])->name('order.update')->middleware('permission:Sửa đơn hàng,admin');
+    // xóa đơn Hàng
+    Route::match(['delete', 'get'],'xoa-don-hang/{order:id}', [AdminOrderController::class, 'delete'])->name('order.delete')->middleware('permission:Xóa đơn hàng,admin');
 
+    //Load ajax adrress
+    Route::get('lay-quan-huyen-theo-tinh-thanh', [AdminOrderController::class, 'districtOfProvince']);
+
+    Route::get('lay-phuong-xa-theo-quan-huyen', [AdminOrderController::class, 'wardOfDistrict']);
+
+    // thông tin cty
+    Route::group(['prefix' => 'info-company', 'middleware' => ['permission:Xem sản phẩm,admin']], function () {
+
+        //danh sách
+        Route::get('/', [InfoCompanyController::class, 'index'])->name('info-company.index');
+        
+        //tạo
+        Route::get('create', [InfoCompanyController::class, 'create'])->name('info-company.create');
+        Route::post('store', [InfoCompanyController::class, 'store'])->name('info-company.store');
+
+        //sửa
+        Route::get('edit', [InfoCompanyController::class, 'edit'])->name('info-company.edit');
+        Route::put('update', [InfoCompanyController::class, 'update'])->name('info-company.update');
+    });
+    
 
     // PRODUCT
     // được phép xem sản phẩm
@@ -197,7 +229,7 @@ Route::group(['middleware' => ['admin']], function () {
 
 
 
-Route::get('/login', [AdminHomeController::class,'login']);
+Route::get('/login', [AdminHomeController::class,'login'])->name('get.admin.login');
 Route::post('/login', [AdminHomeController::class,'postLogin'])->name('admin.login');
 
 // Route::get('/don-hang', function () {

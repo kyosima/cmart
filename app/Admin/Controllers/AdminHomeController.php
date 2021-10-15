@@ -28,7 +28,10 @@ class AdminHomeController extends Controller
         }
         return view('admin.login');
     }
-
+    public function logout(){
+        Auth::guard('admin')->logout();
+        return redirect()->route('get.admin.login');
+    }
     public function postLogin(Request $request){
         if(Auth::guard('admin')->attempt(['name' => $request->in_name, 'password' => $request->in_password])){
             return redirect('/admin');
