@@ -50,7 +50,6 @@
                         @foreach ($page as $item)
                             <tr>
                                 <td>{{$item->id}}</td>
-                                <td><img src="{{$item->feature_img}}" alt=""></td>
                                 <td>
                                     @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
                                     <a class="text-decoration-none" href="{{route('info-company.edit', $item->id)}}">
@@ -60,7 +59,7 @@
                                     {{$item->name}}
                                     @endif
                                 </td>
-                                <td>{{$item->blogCategory->name}}</td>
+                                <td>{{$item->type}}</td>
                                 @if ($item->status == 1)
                                     <td>
                                         <span style=" max-width: 82px;min-width: 82px;" type="text"

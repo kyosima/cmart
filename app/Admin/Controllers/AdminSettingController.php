@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Artisan;
 class AdminSettingController extends Controller
 {
     //
-
     public function maintenanceMode(){
         Artisan::call("down");
     }

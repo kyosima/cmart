@@ -12,7 +12,7 @@ use App\Admin\Controllers\BrandController;
 use App\Admin\Controllers\CalculationUnitController;
 use App\Admin\Controllers\WarehouseController;
 use App\Admin\Controllers\AdminOrderController;
-use App\Admin\Controllers\InfoCompanyController;
+use App\Admin\Controllers\AdminInfoCompanyController;
 
 Route::group(['middleware' => ['admin']], function () {
 
@@ -47,15 +47,15 @@ Route::group(['middleware' => ['admin']], function () {
     Route::group(['prefix' => 'info-company', 'middleware' => ['permission:Xem sản phẩm,admin']], function () {
 
         //danh sách
-        Route::get('/', [InfoCompanyController::class, 'index'])->name('info-company.index');
+        Route::get('/', [AdminInfoCompanyController::class, 'index'])->name('info-company.index');
         
         //tạo
-        Route::get('create', [InfoCompanyController::class, 'create'])->name('info-company.create');
-        Route::post('store', [InfoCompanyController::class, 'store'])->name('info-company.store');
+        Route::get('create', [AdminInfoCompanyController::class, 'create'])->name('info-company.create');
+        Route::post('store', [AdminInfoCompanyController::class, 'store'])->name('info-company.store');
 
         //sửa
-        Route::get('edit', [InfoCompanyController::class, 'edit'])->name('info-company.edit');
-        Route::put('update', [InfoCompanyController::class, 'update'])->name('info-company.update');
+        Route::get('edit', [AdminInfoCompanyController::class, 'edit'])->name('info-company.edit');
+        Route::put('update', [AdminInfoCompanyController::class, 'update'])->name('info-company.update');
     });
     
 

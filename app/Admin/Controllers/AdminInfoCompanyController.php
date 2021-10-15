@@ -4,18 +4,22 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
+use App\Models\InfoCompany;
 
-class InfoCompanyController extends Controller
+class AdminInfoCompanyController extends Controller
 {
     //
+
+    public function index(){
+        $page = InfoCompany::all();
+        return view('admin.info_company.index', compact('page'));
+    }
     public function create(){
 
         $type = config('custom-config.page.type');
         return view('admin.info_company.create', compact('type'));
         
     }
-
     public function createSlug($title, $id = 0)
     {
         $slug = str_slug($title);
