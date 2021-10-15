@@ -235,14 +235,14 @@
                                         <div class="price-wrapper">
                                             @if ($item->shock_price != null || $item->shock_price != 0)
                                                 <span class="price">
-                                                    <span class="amount">{{$item->shock_price}}</span>
+                                                    <span class="amount">{{number_format($item->shock_price)}}đ</span>
                                                 </span>
                                                 <span class="price-old">
-                                                    <span class="amount">{{$item->regular_price}}</span>
+                                                    <span class="amount">{{number_format($item->regular_price)}}đ</span>
                                                 </span>
                                             @else
                                                 <span class="price">
-                                                    <span class="amount">{{$item->regular_price}}</span>
+                                                    <span class="amount">{{number_format($item->regular_price)}}đ</span>
                                                 </span>
                                             @endif
                                         </div>
