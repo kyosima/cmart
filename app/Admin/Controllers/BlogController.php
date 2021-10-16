@@ -33,10 +33,10 @@ class BlogController extends Controller
     {
         $slug = Str::slug($request->blog_title, '-');
 
-        if(Blog::whereSlug($slug)->exists()){
-            $int = random_int(1, 99999999);
-            $slug .= '-'.$int;
-        }
+        // if(Blog::whereSlug($slug)->exists()){
+        //     $int = random_int(1, 99999999);
+        //     $slug .= '-'.$int;
+        // }
 
         $blog = Blog::create([
             'id_ofcategory' => $request->blog_category,
@@ -45,6 +45,8 @@ class BlogController extends Controller
             'slug' => $slug,
             'content' => $request->description,
             'status' => $request->blog_status,
+            'meta_desc' => $request->meta_description,
+            'meta_keyword' => $request->meta_keyword,
         ]);
 
         if($blog) {
@@ -54,15 +56,14 @@ class BlogController extends Controller
         }
     }
 
-
     public function update(Request $request, $id)
     {
         $slug = Str::slug($request->blog_title, '-');
 
-        if(Blog::whereSlug($slug)->exists()){
-            $int = random_int(1, 99999999);
-            $slug .= '-'.$int;
-        }
+        // if(Blog::whereSlug($slug)->exists()){
+        //     $int = random_int(1, 99999999);
+        //     $slug .= '-'.$int;
+        // }
 
         $blog = Blog::where('id', $id)->update([
             'id_ofcategory' => $request->blog_category,
@@ -71,6 +72,8 @@ class BlogController extends Controller
             'slug' => $slug,
             'content' => $request->description,
             'status' => $request->blog_status,
+            'meta_desc' => $request->meta_description,
+            'meta_keyword' => $request->meta_keyword,
         ]);
 
         if($blog) {

@@ -50,10 +50,10 @@ class BlogCategoryController extends Controller
             $slug = Str::slug($request->unitSlug, '-');
         }
 
-        if(BlogCategory::whereSlug($slug)->exists()){
-            $int = random_int(1, 99999999);
-            $slug .= '-'.$int;
-        }
+        // if(BlogCategory::whereSlug($slug)->exists()){
+        //     $int = random_int(1, 99999999);
+        //     $slug .= '-'.$int;
+        // }
         
         $blogCategory = BlogCategory::create([
             'name' => $request->unitName,
@@ -83,10 +83,10 @@ class BlogCategoryController extends Controller
             $slug = Str::slug($request->unitSlug, '-');
         }
 
-        if(BlogCategory::whereSlug($slug)->exists()){
-            $int = random_int(1, 99999999);
-            $slug .= '-'.$int;
-        }
+        // if(BlogCategory::whereSlug($slug)->exists()){
+        //     $int = random_int(1, 99999999);
+        //     $slug .= '-'.$int;
+        // }
 
         $blogCategory = BlogCategory::where('id', $request->id)->update([
             'name' => $request->unitName,

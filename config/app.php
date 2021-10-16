@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Ho_Chi_Minh',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'vi',
 
     /*
     |--------------------------------------------------------------------------
@@ -177,7 +177,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
     ],
 
     /*
@@ -234,6 +236,12 @@ return [
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
+        'SEOMeta'       => Artesaos\SEOTools\src\SEOTools\Facades\SEOMeta::class,
+        'OpenGraph'     => Artesaos\SEOTools\src\SEOTools\Facades\OpenGraph::class,
+        'Twitter'       => Artesaos\SEOTools\src\SEOTools\Facades\TwitterCard::class,
+        'JsonLd'        => Artesaos\SEOTools\src\SEOTools\Facades\JsonLd::class,
+        'JsonLdMulti'   => Artesaos\SEOTools\src\SEOTools\Facades\JsonLdMulti::class,
+        'SEO' => Artesaos\SEOTools\src\SEOTools\Facades\SEOTools::class,
     ],
 
 ];

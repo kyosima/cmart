@@ -31,7 +31,7 @@
             </div>
             <div class="menu-demuc d-flex justify-content-between">
               <div class="cate-menu" id="main-menu">
-                <a href="{{route('san-pham.index')}}">
+                <a href="{{url('san-pham')}}">
                   <p class="title-cate"> Danh mục sản phẩm <i class="fas fa-bars"></i></p>
                 </a>
                 <!-- <p class="title-cate"> Danh mục sản phẩm <a href="#sub-menu" data-toggle="collapse" data-parent="#main-menu" class="fas fa-bars" aria-expanded="false" aria-haspopup="true"></a></p> -->

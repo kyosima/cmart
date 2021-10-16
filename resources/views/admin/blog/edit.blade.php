@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Chỉnh sửa bài viết')
+@section('title', 'Sửa bài viết')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/quanlysanpham.css') }}" type="text/css">
@@ -10,7 +10,7 @@
 <div class="m-3">
     <div class="wrapper bg-white p-4">
         @if (session('success'))
-            <div class="portlet-status">
+            <div class="portlet-status mb-2">
                 <div class="caption bg-success p-3">
                     <span class="caption-subject bold uppercase text-light">{{session('success')}}</span>
                 </div>
@@ -21,7 +21,7 @@
                 <div class="caption">
                     <i class="fa fa-product-hunt icon-drec" aria-hidden="true"></i>
                     <span class="caption-subject bold uppercase">
-                        Thông tin bài viết</span>
+                        Chỉnh sửa bài viết</span>
                 </div>
             </div>
         </div>
@@ -93,6 +93,30 @@
                     </div>
 
                     <div class="col-md-12 mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group mb-2">
+                                    <label class="col-md-12 control-label vertical text-left">Meta description:</label>
+                                    <div class="col-md-12">
+                                        <textarea name="meta_description" id="meta_description" class="form-control" rows="3"
+                                            placeholder="Meta description tối đa 150 - 160 ký tự" maxlength="160">{{ old('meta_description', $blog->meta_desc) }}</textarea>
+                                        <div id="the-count">
+                                            <span id="current">0</span>
+                                            <span id="maximum">/ 160</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group mb-2">
+                                    <label class="col-md-12 control-label vertical text-left">Meta keyword (cách nhau bởi dấu phẩy)</label>
+                                    <div class="col-md-12">
+                                        <textarea name="meta_keyword" id="meta_keyword" class="form-control" rows="3"
+                                            placeholder="Ví dụ: từ khóa 1, từ khóa 2,..">{{ old('meta_keyword', $blog->meta_keyword) }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-md-12 control-label vertical text-left text-danger">Mô tả chi tiết:</label>
                             <div class="col-md-12">
@@ -128,6 +152,24 @@
             width: '100%',
         });
 
+        $('#meta_description').keyup(function() {
+            var characterCount = $(this).val().length,
+                current = $('#current'),
+                maximum = $('#maximum'),
+                theCount = $('#the-count');
+            
+            current.text(characterCount);
+
+            if (characterCount >= 140) {
+                maximum.css('color', '#8f0001');
+                current.css('color', '#8f0001');
+                theCount.css('font-weight','bold');
+            } else {
+                maximum.css('color','#666');
+                theCount.css('font-weight','normal');
+            }
+        })
+
         CKEDITOR.replace('description', {
             toolbar :
             [
@@ -157,12 +199,12 @@
                     finder.on('files:choose', function(evt) {
                         var file = evt.data.files.first();
                         var output = document.getElementById(elementId);
-                        output.value = file.getUrl();
+                        output.value = new URL(file.getUrl()).pathname;
                         $('.fileinput-new.thumbnail img').attr('src', file.getUrl())
                     });
                     finder.on('file:choose:resizedImage', function(evt) {
                         var output = document.getElementById(elementId);
-                        output.value = evt.data.resizedUrl;
+                        output.value = new URL(evt.data.resizedUrl).pathname;
                         $('.fileinput-new img').attr('src', evt.data.resizedUrl)
                     });
                 }

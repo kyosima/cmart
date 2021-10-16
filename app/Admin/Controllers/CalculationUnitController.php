@@ -42,12 +42,10 @@ class CalculationUnitController extends Controller
         $id = $request->id;
         $unit = CalculationUnit::where('id', $id)->first();
         $returnHTML = view('admin.donViTinh.formUpdate', compact('unit', 'id'))->render();
-
         return response()->json([
             'html' => $returnHTML
         ], 200);
     }
-
 
     /**
      * Store a newly created resource in storage.

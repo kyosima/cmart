@@ -18,6 +18,14 @@ class AdminProductCategoryController extends Controller
         return view('admin.productCategory.index', compact('categories'));
     }
 
+    public function edit(Request $request) {
+        $proCat = ProductCategory::findOrFail($request->id);
+        $categories = ProductCategory::where('category_parent', 0)
+            ->with('childrenCategories')
+            ->get();
+        return view('admin.productCategory.edit', compact('proCat', 'categories'));
+    }
+
     public function store(Request $request)
     {
         if($request->proCatSlug == '') {
@@ -26,10 +34,10 @@ class AdminProductCategoryController extends Controller
             $slug = Str::slug($request->proCatSlug, '-');
         }
 
-        if(ProductCategory::whereSlug($slug)->exists()){
-            $int = random_int(1, 99999999);
-            $slug .= '-'.$int;
-        }
+        // if(ProductCategory::whereSlug($slug)->exists()){
+        //     $int = random_int(1, 99999999);
+        //     $slug .= '-'.$int;
+        // }
 
         if ($request->proCatParent == 0) {
             ProductCategory::create([
@@ -37,7 +45,8 @@ class AdminProductCategoryController extends Controller
                 'level' => 0,
                 'slug' => $slug,
                 'name' => $request->proCatName,
-                'description' => $request->proCatDescription
+                'description' => $request->proCatDescription,
+                'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
             ]);
         } else {
             $catPar = ProductCategory::where('id', $request->proCatParent)->first();
@@ -47,7 +56,8 @@ class AdminProductCategoryController extends Controller
                     'level' => $catPar->level + 1,
                     'slug' => $slug,
                     'name' => $request->proCatName,
-                    'description' => $request->proCatDescription
+                    'description' => $request->proCatDescription,
+                    'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
                 ]);
             }
         }
@@ -62,10 +72,10 @@ class AdminProductCategoryController extends Controller
             $slug = Str::slug($request->proCatSlug, '-');
         }
 
-        if(ProductCategory::whereSlug($slug)->exists()){
-            $int = random_int(1, 99999999);
-            $slug .= '-'.$int;
-        }
+        // if(ProductCategory::whereSlug($slug)->exists()){
+        //     $int = random_int(1, 99999999);
+        //     $slug .= '-'.$int;
+        // }
 
         if ($request->proCatParent == 0) {
             ProductCategory::where('id', $id)->update([
@@ -73,7 +83,12 @@ class AdminProductCategoryController extends Controller
                 'level' => 0,
                 'slug' => $slug,
                 'name' => $request->proCatName,
-                'description' => $request->proCatDescription
+                'feature_img' => $request->feature_img,
+                'gallery' => rtrim($request->gallery_img, ", "),
+                'meta_desc' => $request->meta_description,
+                'meta_keyword' => $request->meta_keyword,
+                'description' => $request->proCatDescription,
+                'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
             ]);
             $this->recursive($id, 0, 1);
         } else {
@@ -84,12 +99,17 @@ class AdminProductCategoryController extends Controller
                     'level' => $catPar->level + 1,
                     'slug' => $slug,
                     'name' => $request->proCatName,
-                    'description' => $request->proCatDescription
+                    'feature_img' => $request->feature_img,
+                    'gallery' => rtrim($request->gallery_img, ", "),
+                    'meta_desc' => $request->meta_description,
+                    'meta_keyword' => $request->meta_keyword,
+                    'description' => $request->proCatDescription,
+                    'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
                 ]);
                 $this->recursive($id, 1, 0);
             }
         }
-        return redirect()->route('nganh-nhom-hang.index');
+        return redirect()->route('nganh-nhom-hang.edit', $id)->with('success', 'Cập nhật danh mục thành công');
     }
 
     public function recursive($id, $status, $levelChange)

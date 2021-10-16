@@ -76,6 +76,12 @@
                             </div>
                             <div class="trademark">
                                 <p><span>Thương hiệu:</span>{{$product->productBrand->name}}</p>
+                            <div class="code info-detail">
+                                <p><span>SKU:</span>001AB1496</p>
+                                <p class="quycach"><span>Quy cách:</span>Gói</p>
+                            </div>
+                            <div class="trademark">
+                                <p><span>Thương hiệu:</span>{{$product->productBrand->name}}</p>
                             </div>
                             <div class="origin">
                                 <p><span>Xuất xứ:</span>Nhật Bản</p>

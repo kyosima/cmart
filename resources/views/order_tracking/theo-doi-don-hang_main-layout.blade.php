@@ -8,22 +8,37 @@
 
 @section('content')
     <div class="container">
-        <div class="check-order">
-            <ul>
-                <li class="active">
-                    <a href="#" title="title">
-                        <img src="{{ URL::to('public/images/icon1.png') }}" alt="title" class="img-order">
-                        <img src="{{ URL::to('public/images/icon1a.png') }}" alt="title" class="hover-order">
-                        Theo dõi đơn hàng
-                    </a>
-                </li>
-                <li>
-                    <a href="#" title="title">
-                        <img src="{{ URL::to('public/images/icon1.png') }}" alt="title" class="img-order">
-                        <img src="{{ URL::to('public/images/icon1a.png') }}" alt="title" class="hover-order">
-                        Chăm sóc khách hàng
-                    </a>
+        <div class="row">
+            <div class="col col-12 col-md-8 order-md-2">
+                <div class="checkorder">
+                    <h3 class="title">THÔNG TIN ĐƠN HÀNG</h3>
+                    <form action="" method="get">
+                        <div class="write-order form-group">
+                            <input value="" type="text" name="code" class="form-control ipt-order"
+                                placeholder="Nhập mã đơn hàng">
+                            <button type="submit" class="btn-check">Tra cứu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col col-12 col-md-4 order-md-1">
+                <div class="check-order">
                     <ul>
+                        <li class="active">
+                            <a href="#" title="title">
+                                <img src="{{ URL::to('public/images/icon1.png') }}" alt="title" class="img-order">
+                                <img src="{{ URL::to('public/images/icon1a.png') }}" alt="title" class="hover-order">
+                                Theo dõi đơn hàng
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="title">
+                                <img src="{{ URL::to('public/images/icon1.png') }}" alt="title" class="img-order">
+                                <img src="{{ URL::to('public/images/icon1a.png') }}" alt="title" class="hover-order">
+                                Chăm sóc khách hàng
+                            </a>
+                        </li>
                         <li><a href="{{ URL::to('/chinh-sach-van-chuyen') }}" title="Chính sách vận chuyển">Chính sách vận
                                 chuyển</a></li>
                         <li><a href="{{ URL::to('/dieu-khoan-giao-dich') }}" title="Điều khoản giao dịch">Điều khoản giao
@@ -46,17 +61,11 @@
                         <li><a href="{{ URL::to('/cau-hoi-thuong-gap') }}" title="Câu hỏi thường gặp">Câu hỏi thường
                                 gặp</a></li>
                     </ul>
-                </li>
-            </ul>
-        </div>
-        <main class="checkorder content">
-            <h3 class="title">THÔNG TIN ĐƠN HÀNG</h3>
-            <form action="" method="get">
-                <div class="write-order form-group">
-                    <input value="" type="text" name="code" class="form-control ipt-order" placeholder="Nhập mã đơn hàng">
-                    <button type="submit" class="btn-check">Tra cứu</button>
                 </div>
-            </form>
-        </main>
+            </div>
+
+            
+        </div>
+
     </div>
 @endsection

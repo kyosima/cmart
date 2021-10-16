@@ -1,14 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-body {
-  background: #F8F8F8 !important;
-}
-
 :root {
   --color: #333942;
   --color-a: #666666;

@@ -74,7 +74,7 @@
         <div class="row">
             <!-- bên trái -->
             <div id="shopsidebar" class="shop-sidebar col-lg-3 col-md-12 col-sm-12">
-                <form action="{{'http://localhost:8080/cmart/'.Request::path()}}" method="get" id="filter_form">
+                <form action="{{url('/').'/'.Request::path()}}" method="get" id="filter_form">
                     <!-- danh mục -->
                     @if (count($subcategory) > 0)
                         <aside class="widget danhmuc">

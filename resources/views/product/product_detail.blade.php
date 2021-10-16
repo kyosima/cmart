@@ -275,7 +275,7 @@
                             @foreach ($new_products as $item)
                                 <div class="product">
                                     <div class="product_img">
-                                        <img src="{{ $item->feature_img }}" alt="">
+                                        <img src="{{ asset($item->feature_img) }}" alt="">
                                     </div>
                                     <div class="product_text">
                                         <p>{{ $item->name }}</p>
@@ -306,7 +306,7 @@
 
                                 <div class="product">
                                     <div class="product-top">
-                                        <img class="product-image" src="{{ $item->feature_img }}" />
+                                        <img class="product-image" src="{{ asset($item->feature_img) }}" />
                                         <div class="product-name">
                                             <a href="{{ route('san-pham.show', $item->slug) }}">
                                                 <p class="product-title">{{ $item->name }}</p>

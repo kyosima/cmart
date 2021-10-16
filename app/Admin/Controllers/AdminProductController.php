@@ -10,6 +10,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductPrice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 
@@ -17,8 +18,12 @@ class AdminProductController extends Controller
 {
     public function index()
     {
+        // dump(auth()->guard('admin')->user()->name);
+        // dump(auth()->guard('admin')->user()->getRoleNames());
+        // dd(auth()->guard('admin')->user()->getAllPermissions());
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
+        Log::info($message);
         $products = Product::all();
-
         return view('admin.product.san-pham', compact('products'));
     }
 
@@ -29,6 +34,10 @@ class AdminProductController extends Controller
                                 ->get();
         $calculationUnits = CalculationUnit::all();
         $brands = Brand::all();
+
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang tạo mới sản phẩm';
+        Log::info($message);
+
         return view('admin.product.tao-san-pham', compact('nganhHang', 'calculationUnits', 'brands'));
     }
 
@@ -38,10 +47,10 @@ class AdminProductController extends Controller
             try {
                 $slug = Str::slug($request->product_name, '-');
 
-                if(Product::whereSlug($slug)->exists()){
-                    $int = random_int(1, 99999999);
-                    $slug .= '-'.$int;
-                }
+                // if(Product::whereSlug($slug)->exists()){
+                //     $int = random_int(1, 99999999);
+                //     $slug .= '-'.$int;
+                // }
 
                 $product = Product::create([
                     'sku' => $request->product_sku,
@@ -60,6 +69,8 @@ class AdminProductController extends Controller
                     'status' => $request->product_status,
                     'short_desc' => $request->short_description,
                     'long_desc' => $request->description,
+                    'meta_desc' => $request->meta_description,
+                    'meta_keyword' => $request->meta_keyword,
                 ]);
 
                 $productPrice = new ProductPrice();
@@ -70,6 +81,9 @@ class AdminProductController extends Controller
                 $productPrice->cpoint = $request->cpoint;
 
                 $product->productPrice()->save($productPrice);
+
+                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới sản phẩm ' . $product->name;
+                Log::info($message);
 
                 return redirect()->route('san-pham.edit', $product->id)->with('success', 'Cập nhật sản phẩm thành công');
             } catch (\Throwable $th) {
@@ -87,6 +101,10 @@ class AdminProductController extends Controller
                                 ->get();
         $calculationUnits = CalculationUnit::all();
         $brands = Brand::all();
+
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' truy cập trang cập nhật sản phẩm';
+        Log::info($message);
+
         return view('admin.product.cap-nhat-san-pham', compact('product', 'nganhHang', 'calculationUnits', 'brands'));
     }
 
@@ -96,10 +114,10 @@ class AdminProductController extends Controller
             try {
                 $slug = Str::slug($request->product_name, '-');
         
-                if(Product::whereSlug($slug)->exists()){
-                    $int = random_int(1, 99999999);
-                    $slug .= '-'.$int;
-                }
+                // if(Product::whereSlug($slug)->exists()){
+                //     $int = random_int(1, 99999999);
+                //     $slug .= '-'.$int;
+                // }
 
                 Product::where('id', $id)->update([
                     'sku' => $request->product_sku,
@@ -118,6 +136,8 @@ class AdminProductController extends Controller
                     'status' => $request->product_status,
                     'short_desc' => $request->short_description,
                     'long_desc' => $request->description,
+                    'meta_desc' => $request->meta_description,
+                    'meta_keyword' => $request->meta_keyword,
                 ]);
 
                 ProductPrice::where('id_ofproduct', $id)->update([
@@ -127,6 +147,9 @@ class AdminProductController extends Controller
                     'shock_price' => $request->product_shock_price,
                     'cpoint' => $request->cpoint,
                 ]);
+
+                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật sản phẩm ' . $request->product_name;
+                Log::info($message);
 
                 return redirect()->route('san-pham.edit', $id)->with('success', 'Cập nhật sản phẩm thành công');
             } catch (\Throwable $th) {
@@ -138,7 +161,12 @@ class AdminProductController extends Controller
 
     public function destroy($id)
     {
+        $product = Product::findOrFail($id);
         Product::destroy($id);
+
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name;
+        Log::info($message);
+
         return redirect()->route('san-pham.index');
     }
 }
