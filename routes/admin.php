@@ -104,6 +104,8 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA bài viết
     Route::group(['middleware' => ['permission:Xóa bài viết,admin']], function () {
         Route::delete('/tat-ca-bai-viet/{id}', [BlogController::class, 'destroy'])->name('baiviet.delete');
+        Route::delete('/tat-ca-bai-viet/multiple-delete', [BlogController::class, 'multipleDestory'])->name('baiviet.multipleDestory');
+
     });
 
     // BLOG CATEGORY
@@ -127,6 +129,8 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA danh mục bài viết
     Route::group(['middleware' => ['permission:Xóa danh mục bài viết,admin']], function () {
         Route::delete('/chuyen-muc-bai-viet', [BlogCategoryController::class, 'destroy'])->name('chuyenmuc-baiviet.delete');
+        Route::delete('/chuyen-muc-bai-viet/multiple-delete', [BlogCategoryController::class, 'multipleDestory'])->name('chuyenmuc-baiviet.multipleDestory');
+
     });
 
     
@@ -152,6 +156,7 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA đơn vị tính
     Route::group(['middleware' => ['permission:Xóa đơn vị tính,admin']], function () {
         Route::delete('/don-vi-tinh', [CalculationUnitController::class, 'destroy'])->name('don-vi-tinh.delete');
+        Route::delete('/don-vi-tinh/multiple-delete', [CalculationUnitController::class, 'multipleDestory'])->name('don-vi-tinh.multipleDestory');
     });
 
     // BRAND
@@ -176,6 +181,7 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA thương hiệu
     Route::group(['middleware' => ['permission:Xóa thương hiệu,admin']], function () {
         Route::delete('/thuong-hieu', [BrandController::class, 'destroy'])->name('thuong-hieu.delete');
+        Route::delete('/thuong-hieu/multiple-delete', [BrandController::class, 'multipleDestory'])->name('thuong-hieu.multipleDestory');
     });
 
     // WAREHOUSE 

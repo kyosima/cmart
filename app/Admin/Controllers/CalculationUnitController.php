@@ -131,4 +131,16 @@ class CalculationUnitController extends Controller
             ]);
         }
     }
+
+    public function multipleDestory(Request $request)
+    {
+        if($request->action == 'delete' && $request->id != null) {
+            foreach($request->id as $item) {
+                CalculationUnit::destroy($item);
+            }
+            return redirect(route('don-vi-tinh.index'));
+        } else {
+            return redirect()->back();
+        }
+    }
 }

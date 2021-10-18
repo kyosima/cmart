@@ -97,4 +97,17 @@ class BlogController extends Controller
         Blog::destroy($id);
         return redirect()->route('baiviet.index');
     }
+
+    public function multipleDestory(Request $request)
+    {
+        dd($request->all());
+        if($request->action == 'delete' && $request->id != null) {
+            foreach($request->id as $item) {
+                Blog::destroy($item);
+            }
+            return redirect(route('baiviet.index'));
+        } else {
+            return redirect()->back();
+        }
+    }
 }

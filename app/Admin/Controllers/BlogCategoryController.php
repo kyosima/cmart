@@ -121,4 +121,16 @@ class BlogCategoryController extends Controller
             ]);
         }
     }
+
+    public function multipleDestory(Request $request)
+    {
+        if($request->action == 'delete' && $request->id != null) {
+            foreach($request->id as $item) {
+                BlogCategory::destroy($item);
+            }
+            return redirect(route('chuyenmuc-baiviet.index'));
+        } else {
+            return redirect()->back();
+        }
+    }
 }

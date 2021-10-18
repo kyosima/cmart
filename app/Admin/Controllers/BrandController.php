@@ -133,4 +133,16 @@ class BrandController extends Controller
             ]);
         }
     }
+
+    public function multipleDestory(Request $request)
+    {
+        if($request->action == 'delete' && $request->id != null) {
+            foreach($request->id as $item) {
+                Brand::destroy($item);
+            }
+            return redirect(route('thuong-hieu.index'));
+        } else {
+            return redirect()->back();
+        }
+    }
 }
