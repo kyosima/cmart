@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @push('css')
-<link rel="stylesheet" href="{{ asset('css/danhmucsanpham.css') }}">
+<link rel="stylesheet" href="{{ asset('public/css/danhmucsanpham.css') }}">
 
 {!! SEOMeta::generate() !!}
 {!! OpenGraph::generate() !!}
@@ -213,7 +213,7 @@
                                     <div class="box-image col-lg-12 col-md-4 col-4">
                                         <div class="image-cover">
                                             <a href="#">
-                                                <img src="{{ $item->feature_img }}" alt="">
+                                                <img src="{{asset( $item->feature_img) }}" alt="">
                                             </a>
                                         </div>
                                         @if ($item->shock_price != null || $item->shock_price != 0)
@@ -235,14 +235,14 @@
                                         <div class="price-wrapper">
                                             @if ($item->shock_price != null || $item->shock_price != 0)
                                                 <span class="price">
-                                                    <span class="amount">{{$item->shock_price}}</span>
+                                                    <span class="amount">{{number_format($item->shock_price)}}đ</span>
                                                 </span>
                                                 <span class="price-old">
-                                                    <span class="amount">{{$item->regular_price}}</span>
+                                                    <span class="amount">{{number_format($item->regular_price)}}đ</span>
                                                 </span>
                                             @else
                                                 <span class="price">
-                                                    <span class="amount">{{$item->regular_price}}</span>
+                                                    <span class="amount">{{number_format($item->regular_price)}}đ</span>
                                                 </span>
                                             @endif
                                         </div>

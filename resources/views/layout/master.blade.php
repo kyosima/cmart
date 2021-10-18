@@ -8,11 +8,11 @@
     <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="url-home" content="{{ URL::to('/') }}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <link href="{{ asset('public/css/boostrap/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/header.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/footer.css') }}" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -38,6 +38,7 @@
 
     @stack('scripts')
     <script src="{{ asset('public/js/cart.js') }}"></script>
+    <script src="{{ asset('public/js/boostrap/bootstrap.min.js') }}"></script>
 
 </body>
 

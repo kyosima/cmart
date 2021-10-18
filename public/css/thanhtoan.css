@@ -3,6 +3,7 @@
     }
     
     .card-information {
+        background-color: #fff;
         box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
     }
     
@@ -35,22 +36,31 @@
     
     .card-information .form-control {
         border-radius: 0;
-        margin: -9px 0 20px;
-        padding: 8px 0;
-        border: 0;
-        border-bottom: 1px solid #DEE5EE;
-        box-shadow: none;
-        height: 38px;
-        font-size: 13px !important;
-        /* font-weight: 500 !important; */
-        color: #333;
-        width: 100%;
+    margin: -9px 0 20px;
+    /* box-shadow: -1px 1px 1px 0 rgb(137 152 172 / 50%); */
+    padding: 8px 0;
+    border: 0;
+    /* border-bottom: 1px solid #DEE5EE; */
+    /* box-shadow: none; */
+    padding: 10px;
+    border-radius: 10px;
+    height: 38px;
+    border: 1px solid #ddd;
+    font-size: 13px !important;
+    /* font-weight: 500 !important; */
+    color: #333;
+    width: 100%;
+        
+    }
+    .card-information .form-control:focus, .card-information .form-control:hover{
+        border-color: orange;
     }
     /* ------------------ */
     
     .phuongthuc-thanhtoan {
         box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
         margin-top: 20px;
+        background: #fff;
     }
     
     .phuongthuc-thanhtoan-card-header {
@@ -110,6 +120,7 @@
     .card-left {}
     
     .makhuyenmai {
+        background: #fff;
         box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
     }
     
@@ -161,6 +172,7 @@
     .donhang {
         box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
         margin-top: 10px;
+        background: #fff;
     }
     
     .donhang-header {

@@ -29,9 +29,9 @@ $("#form-add-to-cart").submit(function (e) {
 });
 function settimeoutAddCart(e) {
     setTimeout(function () {
-        e.html(content);
+        e.html('<p>'+content+'</p>');
         e.attr('type', 'submit');
-        e.css('background-color', 'var(--scolor)');
+        $(e).removeAttr('style');
         clearTimeout();
     }, 2000);
 }
@@ -54,7 +54,7 @@ $('input[name=qty].product-qty').change(function () {
             console.log(data);
         },
         success: function (response) {
-            input.closest('.product-main').find('.product-main-item-box-price').text(response[0]);
+            input.closest('.cart_item').find('.cart_price_col h2').text(response[0]);
             $('.cart-subtotal .amount').text(response[1]);
             $('.cart-total .amount').text(response[1]);
         }
@@ -78,7 +78,7 @@ function removeRowCart(e) {
             console.log(data);
         },
         success: function (response) {
-            e.closest('.product-main').remove();
+            e.closest('.cart_item').remove();
             $('.cart-subtotal .amount').text(response[0]);
             $('.cart-total .amount').text(response[1]);
         }

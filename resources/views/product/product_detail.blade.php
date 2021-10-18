@@ -101,34 +101,12 @@
                                     </button>
                                 </form>
                             </div>
-                            <div class="product_bonus">
-                                <div class="title">
-                                    <h2>Mua cùng giảm thêm</h2>
-                                </div>
-                                <div class="product_bonus-d">
-                                    <input type="checkbox" name="vehicle1" value="Bike">
-                                    <img src="{{ asset('public/image/product-small-1.jpg') }}" alt="">
-                                    <p>Viên uống rau củ DHC Nhật Bản 240 Viên</p>
-                                    <p class="price">335.000 đ</p>
-                                </div>
-                                <div class="product_bonus-d">
-                                    <input type="checkbox" name="vehicle1" value="Bike">
-                                    <img src="{{ asset('public/image/product-small-1.jpg') }}" alt="">
-                                    <p>Viên uống rau củ DHC Nhật Bản 240 Viên</p>
-                                    <p class="price">335.000 đ</p>
-                                </div>
-                                <div class="total">
-                                    <span>Tổng cộng:<p>914.000 đ</p></span>
-                                    <div class="addtoCart">
-                                        <span>Thêm tất cả vào giỏ hàng</span>
-                                    </div>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 freeship">
                         <div class="freeship_d">
-                            <img src="{{ asset('public/image/car.jpg') }}" alt="">
+                            <img src="{{ asset('public/image/car.png') }}" alt="">
                             <p>Miễn phí vận chuyển cho đơn từ 1.500.000đ</p>
                         </div>
                     </div>
@@ -137,11 +115,11 @@
                     </div>
                     <div class="quality">
                         <div class="quality-control">
-                            <img src="{{ asset('public/image/icon/quality-star.jpg') }}" alt="">
+                            <img src="{{ asset('public/image/quality-star.png') }}" alt="">
                             <p>100% sản phẩm được kiểm soát chất lượng</p>
                         </div>
                         <div class="commit">
-                            <img src="{{ asset('public/image/icon/circle-return.jpg') }}" alt="">
+                            <img src="{{ asset('public/image/circle-return.png') }}" alt="">
                             <p>Cam kết 90 ngày đổi trả miễn phí</p>
                         </div>
                     </div>
@@ -230,9 +208,9 @@
                                             <div class="product1_img">
                                                 <img src="{{ asset($product->feature_img) }}" alt="">
                                             </div>
-                                            <div class="product1_text">
+                                            <div class="product_text">
                                                 <p>{{ $product->name }}</p>
-                                                <h5>{{ formatPrice($product->regular_price) }}</h5>
+                                                <h5 class="text-danger">{{ formatPrice($product->regular_price) }}</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -280,10 +258,10 @@
                                     <div class="product_text">
                                         <p>{{ $item->name }}</p>
                                         @if ($item->productPrice()->value('shock_price') != null || $item->productPrice()->value('shock_price') != 0)
-                                            <h5>{{ $item->productPrice()->value('shock_price') }}</h5>
-                                            <h5 id="h5">{{ $item->productPrice()->value('regular_price') }}</h5>
+                                            <h5>{{formatPrice(  $item->productPrice()->value('shock_price') )}}</h5>
+                                            <h5 id="h5">{{formatPrice(  $item->productPrice()->value('regular_price') )}}</h5>
                                         @else
-                                            <h5>{{ $item->productPrice()->value('regular_price') }}</h5>
+                                            <h5>{{ formatPrice( $item->productPrice()->value('regular_price') )}}</h5>
                                         @endif
                                     </div>
                                 </div>
@@ -318,13 +296,13 @@
                                             @if ($item->productPrice()->value('shock_price') != null || $item->productPrice()->value('shock_price') != 0)
 
                                                 <span
-                                                    class="price-was">{{ $item->productPrice()->value('regular_price') }}</span>
+                                                    class="price-was">{{formatPrice( $item->productPrice()->value('regular_price') )}}</span>
                                                 <span
-                                                    class="price-save">{{ $item->productPrice()->value('shock_price') }}</span>
+                                                    class="price-save">{{formatPrice( $item->productPrice()->value('shock_price') )}}</span>
                                             @else
                                                 <span class="price">
                                                     <span
-                                                        class="amount">{{ $item->productPrice()->value('regular_price') }}</span>
+                                                        class="amount">{{ formatPrice($item->productPrice()->value('regular_price')) }}</span>
                                                 </span>
                                             @endif
                                         </p>

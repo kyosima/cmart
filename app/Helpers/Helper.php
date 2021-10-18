@@ -9,7 +9,7 @@ if (!function_exists('formatPrice')) {
 ?>
 <?php 
 
-if (!function_exists('helper')) {
+if (!function_exists('permissionOfRole')) {
     
     function permissionOfRole($data){
         $str = '';

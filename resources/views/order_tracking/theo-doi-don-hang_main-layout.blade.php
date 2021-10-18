@@ -3,7 +3,7 @@
 @section('title', 'Theo dõi đơn hàng')
 
 @push('css')
-    <link href="{{ asset('css/order_tracking/style.css') }}" rel="stylesheet" type='text/css' />
+    <link href="{{ asset('public/css/order_tracking/style.css') }}" rel="stylesheet" type='text/css' />
 @endpush
 
 @section('content')

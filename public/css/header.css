@@ -30,6 +30,9 @@ li {
 .toolbar2 {
     display: none;
 }
+.dropdown-navcmart{
+    z-index: 999999999 !important;
+}
 
 @media all and (min-width: 1025px) {
     .menu-demuc {
@@ -620,7 +623,7 @@ li {
         padding-bottom: 10px;
     }
 
-    .form-control {
+    header .form-control {
         border: thin;
         padding-left: 40px;
     }

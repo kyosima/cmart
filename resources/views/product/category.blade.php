@@ -259,14 +259,14 @@
                                             <div class="price-wrapper">
                                                 @if ($item->productPrice()->value('shock_price') != null || $item->productPrice()->value('->shock_price') != 0)
                                                     <span class="price">
-                                                        <span class="amount">{{ $item->productPrice()->value('shock_price') }}</span>
+                                                        <span class="amount">{{ formatPrice( $item->productPrice()->value('shock_price')) }}</span>
                                                     </span>
                                                     <span class="price-old">
-                                                        <span class="amount">{{ $item->productPrice()->value('regular_price') }}</span>
+                                                        <span class="amount">{{ formatPrice( $item->productPrice()->value('regular_price')) }}</span>
                                                     </span>
                                                 @else
                                                     <span class="price">
-                                                        <span class="amount">{{ $item->productPrice()->value('regular_price') }}</span>
+                                                        <span class="amount">{{ formatPrice( $item->productPrice()->value('regular_price')) }}</span>
                                                     </span>
                                                 @endif
                                             </div>

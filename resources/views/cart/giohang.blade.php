@@ -12,51 +12,70 @@
     <div class="container p-3">
         <div class="row">
             <div class="col-xl-9 col-sm-12 col-12 ">
-                <div class="product-cart">
-                    <div class="product-title">
-                        <h3>Giỏ hàng </h3>
-                        <span>- {{ count($carts) }} sản phẩm</span>
-                    </div>
-                    <hr>
+                <div class="product-title">
+                    <h3>Giỏ hàng </h3>
+                    <span>- {{ count($carts) }} sản phẩm</span>
+                </div>
+                <hr>
+                <div id="store_cart">
+                    <ul class="cart_head">
+                        <li class="cart_head_title">
+                            Ảnh
+                        </li>
+                        <li class="cart_head_product">
+                            Tên sản phẩm
+                        </li>
+                        <li class="cart_head_options">
+                            Số lượng
+                        </li>
+                        <li class="cart_head_price">
+                            Tổng tiền
+                        </li>
+                    </ul>
                     @foreach ($carts as $row)
 
-                        <div class="product-main">
-                            <div class="product-main-item">
-                                <div class="product-main-item-box">
-                                    <div class="product-main-item-box-img ">
-                                        <a href="{{ route('san-pham.show', $row->model->slug)}}">
-                                            <img src="{{ asset($row->model->feature_img) }}" alt=""
-                                                class="product-main-item-box-img-item">
-                                        </a>
-                                    </div>
-                                    <div class="product-main-item-box-detail">
-                                        <div class="product-main-item-box-detail-title">
-                                            <a href="{{ route('san-pham.show', $row->model->slug)}}">{{ $row->name }}</a>
-                                        </div>
-                                        <div class="product-main-item-box-detail-btn-delete"><a class="remove"
-                                                onclick="removeRowCart(this)" data-url="{{ route('cart.delete') }}"
-                                                data-rowid="{{ $row->rowId }}" aria-label="Xóa sản phẩm">Xóa</a> </div>
-                                    </div>
-                                    <span
-                                        class="product-main-item-box-price">{{ formatPrice($row->price * $row->qty) }}</span>
-                                    <div class="product-main-item-box-add-delete">
-                                        {{-- <button class="btn-giam">-</button> --}}
-                                        <input type="number"
-                                            class="product-qty soluong form-control form-control-sm text-center"
-                                            value="{{ $row->qty }}" step="1" min="1" max="" name="qty"
-                                            value="{{ $row->qty }}" data-rowid="{{ $row->rowId }}"
-                                            data-url="{{ route('cart.update') }}" title="SL" size="3" pattern="[0-9]*"
-                                            inputmode="numeric">
-                                        {{-- <button class="btn-tang">+</button> --}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+                    <ul class="cart_item">
+            
+                        <li class="cart_img_col">
+                            <a href="{{ route('san-pham.show', $row->model->slug)}}">
 
+                            <img src="{{ asset($row->model->feature_img) }}">
+                            </a>
+                        </li>
+            
+                        <li class="cart_product_col">
+                            <a href="{{ route('san-pham.show', $row->model->slug)}}">{{ $row->name }}</a>
+                        </li>
+                         
+                          <li class="cart_options_col">
+                            <input type="number"
+                            class="product-qty soluong form-control form-control-sm text-center"
+                            value="{{ $row->qty }}" step="1" min="1" max="" name="qty"
+                            value="{{ $row->qty }}" data-rowid="{{ $row->rowId }}"
+                            data-url="{{ route('cart.update') }}" title="SL" size="3" pattern="[0-9]*"
+                            inputmode="numeric">
+                        </li>
+            
+                        <li class="cart_price_col">
+                            <h2>{{ formatPrice($row->price * $row->qty) }}</h2>
+                        </li>
+                        <li class="cart_del_col">
+                    <img src="https://i.imgur.com/bI4oD5C.png" class="remove"
+                    onclick="removeRowCart(this)" data-url="{{ route('cart.delete') }}"
+                    data-rowid="{{ $row->rowId }}" aria-label="Xóa sản phẩm">
+                        </li>
+                    </ul>
+            @endforeach
+                   
+            
                 </div>
+                
             </div>
             <div class="col-xl-3 col-sm-12 col-12 ">
+                <div class="product-title">
+                    <h3>Thanh toán </h3>
+                </div>
+                <hr>
                 <div class="cart-right">
                     <div class="cart-body">
                         <p class="tamtinh"> <span class="tamtinh-title">Tạm tính:</span> <span
@@ -84,7 +103,7 @@
                                 <button class="btn-primary btn-a">
                                     Xem khuyến mãi
                                 </button>
-                                <a class="btn-primary btn-b" href="{{route('san-pham.index')}}">
+                                <a class="btn-primary btn-b" href="{{url('/san-pham')}}">
                                     Tiếp tục mua sắm
                                 </a>
                             </div>

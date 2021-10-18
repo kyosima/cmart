@@ -3,7 +3,7 @@
 @section('title', 'Sản phẩm khuyến mãi')
 
 @push('css')
-    <link rel="stylesheet" href="{{asset('css/khuyenmai.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/khuyenmai.css')}}">
 @endpush
 
     @section('content')
