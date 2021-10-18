@@ -7,112 +7,21 @@
 @endpush
 
 @section('content')
+<x-alert />
     <!-- Team -->
     <div class="team m-3">
         <div class="team_container py-3 px-4">
-            <!-- table -->
-            <div class="table__container mt-2">
-                <table class="table table-hover" id="tbluser" class="display" style="width:100%">
-                    <thead class="table__daily">
-                        <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Họ tên</th>
-                            <th scope="col">Mức độ hoạt động</th>
-                            <th scope="col">Cấp độ</th>
-                            <th scope="col">Quyền</th>
-                            <th scope="col">Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody class="font-size-1">
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Nguyễn Văn A</td>
-                            <td>300</td>
-                            <td>11</td>
-                            <td>
-                                <ol class="list-group list-group-numbered">
-                                    <li>Xem trang quản lý shop</li>
-                                    <li>Quản lý đội nhóm</li>
-                                </ol>
-                            </td>
-                            <td>
-                                <a href="phan-quyen.html" class=" btn btn-sm btn-outline-success">
-                                    Phân quyền
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Trần Thị B</td>
-                            <td>444</td>
-                            <td>2</td>
-                            <td>
-                                <ol class="list-group list-group-numbered">
-                                    <li>Xem trang quản lý shop</li>
-                                    <li>Quản lý đội nhóm</li>
-                                </ol>
-                            </td>
-                            <td>
-                                <a href="phan-quyen.html" class=" btn btn-sm btn-outline-success">
-                                    Phân quyền
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Nguyễn Mai C</td>
-                            <td>33333</td>
-                            <td>3</td>
-                            <td>
-                                <ol class="list-group list-group-numbered">
-                                    <li>Xem trang quản lý shop</li>
-                                    <li>Quản lý đội nhóm</li>
-                                </ol>
-                            </td>
-                            <td>
-                                <a href="phan-quyen.html" class=" btn btn-sm btn-outline-success">
-                                    Phân quyền
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Trần Kim D</td>
-                            <td>255</td>
-                            <td>4</td>
-                            <td>
-                                <ol class="list-group list-group-numbered">
-                                    <li>Xem trang quản lý shop</li>
-                                    <li>Quản lý đội nhóm</li>
-                                </ol>
-                            </td>
-                            <td>
-                                <a href="phan-quyen.html" class=" btn btn-sm btn-outline-success">
-                                    Phân quyền
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Đỗ Quốc E</td>
-                            <td>23232</td>
-                            <td>5</td>
-                            <td>
-                                <ol class="list-group list-group-numbered">
-                                    <li>Xem trang quản lý shop</li>
-                                    <li>Quản lý đội nhóm</li>
-                                </ol>
-                            </td>
-                            <td>
-                                <a href="phan-quyen.html" class=" btn btn-sm btn-outline-success">
-                                    Phân quyền
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- end table -->
+            <form action="{{route('post.maintenanceMode')}}" class="row g-3" method="post">
+                @csrf
+                <div class="form-check form-switch col-auto">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Maintenance Mode</label>
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="in_action" {{checked($check_maintenance_mode, 1)}}>
+                    
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm ms-5">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
     <!-- Team -->

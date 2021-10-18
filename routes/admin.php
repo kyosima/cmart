@@ -13,6 +13,7 @@ use App\Admin\Controllers\CalculationUnitController;
 use App\Admin\Controllers\WarehouseController;
 use App\Admin\Controllers\AdminOrderController;
 use App\Admin\Controllers\AdminInfoCompanyController;
+use App\Admin\Controllers\AdminSettingController;
 
 Route::group(['middleware' => ['admin']], function () {
 
@@ -54,8 +55,11 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('store', [AdminInfoCompanyController::class, 'store'])->name('info-company.store');
 
         //sửa
-        Route::get('edit', [AdminInfoCompanyController::class, 'edit'])->name('info-company.edit');
-        Route::put('update', [AdminInfoCompanyController::class, 'update'])->name('info-company.update');
+        Route::get('edit/{info_company:id}', [AdminInfoCompanyController::class, 'edit'])->name('info-company.edit');
+        Route::put('update/{info_company:id}', [AdminInfoCompanyController::class, 'update'])->name('info-company.update');
+
+        //xóa
+        Route::delete('delete/{info_company:id}', [AdminInfoCompanyController::class, 'delete'])->name('info-company.delete')->middleware('permission:Xóa đơn hàng,admin');
     });
     
 
@@ -222,6 +226,12 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/get-location', [WarehouseController::class, 'getLocation'])->name('warehouse.getLocation');
     Route::get('/get-warehouse', [WarehouseController::class, 'getWarehouse'])->name('warehouse.getWarehouse');
     Route::get('/ton-kho-dai-ly/modal-edit', [WarehouseController::class, 'modalEdit'])->name('warehouse.modalEdit');
+
+    //setting
+    Route::get('setting', [AdminSettingController::class, 'index']);
+
+    //setting
+    Route::post('setting/maintenance-mode', [AdminSettingController::class, 'maintenanceMode'])->name('post.maintenanceMode');
     
 });
 
@@ -250,9 +260,7 @@ Route::post('/login', [AdminHomeController::class,'postLogin'])->name('admin.log
 // Route::get('/profile', function () {
 //     return view('admin.profile');
 // });
-// Route::get('/setting', function () {
-//     return view('admin.setting');
-// });
+
 // Route::get('/ton-kho', function () {
 //     return view('admin.ton-kho');
 // });

@@ -4,14 +4,15 @@
 
 
 @section('content')
+<x-alert />
 <div class="m-3">
     <div class="wrapper bg-white p-4">
         <div class="portlet-body">
             <form action="{{ route('info-company.store') }}" class="needs-validation" method="post" novalidate>
                 @csrf
                 <div class="mb-3">
-                    <label for="in_title" class="form-label">Title:</label>
-                    <input type="text" class="form-control" id="in_title" name="in_title" placeholder="Title" required>
+                    <label for="in_name" class="form-label">Title:</label>
+                    <input type="text" class="form-control" id="in_name" name="in_name" placeholder="Title" value="{{ old('in_name') }}" required>
                     <div class="invalid-feedback">
                         Please enter your a title.
                     </div>
@@ -32,7 +33,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="inStatus" class="form-label">Type</label>
-                        <select class="form-select" id="inStatus" name="in_status" required>
+                        <select class="form-select" id="inStatus" name="in_type" required>
                             @foreach($type as $key => $value)
                                 <option value="{{$key}}">{{$value}}</option>
                             @endforeach

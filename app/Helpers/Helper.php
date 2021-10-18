@@ -66,5 +66,23 @@ if (!function_exists('helper')) {
         }
         return $string;
     }
+    function selected($value1, $value2){
+        if($value1 == $value2){
+            return 'selected';
+        }
+        return;
+    }
+
+    function checked($value1, $value2){
+        if($value1 == $value2){
+            return 'checked';
+        }
+        return;
+    }
+
+    function typeInfoCompany($value){
+        $type = config('custom-config.page.type');
+        return $type[$value];
+    }
 
 }
