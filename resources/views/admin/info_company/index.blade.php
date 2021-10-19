@@ -23,7 +23,7 @@
                 <div class="ps-5">
                     <a href="{{route('info-company.create')}}" class="btn btn-add"><i
                             class="fa fa-plus"></i>
-                        Thêm mới </a>
+                        Create </a>
                 </div>
                 @endif
             </div>
@@ -44,6 +44,8 @@
                             </th>
                             <th class="title-text title4">
                                 Status</th>
+                            <th class="title-text title4">
+                                Sort</th>
                             <th class="title-text title4" >Thao tác</th>
                         </tr>
                     </thead>
@@ -73,6 +75,7 @@
                                         class="form-control form-control-sm font-size-s text-white stop text-center d-inline">Ngừng</span>
                                     </td>
                                 @endif
+                                <td>{{$item->sort}}</td>
                                 <td><button type="button" class="btn btn-danger ajax-delete" data-url="{{route('info-company.delete', $item->id)}}">Delete</button></td>
                             </tr>
                         @endforeach
@@ -97,7 +100,7 @@
     $(document).ready(function() {
         $('#tblInfoCompany').DataTable({
             columnDefs: [
-                { orderable: false, targets: 4 }
+                { orderable: false, targets: 5 }
             ],
             "language": {
                 "emptyTable": "Không có dữ liệu nào !",
