@@ -50,6 +50,7 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA sản phẩm
     Route::group(['middleware' => ['permission:Xóa sản phẩm,admin']], function () {
         Route::delete('/san-pham/delete/{id}', [AdminProductController::class, 'destroy'])->name('san-pham.delete');
+        Route::delete('/san-pham/multiple-delete', [AdminProductController::class, 'multipleDestory'])->name('san-pham.multipleDestory');
     });
 
 
@@ -104,7 +105,7 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA bài viết
     Route::group(['middleware' => ['permission:Xóa bài viết,admin']], function () {
         Route::delete('/tat-ca-bai-viet/{id}', [BlogController::class, 'destroy'])->name('baiviet.delete');
-        Route::delete('/tat-ca-bai-viet/multiple-delete', [BlogController::class, 'multipleDestory'])->name('baiviet.multipleDestory');
+        Route::post('/tat-ca-bai-viet/multiple-delete', [BlogController::class, 'multipleDestory'])->name('baiviet.multipleDestory');
 
     });
 

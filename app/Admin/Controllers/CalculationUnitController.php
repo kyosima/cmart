@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\CalculationUnit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CalculationUnitController extends Controller
 {
@@ -17,6 +18,8 @@ class CalculationUnitController extends Controller
     {
         $calculationUnit = CalculationUnit::all();
         $index = 1;
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang quản lý đơn vị tính';
+        Log::info($message);
         return view('admin.donViTinh.don-vi-tinh', compact('calculationUnit', 'index'));
     }
 
@@ -62,6 +65,9 @@ class CalculationUnitController extends Controller
         ]);
 
         if($calculationUnit){
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới đơn vị tính ' . $calculationUnit->name;
+            Log::info($message);
+
             return response()->json([
                 'message' => "Success",
                 'code' => 200,
@@ -85,6 +91,9 @@ class CalculationUnitController extends Controller
         ]);
 
         if($calculationUnit){
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật đơn vị tính ' . $request->unitName;
+            Log::info($message);
+
             return response()->json([
                 'message' => "Success",
                 'code' => 200,
@@ -118,8 +127,12 @@ class CalculationUnitController extends Controller
 
     public function destroy(Request $request)
     {
+        $c = CalculationUnit::findOrFail($request->id);
         $calculationUnit = CalculationUnit::destroy($request->id);
         if($calculationUnit){
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa đơn vị tính ' . $c->name;
+            Log::info($message);
+
             return response()->json([
                 'message' => "Success",
                 'code' => 200,
@@ -136,7 +149,10 @@ class CalculationUnitController extends Controller
     {
         if($request->action == 'delete' && $request->id != null) {
             foreach($request->id as $item) {
+                $c = CalculationUnit::findOrFail($item);
                 CalculationUnit::destroy($item);
+                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa đơn vị tính ' . $c->name;
+                Log::info($message);
             }
             return redirect(route('don-vi-tinh.index'));
         } else {

@@ -35,7 +35,6 @@
                 @if (auth()->guard('admin')->user()->can('Xóa bài viết'))
                 <form id="myform" action="{{route('baiviet.multipleDestory')}}" method="post">
                     @csrf
-                    @method('DELETE')
                 @endif
                     <table id="table-calculation-unit" class="table table-hover table-main">
                         <thead class="thead1" style="vertical-align: middle;">
@@ -81,7 +80,7 @@
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li>
                                                     @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
-                                                    <form
+                                                    {{-- <form
                                                         action="{{ route('baiviet.updateStatus', $item->id) }}"
                                                         method="post">
                                                         @csrf
@@ -89,19 +88,33 @@
                                                         <input type="hidden" name="unitStatus" value="0">
                                                         <button type="submit"
                                                             class="dropdown-item">Ngừng</button>
-                                                    </form>
+                                                    </form> --}}
+                                                    <button 
+                                                        data-id="{{$item->id}}"
+                                                        data-value="0"
+                                                        data-url="{{ route('baiviet.updateStatus', $item->id) }}"
+                                                        class="dropdown-item changeStatus">
+                                                        Ngừng
+                                                    </button>
                                                     @endif
                                                 </li>
                                                 <li>
                                                     @if(auth()->guard('admin')->user()->can('Xóa bài viết'))
-                                                    <form
+                                                    {{-- <form
                                                         action="{{ route('baiviet.delete', $item->id) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button type="submit" class="dropdown-item"
                                                             onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
-                                                    </form>
+                                                    </form> --}}
+                                                    <button type="button"
+                                                        data-id="{{$item->id}}"
+                                                        onclick="confirm('Bạn có chắc muốn xóa');"
+                                                        data-url="{{ route('baiviet.delete', $item->id) }}"
+                                                        class="dropdown-item btn-delete">
+                                                        Xóa
+                                                    </button>
                                                     @endif
                                                 </li>
                                             </ul>
@@ -117,7 +130,7 @@
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li>
                                                     @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
-                                                    <form
+                                                    {{-- <form
                                                         action="{{ route('baiviet.updateStatus', $item->id) }}"
                                                         method="post">
                                                         @csrf
@@ -125,19 +138,33 @@
                                                         <input type="hidden" name="unitStatus" value="1">
                                                         <button type="submit"
                                                             class="dropdown-item">Hoạt động</button>
-                                                    </form>
+                                                    </form> --}}
+                                                    <button type="button"
+                                                        data-id="{{$item->id}}"
+                                                        data-value="1"
+                                                        data-url="{{ route('baiviet.updateStatus', $item->id) }}"
+                                                        class="dropdown-item changeStatus">
+                                                        Hoạt động
+                                                    </button>
                                                     @endif
                                                 </li>
                                                 <li>
                                                     @if(auth()->guard('admin')->user()->can('Xóa bài viết'))
-                                                    <form
+                                                    {{-- <form
                                                         action="{{ route('baiviet.delete', $item->id) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button type="submit" class="dropdown-item"
                                                             onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
-                                                    </form>
+                                                    </form> --}}
+                                                    <button type="button"
+                                                        data-id="{{$item->id}}"
+                                                        onclick="confirm('Bạn có chắc muốn xóa');"
+                                                        data-url="{{ route('baiviet.delete', $item->id) }}"
+                                                        class="dropdown-item btn-delete">
+                                                        Xóa
+                                                    </button>
                                                     @endif
                                                 </li>
                                             </ul>
@@ -169,6 +196,43 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
+
+        $('.changeStatus').click(function(){
+            var id = $(this).data('id')
+            var value = $(this).data('value')
+            var url = $(this).data('url')
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: {
+                    unitStatus: value
+                },
+                success: function (response) {
+                    $.toast({
+                        heading: 'Thành công',
+                        text: 'Thực hiện thành công',
+                        position: 'top-right',
+                        icon: 'success'
+                    });
+                    location.reload();
+                },
+                error: function (response) {
+                    $.toast({
+                        heading: 'Thất bại',
+                        text: 'Thực hiện không thành công',
+                        position: 'top-right',
+                        icon: 'error'
+                    });
+                }
+            });
+        })
+
+
         var table = $('#table-calculation-unit').DataTable({
             ordering: false,
             columnDefs: [
