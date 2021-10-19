@@ -98,7 +98,7 @@
          @endif
          
          <li class="dropdown">
-            <a href="setting.html" class="dropbtn">
+            <a href="{{route('setting.index')}}" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name">Setting</span>
             </a>

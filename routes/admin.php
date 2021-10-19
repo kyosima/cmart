@@ -66,7 +66,7 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::group(['middleware' => ['role:Boss|Manager,admin']], function () {
         //setting
-        Route::get('setting', [AdminSettingController::class, 'index']);
+        Route::get('setting', [AdminSettingController::class, 'index'])->name('setting.index');
 
         //setting
         Route::post('setting/maintenance-mode', [AdminSettingController::class, 'maintenanceMode'])->name('post.maintenanceMode');
