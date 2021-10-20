@@ -68,8 +68,12 @@
 														
 														<td>
 															<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+																@if(auth()->guard('admin')->user()->can('Xem đơn hàng'))
 																<a href="{{route('order.show', ['order' => $order->id])}}" class="btn bg-info">Xem</a>
+																@endif
+																@if(auth()->guard('admin')->user()->can('Xem DS đơn hàng'))
 																<button type="button" data-url="{{route('order.delete', ['order' => $order->id])}}" class="btn btn-danger ajax-delete">Xóa</button>
+																@endif
 															</div>
 														</td>
 													</tr>

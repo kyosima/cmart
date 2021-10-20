@@ -29,7 +29,7 @@ Route::group(['middleware' => ['admin']], function () {
     // Xem đơn Hàng
     Route::get('chi-tiet-don-hang/{order:id}', [AdminOrderController::class, 'show'])->name('order.show')->middleware('permission:Xem đơn hàng,admin');
     // sửa đơn Hàng
-    Route::put('sua-don-hang/{order:id}', [AdminOrderController::class, 'update'])->name('order.update')->middleware('permission:Sửa đơn hàng,admin');
+    Route::put('cap-nhat-don-hang/{order:id}', [AdminOrderController::class, 'update'])->name('order.update')->middleware('permission:Cập nhật đơn hàng,admin');
     // xóa đơn Hàng
     Route::match(['delete', 'get'],'xoa-don-hang/{order:id}', [AdminOrderController::class, 'delete'])->name('order.delete')->middleware('permission:Xóa đơn hàng,admin');
 
@@ -53,7 +53,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::put('update/{info_company:id}', [AdminInfoCompanyController::class, 'update'])->name('info-company.update')->middleware('permission:Cập nhật trang đơn,admin');
 
         //xóa
-        Route::delete('delete/{info_company:id}', [AdminInfoCompanyController::class, 'delete'])->name('info-company.delete')->middleware('permission:Xóa trang đơn,admin');
+        Route::match(['delete', 'get'], 'delete/{info_company:id}', [AdminInfoCompanyController::class, 'delete'])->name('info-company.delete')->middleware('permission:Xóa trang đơn,admin');
     });
     
     Route::group(['middleware' => ['role:Boss,admin']], function () {

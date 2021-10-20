@@ -59,12 +59,14 @@
                 <a href="loai-khuyen-mai.html">Loại khuyến mãi</a>
             </span>
          </li>
+         @if(auth()->guard('admin')->user()->can('Xem DS đơn hàng'))
          <li class="dropdown">
             <a href="{{route('order.index')}}" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Đơn hàng <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
          </li>
+         @endif
          @if (auth()->guard('admin')->user()->can('Xem kho'))
          <li class="dropdown">
             <a href="{{route('warehouse.index')}}" class="dropbtn">
@@ -73,7 +75,7 @@
             </a>
          </li>
          @endif
-         @if (auth()->guard('admin')->user()->can('All Permissions'))
+         @role('Boss', 'admin')
          <li class="dropdown">
             <a href="#" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
@@ -86,24 +88,28 @@
                 <a href="{{URL::to('/admin/log-viewer/logs')}}">Follow Admin</a>
             </span>
          </li>
+         @endrole
+         @if (auth()->guard('admin')->user()->can('QL thông tin'))
          <li class="dropdown">
             <a href="#" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Info Company <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
+            @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
             <span class="dropdown-content">
                 <a href="{{route('info-company.index')}}">Page</a>
             </span>
+            @endif
          </li>
          @endif
-         
+         @hasanyrole('Manager|Boss', 'admin')
          <li class="dropdown">
             <a href="{{route('setting.index')}}" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name">Setting</span>
             </a>
          </li>
-         
+         @endhasanyrole
         <li class="profile">
             <div class="profile-details">
                 <img src="https://ict-imgs.vgcloud.vn/2020/09/01/19/huong-dan-tao-facebook-avatar.jpg" alt="profileImg">

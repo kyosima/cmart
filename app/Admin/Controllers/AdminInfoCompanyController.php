@@ -39,7 +39,7 @@ class AdminInfoCompanyController extends Controller
             'status' => $request->in_status,
             'sort' => $request->in_sort ? $request->in_sort : 0
         ]);
-        Log::info('Admin '.auth()->guard('admin')->user()->name.' Tạo trang đơn #'.$info_company->id, ['data' => $request->all()]);
+        Log::info('Admin '.auth()->guard('admin')->user()->name.' Tạo trang đơn #'.$info_company->id);
         Session::flash('success', 'Bạn đã thêm thành công !');
         return redirect()->route('info-company.edit', ['info_company' => $info_company->id]);
     }
@@ -55,7 +55,7 @@ class AdminInfoCompanyController extends Controller
             'in_type' => 'required',
             'in_status' => 'required'
         ]);
-        Log::info('Admin '.auth()->guard('admin')->user()->name.' Cập nhật trang đơn #'.$info_company->id, ['data' => $request->all()]);
+        Log::info('Admin '.auth()->guard('admin')->user()->name.' Cập nhật trang đơn #'.$info_company->id);
         $info_company->update([
             'name' => $request->in_name,
             'slug' => $this->createSlug($request->in_name, $info_company->id),
@@ -96,7 +96,11 @@ class AdminInfoCompanyController extends Controller
     }
     public function delete(Request $request, InfoCompany $info_company){
         $info_company->delete();
-        Log::info('Admin '.auth()->guard('admin')->user()->name.' Xóa nhật trang đơn #'.$info_company->id, ['data' => $info_company]);
+        Log::info('Admin '.auth()->guard('admin')->user()->name.' Xóa nhật trang đơn #'.$info_company->id);
+        if ($request->isMethod('get')) {
+            Session::flash('success', 'Thực hiện thành công');
+            return redirect()->route('info-company.index');
+        }
         return response('Thành công', 200);
     }
 }

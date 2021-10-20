@@ -19,7 +19,7 @@
                         LIST PAGE </span>
                     <span class="caption-helper"></span>
                 </div>
-                @if(auth()->guard('admin')->user()->can('Thêm bài viết'))
+                @if(auth()->guard('admin')->user()->can('Tạo trang đơn'))
                 <div class="ps-5">
                     <a href="{{route('info-company.create')}}" class="btn btn-add"><i
                             class="fa fa-plus"></i>
@@ -54,7 +54,7 @@
                             <tr>
                                 <td>{{$item->id}}</td>
                                 <td>
-                                    @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
+                                    @if(auth()->guard('admin')->user()->can('Xem trang đơn'))
                                     <a class="text-decoration-none" href="{{route('info-company.edit', ['info_company' => $item->id])}}">
                                         {{$item->name}}
                                     </a>
@@ -76,7 +76,11 @@
                                     </td>
                                 @endif
                                 <td>{{$item->sort}}</td>
-                                <td><button type="button" class="btn btn-danger ajax-delete" data-url="{{route('info-company.delete', $item->id)}}">Delete</button></td>
+                                <td>
+                                    @if(auth()->guard('admin')->user()->can('Xóa trang đơn'))
+                                    <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('info-company.delete', $item->id)}}">Delete</button>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

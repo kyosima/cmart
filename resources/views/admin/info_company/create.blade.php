@@ -9,8 +9,10 @@
     <div class="wrapper bg-white p-4">
         <div class="portlet-body">
         <div class="d-flex justify-content-end align-items-center">
-                <a href="{{route('info-company.index')}}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i> List</a>
-            </div>
+            @if(auth()->guard('admin')->user()->can('Xem DS trang đơn'))
+            <a href="{{route('info-company.index')}}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i> List</a>
+            @endif
+        </div>
             <form action="{{ route('info-company.store') }}" class="needs-validation" method="post" novalidate>
                 @csrf
                 <div class="mb-3">

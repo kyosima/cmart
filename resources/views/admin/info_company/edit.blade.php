@@ -9,8 +9,12 @@
     <div class="wrapper bg-white p-4">
         <div class="portlet-body">
             <div class="d-flex justify-content-end align-items-center">
+                @if(auth()->guard('admin')->user()->can('Tạo trang đơn'))
                 <a href="{{route('info-company.create')}}" class="btn btn-primary me-3"><i class="fa fa-plus"></i> Create</a>
+                @endif
+                @if(auth()->guard('admin')->user()->can('Xem DS trang đơn'))
                 <a href="{{route('info-company.index')}}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i> List</a>
+                @endif
             </div>
             <form action="{{ route('info-company.update', $info_company->id) }}" class="needs-validation" method="post" novalidate>
                 @csrf
@@ -62,7 +66,14 @@
                     <label for="description" class="form-label">Content:</label>
                     <textarea class="form-control" id="description" name="description" rows="3">{{ $info_company->content }}</textarea>
                 </div>
-                <button type="submit" class="btn btn-info">Update</button>
+                <div class="d-flex justify-content-between align-items-center">
+                    @if(auth()->guard('admin')->user()->can('Cập nhật trang đơn'))
+                    <button type="submit" class="btn btn-info">Update</button>
+                    @endif
+                    @if(auth()->guard('admin')->user()->can('Xóa đơn hàng'))
+                    <a href="{{route('info-company.delete', $info_company->id)}}" class="btn btn-danger" onclick="return confirm('Do you want to delete this ?')">Delete</a>
+                    @endif
+                </div>
             </form>
         </div>
     </div>
