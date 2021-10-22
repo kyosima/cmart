@@ -101,7 +101,7 @@
                                     </button>
                                 </form>
                             </div>
-                           
+
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 freeship">
@@ -132,13 +132,14 @@
                     <div class="col-sm-12 col-md-10 col-lg-10">
                         <div class="product__des-content">
                             <div class="title">
-                                <ul>
+                                {{-- <ul>
                                     <li id="li-mobile">Thông tin chi tiết</li>
                                     <li id="li-pc">Mô tả sản phẩm</li>
-                                </ul>
+                                </ul> --}}
+                                <h5 class="text-center">Thông tin sản phẩm</h5> 
                             </div>
                             <div class="text">
-                                <div class="text_d p-4">
+                                <div class="text_d long-desc-product">
                                     {!! $product->long_desc !!}
                                 </div>
                                 <div class="text-mb tab_mobile-detail">
@@ -210,7 +211,8 @@
                                             </div>
                                             <div class="product_text">
                                                 <p>{{ $product->name }}</p>
-                                                <h5 class="text-danger">{{ formatPrice($product->regular_price) }}</h5>
+                                                <h5 class="text-danger">{{ formatPrice($product->regular_price) }}
+                                                </h5>
                                             </div>
                                         </div>
                                     </div>
@@ -225,25 +227,290 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="product-comment">
                                 <h5>Hỏi đáp & đánh giá sản phẩm</h5>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-5 col-lg-5">
-                                       <div class="star-score">
-                                        5.0
-                                        </div> 
-                                        
+                                    <div class="col-sm-12 col-md-6 col-lg-6 text-center" style="border-right: 1px solid #ddd">
+                                        <div class="counter-rating-left d-flex align-items-center justify-content-center">
+                                            <span class="rating-number">{{ $rating_average }}</span> <span>({{ $rating_count }} đánh giá)</span>
+                                        </div>
+                                        <div class="counter-rating d-flex align-items-center justify-content-center">
+                                            <div class="counter-rating-right">
+                                                <div class="star-ratings">
+                                                    <div class="fill-ratings" style="width: {{$rating_average/5*100}}%;">
+                                                        <span>★★★★★</span>
+                                                    </div>
+                                                    <div class="empty-ratings">
+                                                        <span>★★★★★</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                  
+                                        <div class="rating-product text-center">
+                                            <button type="button" class="btn btn-primary btn-outline" data-toggle="modal"
+                                                data-target="#rating-modal">
+                                                Đánh giá sản phẩm
+                                            </button>
+                                        </div>
 
-                         
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="bar-list">
+                                            <div class="bar-statistic d-flex align-items-center">
+                                                <div class="bar-icon"><i class="fas fa-star"></i>5</div>
+                                                <div class="bar-view">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar"
+                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[0] / $rating_count) * 100 }}%"
+                                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="bar-counter"><span>{{ $rating_list[0] }}</span></div>
+                                            </div>
+                                            <div class="bar-statistic d-flex align-items-center">
+                                                <div class="bar-icon"><i class="fas fa-star"></i>4</div>
+                                                <div class="bar-view">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar"
+                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[1] / $rating_count) * 100 }}%"
+                                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="bar-counter"><span>{{ $rating_list[1] }}</span></div>
+                                            </div>
+                                            <div class="bar-statistic d-flex align-items-center">
+                                                <div class="bar-icon"><i class="fas fa-star"></i>3</div>
+                                                <div class="bar-view">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar"
+                                                            style="width: {{  $rating_list[0] >0 ? 0:($rating_list[2] / $rating_count) * 100 }}%"
+                                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="bar-counter"><span>{{ $rating_list[2] }}</span></div>
+                                            </div>
+                                            <div class="bar-statistic d-flex align-items-center">
+                                                <div class="bar-icon"><i class="fas fa-star"></i>2</div>
+                                                <div class="bar-view">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar"
+                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[3] / $rating_count) * 100 }}%"
+                                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="bar-counter"><span>{{ $rating_list[3] }}</span></div>
+                                            </div>
+                                            <div class="bar-statistic d-flex align-items-center">
+                                                <div class="bar-icon"><i class="fas fa-star"></i>1</div>
+                                                <div class="bar-view">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar"
+                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[4] / $rating_count) * 100 }}%"
+                                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="bar-counter"><span>{{ $rating_list[4] }}</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                        <div class="d-flex align-items-center justify-content-center vh-100">
+                                            <div class="container">
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-12">
+                                                        <h5>{{$rating_count}} đánh giá</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="row  mb-4">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                                        <div class="comments">
+                                                            @foreach ($ratings as $rating)
+                                                                
+                                                            <div class="comment d-flex mb-4">
+                                                                <div class="flex-shrink-0">
+                                                                    <div class="avatar avatar-sm rounded-circle">
+                                                                        <span class="avatar-img">
+                                                                            <span>{{substr($rating->fullname, 0,1)}}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-2 ms-sm-3">
+                                                                    <div class="comment-meta d-flex align-items-baseline align-items-center">
+                                                                        <h6 class="me-2 mr-1">{{$rating->fullname}}</h6>
+                                                                        <span class="text-muted">{{date('d/m/y H:i:s', strtotime($rating->created_at))}}</span>
+                                                                    </div>
+                                                                    <div class="rating-body counter-rating">
+                                                                        <div class="star-ratings">
+                                                                            <div class="fill-ratings" style="width: {{$rating->value/5 *100}}%;">
+                                                                                <span>★★★★★</span>
+                                                                            </div>
+                                                                            <div class="empty-ratings">
+                                                                                <span>★★★★★</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
+                                                                    <div class="comment-body">
+                                                                        {{$rating->comment}}
+                                                                    </div>
+
+                                                                    {{-- <div class="comment-replies bg-light p-3 mt-3 rounded">
+                                                                        <h6
+                                                                            class="comment-replies-title mb-4 text-muted text-uppercase">
+                                                                            2 replies</h6>
+
+                                                                        <div class="reply d-flex mb-4">
+                                                                            <div class="flex-shrink-0">
+                                                                                <div
+                                                                                    class="avatar avatar-sm rounded-circle">
+                                                                                    <img class="avatar-img"
+                                                                                        src="https://images.unsplash.com/photo-1501325087108-ae3ee3fad52f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=f7f448c2a70154ef85786cf3e4581e4b"
+                                                                                        alt="">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex-grow-1 ms-2 ms-sm-3">
+                                                                                <div
+                                                                                    class="reply-meta d-flex align-items-baseline">
+                                                                                    <h6 class="mb-0 me-2">Brandon
+                                                                                        Smith</h6>
+                                                                                    <span class="text-muted">2d</span>
+                                                                                </div>
+                                                                                <div class="reply-body">
+                                                                                    Lorem ipsum dolor sit, amet consectetur
+                                                                                    adipisicing elit.
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="reply d-flex">
+                                                                            <div class="flex-shrink-0">
+                                                                                <div
+                                                                                    class="avatar avatar-sm rounded-circle">
+                                                                                    <img class="avatar-img"
+                                                                                        src="https://uifaces.co/our-content/donated/6f6p85he.jpg"
+                                                                                        alt="">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex-grow-1 ms-2 ms-sm-3">
+                                                                                <div
+                                                                                    class="reply-meta d-flex align-items-baseline">
+                                                                                    <h6 class="mb-0 me-2">James
+                                                                                        Parsons</h6>
+                                                                                    <span class="text-muted">1d</span>
+                                                                                </div>
+                                                                                <div class="reply-body">
+                                                                                    Lorem ipsum dolor sit amet, consectetur
+                                                                                    adipisicing elit. Distinctio dolore sed
+                                                                                    eos sapiente, praesentium.
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> --}}
+                                                                </div>
+                                                            </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="rating-modal" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered " role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Đánh giá sản phẩm
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-2">
+                                                        <img src="{{ asset($product->feature_img) }}" alt=""
+                                                            class="w-100">
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p>{{ $product->name }}</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <section class='rating-widget'>
+                                                    <!-- Rating Stars Box -->
+                                                    <div class='success-box text-center'>
+                                                        <div class='text-message'></div>
+                                                    </div>
+                                                    <div class='rating-stars text-center'>
+                                                        <ul id='stars'>
+                                                            <li class='star' title='Poor' data-value='1'>
+                                                                <i class='fa fa-star fa-fw'></i>
+                                                            </li>
+                                                            <li class='star' title='Fair' data-value='2'>
+                                                                <i class='fa fa-star fa-fw'></i>
+                                                            </li>
+                                                            <li class='star' title='Good' data-value='3'>
+                                                                <i class='fa fa-star fa-fw'></i>
+                                                            </li>
+                                                            <li class='star' title='Excellent' data-value='4'>
+                                                                <i class='fa fa-star fa-fw'></i>
+                                                            </li>
+                                                            <li class='star' title='WOW!!!' data-value='5'>
+                                                                <i class='fa fa-star fa-fw'></i>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <form id="form-comment" method="post"
+                                                        action="{{ route('san-pham.danhgia') }}">
+                                                        <div class="error-rating alert alert-warning text-center"
+                                                            style="display: none">
+                                                            <p></p>
+                                                        </div>
+                                                        <input type="hidden" name="value" value="0">
+                                                        <input type="hidden" name="product_id" value="{{ $product->id }}"
+                                                            min="1">
+
+                                                        <div class="form-group comment-text-area">
+                                                            <label for="">Nhập bình luận</label>
+                                                            <textarea class="form-control" rows="3" minlength="10"
+                                                                name="comment" required></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Họ và tên</label>
+                                                            <input type="text" class="form-control" name="fullname"
+                                                                required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Số điện thoại</label>
+                                                            <input type="number" class="form-control" name="phone"
+                                                                required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button class="btn btn-danger w-100" type="submit">Gửi đánh
+                                                                giá</button>
+                                                        </div>
+                                                    </form>
+
+
+                                                </section>
+
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
                     <div class="col-sm-12 col-md-2 col-lg-2 category">
                         <div>
@@ -258,16 +525,17 @@
                                     <div class="product_text">
                                         <p>{{ $item->name }}</p>
                                         @if ($item->productPrice()->value('shock_price') != null || $item->productPrice()->value('shock_price') != 0)
-                                            <h5>{{formatPrice(  $item->productPrice()->value('shock_price') )}}</h5>
-                                            <h5 id="h5">{{formatPrice(  $item->productPrice()->value('regular_price') )}}</h5>
+                                            <h5>{{ formatPrice($item->productPrice()->value('shock_price')) }}</h5>
+                                            <h5 id="h5">{{ formatPrice($item->productPrice()->value('regular_price')) }}
+                                            </h5>
                                         @else
-                                            <h5>{{ formatPrice( $item->productPrice()->value('regular_price') )}}</h5>
+                                            <h5>{{ formatPrice($item->productPrice()->value('regular_price')) }}</h5>
                                         @endif
                                     </div>
                                 </div>
                             @endforeach
 
-                           
+
                         </div>
                     </div>
                 </div>
@@ -296,9 +564,9 @@
                                             @if ($item->productPrice()->value('shock_price') != null || $item->productPrice()->value('shock_price') != 0)
 
                                                 <span
-                                                    class="price-was">{{formatPrice( $item->productPrice()->value('regular_price') )}}</span>
+                                                    class="price-was">{{ formatPrice($item->productPrice()->value('regular_price')) }}</span>
                                                 <span
-                                                    class="price-save">{{formatPrice( $item->productPrice()->value('shock_price') )}}</span>
+                                                    class="price-save">{{ formatPrice($item->productPrice()->value('shock_price')) }}</span>
                                             @else
                                                 <span class="price">
                                                     <span
@@ -320,11 +588,10 @@
 
 
 @push('scripts')
-    <script src="{{ asset('public/js/jquery.js') }}"></script>
     <script src="{{ asset('public/js/fotorama.js') }}"></script>
     <script src="{{ asset('public/js/main.js') }}"></script>
     <script src="https://kenwheeler.github.io/slick/slick/slick.js"></script>
-
+    <script src="{{ asset('public/js/rating.js') }}"></script>
     <script src="{{ asset('public/js/lastview_product.js') }}"></script>
 
 @endpush

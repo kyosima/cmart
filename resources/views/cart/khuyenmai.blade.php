@@ -11,12 +11,12 @@
         <div class="container-fruid">
             <!-- banner -->
             <div class="banner-header">
-                <a href="#"><img class="banner-header-item" src="{{asset('assets/image/banner1.jpeg')}}" alt=""></a>
+                <a href="#"><img class="banner-header-item" src="{{asset('public/assets/image/banner1.jpeg')}}" alt=""></a>
             </div>
             <div class="container">
                 <div class="row">
                     <div class="banner">
-                        <a href="#"><img class="banner-item" src="{{asset('assets/image/banner2.jpeg')}}" alt=""></a>
+                        <a href="#"><img class="banner-item" src="{{asset('public/assets/image/banner2.jpeg')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
@@ -24,10 +24,10 @@
                         <div class="slider-product">
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -45,10 +45,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -66,10 +66,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -87,10 +87,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -108,10 +108,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -129,10 +129,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -158,7 +158,7 @@
                 </div>
                 <div class="row">
                     <div class="banner">
-                        <a href="#"><img class="banner-item" src="{{asset('assets/image/banner3.jpeg')}}" alt=""></a>
+                        <a href="#"><img class="banner-item" src="{{asset('public/assets/image/banner3.jpeg')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
@@ -166,10 +166,10 @@
                         <div class="slider-product">
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -187,10 +187,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -208,10 +208,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -229,10 +229,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -250,10 +250,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -281,26 +281,26 @@
                 </div>
                 <div class="row">
                     <div class="banner">
-                        <a href="#"> <img class="banner-item" src="{{asset('assets/image/banner4.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="banner-item" src="{{asset('public/assets/image/banner4.jpeg')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="donggia col-6 col-md-6 col-lg-3">
-                        <a href="#"><img class="donggia-item " src="{{asset('assets/image/thuonghieu1.jpeg')}}" alt=""></a>
+                        <a href="#"><img class="donggia-item " src="{{asset('public/assets/image/thuonghieu1.jpeg')}}" alt=""></a>
                     </div>
                     <div class="donggia col-6 col-md-6 col-lg-3">
-                        <a href="#"> <img class="donggia-item" src="{{asset('assets/image/thuonghieu2.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="donggia-item" src="{{asset('public/assets/image/thuonghieu2.jpeg')}}" alt=""></a>
                     </div>
                     <div class="donggia col-6 col-md-6 col-lg-3">
-                        <a href="#"> <img class="donggia-item" src="{{asset('assets/image/thuonghieu3.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="donggia-item" src="{{asset('public/assets/image/thuonghieu3.jpeg')}}" alt=""></a>
                     </div>
                     <div class="donggia col-6 col-md-6 col-lg-3">
-                        <a href="#"> <img class="donggia-item" src="{{asset('assets/image/thuonghieu4.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="donggia-item" src="{{asset('public/assets/image/thuonghieu4.jpeg')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="banner">
-                        <a href="#"> <img class="banner-item" src="{{asset('assets/image/banner5.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="banner-item" src="{{asset('public/assets/image/banner5.jpeg')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
@@ -308,10 +308,10 @@
                         <div class="slider-product">
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -329,10 +329,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -350,10 +350,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -371,10 +371,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -392,10 +392,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -421,7 +421,7 @@
                 </div>
                 <div class="row">
                     <div class="banner">
-                        <a href="#"> <img class="banner-item" src="{{asset('assets/image/banner6.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="banner-item" src="{{asset('public/assets/image/banner6.jpeg')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
@@ -429,10 +429,10 @@
                         <div class="slider-product">
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -450,10 +450,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -471,10 +471,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -492,10 +492,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -513,10 +513,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -544,7 +544,7 @@
                 <!-- thực phẩm tăng cường sức khỏe -->
                 <div class="row">
                     <div class="banner">
-                        <a href="#"> <img class="banner-item" src="{{asset('assets/image/banner7.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="banner-item" src="{{asset('public/assets/image/banner7.jpeg')}}" alt=""></a>
                     </div>
                 </div>
                 <!-- product thực phẩm tăng cường sức khỏe  -->
@@ -553,10 +553,10 @@
                         <div class="slider-product">
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -574,10 +574,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -595,10 +595,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -616,10 +616,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -637,10 +637,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -668,7 +668,7 @@
                 <!-- xua tan lo lắng -->
                 <div class="row">
                     <div class="banner">
-                        <a href="#"> <img class="banner-item" src="{{asset('assets/image/banner8.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="banner-item" src="{{asset('public/assets/image/banner8.jpeg')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
@@ -676,10 +676,10 @@
                         <div class="slider-product">
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -697,10 +697,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -718,10 +718,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -739,10 +739,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -760,10 +760,10 @@
                             <!--  -->
                             <div class="slider-product-item">
                                 <div class="slider-product-item-box">
-                                    <a href=""><img src="{{asset('assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
+                                    <a href=""><img src="{{asset('public/assets/image/kemtay.jpg')}}" alt="" class="slider-product-item-box-img"></a>
                                 </div>
                                 <div class="block-sale">
-                                    <img src="{{asset('assets/image/background-sale.png')}}" alt="">
+                                    <img src="{{asset('public/assets/image/background-sale.png')}}" alt="">
                                     <span>-17%</span>
                                 </div>
                                 <div class="slider-product-item-box-detail">
@@ -791,26 +791,26 @@
                 <!-- siêu sale thương hiệu -->
                 <div class="row">
                     <div class="banner">
-                        <a href="#"> <img class="banner-item" src="{{asset('assets/image/banner9.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="banner-item" src="{{asset('public/assets/image/banner9.jpeg')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="donggia col-6 col-md-6 col-lg-3">
-                        <a href="#"><img class="donggia-item " src="{{asset('assets/image/thuonghieu1.jpeg')}}" alt=""></a>
+                        <a href="#"><img class="donggia-item " src="{{asset('public/assets/image/thuonghieu1.jpeg')}}" alt=""></a>
                     </div>
                     <div class="donggia col-6 col-md-6 col-lg-3">
-                        <a href="#"> <img class="donggia-item" src="{{asset('assets/image/thuonghieu2.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="donggia-item" src="{{asset('public/assets/image/thuonghieu2.jpeg')}}" alt=""></a>
                     </div>
                     <div class="donggia col-6 col-md-6 col-lg-3">
-                        <a href="#"> <img class="donggia-item" src="{{asset('assets/image/thuonghieu3.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="donggia-item" src="{{asset('public/assets/image/thuonghieu3.jpeg')}}" alt=""></a>
                     </div>
                     <div class="donggia col-6 col-md-6 col-lg-3">
-                        <a href="#"> <img class="donggia-item" src="{{asset('assets/image/thuonghieu4.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="donggia-item" src="{{asset('public/assets/image/thuonghieu4.jpeg')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="banner">
-                        <a href="#"> <img class="banner-item" src="{{asset('assets/image/banner10.jpeg')}}" alt=""></a>
+                        <a href="#"> <img class="banner-item" src="{{asset('public/assets/image/banner10.jpeg')}}" alt=""></a>
                     </div>
                 </div>
             </div>

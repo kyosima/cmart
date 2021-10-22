@@ -499,6 +499,9 @@ li {
         display: none;
     }
 }
+p{
+    line-height: 20px;
+}
 /* header-tablet-mobile */
 @media (max-width: 991px) {
 }
@@ -618,7 +621,7 @@ li {
     .header-search {
         position: relative;
     }
-
+   
     .form-search {
         padding-bottom: 10px;
     }

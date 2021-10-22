@@ -956,6 +956,10 @@ input#rate-1:checked ~ label {
 .product_text{
   padding: 10px 0px;
 }
+.long-desc-product img{
+  width: 100% !important;
+  height: unset !important;
+}
 
 @media only screen and (max-width: 991px) and (min-width: 500px) {
   .category-product {
@@ -1121,6 +1125,7 @@ input#rate-1:checked ~ label {
   .product__detail .ads-mobile {
     display: block;
   }
+ 
   .product__detail .quality {
     display: -webkit-box;
     display: -ms-flexbox;

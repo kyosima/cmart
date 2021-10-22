@@ -93,6 +93,11 @@ Route::resources([
     'san-pham' => ProductController::class
 ]);
 
+Route::prefix('san-pham')->group(function () {
+    Route::post('danh-gia', [ProductController::class, 'postRating'])->name('san-pham.danhgia');
+});
+
+
 
 Route::get('lay-quan-huyen-theo-tinh-thanh', [ShippingController::class, 'districtOfProvince']);
 

@@ -8,6 +8,7 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Models\Brand;
+use App\Models\ProductRating;
 
 class ProductController extends Controller
 {
@@ -71,8 +72,19 @@ class ProductController extends Controller
             $categoryIds = array_diff( $categoryIds, [0] );
             $new_products = Product::latest()->paginate(5);
             $lastview_product = Product::latest()->paginate(10);
-
-            return view('product.product_detail', ['product' => $product, 'categoryIds' => $categoryIds, 'new_products'=>$new_products, 'lastview_product'=>$lastview_product]);
+            $ratings = $product->ratings()->latest()->get();
+            $rating_sum = $product->ratings()->sum('value');
+            $rating_count = $product->ratings()->count();
+            
+            $rating_average = $rating_sum >0 ?  number_format($rating_sum / $rating_count,1):0;
+            $rating_list = [$product->ratings()->whereValue(5)->count(),
+                            $product->ratings()->whereValue(4)->count(),
+                            $product->ratings()->whereValue(3)->count(),
+                            $product->ratings()->whereValue(2)->count(),
+                            $product->ratings()->whereValue(1)->count()
+                            ];
+            
+            return view('product.product_detail', ['ratings'=>$ratings, 'rating_list'=>$rating_list,'rating_count'=>$rating_count,'rating_average'=>$rating_average, 'product' => $product, 'categoryIds' => $categoryIds, 'new_products'=>$new_products, 'lastview_product'=>$lastview_product]);
         }
     }
 
@@ -108,5 +120,21 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+
+    public function postRating(Request $request){
+        $phone = $_POST['phone'];
+        $value = $_POST['value'];
+        $fullname = $_POST['fullname'];
+        $comment = $_POST['comment'];
+        $product_id = $_POST['product_id'];
+        $check = ProductRating::wherePhone($phone)->whereProductId($product_id)->first();
+        if($check == null){
+            ProductRating::insert(['phone'=> $phone, 'fullname'=>$fullname, 'value'=>$value, 'product_id'=>$product_id, 'comment'=>$comment]);
+            return 'Gửi đánh giá thành công';
+        }else{
+            return  'Bạn đã đánh giá sản phẩm này rồi';
+        }
     }
 }
