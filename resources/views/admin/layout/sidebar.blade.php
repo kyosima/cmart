@@ -97,7 +97,7 @@
          </li>
          @endif
          <li class="dropdown">
-            <a href="danhsach" class="dropbtn">
+            <a href="admin/user/danhsach" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name">Danh sách user</span>
             </a>

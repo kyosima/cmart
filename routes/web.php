@@ -14,7 +14,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Admin\Controllers\AdminHomeController;
 use App\Admin\Controllers\AdminRolesController;
-
+use App\Http\Controllers\UserProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -77,7 +77,7 @@ Route::get('/quen-mat-khau', function () {
     return view('account.quen-mat-khau');
 });
 
-
+// Route::get('danhsach',[UserController::class, 'getDanhsach']);
 
 Route::group(['prefix'=>'admin'], function() {
     Route::group(['prefix'=>'user'], function() {
@@ -87,3 +87,13 @@ Route::group(['prefix'=>'admin'], function() {
         Route::post('profile/{id}','UserController@postEdit');
     });
 });
+Route::get('/login', [HomeController::class, 'getLogin']);
+Route::post('/login', [HomeController::class, 'postLogin']);
+
+Route::get('/register', [HomeController::class, 'getRegister']);
+Route::post('/register', [HomeController::class, 'postRegister']);
+
+Route::get('/logout', [HomeController::class, 'getLogout']);
+
+Route::get('/profileUser', [HomeController::class, 'getProfile']);
+Route::post('/profileUser', [HomeController::class, 'postProfile']);

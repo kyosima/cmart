@@ -239,14 +239,21 @@
                 <a class="nav-link" href="#">
                   (028) 7108 8889 <i class="fas fa-phone-alt"></i></a>
               </li> -->
+              @if(Auth::check()===false)
                 <li class="nav-item">
-                  <a class="nav-link" href="{{url('/tai-khoan')}}"> Đăng nhập</a>
+                  <a class="nav-link" href="login"> Đăng nhập</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link gach" href="{{url('/tai-khoan')}}">Đăng ký</a>
+                  <a class="nav-link gach" href="register">Đăng ký</a>
                 </li>
-
-
+              @else
+                <li class="nav-item">
+                  <a class="nav-link text-uppercase" href="profileUser">{{Auth::User()->name}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-uppercase gach" href="logout">Logout</a>
+                </li>
+              @endif
               </ul>
             </div>
           </nav>

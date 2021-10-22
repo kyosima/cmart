@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 15, 2021 lúc 12:03 PM
+-- Thời gian đã tạo: Th10 22, 2021 lúc 08:23 AM
 -- Phiên bản máy phục vụ: 10.4.11-MariaDB
 -- Phiên bản PHP: 7.4.2
 
@@ -1498,11 +1498,14 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `hoten` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(500) CHARACTER SET utf8mb4 NOT NULL,
   `email` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `level` tinyint(4) NOT NULL DEFAULT 0,
   `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cmnd` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tichluyC` int(9) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -1511,10 +1514,15 @@ CREATE TABLE `users` (
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `password`, `email`, `phone`, `level`, `address`, `created_at`, `updated_at`) VALUES
-(1, 'truong', '$2y$10$GpRjtByq.8BL20XQ8aXWP.jD6P/EDOYzILU9BlIYNx.E1U1Tjd9Hq', 'truong@gmail.com', '1231324', 0, '998 Quang Trung', '2021-10-01 02:27:58', '2021-10-01 02:27:58'),
-(2, 'Riddler', '$2y$10$GpRjtByq.8BL20XQ8aXWP.jD6P/EDOYzILU9BlIYNx.E1U1Tjd9Hq', 'riddler@gmail.com', '463213', 1, '114 Quang Trung', NULL, '2021-10-15 08:53:56'),
-(3, 'kira', '', 'kira@gmail.com', '123456888', 0, '26 nguyen hue', NULL, NULL);
+INSERT INTO `users` (`id`, `name`, `hoten`, `password`, `email`, `phone`, `level`, `address`, `cmnd`, `tichluyC`, `created_at`, `updated_at`) VALUES
+(1, 'truong', '', '$2y$10$GpRjtByq.8BL20XQ8aXWP.jD6P/EDOYzILU9BlIYNx.E1U1Tjd9Hq', 'truong@gmail.com', '1231324', 0, '998 Quang Trung asfas', '', 0, '2021-10-01 02:27:58', '2021-10-15 10:21:41'),
+(2, 'Riddler', '', '$2y$10$GpRjtByq.8BL20XQ8aXWP.jD6P/EDOYzILU9BlIYNx.E1U1Tjd9Hq', 'riddler@gmail.com', '463213', 1, '114 Quang Trung', '', 0, NULL, '2021-10-15 08:53:56'),
+(3, 'kira', '', '', 'kira@gmail.com', '123456888', 0, '26 nguyen hue', '', 0, NULL, NULL),
+(4, 'thinh1', '', '$2y$10$GpRjtByq.8BL20XQ8aXWP.jD6P/EDOYzILU9BlIYNx.E1U1Tjd9Hq', '123@gmail.com', NULL, 0, NULL, '', 0, '2021-10-20 09:47:20', '2021-10-20 09:47:20'),
+(5, 'thinh2', '', '$2y$10$sP0W3See1J9ZwkkijhhDDOusAvbqlGMbsBcI3A6PwVuznKUROR13S', 'thinh@gmail.com', NULL, 0, NULL, '', 0, '2021-10-20 09:52:59', '2021-10-20 09:52:59'),
+(6, 'thinh01165', '', '$2y$10$nQCuRPHiJcgohQ79sqBCSeK.6kw04QQmHpaiZzrcGUfCdl4GOXAMe', 'thinhnguyen01165@gmail.com', NULL, 0, NULL, '', 0, '2021-10-21 06:41:58', '2021-10-21 06:41:58'),
+(9, 'thinh3', 'Thinh nguyen 3', '$2y$10$HjUPTEeC5pZHMvPOOgiDpe4LWnrumxEAGqD5.existagspQJeOt8e', 'thinh3@gmail.com', '01235221111', 0, '114 Quang Trung', '21526600', 0, '2021-10-21 10:52:38', '2021-10-22 06:03:22'),
+(10, 'thinh4', NULL, '$2y$10$3OD7BjE/Xh.MTrGwHQrvouLDUyzWS4eVI9hj.BprUBw1kIpVzV3Vq', 'thinh4@gmail.com', '123456', 0, NULL, NULL, 0, '2021-10-21 10:55:31', '2021-10-21 11:00:37');
 
 -- --------------------------------------------------------
 
@@ -13101,7 +13109,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `user_info`
