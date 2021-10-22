@@ -50,7 +50,7 @@ if (!function_exists('helper')) {
         }elseif($status == 4){
             return '<span class="text-success status-order">Hoàn thành</span>';
         }else{
-            return '<span class="text-light status-order">Đã hủy</span>';
+            return '<span class="text-danger status-order">Đã hủy</span>';
         }
     }
 

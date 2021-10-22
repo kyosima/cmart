@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
+use App\Admin\Requests\StoreInfoCompanyRequest;
 
 class AdminInfoCompanyController extends Controller
 {
@@ -25,12 +26,7 @@ class AdminInfoCompanyController extends Controller
         
     }
 
-    public function store(Request $request){
-        $this->validate($request, [
-            'in_name' => 'required|max:255',
-            'in_type' => 'required',
-            'in_status' => 'required'
-        ]);
+    public function store(StoreInfoCompanyRequest $request){
         $info_company = InfoCompany::create([
             'name' => $request->in_name,
             'slug' => $this->createSlug($request->in_name),
@@ -49,12 +45,7 @@ class AdminInfoCompanyController extends Controller
         return view('admin.info_company.edit', compact('info_company', 'type'));
     }
 
-    public function update(Request $request, InfoCompany $info_company){
-        $this->validate($request, [
-            'in_name' => 'required|max:255',
-            'in_type' => 'required',
-            'in_status' => 'required'
-        ]);
+    public function update(StoreInfoCompanyRequest $request, InfoCompany $info_company){
         Log::info('Admin '.auth()->guard('admin')->user()->name.' Cập nhật trang đơn #'.$info_company->id);
         $info_company->update([
             'name' => $request->in_name,
