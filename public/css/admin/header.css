@@ -75,7 +75,6 @@ img, svg {
 }
 .sidebar li {
   position: relative;
-  margin: 8px 0;
   list-style: none;
 }
 .sidebar li .tooltip {
@@ -226,6 +225,7 @@ img, svg {
 .sidebar.open .profile #log_out {
   width: 50px;
   background: none;
+  cursor: pointer;
 }
 .home-section {
   position: relative;
@@ -361,4 +361,8 @@ label {
 
 .btn-check:focus+.btn, .btn:focus {
   box-shadow: none;
+}
+
+ul.nav-list::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
 }

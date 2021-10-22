@@ -24,4 +24,10 @@
 }
 .select2-container--classic .select2-selection--multiple .select2-selection__choice__remove{
     color: #fff;
+<<<<<<< HEAD
+=======
+}
+.was-validated .select2-container--classic .select2-selection--single{
+    border-color: #dc3545;
+>>>>>>> thinh
 }

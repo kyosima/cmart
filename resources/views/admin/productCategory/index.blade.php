@@ -58,6 +58,7 @@
                                 </div>
                             </div>
                             <div class="form-group d-flex mb-2">
+<<<<<<< HEAD
                                 <label class="col-md-3 control-label">Liên kết tới danh mục khác</label>
                                 <div class="col-md-9">
                                     <select name="linkProCat" class="form-control proCatType">
@@ -74,6 +75,12 @@
                                             @endif
                                         @endforeach
                                     </select>
+=======
+                                <label class="col-md-3 control-label">Miêu tả</label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" name="proCatDescription" rows="3"
+                                        value="{{ old('proCatDescription') }}"></textarea>
+>>>>>>> thinh
                                 </div>
                             </div>
                         </div>

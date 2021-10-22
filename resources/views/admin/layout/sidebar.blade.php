@@ -60,7 +60,7 @@
             </span>
          </li>
          <li class="dropdown">
-            <a href="don-hang.html" class="dropbtn">
+            <a href="{{route('order.index')}}" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Đơn hàng <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
@@ -73,6 +73,10 @@
             </a>
          </li>
          @endif
+<<<<<<< HEAD
+=======
+         @if (auth()->guard('admin')->user()->can('All Permissions'))
+>>>>>>> thinh
          <li class="dropdown">
             <a href="#" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
@@ -82,6 +86,7 @@
                 <a href="{{route('roles.index')}}">Roles</a>
                 <a href="{{route('permissions.index')}}">Permission</a>
                 <a href="{{route('manager-admin.index')}}">List Admin</a>
+<<<<<<< HEAD
             </span>
          </li>
          <li class="dropdown">
@@ -90,21 +95,61 @@
              <span class="links_name w-100 align-items-center d-flex">Follow Action Admin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
          </li>
+=======
+                <a href="{{URL::to('/admin/log-viewer/logs')}}">Follow Admin</a>
+            </span>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropbtn">
+             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <span class="links_name w-100 align-items-center d-flex">Info Company <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            </a>
+            <span class="dropdown-content">
+                <a href="{{route('info-company.index')}}">Page</a>
+            </span>
+         </li>
+         @endif
+         <li class="dropdown">
+            <a href="admin/user/danhsach" class="dropbtn">
+             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <span class="links_name">Danh sách user</span>
+            </a>
+         </li>
+
+>>>>>>> thinh
          <li class="dropdown">
             <a href="setting.html" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name">Setting</span>
             </a>
          </li>
+         
         <li class="profile">
             <div class="profile-details">
-                <img src="./image/header/avatar.jpg" alt="profileImg">
+                <img src="https://ict-imgs.vgcloud.vn/2020/09/01/19/huong-dan-tao-facebook-avatar.jpg" alt="profileImg">
                 <div class="name_job">
-                <div class="name">Tom E. Riddler</div>
-                <div class="job">Science Technology</div>
+                <div class="name">{{auth()->guard('admin')->user()->name}}</div>
+                <div class="job">{{auth()->guard('admin')->user()->getRoleNames()[0]}}</div>
             </div>
             </div>
-            <i class='bx bx-log-out' id="log_out" ></i>
+            <i class='bx bx-log-out' id="log_out" data-bs-toggle="modal" data-bs-target="#modalLogout"></i>
         </li>
     </ul>
+</div>
+<div id="modalLogout" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Logout</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Do you want to logout account ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="{{route('logout')}}" class="btn btn-danger">Logout</a>
+      </div>
+    </div>
+  </div>
 </div>

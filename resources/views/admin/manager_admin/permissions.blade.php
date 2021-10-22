@@ -34,7 +34,11 @@
                 <div class="col-xs-12 col-md-9">
                     <!-- table -->
                     <div class="table__container mt-2">
+<<<<<<< HEAD
                         <table class="table table-hover" id="tblroles" class="display" style="width:100%">
+=======
+                        <table class="table table-hover" id="tblPermission" class="display" style="width:100%">
+>>>>>>> thinh
                             <thead class="table__daily">
                                 <tr>
                                     <th scope="col">Name</th>
@@ -110,7 +114,14 @@
     <!-- format language -->
     <script>
         $(document).ready(function() {
+<<<<<<< HEAD
             $('#tbluser').DataTable({
+=======
+            $('#tblPermission').DataTable({
+                columnDefs: [
+                    { orderable: false, targets: 1 }
+                ],
+>>>>>>> thinh
                 "language": {
                     "emptyTable": "Không có dữ liệu nào !",
                     "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",

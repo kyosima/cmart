@@ -1,13 +1,15 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 use App\Admin\Controllers\AdminProductCategoryController;
 use App\Admin\Controllers\AdminProductController;
 use App\Admin\Controllers\BlogCategoryController;
+use App\Admin\Controllers\AdminHomeController;
+use App\Admin\Controllers\AdminRolesController;
 use App\Admin\Controllers\BlogController;
 use App\Admin\Controllers\BrandController;
 use App\Admin\Controllers\CalculationUnitController;
 use App\Admin\Controllers\WarehouseController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductCategoryController;
@@ -15,9 +17,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\shippingController;
-use App\Admin\Controllers\AdminHomeController;
-use App\Admin\Controllers\AdminRolesController;
-
+use App\Http\Controllers\UserProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +29,7 @@ use App\Admin\Controllers\AdminRolesController;
 |
 */
 
+// Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
 // Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
 Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
 Route::get('/', [HomeController::class, 'home']);
@@ -102,3 +103,23 @@ Route::prefix('san-pham')->group(function () {
 Route::get('lay-quan-huyen-theo-tinh-thanh', [ShippingController::class, 'districtOfProvince']);
 
 Route::get('lay-phuong-xa-theo-quan-huyen', [ShippingController::class, 'wardOfDistrict']);
+// Route::get('danhsach',[UserController::class, 'getDanhsach']);
+
+Route::group(['prefix'=>'admin'], function() {
+    Route::group(['prefix'=>'user'], function() {
+        Route::get('danhsach','UserController@getDanhsach');
+
+        Route::get('profile/{id}','UserController@getEdit');
+        Route::post('profile/{id}','UserController@postEdit');
+    });
+});
+Route::get('/login', [HomeController::class, 'getLogin']);
+Route::post('/login', [HomeController::class, 'postLogin']);
+
+Route::get('/register', [HomeController::class, 'getRegister']);
+Route::post('/register', [HomeController::class, 'postRegister']);
+
+Route::get('/logout', [HomeController::class, 'getLogout']);
+
+Route::get('/profileUser', [HomeController::class, 'getProfile']);
+Route::post('/profileUser', [HomeController::class, 'postProfile']);

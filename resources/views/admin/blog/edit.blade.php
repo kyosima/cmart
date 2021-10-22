@@ -1,6 +1,10 @@
 @extends('admin.layout.master')
 
+<<<<<<< HEAD
 @section('title', 'Sửa bài viết')
+=======
+@section('title', 'Chỉnh sửa bài viết')
+>>>>>>> thinh
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/quanlysanpham.css') }}" type="text/css">
@@ -10,7 +14,11 @@
 <div class="m-3">
     <div class="wrapper bg-white p-4">
         @if (session('success'))
+<<<<<<< HEAD
             <div class="portlet-status mb-2">
+=======
+            <div class="portlet-status">
+>>>>>>> thinh
                 <div class="caption bg-success p-3">
                     <span class="caption-subject bold uppercase text-light">{{session('success')}}</span>
                 </div>
@@ -21,7 +29,11 @@
                 <div class="caption">
                     <i class="fa fa-product-hunt icon-drec" aria-hidden="true"></i>
                     <span class="caption-subject bold uppercase">
+<<<<<<< HEAD
                         Chỉnh sửa bài viết</span>
+=======
+                        Thông tin bài viết</span>
+>>>>>>> thinh
                 </div>
             </div>
         </div>

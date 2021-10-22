@@ -30,7 +30,10 @@
                                                         'child_category' => $childCategory,
                                                         'prefix' => '&nbsp;&nbsp;&nbsp;',
                                                         'proCat' => $proCat,
+<<<<<<< HEAD
                                                         'isLinked' => false,
+=======
+>>>>>>> thinh
                                                         ])
                                                 @endforeach
                                             @endif
@@ -54,6 +57,7 @@
                                     value="{{ old('proCatSlug', $proCat->slug) }}">
                             </div>
                         </div>
+<<<<<<< HEAD
                         <div class="form-group d-flex mb-2">
                             <label class="col-md-3 control-label">Liên kết tới danh mục khác</label>
                             <div class="col-md-9">
@@ -80,6 +84,8 @@
                                 </select>
                             </div>
                         </div>
+=======
+>>>>>>> thinh
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal"

@@ -122,7 +122,6 @@ class ProductController extends Controller
         //
     }
     
-
     public function postRating(Request $request){
         $phone = $_POST['phone'];
         $value = $_POST['value'];

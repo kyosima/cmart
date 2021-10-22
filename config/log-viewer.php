@@ -46,16 +46,22 @@ return [
      |  Route settings
      | -----------------------------------------------------------------
      */
-
     'route'         => [
         'enabled'    => true,
 
         'attributes' => [
             'prefix'     => 'admin/log-viewer',
 
-            'middleware' => env('ARCANEDEV_LOGVIEWER_MIDDLEWARE') ? explode(',', env('ARCANEDEV_LOGVIEWER_MIDDLEWARE')) : null,
+            'middleware' => env('ARCANEDEV_LOGVIEWER_MIDDLEWARE') ? explode(';', env('ARCANEDEV_LOGVIEWER_MIDDLEWARE')) : null,
         ],
     ],
+    // 'route'         => [
+    //     'enabled'    => true,
+    //     'attributes' => [
+    //         'prefix'     => 'admin/log-viewer',
+    //         'middleware' => ["web","admin","role_or_permission:Boss,admin"],
+    //     ],
+    // ],
 
     /* -----------------------------------------------------------------
      |  Log entries per page

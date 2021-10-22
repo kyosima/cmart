@@ -1,5 +1,6 @@
 
 var myOffcanvas = document.getElementById('offcanvas_edit');
+<<<<<<< HEAD
 var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas);
 
 myOffcanvas.addEventListener('hide.bs.offcanvas', function () {
@@ -8,11 +9,30 @@ myOffcanvas.addEventListener('hide.bs.offcanvas', function () {
 });
 
 function actionRoles(element,data, type){
+=======
+
+if(myOffcanvas)
+{
+    var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas);
+    myOffcanvas.addEventListener('hide.bs.offcanvas', function () {
+        $(this).find('form').removeClass('was-validated');
+        // $(".clear-option").empty();
+    });
+}
+
+
+
+function action(element,data, type){
+>>>>>>> thinh
     if(type == 'POST'){
         $(element).prepend(data);
         return;
     }
+<<<<<<< HEAD
     if(type == 'PUT'){
+=======
+    else if(type == 'PUT'){
+>>>>>>> thinh
         $(element).replaceWith(data);
         return;
     }
@@ -27,9 +47,19 @@ function startAjax(element){
 }
 
 function endAjax(element, text){
+<<<<<<< HEAD
     element = element.find('button[type="submit"]');
     element.removeClass('disabled');
     element.html(text);
+=======
+
+    element.find('.select2-selection__rendered').empty();
+    element = element.find('button[type="submit"]');
+    element.removeClass('disabled');
+    element.html(text);
+    
+    // $('.select2-selection__rendered').empty();
+>>>>>>> thinh
 }
 
 $(document).on('submit', '.ajax-form-post', function(e){
@@ -51,7 +81,11 @@ $(document).on('submit', '.ajax-form-post', function(e){
         contentType: false,
     } )
     .done(function(data) {
+<<<<<<< HEAD
         actionRoles(element_show, data, 'POST');
+=======
+        action(element_show, data, 'POST');
+>>>>>>> thinh
         $.toast({
             heading: 'Thành công',
             text: 'Thực hiện thành công',
@@ -103,6 +137,33 @@ $(document).on('click', '.ajax-get-roles', function(e){
     });
 
 });
+<<<<<<< HEAD
+=======
+$(document).on('click', '.ajax-get-admin', function(e){
+
+    $("#offcanvas_edit").find('input[name="in_email_edit"]').val($(this).data('email'));
+    var url = $(this).data('url');
+    $.ajax( {
+        url: url,
+        type: 'GET',
+    } )
+    .done(function(data) {
+        $("#selRoleEdit").html(data);
+    })
+    .fail(function(data) {
+        $.toast({
+            heading: 'Thất bại',
+            text: 'Thực hiện không thành công',
+            position: 'top-right',
+            icon: 'error'
+        });
+    })
+    .always(function() {
+        
+    });
+
+});
+>>>>>>> thinh
 
 $(document).on('click', '.ajax-edit', function(e){
     $("#offcanvas_edit").find('input[name="in_name_edit"]').val($(this).data('name'));
@@ -127,7 +188,11 @@ $(document).on('submit', '.ajax-form-put', function(e){
         data: is.serialize()
     } )
     .done(function(data) {
+<<<<<<< HEAD
         actionRoles(element_show, data, 'PUT');
+=======
+        action(element_show, data, 'PUT');
+>>>>>>> thinh
         bsOffcanvas.hide();
         $.toast({
             heading: 'Thành công',
@@ -135,6 +200,10 @@ $(document).on('submit', '.ajax-form-put', function(e){
             position: 'top-right',
             icon: 'success'
         });
+<<<<<<< HEAD
+=======
+        is.trigger("reset");
+>>>>>>> thinh
       })
       .fail(function(data) {
         $.map(data.responseJSON, function(value) {
