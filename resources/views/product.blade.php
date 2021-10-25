@@ -98,8 +98,8 @@
                                 <p><span>SKU:</span>001AB1496</p>
                                 <p class="quycach"><span>Quy cách:</span>Gói</p>
                             </div>
-                            <div class="trademark info-detail">
-                                <p><span>Thương hiệu:</span>Pasode</p>
+                            <div class="trademark">
+                                <p><span>Thương hiệu:</span>{{$product->productBrand->name}}</p>
                             </div>
                             <div class="origin info-detail">
                                 <p><span>Xuất xứ:</span>Nhật Bản</p>

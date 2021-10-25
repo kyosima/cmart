@@ -3,7 +3,7 @@
 @section('title', 'Trang chủ')
 
 @push('css')
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/home.css') }}" rel="stylesheet" type="text/css">
     
 @endpush
     
@@ -162,7 +162,7 @@
                 @endphp
                 @if (count($products) > 0)
                     <div class="product-block bg-white p-2">
-                        <div class="row">
+                        <div class="row d-flex align-items-center">
                             <div class="col col-12">
                                 <div class="section-title-container">
                                     <p class="section-title section-title-normal">
@@ -173,6 +173,9 @@
                                             </a>
                                         </span>
                                         <b></b>
+                                        <a href="{{route('proCat.index', $proCat->slug)}}" class="view-more text-dark text-right">
+                                            Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                          </a>
                                     </p>
                                 </div>
                             </div>
@@ -188,55 +191,58 @@
                                 </div>
                             </div>
                             <div class="col col-12 col-lg-9">
-                                <div class="row">
-                                    @foreach ($products as $item)
-                                        <div class="col col-6 col-lg-3">
+                                <div class="product-p c">
+                                    <div class="silder-product-1">
+                                        <div class="items">
+                                            @foreach ($products as $item)
+
                                             <div class="sp">
                                                 <div class="box3item">
                                                     <div class="box-img">
-                                                        <a href="{{route('product.index', $item->slug)}}" title="{{$item->name}}" tabindex="0">
-                                                            <img src="{{$item->feature_img}}" alt="{{$item->name}}">
+                                                        <a href="{{route('san-pham.show', $item->slug)}}" title="{{$item->name}}" tabindex="0">
+                                                            <img src="{{asset($item->feature_img)}}" alt="{{$item->name}}">
                                                         </a>
                                                         @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
-                                                            @php
-                                                                $percent = (1 - ($item->productPrice->shock_price/$item->productPrice->regular_price))*100;
-                                                            @endphp
-                                                            <div class="block-sale">
-                                                                <img alt="" src="{{ asset('image/bg-sale.png') }}">
-                                                                <span class="sale">-{{round($percent)}}%</span>
-                                                            </div>
-                                                        @endif
+                                                        @php
+                                                            $percent = (1 - ($item->productPrice->shock_price/$item->productPrice->regular_price))*100;
+                                                        @endphp
+                                                        <div class="block-sale">
+                                                            <img alt="" src="{{ asset('public/image/bg-sale.png') }}">
+                                                            <span class="sale">-{{round($percent)}}%</span>
+                                                        </div>
+                                                    @endif
                                                     </div>
                                                     <div class="detail">
                                                         <h3 class="title">
-                                                            <a href="{{route('product.index', $item->slug)}}" title="{{$item->name}}" tabindex="0">{{$item->name}}</a>
+                                                            <a href="{{route('san-pham.show', $item->slug)}}" title="{{$item->name}}" tabindex="0">
+                                                                {{$item->name}}</a>
                                                         </h3>
                                                         <ul class="box-price">
                                                             @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
-                                                                <li class="price">
-                                                                    <span>{{number_format($item->productPrice->shock_price)}}đ</span>
-                                                                </li>
-                                                                <li class="old-price">
-                                                                    <span>{{number_format($item->productPrice->regular_price)}} đ</span>
-                                                                </li>
-                                                            @else
-                                                                <li class="price">
-                                                                    <span>{{number_format($item->productPrice->shock_price)}}đ</span>
-                                                                </li>
-                                                            @endif
+                                                            <li class="price">
+                                                                <span>{{number_format($item->productPrice->shock_price)}}đ</span>
+                                                            </li>
+                                                            <li class="old-price">
+                                                                <span>{{number_format($item->productPrice->regular_price)}} đ</span>
+                                                            </li>
+                                                        @else
+                                                            <li class="price">
+                                                                <span>{{number_format($item->productPrice->shock_price)}}đ</span>
+                                                            </li>
+                                                        @endif
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endforeach
                                         </div>
-                                    @endforeach
+                                    </div>
                                 </div>
+                                
                             </div>
                             <div class="col col-12">
                                 <div class="text-center mt-2">
-                                    <a href="{{route('proCat.index', $proCat->slug)}}" class="btn btn-success text-light">
-                                        Xem thêm
-                                    </a>
+                                  
                                 </div>
                             </div>
                         </div>
@@ -1186,7 +1192,24 @@
         $('.items').slick({
             infinite: true,
             slidesToShow: 5,
-            slidesToScroll: 5
+            slidesToScroll: 3,
+            responsive: [
+                {
+                breakpoint: 1024, 
+                    settings: {
+                        slidesToShow: 5,
+                        slidesToScroll: 3,
+                        infinite: true
+                    }
+                },
+                {
+                breakpoint: 600,
+                    settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                    }
+                }
+            ]
         });
         $('.items-brand').slick({
             infinite: true,

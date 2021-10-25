@@ -129,7 +129,17 @@ class ProductCategoryController extends Controller
         // VALUE = SỐ LƯỢNG SP THUỘC BRAND
         $countBrand = array_count_values($brandIds);                                    
 
-        return view('danhmucsanpham', compact('proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory'));
+        return view('proCat.danhmucsanpham', compact('proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory'));
+    }
+
+    public function showAll()
+    {
+        $categories = ProductCategory::where('category_parent', 0)
+            ->where('id', '!=', 1)
+            ->with(['childrenCategories.products', 'products'])
+            ->get();
+        
+        return view('proCat.allProCat', compact('categories'));
     }
 
 }

@@ -1,29 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css" />
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
-  <link href="public/css/header.css" rel="stylesheet">
-
-  <title>Document</title>
-</head>
-
-<body>
 
   <!-- Pc -->
   <header class="header-site" id="top">
     <div id="button"> <i class="fas fa-chevron-up"></i></div>
-
 
     <!-- Some content to fill up the page -->
 
@@ -33,7 +14,7 @@
           <div class="logo-header ">
             <h1 title="Siêu thị Nhật Bản Japapa.vn" style="margin: 0;">
               <a href="{{url('/')}}" title="Siêu thị Nhật Bản Japana.vn">
-                <img src="https://japana.vn/uploads/system/1549872401-logo.svg" alt="Siêu thị Nhật Bản Japana.vn">
+                <img src="{{asset('public/image/logo-c.png')}}" alt="Siêu Thị C-Mart">
               </a>
             </h1>
 
@@ -52,119 +33,10 @@
             </div>
             <div class="menu-demuc d-flex justify-content-between">
               <div class="cate-menu" id="main-menu">
-                <a href="{{url('/danh-muc-san-pham')}}">
+                <a href="{{url('san-pham')}}">
                   <p class="title-cate"> Danh mục sản phẩm <i class="fas fa-bars"></i></p>
                 </a>
-                <!-- <p class="title-cate"> Danh mục sản phẩm <a href="#sub-menu" data-toggle="collapse" data-parent="#main-menu" class="fas fa-bars" aria-expanded="false" aria-haspopup="true"></a></p> -->
-                <!-- <div class="collapse list-group-menu" id="sub-menu">
-                  <li class="has-sub">
-                    <a href="#" title="Sản Phẩm Bán Chạy">
-                      <img src="https://japana.vn/uploads/category/1612510003-1557111695-asset-10.png" alt="Sản Phẩm Bán Chạy">
-                      <span>Sản Phẩm Bán Chạy </span>
-                    </a>
-
-                    </ul>
-                  </li>
-                  <li class="has-sub">
-                    <a href="#" title="Collagen">
-                      <img src="https://japana.vn/uploads/category/1545300977-collagen.png" alt="Collagen">
-                      <span>Collagen <i class="fa fa-angle-right" aria-hidden="true"></i>
-                      </span>
-                    </a>
-                    <ul>
-                      <li><a href="#" title="Nước Uống Collagen">
-                          Nước Uống Collagen</a>
-                      </li>
-                      <li><a href="#" title="Collagen Dạng Bột - Thạch Ăn">
-                          Collagen Dạng Bột - Thạch Ăn</a>
-                      </li>
-                      <li><a href="#" title="Collagen Dạng Viên Uống">
-                          Collagen Dạng Viên Uống</a>
-                      </li>
-                    </ul>
-                  </li>
-
-                  <li class="has-sub">
-                    <a href="#" title="Thực Phẩm Làm Đẹp">
-                      <img src="https://japana.vn/uploads/category/1536632955-icon2.png" alt="Thực Phẩm Làm Đẹp">
-                      <span>Thực Phẩm Làm Đẹp <i class="fa fa-angle-right" aria-hidden="true"></i>
-                      </span>
-                    </a>
-                    <ul>
-                      <li><a href="#" title="Trắng Da - Trị Nám">
-                          Trắng Da - Trị Nám</a>
-                      </li>
-                      <li><a href="#" title="Nhau Thai - Placenta">
-                          Nhau Thai - Placenta</a>
-                      </li>
-                      <li><a href="#" title="Giấm Đen - Nghệ Đen - Tỏi Đen">
-                          Giấm Đen - Nghệ Đen - Tỏi Đen</a>
-                      </li>
-                      <li><a href="#" title="Sữa Ong Chúa - Chống Lão Hóa">
-                          Sữa Ong Chúa - Chống Lão Hóa</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="has-sub">
-                    <a href="#" title="Giảm cân">
-                      <img src="https://japana.vn/uploads/category/1536632988-icon4.png" alt="Giảm cân">
-                      <span>Giảm cân </span>
-                    </a>
-                    <ul>
-                    </ul>
-                  </li>
-                  <li class="has-sub">
-                    <a href="https://japana.vn/thuc-pham-chuc-nang/" title="Chăm Sóc Sức Khỏe">
-                      <img src="https://japana.vn/uploads/category/1536633007-icon5.png" alt="Chăm Sóc Sức Khỏe">
-                      <span>Chăm Sóc Sức Khỏe <i class="fa fa-angle-right" aria-hidden="true"></i>
-                      </span>
-                    </a>
-                    <ul>
-                      <li><a href="#" title="Tảo Xoắn">
-                          Tảo Xoắn</a>
-                      </li>
-                      <li><a href="#" title="Nấm Linh Chi">
-                          Nấm Linh Chi</a>
-                      </li>
-                      <li><a href="#" title="Hỗ Trợ Điều Trị Ung Thư">
-                          Hỗ Trợ Điều Trị Ung Thư</a>
-                      </li>
-                      <li><a href="#" title="Hỗ Trợ Xương Khớp">
-                          Hỗ Trợ Xương Khớp</a>
-                      </li>
-                      <li><a href="#" title="Hỗ Trợ Điều Trị Tai Biến">
-                          Hỗ Trợ Điều Trị Tai Biến</a>
-                      </li>
-                      <li><a href="#" title="Hỗ Trợ Não &amp; Trí Nhớ">
-                          Hỗ Trợ Não &amp; Trí Nhớ</a>
-                      </li>
-                      <li><a href="#" title="Thải Độc Gan">
-                          Thải Độc Gan</a>
-                      </li>
-                      <li><a href="#" title="Sức Khỏe &amp; Sinh Lý Nam">
-                          Sức Khỏe &amp; Sinh Lý Nam</a>
-                      </li>
-                      <li><a href="#" title="Sức Khỏe &amp; Sinh Lý Nữ">
-                          Sức Khỏe &amp; Sinh Lý Nữ</a>
-                      </li>
-                      <li><a href="#" title="Chăm Sóc Mắt">
-                          Chăm Sóc Mắt</a>
-                      </li>
-                      <li><a href="#" title="Chăm Sóc Hệ Tiêu Hóa">
-                          Chăm Sóc Hệ Tiêu Hóa</a>
-                      </li>
-                      <li><a href="#" title="Vitamin Tổng Hợp">
-                          Vitamin Tổng Hợp</a>
-                      </li>
-                      <li><a href="#" title="Điều Trị Khác">
-                          Điều Trị Khác</a>
-                      </li>
-                    </ul>
-                  </li>
-
-                </div> -->
-
-
+            
               </div>
               <div class="tag-top">
                 <ul class="d-flex dv-ht">
@@ -260,7 +132,7 @@
             <div class="cart other">
               <a rel="nofollow" href="{{url('/gio-hang')}}" title="Giỏ hàng">
                 <i class="icon-all-new icon-cart icon-cart-header"></i>
-                <span class="number-cart"><abbr class="count-giohang">0</abbr></span>
+                <span class="number-cart"><abbr class="count-giohang">{{ Cart::instance('shopping')->count() > 0 ? Cart::instance('shopping')->count() : '0' }}</abbr></span>
               </a>
             </div>
           </div>
@@ -293,7 +165,7 @@
           </div>
           <div class="logo-nav">
             <a rel="nofollow" href="{{url('/')}}" title="Siêu thị Nhật Bản Japana.vn">
-              <img src="https://japana.vn/uploads/system/1549872401-logo.svg" alt="Siêu thị Nhật Bản Japana.vn">
+              <img src="{{asset('public/image/logo-c-v.png')}}" alt="Siêu thị Nhật Bản Japana.vn">
             </a>
 
           </div>
@@ -301,9 +173,8 @@
 
             <a class="number-cart" rel="nofollow" href="{{url('/gio-hang')}}" title="giỏ hàng">
               <i class="icon-2020 icon-cart-2020"></i>
-              <span class="count-item count-giohang">0</span>
+              <span class="count-item count-giohang">{{ Cart::instance('shopping')->count() > 0 ? Cart::instance('shopping')->count() : '0' }}</span>
             </a>
-
 
           </div>
         </div>

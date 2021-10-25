@@ -253,13 +253,13 @@
         transition: all .4s ease-in-out;
     } */
 
-    .sp1.row a:hover img, .sp2.row a:hover img, .sp3.row a:hover img, .banner.row a:hover img {
+    /* .sp1.row a:hover img, .sp2.row a:hover img, .sp3.row a:hover img, .banner.row a:hover img {
         -webkit-box-shadow: 0 0 17px 2px rgb(0 0 0 / 30%);
         box-shadow: 0 0 17px 2px rgb(0 0 0 / 30%);
         -webkit-transition: all .4s ease-in-out;
         -o-transition: all .4s ease-in-out;
         transition: all .4s ease-in-out;
-    }
+    } */
 
     .product {
         margin: 20px 0;
@@ -304,6 +304,10 @@
         -ms-flex-pack: justify;
         justify-content: space-between;
         width: 100%;
+    }
+    .view-more{
+        font-size: 16px;
+        font-weight: bold;
     }
 
     .section-title {
@@ -504,11 +508,31 @@
             display: block
         }
     }
+    .detail .title a{
+        height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    
+    }
 
     .slider-mobile {
         display: none;
     }
+    @media all and (max-width: 600px) {
 
+    .section-title-normal span{
+        font-size: 13px;
+        width: 75%;
+        margin-right: 0;
+    }
+    .view-more{
+        font-size: 12px;
+    }
+
+}
     @media all and (min-width: 1025px) {
         .anima-hvr:hover:before {
             top: 50%;

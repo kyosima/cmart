@@ -30,4 +30,9 @@ class Product extends Model
     public function warehouses() {
         return $this->belongstoMany(Warehouse::class, 'warehouse_product', 'product_id', 'warehouse_id');
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(ProductRating::class, 'product_id', 'id');
+    }
 }

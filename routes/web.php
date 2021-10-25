@@ -1,20 +1,14 @@
 <?php
-
-use App\Admin\Controllers\AdminProductCategoryController;
-use App\Admin\Controllers\AdminProductController;
-use App\Admin\Controllers\BlogCategoryController;
-use App\Admin\Controllers\BlogController;
-use App\Admin\Controllers\BrandController;
-use App\Admin\Controllers\CalculationUnitController;
-use App\Admin\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
-use App\Admin\Controllers\AdminHomeController;
-use App\Admin\Controllers\AdminRolesController;
-
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\shippingController;
+use App\Http\Controllers\UserProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,7 +20,9 @@ use App\Admin\Controllers\AdminRolesController;
 |
 */
 
-Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
+// Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
+// Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
+Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'showAll'])->name('proCat.showAll');
 Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
 Route::get('/', [HomeController::class, 'home']);
 
@@ -45,13 +41,22 @@ Route::get('/khuyen-mai', function () {
     return view('cart.khuyenmai');
 });
 
-Route::get('/gio-hang', function () {
-    return view('cart.giohang');
+Route::prefix('gio-hang')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::post('add', [CartController::class, 'addCart'])->name('cart.add');
+    Route::post('update', [CartController::class, 'updateCart'])->name('cart.update');
+    Route::post('delete', [CartController::class, 'deleteCart'])->name('cart.delete');
 });
 
-Route::get('/thanh-toan', function () {
-    return view('cart.thanhtoan');
+Route::prefix('thanh-toan')->group(function () {
+    Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('post', [CheckoutController::class, 'postOrder'])->name('checkout.post');
+    Route::get('thanh-cong', [CheckoutController::class, 'orderSuccess'])->name('checkout.orderSuccess');
+
 });
+
+
+
 
 //Route - Theo dõi đơn hàng
 Route::get('/theo-doi-don-hang', function () {
@@ -76,3 +81,37 @@ Route::get('/tai-khoan', function () {
 Route::get('/quen-mat-khau', function () {
     return view('account.quen-mat-khau');
 });
+
+Route::resources([
+    'san-pham' => ProductController::class
+]);
+
+Route::prefix('san-pham')->group(function () {
+    Route::post('danh-gia', [ProductController::class, 'postRating'])->name('san-pham.danhgia');
+});
+
+
+
+Route::get('lay-quan-huyen-theo-tinh-thanh', [ShippingController::class, 'districtOfProvince']);
+
+Route::get('lay-phuong-xa-theo-quan-huyen', [ShippingController::class, 'wardOfDistrict']);
+// Route::get('danhsach',[UserController::class, 'getDanhsach']);
+
+// Route::group(['prefix'=>'admin'], function() {
+//     Route::group(['prefix'=>'user'], function() {
+//         Route::get('danhsach','UserController@getDanhsach');
+
+//         Route::get('profile/{id}','UserController@getEdit');
+//         Route::post('profile/{id}','UserController@postEdit');
+//     });
+// });
+Route::get('/login', [HomeController::class, 'getLogin']);
+Route::post('/login', [HomeController::class, 'postLogin']);
+
+Route::get('/register', [HomeController::class, 'getRegister']);
+Route::post('/register', [HomeController::class, 'postRegister']);
+
+Route::get('/logout', [HomeController::class, 'getLogout']);
+
+Route::get('/profileUser', [HomeController::class, 'getProfile']);
+Route::post('/profileUser', [HomeController::class, 'postProfile']);

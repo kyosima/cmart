@@ -93,7 +93,6 @@
 
 @media (max-width: 739px) {
     .container {
-        padding: 0;
     }
     .product-title {
         display: block;

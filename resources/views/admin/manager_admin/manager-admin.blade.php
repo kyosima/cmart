@@ -57,13 +57,27 @@
                             </div>
                         </div>
                         <div class="mb-3">
+<<<<<<< HEAD
                             <label for="selRole" class="form-label">Roles</label>
                             <select class="form-select select2" id="selRole" name="sel_role" required>
+=======
+                            <label for="selRole" class="form-label">Role</label>
+                            <select class="form-select select2" id="selRole" name="sel_role[]" size="5" multiple required>
+>>>>>>> thinh
                                 <option value="">Vui lòng chọn</option>
                                 @foreach($roles as $value)
                                     <option value="{{$value->name}}">{{$value->name}}</option>
                                 @endforeach
                             </select>
+<<<<<<< HEAD
+=======
+                            <div class="invalid-feedback">
+                                Please choose one of the role
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+>>>>>>> thinh
                         </div>
                         <div class="d-flex align-items-center">
                             <button class="btn btn-primary" type="submit">Create</button>
@@ -74,7 +88,11 @@
                 <div class="col-xs-12 col-md-9">
                     <!-- table -->
                     <div class="table__container mt-2">
+<<<<<<< HEAD
                         <table class="table table-hover" id="tblroles" class="display" style="width:100%">
+=======
+                        <table class="table table-hover" id="tblAdmin" class="display" style="width:100%">
+>>>>>>> thinh
                             <thead class="table__daily">
                                 <tr>
                                     <th scope="col">Name</th>
@@ -88,10 +106,17 @@
                                 <tr class="replaywith-{{$value->id}}">
                                     <td>{{$value->name}}</td>
                                     <td>{{$value->email}}</td>
+<<<<<<< HEAD
                                     <td><span class="badge bg-primary">{{$value->roles[0]->name}}</span></td>
                                     <td>
                                         <button type="button" class="btn btn-warning ajax-edit ajax-get-roles" data-id="{{$value->id}}" data-name="{{$value->name}}" data-url="{{route('roles.edit', $value->id)}}">Edit</button>
                                         <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('roles.destroy', $value->id)}}">Delete</button>
+=======
+                                    <td>{!! showAdminWithRoles($value->roles) !!}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning ajax-edit ajax-get-admin" data-id="{{$value->id}}" data-name="{{$value->name}}" data-email="{{$value->email}}" data-url="{{route('manager-admin.edit', $value->id)}}">Edit</button>
+                                        <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('manager-admin.destroy', $value->id)}}">Delete</button>
+>>>>>>> thinh
                                     </td> 
                                 </tr>
                                 @endforeach
@@ -111,6 +136,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
+<<<<<<< HEAD
             <form data-action="{{route('roles.update', 1)}}" data-element="#tblroles tbody" class="g-3 needs-validation ajax-form-put" method="post" novalidate>
                 @method("PUT")
                 @csrf
@@ -119,16 +145,69 @@
                     <input type="text" class="form-control" name="in_name_edit" id="roleNameEdit" placeholder="Role name">
                     <div class="invalid-feedback">
                         Please enter your role name
+=======
+            <form data-action="{{route('manager-admin.update', 1)}}" class="g-3 needs-validation ajax-form-put" method="post" novalidate>
+                @method("PUT")
+                @csrf
+                <div class="mb-3">
+                    <label for="adminNameEdit" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="in_name_edit" id="adminNameEdit" placeholder="Name" value="" required>
+                    <div class="invalid-feedback">
+                        Please enter your name
                     </div>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
                 </div>
                 <div class="mb-3">
+                    <label for="adminEmailEdit" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="in_email_edit" id="adminEmailEdit" placeholder="Email" value="" required>
+                    <div class="invalid-feedback">
+                        Please enter your email
+>>>>>>> thinh
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+<<<<<<< HEAD
                     <label for="selPermissionEdit" class="form-label">Permission</label>
                     <select class="form-select select2" id="selPermissionEdit" name="sel_permission_edit[]" multiple required>
                         
                     </select>
+=======
+                    <label for="adminNewPassword" class="form-label">New Password</label>
+                    <input type="password" class="form-control" name="in_new_password" id="adminNewPassword" placeholder="New Password" >
+                    <div class="invalid-feedback">
+                        Please enter your new password
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="adminConfirmNewPassword" class="form-label">Confirm New Password</label>
+                    <input type="password" class="form-control" name="in_confirm_new_password" id="adminConfirmNewPassword" placeholder="Confirm New Password" >
+                    <div class="invalid-feedback">
+                        Please enter your confirm new password
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="selRoleEdit" class="form-label">Role</label>
+                    <select class="form-select select2 clear-option" id="selRoleEdit" name="sel_role_edit[]" size="5" multiple required>
+                        
+                    </select>
+                    <div class="invalid-feedback">
+                        Please choose one of the role
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+>>>>>>> thinh
                 </div>
                 <input type="hidden" name="in_id_edit" value="">
                 <div class="d-flex align-items-center">
@@ -161,7 +240,14 @@
     <!-- format language -->
     <script>
         $(document).ready(function() {
+<<<<<<< HEAD
             $('#tbluser').DataTable({
+=======
+            $('#tblAdmin').DataTable({
+                columnDefs: [
+                    { orderable: false, targets: 3 }
+                ],
+>>>>>>> thinh
                 "language": {
                     "emptyTable": "Không có dữ liệu nào !",
                     "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",

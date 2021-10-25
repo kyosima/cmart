@@ -112,10 +112,10 @@
 }
 
 .product__detail .short-desc .title h2 {
-  font-size: 20px;
-  color: #2a2a2a;
-  line-height: 2rem;
-  margin-bottom: 0;
+  font-size: 30px;
+    color: #bb0029;
+    margin-bottom: 25px;
+    line-height: 2rem;
 }
 
 .product__detail .short-desc .code {
@@ -195,7 +195,7 @@
 }
 
 .product__detail .short-desc .quantity input {
-  border: none;
+  border: 2px solid #bb0029;
   outline: none;
   width: 20%;
   padding: 5px;
@@ -370,7 +370,7 @@
 
 .product__des-content .text_d p {
   color: var(--color-a);
-  font-size: var(--font-size-a);
+  font-size: 14px;
 }
 
 .product__des-content .text_d h2 {
@@ -545,7 +545,7 @@
   text-decoration: none;
   pointer-events: none;
   color: var(--color-a);
-  font-size: var(--font-size-a);
+  font-size: var(--fontSize-a);
 }
 
 .product__des .product1 {
@@ -953,6 +953,13 @@ input#rate-1:checked ~ label {
 .search {
   display: none;
 }
+.product_text{
+  padding: 10px 0px;
+}
+.long-desc-product img{
+  width: 100% !important;
+  height: unset !important;
+}
 
 @media only screen and (max-width: 991px) and (min-width: 500px) {
   .category-product {
@@ -1057,7 +1064,7 @@ input#rate-1:checked ~ label {
     margin: 0 5px;
   }
   .row-slide .product-seen .product img {
-    width: 50%;
+    width: 100%;
     max-width: 100%;
   }
   .fotorama__nav-wrap {
@@ -1069,6 +1076,8 @@ input#rate-1:checked ~ label {
   .product__detail .short-desc .title {
     margin-top: 30px;
   }
+ 
+
   .product__detail .short-desc .info-detail {
     display: none;
   }
@@ -1108,7 +1117,7 @@ input#rate-1:checked ~ label {
     font-size: 15px;
   }
   .product__detail .short-desc .quantity {
-    display: none;
+    padding: 10px 0px
   }
   .product__detail .freeship {
     display: block;
@@ -1116,6 +1125,7 @@ input#rate-1:checked ~ label {
   .product__detail .ads-mobile {
     display: block;
   }
+ 
   .product__detail .quality {
     display: -webkit-box;
     display: -ms-flexbox;

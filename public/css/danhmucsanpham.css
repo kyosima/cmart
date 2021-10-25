@@ -16,9 +16,7 @@ a{
 a:hover, a:focus {
     text-decoration: none;
 }
-.container{
-    max-width: 1200px;
-}
+
 ::placeholder {
     color: #999 !important;
     opacity: 1;
@@ -590,10 +588,10 @@ section{
         content:url("../image/banner/banner1mb.jpeg");
     } 
     /* kết */
-    .container, .row{
+    /* .container, .row{
         padding: 0;
         margin: 0;
-    }
+    } */
     .category-page .shop-sidebar{
         padding: 0;
         background: #fff;
@@ -605,7 +603,7 @@ section{
     .widget, .shop-container-inner, .shop-container{
         box-shadow: none;
         border: none;
-        padding: 0;
+        /* padding: 0; */
     }
     .widget-title, .widget-price .title-range{
         font-size: 4.5vw;
@@ -767,6 +765,7 @@ section{
         font-size: 4.1vw !important;
     }
 }
+
 @media only screen and (min-width: 992px) {
     /* check box scroll view */
     .scrollbar:hover::-webkit-scrollbar {

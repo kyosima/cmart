@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @push('css')
-<link rel="stylesheet" href="{{ asset('css/danhmucsanpham.css') }}">
+<link rel="stylesheet" href="{{ asset('public/css/danhmucsanpham.css') }}">
 
 {!! SEOMeta::generate() !!}
 {!! OpenGraph::generate() !!}
@@ -74,7 +74,7 @@
         <div class="row">
             <!-- bên trái -->
             <div id="shopsidebar" class="shop-sidebar col-lg-3 col-md-12 col-sm-12">
-                <form action="{{'http://localhost:85/cmart/'.Request::path()}}" method="get" id="filter_form">
+                <form action="{{url('/').'/'.Request::path()}}" method="get" id="filter_form">
                     <!-- danh mục -->
                     @if (count($subcategory) > 0)
                         <aside class="widget danhmuc">
@@ -213,7 +213,7 @@
                                     <div class="box-image col-lg-12 col-md-4 col-4">
                                         <div class="image-cover">
                                             <a href="#">
-                                                <img src="{{ $item->feature_img }}" alt="">
+                                                <img src="{{asset( $item->feature_img) }}" alt="">
                                             </a>
                                         </div>
                                         @if ($item->shock_price != null || $item->shock_price != 0)
@@ -228,7 +228,7 @@
                                     </div>
                                     <div class="box-text col-lg-12 col-md-8 col-8">
                                         <div class="title-wrapper">
-                                            <a href="{{route('product.index', $item->slug)}}">
+                                            <a href="{{route('san-pham.show', $item->slug)}}">
                                                 <p class="product-title">{{$item->name}}</p>
                                             </a>
                                         </div>

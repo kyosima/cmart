@@ -3,124 +3,55 @@
 @section('title', 'Tài khoản')
 
 @push('css')
-    <link href="{{ asset('css/order_tracking/style.css') }}" rel="stylesheet" type='text/css' />
+    <link href="{{ asset('public/css/account.css') }}" rel="stylesheet" type='text/css' />
 @endpush
 
 @section('content')
-<div class="container">
-    <div class="form-box">
-        <div class="button-box">
-            <div id="btn"></div>
-            <button type="button" class="toggle-btn" onclick="login();">Đăng Nhập</button>
-            <button type="button" class="toggle-btn" onclick="register();">Đăng ký</button>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col col-lg-6 col-md-6 col-xs-12 col-sm-12 ">
+                <section class="loginWrapper">
+
+                    <ul class="tabs">
+                        <li class="active">Đăng nhập</li>
+                        <li>Đăng ký</li>
+                    </ul>
+
+                    <ul class="tab__content">
+
+                        <li class="active">
+                            <div class="content__wrapper">
+                                <form method="POST" action="">
+                                    <input type="email" name="email" placeholder="Tài khoản">
+                                    <input type="password" name="password" placeholder="Mật khẩu">
+                                    <input type="submit" value="Login" name="Đăng nhập">
+                                </form>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="content__wrapper">
+                                <form method="POST" action="">
+                                    <input type="name" name="name" placeholder="Tên tài khoản">
+                                    <input type="email" name="email" placeholder="email">
+                                    <input type="pass" name="pass" placeholder="Mật khẩu">
+                                    <input type="repass" name="repass" placeholder="Nhập lại mật khẩu">
+                                    <input type="submit" value="Register" name="Đăng ký">
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </section>
+            </div>
         </div>
-        <form id="login" class="input-group">
-            <div class="box-input form-group">
-                <div class="icon-form">
-                    <i class="fa fa-user"></i>
-                </div>
-                <input type="text" placeholder="Email hoặc số điện thoại" class="form-control ipt-text">
-            </div>
-            <div class="box-input form-group">
-                <div class="icon-form">
-                    <i class="fa fa-lock"></i>
-                </div>
-                <input type="password" placeholder="Mật khẩu" class="form-control ipt-text">
-            </div>
-
-            <button type="submit" class="btn-red">Đăng nhập</button>
-            <p style="margin-top: 10px;color: red;" id="error-login"></p>
-            <div class="box-check login-popup">
-                <label class="check-custom">Ghi nhớ tài khoản
-                    <a href="#" title="Quên mật khẩu?" data-toggle="modal" class="forgot-pass"
-                        onclick="forgotpassword()">Quên mật khẩu?</a>
-                    <input type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
-                </label>
-            </div>
-        </form>
-
-
-        <form id="register" class="input-group">
-            <div class="box-input form-group">
-                <div class="icon-form">
-                    <i class="fa fa-user"></i>
-                </div>
-                <input type="text" placeholder="Họ và tên" class="form-control ipt-text">
-            </div>
-
-            <div class="box-input form-group">
-                <div class="icon-form">
-                    <i class="fa fa-envelope"></i>
-                </div>
-                <input type="email" placeholder="Email" class="form-control ipt-text">
-            </div>
-            <div class="box-input form-group">
-                <div class="icon-form">
-                    <i class="fa fa-phone"></i>
-                </div>
-                <input type="tel" placeholder="Số điện thoại" class="form-control ipt-text">
-            </div>
-
-            <div class="box-input form-group">
-                <div class="icon-form">
-                    <i class="fa fa-lock"></i>
-                </div>
-                <input type="password" placeholder="Mật khẩu" class="form-control ipt-text">
-            </div>
-            <div class="box-input form-group">
-                <div class="icon-form">
-                    <i class="fa fa-lock" aria-hidden="true"></i>
-                </div>
-                <input type="password" placeholder="Xác nhận mật khẩu" class="form-control ipt-text">
-            </div>
-
-
-            <div class="box-check">
-                <label class="check-custom">Bạn đã đọc và đồng ý với điều khoản sử dụng, mua bán và bảo
-                    mật của <a href="#" title="japana">Japana.vn</a>
-                    <input type="checkbox" id="check-rule" checked="checked">
-                    <span class="checkmark"></span>
-                </label>
-            </div>
-            <div class="box-check2">
-                <label class="check-custom">Đăng ký nhận khuyến mãi từ chúng tôi
-                    <input type="checkbox" id="check-promo" checked="checked">
-                    <span class="checkmark"></span>
-                </label>
-            </div>
-            <button type="submit" name="regis-btn" class="btn-red">Tạo
-                tài khoản</button>
-        </form>
-
-
-
-
-        <form id="forgot-password" class="input-group">
-            <p class="title-log">Lấy lại mật khẩu</p>
-            <form>
-                <p class="intro-log">
-                    Vui lòng nhập địa chỉ email của bạn vào ô bên dưới. Bạn sẽ nhận được một liên kết để thiết lập lại
-                    mật khẩu.
-                </p>
-                <div class="box-input form-group">
-                    <div class="icon-form">
-                        <i class="fa fa-envelope"></i>
-                    </div>
-                    <input type="email" placeholder="Nhập email của bạn" class="form-control ipt-text">
-                </div>
-
-                <button onclick="funcuser.losspass('https://japana.vn/');" type="button" class="btn-red">Lấy lại
-                    mật khẩu</button>
-                <a href="#Login" class="link-return"><i class="fa fa-angle-double-left"></i> Quay lại trang đăng
-                    nhập</a>
-            </form>
-        </form>
     </div>
-</div>
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('public/js/account.js') }}"></script>
+
     <script>
         var x = document.getElementById("login")
         var y = document.getElementById("register")

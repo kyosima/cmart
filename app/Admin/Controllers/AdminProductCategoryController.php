@@ -51,8 +51,7 @@ class AdminProductCategoryController extends Controller
                 'level' => 0,
                 'slug' => $slug,
                 'name' => $request->proCatName,
-                'description' => $request->proCatDescription,
-                'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
+                'description' => $request->proCatDescription
             ]);
             $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới danh mục sản phẩm '. $proCat->name;
             Log::info($message);
@@ -64,8 +63,7 @@ class AdminProductCategoryController extends Controller
                     'level' => $catPar->level + 1,
                     'slug' => $slug,
                     'name' => $request->proCatName,
-                    'description' => $request->proCatDescription,
-                    'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
+                    'description' => $request->proCatDescription
                 ]);
 
                 $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới danh mục sản phẩm '. $proCat->name;
@@ -98,8 +96,7 @@ class AdminProductCategoryController extends Controller
                 'gallery' => rtrim($request->gallery_img, ", "),
                 'meta_desc' => $request->meta_description,
                 'meta_keyword' => $request->meta_keyword,
-                'description' => $request->proCatDescription,
-                'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
+                'description' => $request->proCatDescription
             ]);
             $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục sản phẩm '. $request->proCatName;
             Log::info($message);
@@ -116,8 +113,7 @@ class AdminProductCategoryController extends Controller
                     'gallery' => rtrim($request->gallery_img, ", "),
                     'meta_desc' => $request->meta_description,
                     'meta_keyword' => $request->meta_keyword,
-                    'description' => $request->proCatDescription,
-                    'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat
+                    'description' => $request->proCatDescription
                 ]);
                 $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục sản phẩm '. $request->proCatName;
                 Log::info($message);

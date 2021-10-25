@@ -94,7 +94,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="selPermissionEdit" class="form-label">Permission</label>
-                    <select class="form-select select2" id="selPermissionEdit" name="sel_permission_edit[]" multiple required>
+                    <select class="form-select select2 clear-option" id="selPermissionEdit" name="sel_permission_edit[]" multiple required>
                         
                     </select>
                 </div>
@@ -129,7 +129,10 @@
     <!-- format language -->
     <script>
         $(document).ready(function() {
-            $('#tbluser').DataTable({
+            $('#tblRoles').DataTable({
+                columnDefs: [
+                    { orderable: false, targets: 2 }
+                ],
                 "language": {
                     "emptyTable": "Không có dữ liệu nào !",
                     "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",
