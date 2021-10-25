@@ -79,13 +79,13 @@
          <li class="dropdown">
             <a href="#" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Manager Admin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+             <span class="links_name w-100 align-items-center d-flex">Quản lý Admin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             <span class="dropdown-content">
-                <a href="{{route('roles.index')}}">Roles</a>
-                <a href="{{route('permissions.index')}}">Permission</a>
-                <a href="{{route('manager-admin.index')}}">List Admin</a>
-                <a href="{{URL::to('/admin/log-viewer/logs')}}">Follow Admin</a>
+                <a href="{{route('roles.index')}}">Vai trò</a>
+                <a href="{{route('permissions.index')}}">Quyền</a>
+                <a href="{{route('manager-admin.index')}}">DS Admin</a>
+                <a href="{{URL::to('/admin/log-viewer/logs')}}">Theo dõi Admin</a>
             </span>
          </li>
          @endrole
@@ -93,11 +93,11 @@
          <li class="dropdown">
             <a href="#" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Info Company <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+             <span class="links_name w-100 align-items-center d-flex">Thông tin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
             <span class="dropdown-content">
-                <a href="{{route('info-company.index')}}">Page</a>
+                <a href="{{route('info-company.index')}}">Trang</a>
             </span>
             @endif
          </li>
@@ -106,7 +106,7 @@
          <li class="dropdown">
             <a href="{{route('setting.index')}}" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name">Setting</span>
+             <span class="links_name">Cài đặt</span>
             </a>
          </li>
          @endhasanyrole
@@ -126,15 +126,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Logout</h5>
+        <h5 class="modal-title">Đăng xuất</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Do you want to logout account ?</p>
+        <p>Bạn có muốn đăng xuất ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a href="{{route('logout')}}" class="btn btn-danger">Logout</a>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <a href="{{route('logout')}}" class="btn btn-danger">Đăng xuất</a>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Manager Admin')
+@section('title', 'DS Admin')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/doitac.css') }}" type="text/css">
@@ -17,62 +17,56 @@
                     <form data-action="{{route('manager-admin.store')}}" class="g-3 needs-validation ajax-form-post" method="post" novalidate>
                         @csrf
                         <div class="mb-3">
-                            <label for="adminName" class="form-label">Name</label>
-                            <input type="text" class="form-control" name="in_name" id="adminName" placeholder="Name" value="{{old('in_name')}}" required>
+                            <label for="adminName" class="form-label">Tên</label>
+                            <input type="text" class="form-control" name="in_name" id="adminName" placeholder="Tên" required>
                             <div class="invalid-feedback">
-                                Please enter your name
+                                Vui lòng nhập tên
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Hợp lệ!
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="adminEmail" class="form-label">Email</label>
                             <input type="text" class="form-control" name="in_email" id="adminEmail" placeholder="Email" value="{{old('in_email')}}" required>
                             <div class="invalid-feedback">
-                                Please enter your email
+                                Vui lòng nhập email
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Hợp lệ!
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="adminPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" name="in_password" id="adminPassword" placeholder="Password" required >
+                            <label for="adminPassword" class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" name="in_password" id="adminPassword" placeholder="Mật khẩu" required >
                             <div class="invalid-feedback">
-                                Please enter your password
+                                Vui lòng nhập mật khẩu
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Hợp lệ!
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="adminPasswordConfirm" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" name="in_confirm_password" id="adminPasswordConfirm" placeholder="Confirm password" required>
+                            <label for="adminPasswordConfirm" class="form-label">Nhập lại mật khẩu</label>
+                            <input type="password" class="form-control" name="in_confirm_password" id="adminPasswordConfirm" placeholder="Nhập lại mật khẩu" required>
                             <div class="invalid-feedback">
-                                Please enter your confirm password
+                                Vui lòng nhập lại mật khẩu
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Hơp lệ!
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="selRole" class="form-label">Role</label>
-                            <select class="form-select select2" id="selRole" name="sel_role[]" size="5" multiple required>
+                            <label for="selRole" class="form-label">Vai trò</label>
+                            <select class="form-select select2" id="selRole" name="sel_role[]" size="5" multiple>
                                 <option value="">Vui lòng chọn</option>
                                 @foreach($roles as $value)
                                     <option value="{{$value->name}}">{{$value->name}}</option>
                                 @endforeach
                             </select>
-                            <div class="invalid-feedback">
-                                Please choose one of the role
-                            </div>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
                         </div>
                         <div class="d-flex align-items-center">
-                            <button class="btn btn-primary" type="submit">Create</button>
+                            <button class="btn btn-primary" type="submit">Tạo</button>
                         </div>
                         
                     </form>
@@ -83,10 +77,10 @@
                         <table class="table table-hover" id="tblAdmin" class="display" style="width:100%">
                             <thead class="table__daily">
                                 <tr>
-                                    <th scope="col">Name</th>
+                                    <th scope="col">Tên</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Role</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col">Vai trò</th>
+                                    <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody class="font-size-1">
@@ -96,8 +90,10 @@
                                     <td>{{$value->email}}</td>
                                     <td>{!! showAdminWithRoles($value->roles) !!}</td>
                                     <td>
-                                        <button type="button" class="btn btn-warning ajax-edit ajax-get-admin" data-id="{{$value->id}}" data-name="{{$value->name}}" data-email="{{$value->email}}" data-url="{{route('manager-admin.edit', $value->id)}}">Edit</button>
-                                        <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('manager-admin.destroy', $value->id)}}">Delete</button>
+                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                            <button type="button" class="btn btn-warning ajax-edit ajax-get-admin" data-id="{{$value->id}}" data-name="{{$value->name}}" data-email="{{$value->email}}" data-url="{{route('manager-admin.edit', $value->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('manager-admin.destroy', $value->id)}}"><i class="fa fa-trash"></i></button>
+                                        </div>
                                     </td> 
                                 </tr>
                                 @endforeach
@@ -113,7 +109,7 @@
 
     <div class="offcanvas offcanvas-end" id="offcanvas_edit">
         <div class="offcanvas-header">
-            <h1 class="offcanvas-title">Role Edit</h1>
+            <h1 class="offcanvas-title">Sửa Admin</h1>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
@@ -121,60 +117,54 @@
                 @method("PUT")
                 @csrf
                 <div class="mb-3">
-                    <label for="adminNameEdit" class="form-label">Name</label>
-                    <input type="text" class="form-control" name="in_name_edit" id="adminNameEdit" placeholder="Name" value="" required>
+                    <label for="adminNameEdit" class="form-label">Tên</label>
+                    <input type="text" class="form-control" name="in_name_edit" id="adminNameEdit" placeholder="Tên" value="" required>
                     <div class="invalid-feedback">
-                        Please enter your name
+                        Vùi lòng nhập tên
                     </div>
                     <div class="valid-feedback">
-                        Looks good!
+                        Hợp lệ!
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="adminEmailEdit" class="form-label">Email</label>
                     <input type="email" class="form-control" name="in_email_edit" id="adminEmailEdit" placeholder="Email" value="" required>
                     <div class="invalid-feedback">
-                        Please enter your email
+                        Vui lòng nhập email
                     </div>
                     <div class="valid-feedback">
-                        Looks good!
+                        Hợp lệ!
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="adminNewPassword" class="form-label">New Password</label>
-                    <input type="password" class="form-control" name="in_new_password" id="adminNewPassword" placeholder="New Password" >
+                    <label for="adminNewPassword" class="form-label">Mật khẩu mới</label>
+                    <input type="password" class="form-control" name="in_new_password" id="adminNewPassword" placeholder="Mật khẩu mới" >
                     <div class="invalid-feedback">
-                        Please enter your new password
+                        Vui lòng nhập mật khẩu mới
                     </div>
                     <div class="valid-feedback">
-                        Looks good!
+                        Hợp lệ!
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="adminConfirmNewPassword" class="form-label">Confirm New Password</label>
-                    <input type="password" class="form-control" name="in_confirm_new_password" id="adminConfirmNewPassword" placeholder="Confirm New Password" >
+                    <label for="adminConfirmNewPassword" class="form-label">Nhập lại mật khẩu</label>
+                    <input type="password" class="form-control" name="in_confirm_new_password" id="adminConfirmNewPassword" placeholder="Nhập lại mật khẩu" >
                     <div class="invalid-feedback">
-                        Please enter your confirm new password
+                        Vui lòng nhập lại mật khẩu
                     </div>
                     <div class="valid-feedback">
-                        Looks good!
+                        Hợp lệ!
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="selRoleEdit" class="form-label">Role</label>
-                    <select class="form-select select2 clear-option" id="selRoleEdit" name="sel_role_edit[]" size="5" multiple required>
+                    <label for="selRoleEdit" class="form-label">Vai trò</label>
+                    <select class="form-select select2 clear-option" id="selRoleEdit" name="sel_role_edit[]" size="5" multiple>
                         
                     </select>
-                    <div class="invalid-feedback">
-                        Please choose one of the role
-                    </div>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
                 </div>
                 <input type="hidden" name="in_id_edit" value="">
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-primary" type="submit">Update</button>
+                    <button class="btn btn-primary" type="submit">Cập nhật</button>
                 </div>
                 
             </form>
@@ -218,8 +208,8 @@
                     "paginate": {
                         "first": "First",
                         "last": "Last",
-                        "next": ">",
-                        "previous": "<"
+                        "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
                     }
                 }
             });

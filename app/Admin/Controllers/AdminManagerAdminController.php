@@ -52,14 +52,22 @@ class AdminManagerAdminController extends Controller
             'in_name' => 'required|min:3|unique:App\Models\Admin,name',
             'in_email' => 'required|min:3|email|unique:App\Models\Admin,email',
             'in_password' => 'required|min:3',
-            'in_confirm_password' => 'required|min:3|same:in_password',
+            'in_confirm_password' => 'same:in_password',
             'sel_role' => 'required'
+        ], [
+            'in_name.unique' => 'Tên này đã tồn tại',
+            'in_name.min' => 'Ít nhất 3 ký tự',
+            'in_email.min' => 'Ít nhất 3 ký tự',
+            'in_email.unique' => 'Email này đã tồn tại',
+            'in_password.min' => 'Ít nhất 3 ký tự',
+            'in_confirm_password.same' => 'Mật khẩu không khớp',
+            'sel_role.required' => 'Vui lòng chọn vai trò'
         ]);
         if($validator->fails()){
             return response($validator->errors(), 400);
         }
         if(!Str::isAscii($request->in_name) || Str::contains($request->in_name, ' ')){
-            return Response::json(['error' => ['Please enter field name must not special charactor and space']], 400);
+            return Response::json(['error' => ['Tên không chứa ký tự đặc biệt và khoảng cách']], 400);
         }
         $admin = Admin::create([
             'name' => $request->in_name,
@@ -114,12 +122,20 @@ class AdminManagerAdminController extends Controller
             'in_email_edit' => ['required', 'min:3', Rule::unique('admins', 'email')->ignore($request->in_id_edit)],
             'in_confirm_new_password' => 'same:in_new_password',
             'sel_role_edit' => 'required'
+        ], [
+            'in_name.unique' => 'Tên này đã tồn tại',
+            'in_name.min' => 'Ít nhất 3 ký tự',
+            'in_email.min' => 'Ít nhất 3 ký tự',
+            'in_email.unique' => 'Email này đã tồn tại',
+            'in_password.min' => 'Ít nhất 3 ký tự',
+            'in_confirm_password.same' => 'Mật khẩu không khớp',
+            'sel_role_edit.required' => 'Vui lòng chọn vai trò'
         ]);
         if($validator->fails()){
             return response($validator->errors(), 400);
         }
         if(!Str::isAscii($request->in_name) || Str::contains($request->in_name, ' ')){
-            return Response::json(['error' => ['Please enter field name must not special charactor and space']], 400);
+            return Response::json(['error' => ['Tên không chứa ký tự đặc biệt và khoảng cách']], 400);
         }
         $admin = Admin::find($request->in_id_edit);
         $admin->name = $request->in_name_edit;

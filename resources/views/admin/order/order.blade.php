@@ -18,7 +18,7 @@
 										<button class="btn btn_success"><i class="fas fa-plus"></i> Thêm
 											mới</button>
 										<button class="btn btn_success"><i class="far fa-file-excel"></i>
-											Export</button>
+											Xuất Excel</button>
 									</p>
 
 									<span>
@@ -69,10 +69,10 @@
 														<td>
 															<div class="btn-group" role="group" aria-label="Basic mixed styles example">
 																@if(auth()->guard('admin')->user()->can('Xem đơn hàng'))
-																<a href="{{route('order.show', ['order' => $order->id])}}" class="btn bg-info">Xem</a>
+																<a href="{{route('order.show', ['order' => $order->id])}}" class="btn bg-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 																@endif
 																@if(auth()->guard('admin')->user()->can('Xem DS đơn hàng'))
-																<button type="button" data-url="{{route('order.delete', ['order' => $order->id])}}" class="btn btn-danger ajax-delete">Xóa</button>
+																<button type="button" data-url="{{route('order.delete', ['order' => $order->id])}}" class="btn btn-danger ajax-delete"><i class="fa fa-trash"></i></button>
 																@endif
 															</div>
 														</td>
@@ -114,8 +114,8 @@
                     "paginate": {
                         "first": "First",
                         "last": "Last",
-                        "next": ">",
-                        "previous": "<"
+                        "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
                     }
                 }
             });

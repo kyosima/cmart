@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Manager Page')
+@section('title', 'Trang')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/doitac.css') }}" type="text/css">
@@ -16,14 +16,14 @@
                 <div class="caption">
                     <i class="fa fa-anchor icon-drec" aria-hidden="true"></i>
                     <span class="caption-subject text-uppercase">
-                        LIST PAGE </span>
+                        DANH SÁCH TRANG </span>
                     <span class="caption-helper"></span>
                 </div>
                 @if(auth()->guard('admin')->user()->can('Tạo trang đơn'))
                 <div class="ps-5">
                     <a href="{{route('info-company.create')}}" class="btn btn-add"><i
                             class="fa fa-plus"></i>
-                        Create </a>
+                        Tạo Trang </a>
                 </div>
                 @endif
             </div>
@@ -38,14 +38,14 @@
                             <th class="title-text" style="width: 50px">
                                 STT </th>
                             <th class="title-text title1">
-                                Title</th>
+                                Tiêu đề</th>
                             <th class="title-text title2">
-                                Type
+                                Loại
                             </th>
                             <th class="title-text title4">
-                                Status</th>
+                                Trạng thái</th>
                             <th class="title-text title4">
-                                Sort</th>
+                                Sắp xếp</th>
                             <th class="title-text title4" >Thao tác</th>
                         </tr>
                     </thead>
@@ -78,7 +78,7 @@
                                 <td>{{$item->sort}}</td>
                                 <td>
                                     @if(auth()->guard('admin')->user()->can('Xóa trang đơn'))
-                                    <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('info-company.delete', $item->id)}}">Delete</button>
+                                    <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('info-company.delete', $item->id)}}"><i class="fa fa-trash"></i></button>
                                     @endif
                                 </td>
                             </tr>
@@ -117,8 +117,8 @@
                 "paginate": {
                     "first": "First",
                     "last": "Last",
-                    "next": ">",
-                    "previous": "<"
+                    "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                    "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
                 }
             }
         });

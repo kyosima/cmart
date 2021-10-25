@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Cài đặt')
+@section('title', 'Quyền')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/doitac.css') }}" type="text/css">
@@ -16,17 +16,17 @@
                     <form data-action="{{route('permissions.store')}}" class="g-3 needs-validation ajax-form-post" method="post" novalidate>
                         @csrf
                         <div class="mb-3">
-                            <label for="permissionName" class="form-label">Permission Name</label>
-                            <input type="text" class="form-control" name="in_name" id="permissionName" required placeholder="Permission name">
+                            <label for="permissionName" class="form-label">Tên quyền</label>
+                            <input type="text" class="form-control" name="in_name" id="permissionName" placeholder="Tên quyền">
                             <div class="invalid-feedback">
-                                Please enter your permission name
+                                Vui lòng nhập tên quyền
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Hợp lệ!
                             </div>
                         </div>
                         <div class="d-flex align-items-center">
-                            <button class="btn btn-primary" type="submit">Create</button>
+                            <button class="btn btn-primary" type="submit">Tạo</button>
                         </div>
                         
                     </form>
@@ -37,7 +37,7 @@
                         <table class="table table-hover" id="tblPermission" class="display" style="width:100%">
                             <thead class="table__daily">
                                 <tr>
-                                    <th scope="col">Name</th>
+                                    <th scope="col">Tên</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
@@ -46,8 +46,8 @@
                                 <tr class="replaywith-{{$value->id}}">
                                     <td>{{$value->name}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-warning ajax-edit" data-id="{{$value->id}}" data-name="{{$value->name}}">Edit</button>
-                                        <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('permissions.destroy', $value->id)}}">Delete</button>
+                                        <button type="button" class="btn btn-warning ajax-edit" data-id="{{$value->id}}" data-name="{{$value->name}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('permissions.destroy', $value->id)}}"><i class="fa fa-trash"></i></button>
                                     </td> 
                                 </tr>
                                 @endforeach
@@ -63,7 +63,7 @@
 
     <div class="offcanvas offcanvas-end" id="offcanvas_edit">
         <div class="offcanvas-header">
-            <h1 class="offcanvas-title">Permission Edit</h1>
+            <h1 class="offcanvas-title">Sửa Quyền</h1>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
@@ -71,18 +71,18 @@
             @method("PUT")
             @csrf
             <div class="mb-3">
-                <label for="roleNameEdit" class="form-label">Permission Name</label>
-                <input type="text" class="form-control" name="in_name_edit" id="roleNameEdit" required placeholder="Permission name">
+                <label for="roleNameEdit" class="form-label">Tên quyền</label>
+                <input type="text" class="form-control" name="in_name_edit" id="roleNameEdit" placeholder="Tên quyền">
                 <div class="invalid-feedback">
-                    Please enter your permission name
+                    Vui lòng nhập tên quyền
                 </div>
                 <div class="valid-feedback">
-                    Looks good!
+                    Hợp lệ!
                 </div>
             </div>
             <input type="hidden" name="in_id_edit" value="">
             <div class="d-flex align-items-center">
-                <button class="btn btn-primary" type="submit">Update</button>
+                <button class="btn btn-primary" type="submit">Cập nhật</button>
             </div>
             
         </form>
@@ -125,8 +125,8 @@
                     "paginate": {
                         "first": "First",
                         "last": "Last",
-                        "next": ">",
-                        "previous": "<"
+                        "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
                     }
                 }
             });

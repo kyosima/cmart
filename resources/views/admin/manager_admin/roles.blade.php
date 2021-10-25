@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Cài đặt')
+@section('title', 'Vai trò')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/doitac.css') }}" type="text/css">
@@ -17,26 +17,26 @@
                     <form data-action="{{route('roles.store')}}" class="g-3 needs-validation ajax-form-post" method="post" novalidate>
                         @csrf
                         <div class="mb-3">
-                            <label for="roleName" class="form-label">Role Name</label>
-                            <input type="text" class="form-control" name="in_name" id="roleName" required placeholder="Role name">
+                            <label for="roleName" class="form-label">Tên vai trò</label>
+                            <input type="text" class="form-control" name="in_name" id="roleName" required placeholder="Tên vai trò">
                             <div class="invalid-feedback">
-                                Please enter your role name
+                                Vui lọng nhập tên vai trò
                             </div>
                             <div class="valid-feedback">
-                                Looks good!
+                                Hợp lệ!
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="selPermission" class="form-label">Permission</label>
+                            <label for="selPermission" class="form-label">Quyền</label>
                             <select class="form-select select2" id="selPermission" name="sel_permission[]" multiple required>
-                                <option value="All Permissions">All Permissions</option>
+                                <option value="All Permissions">Tất cả các quyền</option>
                                 @foreach($permissions as $value)
                                     <option value="{{$value->id}}">{{$value->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="d-flex align-items-center">
-                            <button class="btn btn-primary" type="submit">Create</button>
+                            <button class="btn btn-primary" type="submit">Tạo</button>
                         </div>
                         
                     </form>
@@ -48,7 +48,7 @@
                             <thead class="table__daily">
                                 <tr>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Permissions</th>
+                                    <th scope="col">Quyền</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
@@ -58,8 +58,11 @@
                                     <td>{{$value->name}}</td>
                                     <td>{!! permissionOfRole($value->permissions) !!}</td>
                                     <td>
-                                        <button type="button" class="btn btn-warning ajax-edit ajax-get-roles" data-id="{{$value->id}}" data-name="{{$value->name}}" data-url="{{route('roles.edit', $value->id)}}">Edit</button>
-                                        <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('roles.destroy', $value->id)}}">Delete</button>
+                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                            <button type="button" class="btn btn-warning ajax-edit ajax-get-roles" data-id="{{$value->id}}" data-name="{{$value->name}}" data-url="{{route('roles.edit', $value->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('roles.destroy', $value->id)}}"><i class="fa fa-trash"></i></button>
+                                        </div>
+                                        
                                     </td> 
                                 </tr>
                                 @endforeach
@@ -75,7 +78,7 @@
 
     <div class="offcanvas offcanvas-end" id="offcanvas_edit">
         <div class="offcanvas-header">
-            <h1 class="offcanvas-title">Role Edit</h1>
+            <h1 class="offcanvas-title">Sửa vai trò</h1>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
@@ -83,24 +86,24 @@
                 @method("PUT")
                 @csrf
                 <div class="mb-3">
-                    <label for="roleNameEdit" class="form-label">Role Name</label>
-                    <input type="text" class="form-control" name="in_name_edit" id="roleNameEdit" required placeholder="Role name">
+                    <label for="roleNameEdit" class="form-label">Tên vai trò</label>
+                    <input type="text" class="form-control" name="in_name_edit" id="roleNameEdit" required placeholder="Tên vai trò">
                     <div class="invalid-feedback">
-                        Please enter your role name
+                        Vui lòng nhập tên vai trò
                     </div>
                     <div class="valid-feedback">
-                        Looks good!
+                        Hợp lệ!
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="selPermissionEdit" class="form-label">Permission</label>
+                    <label for="selPermissionEdit" class="form-label">Quyền</label>
                     <select class="form-select select2 clear-option" id="selPermissionEdit" name="sel_permission_edit[]" multiple required>
                         
                     </select>
                 </div>
                 <input type="hidden" name="in_id_edit" value="">
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-primary" type="submit">Update</button>
+                    <button class="btn btn-primary" type="submit">Cập nhật</button>
                 </div>
                 
             </form>
@@ -144,8 +147,8 @@
                     "paginate": {
                         "first": "First",
                         "last": "Last",
-                        "next": ">",
-                        "previous": "<"
+                        "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
                     }
                 }
             });

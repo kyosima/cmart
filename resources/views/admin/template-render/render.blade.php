@@ -3,8 +3,10 @@
     <td>{{$role->name}}</td>
     <td>{!! permissionOfRole($permission) !!}</td>
     <td>
-        <button type="button" class="btn btn-warning ajax-edit ajax-get-roles" data-id="{{$role->id}}" data-name="{{$role->name}}"  data-url="{{route('roles.edit', $role->id)}}">Edit</button>
-        <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('roles.destroy', $role->id)}}">Delete</button>
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <button type="button" class="btn btn-warning ajax-edit ajax-get-roles" data-id="{{$role->id}}" data-name="{{$role->name}}"  data-url="{{route('roles.edit', $role->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('roles.destroy', $role->id)}}"><i class="fa fa-trash"></i></button>
+        </div>
     </td>
 </tr>
 @endif
@@ -13,21 +15,23 @@
 <tr class="replaywith-{{$permission->id}}">
     <td>{{$permission->name}}</td>
     <td>
-        <button type="button" class="btn btn-warning ajax-edit" data-id="{{$permission->id}}" data-name="{{$permission->name}}">Edit</button>
-        <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('permissions.destroy', $permission->id)}}">Delete</button>
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <button type="button" class="btn btn-warning ajax-edit" data-id="{{$permission->id}}" data-name="{{$permission->name}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('permissions.destroy', $permission->id)}}"><i class="fa fa-trash"></i></button>
+        </div>
     </td>
 </tr>
 @endif
 
 @if($type == 'All Permissions')
-    <option value="All Permissions" selected>All Permissions</option>
+    <option value="All Permissions" selected>Tất cả các quyền</option>
     @foreach($permissions as $value)
         <option value="{{$value->id}}">{{$value->name}}</option>
     @endforeach
 @endif
 
 @if($type == 'Permissions Role')
-    <option value="All Permissions">All Permissions</option>
+    <option value="All Permissions">Tất cả các quyền</option>
     @foreach($permissions as $value)
         <option value="{{$value->id}}" {{ checkRoleHasPermissions($role, $value->name) }}>{{$value->name}}</option>
     @endforeach
@@ -46,8 +50,10 @@
     <td>{{$admin->email}}</td>
     <td>{!! showRolesOfAdmin($role_name) !!}</td>
     <td>
-        <button type="button" class="btn btn-warning ajax-edit ajax-get-admin" data-id="{{$admin->id}}" data-name="{{$admin->name}}" data-email="{{$admin->email}}" data-url="{{route('manager-admin.edit', $admin->id)}}">Edit</button>
-        <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('manager-admin.destroy', $admin->id)}}">Delete</button>
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <button type="button" class="btn btn-warning ajax-edit ajax-get-admin" data-id="{{$admin->id}}" data-name="{{$admin->name}}" data-email="{{$admin->email}}" data-url="{{route('manager-admin.edit', $admin->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('manager-admin.destroy', $admin->id)}}"><i class="fa fa-trash"></i></button>
+        </div>
     </td> 
 </tr>
 @endif

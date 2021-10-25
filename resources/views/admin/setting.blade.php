@@ -14,12 +14,12 @@
             <form action="{{route('post.maintenanceMode')}}" class="row g-3" method="post">
                 @csrf
                 <div class="form-check form-switch col-auto">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Maintenance Mode</label>
+                <label class="form-check-label" for="flexSwitchCheckDefault">Bảo trì website</label>
                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="in_action" {{checked($check_maintenance_mode, 1)}}>
                     
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-primary btn-sm ms-5">Submit</button>
+                    <button type="submit" class="btn btn-primary btn-sm ms-5">Lưu lại</button>
                 </div>
             </form>
         </div>
