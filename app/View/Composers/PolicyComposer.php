@@ -4,6 +4,7 @@ namespace App\View\Composers;
 
 use Illuminate\View\View;
 use App\Models\InfoCompany;
+use App\Models\Settings;
 
 class PolicyComposer
 {
@@ -33,6 +34,15 @@ class PolicyComposer
      */
     public function compose(View $view)
     {
-        $view->with('policy', InfoCompany::select('name', 'slug')->where('type', 'policy')->get());
+        $info_company = InfoCompany::select('name', 'slug')->where('type', 'policy')->get();
+        $settings = Settings::select('key', 'plain_value')->get();
+        
+        $setting = array();
+        
+        foreach($settings->toArray() as $value){ 
+            $arr = [$value['key'] => $value['plain_value']];
+            $setting = $setting + $arr;
+        }
+        $view->with(['policy' => $info_company, 'setting' => $setting]);
     }
 }

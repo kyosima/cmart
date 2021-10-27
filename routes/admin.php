@@ -70,6 +70,10 @@ Route::group(['middleware' => ['admin']], function () {
 
         //setting
         Route::post('setting/maintenance-mode', [AdminSettingController::class, 'maintenanceMode'])->name('post.maintenanceMode');
+
+        //setting
+        Route::post('setting', [AdminSettingController::class, 'store'])->name('post.setting');
+
     });
 
     // PRODUCT

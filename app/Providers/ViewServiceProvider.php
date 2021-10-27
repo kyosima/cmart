@@ -26,6 +26,6 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        View::composer('*', PolicyComposer::class);
+        View::composer('layout.footer', PolicyComposer::class);
     }
 }
