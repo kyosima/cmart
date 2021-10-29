@@ -163,7 +163,7 @@
                 @if (count($products) > 0)
                     <div class="product-block bg-white p-2">
                         <div class="row d-flex align-items-center">
-                            <div class="col col-8">
+                            <div class="col col-12">
                                 <div class="section-title-container">
                                     <p class="section-title section-title-normal">
                                         <b></b>
@@ -173,13 +173,11 @@
                                             </a>
                                         </span>
                                         <b></b>
+                                        <a href="{{route('proCat.index', $proCat->slug)}}" class="view-more text-dark text-right">
+                                            Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                          </a>
                                     </p>
                                 </div>
-                            </div>
-                            <div class="col col-4 text-right">
-                                <a href="{{route('proCat.index', $proCat->slug)}}" class="view-more text-dark">
-                                  Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                </a>
                             </div>
                         </div>
                         <div class="row">

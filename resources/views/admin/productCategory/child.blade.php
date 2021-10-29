@@ -3,11 +3,7 @@
     <td>
         @if (auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
             <a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
-<<<<<<< HEAD
                 href="{{ route('nganh-nhom-hang.edit', $child_category->id) }}">{{ $prefix }}
-=======
-                href="{{ route('nganh-nhom-hang.edit', $category->id) }}">{{ $prefix }}
->>>>>>> thinh
                 {{ $child_category->name }}</a>
         @else
             {{ $prefix }} {{ $child_category->name }}

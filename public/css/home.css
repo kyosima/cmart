@@ -308,12 +308,6 @@
     .view-more{
         font-size: 16px;
         font-weight: bold;
-        margin-right: 15px;
-        padding-bottom: 7.5px;
-        border-bottom: 2px solid rgba(0,0,0,0.1);
-        margin-bottom: -2px;
-        letter-spacing: 0.5px;
-        border-bottom: 1px solid #E5E5E5;
     }
 
     .section-title {
@@ -531,6 +525,8 @@
 
     .section-title-normal span{
         font-size: 13px;
+        width: 75%;
+        margin-right: 0;
     }
     .view-more{
         font-size: 12px;

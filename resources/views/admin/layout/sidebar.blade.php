@@ -73,10 +73,7 @@
             </a>
          </li>
          @endif
-<<<<<<< HEAD
-=======
          @if (auth()->guard('admin')->user()->can('All Permissions'))
->>>>>>> thinh
          <li class="dropdown">
             <a href="#" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
@@ -86,7 +83,6 @@
                 <a href="{{route('roles.index')}}">Roles</a>
                 <a href="{{route('permissions.index')}}">Permission</a>
                 <a href="{{route('manager-admin.index')}}">List Admin</a>
-<<<<<<< HEAD
             </span>
          </li>
          <li class="dropdown">
@@ -95,7 +91,6 @@
              <span class="links_name w-100 align-items-center d-flex">Follow Action Admin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
          </li>
-=======
                 <a href="{{URL::to('/admin/log-viewer/logs')}}">Follow Admin</a>
             </span>
          </li>
@@ -116,7 +111,6 @@
             </a>
          </li>
 
->>>>>>> thinh
          <li class="dropdown">
             <a href="setting.html" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>

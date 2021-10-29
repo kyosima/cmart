@@ -28,73 +28,88 @@
         <hr>
         <div class="portlet-body">
             <div class="pt-3" style="overflow-x: auto;">
-                <table id="table-product" class="table table-hover table-main">
-                    <thead class="thead1" style="vertical-align: middle;">
-                        <tr>
-                            <th class="title-text" style="width: 2%">
-                                STT </th>
-                            <th class="title-text">
-                                Hình ảnh
-                            </th>
-                            <th class="title-text" style="width: 12%">
-                                Model/Mã SP
-                            </th>
-                            <th class="title-text">
-                                Tên sản phẩm
-                            </th>
-                            <th class="title-text">
-                                Thương hiệu
-                            </th>
-                            <th class="title-text">
-                                Danh mục sản phẩm
-                            </th>
-                            <th class="title-text">
-                                Đơn vị tính
-                            </th>
-                            <th class="title-text">
-                                Khối lượng(g)
-                            </th>
-                            <th class="title-text">
-                                Chiều dài(cm)
-                            </th>
-                            <th class="title-text">
-                                Chiều rộng(cm)
-                            </th>
-                            <th class="title-text">
-                                Chiều cao(cm)
-                            </th>
-                            {{-- <th class="title-text">
-                                Đơn giá bán lẻ
-                            </th> --}}
-                        </tr>
-                    </thead>
-                    <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
-                        @foreach ($products as $item)
+                @if (auth()->guard('admin')->user()->can('Xóa bài viết'))
+                <form id="myform" action="{{route('baiviet.multipleDestory')}}" method="post">
+                    @csrf
+                    @method('delete')
+                @endif
+                    <table id="table-product" class="table table-hover table-main">
+                        <thead class="thead1" style="vertical-align: middle;">
                             <tr>
-                                <td>{{ $item->id }}</td>
-                                <td><img src="{{ $item->feature_img }}" width="70" height="60" alt=""></td>
-                                <td>{{ $item->sku }}</td>
-                                <td>
-                                    @if(auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
-                                        <a style="text-decoration: none;"
-                                        href="{{ route('san-pham.edit', $item->id) }}">{{ $item->name }}</a>
-                                    @else
-                                    {{ $item->name }}
-                                    @endif
-                                </td>
-                                <td>{{ $item->productBrand->name }}</td>
-                                <td>{{ $item->productCategory->name }}
-                                </td>
-                                <td>{{ $item->productCalculationUnit->name }}</td>
-                                <td>{{ $item->weight }} gam</td>
-                                <td>{{ $item->length }}cm</td>
-                                <td>{{ $item->width }}cm</td>
-                                <td>{{ $item->height }}cm</td>
-                                {{-- <td>{{ moneyFormat($item->productPrice->regular_price) }}đ</td> --}}
+                                <th></th>
+                                <th class="title-text" style="width: 2%">
+                                    STT </th>
+                                <th class="title-text">
+                                    Hình ảnh
+                                </th>
+                                <th class="title-text" style="width: 12%">
+                                    Model/Mã SP
+                                </th>
+                                <th class="title-text">
+                                    Tên sản phẩm
+                                </th>
+                                <th class="title-text">
+                                    Thương hiệu
+                                </th>
+                                <th class="title-text">
+                                    Danh mục sản phẩm
+                                </th>
+                                <th class="title-text">
+                                    Đơn vị tính
+                                </th>
+                                <th class="title-text">
+                                    Khối lượng(g)
+                                </th>
+                                <th class="title-text">
+                                    Chiều dài(cm)
+                                </th>
+                                <th class="title-text">
+                                    Chiều rộng(cm)
+                                </th>
+                                <th class="title-text">
+                                    Chiều cao(cm)
+                                </th>
+                                {{-- <th class="title-text">
+                                    Đơn giá bán lẻ
+                                </th> --}}
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
+                            @foreach ($products as $item)
+                                <tr>
+                                    <td></td>
+                                    <td>{{ $item->id }}</td>
+                                    <td><img src="{{ $item->feature_img }}" width="70" height="60" alt=""></td>
+                                    <td>{{ $item->sku }}</td>
+                                    <td>
+                                        @if(auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+                                            <a style="text-decoration: none;"
+                                            href="{{ route('san-pham.edit', $item->id) }}">{{ $item->name }}</a>
+                                        @else
+                                        {{ $item->name }}
+                                        @endif
+                                    </td>
+                                    <td>{{ $item->productBrand->name }}</td>
+                                    <td>{{ $item->productCategory->name }}
+                                    </td>
+                                    <td>{{ $item->productCalculationUnit->name }}</td>
+                                    <td>{{ $item->weight }} gam</td>
+                                    <td>{{ $item->length }}cm</td>
+                                    <td>{{ $item->width }}cm</td>
+                                    <td>{{ $item->height }}cm</td>
+                                    {{-- <td>{{ moneyFormat($item->productPrice->regular_price) }}đ</td> --}}
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @if (auth()->guard('admin')->user()->can('Xóa bài viết'))
+                    <select name="action" id="">
+                        <option value="-1" selected>Chọn tác vụ</option>
+                        <option value="delete">Xóa</option>
+                    </select>
+                    <button type="submit" class="btn btn-warning" onclick="confirm('Bạn chắc chắn muốn thực hiện tác vụ này?')">Thực hiện tác vụ</button>
+                </form>
+                @endif
             </div>
         </div>
     </div>
@@ -113,6 +128,17 @@
         columnDefs: [
             { "type": "string", "targets": [1] },
             { "type": "html", "targets": [2, 3, 4, 5] },
+            {
+                targets: 0,
+                defaultContent: '',
+                'render': function(data, type, row, meta){
+                    if(type === 'display'){
+                        data = `<input type="checkbox" class="dt-checkboxes" name="id[]" value="${row[1]}">`;
+                    }
+                    return data;
+                },
+                'checkboxes': true
+            }
         ],
 		searchBuilder: {
 			conditions: {

@@ -1,15 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-use App\Admin\Controllers\AdminProductCategoryController;
-use App\Admin\Controllers\AdminProductController;
-use App\Admin\Controllers\BlogCategoryController;
-use App\Admin\Controllers\AdminHomeController;
-use App\Admin\Controllers\AdminRolesController;
-use App\Admin\Controllers\BlogController;
-use App\Admin\Controllers\BrandController;
-use App\Admin\Controllers\CalculationUnitController;
-use App\Admin\Controllers\WarehouseController;
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductCategoryController;
@@ -33,6 +24,7 @@ use App\Http\Controllers\OrderController;
 
 // Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
 // Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
+Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'showAll'])->name('proCat.showAll');
 Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
 Route::get('/', [HomeController::class, 'home']);
 
@@ -52,16 +44,16 @@ Route::get('/khuyen-mai', function () {
 });
 
 Route::prefix('gio-hang')->group(function () {
-    Route::get('/', [CartController::Class, 'index'])->name('cart.index');
-    Route::post('add', [CartController::Class, 'addCart'])->name('cart.add');
-    Route::post('update', [CartController::Class, 'updateCart'])->name('cart.update');
-    Route::post('delete', [CartController::Class, 'deleteCart'])->name('cart.delete');
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::post('add', [CartController::class, 'addCart'])->name('cart.add');
+    Route::post('update', [CartController::class, 'updateCart'])->name('cart.update');
+    Route::post('delete', [CartController::class, 'deleteCart'])->name('cart.delete');
 });
 
 Route::prefix('thanh-toan')->group(function () {
-    Route::get('/', [CheckoutController::Class, 'index'])->name('checkout.index');
-    Route::post('post', [CheckoutController::Class, 'postOrder'])->name('checkout.post');
-    Route::get('thanh-cong', [CheckoutController::Class, 'orderSuccess'])->name('checkout.orderSuccess');
+    Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('post', [CheckoutController::class, 'postOrder'])->name('checkout.post');
+    Route::get('thanh-cong', [CheckoutController::class, 'orderSuccess'])->name('checkout.orderSuccess');
 
 });
 
@@ -106,14 +98,15 @@ Route::get('lay-quan-huyen-theo-tinh-thanh', [ShippingController::class, 'distri
 Route::get('lay-phuong-xa-theo-quan-huyen', [ShippingController::class, 'wardOfDistrict']);
 // Route::get('danhsach',[UserController::class, 'getDanhsach']);
 
-Route::group(['prefix'=>'admin'], function() {
-    Route::group(['prefix'=>'user'], function() {
-        Route::get('danhsach','UserController@getDanhsach');
+// Route::group(['prefix'=>'admin'], function() {
+//     Route::group(['prefix'=>'user'], function() {
+//         Route::get('danhsach','UserController@getDanhsach');
 
-        Route::get('profile/{id}','UserController@getEdit');
-        Route::post('profile/{id}','UserController@postEdit');
-    });
-});
+//         Route::get('profile/{id}','UserController@getEdit');
+//         Route::post('profile/{id}','UserController@postEdit');
+//     });
+// });
+// Route::get('/login', [HomeController::class, 'getLogin']);
 Route::post('/login', [HomeController::class, 'postLogin']);
 Route::get('/tai-khoan', [HomeController::class, 'getAccessAccount']);
 

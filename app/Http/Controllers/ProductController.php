@@ -20,7 +20,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
         $products = Product::latest()->paginate(12);
         $subcategory = ProductCategory::latest()->get();
         $brandIds = $products->pluck('brand')->toArray();

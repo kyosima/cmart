@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class BlogController extends Controller
@@ -13,12 +14,16 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::all();
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang Quản lý bài viết';
+        Log::info($message);
         return view('admin.blog.index', compact('blogs'));
     }
 
     public function create()
     {
         $categories = BlogCategory::all();
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang tạo mới bài viết';
+        Log::info($message);
         return view('admin.blog.create', compact('categories'));
     }
 
@@ -26,6 +31,8 @@ class BlogController extends Controller
     {
         $categories = BlogCategory::all();
         $blog = Blog::find($id);
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang chỉnh sửa bài viết';
+        Log::info($message);
         return view('admin.blog.edit', compact('categories', 'blog'));
     }
 
@@ -50,6 +57,9 @@ class BlogController extends Controller
         ]);
 
         if($blog) {
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới bài viết ' . $blog->name;
+            Log::info($message);
+
             return redirect()->route('baiviet.edit', $blog->id)->with('success', 'Tạo bài viết thành công');
         } else {
             return redirect()->back()->withErrors(['error' => "Đã có lỗi xảy ra, vui lòng nhập đúng dữ liệu"]);
@@ -77,6 +87,9 @@ class BlogController extends Controller
         ]);
 
         if($blog) {
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật bài viết ' . $request->blog_title;
+            Log::info($message);
+
             return redirect()->route('baiviet.edit', $id)->with('success', 'Cập nhật bài viết thành công');
         } else {
             return redirect()->back()->withErrors(['error' => "Đã có lỗi xảy ra, vui lòng nhập đúng dữ liệu"]);
@@ -85,16 +98,45 @@ class BlogController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        Blog::where('id', $id)->update([
+        $blog = Blog::where('id', $id)->update([
             'status' => $request->unitStatus
         ]);
-
-        return redirect()->route('baiviet.index');
+        // return redirect()->route('baiviet.index');
+        if($blog){
+            return response()->json([
+                'message' => "Success",
+                'code' => 200,
+            ]);
+        } else {
+            return response()->json([
+                'message' => "Error",
+                'code' => 500,
+            ]);
+        }
     }
 
     public function destroy($id)
     {
+        $blog = Blog::findOrFail($id);
         Blog::destroy($id);
+
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa bài viết ' . $blog->name;
+        Log::info($message);
         return redirect()->route('baiviet.index');
+    }
+
+    public function multipleDestory(Request $request)
+    {
+        if($request->action == 'delete' && $request->id != null) {
+            foreach($request->id as $item) {
+                $blog = Blog::findOrFail($item);
+                Blog::destroy($item);
+                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa bài viết ' . $blog->name;
+                Log::info($message);
+            }
+            return redirect(route('baiviet.index'));
+        } else {
+            return redirect()->back();
+        }
     }
 }

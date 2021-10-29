@@ -438,7 +438,7 @@ section{
     text-decoration: line-through;
     margin-top: 6px;
 }
-.products .box-image img{
+.products .box-image .image-cover img{
     width: 100%;
     height: 200px;
 }
@@ -589,10 +589,10 @@ section{
         content:url("../image/banner/banner1mb.jpeg");
     } 
     /* kết */
-    .container, .row{
+    /* .container, .row{
         padding: 0;
         margin: 0;
-    }
+    } */
     .category-page .shop-sidebar{
         padding: 0;
         background: #fff;
@@ -604,7 +604,7 @@ section{
     .widget, .shop-container-inner, .shop-container{
         box-shadow: none;
         border: none;
-        padding: 0;
+        /* padding: 0; */
     }
     .widget-title, .widget-price .title-range{
         font-size: 4.5vw;
@@ -769,6 +769,7 @@ section{
         height: 75px !important;
     }
 }
+
 @media only screen and (min-width: 992px) {
     /* check box scroll view */
     .scrollbar:hover::-webkit-scrollbar {

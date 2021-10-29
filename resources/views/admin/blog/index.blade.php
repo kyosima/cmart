@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Quản lý đơn vị tính')
+@section('title', 'Quản lý bài viết')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/doitac.css') }}" type="text/css">
@@ -32,114 +32,156 @@
         <hr>
         <div class="portlet-body">
             <div class="pt-3" style="overflow-x: auto;">
-                <table id="table-calculation-unit" class="table table-hover table-main">
-                    <thead class="thead1" style="vertical-align: middle;">
-                        <tr>
-                            <th class="title-text" style="width: 50px">
-                                STT </th>
-                            <th class="title-text title1">
-                                Ảnh đại diện</th>
-                            <th class="title-text title2">
-                                Tiêu đề
-                            </th>
-                            <th class="title-text title2">
-                                Chuyên mục
-                            </th>
-                            <th class="title-text title4">
-                                Trạng thái</th>
-                        </tr>
-                    </thead>
-                    <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
-                        @foreach ($blogs as $item)
+                @if (auth()->guard('admin')->user()->can('Xóa bài viết'))
+                <form id="myform" action="{{route('baiviet.multipleDestory')}}" method="post">
+                    @csrf
+                @endif
+                    <table id="table-calculation-unit" class="table table-hover table-main">
+                        <thead class="thead1" style="vertical-align: middle;">
                             <tr>
-                                <td>{{$item->id}}</td>
-                                <td><img src="{{$item->feature_img}}" alt=""></td>
-                                <td>
-                                    @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
-                                    <a class="text-decoration-none" href="{{route('baiviet.edit', $item->id)}}">
-                                        {{$item->name}}
-                                    </a>
-                                    @else 
-                                    {{$item->name}}
-                                    @endif
-                                </td>
-                                <td>{{$item->blogCategory->name}}</td>
-                                @if ($item->status == 1)
-                                    <td>
-                                        <span style=" max-width: 82px;min-width: 82px;" type="text"
-                                                class="form-control form-control-sm font-size-s text-white active text-center d-inline">Hoạt động</span>
-                                        <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
-                                                aria-hidden="true"></i></button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
-                                                <form
-                                                    action="{{ route('baiviet.updateStatus', $item->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('put')
-                                                    <input type="hidden" name="unitStatus" value="0">
-                                                    <button type="submit"
-                                                        class="dropdown-item">Ngừng</button>
-                                                </form>
-                                                @endif
-                                            </li>
-                                            <li>
-                                                @if(auth()->guard('admin')->user()->can('Xóa bài viết'))
-                                                <form
-                                                    action="{{ route('baiviet.delete', $item->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="dropdown-item"
-                                                        onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
-                                                </form>
-                                                @endif
-                                            </li>
-                                        </ul>
-                                        
-                                    </td>
-                                @else
-                                    <td>
-                                        <span style=" max-width: 82px;min-width: 82px;" type="text"
-                                        class="form-control form-control-sm font-size-s text-white stop text-center d-inline">Ngừng</span>
-                                        <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
-                                                aria-hidden="true"></i></button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
-                                                <form
-                                                    action="{{ route('baiviet.updateStatus', $item->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('put')
-                                                    <input type="hidden" name="unitStatus" value="1">
-                                                    <button type="submit"
-                                                        class="dropdown-item">Hoạt động</button>
-                                                </form>
-                                                @endif
-                                            </li>
-                                            <li>
-                                                @if(auth()->guard('admin')->user()->can('Xóa bài viết'))
-                                                <form
-                                                    action="{{ route('baiviet.delete', $item->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="dropdown-item"
-                                                        onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
-                                                </form>
-                                                @endif
-                                            </li>
-                                        </ul>
-                                    </td>
-                                @endif
+                                <th></th>
+                                <th class="title-text" style="width: 50px">
+                                    STT </th>
+                                <th class="title-text title1">
+                                    Ảnh đại diện</th>
+                                <th class="title-text title2">
+                                    Tiêu đề
+                                </th>
+                                <th class="title-text title2">
+                                    Chuyên mục
+                                </th>
+                                <th class="title-text title4">
+                                    Trạng thái</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
+                            @foreach ($blogs as $item)
+                                <tr>
+                                    <td></td>
+                                    <td>{{$item->id}}</td>
+                                    <td><img src="{{$item->feature_img}}" alt=""></td>
+                                    <td>
+                                        @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
+                                        <a class="text-decoration-none" href="{{route('baiviet.edit', $item->id)}}">
+                                            {{$item->name}}
+                                        </a>
+                                        @else 
+                                        {{$item->name}}
+                                        @endif
+                                    </td>
+                                    <td>{{$item->blogCategory->name}}</td>
+                                    @if ($item->status == 1)
+                                        <td>
+                                            <span style=" max-width: 82px;min-width: 82px;" type="text"
+                                                    class="form-control form-control-sm font-size-s text-white active text-center d-inline">Hoạt động</span>
+                                            <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
+                                                    aria-hidden="true"></i></button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li>
+                                                    @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
+                                                    {{-- <form
+                                                        action="{{ route('baiviet.updateStatus', $item->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('put')
+                                                        <input type="hidden" name="unitStatus" value="0">
+                                                        <button type="submit"
+                                                            class="dropdown-item">Ngừng</button>
+                                                    </form> --}}
+                                                    <button 
+                                                        data-id="{{$item->id}}"
+                                                        data-value="0"
+                                                        data-url="{{ route('baiviet.updateStatus', $item->id) }}"
+                                                        class="dropdown-item changeStatus">
+                                                        Ngừng
+                                                    </button>
+                                                    @endif
+                                                </li>
+                                                <li>
+                                                    @if(auth()->guard('admin')->user()->can('Xóa bài viết'))
+                                                    {{-- <form
+                                                        action="{{ route('baiviet.delete', $item->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="dropdown-item"
+                                                            onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
+                                                    </form> --}}
+                                                    <button type="button"
+                                                        data-id="{{$item->id}}"
+                                                        onclick="confirm('Bạn có chắc muốn xóa');"
+                                                        data-url="{{ route('baiviet.delete', $item->id) }}"
+                                                        class="dropdown-item btn-delete">
+                                                        Xóa
+                                                    </button>
+                                                    @endif
+                                                </li>
+                                            </ul>
+                                            
+                                        </td>
+                                    @else
+                                        <td>
+                                            <span style=" max-width: 82px;min-width: 82px;" type="text"
+                                            class="form-control form-control-sm font-size-s text-white stop text-center d-inline">Ngừng</span>
+                                            <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
+                                                    aria-hidden="true"></i></button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li>
+                                                    @if(auth()->guard('admin')->user()->can('Chỉnh sửa bài viết'))
+                                                    {{-- <form
+                                                        action="{{ route('baiviet.updateStatus', $item->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('put')
+                                                        <input type="hidden" name="unitStatus" value="1">
+                                                        <button type="submit"
+                                                            class="dropdown-item">Hoạt động</button>
+                                                    </form> --}}
+                                                    <button type="button"
+                                                        data-id="{{$item->id}}"
+                                                        data-value="1"
+                                                        data-url="{{ route('baiviet.updateStatus', $item->id) }}"
+                                                        class="dropdown-item changeStatus">
+                                                        Hoạt động
+                                                    </button>
+                                                    @endif
+                                                </li>
+                                                <li>
+                                                    @if(auth()->guard('admin')->user()->can('Xóa bài viết'))
+                                                    {{-- <form
+                                                        action="{{ route('baiviet.delete', $item->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="dropdown-item"
+                                                            onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
+                                                    </form> --}}
+                                                    <button type="button"
+                                                        data-id="{{$item->id}}"
+                                                        onclick="confirm('Bạn có chắc muốn xóa');"
+                                                        data-url="{{ route('baiviet.delete', $item->id) }}"
+                                                        class="dropdown-item btn-delete">
+                                                        Xóa
+                                                    </button>
+                                                    @endif
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @if (auth()->guard('admin')->user()->can('Xóa bài viết'))
+                    <select name="action" id="">
+                        <option value="-1" selected>Chọn tác vụ</option>
+                        <option value="delete">Xóa</option>
+                    </select>
+                    <button type="submit" class="btn btn-warning" onclick="confirm('Bạn chắc chắn muốn thực hiện tác vụ này?')">Thực hiện tác vụ</button>
+                </form>
+                @endif
             </div>
 
         </div>
@@ -154,10 +196,61 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
+
+        $('.changeStatus').click(function(){
+            var id = $(this).data('id')
+            var value = $(this).data('value')
+            var url = $(this).data('url')
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: {
+                    unitStatus: value
+                },
+                success: function (response) {
+                    $.toast({
+                        heading: 'Thành công',
+                        text: 'Thực hiện thành công',
+                        position: 'top-right',
+                        icon: 'success'
+                    });
+                    location.reload();
+                },
+                error: function (response) {
+                    $.toast({
+                        heading: 'Thất bại',
+                        text: 'Thực hiện không thành công',
+                        position: 'top-right',
+                        icon: 'error'
+                    });
+                }
+            });
+        })
+
+
         var table = $('#table-calculation-unit').DataTable({
             ordering: false,
             columnDefs: [
-                { "type": "html", "targets": [3] },
+                { 
+                    type: "html",
+                    targets: 3 
+                },
+                {
+                    targets: 0,
+                    defaultContent: '',
+                    'render': function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = `<input type="checkbox" class="dt-checkboxes" name="id[]" value="${row[1]}">`;
+                        }
+                        return data;
+                    },
+                    'checkboxes': true
+                }
             ],
             searchBuilder: {
 			conditions: {

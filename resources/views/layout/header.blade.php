@@ -33,7 +33,7 @@
             </div>
             <div class="menu-demuc d-flex justify-content-between">
               <div class="cate-menu" id="main-menu">
-                <a href="{{url('san-pham')}}">
+                <a href="{{route('proCat.showAll')}}">
                   <p class="title-cate"> Danh mục sản phẩm <i class="fas fa-bars"></i></p>
                 </a>
             

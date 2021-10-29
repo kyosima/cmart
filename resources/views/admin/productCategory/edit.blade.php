@@ -1,10 +1,6 @@
 @extends('admin.layout.master')
 
-<<<<<<< HEAD
 @section('title', 'Sửa danh mục sản phẩm')
-=======
-@section('title', 'Tạo bài viết mới')
->>>>>>> thinh
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/quanlysanpham.css') }}" type="text/css">
@@ -14,11 +10,7 @@
 <div class="m-3">
     <div class="wrapper bg-white p-4">
         @if (session('success'))
-<<<<<<< HEAD
             <div class="portlet-status mb-2">
-=======
-            <div class="portlet-status">
->>>>>>> thinh
                 <div class="caption bg-success p-3">
                     <span class="caption-subject bold uppercase text-light">{{session('success')}}</span>
                 </div>
@@ -29,11 +21,7 @@
                 <div class="caption">
                     <i class="fa fa-product-hunt icon-drec" aria-hidden="true"></i>
                     <span class="caption-subject bold uppercase">
-<<<<<<< HEAD
                         Chỉnh sửa danh mục sản phẩm</span>
-=======
-                        Thông tin bài viết</span>
->>>>>>> thinh
                 </div>
             </div>
         </div>
@@ -134,7 +122,6 @@
                                                                 'child_category' => $childCategory,
                                                                 'prefix' => '&nbsp;&nbsp;&nbsp;',
                                                                 'proCat' => $proCat,
-<<<<<<< HEAD
                                                                 'isLinked' => false,
                                                                 ])
                                                         @endforeach
@@ -163,8 +150,6 @@
                                                                 'prefix' => '&nbsp;&nbsp;&nbsp;',
                                                                 'proCat' => $proCat,
                                                                 'isLinked' => true,
-=======
->>>>>>> thinh
                                                                 ])
                                                         @endforeach
                                                     @endif

@@ -253,29 +253,10 @@
                     </div>
 
                     <!-- Pagination -->
-                    <div class="nav-pager">
-                        <ul id="pagination">
-                            <li><a class="page-arrow" href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                            <li><a class="page-arrow" href="#"><i class="fa fa-angle-left"></i></a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#" class="active">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a class="d-none d-lg-inline-block    " href="#">4</a></li>
-                            <li><a class="page-arrow" href="#"><i class="fa fa-angle-right"></i></a></li>
-                            <li><a class="page-arrow" href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul>
-                        <div class="select-option d-none d-lg-block">
-                            <select class="custom-select">
-                                <option value="20" selected="">20</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                            <i class="fa fa-caret-down"></i>
+                    <div class="text-center">
+                        <div class="nav_pager">
+                            {{ $products->links('product.include.pagination') }}
                         </div>
-                    </div>
-
-                    <div class="nav-pager">
-                        {{ $products->links() }}
                     </div>
 
                 </div>
@@ -296,6 +277,8 @@
 
 
 @push('scripts')
+<script src="{{ asset('public/js/danhmucsanpham.js') }}"></script>
+
     <script type='text/javascript'>
         function openSidebar() {
             document.getElementById("shopsidebar").style.zIndex = "1000";
@@ -307,7 +290,6 @@
             document.body.style.overflow = "auto";
         }
     </script>
-<script src="{{ asset('js/danhmucsanpham.js') }}"></script>
 
 <script>
     function order(id) {

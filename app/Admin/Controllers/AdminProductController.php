@@ -169,4 +169,21 @@ class AdminProductController extends Controller
 
         return redirect()->route('san-pham.index');
     }
+
+    public function multipleDestory(Request $request)
+    {
+        if($request->action == 'delete' && $request->id != null) {
+            foreach($request->id as $item) {
+                $product = Product::findOrFail($item);
+                Product::destroy($item);
+
+                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name;
+                Log::info($message);
+            }
+            return redirect(route('san-pham.index'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
 }

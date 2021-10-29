@@ -5,12 +5,15 @@ namespace App\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class BlogCategoryController extends Controller
 {
     public function index()
     {
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang Quản lý danh mục bài viết';
+        Log::info($message);
         return view('admin.blogCategory.index');
     }
 
@@ -61,6 +64,10 @@ class BlogCategoryController extends Controller
         ]);
 
         if($blogCategory){
+
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới danh mục bài viết ' . $blogCategory->name;
+            Log::info($message);
+
             return response()->json([
                 'message' => "Success",
                 'code' => 200,
@@ -94,6 +101,9 @@ class BlogCategoryController extends Controller
         ]);
 
         if($blogCategory){
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục bài viết ' . $request->unitName;
+            Log::info($message);
+
             return response()->json([
                 'message' => "Success",
                 'code' => 200,
@@ -108,8 +118,12 @@ class BlogCategoryController extends Controller
 
     public function destroy(Request $request)
     {
+        $blogCate = BlogCategory::findOrFail($request->id);
         $blogCategory = BlogCategory::destroy($request->id);
         if($blogCategory){
+
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa danh mục bài viết ' . $blogCate->name;
+            Log::info($message);
             return response()->json([
                 'message' => "Success",
                 'code' => 200,
@@ -119,6 +133,21 @@ class BlogCategoryController extends Controller
                 'message' => "Error",
                 'code' => 500,
             ]);
+        }
+    }
+
+    public function multipleDestory(Request $request)
+    {
+        if($request->action == 'delete' && $request->id != null) {
+            foreach($request->id as $item) {
+                $blogCate = BlogCategory::findOrFail($item);
+                BlogCategory::destroy($item);
+                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa danh mục bài viết ' . $blogCate->name;
+                Log::info($message);
+            }
+            return redirect(route('chuyenmuc-baiviet.index'));
+        } else {
+            return redirect()->back();
         }
     }
 }

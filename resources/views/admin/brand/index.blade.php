@@ -100,29 +100,43 @@
         <hr>
         <div class="portlet-body">
             <div class="pt-3" style="overflow-x: auto;">
-                <table id="table-calculation-unit" class="table table-hover table-main">
-                    <thead class="thead1" style="vertical-align: middle;">
-                        <tr>
-                            <th class="title-text" style="width: 100px">
-                                STT </th>
-                            <th class="title-text title1">
-                                Mã thương hiệu</th>
-                            <th class="title-text title2">
-                                Tên thương hiệu
-                            </th>
-                            <th class="title-text title3">
-                                Loại thương hiệu
-                            </th>
-                            <th class="title-text title4">
-                                Miêu tả</th>
-                            <th class="title-text title5">
-                                Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
-                        
-                    </tbody>
-                </table>
+                @if (auth()->guard('admin')->user()->can('Xóa thương hiệu'))
+                <form id="myform" action="{{route('thuong-hieu.multipleDestory')}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                @endif
+                    <table id="table-calculation-unit" class="table table-hover table-main">
+                        <thead class="thead1" style="vertical-align: middle;">
+                            <tr>
+                                <th></th>
+                                <th class="title-text" style="width: 100px">
+                                    STT </th>
+                                <th class="title-text title1">
+                                    Mã thương hiệu</th>
+                                <th class="title-text title2">
+                                    Tên thương hiệu
+                                </th>
+                                <th class="title-text title3">
+                                    Loại thương hiệu
+                                </th>
+                                <th class="title-text title4">
+                                    Miêu tả</th>
+                                <th class="title-text title5">
+                                    Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
+                            
+                        </tbody>
+                    </table>
+                @if (auth()->guard('admin')->user()->can('Xóa thương hiệu'))
+                    <select name="action" id="">
+                        <option value="-1" selected>Chọn tác vụ</option>
+                        <option value="delete">Xóa</option>
+                    </select>
+                    <button type="submit" class="btn btn-warning" onclick="confirm('Bạn chắc chắn muốn thực hiện tác vụ này?')">Thực hiện tác vụ</button>
+                </form>
+                @endif
             </div>
 
         </div>
@@ -154,19 +168,33 @@
                     data: form.serialize(), // serializes the form's elements.
                     success: function (response) {
                         $("#formCreateBrand")[0].reset();
-                        $('#brand_create .form-body').prepend(`<div class="bg-success p-2 mb-2">
-                            <p class="text-light m-0">Đã thêm mới thương hiệu thành công</p>
-                            </div>`);
+                        $.toast({
+                            heading: 'Thành công',
+                            text: 'Thực hiện thành công',
+                            position: 'top-right',
+                            icon: 'success'
+                        });
                         setTimeout(function () {
                             $('#brand_create').modal('dispose')
                             $('#brand_create').hide()
                             $('.modal-backdrop.fade.show').remove()
                         }, 1500);
                         table.ajax.reload();
+                    },
+                    error: function(response) {
+                        $.toast({
+                            heading: 'Thất bại',
+                            text: 'Thực hiện không thành công',
+                            position: 'top-right',
+                            icon: 'error'
+                        });
                     }
                 });
             });
+        @endif
 
+        @if(auth()->guard('admin')->user()->can('Chỉnh sửa thương hiệu'))
+            // UPDATE 
             $(document).on("submit", '#formUpdateUnit', function (e) {
                 e.preventDefault();
                 var form = $(this)
@@ -180,9 +208,12 @@
                     url: form.attr('action'),
                     data: form.serialize(),
                     success: function (response) {
-                        $('#calculation_unit_update .form-body').prepend(`<div class="bg-success p-2 mb-2">
-                            <p class="text-light m-0">Đã chỉnh sửa thương hiệu thành công</p>
-                            </div>`);
+                        $.toast({
+                            heading: 'Thành công',
+                            text: 'Thực hiện thành công',
+                            position: 'top-right',
+                            icon: 'success'
+                        });
                         setTimeout(function () {
                             $('#calculation_unit_update').modal('dispose')
                             $('#calculation_unit_update').remove()
@@ -191,12 +222,17 @@
                             $('body').css({'padding-right': 'unset', 'overflow': 'unset'})
                         }, 1500);
                         table.ajax.reload();
+                    },
+                    error: function(response) {
+                        $.toast({
+                            heading: 'Thất bại',
+                            text: 'Thực hiện không thành công',
+                            position: 'top-right',
+                            icon: 'error'
+                        });
                     }
                 });
             });
-        @endif
-
-        @if(auth()->guard('admin')->user()->can('Chỉnh sửa thương hiệu'))
             // UPDATE STATUS
             $(document).on('click', '.changeStatus', function () {
                 var id = $(this).data('unitid')
@@ -214,34 +250,62 @@
                         id: id
                     },
                     success: function (response) {
+                        $.toast({
+                            heading: 'Thành công',
+                            text: 'Thực hiện thành công',
+                            position: 'top-right',
+                            icon: 'success'
+                        });
                         table.ajax.reload();
+                    },
+                    error: function(response) {
+                        $.toast({
+                            heading: 'Thất bại',
+                            text: 'Thực hiện không thành công',
+                            position: 'top-right',
+                            icon: 'error'
+                        });
                     }
                 });
             })
         @endif
 
         @if(auth()->guard('admin')->user()->can('Xóa thương hiệu'))
-        // DELETE
-        $(document).on('click', '.item-delete', function () {
-            var id = $(this).data('unitid')
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            if(confirm('Bạn có chắc muốn xóa')){
-                $.ajax({
-                    type: "DELETE",
-                    url: `{{ route('thuong-hieu.delete') }}`,
-                    data: {
-                        id: id
-                    },
-                    success: function (response) {
-                        table.ajax.reload();
+            // DELETE
+            $(document).on('click', '.item-delete', function () {
+                var id = $(this).data('unitid')
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-            }
-        })
+                if(confirm('Bạn có chắc muốn xóa')){
+                    $.ajax({
+                        type: "DELETE",
+                        url: `{{ route('thuong-hieu.delete') }}`,
+                        data: {
+                            id: id
+                        },
+                        success: function (response) {
+                            $.toast({
+                                heading: 'Thành công',
+                                text: 'Thực hiện thành công',
+                                position: 'top-right',
+                                icon: 'success'
+                            });
+                            table.ajax.reload();
+                        },
+                        error: function(response) {
+                            $.toast({
+                                heading: 'Thất bại',
+                                text: 'Thực hiện không thành công',
+                                position: 'top-right',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
+            })
         @endif
 
         var table = $('#table-calculation-unit').DataTable({
@@ -262,11 +326,30 @@
             },
             dom: '<"wrapper d-flex justify-content-between mb-3"lf>tip',
             ajax: "{{ route('thuong-hieu.indexDatatable') }}",
-            columns: [{
-                    data: 'id'
+            columnDefs: [
+                {
+                    targets: 0,
+                    defaultContent: '',
+                    'render': function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = `<input type="checkbox" class="dt-checkboxes" name="id[]" value="${row.id}">`;
+                        }
+                        return data;
+                    },
+                    'checkboxes': {
+                        'selectRow': true,
+                    }
+                },
+                {
+                    targets: 1,
+                    data: 'id',
+                    render: function(data, type, row) {
+                        return `${row.id}`
+                    }
                 },
                 @if(auth()->guard('admin')->user()->can('Chỉnh sửa thương hiệu'))
                 {
+                    targets: 2,
                     data: 'code',
                     render: function(data, type, row) {
                         return `<a style="text-decoration: none; cursor: pointer;" 
@@ -275,6 +358,7 @@
                     }
                 },
                 {
+                    targets: 3,
                     data: 'name',
                     render: function(data, type, row) {
                         return `<a style="text-decoration: none; cursor: pointer;"
@@ -284,26 +368,25 @@
                 },
                 @else 
                 {
+                    targets: 2,
                     data: 'code',
-                    render: function(data, type, row) {
-                        return `${row.code}`
-                    }
                 },
                 {
+                    targets: 3,
                     data: 'name',
-                    render: function(data, type, row) {
-                        return `${row.name}`
-                    }
                 },
                 @endif
                 {
+                    targets: 4,
                     data: 'type',
                 },
                 {
+                    targets: 5,
                     data: 'description',
                 },
                 @if(auth()->guard('admin')->user()->can('Chỉnh sửa thương hiệu') && auth()->guard('admin')->user()->cannot('Xóa thương hiệu'))
                 {
+                    targets: 6,
                     data: 'status',
                     render: function(data, type, row){
                         var id = row.id 
@@ -330,6 +413,7 @@
                 },
                 @elseif(auth()->guard('admin')->user()->can('Xóa thương hiệu') && auth()->guard('admin')->user()->cannot('Chỉnh sửa thương hiệu'))
                 {
+                    targets: 6,
                     data: 'status',
                     render: function(data, type, row){
                         var id = row.id 
@@ -356,6 +440,7 @@
                 },
                 @elseif(auth()->guard('admin')->user()->can('Xóa thương hiệu') && auth()->guard('admin')->user()->can('Chỉnh sửa thương hiệu'))
                 {
+                    targets: 6,
                     data: 'status',
                     render: function(data, type, row){
                         var id = row.id 
@@ -384,6 +469,7 @@
                 },
                 @else 
                     {
+                        targets: 6,
                         data: 'status',
                         render: function(data, type, row) {
                             return ``;
