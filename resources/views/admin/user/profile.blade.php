@@ -12,7 +12,7 @@
             <div class="wrapper">
                 <div class="profile-card js-profile-card">
                     <div class="profile-card__img">
-                        <img src="./image/header/68885333_131036021490989_8108439814333792256_n.jpg" alt="profile">
+                        <img src="{{asset('/public/storage/upload/'.$user->avatar)}}" alt="profile">
                     </div>
 
                     <div class="profile-card__cnt js-profile-cnt">
@@ -44,15 +44,106 @@
                                     <label for="exampleFormControlInput1" class="form-label">Level</label>
                                     <input type="level" class="form-control mb-2" name="level" placeholder="Level"
                                         value="{{$user->level}}">
-                                    <label for="exampleFormControlInput1" class="form-label">Password</label>
-                                    <input type="password" class="form-control mb-2" name="password" placeholder="Password"
-                                        value="{{$user->password}}">
+                                    <label for="exampleFormControlInput1" class="form-label">Loại giấy tờ</label>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <select class="form-select" name="type_cmnd" aria-label="Default select example">
+                                              <option selected>
+                                                    @if($user->type_cmnd == 0)
+                                                        Chọn loại giấy tờ tùy thân
+                                                    @elseif($user->type_cmnd == 1)
+                                                        Chứng minh nhân dân
+                                                    @elseif($user->type_cmnd == 2)
+                                                        Căn cước công dân
+                                                    @elseif($user->type_cmnd == 3)
+                                                        Hộ chiếu
+                                                    @else
+                                                    @endif  
+                                              </option>
+                                              <option value="1">Chứng minh nhân dân</option>
+                                              <option value="2">Căn cước công dân</option>
+                                              <option value="3">Hộ chiếu</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="cmnd" class="form-control mb-2" name="Số CMND" placeholder="Level" value="{{$user->cmnd}}">
+                                        </div>
+                                    </div>
+
+
                                 </div>
 
                                 <div class="col-lg-12 text-start">
                                     <label for="exampleFormControlInput1" class="form-label">Địa chỉ</label>
-                                    <input type="text" class="form-control mb-2" name="address" placeholder="Nhập địa chỉ"
-                                        value="{{$user->address}}">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <input type="text" class="form-control mb-2" name="address" placeholder="Nhập địa chỉ"
+                                            value="{{$user->address}}">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <select name="tinhthanh" class="form-control select2" data-placeholder="---Chọn tỉnh thành---" required>
+                                                @if($user->id_tinhthanh != null)
+                                                    @foreach ($province as $value)
+                                                    <option value="{{$value->matinhthanh}}">{{ $value->tentinhthanh }}</option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="">---Chọn tỉnh thành---</option>
+                                                    @foreach ($province as $value)
+                                                    <option value="{{$value->matinhthanh}}">{{ $value->tentinhthanh }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <select name="phuongxa" class="form-control select2" data-placeholder="---Chọn tỉnh thành---" required>
+                                                @if($user->id_phuongxa != null)
+                                                    @foreach ($ward as $value)
+                                                    <option value="{{$value->maphuongxa}}">{{ $value->tenphuongxa }}</option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="">---Chọn phường xã---</option>
+                                                    @foreach ($ward as $value)
+                                                    <option value="{{$value->maphuongxa}}">{{ $value->tenphuongxa }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <select name="quanhuyen" class="form-control select2" data-placeholder="---Chọn tỉnh thành---" required>
+                                                @if($user->id_quanhuyen != null)
+                                                    @foreach ($district as $value)
+                                                    <option value="{{$value->maquanhuyen}}">{{ $value->tenquanhuyen }}</option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="">---Chọn quận huyện---</option>
+                                                    @foreach ($district as $value)
+                                                    <option value="{{$value->maquanhuyen}}">{{ $value->tenquanhuyen }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <label for="exampleFormControlInput1" class="form-label">Trạng thái KYC</label>
+                                            <select class="form-select" name="check_kyc" aria-label="Default select example">
+                                                @if($user->check_kyc == 0)
+                                                    <option selected>Chọn trạng thái KYC</option>
+                                                    <option value="1">Đồng ý</option>
+                                                    <option value="2">Từ chối</option>
+                                                @elseif($user->check_kyc == 1)
+                                                    <option selected value="1">Đồng ý</option>
+                                                    <option value="2">Từ chối</option>
+                                                @elseif($user->check_kyc == 2)
+                                                    <option selected value="2">Từ chối</option>
+                                                    <option value="1">Đồng ý</option>
+                                                @else
+                                                @endif  
+                                              
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 <button type="submit" class="btn btn-danger">Save Changes</button>
                             </div>

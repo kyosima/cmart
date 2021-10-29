@@ -97,3 +97,5 @@ Route::get('/logout', [HomeController::class, 'getLogout']);
 
 Route::get('/profileUser', [HomeController::class, 'getProfile']);
 Route::post('/profileUser', [HomeController::class, 'postProfile']);
+
+// Route::post('postImage',['as'=>'postImage','uses'=>'HomeController']);

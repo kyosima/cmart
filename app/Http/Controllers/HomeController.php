@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
+use App\Models\Province;
+use App\Models\District;
+use App\Models\Ward;
 
 class HomeController extends Controller
 {
@@ -24,7 +27,13 @@ class HomeController extends Controller
     }
 
     public function getLogin() {
-        return view('account.loginUser');
+        if (Auth::check()) {;
+            return view('home');
+        }
+        else {
+            return view('account.loginUser');
+        }
+        
     }
 
     public function postLogin(Request $request) {
@@ -50,7 +59,13 @@ class HomeController extends Controller
 
     public function getRegister ()
     {
-        return view('account.register');
+        if (Auth::check()) {;
+            return view('home');
+        }
+        else {
+            return view('account.register');
+        }
+        
     }
 
     public function postRegister (Request $request)
@@ -92,12 +107,17 @@ class HomeController extends Controller
     public function getProfile() {
         if (Auth::check()) {
             $user = Auth::user();
-            return view('account.profileUser',['profileUser'=>$user]);
+            $province = Province::select('matinhthanh', 'tentinhthanh')->get();
+            $district = District::select('maquanhuyen', 'tenquanhuyen')->get();
+            $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
+            return view('account.profileUser',['profileUser'=>$user,'province'=>$province, 'district'=>$district, 'ward'=>$ward]);
         }
         else {
             return redirect('login')->with('thongbao','Bạn chưa đăng nhập!');
         }
     }
+
+
 
     public function postProfile(Request $request) {
         $user = Auth::user();
@@ -105,6 +125,29 @@ class HomeController extends Controller
         $user->phone = $request->phone;
         $user->cmnd = $request->cmnd;
         $user->address = $request->address;
+        $user->id_phuongxa = $request->phuongxa;
+        $user->id_quanhuyen = $request->quanhuyen;
+        $user->id_tinhthanh = $request->tinhthanh;
+        $user->type_cmnd = $request->type_cmnd;
+        if($request->hasFile('image_cmnd')) {
+            $destination_path = 'public\upload';
+            $image = $request->file('image_cmnd');
+            $image_name = $image->getClientOriginalName();
+            $user->cmnd_image = $image_name;
+            $path = $request->file('image_cmnd')->storeAs($destination_path,$image_name);
+            $input['image_cmnd'] = $image_name;
+        }
+        // $idfinal = Province::where('$user->id_phuongxa',$request->id_phuongxa)
+       // $abc = DB::table('province')->where($user->id = $province->user_id)->get();
+
+        if($request->hasFile('avatar')) {
+            $destination_path = 'public\upload';
+            $image_avatar = $request->file('avatar');
+            $image_avatar_name = $image_avatar->getClientOriginalName();
+            $user->avatar = $image_avatar_name;
+            $path = $request->file('avatar')->storeAs($destination_path,$image_avatar_name);
+            $input['avatar'] = $image_avatar_name;
+        }
 
         if($request->changePassword == "on"){
             $this->validate($request, [
@@ -132,6 +175,5 @@ class HomeController extends Controller
             $user->point += $order->shipping_total;
         }
         $user->tichluyC;
-        return view('');
     }
 }

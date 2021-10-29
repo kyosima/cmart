@@ -24,6 +24,7 @@
                                 <th>Phone</th>
                                 <th>Level</th>
                                 <th>Edit</th>
+                                <th>Check KYC</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,6 +41,15 @@
                                     @endif
                                 </td>
                                 <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="profile/{{$k->id}}"> Edit</a></td>
+                                <td>
+                                    @if($k->check_kyc == 0)
+                                        Chưa duyệt!
+                                    @elseif($k->check_kyc == 1)
+                                        Đồng ý
+                                    @else
+                                        Từ chối
+                                    @endif
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
