@@ -18,6 +18,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\shippingController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\OrderController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,15 +68,7 @@ Route::prefix('thanh-toan')->group(function () {
 
 
 
-//Route - Theo dõi đơn hàng
-Route::get('/theo-doi-don-hang', function () {
-    return view('order_tracking.theo-doi-don-hang_main-layout');
-});
 
-//Route - Đơn hàng sau khi tra cứu
-Route::get('/don-hang-sau-khi-tra-cuu', function () {
-    return view('order_tracking.don-hang-sau-khi-tra-cuu');
-});
 
 //Route - Liên hệ
 Route::get('/lien-he', function () {
@@ -82,23 +76,30 @@ Route::get('/lien-he', function () {
 });
 
 //Route - Tài Khoản
-Route::get('/tai-khoan', function () {
-    return view('account.account');
-});
 
 Route::get('/quen-mat-khau', function () {
     return view('account.quen-mat-khau');
 });
 
-Route::resources([
-    'san-pham' => ProductController::class
-]);
+// Route::resources([
+//     'san-pham' => ProductController::class
+// ]);
 
 Route::prefix('san-pham')->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('san-pham.index');
+    Route::get('/{slug}', [ProductController::class, 'show'])->name('san-pham.show');
+
     Route::post('danh-gia', [ProductController::class, 'postRating'])->name('san-pham.danhgia');
 });
 
+// Route::prefix('theo-doi-don-hang')->group(function () {
+//     Route::get('/', [OrderController::class, 'index'])->name('don-hang.index');
+//     Route::get('/{slug}', [OrderController::class, 'show'])->name('don-hang.show');
 
+// });
+Route::resources([
+    'theo-doi-don-hang' => OrderController::class,
+]);
 
 Route::get('lay-quan-huyen-theo-tinh-thanh', [ShippingController::class, 'districtOfProvince']);
 
@@ -113,13 +114,12 @@ Route::group(['prefix'=>'admin'], function() {
         Route::post('profile/{id}','UserController@postEdit');
     });
 });
-Route::get('/login', [HomeController::class, 'getLogin']);
 Route::post('/login', [HomeController::class, 'postLogin']);
+Route::get('/tai-khoan', [HomeController::class, 'getAccessAccount']);
 
-Route::get('/register', [HomeController::class, 'getRegister']);
 Route::post('/register', [HomeController::class, 'postRegister']);
 
 Route::get('/logout', [HomeController::class, 'getLogout']);
 
-Route::get('/profileUser', [HomeController::class, 'getProfile']);
-Route::post('/profileUser', [HomeController::class, 'postProfile']);
+Route::get('/thong-tin-tai-khoan', [HomeController::class, 'getProfile']);
+Route::post('/thong-tin-tai-khoan', [HomeController::class, 'postProfile']);

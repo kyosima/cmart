@@ -111,12 +111,19 @@
                 <a class="nav-link" href="#">
                   (028) 7108 8889 <i class="fas fa-phone-alt"></i></a>
               </li> -->
-                <li class="nav-item">
-                  <a class="nav-link" href="{{url('/tai-khoan')}}"> Đăng nhập</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link gach" href="{{url('/tai-khoan')}}">Đăng ký</a>
-                </li>
+              @if (Auth::check()) 
+              <li class="nav-item">
+                <a class="nav-link btn btn-light text-dark" href="{{url('/thong-tin-tai-khoan')}}"><i class="fas fa-user text-dark"></i> {{ Auth::user()->name}}</a>
+              </li>
+              @else
+              <li class="nav-item">
+                <a class="nav-link" href="{{url('/tai-khoan')}}"> Đăng nhập</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link gach" href="{{url('/tai-khoan')}}">Đăng ký</a>
+              </li>
+              @endif
+               
 
 
               </ul>
@@ -744,8 +751,12 @@
           <div role="tabpanel" class="tab-pane " id="acc">
             <div class="box-item">
               <ul>
+                @if (Auth::check()) 
+                <li><a id="profile-btn" href="{{url('/thong-tin-tai-khoan')}}" title="title"><i class="fas fa-user"></i><span>{{ Auth::user()->name}}</span></a></li>
+                @else
                 <li><a id="register-btn" href="{{url('/tai-khoan')}}" title="title"><i class="fas fa-user"></i><span>Đăng ký tài khoản</span></a></li>
                 <li><a id="login-btn" href="{{url('/tai-khoan')}}" title="title"><i class="fas fa-sign-in-alt"></i></i><span>Đăng nhập</span></a></li>
+                @endif
                 <li><a href="{{url('/theo-doi-don-hang ')}}" title="title"><i class="far fa-sticky-note"></i><span>Tra cứu đơn hàng</span></a></li>
               </ul>
             </div>

@@ -348,7 +348,7 @@ textarea.form-control {
     padding: 60px 0;
 }
 .progress>li:first-child:before {
-    content: url(http://localhost:8081/japana/public/images/check1.png);
+    content: url(../../images/check1.png);
 }
 .progress>li:before {
     display: block;
@@ -391,8 +391,8 @@ textarea.form-control {
     right: 50%;
     z-index: 0;
 }
-.progress>li.pause-complete:before {
-    content: url(http://localhost:8081/japana/public/images/check2.png);
+.progress>li.pause-complete.active:before {
+    content: url(../../images/check1.png);
 }
 .progress>li.pause-complete:after {
     background: #cbcbcb;

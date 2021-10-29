@@ -440,6 +440,7 @@ section{
 }
 .products .box-image img{
     width: 100%;
+    height: 200px;
 }
 .products .box-image .block-sale{
     position: absolute;
@@ -763,6 +764,9 @@ section{
     }
     .products .price-wrapper *{
         font-size: 4.1vw !important;
+    }
+    .products .box-image img{
+        height: 75px !important;
     }
 }
 @media only screen and (min-width: 992px) {

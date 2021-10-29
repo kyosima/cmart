@@ -11,7 +11,7 @@ use App\Models\Order;
 use App\Models\OrderInfo;
 use App\Models\OrderAddress;
 use App\Models\OrderProduct;
-
+use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 
@@ -37,6 +37,11 @@ class CheckoutController extends Controller
 
     public function postOrder(Request $request){
         $cart = Cart::instance('shopping')->content();
+        $user_id = null;
+        if (Auth::check()) {
+            $user = Auth::user();
+            $user_id = $user->id;
+        }
         $validation = $request->validate([
             'fullname' => 'required',
             'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/'],
@@ -51,11 +56,14 @@ class CheckoutController extends Controller
         //     try {
                 $order = Order::create([
                     'note' => $request->note,
+                    'user_id'=>$user_id,
                     // 'shipping_method' => $request->shipping_method,
                     'shipping_total' => 0,
                     'sub_total' => intval(str_replace(",", "", Cart::instance('shopping')->subtotal())),
                     'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()))
                 ]);
+                $order->order_code = 'CMART-'.$order->id.time();
+                $order->save();
 
                 $order_address = new OrderAddress();
                 $order_address->id_province = $request->sel_province;
@@ -80,7 +88,7 @@ class CheckoutController extends Controller
                     ]);
                 }
                 Cart::instance('shopping')->destroy();
-                return redirect()->route('checkout.orderSuccess', ['id' => $order]);
+                return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         //     } catch (\Throwable $th) {
         //         throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
         //         return redirect()->back()->withErrors(['error' => $th->getMessage()]);
@@ -90,9 +98,10 @@ class CheckoutController extends Controller
 
 
     public function orderSuccess(Request $request){
-        if(!$request->id || !$order = Order::find($request->id)){
+        if(!$request->order_code || !$order = Order::whereOrderCode($request->order_code)->first()){
             return redirect('/');
         }
+
         $order_info = $order->order_info()->first();
         $order_address = $order->order_address()->first();
         $products = $order->order_products()->get();

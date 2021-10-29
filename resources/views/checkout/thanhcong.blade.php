@@ -13,6 +13,7 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                 <div class="alert alert-light order-complete-info  text-dark">
+                    <h5>Mã đơn hàng: <span class="text-danger">{{$order->order_code}}</span></h5>
                     <b>Thông tin khách hàng</b>
                     <ul>
                         <li>Họ và tên: {{ $order_info->fullname }}</li>

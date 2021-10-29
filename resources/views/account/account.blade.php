@@ -21,8 +21,9 @@
 
                         <li class="active">
                             <div class="content__wrapper">
-                                <form method="POST" action="">
-                                    <input type="email" name="email" placeholder="Tài khoản">
+                                <form method="POST" action="{{url('/login')}}">
+                                    @csrf
+                                    <input type="text" name="name" placeholder="Tài khoản">
                                     <input type="password" name="password" placeholder="Mật khẩu">
                                     <input type="submit" value="Login" name="Đăng nhập">
                                 </form>
@@ -31,11 +32,13 @@
 
                         <li>
                             <div class="content__wrapper">
-                                <form method="POST" action="">
+                                <form method="POST" action="{{url('/register')}}">
+                                    @csrf
                                     <input type="name" name="name" placeholder="Tên tài khoản">
                                     <input type="email" name="email" placeholder="email">
-                                    <input type="pass" name="pass" placeholder="Mật khẩu">
-                                    <input type="repass" name="repass" placeholder="Nhập lại mật khẩu">
+                                    <input type="number" name="phone" placeholder="Số điện thoại">
+                                    <input type="password" name="password" placeholder="Mật khẩu">
+                                    <input type="password" name="passwordAgain" placeholder="Nhập lại mật khẩu">
                                     <input type="submit" value="Register" name="Đăng ký">
                                 </form>
                             </div>

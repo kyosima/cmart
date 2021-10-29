@@ -194,13 +194,13 @@
   color: #fff;
 }
 
-.product__detail .short-desc .quantity input {
+/* .product__detail .short-desc .quantity input {
   border: 2px solid #bb0029;
   outline: none;
   width: 20%;
   padding: 5px;
   border-radius: 20px;
-}
+} */
 
 .product__detail .short-desc .quantity input:focus {
   border: 1px solid #000;
@@ -1327,3 +1327,107 @@ input#rate-1:checked ~ label {
   }
 }
 /*# sourceMappingURL=style.css.map */
+.quantity .cart-button {
+  float: right;
+  margin: 12px 15px 0 0;
+}
+.quantity .cart-button img {
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+  display: block;
+  color: #888;
+}
+.quantity .cart-button .cart-qty {
+  background: #ff5252;
+  border-radius: 50%;
+  color: #fff;
+  display: block;
+  font-size: 0.8em;
+  line-height: 17px;
+  position: absolute;
+  text-align: center;
+  top: 11px;
+  right: 10px;
+  height: 17px;
+  width: 17px;
+}
+.quantity .qty-block {
+  margin-top: 20px;
+}
+.quantity .qty {
+  float: left;
+  width: 80px;
+  margin-right: 10px;
+  user-select: none;
+}
+.quantity .qty_inc_dec .increment, .qty_inc_dec .decrement {
+  float: left;
+  text-align: center;
+  width: 30px;
+  cursor: pointer;
+  font-size: 1.2em;
+  line-height: 20px;
+  height: 25px;
+  vertical-align: middle;
+  background: #ddd;
+  border: 1px solid #ccc;
+}
+.quantity .qty_inc_dec .increment {
+  border-bottom: 0;
+  line-height: 25px;
+}
+.quantity .qty_inc_dec {
+  float: left;
+  width: 10px;
+  height: 50px;
+  display: inline-block;
+}
+.quantity .qty input[type="text"] {
+  float: left;
+  font-family: "Open Sans", sans-serif;
+  outline: 0;
+  font-size: 1.2em;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  color: #2a2a2a;
+  line-height: 40px;
+  border: 1px solid #ccc;
+  border-right: 0;
+}
+.quantity button.btn-cart {
+  cursor: pointer;
+  width: 168px;
+  border: none;
+  border-radius: 25px;
+  color: #2a2a2a;
+  height: 50px;
+  font-size: 1.2em;
+  font-family: 'Open Sans', sans-serif;
+  transition: all 0.2s;
+  background: #bb0029;
+  border: 1px solid #bb0029;
+  color: #fff;
+  box-shadow: 0 1px 2px #fff;
+}
+.quantity button.btn-cart:hover {
+  box-shadow: 0 1px 2px #cbc3ba;
+  background: #fff;
+  color: #bb0029;
+}
+.quantity button.btn-cart:active, button.btn-cart:focus {
+  outline: none;
+}
+.quantity .rotate-x {
+  animation-duration: 0.6s;
+  animation-name: rotate-x;
+}
+@keyframes rotate-x {
+  from {
+    transform: rotateY(0deg);
+ }
+  to {
+    transform: rotateY(360deg);
+ }
+}

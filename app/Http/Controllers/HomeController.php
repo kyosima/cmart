@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -25,8 +26,8 @@ class HomeController extends Controller
         }
     }
 
-    public function getLogin() {
-        return view('account.loginUser');
+    public function getAccessAccount() {
+        return view('account.account');
     }
 
     public function postLogin(Request $request) {
@@ -43,16 +44,16 @@ class HomeController extends Controller
         ]);
 
         if(Auth::attempt(['name'=>$request->name,'password'=>$request->password])){
-            return redirect('');
+            return redirect('/');
         }
         else {
-            return redirect('login')->with('thongbao','Sai tên đăng nhập hoặc mật khẩu!');
+            return redirect('tai-khoan')->with('thongbao','Sai tên đăng nhập hoặc mật khẩu!');
         }
     }
 
     public function getRegister ()
     {
-        return view('account.register');
+        return redirect('tai-khoan');
     }
 
     public function postRegister (Request $request)
@@ -83,7 +84,7 @@ class HomeController extends Controller
         $user->phone = $request->phone;
         $user->save();
 
-        return redirect('login')->with('thongbao','Register success');
+        return redirect('tai-khoan')->with('thongbao','Register success');
     }
 
     public function getLogout() {
@@ -97,7 +98,7 @@ class HomeController extends Controller
             return view('account.profileUser',['profileUser'=>$user]);
         }
         else {
-            return redirect('login')->with('thongbao','Bạn chưa đăng nhập!');
+            return redirect('tai-khoan')->with('thongbao','Bạn chưa đăng nhập!');
         }
     }
 
@@ -123,7 +124,7 @@ class HomeController extends Controller
         }
         
         $user->save();
-        return redirect('profileUser')->with('thongbao','Sửa thành công');
+        return back()->with('thongbao','Sửa thành công');
     }
 
     public function pointC() {

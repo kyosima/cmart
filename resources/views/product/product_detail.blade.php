@@ -95,10 +95,16 @@
                                 <form id="form-add-to-cart" method="POST" action="{{ route('cart.add') }}">
                                     <input type="hidden" class="card-quality-input" name="product_id"
                                         value="{{ $product->id_ofproduct }}">
-                                    <input type="number" class="card-quality-input" name="qty" value="1">
-                                    <button class="quantity_btn add-cart" type="submit">
-                                        <p>Thêm vào giỏ</p>
-                                    </button>
+                                    <div class="qty-block">
+                                        <div class="qty">
+                                            <input type="text" name="qty" maxlength="12" value="1" title="" class="input-text" />
+                                            <div class="qty_inc_dec">
+                                            <i class="increment" onclick="incrementQty()">+</i>
+                                            <i class="decrement" onclick="decrementQty()">-</i>
+                                            </div>
+                                        </div>
+                                        <button type="submit" title="Add to Cart" class="btn-cart">Thêm vào giỏ</button>
+                                        </div>
                                 </form>
                             </div>
 
@@ -265,7 +271,7 @@
                                                 <div class="bar-view">
                                                     <div class="progress">
                                                         <div class="progress-bar" role="progressbar"
-                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[0] / $rating_count) * 100 }}%"
+                                                        style="width: {{  $rating_list[0] == 0 ? 0 : ($rating_list[0] / $rating_count) * 100 }}%"
                                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -276,7 +282,7 @@
                                                 <div class="bar-view">
                                                     <div class="progress">
                                                         <div class="progress-bar" role="progressbar"
-                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[1] / $rating_count) * 100 }}%"
+                                                        style="width: {{  $rating_list[1] == 0 ? 0:($rating_list[1] / $rating_count) * 100 }}%"
                                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -287,7 +293,7 @@
                                                 <div class="bar-view">
                                                     <div class="progress">
                                                         <div class="progress-bar" role="progressbar"
-                                                            style="width: {{  $rating_list[0] >0 ? 0:($rating_list[2] / $rating_count) * 100 }}%"
+                                                            style="width: {{  $rating_list[2] == 0 ? 0:($rating_list[2] / $rating_count) * 100 }}%"
                                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -298,7 +304,7 @@
                                                 <div class="bar-view">
                                                     <div class="progress">
                                                         <div class="progress-bar" role="progressbar"
-                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[3] / $rating_count) * 100 }}%"
+                                                        style="width: {{  $rating_list[3] == 0 ? 0:($rating_list[3] / $rating_count) * 100 }}%"
                                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -309,7 +315,7 @@
                                                 <div class="bar-view">
                                                     <div class="progress">
                                                         <div class="progress-bar" role="progressbar"
-                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[4] / $rating_count) * 100 }}%"
+                                                        style="width: {{  $rating_list[4] ==0 ? 0:($rating_list[4] / $rating_count) * 100 }}%"
                                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>

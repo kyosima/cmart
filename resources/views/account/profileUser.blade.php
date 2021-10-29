@@ -87,8 +87,8 @@
                 </div>
                 @endif
 
-                <form action="profileUser" method="POST">
-                <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                <form  method="POST" action="{{url('thong-tin-tai-khoan')}}">
+               @csrf
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profile Settings</h4>
                 </div>

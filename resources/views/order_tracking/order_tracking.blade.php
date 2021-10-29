@@ -12,9 +12,14 @@
             <div class="col col-12 col-md-8 order-md-2">
                 <div class="checkorder">
                     <h3 class="title">THÔNG TIN ĐƠN HÀNG</h3>
+                    @if(isset($error))
+                        <div class="alert alert-warning text-center">
+                            <b class="text-danger">{{$error}}</b>
+                        </div>
+                    @endif
                     <form action="" method="get">
                         <div class="write-order form-group">
-                            <input value="" type="text" name="code" class="form-control ipt-order"
+                            <input value="" type="text" name="order_code" class="form-control ipt-order"
                                 placeholder="Nhập mã đơn hàng">
                             <button type="submit" class="btn-check">Tra cứu</button>
                         </div>

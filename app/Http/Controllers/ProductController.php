@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Models\Brand;
 use App\Models\ProductRating;
+use Illuminate\Support\Facades\URL;
 
 class ProductController extends Controller
 {
@@ -63,6 +64,23 @@ class ProductController extends Controller
         {
             //
             $product = Product::whereSlug($slug)->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')->firstorfail();
+            SEOMeta::setTitle($product->name);
+            SEOMeta::addMeta('robots', 'noindex, nofollow');
+            SEOMeta::addMeta('name', $product->name, 'itemprop');
+            SEOMeta::setDescription($product->meta_desc);
+            SEOMeta::addKeyword(explode(",", $product->meta_keyword));
+    
+            OpenGraph::setTitle($product->name)
+                // ->setDescription('Some Article')
+                ->setSiteName('cmart.vn')
+                ->setType('product')
+                ->setUrl(URL::current())
+                ->setDescription($product->meta_desc)
+                ->addImage($product->feature_img)
+                ->addProperty('og:image:secure_url', $product->feature_img)
+                ->addProperty('locale', 'vi_VN')
+                ->addProperty('og:image:width', 600)
+                ->addProperty('og:image:height', 600);
             $categoryIds = ProductCategory::where('id', $parentId = ProductCategory::where('id', $product->category_id)
             ->pluck('category_parent')->toArray())
             ->pluck('category_parent')
@@ -83,7 +101,6 @@ class ProductController extends Controller
                             $product->ratings()->whereValue(2)->count(),
                             $product->ratings()->whereValue(1)->count()
                             ];
-            
             return view('product.product_detail', ['ratings'=>$ratings, 'rating_list'=>$rating_list,'rating_count'=>$rating_count,'rating_average'=>$rating_average, 'product' => $product, 'categoryIds' => $categoryIds, 'new_products'=>$new_products, 'lastview_product'=>$lastview_product]);
         }
     }
@@ -122,6 +139,7 @@ class ProductController extends Controller
         //
     }
     
+
     public function postRating(Request $request){
         $phone = $_POST['phone'];
         $value = $_POST['value'];
