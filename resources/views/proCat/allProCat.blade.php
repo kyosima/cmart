@@ -62,13 +62,32 @@
                         </div>
                         <div class="">
                             <div id="category_search" class="widget-product-categories">
-                                @foreach ($categories as $item)
-                                    <div class="check-side">
-                                        <label class="py-1">
+                                <ul class="check-side category-menu">
+                                    @foreach ($categories as $item)
+                                    @if (count($item->childrenCategories) > 0)
+                                        <li class="menu-item menu-item-has-children py-1 has-child">
                                             <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
-                                        </label>
-                                    </div>
-                                @endforeach
+                                            <button class="toggle">
+                                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                            </button>
+                                            @include('proCat.danhmuc-sidebar', [
+                                                'child_categories' => $item->childrenCategories,
+                                                ])
+                                        </li>
+                                    @else
+                                        <li class="menu-item py-1">
+                                            <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
+                                        </li>
+                                    @endif
+                                    @endforeach
+                                </ul>
+                                {{-- @foreach ($categories as $item)
+                                <div class="check-side">
+                                    <label class="py-1">
+                                        <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
+                                    </label>
+                                </div>
+                                @endforeach --}}
                             </div>
                         </div>
                     </aside>
@@ -180,21 +199,40 @@
             var input, filter, li, a, i, txtValue;
             input = $('#input_' + id);
             filter = input.val().toUpperCase();
-            li = $('#' + id + ' .check-side');
+            li = $('#' + id + ' .check-side .menu-item');
             for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByTagName("label")[0];
+                a = li[i].getElementsByTagName("a")[0];
                 txtValue = a.textContent || a.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
+                    li[i].getElementsByTagName("a")[0].style.display = "";
                 } else {
-                    li[i].style.display = "none";
+                    li[i].getElementsByTagName("a")[0].style.display = "none";
                 }
+            }
+            if(filter == '') {
+                $('.sub-menu').css({"display": "none", "padding-left": "15px", 'border-left':'1px solid #ddd', 'margin':'0 0 10px 3px'});
+                $('.toggle').css('display','block');
+            } else {
+                $('.toggle').css('display','none');
+                $('.sub-menu').css({"display": "block", "padding-left": "0", 'border':'0', 'margin':'0'});
             }
         }
     </script>
 
 <script type='text/javascript'>
     $(document).ready(function() {
+
+        $(document).on("click", "button.toggle", function(){
+            if(!$(this).parent().hasClass('active')) {
+                $(this).parent().addClass('active');
+                $(this).find('i').removeClass('fa-angle-down')
+                $(this).find('i').addClass('fa-angle-up')
+            } else {
+                $(this).parent().removeClass('active');
+                $(this).find('i').removeClass('fa-angle-up')
+                $(this).find('i').addClass('fa-angle-down')
+            }
+        })
 
         $('.items').slick({
             infinite: true,
@@ -241,9 +279,6 @@
             infinite: true,
             slidesToShow: 4,
             slidesToScroll: 1,
-
-
-
         });
     });
     </script>

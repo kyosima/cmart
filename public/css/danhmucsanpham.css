@@ -795,3 +795,46 @@ section{
     }
 /* KẾT */
 
+.active>ul.sub-menu {
+    display: block !important;
+}
+
+ul.category-menu>li ul {
+    border-left: 1px solid #ddd;
+    margin: 0 0 10px 3px;
+    padding-left: 15px;
+    width: 100%;
+    display: none;
+}
+
+ul.category-menu>li.has-child {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+ul.category-menu>li>a, ul.category-menu>li>span:first-child{
+    display: inline-block;
+    padding: 6px 0;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+button.toggle {
+    border: 0;
+    cursor: pointer;
+    height: auto;
+    padding: 0;
+    background: transparent;
+    width: 1em;
+    min-height: 1em;
+    margin: 0 0 0 5px;
+}

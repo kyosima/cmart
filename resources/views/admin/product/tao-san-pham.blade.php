@@ -29,7 +29,7 @@
                                 <img src="http://api.salefie.vn/images/new_product_default.jpg">
                             </div>
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-1" type="hidden" name="feature_img" class="form-control">
+                                <input id="ckfinder-input-1" type="hidden" required name="feature_img" class="form-control">
                                 <a style="cursor: pointer;" id="ckfinder-popup-1" class="btn btn-success">Chọn ảnh đại diện</a>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                                     <label class="col-md-12 control-label text-left">Tên sản phẩm<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" name="product_name" class="form-control" placeholder=""
+                                        <input type="text" name="product_name" class="form-control"
                                             required value="{{ old('product_name') }}">
                                     </div>
                                 </div>
@@ -135,8 +135,8 @@
                                     <label class="col-md-12 control-label text-left">Khối lượng (g) <span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="number" step="0.1" max="1000000" min="0.1" name="product_weight" class="form-control"
-                                            placeholder="" value="{{ old('product_weight', 1.1) }}">
+                                        <input type="number" step="0.1" max="1000000" min="0.1" name="product_weight" required class="form-control"
+                                            value="{{ old('product_weight', 1.1) }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -145,8 +145,8 @@
                                             <label class="col-md-12 control-label text-left">Chiều dài (cm)<span
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
-                                                <input type="number" step="0.1" max="10000" min="1" name="product_length"
-                                                    class="form-control" placeholder=""
+                                                <input type="number" step="0.1" max="10000" min="1" required name="product_length"
+                                                    class="form-control"
                                                     value="{{ old('product_length', 1.1) }}">
                                             </div>
                                         </div>
@@ -154,8 +154,8 @@
                                             <label class="col-md-12 control-label text-left">Chiều cao (cm)<span
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
-                                                <input type="number" step="0.1" max="10000" min="1" name="product_height"
-                                                    class="form-control" placeholder=""
+                                                <input type="number" step="0.1" max="10000" min="1" required name="product_height"
+                                                    class="form-control"
                                                     value="{{ old('product_height', 1.1) }}">
                                             </div>
                                         </div>
@@ -163,8 +163,8 @@
                                             <label class="col-md-12 control-label text-left">Chiều rộng (cm)<span
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
-                                                <input type="number" step="0.1" max="10000" min="1" name="product_width"
-                                                    class="form-control" placeholder=""
+                                                <input type="number" step="0.1" max="10000" min="1" required name="product_width"
+                                                    class="form-control"
                                                     value="{{ old('product_width', 1.1) }}">
                                             </div>
                                         </div>
@@ -203,7 +203,7 @@
                                     <label class="col-md-12 control-label text-left">Giá shock khuyến mãi<span
                                         class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="number" step="1" min="1" name="product_shock_price"
+                                        <input type="number" step="1" min="1" required name="product_shock_price"
                                             class="form-control" 
                                             value="{{ old('product_shock_price') }}">
                                     </div>
@@ -221,24 +221,31 @@
                     </div>
 
                     <div class="col-md-12 mb-3">
-                        <div class="form-group mb-2">
-                            <label class="col-md-12 control-label vertical text-left">Meta keyword (cách nhau bởi dấu phẩy)</label>
-                            <div class="col-md-12">
-                                <textarea name="meta_keyword" id="meta_keyword" class="form-control" rows="2"
-                                    placeholder="Ví dụ: từ khóa 1, từ khóa 2,..">{{ old('meta_keyword') }}</textarea>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group mb-2">
+                                    <label class="col-md-12 control-label vertical text-left">Meta description:</label>
+                                    <div class="col-md-12">
+                                        <textarea name="meta_description" id="meta_description" class="form-control" rows="3"
+                                                    placeholder="Meta description tối đa 150 - 160 ký tự" maxlength="160">{{ old('meta_description') }}</textarea>
+                                        <div id="the-count">
+                                            <span id="current">0</span>
+                                            <span id="maximum">/ 160</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label class="col-md-12 control-label vertical text-left">Meta description:</label>
-                            <div class="col-md-12">
-                                <textarea name="meta_description" id="meta_description" class="form-control" rows="3"
-                                            placeholder="Meta description tối đa 150 - 160 ký tự" maxlength="160">{{ old('meta_description') }}</textarea>
-                                <div id="the-count">
-                                    <span id="current">0</span>
-                                    <span id="maximum">/ 160</span>
+                            <div class="col-6">
+                                <div class="form-group mb-2">
+                                    <label class="col-md-12 control-label vertical text-left">Meta keyword (cách nhau bởi dấu phẩy)</label>
+                                    <div class="col-md-12">
+                                        <textarea name="meta_keyword" id="meta_keyword" class="form-control" rows="3"
+                                            placeholder="Ví dụ: từ khóa 1, từ khóa 2,..">{{ old('meta_keyword') }}</textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group mb-2">
                             <label class="col-md-12 control-label vertical text-left">Mô tả ngắn:</label>
                             <div class="col-md-12">
