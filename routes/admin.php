@@ -12,18 +12,13 @@ use App\Admin\Controllers\BrandController;
 use App\Admin\Controllers\CalculationUnitController;
 use App\Admin\Controllers\WarehouseController;
 use App\Admin\Controllers\AdminOrderController;
-use App\Admin\Controllers\InfoCompanyController;
+use App\Admin\Controllers\AdminInfoCompanyController;
+use App\Admin\Controllers\AdminSettingController;
 
 Route::group(['middleware' => ['admin']], function () {
 
     Route::get('logout', [AdminHomeController::class, 'logout'])->name('logout');
 
-    Route::group(['middleware' => ['role_or_permission:Boss,admin']], function () {
-        //
-        Route::resource('roles', AdminRolesController::class);
-        Route::resource('permissions', AdminPermissionsController::class);
-        Route::resource('manager-admin', AdminManagerAdminController::class);
-    });
     Route::get('/', [AdminHomeController::class,'dashboard'])->name('admin.index');
     //quản lý admins
 
@@ -34,7 +29,7 @@ Route::group(['middleware' => ['admin']], function () {
     // Xem đơn Hàng
     Route::get('chi-tiet-don-hang/{order:id}', [AdminOrderController::class, 'show'])->name('order.show')->middleware('permission:Xem đơn hàng,admin');
     // sửa đơn Hàng
-    Route::put('sua-don-hang/{order:id}', [AdminOrderController::class, 'update'])->name('order.update')->middleware('permission:Sửa đơn hàng,admin');
+    Route::put('cap-nhat-don-hang/{order:id}', [AdminOrderController::class, 'update'])->name('order.update')->middleware('permission:Cập nhật đơn hàng,admin');
     // xóa đơn Hàng
     Route::match(['delete', 'get'],'xoa-don-hang/{order:id}', [AdminOrderController::class, 'delete'])->name('order.delete')->middleware('permission:Xóa đơn hàng,admin');
 
@@ -44,20 +39,42 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('lay-phuong-xa-theo-quan-huyen', [AdminOrderController::class, 'wardOfDistrict']);
 
     // thông tin cty
-    Route::group(['prefix' => 'info-company', 'middleware' => ['permission:Xem sản phẩm,admin']], function () {
+    Route::group(['prefix' => 'info-company'], function () {
 
         //danh sách
-        Route::get('/', [InfoCompanyController::class, 'index'])->name('info-company.index');
+        Route::get('/', [AdminInfoCompanyController::class, 'index'])->name('info-company.index')->middleware('permission:Xem DS trang đơn,admin');
         
         //tạo
-        Route::get('create', [InfoCompanyController::class, 'create'])->name('info-company.create');
-        Route::post('store', [InfoCompanyController::class, 'store'])->name('info-company.store');
+        Route::get('create', [AdminInfoCompanyController::class, 'create'])->name('info-company.create')->middleware('permission:Tạo trang đơn,admin');
+        Route::post('store', [AdminInfoCompanyController::class, 'store'])->name('info-company.store')->middleware('permission:Tạo trang đơn,admin');
 
         //sửa
-        Route::get('edit', [InfoCompanyController::class, 'edit'])->name('info-company.edit');
-        Route::put('update', [InfoCompanyController::class, 'update'])->name('info-company.update');
+        Route::get('edit/{info_company:id}', [AdminInfoCompanyController::class, 'edit'])->name('info-company.edit')->middleware('permission:Xem trang đơn,admin');
+        Route::put('update/{info_company:id}', [AdminInfoCompanyController::class, 'update'])->name('info-company.update')->middleware('permission:Cập nhật trang đơn,admin');
+
+        //xóa
+        Route::match(['delete', 'get'], 'delete/{info_company:id}', [AdminInfoCompanyController::class, 'delete'])->name('info-company.delete')->middleware('permission:Xóa trang đơn,admin');
     });
     
+    Route::group(['middleware' => ['role:Boss,admin']], function () {
+        //
+        Route::resource('roles', AdminRolesController::class);
+        Route::resource('permissions', AdminPermissionsController::class);
+        Route::resource('manager-admin', AdminManagerAdminController::class);
+        
+    });
+
+    Route::group(['middleware' => ['role:Boss|Manager,admin']], function () {
+        //setting
+        Route::get('setting', [AdminSettingController::class, 'index'])->name('setting.index');
+
+        //setting
+        Route::post('setting/maintenance-mode', [AdminSettingController::class, 'maintenanceMode'])->name('post.maintenanceMode');
+
+        //setting
+        Route::post('setting', [AdminSettingController::class, 'store'])->name('post.setting');
+
+    });
 
     // PRODUCT
     // được phép xem sản phẩm
@@ -257,9 +274,7 @@ Route::post('/login', [AdminHomeController::class,'postLogin'])->name('admin.log
 // Route::get('/profile', function () {
 //     return view('admin.profile');
 // });
-// Route::get('/setting', function () {
-//     return view('admin.setting');
-// });
+
 // Route::get('/ton-kho', function () {
 //     return view('admin.ton-kho');
 // });

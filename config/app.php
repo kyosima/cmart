@@ -181,6 +181,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
     ],
 
     /*

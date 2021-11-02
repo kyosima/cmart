@@ -8,7 +8,7 @@ if (!function_exists('formatPrice')) {
 }
 
 if (!function_exists('permissionOfRole')) {
-
+}
 if (!function_exists('helper')) {
     
     function permissionOfRole($data){
@@ -21,7 +21,6 @@ if (!function_exists('helper')) {
         }
         return $str;
     }
-}
     function checkRoleHasPermissions($role, $permissionName){
         if($role->hasPermissionTo($permissionName)){
             return 'selected';
@@ -60,7 +59,7 @@ if (!function_exists('helper')) {
         }elseif($status == 4){
             return '<span class="text-success status-order">Hoàn thành</span>';
         }else{
-            return '<span class="text-light status-order">Đã hủy</span>';
+            return '<span class="text-danger status-order">Đã hủy</span>';
         }
     }
 
@@ -75,6 +74,24 @@ if (!function_exists('helper')) {
             $string .= '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
         }
         return $string;
+    }
+    function selected($value1, $value2){
+        if($value1 == $value2){
+            return 'selected';
+        }
+        return;
+    }
+
+    function checked($value1, $value2){
+        if($value1 == $value2){
+            return 'checked';
+        }
+        return;
+    }
+
+    function typeInfoCompany($value){
+        $type = config('custom-config.page.type');
+        return $type[$value];
     }
 
 }

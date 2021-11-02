@@ -45,6 +45,8 @@ class AdminPermissionsController extends Controller
         //
         $validator = Validator::make($request->all(), [
             'in_name' => 'required|unique:Spatie\Permission\Models\Permission,name'
+        ], [
+            'in_name.unique' => 'Tên này đã tôn tại'
         ]);
     
         if ($validator->fails()) {
@@ -97,6 +99,8 @@ class AdminPermissionsController extends Controller
         $validator = Validator::make($request->all(), [
             'in_name_edit' => ['required', Rule::unique('permissions', 'name')->ignore($request->in_id_edit)],
             'in_id_edit' => 'required'
+        ], [
+            'in_name_edit.unique' => 'Tên này đã tôn tại'
         ]);
     
         if ($validator->fails()) {

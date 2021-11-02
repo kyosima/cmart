@@ -156,8 +156,14 @@
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <a href="{{route('order.delete', ['order' => $order->id])}}" class="btn btn-danger btn-submit-unit" onclick="return confirm('Are you sure you want to delete this order?')">Xóa</a>
-                                        <button type="submit" class="btn btn-info btn-submit-unit">Cập nhật</button>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            @if(auth()->guard('admin')->user()->can('Cập nhật đơn hàng'))
+                                            <button type="submit" class="btn btn-info btn-submit-unit">Cập nhật</button>
+                                            @endif
+                                            @if(auth()->guard('admin')->user()->can('Xóa đơn hàng'))
+                                            <a href="{{route('order.delete', ['order' => $order->id])}}" class="btn btn-danger btn-submit-unit" onclick="return confirm('Are you sure you want to delete this order?')">Xóa</a>
+                                            @endif
+                                        </div>
                                     </div>
                                 </form>
                                 </div>
