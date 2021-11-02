@@ -202,15 +202,7 @@
                                                         <a href="{{route('san-pham.show', $item->slug)}}" title="{{$item->name}}" tabindex="0">
                                                             <img src="{{asset($item->feature_img)}}" alt="{{$item->name}}">
                                                         </a>
-                                                        @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
-                                                        @php
-                                                            $percent = (1 - ($item->productPrice->shock_price/$item->productPrice->regular_price))*100;
-                                                        @endphp
-                                                        <div class="block-sale">
-                                                            <img alt="" src="{{ asset('public/image/bg-sale.png') }}">
-                                                            <span class="sale">-{{round($percent)}}%</span>
-                                                        </div>
-                                                    @endif
+                                                        {!!getTagSale($item)!!}
                                                     </div>
                                                     <div class="detail">
                                                         <h3 class="title">
@@ -218,7 +210,10 @@
                                                                 {{$item->name}}</a>
                                                         </h3>
                                                         <ul class="box-price">
-                                                            @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
+                                                            <li class="price">
+                                                                <span>{{formatPriceOfLevel($item)}}</span>
+                                                            </li>
+                                                            {{-- @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
                                                             <li class="price">
                                                                 <span>{{number_format($item->productPrice->shock_price)}}đ</span>
                                                             </li>
@@ -229,7 +224,7 @@
                                                             <li class="price">
                                                                 <span>{{number_format($item->productPrice->shock_price)}}đ</span>
                                                             </li>
-                                                        @endif
+                                                        @endif --}}
                                                         </ul>
                                                     </div>
                                                 </div>

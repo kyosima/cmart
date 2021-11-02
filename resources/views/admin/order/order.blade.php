@@ -48,6 +48,7 @@
 												<thead>
 													<tr>
 														<th class="title">ID</th>
+														<th class="title">Mã</th>
 														<!-- <th class="title"><input class="form-check" type="checkbox"></th> -->
 														<th class="title">Người đặt</th>
 														<th class="title">Trạng thái</th>
@@ -60,8 +61,9 @@
 													@foreach ( $orders as $order)
 													<tr>
 														<td>#{{$order->id}}</td>
+														<th class="title">{{$order->order_code}}</th>
 														<!-- <td><input type="checkbox" name="" id=""></td> -->
-														<td>{{$order->order_info->fullname}}</td>
+														<td>{{$order->order_info()->value('fullname')}}</td>
 														<td class="change-status-{{$order->id}}">{!! orderStatus($order->status) !!}</td>
 														<td>{{number_format($order->total)}} đ</td>
 														<td>{{date('d-m-Y H:i:s', strtotime($order->created_at))}}</td>

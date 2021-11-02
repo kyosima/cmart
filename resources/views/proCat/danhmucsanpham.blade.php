@@ -216,15 +216,8 @@
                                                 <img src="{{asset( $item->feature_img) }}" alt="">
                                             </a>
                                         </div>
-                                        @if ($item->shock_price != null || $item->shock_price != 0)
-                                            @php
-                                                $percent = (1 - ($item->shock_price/$item->regular_price))*100;
-                                            @endphp
-                                            <div class="block-sale">
-                                                <img alt="" src="{{ asset('image/bg-sale.png') }}">
-                                                <span class="sale">-{{round($percent)}}%</span>
-                                            </div>
-                                        @endif
+                                        {!!getTagSale($item)!!}
+
                                     </div>
                                     <div class="box-text col-lg-12 col-md-8 col-8">
                                         <div class="title-wrapper">
@@ -233,7 +226,10 @@
                                             </a>
                                         </div>
                                         <div class="price-wrapper">
-                                            @if ($item->shock_price != null || $item->shock_price != 0)
+                                            <li class="price">
+                                                <span>{{formatPriceOfLevel($item)}}</span>
+                                            </li>
+                                            {{-- @if ($item->shock_price != null || $item->shock_price != 0)
                                                 <span class="price">
                                                     <span class="amount">{{number_format($item->shock_price)}}đ</span>
                                                 </span>
@@ -244,7 +240,7 @@
                                                 <span class="price">
                                                     <span class="amount">{{number_format($item->regular_price)}}đ</span>
                                                 </span>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </div>

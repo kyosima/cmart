@@ -7,6 +7,47 @@ if (!function_exists('formatPrice')) {
     }
 }
 
+
+if (!function_exists('formatPriceOfLevel')) {
+    function formatPriceOfLevel($product)
+    {
+        return number_format(getPriceOfLevel($product), 0, '.', ',') . ' ₫';
+    }
+}
+
+if (!function_exists('getTagSale')) {
+    function getTagSale($product){
+        if (Auth::check()) {
+            $user = Auth::user();
+            if (($product->productPrice->shock_price != null || $product->productPrice->shock_price != 0) && ($user->level == 1)){
+                $percent = (1 - ($product->productPrice->shock_price/$product->productPrice->regular_price))*100;
+                $html='<div class="block-sale">
+                    <img alt="" src="'. asset('public/image/bg-sale.png') .'">
+                    <span class="sale">-'.round($percent).'%</span>
+                </div>';
+                return $html;
+            }else{
+                return null;
+            }
+        }
+    }
+}
+if (!function_exists('getPriceOfLevel')) {
+    function getPriceOfLevel($product)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            if($user->level ==0){
+                return $product->productPrice()->value('regular_price');
+            }else{
+                return $product->productPrice()->value('shock_price');
+            }
+        }else{
+            return $product->productPrice()->value('regular_price');
+        }
+    }
+}
+
 if (!function_exists('permissionOfRole')) {
 }
 if (!function_exists('helper')) {

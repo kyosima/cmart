@@ -67,12 +67,13 @@
                                 <p><span>Sản xuất tại:</span>Nhật Bản</p>
                             </div>
                             <div class="all-price">
-                                @if ($product->shock_price != null || $product->shock_price != 0)
+                                <p class="new-price">{{ formatPriceOfLevel($product) }}</p>
+                                {{-- @if ($product->shock_price != null || $product->shock_price != 0)
                                     <p class="new-price">{{ formatPrice($product->shock_price) }}</p>
                                     <p class="old-price">{{ formatPrice($product->regular_price) }}</p>
                                 @else
                                     <p class="new-price">{{ formatPrice($product->regular_price) }}</p>
-                                @endif
+                                @endif --}}
                             </div>
                             <div class="promo-intro">
                                 <p class="title-promo">Tiết kiệm

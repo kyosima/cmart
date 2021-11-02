@@ -20,7 +20,7 @@ class AdminOrderController extends Controller
     //
 
     public function index(Request $request){
-        $orders = Order::with('order_info')->get();
+        $orders = Order::latest()->get();
         $doanh_thu = Order::where('status', 4)->sum('total');
         return view('admin.order.order', compact('orders', 'doanh_thu'));
     }
