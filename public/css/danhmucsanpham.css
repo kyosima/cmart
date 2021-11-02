@@ -230,31 +230,69 @@ section{
 /* FILTER GIÁ */
     /* slider */
 .price-range-slider .range-bar{
-    border: none;
-    background: #DEE5E9;
-    height: 6px;  
+    height: 6px !important;
+    background-color: #DEE5E9 !important;
+    border-radius: 4px;
+    border: 0 !important;
     margin-bottom: 20px;
+    position: relative;
 }
+
+.ui-slider .ui-slider-range {
+    position: absolute;
+    z-index: 1;
+    font-size: .7em;
+    display: block;
+    border: 0;
+    background-position: 0 0;
+}
+
+.ui-slider-horizontal .ui-slider-range {
+    top: 0;
+    height: 100%;
+}
+
 .price-range-slider .range-bar .ui-slider-range {
-    background:#BB0029 ;
+    background: #BB0029;
     height: 6px;
 }
+
+.ui-slider .ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    width: 1.2em;
+    height: 1.2em;
+    cursor: default;
+    -ms-touch-action: none;
+    touch-action: none;
+}
+
+.ui-slider-horizontal .ui-slider-handle {
+    top: -0.3em;
+    margin-left: -0.6em;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default {
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+    font-weight: 400;
+    color: #454545;
+}
+
 .price-range-slider .range-bar .ui-slider-handle {
-    border:none;
-    border-radius:25px;
-    background:#fff;
-    border:1px solid #c5c5c5;
-    height:16px;
-    width:16px;
-    top: 50%;
-    transform: translate(0, -50%);
-    cursor:pointer;
+    background-color: #FFFFFF !important;
+    box-shadow: -1px 1px 4px rgba(137, 152, 172, 0.5);
+    width: 16px !important;
+    height: 16px !important;
+    border-radius: 100%;
+    right: -8px;
     outline: none;
 }
 .ui-widget.ui-widget-content {
     border: none !important;
 }
-    /* hiển thị giá */
+
+/* hiển thị giá */
 .widget-price{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
