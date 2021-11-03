@@ -212,13 +212,13 @@
                 
             </div>
             
-        <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span><input type="checkbox" id="changePassword" name="changePassword"> Đổi mật khẩu</span></div><br>
-                <div class="col-md-12"><label class="labels">Password</label><input type="password" class="form-control password" name="password" placeholder="Password" disabled></div> <br>
-                <div class="col-md-12"><label class="labels">Nhập lại password</label><input type="password" class="form-control password" name="passwordAgain" placeholder="Re-Password" disabled></div>
+            <div class="col-md-4">
+                <div class="row p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span><input type="checkbox" id="changePassword" name="changePassword"> Đổi mật khẩu</span></div><br>
+                    <div class="col-md-12"><label class="labels">Password</label><input type="password" class="form-control password" name="password" placeholder="Password" disabled></div> <br>
+                    <div class="col-md-12"><label class="labels">Nhập lại password</label><input type="password" class="form-control password" name="passwordAgain" placeholder="Re-Password" disabled></div>
+                </div>
             </div>
-        </div>
         </div>
         
 
