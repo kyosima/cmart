@@ -12,6 +12,7 @@
 
         <!-- Page Content -->
         <div id="page-wrapper">
+        <form action="danh-sach-user" method="POST">
             <div class="container-fluid">
                 <div class="row">
                     <!-- /.col-lg-12 -->
@@ -23,7 +24,9 @@
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Level</th>
+                                <th>Điểm tích lũy</th>
                                 <th>Edit</th>
+                                <th>Check KYC</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,7 +42,27 @@
                                         {{"Member Thuong"}}
                                     @endif
                                 </td>
-                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="profile/{{$k->id}}"> Edit</a></td>
+                                <td>
+                                @if($k->tichluyC >= 5000000)
+                                    {{$k->tichluyC}}
+                                    <button type="submit" name="levelUP" value="1" >Nâng cấp khách hàng thân thiết</button> 
+                                @elseif($k->tichluyC >= 30000000)
+                                    {{$k->tichluyC}}
+                                    <button type="submit" name="levelUP" value="2" >Nâng cấp khách hàng VIP</button>
+                                @else
+                                    {{$k->tichluyC}}
+                                @endif
+                                </td>
+                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="{{url('admin/danh-sach-user')}}/{{$k->id}}"> Edit</a></td>
+                                <td>
+                                    @if($k->check_kyc == 0)
+                                        Chưa duyệt!
+                                    @elseif($k->check_kyc == 1)
+                                        Đồng ý
+                                    @else
+                                        Từ chối
+                                    @endif
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

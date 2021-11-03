@@ -14,8 +14,16 @@ use App\Admin\Controllers\WarehouseController;
 use App\Admin\Controllers\AdminOrderController;
 use App\Admin\Controllers\AdminInfoCompanyController;
 use App\Admin\Controllers\AdminSettingController;
-
+use App\Admin\UserController;
 Route::group(['middleware' => ['admin']], function () {
+
+    Route::get('danh-sach-user',[UserController::class, 'getDanhsach']);
+    Route::post('danh-sach-user',[UserController::class, 'postDanhsach']);
+    
+    Route::group(['prefix'=>'danh-sach-user'], function() {
+        Route::get('{id}',[UserController::class, 'getEdit']);
+        Route::post('{id}',[UserController::class, 'postEdit']);
+    });
 
     Route::get('logout', [AdminHomeController::class, 'logout'])->name('logout');
 

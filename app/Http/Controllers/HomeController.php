@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Province;
+use App\Models\District;
+use App\Models\Ward;
 
 class HomeController extends Controller
 {
@@ -27,7 +31,12 @@ class HomeController extends Controller
     }
 
     public function getAccessAccount() {
-        return view('account.account');
+        if (Auth::check()) {;
+            return view('home');
+        }
+        else {
+            return view('account.account');
+        } 
     }
 
     public function postLogin(Request $request) {
@@ -53,7 +62,12 @@ class HomeController extends Controller
 
     public function getRegister ()
     {
-        return redirect('tai-khoan');
+        if (Auth::check()) {;
+            return view('home');
+        }
+        else {
+            return view('account.register');
+        }
     }
 
     public function postRegister (Request $request)
@@ -95,7 +109,12 @@ class HomeController extends Controller
     public function getProfile() {
         if (Auth::check()) {
             $user = Auth::user();
-            return view('account.profileUser',['profileUser'=>$user]);
+            $province = Province::orderby('matinhthanh','ASC')->get();
+            // $district = District::select('maquanhuyen', 'tenquanhuyen')->get();
+            // $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
+            
+            // return view('account.profileUser',['profileUser'=>$user,'province'=>$province, 'district'=>$district, 'ward'=>$ward]);
+            return view('account.profileUser',['profileUser'=>$user])->with(compact('province'));
         }
         else {
             return redirect('tai-khoan')->with('thongbao','Bạn chưa đăng nhập!');
@@ -108,6 +127,46 @@ class HomeController extends Controller
         $user->phone = $request->phone;
         $user->cmnd = $request->cmnd;
         $user->address = $request->address;
+        $user->id_phuongxa = $request->phuongxa;
+        $user->id_quanhuyen = $request->quanhuyen;
+        $user->id_tinhthanh = $request->tinhthanh;
+        $user->type_cmnd = $request->type_cmnd;
+        $data = $request->all();
+        if($user['action']) {
+            $output = '';
+            if($user['action']=="city") {
+                $select_city = District::where('matinhthanh',$user['ma_id'])->orderby('maquanhuyen','ASC')->get();
+                $output.='<option>--Chon quan huyen--</option>';
+                foreach ($select_city as $key => $district){
+                    $output.='<option value="'.$district->maquanhuyen.'">'.$district->tenquanhuyen.'</option>';
+                }
+            } else {
+                $select_ward = Ward::where('maquanhuyen',$user['ma_id'])->orderby('maphuongxa','ASC')->get();
+                $output.='<option>--Chon xa phuong--</option>';
+                foreach ($select_ward as $key => $ward){
+                    $output.='<option value="'.$ward->maphuongxa.'"'.$ward->tenphuongxa.'</option>';
+                }
+            }
+        }
+        if($request->hasFile('image_cmnd')) {
+            $destination_path = 'public\upload';
+            $image = $request->file('image_cmnd');
+            $image_name = $image->getClientOriginalName();
+            $user->cmnd_image = $image_name;
+            $path = $request->file('image_cmnd')->storeAs($destination_path,$image_name);
+            $input['image_cmnd'] = $image_name;
+        }
+        // $idfinal = Province::where('$user->id_phuongxa',$request->id_phuongxa)
+       // $abc = DB::table('province')->where($user->id = $province->user_id)->get();
+
+        if($request->hasFile('avatar')) {
+            $destination_path = 'public\upload';
+            $image_avatar = $request->file('avatar');
+            $image_avatar_name = $image_avatar->getClientOriginalName();
+            $user->avatar = $image_avatar_name;
+            $path = $request->file('avatar')->storeAs($destination_path,$image_avatar_name);
+            $input['avatar'] = $image_avatar_name;
+        }
 
         if($request->changePassword == "on"){
             $this->validate($request, [
@@ -122,7 +181,7 @@ class HomeController extends Controller
             ]);
             $user->password = bcrypt($request->password);
         }
-        
+
         $user->save();
         return back()->with('thongbao','Sửa thành công');
     }

@@ -98,15 +98,8 @@ Route::get('lay-quan-huyen-theo-tinh-thanh', [ShippingController::class, 'distri
 Route::get('lay-phuong-xa-theo-quan-huyen', [ShippingController::class, 'wardOfDistrict']);
 // Route::get('danhsach',[UserController::class, 'getDanhsach']);
 
-// Route::group(['prefix'=>'admin'], function() {
-//     Route::group(['prefix'=>'user'], function() {
-//         Route::get('danhsach','UserController@getDanhsach');
 
-//         Route::get('profile/{id}','UserController@getEdit');
-//         Route::post('profile/{id}','UserController@postEdit');
-//     });
-// });
-// Route::get('/login', [HomeController::class, 'getLogin']);
+
 Route::post('/login', [HomeController::class, 'postLogin']);
 Route::get('/tai-khoan', [HomeController::class, 'getAccessAccount']);
 

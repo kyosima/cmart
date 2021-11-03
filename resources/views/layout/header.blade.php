@@ -115,6 +115,9 @@
               <li class="nav-item">
                 <a class="nav-link btn btn-light text-dark" href="{{url('/thong-tin-tai-khoan')}}"><i class="fas fa-user text-dark"></i> {{ Auth::user()->name}}</a>
               </li>
+              <li class="nav-item">
+                  <a class="nav-link text-uppercase gach" href="logout">Logout</a>
+                </li>
               @else
               <li class="nav-item">
                 <a class="nav-link" href="{{url('/tai-khoan')}}"> Đăng nhập</a>

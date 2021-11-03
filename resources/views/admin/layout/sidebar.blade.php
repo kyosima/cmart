@@ -101,6 +101,17 @@
             </span>
             @endif
          </li>
+         <li class="dropdown">
+            <a href="#" class="dropbtn">
+             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <span class="links_name w-100 align-items-center d-flex">Quản lý user <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            </a>
+            @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
+            <span class="dropdown-content">
+                <a href="{{url('admin/danh-sach-user')}}">Danh sách user</a>
+            </span>
+            @endif
+         </li>
          @endif
          @hasanyrole('Manager|Boss', 'admin')
          <li class="dropdown">
