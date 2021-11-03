@@ -115,12 +115,12 @@
              
               <li class="nav-item">
                 <div class="btn-group">
-                  <a class="btn btn-light text-dark" href="{{url('/thong-tin-tai-khoan')}}"><i class="fas fa-user text-dark"></i> {{ Auth::user()->name}}</a>
+                  <a class="btn btn-light text-dark" href="{{url('/xac-thuc-ho-so')}}"><i class="fas fa-user text-dark"></i> {{ Auth::user()->name}}</a>
                   <button type="button" class="btn  btn-light text-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu text-dark">
-                    <a class="dropdown-item text-dark" href="{{route('account.info')}}">Thông tin tài khoản</a>
+                    <a class="dropdown-item text-dark" href="{{url('/xac-thuc-ho-so')}}">Thông tin tài khoản</a>
                     <a class="dropdown-item text-dark" href="#">Lịch sử đơn hàng</a>
                     <a class="dropdown-item text-dark" href="#">Ví của bạn</a>
                     <div class="dropdown-divider"></div>
@@ -766,7 +766,7 @@
             <div class="box-item">
               <ul>
                 @if (Auth::check()) 
-                <li><a id="profile-btn" href="{{url('/thong-tin-tai-khoan')}}" title="title"><i class="fas fa-user"></i><span>{{ Auth::user()->name}}</span></a></li>
+                <li><a id="profile-btn" href="{{url('/xac-thuc-ho-so')}}" title="title"><i class="fas fa-user"></i><span>{{ Auth::user()->name}}</span></a></li>
                 @else
                 <li><a id="register-btn" href="{{url('/tai-khoan')}}" title="title"><i class="fas fa-user"></i><span>Đăng ký tài khoản</span></a></li>
                 <li><a id="login-btn" href="{{url('/tai-khoan')}}" title="title"><i class="fas fa-sign-in-alt"></i></i><span>Đăng nhập</span></a></li>

@@ -81,6 +81,7 @@
             <div class="text-center"><button class="btn btn-primary profile-button" type="button">Tích lũy: {{$profileUser->tichluyC}} point</button></div>
             <div class="text-center mt-2"><button class="btn btn-primary profile-button" type="button">Lịch sử giao dịch</button></div>
         </div>
+
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
 
@@ -98,7 +99,7 @@
                 </div>
                 @endif
                 @if($profileUser->check_kyc == 2 || $profileUser->check_kyc == 0 )
-                    <div class="col-md-12"><div class="alert alert-danger">Hiện bạn chưa được duyệt KYC thành công, mời bạn nhập đầy đủ thông tin để admin xét duyệt để nhận nhiều yêu đãi từ chúng tôi!</div></div>
+                    <!-- <div class="col-md-12"><div class="alert alert-danger">Hiện bạn chưa được duyệt KYC thành công, mời bạn nhập đầy đủ thông tin để admin xét duyệt để nhận nhiều yêu đãi từ chúng tôi!</div></div> -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profile Settings</h4>
                 </div>
@@ -210,7 +211,8 @@
 
                 
             </div>
-            <div class="col-md-4">
+            
+        <div class="col-md-4">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center experience"><span><input type="checkbox" id="changePassword" name="changePassword"> Đổi mật khẩu</span></div><br>
                 <div class="col-md-12"><label class="labels">Password</label><input type="password" class="form-control password" name="password" placeholder="Password" disabled></div> <br>
@@ -218,6 +220,7 @@
             </div>
         </div>
         </div>
+        
 
     </div>
 </div>

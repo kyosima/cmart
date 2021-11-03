@@ -106,15 +106,29 @@ class HomeController extends Controller
         return redirect('/');
     }
 
+    public function getXacthuc() {
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->check_kyc == 0){
+                return view('account.check_kyc_acc');
+            }
+            else {
+                return redirect('/thong-tin-tai-khoan');
+            }
+        }
+        else {
+            return redirect('tai-khoan')->with('thongbao','Bạn chưa đăng nhập!');
+        }
+    }
+
     public function getProfile() {
         if (Auth::check()) {
             $user = Auth::user();
             $province = Province::orderby('matinhthanh','ASC')->get();
-            // $district = District::select('maquanhuyen', 'tenquanhuyen')->get();
-            // $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
+            $district = District::select('maquanhuyen', 'tenquanhuyen')->get();
+            $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
+                return view('account.profileUser',['profileUser'=>$user,'province'=>$province, 'district'=>$district, 'ward'=>$ward])->with(compact('province'));
             
-            // return view('account.profileUser',['profileUser'=>$user,'province'=>$province, 'district'=>$district, 'ward'=>$ward]);
-            return view('account.profileUser',['profileUser'=>$user])->with(compact('province'));
         }
         else {
             return redirect('tai-khoan')->with('thongbao','Bạn chưa đăng nhập!');
