@@ -154,7 +154,5 @@ class ProductController extends Controller
         }
     }
 
-    public function getSearch(Request $request){
-        return $request->keyword;
-    }
+   
 }

@@ -55,7 +55,7 @@
                                 <tr>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $product->quantity }}</td>
-                                    <td>{{ formatPrice($product->prices) }}</td>
+                                    <td>{{ formatPrice($product->price) }}</td>
                                     <td>{{ formatPrice($product->price * $product->quantity) }}</td>
                                 </tr>
                             @endforeach
