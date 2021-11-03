@@ -109,7 +109,6 @@
                             <span>Bộ lọc</span>
                             <button class="close-filter" onclick="closeSidebar()"></button>
                         </div>
-
                         <div class="slider-price">
                             <h3 class="widget-title">Giá</h3>
                             <div class="widget-filter-price">
@@ -117,23 +116,39 @@
                                     <div id="slider-range" class="range-bar"></div>
                                 </div>
                             </div>
+                            <input type="hidden" name="minprice" id="minprice" value="{{$minPrice}}">
+                            <input type="hidden" name="beginMinPrice" id="minprice1"
+                                @if ($beginMinPrice == 0)
+                                value="{{$minPrice}}"
+                                @else 
+                                value="{{$beginMinPrice}}"
+                                @endif    
+                            >
+                            <input type="hidden" name="maxprice" id="maxprice" value="{{$maxPrice}}">
+                            <input type="hidden" name="endMaxPrice" id="maxprice1"
+                                @if ($endMaxPrice == 0)
+                                value="{{$maxPrice}}"
+                                @else 
+                                value="{{$endMaxPrice}}"
+                                @endif 
+                            >
                             <div class="widget-price">
                                 <div class="form-group trai">
                                     <p class="title-range">Min</p>
                                     <div class="box-input">
-                                        <input type="text" class="form-control" id="amount1" disabled="">
+                                        <input type="text" class="form-control slider_price_textbox" id="amount1" disabled="">
                                         <span>đ</span>
                                     </div>
                                 </div>
                                 <div class="form-group phai">
                                     <p class="title-range">Max</p>
                                     <div class="box-input">
-                                        <input type="text" class="form-control" id="amount2" disabled="">
+                                        <input type="text" class="form-control slider_price_textbox" id="amount2" disabled="">
                                         <span>đ</span>
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn-price" type="button">Áp dụng</button>
+                            <button class="btn-price" type="submit">Áp dụng</button>
                         </div>
                     </aside>
 
@@ -286,8 +301,14 @@
             document.body.style.overflow = "auto";
         }
     </script>
+<script src="{{ asset('js/danhmucsanpham.js') }}"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js" integrity="sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=" crossorigin="anonymous"></script>
 
 <script>
+    jQuery(function () {
+        initSlidePrice()
+    });
+
     function order(id) {
         $("#sale").val('');
         $("#order").val(id);
@@ -314,6 +335,82 @@
             }
         }
     }
+
+    var initSlidePrice = function () {
+        var min_price1 = parseInt(jQuery("#minprice").val());
+        var max_price1 = parseInt(jQuery("#maxprice").val());
+        if (($("#minprice1")).val()) {
+            var min_price = parseInt(jQuery("#minprice1").val())
+        } else {
+            var min_price = parseInt(jQuery("#minprice").val())
+        }
+        if (($("#maxprice1")).val()) {
+            var max_price = parseInt(jQuery("#maxprice1").val())
+        } else {
+            var max_price = parseInt(jQuery("#maxprice").val())
+        }
+        jQuery("#slider-range").slider({
+            range: !0,
+            min: min_price1,
+            max: max_price1,
+            values: [min_price, max_price],
+            slide: function (event, ui) {
+                jQuery("#amount").html("$" + ui.values[0] + " - $" + ui.values[1]);
+                var amount1 = formatCurrency(ui.values[0]);
+                var amount2 = formatCurrency(ui.values[1]);
+                jQuery("#amount1").val(amount1);
+                jQuery("#amount2").val(amount2);
+                jQuery("#minprice1").val(ui.values[0]);
+                jQuery("#maxprice1").val(ui.values[1])
+            }
+        });
+        jQuery("#amount").html("$" + jQuery("#slider-range").slider("values", 0) + " - $" + jQuery("#slider-range").slider("values", 1));
+        var from1st = formatCurrency(min_price);
+        var to1st = formatCurrency(max_price);
+        $("#amount1").val(from1st);
+        $("#amount2").val(to1st);
+        jQuery(".slider_price_textbox").on("keypress,keyup", function (e) {
+            var code = e.charCode || e.keyCode;
+            if (code == '8') return !0;
+            if (String.fromCharCode(code).match(/[^0-9]/g)) {
+                return !1
+            }
+            return !0
+        });
+        jQuery(".slider_price_textbox").focusout(function () {
+            jQuery(this).val(formatCurrency(jQuery(this).val()))
+        });
+        jQuery(".slider_price_submit").click(function () {
+            var from = formatNumber(jQuery("#amount1").val());
+            var to = formatNumber(jQuery("#amount2").val());
+            var sliderPriceURL = "http://japana.vn";
+            sliderPriceURL = sliderPriceURL.replace("amshopby_slider_from", from);
+            sliderPriceURL = sliderPriceURL.replace("amshopby_slider_to", to);
+            jQuery(".slider_price_form").attr("action", sliderPriceURL);
+            return !0
+        });
+        jQuery("#min-price").val(jQuery("#slider-range").slider("values", 0));
+        jQuery("#max-price").val(jQuery("#slider-range").slider("values", 1));
+
+        function formatCurrency(val) {
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        }
+
+        function formatNumber(val) {
+            return val.toString().split('.').join("")
+        }
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode == 59 || charCode == 46)
+                return !0;
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return !1;
+            return !0
+        }
+    }
+
+
 
     $(document).ready(function () {
         $(".submit_click").click(function () {
@@ -355,7 +452,5 @@
     var sales = urlSearchParams.get("sale");
 
 </script>
-
-
 
 @endpush

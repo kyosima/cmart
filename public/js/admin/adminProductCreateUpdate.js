@@ -50,43 +50,23 @@ $(document).ready(function () {
                 required: true,
                 number: true,
             },
-            product_vpoint: {
-                min: 0.1,
+            product_market_price: {
+                min: 1,
                 required: true,
                 number: true,
             },
-            product_discount_2: {
-                min: 0.1,
+            product_wholesale_price: {
+                min: 1,
                 required: true,
                 number: true,
             },
-            product_discount_1: {
-                min: 0.1,
+            cpoint: {
+                min: 1,
                 required: true,
                 number: true,
             },
-            product_discount_platinum: {
-                min: 0.1,
-                required: true,
-                number: true,
-            },
-            product_discount_diamond: {
-                min: 0.1,
-                required: true,
-                number: true,
-            },
-            product_discount_gold: {
-                min: 0.1,
-                required: true,
-                number: true,
-            },
-            product_discount_silver: {
-                min: 0.1,
-                required: true,
-                number: true,
-            },
-            product_discount_member: {
-                min: 0.1,
+            product_shock_price: {
+                min: 1,
                 required: true,
                 number: true,
             },
@@ -105,14 +85,10 @@ $(document).ready(function () {
             product_height: "Không được để trống",
             product_width: "Không được để trống",
             product_regular_price: "Không được để trống",
-            product_vpoint: "Không được để trống",
-            product_discount_2: "Không được để trống",
-            product_discount_1: "Không được để trống",
-            product_discount_platinum: "Không được để trống",
-            product_discount_diamond: "Không được để trống",
-            product_discount_gold: "Không được để trống",
-            product_discount_silver: "Không được để trống",
-            product_discount_member: "Không được để trống",
+            product_market_price: "Không được để trống",
+            product_wholesale_price: "Không được để trống",
+            cpoint: "Không được để trống",
+            product_shock_price: "Không được để trống",
         }
     });
 });

@@ -1,7 +1,6 @@
 /* Quy định chung */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 body{
-    line-height: 1;
     font-size: 14px;
     font-family: "Roboto",sans-serif;
 }
@@ -230,31 +229,69 @@ section{
 /* FILTER GIÁ */
     /* slider */
 .price-range-slider .range-bar{
-    border: none;
-    background: #DEE5E9;
-    height: 6px;  
+    height: 6px !important;
+    background-color: #DEE5E9 !important;
+    border-radius: 4px;
+    border: 0 !important;
     margin-bottom: 20px;
+    position: relative;
 }
+
+.ui-slider .ui-slider-range {
+    position: absolute;
+    z-index: 1;
+    font-size: .7em;
+    display: block;
+    border: 0;
+    background-position: 0 0;
+}
+
+.ui-slider-horizontal .ui-slider-range {
+    top: 0;
+    height: 100%;
+}
+
 .price-range-slider .range-bar .ui-slider-range {
-    background:#BB0029 ;
+    background: #BB0029;
     height: 6px;
 }
+
+.ui-slider .ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    width: 1.2em;
+    height: 1.2em;
+    cursor: default;
+    -ms-touch-action: none;
+    touch-action: none;
+}
+
+.ui-slider-horizontal .ui-slider-handle {
+    top: -0.3em;
+    margin-left: -0.6em;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default {
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+    font-weight: 400;
+    color: #454545;
+}
+
 .price-range-slider .range-bar .ui-slider-handle {
-    border:none;
-    border-radius:25px;
-    background:#fff;
-    border:1px solid #c5c5c5;
-    height:16px;
-    width:16px;
-    top: 50%;
-    transform: translate(0, -50%);
-    cursor:pointer;
+    background-color: #FFFFFF !important;
+    box-shadow: -1px 1px 4px rgba(137, 152, 172, 0.5);
+    width: 16px !important;
+    height: 16px !important;
+    border-radius: 100%;
+    right: -8px;
     outline: none;
 }
 .ui-widget.ui-widget-content {
     border: none !important;
 }
-    /* hiển thị giá */
+
+/* hiển thị giá */
 .widget-price{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -799,3 +836,55 @@ section{
     }
 /* KẾT */
 
+.active>ul.sub-menu {
+    display: block !important;
+}
+
+ul.category-menu>li ul {
+    border-left: 1px solid #ddd;
+    margin: 0 0 10px 3px;
+    padding-left: 15px;
+    width: 100%;
+    display: none;
+}
+
+ul.category-menu>li.has-child {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+ul.category-menu>li>a, ul.category-menu>li>span:first-child{
+    display: inline-block;
+    padding: 6px 0;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+button.toggle {
+    border: 0;
+    cursor: pointer;
+    height: auto;
+    padding: 0;
+    background: transparent;
+    width: 1em;
+    min-height: 1em;
+    margin: 0 0 0 5px;
+}
+.check-side.category-menu li.menu-item{
+    border-bottom: 1px solid #ddd;
+}
+.check-side.category-menu li.menu-item:hover a{
+    color: red;
+}
+.check-side.category-menu li.menu-item:last-child{
+    border-bottom: unset;
+}

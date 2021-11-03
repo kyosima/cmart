@@ -37,7 +37,7 @@
                                 <img src="{{$product->feature_img}}">
                             </div>
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-1" type="hidden" name="feature_img" class="form-control" value="{{old('feature_img', $product->feature_img)}}" readonly required>
+                                <input id="ckfinder-input-1" type="hidden" required name="feature_img" class="form-control" value="{{old('feature_img', $product->feature_img)}}" readonly required>
                                 <a style="cursor: pointer;" id="ckfinder-popup-1" class="btn btn-success">Chọn ảnh</a>
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                                     <label class="col-md-12 control-label text-left">Tên sản phẩm<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" name="product_name" class="form-control" placeholder=""
+                                        <input type="text" name="product_name" class="form-control"
                                             required value="{{ old('product_name', $product->name) }}">
                                     </div>
                                 </div>
@@ -163,7 +163,7 @@
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <input type="number" step="0.1" max="1000000" min="1" name="product_weight" class="form-control"
-                                            placeholder="" value="{{ old('product_weight', $product->weight) }}">
+                                        required value="{{ old('product_weight', $product->weight) }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -173,7 +173,7 @@
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
                                                 <input type="number" step="0.1" max="10000" min="1" name="product_length"
-                                                    class="form-control" placeholder=""
+                                                    class="form-control" required
                                                     value="{{ old('product_length', $product->length) }}">
                                             </div>
                                         </div>
@@ -182,7 +182,7 @@
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
                                                 <input type="number" step="0.1" max="10000" min="1" name="product_height"
-                                                    class="form-control" placeholder=""
+                                                    class="form-control" required
                                                     value="{{ old('product_height', $product->height) }}">
                                             </div>
                                         </div>
@@ -191,7 +191,7 @@
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
                                                 <input type="number" step="0.1" max="10000" min="1" name="product_width"
-                                                    class="form-control" placeholder=""
+                                                    class="form-control" required
                                                     value="{{ old('product_width', $product->width) }}">
                                             </div>
                                         </div>
