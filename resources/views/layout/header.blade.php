@@ -22,10 +22,10 @@
 
           <div class="search-menu">
             <div class="box-search">
-              <form method="GET" name="frm" id="frm" action="#" enctype="multipart/form-data">
+              <form method="GET" name="frm" id="frm" action="{{route('search')}}" enctype="multipart/form-data">
                 <div class="form-group">
-                  <input autocomplete="off" x-webkit-speech_off="" x-webkit-grammar_off="builtin:search" id="search" name="search" class="form-control ipt-search" placeholder="Tìm kiếm sản phẩm ..." type="text" value="">
-                  <button onclick="" type="button" class="icon-search"><i class="fas fa-search"></i></button>
+                  <input autocomplete="off" x-webkit-speech_off="" x-webkit-grammar_off="builtin:search" id="search" name="keyword" minlength="3"  class="form-control ipt-search" placeholder="Tìm kiếm sản phẩm ..." type="text" value="">
+                  <button onclick="" type="submit" class="icon-search"><i class="fas fa-search"></i></button>
                   <div id="showsearch">
                   </div>
                 </div>
@@ -112,11 +112,22 @@
                   (028) 7108 8889 <i class="fas fa-phone-alt"></i></a>
               </li> -->
               @if (Auth::check()) 
+             
               <li class="nav-item">
-                <a class="nav-link btn btn-light text-dark" href="{{url('/thong-tin-tai-khoan')}}"><i class="fas fa-user text-dark"></i> {{ Auth::user()->name}}</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link text-uppercase gach" href="logout">Logout</a>
+                <div class="btn-group">
+                  <a class="btn btn-light text-dark" href="{{url('/thong-tin-tai-khoan')}}"><i class="fas fa-user text-dark"></i> {{ Auth::user()->name}}</a>
+                  <button type="button" class="btn  btn-light text-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <div class="dropdown-menu text-dark">
+                    <a class="dropdown-item text-dark" href="{{route('account.info')}}">Thông tin tài khoản</a>
+                    <a class="dropdown-item text-dark" href="#">Lịch sử đơn hàng</a>
+                    <a class="dropdown-item text-dark" href="#">Ví của bạn</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="{{route('logoutuser')}}">Đăng xuất</a>
+                  </div>
+                </div>
+                
                 </li>
               @else
               <li class="nav-item">

@@ -103,7 +103,7 @@ class HomeController extends Controller
 
     public function getLogout() {
         Auth::logout();
-        return redirect('');
+        return redirect('/');
     }
 
     public function getProfile() {

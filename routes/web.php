@@ -57,10 +57,7 @@ Route::prefix('thanh-toan')->group(function () {
 
 });
 
-
-
-
-
+Route::get('tim-kiem', [ProductController::class, 'getSearch'])->name('search');
 
 //Route - Liên hệ
 Route::get('/lien-he', function () {
@@ -105,7 +102,7 @@ Route::get('/tai-khoan', [HomeController::class, 'getAccessAccount']);
 
 Route::post('/register', [HomeController::class, 'postRegister']);
 
-Route::get('/logout', [HomeController::class, 'getLogout']);
+Route::get('/dang-xuat', [HomeController::class, 'getLogout'])->name('logoutuser');
 
-Route::get('/thong-tin-tai-khoan', [HomeController::class, 'getProfile']);
+Route::get('/thong-tin-tai-khoan', [HomeController::class, 'getProfile'])->name('account.info');
 Route::post('/thong-tin-tai-khoan', [HomeController::class, 'postProfile']);

@@ -153,4 +153,8 @@ class ProductController extends Controller
             return  'Bạn đã đánh giá sản phẩm này rồi';
         }
     }
+
+    public function getSearch(Request $request){
+        return $request->keyword;
+    }
 }
