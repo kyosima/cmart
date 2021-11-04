@@ -195,7 +195,7 @@
                         <ul>
                             <li class="d-lg-inline d-none">Sắp xếp theo:</li>
                             <li class="li-filter-cate">
-                                <a href="javascript:order();" class="active">Mặc định</a>
+                                <a href="javascript:order();" class="order-default">Mặc định</a>
                             </li>
                             <li class="li-filter-cate">
                                 <a href="javascript:order('regular_price desc');"
@@ -438,6 +438,9 @@
                 $("#sale").val(sales);
                 $(this).addClass('active')
             } 
+            else if(orders == '' && sales == '') {
+                $('li.li-filter-cate > a.order-default').addClass('active')
+            }
             else {
                 $(this).removeClass('active')
             }

@@ -174,15 +174,6 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Đơn giá thị trường<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="number" step="1" min="1" name="product_market_price"
-                                            class="form-control" required
-                                            value="{{ old('product_market_price') }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-md-12 control-label text-left">Đơn giá bán lẻ<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
@@ -216,6 +207,46 @@
                                             class="form-control" required value="{{ old('cpoint') }}">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Tích lũy (M)<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <input type="number" step="1" min="1" name="mpoint"
+                                            class="form-control" required value="{{ old('mpoint') }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Phí xử lý<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <input type="number" step="1" min="1" name="phi_xuly"
+                                            class="form-control" required
+                                            value="{{ old('phi_xuly') }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Phí giao hàng (C-Ship)<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <input type="number" step="1" min="1" name="cship"
+                                            class="form-control" required
+                                            value="{{ old('cship') }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Thuế suất<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control" name="tax"
+                                            required data-placeholder="Thuế suất">
+                                            <option value="-1" selected>Chọn thuế suất</option>
+                                            <option value="0">0%</option>
+                                            <option value="0.05">5%</option>
+                                            <option value="0.1">10%</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

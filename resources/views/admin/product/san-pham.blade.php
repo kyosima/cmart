@@ -28,8 +28,8 @@
         <hr>
         <div class="portlet-body">
             <div class="pt-3" style="overflow-x: auto;">
-                @if (auth()->guard('admin')->user()->can('Xóa bài viết'))
-                <form id="myform" action="{{route('baiviet.multipleDestory')}}" method="post">
+                @if (auth()->guard('admin')->user()->can('Xóa sản phẩm'))
+                <form id="myform" action="{{route('san-pham.multipleDestory')}}" method="post">
                     @csrf
                     @method('delete')
                 @endif
@@ -43,31 +43,34 @@
                                     Hình ảnh
                                 </th>
                                 <th class="title-text" style="width: 12%">
-                                    Model/Mã SP
+                                    Mã SP
                                 </th>
                                 <th class="title-text">
-                                    Tên sản phẩm
+                                    Tên SP
                                 </th>
                                 <th class="title-text">
-                                    Thương hiệu
+                                    Thuế suất
                                 </th>
                                 <th class="title-text">
-                                    Danh mục sản phẩm
+                                    Giá bán lẻ
                                 </th>
                                 <th class="title-text">
-                                    Đơn vị tính
+                                    GIÁ SHOCK
                                 </th>
                                 <th class="title-text">
-                                    Khối lượng(g)
+                                    Giá buôn
                                 </th>
                                 <th class="title-text">
-                                    Chiều dài(cm)
+                                    C
                                 </th>
                                 <th class="title-text">
-                                    Chiều rộng(cm)
+                                    M
                                 </th>
                                 <th class="title-text">
-                                    Chiều cao(cm)
+                                    Phí xử lý
+                                </th>
+                                <th class="title-text">
+                                    Phí giao hàng
                                 </th>
                                 {{-- <th class="title-text">
                                     Đơn giá bán lẻ
@@ -89,20 +92,19 @@
                                         {{ $item->name }}
                                         @endif
                                     </td>
-                                    <td>{{ $item->productBrand->name }}</td>
-                                    <td>{{ $item->productCategory->name }}
-                                    </td>
-                                    <td>{{ $item->productCalculationUnit->name }}</td>
-                                    <td>{{ $item->weight }} gam</td>
-                                    <td>{{ $item->length }}cm</td>
-                                    <td>{{ $item->width }}cm</td>
-                                    <td>{{ $item->height }}cm</td>
-                                    {{-- <td>{{ moneyFormat($item->productPrice->regular_price) }}đ</td> --}}
+                                    <td>{{ $item->productPrice->tax }}%</td>
+                                    <td>{{ number_format($item->productPrice->regular_price) }}đ</td>
+                                    <td>{{ number_format($item->productPrice->shock_price) }}đ</td>
+                                    <td>{{ number_format($item->productPrice->wholesale_price) }}đ</td>
+                                    <td>{{ $item->productPrice->cpoint }}(C)</td>
+                                    <td>{{ $item->productPrice->mpoint }}(M)</td>
+                                    <td>{{ number_format($item->productPrice->phi_xuly) }}đ</td>
+                                    <td>{{ number_format($item->productPrice->cship) }}đ</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                @if (auth()->guard('admin')->user()->can('Xóa bài viết'))
+                @if (auth()->guard('admin')->user()->can('Xóa sản phẩm'))
                     <select name="action" id="">
                         <option value="-1" selected>Chọn tác vụ</option>
                         <option value="delete">Xóa</option>
@@ -122,14 +124,27 @@
 @push('scripts')
 
 <script>
+
+    jQuery.fn.dataTableExt.aTypes.unshift(
+        function ( sData )
+        {
+            var deformatted = sData.replace(/[^\d\-\.\/a-zA-Z]/g,'');
+            var isNumeric = !isNaN( deformatted - parseFloat( deformatted ) );
+    
+            return isNumeric || deformatted === "-" ?
+                'formatted-num' :
+                null;
+        }
+    );
+
     $('#table-product').DataTable({
-        ordering: false,
+        ordering: true,
         lengthMenu: [ [25 ,50, -1], [25, 50, "All"] ],
         columnDefs: [
-            { "type": "string", "targets": [1] },
-            { "type": "html", "targets": [2, 3, 4, 5] },
             {
                 targets: 0,
+                orderable: false,
+                searchable: false,
                 defaultContent: '',
                 'render': function(data, type, row, meta){
                     if(type === 'display'){
@@ -138,6 +153,25 @@
                     return data;
                 },
                 'checkboxes': true
+            },
+            {
+                "targets": [ 1 ],
+                "visible": false,
+                "searchable": false
+            },
+            { targets: [2], orderable: false, searchable: false },
+            { type: "html", targets: [3, 4] },
+            {
+                targets: [5, 6, 7, 8, 9, 10, 11, 12],
+                searchable: false
+            },
+            {
+                targets: [6, 7, 8, 9, 10],
+                type: "formatted-num"
+            },
+            {
+                targets: [5, 11, 12],
+                orderable: false
             }
         ],
 		searchBuilder: {
