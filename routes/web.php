@@ -97,11 +97,10 @@ Route::get('lay-phuong-xa-theo-quan-huyen', [ShippingController::class, 'wardOfD
 // Route::get('danhsach',[UserController::class, 'getDanhsach']);
 
 
-
-Route::post('/login', [HomeController::class, 'postLogin']);
 Route::get('/tai-khoan', [HomeController::class, 'getAccessAccount']);
+Route::post('/dang-nhap', [HomeController::class, 'postLogin'])->name('user.login');
 
-Route::post('/register', [HomeController::class, 'postRegister']);
+Route::post('/dang-ky', [HomeController::class, 'postRegister'])->name('user.register');
 
 Route::get('/dang-xuat', [HomeController::class, 'getLogout'])->name('logoutuser');
 

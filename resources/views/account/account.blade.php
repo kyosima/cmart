@@ -21,7 +21,7 @@
 
                         <li class="active">
                             <div class="content__wrapper">
-                                <form method="POST" action="{{url('/login')}}">
+                                <form method="POST" action="{{route('user.login')}}">
                                     @csrf
                                     <input type="text" name="name" placeholder="Tài khoản">
                                     <input type="password" name="password" placeholder="Mật khẩu">
@@ -32,7 +32,7 @@
 
                         <li>
                             <div class="content__wrapper">
-                                <form method="POST" action="{{url('/register')}}">
+                                <form method="POST" action="{{route('user.register')}}">
                                     @csrf
                                     <input type="name" name="name" placeholder="Tên tài khoản">
                                     <input type="email" name="email" placeholder="email">

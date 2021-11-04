@@ -20,6 +20,11 @@ class CheckoutController extends Controller
     //
     public function index(){
         if(Cart::instance('shopping')->count() > 0){
+            if (Auth::check()) {
+                $user = Auth::user();
+            }else{
+                $user = null;
+            }
             $carts = Cart::instance('shopping')->content();
             $cart_subtotal = Cart::instance('shopping')->subtotal();
             $cart_total = Cart::instance('shopping')->total();
@@ -28,7 +33,8 @@ class CheckoutController extends Controller
                 'carts' => $carts, 
                 'cart_subtotal' => $cart_subtotal, 
                 'cart_total'=>$cart_total,
-                'province' => $province
+                'province' => $province,
+                'user' => $user
             ]);
         }else{
             return redirect()->route('cart.index');
