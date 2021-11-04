@@ -74,11 +74,14 @@ class AdminProductController extends Controller
                 ]);
 
                 $productPrice = new ProductPrice();
-                $productPrice->market_price = $request->product_market_price;
                 $productPrice->regular_price = $request->product_regular_price;
                 $productPrice->wholesale_price = $request->product_wholesale_price;
                 $productPrice->shock_price = $request->product_shock_price;
                 $productPrice->cpoint = $request->cpoint;
+                $productPrice->mpoint = $request->mpoint;
+                $productPrice->phi_xuly = $request->phi_xuly;
+                $productPrice->cship = $request->cship;
+                $productPrice->tax = $request->tax;
 
                 $product->productPrice()->save($productPrice);
 
@@ -141,11 +144,14 @@ class AdminProductController extends Controller
                 ]);
 
                 ProductPrice::where('id_ofproduct', $id)->update([
-                    'market_price' => $request->product_market_price,
                     'regular_price' => $request->product_regular_price,
                     'wholesale_price' => $request->product_wholesale_price,
                     'shock_price' => $request->product_shock_price,
                     'cpoint' => $request->cpoint,
+                    'mpoint' => $request->mpoint,
+                    'phi_xuly' => $request->phi_xuly,
+                    'cship' => $request->cship,
+                    'tax' => $request->tax,
                 ]);
 
                 $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật sản phẩm ' . $request->product_name;

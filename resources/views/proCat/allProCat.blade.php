@@ -211,10 +211,12 @@
             }
             if(filter == '') {
                 $('.sub-menu').css({"display": "none", "padding-left": "15px", 'border-left':'1px solid #ddd', 'margin':'0 0 10px 3px'});
-                $('.toggle').css('display','block');
+                $('.toggle').css('display','inline-block');
+                $('li.menu-item').addClass('py-1');
             } else {
                 $('.toggle').css('display','none');
                 $('.sub-menu').css({"display": "block", "padding-left": "0", 'border':'0', 'margin':'0'});
+                $('li.menu-item').removeClass('py-1');
             }
         }
     </script>

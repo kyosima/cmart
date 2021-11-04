@@ -195,7 +195,7 @@
                         <ul>
                             <li class="d-lg-inline d-none">Sắp xếp theo:</li>
                             <li class="li-filter-cate">
-                                <a href="javascript:order();" class="active">Mặc định</a>
+                                <a href="javascript:order();" class="order-default">Mặc định</a>
                             </li>
                             <li class="li-filter-cate">
                                 <a href="javascript:order('regular_price desc');"
@@ -268,29 +268,10 @@
                     </div>
 
                     <!-- Pagination -->
-                    <div class="nav-pager">
-                        <ul id="pagination">
-                            <li><a class="page-arrow" href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                            <li><a class="page-arrow" href="#"><i class="fa fa-angle-left"></i></a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#" class="active">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a class="d-none d-lg-inline-block    " href="#">4</a></li>
-                            <li><a class="page-arrow" href="#"><i class="fa fa-angle-right"></i></a></li>
-                            <li><a class="page-arrow" href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul>
-                        <div class="select-option d-none d-lg-block">
-                            <select class="custom-select">
-                                <option value="20" selected="">20</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                            <i class="fa fa-caret-down"></i>
+                    <div class="text-center">
+                        <div class="nav_pager">
+                            {{ $products->links('product.include.pagination') }}
                         </div>
-                    </div>
-
-                    <div class="nav-pager">
-                        {{ $products->links() }}
                     </div>
 
                 </div>
@@ -459,6 +440,9 @@
                 $("#sale").val(sales);
                 $(this).addClass('active')
             } 
+            else if(orders == '' && sales == '') {
+                $('li.li-filter-cate > a.order-default').addClass('active')
+            }
             else {
                 $(this).removeClass('active')
             }

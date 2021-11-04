@@ -50,11 +50,6 @@ $(document).ready(function () {
                 required: true,
                 number: true,
             },
-            product_market_price: {
-                min: 1,
-                required: true,
-                number: true,
-            },
             product_wholesale_price: {
                 min: 1,
                 required: true,
@@ -65,7 +60,25 @@ $(document).ready(function () {
                 required: true,
                 number: true,
             },
+            mpoint: {
+                min: 1,
+                required: true,
+                number: true,
+            },
             product_shock_price: {
+                min: 1,
+                required: true,
+                number: true,
+            },
+            tax: {
+                required: true,
+            },
+            cship: {
+                min: 1,
+                required: true,
+                number: true,
+            },
+            phi_xuly: {
                 min: 1,
                 required: true,
                 number: true,
@@ -85,10 +98,12 @@ $(document).ready(function () {
             product_height: "Không được để trống",
             product_width: "Không được để trống",
             product_regular_price: "Không được để trống",
-            product_market_price: "Không được để trống",
             product_wholesale_price: "Không được để trống",
             cpoint: "Không được để trống",
+            mpoint: "Không được để trống",
             product_shock_price: "Không được để trống",
+            cship: "Không được để trống",
+            phi_xuly: "Không được để trống",
         }
     });
 });
