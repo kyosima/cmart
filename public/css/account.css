@@ -124,7 +124,7 @@ box-shadow: 0px 12px 34px -8px rgba(0,0,0,0.28);
 }
 
 
-	form input {
+.loginWrapper input {
 		border: none;
 		padding: 12px;
 		background: #EEE;
@@ -135,17 +135,17 @@ box-shadow: 0px 12px 34px -8px rgba(0,0,0,0.28);
     	outline: none;
 	}
 
-	form input:first-child {margin-top: 8px;}
+.loginWrapper input:first-child {margin-top: 8px;}
 	form input:last-child {margin-top: 16px; margin-bottom: 0px;}
 
-	form input:focus {background-color: #FFF;}
-	form input:hover {background-color: #FFF;}
-	form input:placeholder {color: blue;}
+	.loginWrapper input:focus {background-color: #FFF;}
+	.loginWrapper input:hover {background-color: #FFF;}
+	.loginWrapper input:placeholder {color: blue;}
 
-	form [type="submit"]:focus,
-	form [type="submit"]:hover {background: red;}
+	.loginWrapper [type="submit"]:focus,
+	.loginWrapper [type="submit"]:hover {background: red;}
 
-	form [type="submit"] {
+	.loginWrapper [type="submit"] {
 		background: #f7732c;
 		color: #FFF;
 		padding: 24px;

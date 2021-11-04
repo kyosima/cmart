@@ -24,9 +24,10 @@
             <div class="box-search">
               <form method="GET" name="frm" id="frm" action="{{route('search')}}" enctype="multipart/form-data">
                 <div class="form-group">
-                  <input autocomplete="off" x-webkit-speech_off="" x-webkit-grammar_off="builtin:search" id="search" name="keyword" minlength="3"  class="form-control ipt-search" placeholder="Tìm kiếm sản phẩm ..." type="text" value="">
+                  <input data-url="{{route('search.suggest')}}" onkeyup="showSearchSuggest(this)" autocomplete="off" x-webkit-speech_off="" x-webkit-grammar_off="builtin:search" id="search-input" name="keyword" minlength="3"  class="form-control ipt-search" placeholder="Tìm kiếm sản phẩm ..." type="text" value="">
                   <button onclick="" type="submit" class="icon-search"><i class="fas fa-search"></i></button>
                   <div id="showsearch">
+                    <ul></ul>
                   </div>
                 </div>
               </form>

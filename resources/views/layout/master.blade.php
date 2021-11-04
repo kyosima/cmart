@@ -15,6 +15,8 @@
     <link href="{{ asset('public/css/boostrap/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/header.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/footer.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/search.css') }}" rel="stylesheet" type="text/css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,6 +41,7 @@
     @stack('scripts')
     <script src="{{ asset('public/js/cart.js') }}"></script>
     <script src="{{ asset('public/js/boostrap/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/search.js') }}"></script>
 
 </body>
 

@@ -42,58 +42,62 @@ class CheckoutController extends Controller
             $user = Auth::user();
             $user_id = $user->id;
         }
-        $validation = $request->validate([
-            'fullname' => 'required',
-            'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/'],
-            'email' => 'required|email',
-            'sel_province' => 'required',
-            'sel_district' => 'required',
-            'sel_ward' => 'required',
-            'address' => 'required',
-            // 'shipping_method' => 'required',
-        ]);
-        // return DB::transaction(function () use ($request, $cart) {
-        //     try {
-                $order = Order::create([
-                    'note' => $request->note,
-                    'user_id'=>$user_id,
-                    // 'shipping_method' => $request->shipping_method,
-                    'shipping_total' => 0,
-                    'sub_total' => intval(str_replace(",", "", Cart::instance('shopping')->subtotal())),
-                    'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()))
-                ]);
-                $order->order_code = 'CMART-'.$order->id.time();
-                $order->save();
+        if(Cart::instance('shopping')->count() > 0){
 
-                $order_address = new OrderAddress();
-                $order_address->id_province = $request->sel_province;
-                $order_address->id_district = $request->sel_district;
-                $order_address->id_ward = $request->sel_ward;
-                $order_address->address = $request->address;
-                $order->order_address()->save($order_address);
-
-                $order_info = new OrderInfo();
-                $order_info->fullname = $request->fullname;
-                $order_info->phone = $request->phone;
-                $order_info->email = $request->email;
-                $order_info->note = $request->note;
-                $order->order_info()->save($order_info);
-
-                foreach ($cart as $item) {
-                    OrderProduct::create([
-                        'id_order' => $order->id,
-                        'id_product' => $item->model->id,
-                        'quantity' => $item->qty,
-                        'price' => $item->price
+            $validation = $request->validate([
+                'fullname' => 'required',
+                'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/'],
+                'email' => 'required|email',
+                'sel_province' => 'required',
+                'sel_district' => 'required',
+                'sel_ward' => 'required',
+                'address' => 'required',
+                // 'shipping_method' => 'required',
+            ]);
+            // return DB::transaction(function () use ($request, $cart) {
+            //     try {
+                    $order = Order::create([
+                        'note' => $request->note,
+                        'user_id'=>$user_id,
+                        // 'shipping_method' => $request->shipping_method,
+                        'shipping_total' => 0,
+                        'sub_total' => intval(str_replace(",", "", Cart::instance('shopping')->subtotal())),
+                        'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()))
                     ]);
-                }
-                Cart::instance('shopping')->destroy();
-                return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-        //     } catch (\Throwable $th) {
-        //         throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
-        //         return redirect()->back()->withErrors(['error' => $th->getMessage()]);
-        //     }
-        // });
+                    $order->order_code = 'CMART-'.$order->id.time();
+                    $order->save();
+                    $order_address = new OrderAddress();
+                    $order_address->id_province = $request->sel_province;
+                    $order_address->id_district = $request->sel_district;
+                    $order_address->id_ward = $request->sel_ward;
+                    $order_address->address = $request->address;
+                    $order->order_address()->save($order_address);
+
+                    $order_info = new OrderInfo();
+                    $order_info->fullname = $request->fullname;
+                    $order_info->phone = $request->phone;
+                    $order_info->email = $request->email;
+                    $order_info->note = $request->note;
+                    $order->order_info()->save($order_info);
+
+                    foreach ($cart as $item) {
+                        OrderProduct::create([
+                            'id_order' => $order->id,
+                            'id_product' => $item->model->id,
+                            'quantity' => $item->qty,
+                            'price' => $item->price
+                        ]);
+                    }
+                    Cart::instance('shopping')->destroy();
+                    return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
+            //     } catch (\Throwable $th) {
+            //         throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
+            //         return redirect()->back()->withErrors(['error' => $th->getMessage()]);
+            //     }
+            // });
+        }else{
+            return redirect()->route('cart.index');
+        }
     }
 
 

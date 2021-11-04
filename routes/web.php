@@ -58,6 +58,7 @@ Route::prefix('thanh-toan')->group(function () {
 });
 
 Route::get('tim-kiem', [ProductCategoryController::class, 'getSearch'])->name('search');
+Route::get('tim-kiem/goi-y', [ProductCategoryController::class, 'getSearchSuggest'])->name('search.suggest');
 
 //Route - Liên hệ
 Route::get('/lien-he', function () {

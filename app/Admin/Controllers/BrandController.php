@@ -55,7 +55,7 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
-        $slug = Str::slug($request->name, '-');
+        $slug = Str::slug($request->brandName, '-');
         $brand = Brand::create([
             'code' => $request->brandCode,
             'slug' => $slug,

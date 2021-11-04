@@ -47,6 +47,7 @@ class Order extends Model
 		'sub_total',
 		'total',
 		'status',
+		'user_id',
 		'fullname'
 	];
 
