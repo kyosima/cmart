@@ -18,9 +18,6 @@ class AdminProductController extends Controller
 {
     public function index()
     {
-        // dump(auth()->guard('admin')->user()->name);
-        // dump(auth()->guard('admin')->user()->getRoleNames());
-        // dd(auth()->guard('admin')->user()->getAllPermissions());
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
         Log::info($message);
         $products = Product::all();

@@ -65,8 +65,12 @@
                                 <ul class="check-side category-menu">
                                     @foreach ($categories as $item)
                                     @if (count($item->childrenCategories) > 0)
-                                        <li class="menu-item menu-item-has-children py-1 has-child">
-                                            <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
+                                        <li class="menu-item menu-item-has-children py-1 has-child menu-border">
+                                            @if ($item->linkToCategory != null)
+                                                <a href="{{route('proCat.index', $item->linkToCategory->slug)}}">{{ $item->name }}</a>
+                                            @else
+                                                <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
+                                            @endif
                                             <button class="toggle">
                                                 <i class="fa fa-angle-down" aria-hidden="true"></i>
                                             </button>
@@ -75,8 +79,12 @@
                                                 ])
                                         </li>
                                     @else
-                                        <li class="menu-item py-1">
-                                            <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
+                                        <li class="menu-item menu-border py-1">
+                                            @if ($item->linkToCategory != null)
+                                                <a href="{{route('proCat.index', $item->linkToCategory->slug)}}">{{ $item->name }}</a>
+                                            @else
+                                                <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
+                                            @endif
                                         </li>
                                     @endif
                                     @endforeach
@@ -212,11 +220,11 @@
             if(filter == '') {
                 $('.sub-menu').css({"display": "none", "padding-left": "15px", 'border-left':'1px solid #ddd', 'margin':'0 0 10px 3px'});
                 $('.toggle').css('display','inline-block');
-                $('li.menu-item').addClass('py-1');
+                $('li.menu-item').addClass('py-1 menu-border');
             } else {
                 $('.toggle').css('display','none');
                 $('.sub-menu').css({"display": "block", "padding-left": "0", 'border':'0', 'margin':'0'});
-                $('li.menu-item').removeClass('py-1');
+                $('li.menu-item').removeClass('py-1 menu-border');
             }
         }
     </script>
@@ -285,6 +293,6 @@
     });
     </script>
 
-    <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script>
+    {{-- <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script> --}}
 
 @endpush
