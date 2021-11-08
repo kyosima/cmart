@@ -13,22 +13,25 @@ use Illuminate\Support\Facades\DB;
 class ProductCategoryController extends Controller
 {
     //
-    public function index($slug, Request $request){
+    public function index($slug, Request $request)
+    {
 
         // KIỂM TRA XEM GIÁ TRỊ CỦA ORDER CÓ ĐÚNG GIÁ TRỊ CHO PHÉP
         if ($request->order != '' || $request->order != null) {
-            $order = explode(' ', $request->order); 
-            if( count($order) != 2 || ($order[0] != 'regular_price' && $order[0] != 'name') ||  ($order[1] != 'asc' && $order[1] != 'desc')  ) {
+            $order = explode(' ', $request->order);
+            if (count($order) != 2 || ($order[0] != 'regular_price' && $order[0] != 'name') ||  ($order[1] != 'asc' && $order[1] != 'desc')) {
                 return redirect()->route('proCat.index', $slug);
             }
-        } 
+        }
         // KIỂM TRA XEM GIÁ TRỊ CỦA SALE CÓ ĐÚNG GIÁ TRỊ CHO PHÉP
-        else if($request->sale != 2 && $request->sale != '') {
+        else if ($request->sale != 2 && $request->sale != '') {
             return redirect()->route('proCat.index', $slug);
         }
 
         $beginMinPrice = 0;
         $endMaxPrice = 0;
+        $minPrice = 0;
+        $maxPrice = 0;
 
         // LẤY RA CATEGORY HIỆN TẠI -> KÈM THEO ĐÓ LÀ RELATIONS BÊN MODAL
         // MỤC ĐÍCH ĐỂ COUNT TỔNG SP
@@ -63,25 +66,28 @@ class ProductCategoryController extends Controller
         // KIỂM TRA XEM CÓ FILTER THEO CATEGORY KH
         if (isset($request->category) && !in_array(null, $request->category)) {
             // KIỂM TRA XEM CATEGORY TRONG REQUEST CÓ NẰM TRONG ARRAY DANH MỤC HIỆN TẠI
-            if( count(array_intersect($request->category, $categoryIds)) == 0  ) {
+            if (count(array_intersect($request->category, $categoryIds)) == 0) {
                 return redirect()->route('proCat.index', $slug);
             }
             $products = Product::whereIn('category_id', $request->category)
-                                ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
-                                ->paginate(16);
-            $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
-            $minPrice = $products->sortBy('regular_price')->first()->regular_price;
+                ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                ->paginate(16);
+            if (count($products) > 0) {
+                $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
+                $minPrice = $products->sortBy('regular_price')->first()->regular_price;
 
-            // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
-            if(isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
-                if ($request->beginMinPrice != '' && $request->endMaxPrice != '' &&
-                    $request->endMaxPrice <= $maxPrice && $request->beginMinPrice >= $minPrice) {
-                    $beginMinPrice = $request->beginMinPrice;
-                    $endMaxPrice = $request->endMaxPrice;
-                    $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice])->paginate(16);
-                }
-                else {
-                    return redirect()->route('proCat.index', $slug);
+                // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
+                if (isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
+                    if (
+                        $request->beginMinPrice != '' && $request->endMaxPrice != '' &&
+                        $request->endMaxPrice <= $maxPrice && $request->beginMinPrice >= $minPrice
+                    ) {
+                        $beginMinPrice = $request->beginMinPrice;
+                        $endMaxPrice = $request->endMaxPrice;
+                        $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice])->paginate(16);
+                    } else {
+                        return redirect()->route('proCat.index', $slug);
+                    }
                 }
             }
             $subcategory = ProductCategory::whereIn('id', array_intersect($request->category, $categoryIds))->get();
@@ -90,78 +96,88 @@ class ProductCategoryController extends Controller
         if (isset($request->id_brand) && !in_array(null, $request->id_brand)) {
             // LẤY RA BRAND ĐỂ SO SÁNH
             $brandIds = Product::whereIn('category_id', $categoryIds)->pluck('brand')->toArray();
-            
+
             // KIỂM TRA XEM BRAND TRONG REQUEST CÓ NẰM TRONG ARRAY BRAND HIỆN TẠI
-            if( count(array_intersect($request->id_brand, $brandIds)) == 0  ) {
+            if (count(array_intersect($request->id_brand, $brandIds)) == 0) {
                 return redirect()->route('proCat.index', $slug);
             }
             $products = Product::whereIn('category_id', $categoryIds)
-                                ->whereIn('brand', $request->id_brand)
-                                ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
-                                ->paginate(16);
-            $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
-            $minPrice = $products->sortBy('regular_price')->first()->regular_price;
+                ->whereIn('brand', $request->id_brand)
+                ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                ->paginate(16);
+            if (count($products) > 0) {
+                $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
+                $minPrice = $products->sortBy('regular_price')->first()->regular_price;
 
-            // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
-            if(isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
-                if ($request->beginMinPrice != '' && $request->endMaxPrice != '' &&
-                    $request->endMaxPrice <= $maxPrice && $request->beginMinPrice >= $minPrice) {
-                    $beginMinPrice = $request->beginMinPrice;
-                    $endMaxPrice = $request->endMaxPrice;
-                    $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice])->paginate(16);
-                }
-                else {
-                    return redirect()->route('proCat.index', $slug);
+                // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
+                if (isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
+                    if (
+                        $request->beginMinPrice != '' && $request->endMaxPrice != '' &&
+                        $request->endMaxPrice <= $maxPrice && $request->beginMinPrice >= $minPrice
+                    ) {
+                        $beginMinPrice = $request->beginMinPrice;
+                        $endMaxPrice = $request->endMaxPrice;
+                        $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice])->paginate(16);
+                    } else {
+                        return redirect()->route('proCat.index', $slug);
+                    }
                 }
             }
 
             $categoryIds = $products->pluck('category_id')->toArray();
             $subcategory = ProductCategory::whereIn('id', $categoryIds)
-                                        ->where('id', '!=', $proCat->id)
-                                        ->get();
+                ->where('id', '!=', $proCat->id)
+                ->get();
         }
         // NẾU FILTER CẢ DANH MỤC VÀ BRAND THÌ VÀO ĐÂY
-        if ( (isset($request->id_brand) && !in_array(null, $request->id_brand)) && 
-                    (isset($request->category) && !in_array(null, $request->category)) ) {
+        if ((isset($request->id_brand) && !in_array(null, $request->id_brand)) &&
+            (isset($request->category) && !in_array(null, $request->category))
+        ) {
             $products = Product::whereIn('category_id', $request->category)
-                            ->whereIn('brand', $request->id_brand)
-                            ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
-                            ->paginate(16);
-            $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
-            $minPrice = $products->sortBy('regular_price')->first()->regular_price;
+                ->whereIn('brand', $request->id_brand)
+                ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                ->paginate(16);
+            if (count($products) > 0) {
+                $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
+                $minPrice = $products->sortBy('regular_price')->first()->regular_price;
 
-            // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
-            if(isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
-                if ($request->beginMinPrice != '' && $request->endMaxPrice != '' &&
-                    $request->endMaxPrice <= $maxPrice && $request->beginMinPrice >= $minPrice) {
-                    $beginMinPrice = $request->beginMinPrice;
-                    $endMaxPrice = $request->endMaxPrice;
-                    $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice])->paginate(16);
-                }
-                else {
-                    return redirect()->route('proCat.index', $slug);
+                // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
+                if (isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
+                    if (
+                        $request->beginMinPrice != '' && $request->endMaxPrice != '' &&
+                        $request->endMaxPrice <= $maxPrice && $request->beginMinPrice >= $minPrice
+                    ) {
+                        $beginMinPrice = $request->beginMinPrice;
+                        $endMaxPrice = $request->endMaxPrice;
+                        $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice])->paginate(16);
+                    } else {
+                        return redirect()->route('proCat.index', $slug);
+                    }
                 }
             }
             $subcategory = ProductCategory::whereIn('id', array_intersect($request->category, $categoryIds))->get();
-        } 
+        }
         // KHÔNG FILTER DANH MỤC VÀ BRAND THÌ VÔ ĐÂY
-        else if ( !isset($request->id_brand) && !isset($request->category)) {
+        else if (!isset($request->id_brand) && !isset($request->category)) {
             $products = Product::whereIn('category_id', $categoryIds)
-                            ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
-                            ->paginate(16);
-            $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
-            $minPrice = $products->sortBy('regular_price')->first()->regular_price;
+                ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                ->paginate(16);
+            if (count($products) > 0) {
+                $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
+                $minPrice = $products->sortBy('regular_price')->first()->regular_price;
 
-            // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
-            if(isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
-                if ($request->beginMinPrice != '' && $request->endMaxPrice != '' &&
-                    $request->endMaxPrice <= $maxPrice && $request->beginMinPrice >= $minPrice) {
-                    $beginMinPrice = $request->beginMinPrice;
-                    $endMaxPrice = $request->endMaxPrice;
-                    $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice])->paginate(16);
-                }
-                else {
-                    return redirect()->route('proCat.index', $slug);
+                // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
+                if (isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
+                    if (
+                        $request->beginMinPrice != '' && $request->endMaxPrice != '' &&
+                        $request->endMaxPrice <= $maxPrice && $request->beginMinPrice >= $minPrice
+                    ) {
+                        $beginMinPrice = $request->beginMinPrice;
+                        $endMaxPrice = $request->endMaxPrice;
+                        $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice])->paginate(16);
+                    } else {
+                        return redirect()->route('proCat.index', $slug);
+                    }
                 }
             }
             $subcategory = ProductCategory::whereIn('id', $categoryIds)->where('id', '!=', $proCat->id)->get();
@@ -169,7 +185,7 @@ class ProductCategoryController extends Controller
 
         // SORT THEO ORDER
         if ($request->order != null || $request->order != '') {
-            if($order[1] == 'asc') {
+            if ($order[1] == 'asc') {
                 $products = $products->sortBy($order[0])->paginate(16);
             } else {
                 $products = $products->sortByDesc($order[0])->paginate(16);
@@ -177,25 +193,29 @@ class ProductCategoryController extends Controller
         }
 
         // SORT THEO SALE
-        else if($request->sale == 2) {
+        else if ($request->sale == 2) {
             $products = $products->where('shock_price', '>', 0)
-                                ->where('shock_price', '!=', null)
-                                ->paginate(16);
-            $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
-            $minPrice = $products->sortBy('regular_price')->first()->regular_price;
-            // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
-            if(isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
-                if ($request->beginMinPrice != '' && $request->endMaxPrice != '' &&
-                    $request->endMaxPrice <= $maxPrice && $request->beginMinPrice >= $minPrice) {
-                    $beginMinPrice = $request->beginMinPrice;
-                    $endMaxPrice = $request->endMaxPrice;
-                    $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice])->paginate(16);
-                }
-                else {
-                    return redirect()->route('proCat.index', $slug);
+                ->where('shock_price', '!=', null)
+                ->paginate(16);
+            if (count($products) > 0) {
+                $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
+                $minPrice = $products->sortBy('regular_price')->first()->regular_price;
+
+                // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
+                if (isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
+                    if (
+                        $request->beginMinPrice != '' && $request->endMaxPrice != '' &&
+                        $request->endMaxPrice <= $maxPrice && $request->beginMinPrice >= $minPrice
+                    ) {
+                        $beginMinPrice = $request->beginMinPrice;
+                        $endMaxPrice = $request->endMaxPrice;
+                        $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice])->paginate(16);
+                    } else {
+                        return redirect()->route('proCat.index', $slug);
+                    }
                 }
             }
-        } 
+        }
 
         // LẤY RA BRAND ĐỂ SHOW KHÔNG BỊ TRÙNG LẶP 
         $brandIds = $products->pluck('brand')->toArray();
@@ -205,7 +225,7 @@ class ProductCategoryController extends Controller
         // ARRAY BRAND 
         // VỚI KEY = BRAND ID
         // VALUE = SỐ LƯỢNG SP THUỘC BRAND
-        $countBrand = array_count_values($brandIds);           
+        $countBrand = array_count_values($brandIds);
 
         return view('proCat.danhmucsanpham', compact('proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory', 'minPrice', 'maxPrice', 'beginMinPrice', 'endMaxPrice'));
     }
@@ -216,7 +236,7 @@ class ProductCategoryController extends Controller
             ->where('id', '!=', 1)
             ->with(['childrenCategories.products', 'products'])
             ->get();
-        
+
         return view('proCat.allProCat', compact('categories'));
     }
 

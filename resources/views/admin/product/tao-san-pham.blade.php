@@ -26,10 +26,10 @@
                     <div class="col-sm-3">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail size-img-profile">
-                                <img src="http://api.salefie.vn/images/new_product_default.jpg">
+                                <img src="{{asset('public/storage/images/default_product.jpg')}}">
                             </div>
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-1" type="hidden" required name="feature_img" class="form-control">
+                                <input id="ckfinder-input-1" type="hidden" required name="feature_img" class="form-control" value="{{asset('public/storage/images/default_product.jpg')}}">
                                 <a style="cursor: pointer;" id="ckfinder-popup-1" class="btn btn-success">Chọn ảnh đại diện</a>
                             </div>
                         </div>

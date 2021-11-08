@@ -69,211 +69,227 @@
 
 <!-- main -->
 <section>
-    <!-- Trang sản phẩm -->
+    @if(count($products) < 1)
+    
     <div class="category-page container">
         <div class="row">
-            <!-- bên trái -->
-            <div id="shopsidebar" class="shop-sidebar col-lg-3 col-md-12 col-sm-12">
-                <form action="{{url('/').'/'.Request::path()}}" method="get" id="filter_form">
-                    <!-- danh mục -->
-                    @if (count($subcategory) > 0)
-                        <aside class="widget danhmuc">
-                            <h3 class="widget-title">Danh mục</h3>
+            <div class="col">
+                <p class="h4 text-center text-danger">Hiện chưa có sản phẩm nào trong danh mục này, CMart sẽ sớm cập nhật để phục vụ quý khách</p>
+            </div>
+        </div>
+    </div>
+
+    @else 
+        <!-- Trang sản phẩm -->
+        <div class="category-page container">
+            <div class="row">
+                <!-- bên trái -->
+                <div id="shopsidebar" class="shop-sidebar col-lg-3 col-md-12 col-sm-12">
+                    <form action="{{url('/').'/'.Request::path()}}" method="get" id="filter_form">
+                        <!-- danh mục -->
+                        @if (count($subcategory) > 0)
+                            <aside class="widget danhmuc">
+                                <h3 class="widget-title">Danh mục</h3>
+                                <div class="widget-search">
+                                    <input autocomplete="off" id="input_category_search" type="text" class="form-control input_search" placeholder="Tìm kiếm..." onkeyup="searchText('category_search')">
+                                    <button type="button">
+                                        <i class="search-icon"></i>
+                                    </button>
+                                </div>
+                                <div class="scrollbar">
+                                    <div id="category_search" class="widget-product-categories">
+                                        @foreach ($subcategory as $item)
+                                            <div class="check-side">
+                                                <label class="check-custom">
+                                                    {{$item->name}}
+                                                    <span class="count-item"> ({{count($item->products)}})</span>
+                                                    <input name="category[]" class="submit_click" type="checkbox" value="{{$item->id}}">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </aside>
+                        @endif
+                        
+
+                        <!-- lọc giá -->
+                        <aside class="widget">
+                            <div class="title-box d-lg-none">
+                                <span>Bộ lọc</span>
+                                <button class="close-filter" onclick="closeSidebar()"></button>
+                            </div>
+                            <div class="slider-price">
+                                <h3 class="widget-title">Giá</h3>
+                                <div class="widget-filter-price">
+                                    <div class="price-range-slider">
+                                        <div id="slider-range" class="range-bar"></div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="minprice" id="minprice" value="{{$minPrice}}">
+                                <input type="hidden" name="beginMinPrice" id="minprice1"
+                                    @if ($beginMinPrice == 0)
+                                    value="{{$minPrice}}"
+                                    @else 
+                                    value="{{$beginMinPrice}}"
+                                    @endif    
+                                >
+                                <input type="hidden" name="maxprice" id="maxprice" value="{{$maxPrice}}">
+                                <input type="hidden" name="endMaxPrice" id="maxprice1"
+                                    @if ($endMaxPrice == 0)
+                                    value="{{$maxPrice}}"
+                                    @else 
+                                    value="{{$endMaxPrice}}"
+                                    @endif 
+                                >
+                                <div class="widget-price">
+                                    <div class="form-group trai">
+                                        <p class="title-range">Min</p>
+                                        <div class="box-input">
+                                            <input type="text" class="form-control slider_price_textbox" id="amount1" disabled="">
+                                            <span>đ</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group phai">
+                                        <p class="title-range">Max</p>
+                                        <div class="box-input">
+                                            <input type="text" class="form-control slider_price_textbox" id="amount2" disabled="">
+                                            <span>đ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn-price" type="submit">Áp dụng</button>
+                            </div>
+                        </aside>
+
+                        <!-- thương hiệu -->
+                        <aside class="widget thuonghieu">
+                            <h3 class="widget-title">Thương hiệu</h3>
                             <div class="widget-search">
-                                <input autocomplete="off" id="input_category_search" type="text" class="form-control input_search" placeholder="Tìm kiếm..." onkeyup="searchText('category_search')">
+                                <input autocomplete="off" id="input_brand_search" type="text" class="form-control input_search" placeholder="Tìm kiếm..." onkeyup="searchText('brand_search')">
                                 <button type="button">
                                     <i class="search-icon"></i>
                                 </button>
                             </div>
                             <div class="scrollbar">
-                                <div id="category_search" class="widget-product-categories">
-                                    @foreach ($subcategory as $item)
+                                <div id="brand_search" class="widget-product-categories">
+                                    @foreach ($brands as $item)
                                         <div class="check-side">
                                             <label class="check-custom">
                                                 {{$item->name}}
-                                                <span class="count-item"> ({{count($item->products)}})</span>
-                                                <input name="category[]" class="submit_click" type="checkbox" value="{{$item->id}}">
+                                                <span class="count-item"> ({{$countBrand[$item->id]}})</span>
+                                                <input name="id_brand[]" class="submit_click" type="checkbox" value="{{$item->id}}">
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="footer-filter d-lg-none">
+                                <button type="button" class="clear_filter">Xóa lọc</button>
+                                <button type="button" class="submit_click">Áp dụng</button>
+                            </div>
                         </aside>
-                    @endif
-                    
+                        <input type="hidden" id="order" name="order" value="">
+                        <input type="hidden" id="sale" name="sale" value="">
+                    </form>
+                </div>
 
-                    <!-- lọc giá -->
-                    <aside class="widget">
-                        <div class="title-box d-lg-none">
-                            <span>Bộ lọc</span>
-                            <button class="close-filter" onclick="closeSidebar()"></button>
+                <!-- bên phải -->
+                <div class="shop-container col-lg-9 col-md-12 col-sm-12">
+                    <div class="shop-container-inner">
+                        <!-- TITLE -->
+                        <h2 class="title-filter d-none d-lg-block">{{$proCat->name}} <span>({{count($products)}} sản phẩm)</span></h2>
+                        <!-- Bộ lọc -->
+                        <div class="filter-cate">
+                            <ul>
+                                <li class="d-lg-inline d-none">Sắp xếp theo:</li>
+                                <li class="li-filter-cate">
+                                    <a href="javascript:order();" class="order-default">Mặc định</a>
+                                </li>
+                                <li class="li-filter-cate">
+                                    <a href="javascript:order('regular_price desc');"
+                                        class="">Giá cao</a>
+                                </li>
+                                <li class="li-filter-cate">
+                                    <a href="javascript:order('regular_price asc');"
+                                    class="">Giá thấp</a>
+                                </li>
+                                <li class="li-filter-cate">
+                                    <a href="javascript:order('name asc');"
+                                    class="">A-z</a>
+                                </li>
+                                <li class="li-filter-cate">
+                                    <a href="javascript:sale('2');"
+                                    class="">Sale</a>
+                                </li>
+                                <li class="
+                                    d-lg-none">
+                                    <a href="javascript:void(0)" class="filter-btn" onclick="openSidebar()">Lọc</a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="slider-price">
-                            <h3 class="widget-title">Giá</h3>
-                            <div class="widget-filter-price">
-                                <div class="price-range-slider">
-                                    <div id="slider-range" class="range-bar"></div>
-                                </div>
-                            </div>
-                            <input type="hidden" name="minprice" id="minprice" value="{{$minPrice}}">
-                            <input type="hidden" name="beginMinPrice" id="minprice1"
-                                @if ($beginMinPrice == 0)
-                                value="{{$minPrice}}"
-                                @else 
-                                value="{{$beginMinPrice}}"
-                                @endif    
-                            >
-                            <input type="hidden" name="maxprice" id="maxprice" value="{{$maxPrice}}">
-                            <input type="hidden" name="endMaxPrice" id="maxprice1"
-                                @if ($endMaxPrice == 0)
-                                value="{{$maxPrice}}"
-                                @else 
-                                value="{{$endMaxPrice}}"
-                                @endif 
-                            >
-                            <div class="widget-price">
-                                <div class="form-group trai">
-                                    <p class="title-range">Min</p>
-                                    <div class="box-input">
-                                        <input type="text" class="form-control slider_price_textbox" id="amount1" disabled="">
-                                        <span>đ</span>
-                                    </div>
-                                </div>
-                                <div class="form-group phai">
-                                    <p class="title-range">Max</p>
-                                    <div class="box-input">
-                                        <input type="text" class="form-control slider_price_textbox" id="amount2" disabled="">
-                                        <span>đ</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn-price" type="submit">Áp dụng</button>
-                        </div>
-                    </aside>
 
-                    <!-- thương hiệu -->
-                    <aside class="widget thuonghieu">
-                        <h3 class="widget-title">Thương hiệu</h3>
-                        <div class="widget-search">
-                            <input autocomplete="off" id="input_brand_search" type="text" class="form-control input_search" placeholder="Tìm kiếm..." onkeyup="searchText('brand_search')">
-                            <button type="button">
-                                <i class="search-icon"></i>
-                            </button>
-                        </div>
-                        <div class="scrollbar">
-                            <div id="brand_search" class="widget-product-categories">
-                                @foreach ($brands as $item)
-                                    <div class="check-side">
-                                        <label class="check-custom">
-                                            {{$item->name}}
-                                            <span class="count-item"> ({{$countBrand[$item->id]}})</span>
-                                            <input name="id_brand[]" class="submit_click" type="checkbox" value="{{$item->id}}">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="footer-filter d-lg-none">
-                            <button type="button" class="clear_filter">Xóa lọc</button>
-                            <button type="button" class="submit_click">Áp dụng</button>
-                        </div>
-                    </aside>
-                    <input type="hidden" id="order" name="order" value="">
-                    <input type="hidden" id="sale" name="sale" value="">
-                </form>
-            </div>
-
-            <!-- bên phải -->
-            <div class="shop-container col-lg-9 col-md-12 col-sm-12">
-                <div class="shop-container-inner">
-                    <!-- TITLE -->
-                    <h2 class="title-filter d-none d-lg-block">{{$proCat->name}} <span>({{count($products)}} sản phẩm)</span></h2>
-                    <!-- Bộ lọc -->
-                    <div class="filter-cate">
-                        <ul>
-                            <li class="d-lg-inline d-none">Sắp xếp theo:</li>
-                            <li class="li-filter-cate">
-                                <a href="javascript:order();" class="order-default">Mặc định</a>
-                            </li>
-                            <li class="li-filter-cate">
-                                <a href="javascript:order('regular_price desc');"
-                                    class="">Giá cao</a>
-                            </li>
-                            <li class="li-filter-cate">
-                                <a href="javascript:order('regular_price asc');"
-                                class="">Giá thấp</a>
-                            </li>
-                            <li class="li-filter-cate">
-                                <a href="javascript:order('name asc');"
-                                class="">A-z</a>
-                            </li>
-                            <li class="li-filter-cate">
-                                <a href="javascript:sale('2');"
-                                class="">Sale</a>
-                            </li>
-                            <li class="
-                                d-lg-none">
-                                <a href="javascript:void(0)" class="filter-btn" onclick="openSidebar()">Lọc</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- SẢN PHẨM -->
-                    <div class="products">
-                        @foreach ($products as $item)
-                            <div class="item">
-                                <div class="product-box row">
-                                    <div class="box-image col-lg-12 col-md-4 col-4">
-                                        <div class="image-cover">
-                                            <a href="#">
-                                                <img src="{{asset( $item->feature_img) }}" alt="">
-                                            </a>
+                        <!-- SẢN PHẨM -->
+                        <div class="products">
+                            @foreach ($products as $item)
+                                <div class="item">
+                                    <div class="product-box row">
+                                        <div class="box-image col-lg-12 col-md-4 col-4">
+                                            <div class="image-cover">
+                                                <a href="#">
+                                                    <img src="{{asset( $item->feature_img) }}" alt="">
+                                                </a>
+                                            </div>
+                                            @if ($item->shock_price != null || $item->shock_price != 0)
+                                                @php
+                                                    $percent = (1 - ($item->shock_price/$item->regular_price))*100;
+                                                @endphp
+                                                <div class="block-sale">
+                                                    <img alt="" src="{{ asset('image/bg-sale.png') }}">
+                                                    <span class="sale">-{{round($percent)}}%</span>
+                                                </div>
+                                            @endif
                                         </div>
-                                        {!!getTagSale($item)!!}
-
-                                    </div>
-                                    <div class="box-text col-lg-12 col-md-8 col-8">
-                                        <div class="title-wrapper">
-                                            <a href="{{route('san-pham.show', $item->slug)}}">
-                                                <p class="product-title">{{$item->name}}</p>
-                                            </a>
-                                        </div>
-                                        <div class="price-wrapper">
-                                            <li class="price">
-                                                <span>{{formatPriceOfLevel($item)}}</span>
-                                            </li>
-                                            {{-- @if ($item->shock_price != null || $item->shock_price != 0)
-                                                <span class="price">
-                                                    <span class="amount">{{number_format($item->shock_price)}}đ</span>
-                                                </span>
-                                                <span class="price-old">
-                                                    <span class="amount">{{number_format($item->regular_price)}}đ</span>
-                                                </span>
-                                            @else
-                                                <span class="price">
-                                                    <span class="amount">{{number_format($item->regular_price)}}đ</span>
-                                                </span>
-                                            @endif --}}
+                                        <div class="box-text col-lg-12 col-md-8 col-8">
+                                            <div class="title-wrapper">
+                                                <a href="{{route('san-pham.show', $item->slug)}}">
+                                                    <p class="product-title">{{$item->name}}</p>
+                                                </a>
+                                            </div>
+                                            <div class="price-wrapper">
+                                                @if ($item->shock_price != null || $item->shock_price != 0)
+                                                    <span class="price">
+                                                        <span class="amount">{{number_format($item->shock_price)}}đ</span>
+                                                    </span>
+                                                    <span class="price-old">
+                                                        <span class="amount">{{number_format($item->regular_price)}}đ</span>
+                                                    </span>
+                                                @else
+                                                    <span class="price">
+                                                        <span class="amount">{{number_format($item->regular_price)}}đ</span>
+                                                    </span>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="text-center">
-                        <div class="nav_pager">
-                            {{ $products->links('product.include.pagination') }}
+                            @endforeach
                         </div>
-                    </div>
 
+                        <!-- Pagination -->
+                        <div class="text-center">
+                            <div class="nav_pager">
+                                {{ $products->links('product.include.pagination') }}
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <!-- Mô tả -->
     @if ($proCat->description != null || $proCat->description != '')
