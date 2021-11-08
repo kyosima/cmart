@@ -412,7 +412,7 @@ section{
     color: #333942;
 }
 .filter-cate ul li{
-    display: inline;
+    display: inline-block;
 }
 .filter-cate ul li a {
     color: #333942;
@@ -420,7 +420,8 @@ section{
     padding: 3px 18px;
     border-radius: 30px;
     transition: color .15s;
-    margin: 0 5px;
+    margin: 5px;
+    display: block;
 }
 .filter-cate ul li a.active, .filter-cate ul li a:hover{
     background: #BB0029;

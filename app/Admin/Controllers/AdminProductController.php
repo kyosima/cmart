@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\CalculationUnit;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductPrice;
@@ -31,11 +32,12 @@ class AdminProductController extends Controller
                                 ->get();
         $calculationUnits = CalculationUnit::all();
         $brands = Brand::all();
+        $payments = Payment::all();
 
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang tạo mới sản phẩm';
         Log::info($message);
 
-        return view('admin.product.tao-san-pham', compact('nganhHang', 'calculationUnits', 'brands'));
+        return view('admin.product.tao-san-pham', compact('nganhHang', 'calculationUnits', 'brands', 'payments'));
     }
 
     public function store(Request $request)
@@ -56,13 +58,14 @@ class AdminProductController extends Controller
                     'feature_img' => $request->feature_img,
                     'gallery' => rtrim($request->gallery_img, ", "),
                     'category_id' => $request->category_parent,
-                    'calculation_unit' => $request->product_calculation_unit,
+                    // 'calculation_unit' => $request->product_calculation_unit,
                     // 'quantity' => $request->product_quantity,
                     'weight' => $request->product_weight,
                     'height' => $request->product_height,
                     'width' => $request->product_width,
                     'length' => $request->product_length,
                     'brand' => $request->product_brand,
+                    'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,
                     'short_desc' => $request->short_description,
                     'long_desc' => $request->description,
@@ -78,6 +81,7 @@ class AdminProductController extends Controller
                 $productPrice->mpoint = $request->mpoint;
                 $productPrice->phi_xuly = $request->phi_xuly;
                 $productPrice->cship = $request->cship;
+                $productPrice->viettel_ship = $request->viettel_ship;
                 $productPrice->tax = $request->tax;
 
                 $product->productPrice()->save($productPrice);
@@ -101,11 +105,12 @@ class AdminProductController extends Controller
                                 ->get();
         $calculationUnits = CalculationUnit::all();
         $brands = Brand::all();
+        $payments = Payment::all();
 
         $message = 'User: '. auth()->guard('admin')->user()->name . ' truy cập trang cập nhật sản phẩm';
         Log::info($message);
 
-        return view('admin.product.cap-nhat-san-pham', compact('product', 'nganhHang', 'calculationUnits', 'brands'));
+        return view('admin.product.cap-nhat-san-pham', compact('product', 'nganhHang', 'calculationUnits', 'brands', 'payments'));
     }
 
     public function update(Request $request, $id)
@@ -126,13 +131,14 @@ class AdminProductController extends Controller
                     'feature_img' => $request->feature_img,
                     'gallery' => rtrim($request->gallery_img, ", "),
                     'category_id' => $request->category_parent,
-                    'calculation_unit' => $request->product_calculation_unit,
+                    // 'calculation_unit' => $request->product_calculation_unit,
                     // 'quantity' => $request->product_quantity,
                     'weight' => $request->product_weight,
                     'height' => $request->product_height,
                     'width' => $request->product_width,
                     'length' => $request->product_length,
                     'brand' => $request->product_brand,
+                    'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,
                     'short_desc' => $request->short_description,
                     'long_desc' => $request->description,
@@ -148,6 +154,7 @@ class AdminProductController extends Controller
                     'mpoint' => $request->mpoint,
                     'phi_xuly' => $request->phi_xuly,
                     'cship' => $request->cship,
+                    'viettel_ship' => $request->viettel_ship,
                     'tax' => $request->tax,
                 ]);
 

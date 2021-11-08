@@ -19,8 +19,19 @@ class Product extends Model
         return $this->belongsto(Brand::class, 'brand', 'id');
     }
 
-    public function productCalculationUnit() {
-        return $this->belongsto(CalculationUnit::class, 'calculation_unit', 'id');
+    // public function productCalculationUnit() {
+    //     return $this->belongsto(CalculationUnit::class, 'calculation_unit', 'id');
+    // }
+
+    public function productPayment()
+    {
+        $product = self::first();
+        $payments = explode(',', $product->payments); 
+        $arr = array();
+        foreach ($payments as $id) {
+           array_push($arr, Payment::where('id', $id)->first());
+        }
+        return $arr;
     }
 
     public function productCategory() {

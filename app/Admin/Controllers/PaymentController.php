@@ -3,34 +3,28 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
-class BrandController extends Controller
+class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $brands = Brand::all();
-        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang quản lý thương hiệu';
+        $calculationUnit = Payment::all();
+        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang quản lý hình thức thanh toán';
         Log::info($message);
-        return view('admin.brand.index', compact('brands'));
+        return view('admin.payment.index', compact('calculationUnit'));
     }
 
     public function indexDatatable()
     {
-        $brands = Brand::all();
-        if($brands) {
+        $units = Payment::all();
+        if($units) {
             return response()->json([
                 'message' => "Success!",
                 'code' => 200,
-                'data' => $brands
+                'data' => $units
             ]);
         } else {
             return response()->json([
@@ -43,28 +37,28 @@ class BrandController extends Controller
     public function modalEdit(Request $request)
     {
         $id = $request->id;
-        $unit = Brand::where('id', $id)->first();
-        $returnHTML = view('admin.brand.formUpdate', compact('unit', 'id'))->render();
-
+        $unit = Payment::where('id', $id)->first();
+        $returnHTML = view('admin.payment.formUpdate', compact('unit', 'id'))->render();
         return response()->json([
             'html' => $returnHTML
         ], 200);
     }
 
-
     public function store(Request $request)
     {
-        $slug = Str::slug($request->name, '-');
-        $brand = Brand::create([
-            'code' => $request->brandCode,
-            'slug' => $slug,
-            'type' => $request->Type == "Company" ? "Công ty" : "Đối thủ",
-            'name' => $request->brandName,
-            'description' => $request->brandDescription,
-        ]);
+        if(isset($request->payment_method)) {
+            $payment = Payment::create([
+                'name' => $request->unitName,
+                'is_tratruoc' => in_array("tratruoc",$request->payment_method) == true ? 1 : 0,
+                'is_trasau' => in_array("trasau",$request->payment_method) == true ? 1 : 0,
+                'note' => $request->unitDescription,
+            ]);
+        } else {
+            $payment = false;
+        }
 
-        if($brand){
-            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới thương hiệu ' . $brand->name;
+        if($payment){
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới hình thức thanh toán ' . $payment->name;
             Log::info($message);
 
             return response()->json([
@@ -77,22 +71,24 @@ class BrandController extends Controller
                 'code' => 500,
             ]);
         }
+
     }
 
     public function update(Request $request)
     {
-        $slug = Str::slug($request->name, '-');
+        if(isset($request->payment_method)) {
+            $payment = Payment::where('id', $request->id)->update([
+                'name' => $request->unitName,
+                'is_tratruoc' => in_array("tratruoc",$request->payment_method) == true ? 1 : 0,
+                'is_trasau' => in_array("trasau",$request->payment_method) == true ? 1 : 0,
+                'note' => $request->unitDescription,
+            ]);
+        } else {
+            $payment = false;
+        }
 
-        $brand = Brand::where('id', $request->id)->update([
-            'code' => $request->brandCode,
-            'slug' => $slug,
-            'type' => $request->Type == "Company" ? "Công ty" : "Đối thủ",
-            'name' => $request->brandName,
-            'description' => $request->brandDescription
-        ]);
-
-        if($brand){
-            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật thương hiệu ' . $request->brandName;
+        if($payment){
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật hình thức thanh toán ' . $request->unitName;
             Log::info($message);
 
             return response()->json([
@@ -109,11 +105,11 @@ class BrandController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $brand = Brand::where('id', $request->id)->update([
+        $payment = Payment::where('id', $request->id)->update([
             'status' => $request->status
         ]);
 
-        if($brand){
+        if($payment){
             return response()->json([
                 'message' => "Success",
                 'code' => 200,
@@ -128,10 +124,10 @@ class BrandController extends Controller
 
     public function destroy(Request $request)
     {
-        $b = Brand::findOrFail($request->id);
-        $brand = Brand::destroy($request->id);
-        if($brand){
-            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa thương hiệu ' . $b->name;
+        $c = Payment::findOrFail($request->id);
+        $payment = Payment::destroy($request->id);
+        if($payment){
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa hình thức thanh toán ' . $c->name;
             Log::info($message);
 
             return response()->json([
@@ -150,12 +146,12 @@ class BrandController extends Controller
     {
         if($request->action == 'delete' && $request->id != null) {
             foreach($request->id as $item) {
-                $b = Brand::findOrFail($item);
-                Brand::destroy($item);
-                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa thương hiệu ' . $b->name;
+                $c = Payment::findOrFail($item);
+                Payment::destroy($item);
+                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa hình thức thanh toán ' . $c->name;
                 Log::info($message);
             }
-            return redirect(route('thuong-hieu.index'));
+            return redirect(route('payment.index'));
         } else {
             return redirect()->back();
         }

@@ -106,16 +106,18 @@
                     <div class="shop-container-inner">
                         @foreach ($categories as $proCat)
                             @php
-                                $products = $proCat->products->merge($proCat->subproducts)->sortBy(['created_at', 'desc']);
+                                $products = $proCat->products->where('status', 1)->merge($proCat->subproducts)->sortBy(['created_at', 'desc']);
                             @endphp
                             {{-- BANNER --}}
+                            @if ($proCat->feature_img != null)
                             <div class="banner row">
                                 <div class="col-12">
-                                    <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="{{$proCat->name}}">
-                                        <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="Chắm sóc sức khỏe">
+                                    <a href="{{route('proCat.index', $proCat->slug)}}" class="box-big-img" title="{{$proCat->name}}">
+                                        <img src="{{$proCat->feature_img}}" alt="{{$proCat->name}}">
                                     </a>
                                 </div>
                             </div>
+                            @endif
                             <div class="row d-flex align-items-center">
                                 <div class="col col-12">
                                     <div class="section-title-container px-2">

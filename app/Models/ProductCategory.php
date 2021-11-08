@@ -47,17 +47,13 @@ class ProductCategory extends Model
         return $this->belongsTo(ProductCategory::class, 'link_to_category', 'id')->with('products')->with('subproducts');
     }
 
-    // ádsadaszxccx
-
     public function getAllChildren ()
     {
         $sections = new Collection();
-
         foreach ($this->childrenCategories as $section) {
             $sections->push($section);
             $sections = $sections->merge($section->getAllChildren());
         }
-
         return $sections;
     }
 }

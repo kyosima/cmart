@@ -43,12 +43,18 @@
                 @if(auth()->guard('admin')->user()->can('Xem thương hiệu'))
                     <a href="{{route('thuong-hieu.index')}}">Thương hiệu</a>
                 @endif
-                @if(auth()->guard('admin')->user()->can('Xem đơn vị tính'))
+                {{-- @if(auth()->guard('admin')->user()->can('Xem đơn vị tính'))
                 <a href="{{route('don-vi-tinh.index')}}">Đơn vị tính</a>
-                @endif
+                @endif --}}
             </span>
          </li>
          @endif
+         <li class="dropdown">
+            <a href="{{route('payment.index')}}" class="dropbtn">
+             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <span class="links_name w-100 align-items-center d-flex">Hình thức thanh toán <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            </a>
+         </li>
          <li class="dropdown">
             <a href="#" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>

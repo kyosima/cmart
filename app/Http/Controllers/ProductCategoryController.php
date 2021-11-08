@@ -18,7 +18,7 @@ class ProductCategoryController extends Controller
         // KIỂM TRA XEM GIÁ TRỊ CỦA ORDER CÓ ĐÚNG GIÁ TRỊ CHO PHÉP
         if ($request->order != '' || $request->order != null) {
             $order = explode(' ', $request->order);
-            if (count($order) != 2 || ($order[0] != 'regular_price' && $order[0] != 'name') ||  ($order[1] != 'asc' && $order[1] != 'desc')) {
+            if (count($order) != 2 || ($order[0] != 'regular_price' && $order[0] != 'name' && $order[0] != 'cpoint' && $order[0] != 'mpoint') ||  ($order[1] != 'asc' && $order[1] != 'desc')) {
                 return redirect()->route('proCat.index', $slug);
             }
         }
@@ -66,6 +66,7 @@ class ProductCategoryController extends Controller
         $categoryIds = $arrCatIds;
         
         $products = Product::whereIn('category_id', $categoryIds)
+                    ->where('status', 1)
                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                     ->get();
         $beginMinPrice = 0;
@@ -120,6 +121,7 @@ class ProductCategoryController extends Controller
                 return redirect()->route('proCat.index', $slug);
             }
             $products = Product::whereIn('category_id', $categoryIds)
+                ->where('status', 1)
                 ->whereIn('brand', $request->id_brand)
                 ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                 ->paginate(16);
@@ -165,6 +167,7 @@ class ProductCategoryController extends Controller
         // else if (!isset($request->id_brand) && !isset($request->category)) {
         else {
             $products = Product::whereIn('category_id', $categoryIds)
+                ->where('status', 1)
                 ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                 ->paginate(16);
 
@@ -195,6 +198,7 @@ class ProductCategoryController extends Controller
         // SORT THEO SALE
         else if ($request->sale == 2) {
             $products = $products->where('shock_price', '>', 0)
+                ->where('status', 1)
                 ->where('shock_price', '!=', null)
                 ->paginate(16);
             // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
@@ -229,6 +233,7 @@ class ProductCategoryController extends Controller
     {
         $categories = ProductCategory::where('category_parent', 0)
             ->where('id', '!=', 1)
+            ->where('status', 1)
             ->with(['childrenCategories.products', 'products'])
             ->get();
 

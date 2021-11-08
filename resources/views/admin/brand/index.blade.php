@@ -39,20 +39,6 @@
                                         value="{{ old('brandName') }}">
                                 </div>
                             </div>
-                            <div class="form-group mb-2">
-                                <div class="col-md-6 mx-auto">
-                                    <div class="mt-radio-inline pb-0">
-                                        <label class="mt-radio blue mt-radio-outline">
-                                            <input type="radio" name="Type" value="Company" checked>
-                                            Công ty
-                                        </label>
-                                        <label class="mt-radio blue mt-radio-outline">
-                                            <input type="radio" name="Type" value="Competitors">
-                                            Đối thủ
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="form-group d-flex mb-2">
                                 <label class="col-md-3 control-label">Miêu tả</label>
                                 <div class="col-md-9">
@@ -115,9 +101,6 @@
                                     Mã thương hiệu</th>
                                 <th class="title-text title2">
                                     Tên thương hiệu
-                                </th>
-                                <th class="title-text title3">
-                                    Loại thương hiệu
                                 </th>
                                 <th class="title-text title4">
                                     Miêu tả</th>
@@ -378,15 +361,11 @@
                 @endif
                 {
                     targets: 4,
-                    data: 'type',
-                },
-                {
-                    targets: 5,
                     data: 'description',
                 },
                 @if(auth()->guard('admin')->user()->can('Chỉnh sửa thương hiệu') && auth()->guard('admin')->user()->cannot('Xóa thương hiệu'))
                 {
-                    targets: 6,
+                    targets: 5,
                     data: 'status',
                     render: function(data, type, row){
                         var id = row.id 
@@ -397,7 +376,7 @@
                                     data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
                                         aria-hidden="true"></i></button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                <li><button class="dropdown-item item-deactive changeStatus" data-unitid="${row.id}" data-status="0">Ngừng</button></li>
+                                <li><span class="dropdown-item item-deactive changeStatus" data-unitid="${row.id}" data-status="0">Ngừng</button></li>
                             </ul>`
                         } else {
                             return `<span type="text"
@@ -406,14 +385,14 @@
                                 data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
                                     aria-hidden="true"></i></button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><button class="dropdown-item item-active changeStatus" data-unitid="${row.id}" data-status="1">Hoạt động</button></li>
+                                <li><span class="dropdown-item item-active changeStatus" data-unitid="${row.id}" data-status="1">Hoạt động</s></li>
                             </ul>`
                         }
                     }
                 },
                 @elseif(auth()->guard('admin')->user()->can('Xóa thương hiệu') && auth()->guard('admin')->user()->cannot('Chỉnh sửa thương hiệu'))
                 {
-                    targets: 6,
+                    targets: 5,
                     data: 'status',
                     render: function(data, type, row){
                         var id = row.id 
@@ -424,7 +403,7 @@
                                     data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
                                         aria-hidden="true"></i></button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                <li><button class="dropdown-item item-delete" data-unitid="${row.id} onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button></li>
+                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button></li>
                             </ul>`
                         } else {
                             return `<span type="text"
@@ -433,14 +412,14 @@
                                 data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
                                     aria-hidden="true"></i></button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><button class="dropdown-item item-delete" data-unitid="${row.id} onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button></li>
+                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');">Xoá</span></li>
                             </ul>`
                         }
                     }
                 },
                 @elseif(auth()->guard('admin')->user()->can('Xóa thương hiệu') && auth()->guard('admin')->user()->can('Chỉnh sửa thương hiệu'))
                 {
-                    targets: 6,
+                    targets: 5,
                     data: 'status',
                     render: function(data, type, row){
                         var id = row.id 
@@ -451,8 +430,8 @@
                                     data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
                                         aria-hidden="true"></i></button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                <li><button class="dropdown-item item-deactive changeStatus" data-unitid="${row.id}" data-status="0">Ngừng</button></li>
-                                <li><button class="dropdown-item item-delete" data-unitid="${row.id} onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button></li>
+                                <li><span class="dropdown-item item-deactive changeStatus" data-unitid="${row.id}" data-status="0">Ngừng</span></li>
+                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');">Xoá</span></li>
                             </ul>`
                         } else {
                             return `<span type="text"
@@ -461,15 +440,15 @@
                                 data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
                                     aria-hidden="true"></i></button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><button class="dropdown-item item-active changeStatus" data-unitid="${row.id}" data-status="1">Hoạt động</button></li>
-                                <li><button class="dropdown-item item-delete" data-unitid="${row.id} onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button></li>
+                                <li><span class="dropdown-item item-active changeStatus" data-unitid="${row.id}" data-status="1">Hoạt động</span></li>
+                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');">Xoá</span></li>
                             </ul>`
                         }
                     }
                 },
                 @else 
                     {
-                        targets: 6,
+                        targets: 5,
                         data: 'status',
                         render: function(data, type, row) {
                             return ``;
