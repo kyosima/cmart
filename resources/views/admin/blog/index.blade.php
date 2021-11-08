@@ -89,13 +89,13 @@
                                                         <button type="submit"
                                                             class="dropdown-item">Ngừng</button>
                                                     </form> --}}
-                                                    <button 
+                                                    <span 
                                                         data-id="{{$item->id}}"
                                                         data-value="0"
                                                         data-url="{{ route('baiviet.updateStatus', $item->id) }}"
                                                         class="dropdown-item changeStatus">
                                                         Ngừng
-                                                    </button>
+                                                    </span>
                                                     @endif
                                                 </li>
                                                 <li>
@@ -108,13 +108,13 @@
                                                         <button type="submit" class="dropdown-item"
                                                             onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
                                                     </form> --}}
-                                                    <button type="button"
+                                                    <span
                                                         data-id="{{$item->id}}"
                                                         onclick="confirm('Bạn có chắc muốn xóa');"
                                                         data-url="{{ route('baiviet.delete', $item->id) }}"
                                                         class="dropdown-item btn-delete">
                                                         Xóa
-                                                    </button>
+                                                    </span>
                                                     @endif
                                                 </li>
                                             </ul>
@@ -139,13 +139,13 @@
                                                         <button type="submit"
                                                             class="dropdown-item">Hoạt động</button>
                                                     </form> --}}
-                                                    <button type="button"
+                                                    <span
                                                         data-id="{{$item->id}}"
                                                         data-value="1"
                                                         data-url="{{ route('baiviet.updateStatus', $item->id) }}"
                                                         class="dropdown-item changeStatus">
                                                         Hoạt động
-                                                    </button>
+                                                    </span>
                                                     @endif
                                                 </li>
                                                 <li>
@@ -158,13 +158,13 @@
                                                         <button type="submit" class="dropdown-item"
                                                             onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
                                                     </form> --}}
-                                                    <button type="button"
+                                                    <span
                                                         data-id="{{$item->id}}"
                                                         onclick="confirm('Bạn có chắc muốn xóa');"
                                                         data-url="{{ route('baiviet.delete', $item->id) }}"
                                                         class="dropdown-item btn-delete">
                                                         Xóa
-                                                    </button>
+                                                    </span>
                                                     @endif
                                                 </li>
                                             </ul>
