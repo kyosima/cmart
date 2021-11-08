@@ -102,8 +102,10 @@
                                     <td>{{ number_format($item->productPrice->cship) }}đ</td>
                                     {{-- <td>{{dd($item->productPayment())}}</td> --}}
                                     <td>
-                                        @foreach ($item->productPayment() as $payment)
-                                            <span>{{$payment->name}},</span>
+                                        @foreach ($item->productPayment($item->id) as $payment)
+                                            @if ($payment != null)
+                                                <span>{{$payment->name}},</span>
+                                            @endif
                                         @endforeach
                                     </td>
                                 </tr>

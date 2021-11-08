@@ -23,13 +23,13 @@ class Product extends Model
     //     return $this->belongsto(CalculationUnit::class, 'calculation_unit', 'id');
     // }
 
-    public function productPayment()
+    public function productPayment($id)
     {
-        $product = self::first();
+        $product = self::where('id', $id)->first();
         $payments = explode(',', $product->payments); 
         $arr = array();
-        foreach ($payments as $id) {
-           array_push($arr, Payment::where('id', $id)->first());
+        foreach ($payments as $index) {
+           array_push($arr, Payment::where('id', $index)->first());
         }
         return $arr;
     }
