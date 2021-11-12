@@ -40,6 +40,15 @@ class AdminProductCategoryController extends Controller
             $slug = Str::slug($request->proCatSlug, '-');
         }
 
+        $request->validate([
+            'proCatName' => 'required|unique:product_categories,name',
+            'proCatSlug' => 'unique:product_categories,slug',
+        ], [
+            'proCatName.required' => 'Tên danh mục không được để trống',
+            'proCatName.unique' => 'Tên danh mục đã bị trùng lặp, vui lòng đặt tên khác',
+            'proCatSlug.unique' => 'Tên đường dẫn đã bị trùng lặp, vui lòng đặt tên khác',
+        ]);
+
         // if(ProductCategory::whereSlug($slug)->exists()){
         //     $int = random_int(1, 99999999);
         //     $slug .= '-'.$int;
@@ -82,6 +91,16 @@ class AdminProductCategoryController extends Controller
         } else {
             $slug = Str::slug($request->proCatSlug, '-');
         }
+
+        $request->validate([
+            'proCatName' => 'required|unique:product_categories,name,'.$id,
+            'proCatSlug' => 'unique:product_categories,slug,'.$id,
+        ], [
+            'proCatName.required' => 'Tên danh mục không được để trống',
+            'proCatName.unique' => 'Tên danh mục đã bị trùng lặp, vui lòng đặt tên khác',
+            'proCatSlug.unique' => 'Tên đường dẫn đã bị trùng lặp, vui lòng đặt tên khác',
+        ]);
+
 
         // if(ProductCategory::whereSlug($slug)->exists()){
         //     $int = random_int(1, 99999999);

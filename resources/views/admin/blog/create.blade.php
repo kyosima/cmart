@@ -9,6 +9,15 @@
 @section('content')
 <div class="m-3">
     <div class="wrapper bg-white p-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="portlet-title">
             <div class="title-name">
                 <div class="caption">
@@ -26,10 +35,16 @@
                     <div class="col-sm-3">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail size-img-profile">
-                                <img src="http://api.salefie.vn/images/new_product_default.jpg">
+                                <img 
+                                @if (old('feature_img'))
+                                src="{{old('feature_img')}}"
+                                @else
+                                src="http://api.salefie.vn/images/new_product_default.jpg"
+                                @endif
+                                >
                             </div>
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-1" type="hidden" name="feature_img" class="form-control">
+                                <input id="ckfinder-input-1" type="hidden" name="feature_img" class="form-control" value="{{old('feature_img')}}">
                                 <a style="cursor: pointer;" id="ckfinder-popup-1" class="btn btn-success">Chọn ảnh đại diện</a>
                             </div>
                         </div>
@@ -46,7 +61,7 @@
                                             <div class="input-group-btn" id="blog-status">
                                                 <select name="blog_status" class="selectpicker form-control">
                                                     <option value="0">Ngưng hoạt động</option>
-                                                    <option value="1">Hoạt động</option>
+                                                    <option value="1" selected>Hoạt động</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -66,9 +81,13 @@
                                     <div class="col-md-12">
                                         <select class="selectpicker form-control" name="blog_category"
                                             required>
-                                            <option value="-1">Chuyên mục bài viết</option>
+                                            <option></option>
                                             @foreach ($categories as $item)
-                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                                <option value="{{$item->id}}"
+                                                    @if (old('blog_category') == $item->id)
+                                                        selected
+                                                    @endif
+                                                    >{{$item->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -133,6 +152,7 @@
 <script>
     $(document).ready(function() {
         $('select.selectpicker').select2({
+            placeholder: "Chọn danh mục bài viết",
             width: '100%',
         });
 
@@ -197,4 +217,31 @@
 
     });
 </script>
+
+<script>
+$(document).ready(function () {
+    $("form").validate({
+        ignore: [],
+        rules: {
+            feature_img: {
+                required: true,
+            },
+            blog_title: {
+                required: true,
+            },
+            blog_category: {
+                required: true,
+            },
+        },
+        messages: {
+            feature_img: "Không được để trống",
+            blog_title: "Không được để trống",
+            blog_category: "Không được để trống",
+        }
+    });
+});
+
+
+</script>
+
 @endpush

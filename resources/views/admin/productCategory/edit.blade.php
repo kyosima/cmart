@@ -16,6 +16,15 @@
                 </div>
             </div>
         @endif
+        @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         <div class="portlet-title">
             <div class="title-name">
                 <div class="caption">
@@ -44,27 +53,46 @@
 
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-2" type="hidden" name="gallery_img"
+                                <input id="ckfinder-input-2" type="text" name="gallery_img"
                                 data-type="multiple" data-hasid="{{$proCat->id}}"
                                 readonly class="form-control"
-                                value="{{old('gallery_img', $proCat->gallery)}}">
+                                value="{{old('gallery_img', $proCat->gallery.',').' '}}">
                                 <a style="cursor: pointer;" id="ckfinder-popup-2" class="btn btn-success">Chọn nhiều ảnh</a>
                             </div>
                             <div class="fileinput-gallery thumbnail">
                                 <div class="row">
-                                    @php
-                                        $gallery = explode(", ",$proCat->gallery);
-                                    @endphp
-                                    @if ($proCat->gallery != null)
-                                        @foreach ($gallery as $img)
+                                    @if (old('gallery_img') && old('gallery_img') != $proCat->gallery.',')
+                                        @php
+                                        $galleries = explode(',', old('gallery_img'));
+                                        @endphp
+                                        @foreach($galleries as $img)
+                                            @if ($img != null || $img != '')
                                             <div class="col-md-3">
-                                                <span style="cursor: pointer;" data-id='{{$proCat->id}}' data-url="{{$img}}" class="delete_gallery">
+                                                <span style="cursor: pointer;" data-id='' data-url="{{trim($img)}}" class="delete_gallery">
                                                     <i class="fas fa-times"></i>
                                                 </span>
-                                                <img src="{{$img}}">
+                                                <img src="{{trim($img)}}">
                                             </div>
+                                            @endif
                                         @endforeach
-                                    @endif
+
+                                    @else 
+
+                                        @php
+                                            $gallery = explode(", ",$proCat->gallery);
+                                        @endphp
+                                        @if ($proCat->gallery != null)
+                                            @foreach ($gallery as $img)
+                                                <div class="col-md-3">
+                                                    <span style="cursor: pointer;" data-id='{{$proCat->id}}' data-url="{{$img}}" class="delete_gallery">
+                                                        <i class="fas fa-times"></i>
+                                                    </span>
+                                                    <img src="{{$img}}">
+                                                </div>
+                                            @endforeach
+                                        @endif
+
+                                    @endif   
                                 </div>
                             </div>
                         </div>
@@ -113,7 +141,9 @@
                                             @foreach ($categories as $item)
                                                 @if ($proCat->id != $item->id && $proCat->level >= $item->level)
                                                     <option value="{{ $item->id }}"
-                                                        {{ $item->id == $proCat->category_parent ? 'selected' : '' }}>
+                                                        {{ $item->id == $proCat->category_parent ? 'selected' : '' }}
+                                                        {{ old('proCatParent') == $item->id ? 'selected' : '' }}
+                                                        >
                                                         {{ $item->name }}
                                                     </option>
                                                     @if (count($item->childrenCategories) > 0)
@@ -140,7 +170,9 @@
                                             @foreach ($categories as $item)
                                                 @if ($proCat->id != $item->id && $item->slug != 'uncategorized')
                                                     <option value="{{ $item->id }}"
-                                                        {{ $item->id == $proCat->link_to_category ? 'selected' : '' }}>
+                                                        {{ $item->id == $proCat->link_to_category ? 'selected' : '' }}
+                                                        {{ old('linkProCat') == $item->id ? 'selected' : '' }}
+                                                        >
                                                         {{ $item->name }}
                                                     </option>
                                                     @if (count($item->childrenCategories) > 0)
@@ -279,17 +311,17 @@
                                 chosenFiles += new URL(file.getUrl()).pathname + ', ';
                                 if(hasid != ''){
                                     $('.fileinput-gallery .row').append(`<div class="col-md-3">
-                                    <span style="cursor: pointer;" data-id='${hasid}' data-url="${file.getUrl()}" class="delete_gallery">
+                                    <span style="cursor: pointer;" data-id='${hasid}' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
                                         <i class="fas fa-times"></i>
                                         </span>
-                                                <img src="${file.getUrl()}">
+                                                <img src="${new URL(file.getUrl()).pathname}">
                                             </div>`)
                                 } else {
                                     $('.fileinput-gallery .row').append(`<div class="col-md-3">
-                                        <span style="cursor: pointer;" data-id='' data-url="${file.getUrl()}" class="delete_gallery">
+                                        <span style="cursor: pointer;" data-id='' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
                                             <i class="fas fa-times"></i>
                                             </span>
-                                                    <img src="${file.getUrl()}">
+                                                    <img src="${new URL(file.getUrl()).pathname}">
                                                 </div>`)
                                 }
                             });

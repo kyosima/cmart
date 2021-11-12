@@ -7,6 +7,7 @@
 @endpush
 
 @section('content')
+
 <div class="m-3">
     <div class="wrapper bg-white p-4">
         @if (session('success'))
@@ -14,6 +15,15 @@
                 <div class="caption bg-success p-3">
                     <span class="caption-subject bold uppercase text-light">{{session('success')}}</span>
                 </div>
+            </div>
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
         <div class="portlet-title">
@@ -34,7 +44,7 @@
                     <div class="col-sm-3">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail size-img-profile">
-                                <img src="{{$product->feature_img}}">
+                                <img src="{{old('feature_img', $product->feature_img)}}">
                             </div>
                             <div class="form-group my-2">
                                 <input id="ckfinder-input-1" type="hidden" required name="feature_img" class="form-control" value="{{old('feature_img', $product->feature_img)}}" readonly required>
@@ -44,26 +54,44 @@
 
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-2" type="hidden" name="gallery_img"
+                                <input id="ckfinder-input-2" type="text" name="gallery_img"
                                 data-type="multiple" data-hasid="{{$product->id}}"
                                 readonly class="form-control"
-                                value="{{old('gallery_img', $product->gallery)}}">
+                                value="{{old('gallery_img', $product->gallery.',').' '}}">
                                 <a style="cursor: pointer;" id="ckfinder-popup-2" class="btn btn-success">Chọn nhiều ảnh</a>
                             </div>
                             <div class="fileinput-gallery thumbnail">
                                 <div class="row">
-                                    @php
-                                        $gallery = explode(", ",$product->gallery);
-                                    @endphp
-                                    @if ($product->gallery != null)
-                                        @foreach ($gallery as $img)
+                                    @if (old('gallery_img') && old('gallery_img') != $product->gallery.',')
+                                        @php
+                                        $galleries = explode(',', old('gallery_img'));
+                                        @endphp
+                                        @foreach($galleries as $img)
+                                            @if ($img != null || $img != '')
                                             <div class="col-md-3">
-                                                <span style="cursor: pointer;" data-id='{{$product->id}}' data-url="{{$img}}" class="delete_gallery">
+                                                <span style="cursor: pointer;" data-id='' data-url="{{trim($img)}}" class="delete_gallery">
                                                     <i class="fas fa-times"></i>
                                                 </span>
-                                                <img src="{{$img}}">
+                                                <img src="{{trim($img)}}">
                                             </div>
+                                            @endif
                                         @endforeach
+
+                                    @else 
+
+                                        @php
+                                            $gallery = explode(", ",$product->gallery);
+                                        @endphp
+                                        @if ($product->gallery != null)
+                                            @foreach ($gallery as $img)
+                                                <div class="col-md-3">
+                                                    <span style="cursor: pointer;" data-id='{{$product->id}}' data-url="{{$img}}" class="delete_gallery">
+                                                        <i class="fas fa-times"></i>
+                                                    </span>
+                                                    <img src="{{$img}}">
+                                                </div>
+                                            @endforeach
+                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -107,6 +135,7 @@
                                             @foreach ($nganhHang as $item)
                                                 <option value="{{ $item->id }}"
                                                     {{ $product->category_id == $item->id ? 'selected' : ''}}
+                                                    {{ old('category_parent') == $item->id ? 'selected' : '' }}
                                                     >{{ $item->name }}</option>
                                                 @if (count($item->childrenCategories) > 0)
                                                     @foreach ($item->childrenCategories as $childCategory)
@@ -121,6 +150,35 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Sản phẩm upsell:</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control select-upsell" name="upsell[]" multiple>
+                                            @php
+                                                $upsells = explode(',', $product->upsell);
+                                            @endphp
+                                            @foreach ($products as $item)
+                                                @if ($item->id != $product->id)
+                                                    <option value="{{ $item->id }}"
+                                                        @php
+                                                            if(old('upsell')) {
+                                                                if(in_array($item->id, $upsells) || in_array($item->id, old('upsell'))) {
+                                                                    echo "selected";
+                                                                }
+                                                            } else {
+                                                                if(in_array($item->id, $upsells)) {
+                                                                    echo "selected";
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        >{{ $item->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -295,9 +353,17 @@
                                             @endphp
                                             @foreach ($payments as $item)
                                                 <option value="{{$item->id}}" 
-                                                    @if (in_array($item->id, $proPay))
-                                                        selected
-                                                    @endif
+                                                    @php
+                                                        if(old('payments')) {
+                                                            if(in_array($item->id, $proPay) || in_array($item->id, old('payments'))) {
+                                                                echo "selected";
+                                                            }
+                                                        } else {
+                                                            if(in_array($item->id, $proPay)) {
+                                                                echo "selected";
+                                                            }
+                                                        }
+                                                    @endphp
                                                     >{{$item->name}}</option>
                                             @endforeach
                                         </select>
@@ -385,6 +451,11 @@
 
         $('select.multiple-payments').select2({
             placeholder: "Chọn hình thức thanh toán",
+            multiple: true
+        });
+
+        $('select.select-upsell').select2({
+            placeholder: "Chọn sản phẩm Upsell",
             multiple: true
         });
 
@@ -495,21 +566,24 @@
                         if(type == "multiple") {
                             var files = evt.data.files;
                             var chosenFiles = $(`#${elementId}`).val();
+                            // if(chosenFiles != '') {
+                            //     chosenFiles += ', ';
+                            // }
                             files.forEach( function(file, idx, array) {
                                 chosenFiles += new URL(file.getUrl()).pathname + ', ';
                                 if(hasid != ''){
                                     $('.fileinput-gallery .row').append(`<div class="col-md-3">
-                                    <span style="cursor: pointer;" data-id='${hasid}' data-url="${file.getUrl()}" class="delete_gallery">
+                                    <span style="cursor: pointer;" data-id='${hasid}' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
                                         <i class="fas fa-times"></i>
                                         </span>
-                                                <img src="${file.getUrl()}">
+                                                <img src="${new URL(file.getUrl()).pathname}">
                                             </div>`)
                                 } else {
                                     $('.fileinput-gallery .row').append(`<div class="col-md-3">
-                                        <span style="cursor: pointer;" data-id='' data-url="${file.getUrl()}" class="delete_gallery">
+                                        <span style="cursor: pointer;" data-id='' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
                                             <i class="fas fa-times"></i>
                                             </span>
-                                                    <img src="${file.getUrl()}">
+                                                    <img src="${new URL(file.getUrl()).pathname}">
                                                 </div>`)
                                 }
                             });
@@ -549,3 +623,5 @@
 <script type="text/javascript" src="{{ asset('/js/admin/adminProductCreateUpdate.js') }}"></script>
     
 @endpush
+
+

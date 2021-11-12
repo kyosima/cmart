@@ -9,6 +9,15 @@
 @section('content')
 <div class="m-3">
     <div class="wrapper bg-white p-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="portlet-title">
             <div class="title-name">
                 <div class="caption">
@@ -26,21 +35,42 @@
                     <div class="col-sm-3">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail size-img-profile">
-                                <img src="http://api.salefie.vn/images/new_product_default.jpg">
+                                <img 
+                                @if (old('feature_img'))
+                                src="{{old('feature_img')}}"
+                                @else
+                                src="http://api.salefie.vn/images/new_product_default.jpg"
+                                @endif
+                                >
                             </div>
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-1" type="hidden" required name="feature_img" class="form-control">
+                                <input id="ckfinder-input-1" type="hidden" required name="feature_img" class="form-control" value="{{old('feature_img')}}">
                                 <a style="cursor: pointer;" id="ckfinder-popup-1" class="btn btn-success">Chọn ảnh đại diện</a>
                             </div>
                         </div>
 
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-2" type="hidden" name="gallery_img" data-type="multiple" class="form-control">
+                                <input id="ckfinder-input-2" type="hidden" name="gallery_img" data-type="multiple" class="form-control" value="{{old('gallery_img')}}">
                                 <a style="cursor: pointer;" id="ckfinder-popup-2" class="btn btn-success">Chọn thư viện ảnh</a>
                             </div>
                             <div class="fileinput-gallery thumbnail">
                                 <div class="row">
+                                    @if (old('gallery_img'))
+                                        @php
+                                        $galleries = explode(',', old('gallery_img'));
+                                        @endphp
+                                        @foreach($galleries as $img)
+                                            @if ($img != null || $img != '')
+                                            <div class="col-md-3">
+                                                <span style="cursor: pointer;" data-id='' data-url="{{$img}}" class="delete_gallery">
+                                                    <i class="fas fa-times"></i>
+                                                </span>
+                                                <img src="{{$img}}">
+                                            </div>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -55,7 +85,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group d-flex">
                                             <input type="text" name="product_sku" class="form-control w-50"
-                                                required>
+                                                required value="{{old('product_sku')}}">
                                             <div class="input-group-btn w-50" id="product-status">
                                                 <select name="product_status" class="selectpicker form-control">
                                                     <option value="0">Ngưng hoạt động</option>
@@ -80,7 +110,11 @@
                                         <select class="selectpicker form-control selectCategory nhomhang" name="category_parent"
                                             required data-placeholder="Chọn danh mục sản phẩm" data-type="megaParent">
                                             @foreach ($nganhHang as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                <option value="{{ $item->id }}"
+                                                    @if (old('category_parent') == $item->id)
+                                                        selected
+                                                    @endif
+                                                    >{{ $item->name }}</option>
                                                 @if (count($item->childrenCategories) > 0)
                                                     @foreach ($item->childrenCategories as $childCategory)
                                                         @include('admin.productCategory.selectChild', [
@@ -89,6 +123,24 @@
                                                             ])
                                                     @endforeach
                                                 @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Sản phẩm upsell:</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control select-upsell" name="upsell[]" multiple>
+                                            @foreach ($products as $item)
+                                                <option value="{{ $item->id }}"
+                                                    @php
+                                                        if(old('upsell')) {
+                                                            if(in_array($item->id, old('upsell'))) {
+                                                                echo "selected";
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    >{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -104,7 +156,11 @@
                                             title="Thương hiệu" data-placeholder="Thương hiệu">
                                             <option value="-1">Chọn thương hiệu</option>
                                             @foreach ($brands as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                <option value="{{ $item->id }}"
+                                                    @if (old('product_brand') == $item->id)
+                                                        selected
+                                                    @endif
+                                                    >{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -247,9 +303,9 @@
                                         <select class="form-control" name="tax"
                                             required data-placeholder="Thuế suất">
                                             <option value="-1" selected>Chọn thuế suất</option>
-                                            <option value="0">0%</option>
-                                            <option value="0.05">5%</option>
-                                            <option value="0.1">10%</option>
+                                            <option value="0" {{ old("tax") == 0 ? "selected":"" }}>0%</option>
+                                            <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
+                                            <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
                                         </select>
                                     </div>
                                 </div>
@@ -260,7 +316,16 @@
                                         <select class="form-control multiple-payments" name="payments[]"
                                             required multiple>
                                             @foreach ($payments as $item)
-                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                                <option value="{{$item->id}}"
+                                                    @php
+                                                        if(old('payments')) {
+                                                            if(in_array($item->id, old('payments'))) {
+                                                                echo "selected";
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    
+                                                    >{{$item->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -338,6 +403,11 @@
 
         $('select.multiple-payments').select2({
             placeholder: "Chọn hình thức thanh toán",
+            multiple: true
+        });
+
+        $('select.select-upsell').select2({
+            placeholder: "Chọn sản phẩm Upsell",
             multiple: true
         });
 
@@ -447,10 +517,10 @@
                                 chosenFiles += new URL(file.getUrl()).pathname + ', ';
 
                                 $('.fileinput-gallery .row').append(`<div class="col-md-3">
-                                    <span style="cursor: pointer;" data-id='' data-url="${file.getUrl()}" class="delete_gallery">
+                                    <span style="cursor: pointer;" data-id='' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
                                         <i class="fas fa-times"></i>
                                         </span>
-                                                <img src="${file.getUrl()}">
+                                                <img src="${new URL(file.getUrl()).pathname}">
                                             </div>`)
                             });
                             var output = document.getElementById(elementId);
