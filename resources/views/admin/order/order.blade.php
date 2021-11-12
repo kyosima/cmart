@@ -1,6 +1,9 @@
 @extends('admin.layout.master')
 
 @section('title', 'Đơn hàng')
+@push('css')
+    <link rel="stylesheet" href="{{ asset('css/admin/select2.css') }}" type="text/css">
+@endpush
 
 @section('content')
 <x-alert />
@@ -15,10 +18,9 @@
 								<div class="d-flex justify-content-between align-items-center">
 									<p>
 										<span class="caption-subject"><i class="fas fa-cart-plus"></i> DANH SÁCH ĐƠN HÀNG</span>
-										<button class="btn btn_success"><i class="fas fa-plus"></i> Thêm
-											mới</button>
-										<button class="btn btn_success"><i class="far fa-file-excel"></i>
-											Xuất Excel</button>
+										<a class="btn btn_success" href="{{route('order.create')}}"><i class="fas fa-plus"></i> Thêm mới</a>
+										<a href="{{route('order.exports')}}" class="btn btn_success"><i class="far fa-file-excel"></i>
+											Xuất Excel</a>
 									</p>
 
 									<span>
@@ -26,8 +28,8 @@
 											aria-expanded="false" aria-controls="collapseExample">
 											<i class="fas fa-chevron-down"></i>
 										</span>&nbsp;
-										<span><i class="fas fa-sync-alt"></i></span>&nbsp;
-										<span><i class="fas fa-expand"></i></span>
+										<!-- <span><i class="fas fa-sync-alt"></i></span>&nbsp; -->
+										<!-- <span><i class="fas fa-expand"></i></span> -->
 									</span>
 								</div>
 								<div class="collapse show" id="collapseExample">
@@ -90,15 +92,20 @@
 		</div>
 	</div>
 </div>
+
 @endsection
 
 @push('scripts')
     <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script>
 	<script type="text/javascript" src="{{ asset('js/admin/ajax-form.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/admin/select2.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/order.js') }}"></script>
     <!-- format language -->
+
     <script>
         $(document).ready(function() {
+
             $('#tblOrder').DataTable({
                 columnDefs: [
                     { orderable: false, targets: 5 }

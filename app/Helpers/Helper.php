@@ -54,6 +54,22 @@ if (!function_exists('helper')) {
         }
     }
 
+    function orderStatusSimple($status){
+        if($status == 0){
+            return 'Đã đặt hàng';
+        }elseif($status == 1){
+            return 'Đã xác nhận thanh toán';
+        }elseif($status == 2){
+            return 'Đang xử lý';
+        }elseif($status == 3){
+            return 'Đang vận chuyển';
+        }elseif($status == 4){
+            return 'Hoàn thành';
+        }else{
+            return 'Đã hủy';
+        }
+    }
+
     function orderStatusOtion($status){
         $array = array('Đã đặt hàng', 'Đã xác nhận thanh toán', 'Đang xử lý', 'Đang vận chuyển', 'Hoàn thành', 'Đã hủy');
         $string = '';
