@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class BlogCategoryController extends Controller
@@ -57,6 +58,17 @@ class BlogCategoryController extends Controller
         //     $int = random_int(1, 99999999);
         //     $slug .= '-'.$int;
         // }
+
+        $validator = Validator::make($request->all(), [
+            'unitName' => 'required',
+            'unitSlug' => 'unique:blog_category,slug',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'errorSlug' => $validator->errors()->first('unitSlug'),
+                'errorName' => $validator->errors()->first('unitName'),
+            ], 400);
+        }
         
         $blogCategory = BlogCategory::create([
             'name' => $request->unitName,

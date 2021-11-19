@@ -165,7 +165,11 @@
                     error: function(response) {
                         $.toast({
                             heading: 'Thất bại',
-                            text: 'Thực hiện không thành công',
+                            text: [
+                                'Thực hiện không thành công',
+                                response.responseJSON.errorSlug,
+                                response.responseJSON.errorName
+                            ],
                             position: 'top-right',
                             icon: 'error'
                         });

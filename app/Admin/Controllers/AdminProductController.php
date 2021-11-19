@@ -119,7 +119,7 @@ class AdminProductController extends Controller
                     'width' => $request->product_width,
                     'length' => $request->product_length,
                     'brand' => $request->product_brand,
-                    'upsell' => implode(',',$request->upsell),
+                    'upsell' => isset($request->upsell) != false ? implode(',',$request->upsell) : null,
                     'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,
                     'short_desc' => $request->short_description,
@@ -225,14 +225,14 @@ class AdminProductController extends Controller
             'tax' => 'Thuế không được để trống',
         ]);
 
+
         return DB::transaction(function () use ($request, $id) {
             try {
                 $slug = Str::slug($request->product_name, '-');
-        
-                // if(Product::whereSlug($slug)->exists()){
-                //     $int = random_int(1, 99999999);
-                //     $slug .= '-'.$int;
-                // }
+
+                if(str_starts_with($request->gallery_img, ', ')){
+                    $request->gallery_img = substr_replace($request->gallery_img,'',0,2);
+                }
 
                 Product::where('id', $id)->update([
                     'sku' => $request->product_sku,
@@ -248,6 +248,7 @@ class AdminProductController extends Controller
                     'width' => $request->product_width,
                     'length' => $request->product_length,
                     'brand' => $request->product_brand,
+                    'upsell' => isset($request->upsell) != false ? implode(',',$request->upsell) : null,
                     'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,
                     'short_desc' => $request->short_description,

@@ -7,6 +7,13 @@ if (!function_exists('formatPrice')) {
     }
 }
 
+if (!function_exists('formatPriceAdmin')) {
+    function formatPriceAdmin($price)
+    {
+        return number_format($price, 0, ',', '.');
+    }
+}
+
 if (!function_exists('permissionOfRole')) {
 
 if (!function_exists('helper')) {
