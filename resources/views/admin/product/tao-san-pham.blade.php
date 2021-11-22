@@ -241,7 +241,7 @@
                                     <label class="col-md-12 control-label text-left">Đơn giá Shock<span
                                         class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" required class="form-control number-separator" 
+                                        <input type="text" required class="form-control number-separator-1" 
                                             value="{{ formatPriceAdmin(old('product_shock_price')) }}">
                                         <input type="hidden" id="product_shock_price" required name="product_shock_price" value="{{ old('product_shock_price') }}">
                                     </div>
@@ -250,7 +250,7 @@
                                     <label class="col-md-12 control-label text-left">Đơn giá Buôn<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator"
+                                        <input type="text" class="form-control number-separator-2"
                                         required value="{{ formatPriceAdmin(old('product_wholesale_price')) }}">
                                         <input type="hidden" id="product_wholesale_price" required name="product_wholesale_price" value="{{ old('product_wholesale_price') }}">
                                     </div>
@@ -273,7 +273,7 @@
                                     <label class="col-md-12 control-label text-left">Phí xử lý<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator" required
+                                        <input type="text" class="form-control number-separator-3" required
                                             value="{{ formatPriceAdmin(old('phi_xuly')) }}">
                                         <input type="hidden" id="phi_xuly" required name="phi_xuly" value="{{ old('phi_xuly') }}">
                                     </div>
@@ -282,7 +282,7 @@
                                     <label class="col-md-12 control-label text-left">Phí giao hàng (C-Ship)<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator" required
+                                        <input type="text" class="form-control number-separator-4" required
                                             value="{{ formatPriceAdmin(old('cship')) }}">
                                         <input type="hidden" id="cship" required name="cship" value="{{ old('cship') }}">
                                     </div>
@@ -291,7 +291,7 @@
                                     <label class="col-md-12 control-label text-left">Phí ship Viettel Post<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator" required
+                                        <input type="text" class="form-control number-separator-5" required
                                             value="{{ formatPriceAdmin(old('viettel_ship')) }}">
                                         <input type="hidden" id="viettel_ship" required name="viettel_ship" value="{{ old('viettel_ship') }}">
                                     </div>
@@ -395,6 +395,7 @@
 
 <script src={{ asset('/public/packages/ckeditor/ckeditor.js') }}></script>
 <script src={{ asset('/public/packages/ckfinder/ckfinder.js') }}></script>
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -410,12 +411,43 @@
             multiple: true
         });
 
-        $(document).on('change', '.number-separator', function() {
-            let number = $(this).val()
-            let vn = new Intl.NumberFormat('vi-VN').format(number);
-            $(this).next().val(number)
-            $(this).val(vn)
+        easyNumberSeparator({
+            selector: '.number-separator',
+            separator: '.',
+            resultInput: '#product_regular_price',
         })
+        easyNumberSeparator({
+            selector: '.number-separator-1',
+            separator: '.',
+            resultInput: '#product_shock_price',
+        })
+        easyNumberSeparator({
+            selector: '.number-separator-2',
+            separator: '.',
+            resultInput: '#product_wholesale_price',
+        })
+        easyNumberSeparator({
+            selector: '.number-separator-3',
+            separator: '.',
+            resultInput: '#phi_xuly',
+        })
+        easyNumberSeparator({
+            selector: '.number-separator-4',
+            separator: '.',
+            resultInput: '#cship',
+        })
+        easyNumberSeparator({
+            selector: '.number-separator-5',
+            separator: '.',
+            resultInput: '#viettel_ship',
+        })
+
+        // $(document).on('change', '.number-separator', function() {
+        //     let number = $(this).val()
+        //     let vn = new Intl.NumberFormat('vi-VN').format(number);
+        //     $(this).next().val(number)
+        //     $(this).val(vn)
+        // })
 
         $('#meta_description').keyup(function() {
             var characterCount = $(this).val().length,
