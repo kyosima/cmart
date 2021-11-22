@@ -34,6 +34,17 @@ class Product extends Model
         return $arr;
     }
 
+    public function productUpsell($id)
+    {
+        $product = self::where('id', $id)->first();
+        $upsells = explode(',', $product->upsell); 
+        $arr = array();
+        foreach ($upsells as $index) {
+           array_push($arr, self::where('id', $index)->first());
+        }
+        return $arr;
+    }
+
     public function productCategory() {
         return $this->belongsto(ProductCategory::class, 'category_id', 'id');
     }

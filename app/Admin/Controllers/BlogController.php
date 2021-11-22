@@ -40,6 +40,15 @@ class BlogController extends Controller
     {
         $slug = Str::slug($request->blog_title, '-');
 
+        $request->validate([
+            'blog_title' => 'required|unique:blogs,name',
+            'blog_category' => 'required',
+        ], [
+            'blog_title.required' => 'Tên bài viết không được để trống',
+            'blog_title.unique' => 'Tên bài viết đã bị trùng lặp, vui lòng đặt tên khác',
+            'blog_category' => 'Danh mục bài viết không được để trống',
+        ]);
+
         // if(Blog::whereSlug($slug)->exists()){
         //     $int = random_int(1, 99999999);
         //     $slug .= '-'.$int;
@@ -74,6 +83,15 @@ class BlogController extends Controller
         //     $int = random_int(1, 99999999);
         //     $slug .= '-'.$int;
         // }
+
+        $request->validate([
+            'blog_title' => 'required|unique:blogs,name',
+            'blog_category' => 'required',
+        ], [
+            'blog_title.required' => 'Tên bài viết không được để trống',
+            'blog_title.unique' => 'Tên bài viết đã bị trùng lặp, vui lòng đặt tên khác',
+            'blog_category' => 'Danh mục bài viết không được để trống',
+        ]);
 
         $blog = Blog::where('id', $id)->update([
             'id_ofcategory' => $request->blog_category,

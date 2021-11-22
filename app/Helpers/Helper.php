@@ -7,12 +7,21 @@ if (!function_exists('formatPrice')) {
     }
 }
 
+if (!function_exists('formatPriceAdmin')) {
+    function formatPriceAdmin($price)
+    {
+        return number_format($price, 0, ',', '.');
+    }
+}
+
+if (!function_exists('permissionOfRole')) {
 
 if (!function_exists('formatPriceOfLevel')) {
     function formatPriceOfLevel($product)
     {
         return number_format(getPriceOfLevel($product), 0, '.', ',') . ' ₫';
     }
+}
 }
 
 if (!function_exists('getTagSale')) {

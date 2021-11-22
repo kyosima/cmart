@@ -58,7 +58,6 @@ class BrandController extends Controller
         $brand = Brand::create([
             'code' => $request->brandCode,
             'slug' => $slug,
-            'type' => $request->Type == "Company" ? "Công ty" : "Đối thủ",
             'name' => $request->brandName,
             'description' => $request->brandDescription,
         ]);

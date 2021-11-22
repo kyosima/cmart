@@ -16,7 +16,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title"><i class="fas fa-copyright"></i> Thông tin thương hiệu </h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" id="formCreateBrand" action="{{ route('thuong-hieu.store') }}"
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Hủy</button>
                             <button type="submit" class="btn btn-info btn-submit-unit">Lưu</button>
                         </div>
                     </form>

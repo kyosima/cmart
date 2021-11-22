@@ -9,6 +9,15 @@
 @section('content')
 <div class="m-3">
     <div class="wrapper bg-white p-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="portlet-title">
             <div class="title-name">
                 <div class="caption">
@@ -36,11 +45,26 @@
 
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-2" type="hidden" name="gallery_img" data-type="multiple" class="form-control">
+                                <input id="ckfinder-input-2" type="hidden" name="gallery_img" data-type="multiple" class="form-control" value="{{old('gallery_img').' '}}">
                                 <a style="cursor: pointer;" id="ckfinder-popup-2" class="btn btn-success">Chọn thư viện ảnh</a>
                             </div>
                             <div class="fileinput-gallery thumbnail">
                                 <div class="row">
+                                    @if (old('gallery_img'))
+                                        @php
+                                        $galleries = explode(',', old('gallery_img'));
+                                        @endphp
+                                        @foreach($galleries as $img)
+                                            @if ($img != null || $img != '')
+                                            <div class="col-md-3">
+                                                <span style="cursor: pointer;" data-id='' data-url="{{$img}}" class="delete_gallery">
+                                                    <i class="fas fa-times"></i>
+                                                </span>
+                                                <img src="{{$img}}">
+                                            </div>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -55,7 +79,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group d-flex">
                                             <input type="text" name="product_sku" class="form-control w-50"
-                                                required>
+                                                required value="{{old('product_sku')}}">
                                             <div class="input-group-btn w-50" id="product-status">
                                                 <select name="product_status" class="selectpicker form-control">
                                                     <option value="0">Ngưng hoạt động</option>
@@ -80,7 +104,11 @@
                                         <select class="selectpicker form-control selectCategory nhomhang" name="category_parent"
                                             required data-placeholder="Chọn danh mục sản phẩm" data-type="megaParent">
                                             @foreach ($nganhHang as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                <option value="{{ $item->id }}"
+                                                    @if (old('category_parent') == $item->id)
+                                                        selected
+                                                    @endif
+                                                    >{{ $item->name }}</option>
                                                 @if (count($item->childrenCategories) > 0)
                                                     @foreach ($item->childrenCategories as $childCategory)
                                                         @include('admin.productCategory.selectChild', [
@@ -89,6 +117,24 @@
                                                             ])
                                                     @endforeach
                                                 @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Sản phẩm upsell:</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control select-upsell" name="upsell[]" multiple>
+                                            @foreach ($products as $item)
+                                                <option value="{{ $item->id }}"
+                                                    @php
+                                                        if(old('upsell')) {
+                                                            if(in_array($item->id, old('upsell'))) {
+                                                                echo "selected";
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    >{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -104,7 +150,11 @@
                                             title="Thương hiệu" data-placeholder="Thương hiệu">
                                             <option value="-1">Chọn thương hiệu</option>
                                             @foreach ($brands as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                <option value="{{ $item->id }}"
+                                                    @if (old('product_brand') == $item->id)
+                                                        selected
+                                                    @endif
+                                                    >{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -177,7 +227,7 @@
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <input type="text" class="form-control number-separator" required
-                                            value="{{ old('product_regular_price') }}">
+                                            value="{{ formatPriceAdmin(old('product_regular_price')) }}">
                                         <input type="hidden" id="product_regular_price" required name="product_regular_price" value="{{ old('product_regular_price') }}">
                                     </div>
                                 </div>
@@ -185,8 +235,8 @@
                                     <label class="col-md-12 control-label text-left">Đơn giá Shock<span
                                         class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" required class="form-control number-separator-1" 
-                                            value="{{ old('product_shock_price') }}">
+                                        <input type="text" required class="form-control number-separator" 
+                                            value="{{ formatPriceAdmin(old('product_shock_price')) }}">
                                         <input type="hidden" id="product_shock_price" required name="product_shock_price" value="{{ old('product_shock_price') }}">
                                     </div>
                                 </div>
@@ -194,8 +244,8 @@
                                     <label class="col-md-12 control-label text-left">Đơn giá Buôn<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator-2"
-                                        required value="{{ old('product_wholesale_price') }}">
+                                        <input type="text" class="form-control number-separator"
+                                        required value="{{ formatPriceAdmin(old('product_wholesale_price')) }}">
                                         <input type="hidden" id="product_wholesale_price" required name="product_wholesale_price" value="{{ old('product_wholesale_price') }}">
                                     </div>
                                 </div>
@@ -217,8 +267,8 @@
                                     <label class="col-md-12 control-label text-left">Phí xử lý<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator-3" required
-                                            value="{{ old('phi_xuly') }}">
+                                        <input type="text" class="form-control number-separator" required
+                                            value="{{ formatPriceAdmin(old('phi_xuly')) }}">
                                         <input type="hidden" id="phi_xuly" required name="phi_xuly" value="{{ old('phi_xuly') }}">
                                     </div>
                                 </div>
@@ -226,8 +276,8 @@
                                     <label class="col-md-12 control-label text-left">Phí giao hàng (C-Ship)<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator-4" required
-                                            value="{{ old('cship') }}">
+                                        <input type="text" class="form-control number-separator" required
+                                            value="{{ formatPriceAdmin(old('cship')) }}">
                                         <input type="hidden" id="cship" required name="cship" value="{{ old('cship') }}">
                                     </div>
                                 </div>
@@ -235,8 +285,8 @@
                                     <label class="col-md-12 control-label text-left">Phí ship Viettel Post<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator-5" required
-                                            value="{{ old('viettel_ship') }}">
+                                        <input type="text" class="form-control number-separator" required
+                                            value="{{ formatPriceAdmin(old('viettel_ship')) }}">
                                         <input type="hidden" id="viettel_ship" required name="viettel_ship" value="{{ old('viettel_ship') }}">
                                     </div>
                                 </div>
@@ -247,9 +297,9 @@
                                         <select class="form-control" name="tax"
                                             required data-placeholder="Thuế suất">
                                             <option value="-1" selected>Chọn thuế suất</option>
-                                            <option value="0">0%</option>
-                                            <option value="0.05">5%</option>
-                                            <option value="0.1">10%</option>
+                                            <option value="0" {{ old("tax") == 0 ? "selected":"" }}>0%</option>
+                                            <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
+                                            <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
                                         </select>
                                     </div>
                                 </div>
@@ -260,7 +310,16 @@
                                         <select class="form-control multiple-payments" name="payments[]"
                                             required multiple>
                                             @foreach ($payments as $item)
-                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                                <option value="{{$item->id}}"
+                                                    @php
+                                                        if(old('payments')) {
+                                                            if(in_array($item->id, old('payments'))) {
+                                                                echo "selected";
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    
+                                                    >{{$item->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -330,7 +389,6 @@
 
 <script src={{ asset('/public/packages/ckeditor/ckeditor.js') }}></script>
 <script src={{ asset('/public/packages/ckfinder/ckfinder.js') }}></script>
-<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -341,35 +399,16 @@
             multiple: true
         });
 
-        easyNumberSeparator({
-            selector: '.number-separator',
-            separator: '.',
-            resultInput: '#product_regular_price',
-        })
-        easyNumberSeparator({
-            selector: '.number-separator-1',
-            separator: '.',
-            resultInput: '#product_shock_price',
-        })
-        easyNumberSeparator({
-            selector: '.number-separator-2',
-            separator: '.',
-            resultInput: '#product_wholesale_price',
-        })
-        easyNumberSeparator({
-            selector: '.number-separator-3',
-            separator: '.',
-            resultInput: '#phi_xuly',
-        })
-        easyNumberSeparator({
-            selector: '.number-separator-4',
-            separator: '.',
-            resultInput: '#cship',
-        })
-        easyNumberSeparator({
-            selector: '.number-separator-5',
-            separator: '.',
-            resultInput: '#viettel_ship',
+        $('select.select-upsell').select2({
+            placeholder: "Chọn sản phẩm Upsell",
+            multiple: true
+        });
+
+        $(document).on('change', '.number-separator', function() {
+            let number = $(this).val()
+            let vn = new Intl.NumberFormat('vi-VN').format(number);
+            $(this).next().val(number)
+            $(this).val(vn)
         })
 
         $('#meta_description').keyup(function() {
@@ -447,10 +486,10 @@
                                 chosenFiles += new URL(file.getUrl()).pathname + ', ';
 
                                 $('.fileinput-gallery .row').append(`<div class="col-md-3">
-                                    <span style="cursor: pointer;" data-id='' data-url="${file.getUrl()}" class="delete_gallery">
+                                    <span style="cursor: pointer;" data-id='' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
                                         <i class="fas fa-times"></i>
                                         </span>
-                                                <img src="${file.getUrl()}">
+                                                <img src="${new URL(file.getUrl()).pathname}">
                                             </div>`)
                             });
                             var output = document.getElementById(elementId);

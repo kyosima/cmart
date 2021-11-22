@@ -1,7 +1,9 @@
 @if ($isLinked)
     @if ($proCat->id != $child_category->id)
         <option value="{{ $child_category->id }}"
-            {{ $proCat->link_to_category == $child_category->id ? 'selected' : '' }}>
+            {{ $proCat->link_to_category == $child_category->id ? 'selected' : '' }}
+            {{ old('linkProCat') == $child_category->id ? 'selected' : '' }}
+            >
             {{ html_entity_decode($prefix, ENT_COMPAT) }}{{ $child_category->name }}
         </option>
     @endif
@@ -21,7 +23,9 @@
 
     @if ($proCat->id != $child_category->id && $proCat->level >= $child_category->level)
         <option value="{{ $child_category->id }}"
-            {{ $proCat->category_parent == $child_category->id ? 'selected' : '' }}>
+            {{ $proCat->category_parent == $child_category->id ? 'selected' : '' }}
+            {{ old('proCatParent') == $child_category->id ? 'selected' : '' }}
+            >
             {{ html_entity_decode($prefix, ENT_COMPAT) }}{{ $child_category->name }}
         </option>
     @endif
