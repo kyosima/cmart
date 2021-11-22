@@ -16,7 +16,7 @@ use App\Admin\Controllers\AdminInfoCompanyController;
 use App\Admin\Controllers\AdminSettingController;
 use App\Admin\UserController;
 Route::group(['middleware' => ['admin']], function () {
-
+    // Route::resource('permissions', AdminPermissionsController::class);
     Route::get('danh-sach-user',[UserController::class, 'getDanhsach']);
     Route::post('danh-sach-user',[UserController::class, 'postDanhsach']);
     

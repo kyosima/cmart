@@ -108,3 +108,5 @@ Route::get('/thong-tin-tai-khoan', [HomeController::class, 'getProfile'])->name(
 Route::post('/thong-tin-tai-khoan', [HomeController::class, 'postProfile']);
 
 Route::get('/xac-thuc-ho-so', [HomeController::class, 'getXacthuc']);
+
+Route::get('/lichsu', [HomeController::class, 'getLichsu']);

@@ -73,12 +73,14 @@ class HomeController extends Controller
     public function postRegister (Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:5',
+            'name' => 'required|min:5|unique:users,name',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:3|max:30',
-            'passwordAgain' => 'required|same:password'
+            'passwordAgain' => 'required|same:password',
+            'phone' => 'required|min:8|unique:users,phone',
         ],[
             'name.required' => 'Bạn chưa nhập username',
+            'name.unique' => 'Tên đăng nhập đã được sử dụng',
             'name.min' => 'Tên người dùng ít nhất 5 ký tự',
             'name.max' => 'Tên người dùng nhìu nhất 30 ký tự',
             'email.email' => 'Email không đúng',
@@ -87,7 +89,9 @@ class HomeController extends Controller
             'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
             'passwordAgain.required' => 'Bạn chưa nhập lại mật khẩu',
-            'passwordAgain.same' => 'Mật khẩu nhập lại chưa khớp'
+            'passwordAgain.same' => 'Mật khẩu nhập lại chưa khớp',
+            'phone.required' => 'Số điện thoại ít nhất phải có 8 số',
+            'phone.unique' => 'Số điện thoại đã được sử dụng',
         ]);
 
         $user = new User;
@@ -124,10 +128,11 @@ class HomeController extends Controller
     public function getProfile() {
         if (Auth::check()) {
             $user = Auth::user();
-            $province = Province::orderby('matinhthanh','ASC')->get();
+            $province = Province::select('matinhthanh', 'tentinhthanh')->get();
             $district = District::select('maquanhuyen', 'tenquanhuyen')->get();
             $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
-                return view('account.profileUser',['profileUser'=>$user,'province'=>$province, 'district'=>$district, 'ward'=>$ward])->with(compact('province'));
+            $name_province = DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->pluck("tentinhthanh");
+                return view('account.profileUser',['profileUser'=>$user,'province'=>$province, 'district'=>$district, 'ward'=>$ward])->with(compact('province','name_province'));
             
         }
         else {
@@ -141,9 +146,9 @@ class HomeController extends Controller
         $user->phone = $request->phone;
         $user->cmnd = $request->cmnd;
         $user->address = $request->address;
-        $user->id_phuongxa = $request->phuongxa;
-        $user->id_quanhuyen = $request->quanhuyen;
-        $user->id_tinhthanh = $request->tinhthanh;
+        $user->id_phuongxa = $request->sel_ward;
+        $user->id_quanhuyen = $request->sel_district;
+        $user->id_tinhthanh = $request->sel_province;
         $user->type_cmnd = $request->type_cmnd;
         $data = $request->all();
         if($user['action']) {
@@ -182,6 +187,15 @@ class HomeController extends Controller
             $input['avatar'] = $image_avatar_name;
         }
 
+        if($request->hasFile('image_cmnd2')) {
+            $destination_path = 'public\upload';
+            $image = $request->file('image_cmnd2');
+            $image_name = $image->getClientOriginalName();
+            $user->cmnd_image2 = $image_name;
+            $path = $request->file('image_cmnd2')->storeAs($destination_path,$image_name);
+            $input['image_cmnd2'] = $image_name;
+        }
+
         if($request->changePassword == "on"){
             $this->validate($request, [
                 'password' => 'required|min:3|max:30',
@@ -209,5 +223,25 @@ class HomeController extends Controller
         }
         $user->tichluyC;
         return view('');
+    }
+
+    public $order_id;
+
+    public function mount($order_id) {
+        $this->order_id = $order_id;
+    }
+
+
+    public function getLichsu() {
+        if (Auth::check()) {
+            // $orders = Order::where('user_id',Auth::user()->id);
+            $orders = DB::table("orders")->join('users', 'users.id', '=', 'orders.user_id')->get();
+            // dd($orders); die;
+            // $orders = Order::all
+            return view('account.lichsu', compact('orders'));
+        }
+        else {
+            return redirect('tai-khoan')->with('thongbao','Bạn chưa đăng nhập!');
+        }
     }
 }
