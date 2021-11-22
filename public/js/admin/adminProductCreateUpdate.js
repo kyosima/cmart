@@ -17,9 +17,9 @@ $(document).ready(function () {
             product_brand: {
                 required: true,
             },
-            product_calculation_unit: {
-                required: true,
-            },
+            // product_calculation_unit: {
+            //     required: true,
+            // },
             product_weight: {
                 required: true,
                 min: 0.1,
@@ -56,13 +56,11 @@ $(document).ready(function () {
                 number: true,
             },
             cpoint: {
-                min: 1,
-                required: true,
+                min: 0,
                 number: true,
             },
             mpoint: {
-                min: 1,
-                required: true,
+                min: 0,
                 number: true,
             },
             product_shock_price: {
@@ -74,6 +72,11 @@ $(document).ready(function () {
                 required: true,
             },
             cship: {
+                min: 1,
+                required: true,
+                number: true,
+            },
+            viettel_ship: {
                 min: 1,
                 required: true,
                 number: true,
@@ -91,7 +94,7 @@ $(document).ready(function () {
             product_name: "Không được để trống",
             category_parent: "Không được để trống",
             product_brand: "Không được để trống",
-            product_calculation_unit: "Không được để trống",
+            // product_calculation_unit: "Không được để trống",
             product_quantity: "Không được để trống",
             product_weight: "Không được để trống",
             product_length: "Không được để trống",
@@ -103,6 +106,7 @@ $(document).ready(function () {
             mpoint: "Không được để trống",
             product_shock_price: "Không được để trống",
             cship: "Không được để trống",
+            viettel_ship: "Không được để trống",
             phi_xuly: "Không được để trống",
         }
     });

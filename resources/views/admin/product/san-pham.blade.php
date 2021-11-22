@@ -72,9 +72,9 @@
                                 <th class="title-text">
                                     Phí giao hàng
                                 </th>
-                                {{-- <th class="title-text">
-                                    Đơn giá bán lẻ
-                                </th> --}}
+                                <th class="title-text">
+                                    Hình thức TT
+                                </th>
                             </tr>
                         </thead>
                         <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
@@ -100,6 +100,14 @@
                                     <td>{{ $item->productPrice->mpoint }}(M)</td>
                                     <td>{{ number_format($item->productPrice->phi_xuly) }}đ</td>
                                     <td>{{ number_format($item->productPrice->cship) }}đ</td>
+                                    {{-- <td>{{dd($item->productPayment())}}</td> --}}
+                                    <td>
+                                        @foreach ($item->productPayment($item->id) as $payment)
+                                            @if ($payment != null)
+                                                <span>{{$payment->name}},</span>
+                                            @endif
+                                        @endforeach
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -162,7 +170,7 @@
             { targets: [2], orderable: false, searchable: false },
             { type: "html", targets: [3, 4] },
             {
-                targets: [5, 6, 7, 8, 9, 10, 11, 12],
+                targets: [5, 6, 7, 8, 9, 10, 11, 12, 13],
                 searchable: false
             },
             {
@@ -170,7 +178,7 @@
                 type: "formatted-num"
             },
             {
-                targets: [5, 11, 12],
+                targets: [5, 11, 12, 13],
                 orderable: false
             }
         ],

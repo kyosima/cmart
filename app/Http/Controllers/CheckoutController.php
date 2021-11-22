@@ -19,6 +19,7 @@ class CheckoutController extends Controller
 {
     //
     public function index(){
+        if (Auth::check()) {
         if(Cart::instance('shopping')->count() > 0){
             if (Auth::check()) {
                 $user = Auth::user();
@@ -39,6 +40,9 @@ class CheckoutController extends Controller
         }else{
             return redirect()->route('cart.index');
         }
+    }else{
+        return redirect()->route('account');
+    }
     }
 
     public function postOrder(Request $request){

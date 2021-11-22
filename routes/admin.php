@@ -15,6 +15,9 @@ use App\Admin\Controllers\AdminOrderController;
 use App\Admin\Controllers\AdminInfoCompanyController;
 use App\Admin\Controllers\AdminSettingController;
 use App\Admin\UserController;
+use App\Admin\Controllers\InfoCompanyController;
+use App\Admin\Controllers\PaymentController;
+
 Route::group(['middleware' => ['admin']], function () {
 
     Route::get('danh-sach-user',[UserController::class, 'getDanhsach']);
@@ -215,6 +218,28 @@ Route::group(['middleware' => ['admin']], function () {
     Route::group(['middleware' => ['permission:Xóa đơn vị tính,admin']], function () {
         Route::delete('/don-vi-tinh', [CalculationUnitController::class, 'destroy'])->name('don-vi-tinh.delete');
         Route::delete('/don-vi-tinh/multiple-delete', [CalculationUnitController::class, 'multipleDestory'])->name('don-vi-tinh.multipleDestory');
+    });
+
+    // HÌNH THỨC THANH TOÁN
+    // được phép xem HTTT
+    Route::group(['middleware' => ['permission:Xem HTTT,admin']], function () {
+        Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+        Route::get('/payment/getDatatable', [PaymentController::class, 'indexDatatable'])->name('payment.indexDatatable');
+    });
+    // được phép thêm HTTT
+    Route::group(['middleware' => ['permission:Thêm HTTT,admin']], function () {
+        Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+    });
+    // được phép chỉnh sửa HTTT
+    Route::group(['middleware' => ['permission:Chỉnh sửa HTTT,admin']], function () {
+        Route::get('/payment/modal-edit', [PaymentController::class, 'modalEdit'])->name('payment.modalEdit');
+        Route::put('/payment/update', [PaymentController::class, 'update'])->name('payment.update');
+        Route::put('/payment/update-status', [PaymentController::class, 'updateStatus'])->name('payment.updateStatus');
+    });
+    // được phép XÓA HTTT
+    Route::group(['middleware' => ['permission:Xóa HTTT,admin']], function () {
+        Route::delete('/payment/delete', [PaymentController::class, 'destroy'])->name('payment.delete');
+        Route::delete('/payment/multiple-delete', [PaymentController::class, 'multipleDestory'])->name('payment.multipleDestory');
     });
 
     // BRAND

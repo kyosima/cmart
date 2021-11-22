@@ -66,8 +66,12 @@
                                 <ul class="check-side category-menu">
                                     @foreach ($categories as $item)
                                     @if (count($item->childrenCategories) > 0)
-                                        <li class="menu-item menu-item-has-children py-1 has-child">
-                                            <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
+                                        <li class="menu-item menu-item-has-children py-1 has-child menu-border">
+                                            @if ($item->linkToCategory != null)
+                                                <a href="{{route('proCat.index', $item->linkToCategory->slug)}}">{{ $item->name }}</a>
+                                            @else
+                                                <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
+                                            @endif
                                             <button class="toggle">
                                                 <i class="fa fa-angle-down" aria-hidden="true"></i>
                                             </button>
@@ -76,8 +80,12 @@
                                                 ])
                                         </li>
                                     @else
-                                        <li class="menu-item py-1">
-                                            <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
+                                        <li class="menu-item menu-border py-1">
+                                            @if ($item->linkToCategory != null)
+                                                <a href="{{route('proCat.index', $item->linkToCategory->slug)}}">{{ $item->name }}</a>
+                                            @else
+                                                <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
+                                            @endif
                                         </li>
                                     @endif
                                     @endforeach
@@ -99,16 +107,18 @@
                     <div class="shop-container-inner">
                         @foreach ($categories as $proCat)
                             @php
-                                $products = $proCat->products->merge($proCat->subproducts)->sortBy(['created_at', 'desc']);
+                                $products = $proCat->products->where('status', 1)->merge($proCat->subproducts)->sortBy(['created_at', 'desc']);
                             @endphp
                             {{-- BANNER --}}
+                            @if ($proCat->feature_img != null)
                             <div class="banner row">
                                 <div class="col-12">
-                                    <a href="{{url('/khuyen-mai')}}" class="box-big-img" title="{{$proCat->name}}">
-                                        <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="Chắm sóc sức khỏe">
+                                    <a href="{{route('proCat.index', $proCat->slug)}}" class="box-big-img" title="{{$proCat->name}}">
+                                        <img src="{{$proCat->feature_img}}" alt="{{$proCat->name}}">
                                     </a>
                                 </div>
                             </div>
+                            @endif
                             <div class="row d-flex align-items-center">
                                 <div class="col col-12">
                                     <div class="section-title-container px-2">
@@ -208,16 +218,16 @@
             if(filter == '') {
                 $('.sub-menu').css({"display": "none", "padding-left": "15px", 'border-left':'1px solid #ddd', 'margin':'0 0 10px 3px'});
                 $('.toggle').css('display','inline-block');
-                $('li.menu-item').addClass('py-1');
+                $('li.menu-item').addClass('py-1 menu-border');
             } else {
                 $('.toggle').css('display','none');
                 $('.sub-menu').css({"display": "block", "padding-left": "0", 'border':'0', 'margin':'0'});
-                $('li.menu-item').removeClass('py-1');
+                $('li.menu-item').removeClass('py-1 menu-border');
             }
         }
     </script>
 
 
-    <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script>
+    {{-- <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script> --}}
 
 @endpush

@@ -181,16 +181,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col col-12 col-lg-3 d-none d-md-block">
-                                <div class="banner row">
-                                    <div class="col col-12">
-                                        <a href="{{route('proCat.index', $proCat->slug)}}" class="box-big-img" title="{{$proCat->name}}">
-                                            <img src="https://japana.vn/uploads/block/2021/08/23/1629681467-homepage-sk-pc.jpeg" alt="{{$proCat->name}}">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col col-12 col-lg-9">
+                           
+                            <div class="col col-12 col-lg-12">
                                 <div class="product-p c">
                                     <div class="silder-product-1">
                                         <div class="items">

@@ -54,9 +54,9 @@
                                 <h2>{{ $product->name }}</h2>
                             </div>
                             <div class="code info-detail">
-                                <p><span>SKU:</span>{{ $product->sku }}</p>
-                                <p class="quycach"><span>Quy
-                                        cách:</span>{{ $product->productCalculationUnit()->value('name') }}</p>
+                                <p><span>Mã sản phẩm:</span>{{ $product->sku }}</p>
+                                {{-- <p class="quycach"><span>Quy
+                                        cách:</span>{{ $product->productCalculationUnit()->value('name') }}</p> --}}
                             </div>
                             <div class="trademark info-detail">
                                 <p><span>Thương hiệu:</span>{{ $product->productBrand()->value('name') }}</p>
@@ -67,6 +67,14 @@
                             <div class="manufacture info-detail">
                                 <p><span>Sản xuất tại:</span>Nhật Bản</p>
                             </div>
+                            
+                            <div class="manufacture info-detail">
+                                <p><span>Điểm C nhận được:</span>{{number_format($product->productPrice()->value('cpoint'), 0, '.', ',')}} điểm</p>
+                                <p><span>Điểm M nhận được:</span>{{number_format($product->productPrice()->value('mpoint'), 0, '.', ',')}} điểm</p>
+                                <p><a  class="text-danger" data-toggle="modal" data-target="#gioithieudiem">Giới thiệu về điểm tích lũy</a></p>
+
+                            </div>
+                        
                             <div class="all-price">
                                 <p class="new-price">{{ formatPriceOfLevel($product) }}</p>
                                 {{-- @if ($product->shock_price != null || $product->shock_price != 0)
@@ -76,7 +84,7 @@
                                     <p class="new-price">{{ formatPrice($product->regular_price) }}</p>
                                 @endif --}}
                             </div>
-                            <div class="promo-intro">
+                            {{-- <div class="promo-intro">
                                 <p class="title-promo">Tiết kiệm
                                     {{ formatPrice($product->regular_price - $product->shock_price) }} Ngay Hôm Nay !</p>
                             </div>
@@ -92,7 +100,7 @@
                                 <div class="sold">
                                     <span>Đã bán 1877</span>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="quantity">
                                 <form id="form-add-to-cart" method="POST" action="{{ route('cart.add') }}">
                                     <input type="hidden" class="card-quality-input" name="product_id"
@@ -109,6 +117,25 @@
                                         </div>
                                 </form>
                             </div>
+                           
+                            <div class="modal fade" id="gioithieudiem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalCenterTitle">Giới thiệu về điểm tích lũy</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      ...
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
 
                         </div>
                     </div>
@@ -237,7 +264,7 @@
                                 </div>
 
                             </div>
-                            <div class="product-comment">
+                            {{-- <div class="product-comment">
                                 <h5>Hỏi đáp & đánh giá sản phẩm</h5>
                                 <hr>
                                 <div class="row">
@@ -369,57 +396,7 @@
                                                                         {{$rating->comment}}
                                                                     </div>
 
-                                                                    {{-- <div class="comment-replies bg-light p-3 mt-3 rounded">
-                                                                        <h6
-                                                                            class="comment-replies-title mb-4 text-muted text-uppercase">
-                                                                            2 replies</h6>
-
-                                                                        <div class="reply d-flex mb-4">
-                                                                            <div class="flex-shrink-0">
-                                                                                <div
-                                                                                    class="avatar avatar-sm rounded-circle">
-                                                                                    <img class="avatar-img"
-                                                                                        src="https://images.unsplash.com/photo-1501325087108-ae3ee3fad52f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=f7f448c2a70154ef85786cf3e4581e4b"
-                                                                                        alt="">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="flex-grow-1 ms-2 ms-sm-3">
-                                                                                <div
-                                                                                    class="reply-meta d-flex align-items-baseline">
-                                                                                    <h6 class="mb-0 me-2">Brandon
-                                                                                        Smith</h6>
-                                                                                    <span class="text-muted">2d</span>
-                                                                                </div>
-                                                                                <div class="reply-body">
-                                                                                    Lorem ipsum dolor sit, amet consectetur
-                                                                                    adipisicing elit.
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="reply d-flex">
-                                                                            <div class="flex-shrink-0">
-                                                                                <div
-                                                                                    class="avatar avatar-sm rounded-circle">
-                                                                                    <img class="avatar-img"
-                                                                                        src="https://uifaces.co/our-content/donated/6f6p85he.jpg"
-                                                                                        alt="">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="flex-grow-1 ms-2 ms-sm-3">
-                                                                                <div
-                                                                                    class="reply-meta d-flex align-items-baseline">
-                                                                                    <h6 class="mb-0 me-2">James
-                                                                                        Parsons</h6>
-                                                                                    <span class="text-muted">1d</span>
-                                                                                </div>
-                                                                                <div class="reply-body">
-                                                                                    Lorem ipsum dolor sit amet, consectetur
-                                                                                    adipisicing elit. Distinctio dolore sed
-                                                                                    eos sapiente, praesentium.
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div> --}}
+                                                               
                                                                 </div>
                                                             </div>
                                                             @endforeach
@@ -516,7 +493,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
                     </div>
