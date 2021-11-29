@@ -54,7 +54,7 @@
 
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-2" type="text" name="gallery_img"
+                                <input id="ckfinder-input-2" type="hidden" name="gallery_img"
                                 data-type="multiple" data-hasid="{{$product->id}}"
                                 readonly class="form-control"
                                 value="{{old('gallery_img', $product->gallery.',').' '}}">
@@ -134,8 +134,11 @@
                                             required data-placeholder="Chọn danh mục sản phẩm" data-type="megaParent">
                                             @foreach ($nganhHang as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $product->category_id == $item->id ? 'selected' : ''}}
-                                                    {{ old('category_parent') == $item->id ? 'selected' : '' }}
+                                                    @if (old('category_parent') != null && old('category_parent') != '')
+                                                        {{ old('category_parent') == $item->id ? 'selected' : '' }}
+                                                    @else
+                                                        {{ $product->category_id == $item->id ? 'selected' : ''}}
+                                                    @endif
                                                     >{{ $item->name }}</option>
                                                 @if (count($item->childrenCategories) > 0)
                                                     @foreach ($item->childrenCategories as $childCategory)
@@ -186,12 +189,15 @@
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <select name="product_brand" class="selectpicker form-control" required
-                                            title="Thương hiệu" data-placeholder="Thương hiệu">
-                                            <option value="-1">Chọn thương hiệu</option>
+                                            title="Thương hiệu" data-placeholder="Chọn thương hiệu">
+                                            <option></option>
                                             @foreach ($brands as $item)
                                                 <option value="{{ $item->id }}" 
-                                                    {{$item->id == $product->productBrand->id ? 'selected' : ''}}
-                                                    {{ old('product_brand') == $item->id ? 'selected' : '' }}
+                                                    @if (old('product_brand') != null && old('product_brand') != '')
+                                                        {{ old('product_brand') == $item->id ? 'selected' : '' }}
+                                                    @else
+                                                        {{$item->id == $product->productBrand->id ? 'selected' : ''}}
+                                                    @endif
                                                     >{{ $item->name }}</option>
                                             @endforeach
                                         </select>
@@ -265,7 +271,7 @@
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <input type="text" class="form-control number-separator" required
-                                            value="{{ formatPriceAdmin(old('product_regular_price', $product->productPrice->regular_price)) }}">
+                                            value="{{ old('product_regular_price', $product->productPrice->regular_price) }}">
                                         <input type="hidden" id="product_regular_price" required name="product_regular_price"
                                         value="{{ old('product_regular_price', $product->productPrice->regular_price) }}">
                                     </div>
@@ -275,7 +281,7 @@
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <input type="text" class="form-control number-separator-1" required
-                                            value="{{ formatPriceAdmin(old('product_shock_price', $product->productPrice->shock_price)) }}">
+                                            value="{{ old('product_shock_price', $product->productPrice->shock_price) }}">
                                         <input type="hidden" id="product_shock_price" required name="product_shock_price"
                                         value="{{ old('product_shock_price', $product->productPrice->shock_price) }}">
                                     </div>
@@ -285,7 +291,7 @@
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <input type="text" class="form-control number-separator-2" required
-                                            value="{{ formatPriceAdmin(old('product_wholesale_price', $product->productPrice->wholesale_price)) }}">
+                                            value="{{ old('product_wholesale_price', $product->productPrice->wholesale_price) }}">
                                         <input type="hidden" id="product_wholesale_price" required name="product_wholesale_price"
                                         value="{{ old('product_wholesale_price', $product->productPrice->wholesale_price) }}">
 
@@ -310,7 +316,7 @@
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <input type="text" class="form-control number-separator-3" required
-                                            value="{{ formatPriceAdmin(old('phi_xuly', $product->productPrice->phi_xuly)) }}">
+                                            value="{{ old('phi_xuly', $product->productPrice->phi_xuly) }}">
                                         <input type="hidden" id="phi_xuly" required name="phi_xuly" value="{{ old('phi_xuly', $product->productPrice->phi_xuly) }}">
                                     </div>
                                 </div>
@@ -319,7 +325,7 @@
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <input type="text" class="form-control number-separator-4" required
-                                            value="{{ formatPriceAdmin(old('cship', $product->productPrice->cship)) }}">
+                                            value="{{ old('cship', $product->productPrice->cship) }}">
                                         <input type="hidden" id="cship" required name="cship" value="{{ old('cship', $product->productPrice->cship) }}">
                                     </div>
                                 </div>
@@ -328,7 +334,7 @@
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <input type="text" class="form-control number-separator-5" required
-                                            value="{{ formatPriceAdmin(old('viettel_ship', $product->productPrice->viettel_ship)) }}">
+                                            value="{{ old('viettel_ship', $product->productPrice->viettel_ship) }}">
                                         <input type="hidden" id="viettel_ship" required name="viettel_ship" value="{{ old('viettel_ship', $product->productPrice->viettel_ship) }}">
                                     </div>
                                 </div>
@@ -336,12 +342,18 @@
                                     <label class="col-md-12 control-label text-left">Thuế suất<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <select class="form-control" name="tax"
-                                            required data-placeholder="Thuế suất">
-                                            <option value="-1">Chọn thuế suất</option>
-                                            <option value="0" {{$product->productPrice->tax == 0 ? 'selected' : ''}}>0%</option>
-                                            <option value="0.05" {{$product->productPrice->tax == 0.05 ? 'selected' : ''}}>5%</option>
-                                            <option value="0.1" {{$product->productPrice->tax == 0.1 ? 'selected' : ''}}>10%</option>
+                                        <select class="selectpicker form-control" name="tax"
+                                            required title="Thuế suất" data-placeholder="Chọn thuế suất">
+                                            <option></option>
+                                            @if (old("tax") != null)
+                                                <option value="0" {{ old("tax") == 0 ? "selected":"" }}>0%</option>
+                                                <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
+                                                <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
+                                            @else
+                                                <option value="0" {{$product->productPrice->tax == 0 ? 'selected' : ''}}>0%</option>
+                                                <option value="0.05" {{$product->productPrice->tax == 0.05 ? 'selected' : ''}}>5%</option>
+                                                <option value="0.1" {{$product->productPrice->tax == 0.1 ? 'selected' : ''}}>10%</option>
+                                            @endif
                                         </select>
                                     </div>
                                 </div>

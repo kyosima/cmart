@@ -86,6 +86,9 @@ $(document).ready(function () {
                 required: true,
                 number: true,
             },
+            payments: {
+                required: true
+            }
         },
         messages: {
             feature_img: "Không được để trống",
@@ -102,12 +105,12 @@ $(document).ready(function () {
             product_width: "Không được để trống",
             product_regular_price: "Không được để trống",
             product_wholesale_price: "Không được để trống",
-            cpoint: "Không được để trống",
-            mpoint: "Không được để trống",
             product_shock_price: "Không được để trống",
             cship: "Không được để trống",
             viettel_ship: "Không được để trống",
             phi_xuly: "Không được để trống",
+            payments: "Không được để trống",
+            tax: "Không được để trống"
         }
     });
 });
