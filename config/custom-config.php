@@ -30,5 +30,8 @@ return [
         'mail_from_name',
         'social_facebook',
         'social_zalo'
-    ]
+    ],
+    'banner' => [
+        'home' => 'Banner Home'
+    ],
 ];

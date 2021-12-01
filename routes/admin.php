@@ -14,6 +14,7 @@ use App\Admin\Controllers\WarehouseController;
 use App\Admin\Controllers\AdminOrderController;
 use App\Admin\Controllers\AdminInfoCompanyController;
 use App\Admin\Controllers\AdminSettingController;
+use App\Admin\Controllers\AdminBannerController;
 
 Route::group(['middleware' => ['admin']], function () {
 
@@ -67,6 +68,17 @@ Route::group(['middleware' => ['admin']], function () {
 
         //xóa
         Route::match(['delete', 'get'], 'delete/{info_company:id}', [AdminInfoCompanyController::class, 'delete'])->name('info-company.delete')->middleware('permission:Xóa trang đơn,admin');
+    });
+
+    //banner
+    Route::group(['prefix' => 'banner'], function () {
+        //danh sách
+        Route::get('/', [AdminBannerController::class, 'index'])->name('admin.banner.index')->middleware('permission:Xem DS trang đơn,admin');
+        Route::post('store', [AdminBannerController::class, 'store'])->name('admin.banner.store')->middleware('permission:Tạo trang đơn,admin');
+        //sửa
+        Route::get('edit/{type}', [AdminBannerController::class, 'edit'])->name('admin.banner.edit')->middleware('permission:Xem trang đơn,admin');
+        Route::put('update', [AdminBannerController::class, 'update'])->name('admin.banner.update')->middleware('permission:Cập nhật trang đơn,admin');
+        Route::delete('delete/{Banner:id}', [AdminBannerController::class, 'delete'])->name('admin.banner.delete');
     });
     
     Route::group(['middleware' => ['role:Boss,admin']], function () {

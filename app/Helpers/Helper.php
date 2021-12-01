@@ -101,4 +101,9 @@ if (!function_exists('helper')) {
         return $type[$value];
     }
 
+    function typeBanner($value){
+        $type = config('custom-config.banner');
+        return $type[$value];
+    }
+
 }
