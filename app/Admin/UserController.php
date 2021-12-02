@@ -9,9 +9,12 @@ use App\Models\User;
 use App\Models\Province;
 use App\Models\District;
 use App\Models\Ward;
+use App\Models\Order;
 
 class UserController extends Controller
 {
+
+
     public function getDanhSach() {
         $user = User::all();
         return view('admin.user.listuser',['user'=>$user]);
@@ -19,7 +22,6 @@ class UserController extends Controller
 
     public function postDanhsach(Request $request) {
         $user = User::all();
-        $user->check_kyc = $request->submit;
         $user->level = $request->levelUP;
         $user->save();
         return redirect('admin/danh-sach-user');
@@ -30,7 +32,8 @@ class UserController extends Controller
         $province = Province::select('matinhthanh', 'tentinhthanh')->get();
         $district = District::select('maquanhuyen', 'tenquanhuyen')->get();
         $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
-        return view('admin.user.profile',['user'=>$user,'province'=>$province, 'district'=>$district, 'ward'=>$ward]);
+        $orders = DB::table("orders")->join('users', 'users.id', '=', 'orders.user_id')->get();
+        return view('admin.user.profile',['user'=>$user,'province'=>$province, 'district'=>$district, 'ward'=>$ward],compact('orders'));
     }
 
     public function postEdit(Request $request, $id) {
@@ -45,5 +48,9 @@ class UserController extends Controller
         return redirect('admin/danh-sach-user');
     }
 
+    public function nangcap(Request $request){
+        $user = User::where('user_id',Auth::user()->id);
+        return redirect('admin/danh-sach-user');
+    }
 
 }

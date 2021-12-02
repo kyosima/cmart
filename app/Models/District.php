@@ -15,4 +15,7 @@ class District extends Model
     public function ward() {
         return $this->hasMany(Ward::class, 'maquanhuyen', 'maquanhuyen');
     }
+    public function getProvinceFromDistrict() {
+        return $this->hasOne(Province::class, 'matinhthanh', 'matinhthanh');
+    }
 }

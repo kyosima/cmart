@@ -7,6 +7,7 @@
 @endpush
 
 @section('content')
+
     <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col col-lg-6 col-md-6 col-xs-12 col-sm-12 ">
@@ -23,10 +24,24 @@
                             <div class="content__wrapper">
                                 <form method="POST" action="{{route('user.login')}}">
                                     @csrf
+                @if(count($errors) > 0)
+				<div class="alert alert-danger">
+					@foreach($errors->all() as $err)
+						{{$err}}<br>
+					@endforeach
+				</div>
+				@endif
+
+				@if(session('thongbao'))
+				<div class="alert alert-success">
+					{{session('thongbao')}}
+				</div>
+				@endif
                                     <input type="text" name="name" placeholder="Tài khoản">
                                     <input type="password" name="password" placeholder="Mật khẩu">
                                     <input type="submit" value="Login" name="Đăng nhập">
                                 </form>
+                                
                             </div>
                         </li>
 

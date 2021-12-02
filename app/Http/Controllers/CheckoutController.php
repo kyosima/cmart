@@ -30,12 +30,33 @@ class CheckoutController extends Controller
             $cart_subtotal = Cart::instance('shopping')->subtotal();
             $cart_total = Cart::instance('shopping')->total();
             $province = Province::select('matinhthanh', 'tentinhthanh')->get();
+            $user_ward = Ward::where('maphuongxa', $user->id_phuongxa)->first();
+            $tax = 0;
+            $c_ship = 0;
+            $v_ship = 0;
+            $m_point = 0;
+            $process_fee = 0;
+            foreach($carts as $row){
+                $price = $row->model->productPrice()->first();
+                $tax += $row->price * $price->tax / 100;
+                $c_ship += $price->cship;
+                $v_ship += $price->viettel_ship;
+                $m_point += $price->mpoint;
+                $process_fee += $price->phi_xuly;
+
+            }
             return view('checkout.thanhtoan', [
                 'carts' => $carts, 
                 'cart_subtotal' => $cart_subtotal, 
                 'cart_total'=>$cart_total,
                 'province' => $province,
-                'user' => $user
+                'user' => $user,
+                'user_ward' => $user_ward,
+                'tax' => $tax,
+                'c_ship' => $c_ship,
+                'v_ship' => $v_ship,
+                'm_point' => $m_point,
+                'process_fee' => $process_fee
             ]);
         }else{
             return redirect()->route('cart.index');

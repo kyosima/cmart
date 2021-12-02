@@ -61,12 +61,7 @@
                             <div class="trademark info-detail">
                                 <p><span>Thương hiệu:</span>{{ $product->productBrand()->value('name') }}</p>
                             </div>
-                            <div class="origin info-detail">
-                                <p><span>Xuất xứ:</span>Nhật Bản</p>
-                            </div>
-                            <div class="manufacture info-detail">
-                                <p><span>Sản xuất tại:</span>Nhật Bản</p>
-                            </div>
+                      
                             
                             <div class="manufacture info-detail">
                                 <p><span>Điểm C nhận được:</span>{{number_format($product->productPrice()->value('cpoint'), 0, '.', ',')}} điểm</p>

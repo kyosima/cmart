@@ -32,46 +32,61 @@
                                 <div class="col-xl-6 ">
                                     <div class="form-group">
                                         <label for="">Tên đẩy đủ<sup class="text-danger">*</sup></label>
-                                        <input type="text" class="form-control" name="fullname" placeholder="Họ và tên" required>
+                                        <input type="text" class="form-control" name="fullname" placeholder="Họ và tên" required value="{{$user->hoten}}" >
                                     </div>
                                     <div class="form-group">
                                         <label for="">Tỉnh/ Thành phố<sup class="text-danger">*</sup></label>
                                         <select name="sel_province" class="form-control select2"
                                             data-placeholder="---Chọn tỉnh thành---" required>
-                                            <option value="">---Chọn tỉnh thành---</option>
-                                            @foreach ($province as $value)
-                                                <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
-                                                </option>
-                                            @endforeach
+                                            @if($user_ward)
+                                                <option value="{{ $user_ward->getDistrictFromWard()->first()->getProvinceFromDistrict()->value('matinhthanh') }}">{{ $user_ward->getDistrictFromWard()->first()->getProvinceFromDistrict()->value('tentinhthanh')  }}
+                                                @foreach ($province as $value)
+                                                    <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
+                                                    </option>
+                                                @endforeach
+                                            @else
+                                                <option value="">---Chọn tỉnh thành---</option>
+                                                @foreach ($province as $value)
+                                                    <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Phường/ Xã<sup class="text-danger">*</sup></label>
                                         <select class="form-control select2" name="sel_ward"
                                             data-placeholder="---Chọn phường xã---" required>
-                                            <option value="">---Chọn phường xã---</option>
+                                            @if($user_ward)
+                                                <option value="{{ $user_ward->maphuongxa }}">{{ $user_ward->tenphuongxa }}
+                                            @else
+                                                <option value="">---Chọn phường xã---</option>
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Email<sup class="text-danger">*</sup></label>
-                                        <input type="email" class="form-control" name="email" placeholder="Nhập email">
+                                        <input type="email" class="form-control" name="email" placeholder="Nhập email" value="{{$user->email}}" >
                                     </div>
                                 </div>
                                 <div class="col-xl-6 ">
                                     <div class="form-group">
                                         <label for="">Số điện thoại<sup class="text-danger">*</sup></label>
-                                        <input type="text" class="form-control" name="phone" placeholder="Số điện thoại" required>
+                                        <input type="text" class="form-control" name="phone" placeholder="Số điện thoại" value="{{$user->phone}}" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Quận/ Huyện<sup class="text-danger">*</sup></label>
                                         <select class="form-control select2" name="sel_district"
                                             data-placeholder="---Chọn quận huyên---" required>
-                                            <option value="">---Chọn quận huyên---</option>
-                                        </select>
+                                            @if($user_ward)
+                                            <option value="{{ $user_ward->getDistrictFromWard()->value('maquanhuyen') }}">{{ $user_ward->getDistrictFromWard()->value('tenquanhuyen')  }}
+                                        @else
+                                            <option value="">---Chọn quận huyện---</option>
+                                        @endif                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Địa chỉ<sup class="text-danger">*</sup></label>
-                                        <input type="text" name="address" class="form-control" placeholder="Địa chỉ" required>
+                                        <input type="text" name="address" class="form-control" value={{$user->address}} placeholder="Địa chỉ" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Ghi chú</label>
@@ -132,7 +147,6 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($carts as $row)
-
                                             <tr>
                                                 <td class="title">{{ $row->name }}</td>
                                                 <td>1</td>
@@ -151,8 +165,16 @@
                                         <p class="tamtinh"> <span class="tamtinh-title">Tạm tính:</span> <span
                                                 class="tamtinh-price">{{ $cart_subtotal }} đ</span> </p>
                                         <hr>
+                                        <p><b>Phí dịch vụ:</b></p>
+                                        <p class="tamtinh"> <span class="tamtinh-title">Thuế:</span> <span
+                                            class="tamtinh-price">{{ formatPrice($tax) }} </span> </p>
+                                        <p class="tamtinh"> <span class="tamtinh-title">Phí xử lý:</span> <span
+                                            class="tamtinh-price">{{ formatPrice($process_fee) }} </span> </p>
+                                        <p class="tamtinh"> <span class="tamtinh-title">Điểm M tích lũy:</span> <span
+                                            class="tamtinh-price">-{{ formatPrice($m_point*100) }} </span> </p>
+                                        <hr>
                                         <p class="total"> <span>Tổng cộng:</span> <span
-                                                class="total-price">{{ $cart_total }} đ</span> </p>
+                                                class="total-price">{{ formatPrice(str_replace(',','',$cart_total)+$tax+$process_fee- ($m_point*100))}} </span> </p>
                                     </div>
                                 </div>
                             </div>

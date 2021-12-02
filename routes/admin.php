@@ -19,7 +19,7 @@ use App\Admin\Controllers\InfoCompanyController;
 use App\Admin\Controllers\PaymentController;
 
 Route::group(['middleware' => ['admin']], function () {
-
+    // Route::resource('permissions', AdminPermissionsController::class);
     Route::get('danh-sach-user',[UserController::class, 'getDanhsach']);
     Route::post('danh-sach-user',[UserController::class, 'postDanhsach']);
     
