@@ -74,7 +74,7 @@ class HomeController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:5|unique:users,name',
-            'email' => 'required|email|unique:users,email',
+            // 'email' => 'required|email|unique:users,email',
             'password' => 'required|min:3|max:30',
             'passwordAgain' => 'required|same:password',
             'phone' => 'required|min:8|unique:users,phone',
@@ -83,8 +83,8 @@ class HomeController extends Controller
             'name.unique' => 'Tên đăng nhập đã được sử dụng',
             'name.min' => 'Tên người dùng ít nhất 5 ký tự',
             'name.max' => 'Tên người dùng nhìu nhất 30 ký tự',
-            'email.email' => 'Email không đúng',
-            'email.unique' => 'Email đã được sử dụng',
+            // 'email.email' => 'Email không đúng',
+            // 'email.unique' => 'Email đã được sử dụng',
             'password.required' => 'Bạn chưa nhập mật khẩu',
             'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
@@ -96,7 +96,7 @@ class HomeController extends Controller
 
         $user = new User;
         $user->name = $request->name;
-        $user->email = $request->email;
+        // $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->level = 0;
         $user->phone = $request->phone;
@@ -230,12 +230,12 @@ class HomeController extends Controller
     public function mount($order_id) {
         $this->order_id = $order_id;
     }
-
-
+    
     public function getLichsu() {
         if (Auth::check()) {
-            $orders = DB::table("orders")->join('users', 'users.id', '=', 'orders.user_id')->get();
-            dd($orders); die;
+            $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')->where('orders.user_id','=',auth()->user()->id)->select('orders.*')->get();
+            
+            //dd($orders); die;
             return view('account.lichsu', compact('orders'));
         }
         else {

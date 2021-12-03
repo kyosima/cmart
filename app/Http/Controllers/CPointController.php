@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\CPointHistory;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CPointController extends Controller
 {
@@ -14,7 +16,9 @@ class CPointController extends Controller
      */
     public function index()
     {
-        $data = CPointHistory::orderBy('created_at', 'desc')->get();
+        // $data = Order::orderBy('created_at', 'desc')->where('orders.user_id','=',auth()->user()->id)->get();
+        $data = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')->where('orders.user_id','=',auth()->user()->id)->select('orders.*')->get();
+            
         return view('account.cpoint_history', compact('data'));
     }
 

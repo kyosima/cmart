@@ -89,19 +89,17 @@
     <table class="styled-table table-sortable">
         <thead>
             <tr>
-                <th>STT</th>
+                <th>Mã đơn hàng</th>
                 <th>Số điểm nhận đc</th>
                 <th>Ngày nhận</th>
-                <th>Cách thức nhận</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $k)
             <tr>
-                <td>{{$k->id}}</td>
-                <td>{{$k->c_point}}</td>
-                <td>{{$k->created_at->format('m-d-y')}}</td>
-                <td style="text-align: center"><a href="#">Xem</a></td>
+                <td>{{$k->order_code}}</td>
+                <td>{{$k->cpoint}}</td>
+                <td>{{$k->created_at}}</td>
             </tr>
             @endforeach
             <!-- and so on... -->

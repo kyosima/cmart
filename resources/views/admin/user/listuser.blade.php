@@ -14,10 +14,11 @@
     <style type="text/css">
         .styled-table {
             border-collapse: collapse;
-            margin: 25px 20px;
+            /* margin: 25px 20px; */
             font-size: 0.9em;
             font-family: sans-serif;
-            min-width: 400px;
+            /* min-width: 400px; */
+            width: 100%;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
         }
 
@@ -79,7 +80,7 @@
             <tr style="text-align:center">
                 <th>ID</th>
                 <th>Name</th>
-                <th>Email</th>
+                <!-- <th>Email</th> -->
                 <th>Phone</th>
                 <th>Level</th>
                 <th>Điểm tích lũy</th>
@@ -93,7 +94,7 @@
                 <tr style="text-align:center">
                     <td>{{$k->id}}</td>
                     <td>{{$k->name}}</td>
-                    <td>{{$k->email}}</td>
+                    <!-- <td>{{$k->email}}</td> -->
                     <td>{{$k->phone}}</td>
                     <td>@if($k->level == 1)
                             {{"Member Vip"}}

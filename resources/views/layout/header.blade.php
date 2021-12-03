@@ -123,6 +123,7 @@
                   <div class="dropdown-menu text-dark">
                     <a class="dropdown-item text-dark" href="{{url('/xac-thuc-ho-so')}}">Thông tin tài khoản</a>
                     <a class="dropdown-item text-dark" href="{{url('/lichsu')}}">Lịch sử đơn hàng</a>
+                    <a class="dropdown-item text-dark" href="{{url('/cpoint')}}">Lịch sử nhận point</a>
                     <a class="dropdown-item text-dark" href="#">Ví của bạn</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{route('logoutuser')}}">Đăng xuất</a>

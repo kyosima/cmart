@@ -50,7 +50,6 @@
                                 <form method="POST" action="{{route('user.register')}}">
                                     @csrf
                                     <input type="name" name="name" placeholder="Tên tài khoản">
-                                    <input type="email" name="email" placeholder="email">
                                     <input type="number" name="phone" placeholder="Số điện thoại">
                                     <input type="password" name="password" placeholder="Mật khẩu">
                                     <input type="password" name="passwordAgain" placeholder="Nhập lại mật khẩu">

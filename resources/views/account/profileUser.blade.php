@@ -134,28 +134,27 @@ img {
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND</label>
                         @if($profileUser->cmnd_image != null)
-                        <img id="imgFileUpload" alt="Select File" title="Select File" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image)}}" width="100%" height="250px" style="cursor: pointer" />
+                        <img id="imgFileUpload" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image)}}" width="100%" height="250px" style="cursor: pointer" />
                         <br />
                         <span id="spnFilePath"></span>
                         <input type="file" id="FileUpload1" style="display: none" name="image_cmnd" id="img_cmnd" />
+
                         @else
                         <p style="color:red">
-                            <input type="file" class="form-control" name="image_cmnd" id="img_cmnd" style="display: none">
-                            <label for="img_cmnd">Click vào đây để chọn ảnh CMND của bạn</label>
+                            <input type="file" class="form-control" name="image_cmnd" id="img_cmnd">
                         </p>
                         @endif
                 </div>
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND mặt sau</label>
                         @if($profileUser->cmnd_image2 != null)
-                        <img id="imgFileUpload" alt="Select File" title="Select File" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image2)}}" width="100%" height="250px" style="cursor: pointer" />
+                        <img id="imgFileUpload" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image2)}}" width="100%" height="250px" style="cursor: pointer" />
                         <br />
                         <span id="spnFilePath"></span>
                         <input type="file" id="FileUpload1" style="display: none" name="image_cmnd2" id="img_cmnd2" />
                         @else
                         <p style="color:red">
-                            <input type="file" class="form-control" name="image_cmnd2" id="img_cmnd2" style="display: none">
-                            <label for="img_cmnd2">Click vào đây để chọn ảnh CMND của bạn</label>
+                            <input type="file" class="form-control" name="image_cmnd2" id="img_cmnd2" >
                         </p>
                         @endif
                 </div>

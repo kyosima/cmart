@@ -18,5 +18,9 @@ class CPointHistory extends Model
 		'c_point',
 	];
 
+	public function order()
+	{
+		return $this->hasOne(Order::class, 'id');
+	}
 
 }

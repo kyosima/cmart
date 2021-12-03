@@ -46,4 +46,16 @@ class User extends Authenticatable
     public function orders() {
         return $this->hasMany(Order::class, 'user_id', 'id');
     }
+
+	// public function orders()
+	// {
+	// 	return $this->belongsToMany(Order::class, 'order_products', 'id_order', 'id_product')
+	// 				->withPivot('id', 'quantity', 'price')
+	// 				->withTimestamps();
+	// }
+
+    // public function cpoint_history()
+	// {
+	// 	return $this->hasMany(CPointHistory::class, 'user_id', 'id');
+	// }
 }

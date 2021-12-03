@@ -32,7 +32,7 @@ class UserController extends Controller
         $province = Province::select('matinhthanh', 'tentinhthanh')->get();
         $district = District::select('maquanhuyen', 'tenquanhuyen')->get();
         $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
-        $orders = DB::table("orders")->join('users', 'users.id', '=', 'orders.user_id')->get();
+        $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')->where('orders.user_id','=',auth()->user()->id)->select('orders.*')->get();
         return view('admin.user.profile',['user'=>$user,'province'=>$province, 'district'=>$district, 'ward'=>$ward],compact('orders'));
     }
 
