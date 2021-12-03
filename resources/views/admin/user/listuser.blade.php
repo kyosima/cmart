@@ -116,7 +116,9 @@
                     </td>
                     <td>
                         @if($k->tichluyC >= 5000000)
-                                <button type="submit" class="alert alert-success m-0" name="levelUP" value="1" >Nâng cấp lên thân thiết</button> 
+                                <button type="submit" class="alert alert-success m-0" name="levelUP" value="1" >
+                                    Nâng cấp lên thân thiết
+                                </button> 
                         @elseif($k->tichluyC >= 30000000)
                                 <button class="alert alert-warning m-0" type="button" name="levelUP" data-url="2" value="2" >Nâng cấp lên VIP</button>
                         @else

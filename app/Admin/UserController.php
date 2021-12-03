@@ -37,7 +37,7 @@ class UserController extends Controller
     }
 
     public function postEdit(Request $request, $id) {
-        $this->validate($request, ['name' => 'required|min:6'],);
+        $this->validate($request, ['name' => 'required|min:3'],);
         $user = User::find($id);
         $user->name = $request->name;
         $user->level = $request->level;

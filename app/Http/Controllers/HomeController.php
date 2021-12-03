@@ -102,7 +102,7 @@ class HomeController extends Controller
         $user->phone = $request->phone;
         $user->save();
 
-        return redirect('tai-khoan')->with('thongbao','Register success');
+        return redirect('tai-khoan')->with('thongbao','Đăng ký thành công');
     }
 
     public function getLogout() {
@@ -234,10 +234,8 @@ class HomeController extends Controller
 
     public function getLichsu() {
         if (Auth::check()) {
-            // $orders = Order::where('user_id',Auth::user()->id);
             $orders = DB::table("orders")->join('users', 'users.id', '=', 'orders.user_id')->get();
-            // dd($orders); die;
-            // $orders = Order::all
+            dd($orders); die;
             return view('account.lichsu', compact('orders'));
         }
         else {

@@ -10,7 +10,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\shippingController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\OrderController;
-
+use App\Http\Controllers\CPointController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -110,3 +110,7 @@ Route::post('/thong-tin-tai-khoan', [HomeController::class, 'postProfile']);
 Route::get('/xac-thuc-ho-so', [HomeController::class, 'getXacthuc']);
 
 Route::get('/lichsu', [HomeController::class, 'getLichsu']);
+
+Route::prefix('/cpoint')->group(function () {
+    Route::get('/', [CPointController::class, 'index'])->name('account.cpoint_history');
+});
