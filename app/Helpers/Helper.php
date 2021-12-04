@@ -47,13 +47,13 @@ if (!function_exists('getPriceOfLevel')) {
         if (Auth::check()) {
             $user = Auth::user();
             if($user->level ==0){
-                return $product->regular_price;
+                return $product->productPrice()->value('regular_price');
             }else{
-                return $product->shock_price;
+                return $product->productPrice()->value('shock_price');
             }
         }else{
 
-            return $product->regular_price;
+            return $product->productPrice()->value('regular_price');
         }
     }
 }

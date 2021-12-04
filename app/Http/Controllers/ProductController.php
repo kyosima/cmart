@@ -62,7 +62,8 @@ class ProductController extends Controller
     {
         {
             //
-            $product = Product::whereSlug($slug)->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')->firstorfail();
+            $product = Product::whereSlug($slug)->firstorfail();
+
             SEOMeta::setTitle($product->name);
             SEOMeta::addMeta('robots', 'noindex, nofollow');
             SEOMeta::addMeta('name', $product->name, 'itemprop');

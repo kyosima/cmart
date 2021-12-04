@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 @endpush
 
@@ -64,9 +65,9 @@
                       
                             
                             <div class="manufacture info-detail">
-                                <p><span>Điểm C nhận được:</span>{{number_format($product->productPrice()->value('cpoint'), 0, '.', ',')}} điểm</p>
+                                <p><span>Điểm C nhận được:</span>{{number_format($product->productPrice()->value('cpoint'), 0, '.', ',')}} điểm 
+                                    <span><i  class="text-danger fa fa-question-circle-o" data-toggle="modal" data-target="#gioithieudiem" ></i></span></p>
                                 <p><span>Điểm M nhận được:</span>{{number_format($product->productPrice()->value('mpoint'), 0, '.', ',')}} điểm</p>
-                                <p><a  class="text-danger" data-toggle="modal" data-target="#gioithieudiem">Giới thiệu về điểm tích lũy</a></p>
 
                             </div>
                         
