@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 26, 2021 lúc 10:20 AM
+-- Thời gian đã tạo: Th10 11, 2021 lúc 09:17 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.10
 
@@ -1008,6 +1008,7 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `payment_method` int(11) NOT NULL DEFAULT 1,
   `shipping_method` text NOT NULL,
   `shipping_total` double NOT NULL,
@@ -1022,8 +1023,9 @@ CREATE TABLE `orders` (
 -- Đang đổ dữ liệu cho bảng `orders`
 --
 
-INSERT INTO `orders` (`id`, `payment_method`, `shipping_method`, `shipping_total`, `sub_total`, `total`, `status`, `updated_at`, `created_at`) VALUES
-(5, 1, 'ems', 23, 23, 23, 5, '2021-10-20 04:19:57', '2021-10-13 08:31:01');
+INSERT INTO `orders` (`id`, `user_id`, `payment_method`, `shipping_method`, `shipping_total`, `sub_total`, `total`, `status`, `updated_at`, `created_at`) VALUES
+(5, NULL, 1, 'ems', 23, 23, 23, 4, '2021-11-05 08:06:05', '2021-10-13 08:31:01'),
+(8, NULL, 1, 'ems', 0, 29780, 29780, 0, '2021-11-11 07:13:01', '2021-11-11 07:13:01');
 
 -- --------------------------------------------------------
 
@@ -1047,8 +1049,8 @@ CREATE TABLE `order_address` (
 --
 
 INSERT INTO `order_address` (`id`, `id_order`, `id_province`, `id_district`, `id_ward`, `address`, `updated_at`, `created_at`) VALUES
-(1, 5, 44, 4532, 45325, '28, đường số 27, phường Tân Quy', '2021-10-20 04:19:57', '2021-09-14 00:56:17'),
-(2, 6, 70, 7200, 71650, '28, đường số 27, phường Tân Quy', '2021-09-14 01:02:19', '2021-09-14 01:02:19');
+(1, 5, 44, 4532, 45325, '28, đường số 27, phường Tân Quy', '2021-11-05 08:06:05', '2021-09-14 00:56:17'),
+(3, 8, 16, 1616, 16166, 'Nhóm 3, Vạn Lộc', '2021-11-11 07:13:01', '2021-11-11 07:13:01');
 
 -- --------------------------------------------------------
 
@@ -1072,8 +1074,8 @@ CREATE TABLE `order_info` (
 --
 
 INSERT INTO `order_info` (`id`, `id_order`, `fullname`, `phone`, `email`, `note`, `updated_at`, `created_at`) VALUES
-(1, 5, 'Nguyễn Chính Hưng', '0338927456', 'nc.hung0806@gmail.com', 'hello', '2021-10-20 04:19:57', '2021-09-14 00:56:17'),
-(2, 6, 'Nguyễn Chính Hưng', '0338927456', 'nc.hung0806@gmail.com', NULL, '2021-09-14 01:02:19', '2021-09-14 01:02:19');
+(1, 5, 'Nguyễn Chính Hưng', '0338927456', 'nc.hung0806@gmail.com', 'hello', '2021-11-05 08:06:05', '2021-09-14 00:56:17'),
+(3, 8, 'trantruong1797@gmail.com', '0342909557', 'truong@gmail.com', NULL, '2021-11-11 07:13:01', '2021-11-11 07:13:01');
 
 -- --------------------------------------------------------
 
@@ -1097,7 +1099,8 @@ CREATE TABLE `order_products` (
 
 INSERT INTO `order_products` (`id`, `id_order`, `id_product`, `quantity`, `price`, `updated_at`, `created_at`) VALUES
 (1, 5, 17, 1, 25000, '2021-09-14 00:56:17', '2021-09-14 00:56:17'),
-(2, 6, 13, 1, 25000, '2021-09-14 01:02:19', '2021-09-14 01:02:19');
+(5, 8, 10, 1, 4780, '2021-11-11 07:13:01', '2021-11-11 07:13:01'),
+(6, 8, 17, 1, 25000, '2021-11-11 07:13:01', '2021-11-11 07:13:01');
 
 -- --------------------------------------------------------
 
@@ -1569,6 +1572,7 @@ INSERT INTO `users` (`id`, `name`, `password`, `email`, `phone`, `level`, `creat
 
 CREATE TABLE `user_info` (
   `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `fullname` varchar(255) NOT NULL,
   `address_full` text DEFAULT NULL,
   `identity_number` varchar(255) NOT NULL,
@@ -1581,6 +1585,13 @@ CREATE TABLE `user_info` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Đang đổ dữ liệu cho bảng `user_info`
+--
+
+INSERT INTO `user_info` (`id`, `user_id`, `fullname`, `address_full`, `identity_number`, `identity_front`, `identity_after`, `identity_avatar`, `ward_id`, `district_id`, `province_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Trần Văn Trường', 'Nhóm 3, Vạn Lộc', '', NULL, NULL, NULL, 62326, 6232, 62, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -12790,6 +12801,30 @@ ALTER TABLE `model_has_roles`
   ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
 
 --
+-- Chỉ mục cho bảng `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `order_address`
+--
+ALTER TABLE `order_address`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `order_info`
+--
+ALTER TABLE `order_info`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `order_products`
+--
+ALTER TABLE `order_products`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `permissions`
 --
 ALTER TABLE `permissions`
@@ -12873,6 +12908,30 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT cho bảng `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT cho bảng `order_address`
+--
+ALTER TABLE `order_address`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT cho bảng `order_info`
+--
+ALTER TABLE `order_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT cho bảng `order_products`
+--
+ALTER TABLE `order_products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT cho bảng `permissions`
 --
 ALTER TABLE `permissions`
@@ -12912,7 +12971,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `ward`

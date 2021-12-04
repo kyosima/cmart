@@ -182,6 +182,7 @@ return [
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -245,6 +246,7 @@ return [
         'JsonLdMulti'   => Artesaos\SEOTools\src\SEOTools\Facades\JsonLdMulti::class,
         'SEO' => Artesaos\SEOTools\src\SEOTools\Facades\SEOTools::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

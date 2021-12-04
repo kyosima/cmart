@@ -98,11 +98,16 @@
              <i class="fa fa-frown-o" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Thông tin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
-            @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
+            
             <span class="dropdown-content">
+                @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
                 <a href="{{route('info-company.index')}}">Trang</a>
+                @endif
+                @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
+                <a href="{{route('admin.banner.index')}}">Banner</a>
+                @endif
             </span>
-            @endif
+            
          </li>
          <li class="dropdown">
             <a href="#" class="dropbtn">

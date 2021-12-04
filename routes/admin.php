@@ -17,6 +17,7 @@ use App\Admin\Controllers\AdminSettingController;
 use App\Admin\UserController;
 use App\Admin\Controllers\InfoCompanyController;
 use App\Admin\Controllers\PaymentController;
+use App\Admin\Controllers\AdminBannerController;
 
 Route::group(['middleware' => ['admin']], function () {
     // Route::resource('permissions', AdminPermissionsController::class);
@@ -36,6 +37,19 @@ Route::group(['middleware' => ['admin']], function () {
     //đơn hàng
     // xem ds đơn Hàng
     Route::get('don-hang', [AdminOrderController::class, 'index'])->name('order.index')->middleware('permission:Xem DS đơn hàng,admin');
+
+    // tạo đơn Hàng
+    Route::get('lay-khach-hang', [AdminOrderController::class, 'getCustomer'])->middleware('permission:Xem DS đơn hàng,admin');
+    // tạo đơn Hàng
+    Route::get('lay-san-pham', [AdminOrderController::class, 'getProduct'])->middleware('permission:Xem DS đơn hàng,admin');
+
+    // tạo đơn Hàng
+    Route::get('tao-don-hang', [AdminOrderController::class, 'create'])->name('order.create')->middleware('permission:Xem DS đơn hàng,admin');
+
+    Route::post('tao-don-hang', [AdminOrderController::class, 'store'])->name('order.store')->middleware('permission:Xem DS đơn hàng,admin');
+
+    // tạo đơn Hàng
+    Route::get('xuat-excel-tat-ca-don-hang', [AdminOrderController::class, 'export'])->name('order.exports')->middleware('permission:Xem DS đơn hàng,admin');
 
     // Xem đơn Hàng
     Route::get('chi-tiet-don-hang/{order:id}', [AdminOrderController::class, 'show'])->name('order.show')->middleware('permission:Xem đơn hàng,admin');
@@ -65,6 +79,17 @@ Route::group(['middleware' => ['admin']], function () {
 
         //xóa
         Route::match(['delete', 'get'], 'delete/{info_company:id}', [AdminInfoCompanyController::class, 'delete'])->name('info-company.delete')->middleware('permission:Xóa trang đơn,admin');
+    });
+
+    //banner
+    Route::group(['prefix' => 'banner'], function () {
+        //danh sách
+        Route::get('/', [AdminBannerController::class, 'index'])->name('admin.banner.index')->middleware('permission:Xem DS trang đơn,admin');
+        Route::post('store', [AdminBannerController::class, 'store'])->name('admin.banner.store')->middleware('permission:Tạo trang đơn,admin');
+        //sửa
+        Route::get('edit/{type}', [AdminBannerController::class, 'edit'])->name('admin.banner.edit')->middleware('permission:Xem trang đơn,admin');
+        Route::put('update', [AdminBannerController::class, 'update'])->name('admin.banner.update')->middleware('permission:Cập nhật trang đơn,admin');
+        Route::delete('delete/{Banner:id}', [AdminBannerController::class, 'delete'])->name('admin.banner.delete');
     });
     
     Route::group(['middleware' => ['role:Boss,admin']], function () {

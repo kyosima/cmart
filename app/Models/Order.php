@@ -47,8 +47,8 @@ class Order extends Model
 		'sub_total',
 		'total',
 		'status',
-		'user_id',
-		'fullname'
+		'fullname',
+		'user_id'
 	];
 
 	public function order_address()

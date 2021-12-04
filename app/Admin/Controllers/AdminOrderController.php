@@ -9,18 +9,23 @@ use App\Models\OrderInfo;
 use App\Models\OrderAddress;
 use App\Models\Province;
 use App\Models\District;
+use App\Models\User;
 use App\Models\Ward;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use App\Admin\Exports\OrderExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminOrderController extends Controller
 {
     //
 
     public function index(Request $request){
-        $orders = Order::latest()->get();
+        $orders = Order::orderBy('id', 'DESC')->with('order_info')->get();
         $doanh_thu = Order::where('status', 4)->sum('total');
         return view('admin.order.order', compact('orders', 'doanh_thu'));
     }
@@ -42,6 +47,61 @@ class AdminOrderController extends Controller
         return view('admin.order.order-detail', compact('order', 'provinces', 'districts', 'wards'));
     }
 
+    public function create(){
+        $provinces = Province::pluck('tentinhthanh', 'matinhthanh');
+        $user = User::select('id', 'name')->get();
+        $product = Product::select('id', 'name')->get();
+        return view('admin.order.order-new', compact('provinces', 'user', 'product'));
+    }
+    public function store(Request $request){
+        // dd($request);
+        $this->validate($request, [
+            'sel_user' => 'required',
+            'fullname' => 'required|max:255',
+            'email' => 'required',
+            'sel_product' => 'required'
+        ]);
+        $order = DB::transaction(function () use ($request) {
+            $products = Product::whereIn('id', $request->sel_product)->with('productPrice')->get();
+            $sub_total = 0;
+            foreach($request->sel_product as $key => $value){
+                $product = $products->where('id', $value)->first()->productPrice;
+                $qt = $request->in_qt ? $request->in_qt[$key] : 1;
+                $sub_total += $product->regular_price*$qt;
+            }
+            $order = Order::create([
+                'user_id' => $request->sel_user,
+                'shipping_method' => 'ems',
+                'shipping_total' => 0,
+                'sub_total' => $sub_total,
+                'total' => $sub_total,
+            ]);
+            $order->order_address()->create([
+                'id_province' => $request->sel_province,
+                'id_district' => $request->sel_district,
+                'id_ward' => $request->sel_ward,
+                'address' => $request->address
+            ]);
+            $order->order_info()->create([
+                'fullname' => $request->fullname,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'note' => $request->note
+            ]);
+            foreach($request->sel_product as $key => $value){
+                $product = $products->where('id', $value)->first()->productPrice;
+                $order->order_products()->create([
+                    'id_product' => $value,
+                    'quantity' => $request->in_qt ? $request->in_qt[$key] : 1,
+                    'price' => $product->regular_price
+                ]);
+            }
+            Log::info('Admin '.auth()->guard('admin')->user()->name.' Thêm mới đơn hàng #'.$order->id, ['data' => $request->all()]);
+            Session::flash('success','Thêm đơn hàng thành công');
+            return $order->id;
+        });
+        return redirect()->route('order.show', $order);
+    }  
     public function update(Request $request, Order $order){
 
         $order->status = $request->sel_status;
@@ -78,6 +138,22 @@ class AdminOrderController extends Controller
         
         return response('Thành công', 200);
         
+    }
+
+    public function export() 
+    {
+        return Excel::download(new OrderExport, 'donhang.xlsx');
+    }
+
+    public function getCustomer(Request $request){
+        return optional(User::find($request->id)->with('user_info')->first(), function ($response) {
+            return $response;
+        });
+    }
+    public function getProduct(Request $request){
+        return optional(Product::select('id', 'name')->whereIn('id', $request->id)->with('productPrice')->get(), function ($response) {
+            return $response;
+        });
     }
 
     public function districtOfProvince(Request $request){

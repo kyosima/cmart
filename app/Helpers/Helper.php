@@ -14,7 +14,7 @@ if (!function_exists('formatPriceAdmin')) {
     }
 }
 
-if (!function_exists('permissionOfRole')) {
+if (!function_exists('formatPriceOfLevel')) {
 
 if (!function_exists('formatPriceOfLevel')) {
     function formatPriceOfLevel($product)
@@ -47,12 +47,13 @@ if (!function_exists('getPriceOfLevel')) {
         if (Auth::check()) {
             $user = Auth::user();
             if($user->level ==0){
-                return $product->productPrice()->value('regular_price');
+                return $product->regular_price;
             }else{
-                return $product->productPrice()->value('shock_price');
+                return $product->shock_price;
             }
         }else{
-            return $product->productPrice()->value('regular_price');
+
+            return $product->regular_price;
         }
     }
 }
@@ -113,6 +114,22 @@ if (!function_exists('helper')) {
         }
     }
 
+    function orderStatusSimple($status){
+        if($status == 0){
+            return 'Đã đặt hàng';
+        }elseif($status == 1){
+            return 'Đã xác nhận thanh toán';
+        }elseif($status == 2){
+            return 'Đang xử lý';
+        }elseif($status == 3){
+            return 'Đang vận chuyển';
+        }elseif($status == 4){
+            return 'Hoàn thành';
+        }else{
+            return 'Đã hủy';
+        }
+    }
+
     function orderStatusOtion($status){
         $array = array('Đã đặt hàng', 'Đã xác nhận thanh toán', 'Đang xử lý', 'Đang vận chuyển', 'Hoàn thành', 'Đã hủy');
         $string = '';
@@ -141,6 +158,11 @@ if (!function_exists('helper')) {
 
     function typeInfoCompany($value){
         $type = config('custom-config.page.type');
+        return $type[$value];
+    }
+
+    function typeBanner($value){
+        $type = config('custom-config.banner');
         return $type[$value];
     }
 
