@@ -37,7 +37,7 @@
 					{{session('thongbao')}}
 				</div>
 				@endif
-                                    <input type="text" name="name" placeholder="Tài khoản">
+                                    <input type="text" name="phone" placeholder="Tài khoản">
                                     <input type="password" name="password" placeholder="Mật khẩu">
                                     <input type="submit" value="Login" name="Đăng nhập">
                                 </form>
@@ -49,7 +49,7 @@
                             <div class="content__wrapper">
                                 <form method="POST" action="{{route('user.register')}}">
                                     @csrf
-                                    <input type="name" name="name" placeholder="Tên tài khoản">
+                                    
                                     <input type="number" name="phone" placeholder="Số điện thoại">
                                     <input type="password" name="password" placeholder="Mật khẩu">
                                     <input type="password" name="passwordAgain" placeholder="Nhập lại mật khẩu">

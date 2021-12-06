@@ -79,10 +79,10 @@
         <thead>
             <tr style="text-align:center">
                 <th>ID</th>
-                <th>Name</th>
+                <th>Họ và tên</th>
                 <!-- <th>Email</th> -->
-                <th>Phone</th>
-                <th>Level</th>
+                <th>Số điện thoại</th>
+                <th>Cấp độ</th>
                 <th>Điểm tích lũy</th>
                 <th>Thông tin chi tiết</th>
                 <th>Trạng thái KYC</th>
@@ -93,7 +93,7 @@
             @foreach($user as $k)
                 <tr style="text-align:center">
                     <td>{{$k->id}}</td>
-                    <td>{{$k->name}}</td>
+                    <td>{{$k->hoten}}</td>
                     <!-- <td>{{$k->email}}</td> -->
                     <td>{{$k->phone}}</td>
                     <td>@if($k->level == 1)

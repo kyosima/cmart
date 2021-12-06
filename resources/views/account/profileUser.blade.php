@@ -65,7 +65,7 @@ img {
                     <div class="col">
                         <div class="row align-items-center">
                             <div class="col-md-7">
-                                <h4 class="mb-1">{{$profileUser->name}}</h4>
+                                <h4 class="mb-1">{{$profileUser->phone}}</h4>
                             </div>
                         </div>
                         <div class="row mb-4">
@@ -98,7 +98,7 @@ img {
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lastname">Số điện thoại</label>
-                        <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}">
+                        <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}" readonly>
                     </div>
                 </div>
                 <div class="form-group">
