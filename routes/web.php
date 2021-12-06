@@ -54,6 +54,7 @@ Route::prefix('gio-hang')->group(function () {
 Route::prefix('thanh-toan')->group(function () {
     Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('post', [CheckoutController::class, 'postOrder'])->name('checkout.post');
+    Route::get('get-address', [CheckoutController::class, 'getAddress'])->name('checkout.getAddress');
     Route::get('thanh-cong', [CheckoutController::class, 'orderSuccess'])->name('checkout.orderSuccess');
 
 });

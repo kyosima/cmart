@@ -115,6 +115,10 @@
                                 </table>
                                 <div class="box-allprice box-price-order">
                                     <p>Tạm tính:<span> {{ formatPrice($order->sub_total) }}</span></p>
+                                    <p>Thuế:<span> {{ formatPrice($order->tax) }}</span></p>
+                                    <p>Phí xử lý:<span> {{ formatPrice($order->process_fee) }}</span></p>
+                                    <p>Điểm M quy đổi:<span> {{ formatPrice($order->m_point * 100) }}</span></p>
+                                    <p>Điểm C tích lũy:<span> {{ $order->c_point }}</span></p>
                                     <p>Phí vận chuyển:<span> + {{ formatPrice($order->shipping_total) }}</span></p>
                                     <p class="last-price">Tổng cộng: <span>{{ formatPrice($order->total) }}</span>
                                     </p>

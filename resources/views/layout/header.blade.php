@@ -39,40 +39,40 @@
                 </a>
             
               </div>
-                        <div class="tag-top">
-                            <ul class="d-flex dv-ht">
-                                <li class="text-color-white dropdowncmart">
-                                    <a class="text-color-white" href="#">
-                                        Dịch Vụ của C-Mart
+                        <!--<div class="tag-top">-->
+                        <!--    <ul class="d-flex dv-ht">-->
+                        <!--        <li class="text-color-white dropdowncmart">-->
+                        <!--            <a class="text-color-white" href="#">-->
+                        <!--                Dịch Vụ của C-Mart-->
 
-                                    </a>
+                        <!--            </a>-->
                                     <!--Start of Dropdown-->
-                                    <ul class="dropdown-navcmart dvcmart">
-                                        <li><a href="">Hỗ trợ,Tư vấn thông tin</a></li>
-                                        <li><a href="">Đi chợ hộ - Mua sắm hộ, Đặt hàng theo mọi yêu cầu</a></li>
-                                        <li><a href="">Gói quà</a></li>
-                                        <li><a href="">Chăm sóc Nhà cửa</a></li>
-                                        <li><a href="">Chăm sóc Cá nhân</a></li>
-                                        <li><a href="">Thanh toán hóa đơn</a></li>
-                                        <li><a href="">Kinh tế, Tài chính, Bảo hiểm, Pháp chế</a></li>
-                                        <li><a href="">Tin học văn phòng, In ấn, Photocopy, Scan, Fax ...</a></li>
-                                        <li><a href="">
-                                                Logistics, Giao thông - Vận tải tận nơi, nhanh chóng</a></li>
-                                        <li><a href="">Giáo dục - Đào tạo, Văn hóa - Giải trí, Truyền thông - Quảng
-                                                cáo</a></li>
-                                        <li><a href="">Hành chính - Nội vụ, Lễ tân</a></li>
+                        <!--            <ul class="dropdown-navcmart dvcmart">-->
+                        <!--                <li><a href="">Hỗ trợ,Tư vấn thông tin</a></li>-->
+                        <!--                <li><a href="">Đi chợ hộ - Mua sắm hộ, Đặt hàng theo mọi yêu cầu</a></li>-->
+                        <!--                <li><a href="">Gói quà</a></li>-->
+                        <!--                <li><a href="">Chăm sóc Nhà cửa</a></li>-->
+                        <!--                <li><a href="">Chăm sóc Cá nhân</a></li>-->
+                        <!--                <li><a href="">Thanh toán hóa đơn</a></li>-->
+                        <!--                <li><a href="">Kinh tế, Tài chính, Bảo hiểm, Pháp chế</a></li>-->
+                        <!--                <li><a href="">Tin học văn phòng, In ấn, Photocopy, Scan, Fax ...</a></li>-->
+                        <!--                <li><a href="">-->
+                        <!--                        Logistics, Giao thông - Vận tải tận nơi, nhanh chóng</a></li>-->
+                        <!--                <li><a href="">Giáo dục - Đào tạo, Văn hóa - Giải trí, Truyền thông - Quảng-->
+                        <!--                        cáo</a></li>-->
+                        <!--                <li><a href="">Hành chính - Nội vụ, Lễ tân</a></li>-->
 
-                                    </ul>
-                                </li>
+                        <!--            </ul>-->
+                        <!--        </li>-->
 
-                            </ul>
+                        <!--    </ul>-->
 
-                        </div>
+                        <!--</div>-->
                         <div class="tag-top">
 
                             <ul class="d-flex dv-ht">
                                 <li class=" text-color-white dropdowncmart">
-                                    <a class="text-color-white" href="#">Hỗ Trợ C-A-Z của C-Mart</a>
+                                    <a class="text-color-white" href="#">Điều khoản và Chính sách</a>
                                     <!--Start of Dropdown-->
                                     <ul class="dropdown-navcmart">
                                         @php

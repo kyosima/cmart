@@ -11,6 +11,8 @@ use App\Models\Order;
 use App\Models\OrderInfo;
 use App\Models\OrderAddress;
 use App\Models\OrderProduct;
+use App\Models\StoreAddress;
+
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
@@ -31,10 +33,12 @@ class CheckoutController extends Controller
             $cart_total = Cart::instance('shopping')->total();
             $province = Province::select('matinhthanh', 'tentinhthanh')->get();
             $user_ward = Ward::where('maphuongxa', $user->id_phuongxa)->first();
+            $store_address = $user->getstoreAddress()->get();
             $tax = 0;
             $c_ship = 0;
             $v_ship = 0;
             $m_point = 0;
+            $c_point = 0;
             $process_fee = 0;
             foreach($carts as $row){
                 $price = $row->model->productPrice()->first();
@@ -42,9 +46,10 @@ class CheckoutController extends Controller
                 $c_ship += $price->cship;
                 $v_ship += $price->viettel_ship;
                 $m_point += $price->mpoint;
+                $c_point += $price->cpoint;
                 $process_fee += $price->phi_xuly;
-
             }
+
             return view('checkout.thanhtoan', [
                 'carts' => $carts, 
                 'cart_subtotal' => $cart_subtotal, 
@@ -56,7 +61,9 @@ class CheckoutController extends Controller
                 'c_ship' => $c_ship,
                 'v_ship' => $v_ship,
                 'm_point' => $m_point,
-                'process_fee' => $process_fee
+                'c_point' => $c_point,
+                'process_fee' => $process_fee,
+                'store_address' => $store_address
             ]);
         }else{
             return redirect()->route('cart.index');
@@ -66,6 +73,18 @@ class CheckoutController extends Controller
     }
     }
 
+    public function getAddress(Request $request){
+        $address = StoreAddress::find($request->id)->first();
+        $a_province = Province::where('matinhthanh', $address->id_province)->first();
+        $a_district = District::where('maquanhuyen', $address->id_district)->first();
+        $a_ward = Ward::where('maphuongxa', $address->id_ward)->first();
+        $province = Province::select('matinhthanh', 'tentinhthanh')->get();
+        $district = $a_province->district()->select('maquanhuyen', 'tenquanhuyen')->get();
+        $ward = $a_district->ward()->select('maphuongxa', 'tenphuongxa')->get();
+        $arr = [$address, $a_province, $a_district, $a_ward, $province, $district, $ward];
+        return $arr;
+    }
+
     public function postOrder(Request $request){
         $cart = Cart::instance('shopping')->content();
         $user_id = null;
@@ -73,8 +92,33 @@ class CheckoutController extends Controller
             $user = Auth::user();
             $user_id = $user->id;
         }
+        $store_address = $request->input('store_address');
+        $tax = 0;
+        $c_ship = 0;
+        $v_ship = 0;
+        $m_point = 0;
+        $c_point = 0;
+        $process_fee = 0;
+        foreach($cart as $row){
+            $price = $row->model->productPrice()->first();
+            $tax += $row->price * $price->tax / 100;
+            $c_ship += $price->cship;
+            $v_ship += $price->viettel_ship;
+            $m_point += $price->mpoint;
+            $c_point += $price->cpoint;
+            $process_fee += $price->phi_xuly;
+        }
+        switch ($request->shipping_method) {
+            case'v_ship':
+                $name_method = 'Viettel Shipping';
+                $shipping_total = $v_ship;
+              break;
+              case'c_ship':
+                $name_method = 'Cmart Shipping';
+                $shipping_total = $c_ship;
+              break;
+          }
         if(Cart::instance('shopping')->count() > 0){
-
             $validation = $request->validate([
                 'fullname' => 'required',
                 'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/'],
@@ -87,14 +131,35 @@ class CheckoutController extends Controller
             ]);
             // return DB::transaction(function () use ($request, $cart) {
             //     try {
+                if($store_address == 1){
+                    $storeAddress = StoreAddress::create([
+                        'id_user' => $user_id,
+                        'name' => $request->name_address,
+                        'fullname' => $request->fullname,
+                        'phone'=>$request->phone,
+                        'email' => $request->email,
+                        'id_province' => $request->sel_province,
+                        'id_district' => $request->sel_district,
+                        'id_ward' => $request->sel_ward,
+                        'address' => $request->address
+                    ]);
+                    $storeAddress->save();
+
+                }
                     $order = Order::create([
                         'note' => $request->note,
                         'user_id'=>$user_id,
-                        // 'shipping_method' => $request->shipping_method,
-                        'shipping_total' => 0,
+                        'shipping_method' => $name_method,
+                        'shipping_total' => $shipping_total,
+                        'c_point' => $c_point,
+                        'm_point' => $m_point,
+                        'tax' => $tax,
+                        'process_fee' => $process_fee,
                         'sub_total' => intval(str_replace(",", "", Cart::instance('shopping')->subtotal())),
-                        'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()))
+                        'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()) + $tax + $process_fee + $shipping_total)
                     ]);
+                    
+                  
                     $order->order_code = 'CMART-'.$order->id.time();
                     $order->save();
                     $order_address = new OrderAddress();

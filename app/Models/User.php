@@ -49,4 +49,7 @@ class User extends Authenticatable
     public function user_info(){
         return $this->hasOne(UserInfo::class, 'user_id', 'id');
     }
+    public function getstoreAddress(){
+        return $this->hasMany(StoreAddress::class, 'id_user', 'id');
+    }
 }

@@ -100,7 +100,7 @@
                             <div class="quantity">
                                 <form id="form-add-to-cart" method="POST" action="{{ route('cart.add') }}">
                                     <input type="hidden" class="card-quality-input" name="product_id"
-                                        value="{{ $product->id_ofproduct }}">
+                                        value="{{ $product->id }}">
                                     <div class="qty-block">
                                         <div class="qty">
                                             <input type="text" name="qty" maxlength="12" value="1" title="" class="input-text" />

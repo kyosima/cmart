@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                 <div class="alert alert-light order-complete-info  text-dark">
-                    <h5>Mã đơn hàng: <span class="text-danger">{{$order->order_code}}</span></h5>
+                    <h5>Mã đơn hàng: <span class="text-danger">{{ $order->order_code }}</span></h5>
                     <b>Thông tin khách hàng</b>
                     <ul>
                         <li>Họ và tên: {{ $order_info->fullname }}</li>
@@ -59,15 +59,21 @@
                                     <td>{{ formatPrice($product->price * $product->quantity) }}</td>
                                 </tr>
                             @endforeach
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>Tổng:</td>
-                                <td> {{ formatPrice($order->total) }}</td>
-                            </tr>
                         </tbody>
                     </table>
+                    <div class="info_order_success">
+                        <ul>
+                            <li>Thuế: <span> {{ formatPrice($order->tax) }}</span></li>
+                            <li>Phí xử lý: <span> {{ formatPrice($order->process_fee) }}</span></li>
+                            <li>Điểm M quy đổi: <span> {{ formatPrice($order->m_point *100) }}</span></li>
+                            <li>Điểm C tích lũy: <span> {{ $order->c_point }}</span></li>
+                            <li>Phương thức vận chuyển: <span> {{ $order->shipping_method }}</span></li>
+                            <li>Phí vận chuyển: <span> {{ formatPrice($order->shipping_total) }}</span></li>
+                            <li><b>Tổng cộng: </b> <span class="text-danger"> {{ formatPrice($order->total) }}</span></li>
 
+                        </ul>
+
+                    </div>
                 </div>
             </div>
         </div>
