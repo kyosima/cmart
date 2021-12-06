@@ -147,7 +147,7 @@ Route::group(['middleware' => ['admin']], function () {
 
     // được phép thêm danh mục sản phẩm
     Route::group(['middleware' => ['permission:Thêm danh mục sản phẩm,admin']], function () {
-        Route::post('/nganh-nhom-hang', [AdminProductCategoryController::class, 'store'])->name('nganh-nhom-hang.store');\
+        Route::post('/nganh-nhom-hang', [AdminProductCategoryController::class, 'store'])->name('nganh-nhom-hang.store');
         Route::get('/nganh-nhom-hang/get-category', [AdminProductCategoryController::class, 'getCategory'])->name('nganh-nhom-hang.getCategory');
     });
 
