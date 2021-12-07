@@ -22,35 +22,33 @@
 
                         <li class="active">
                             <div class="content__wrapper">
-                                <form method="POST" action="{{route('user.login')}}">
+                                <form method="POST" action="{{ route('user.login') }}">
                                     @csrf
-                @if(count($errors) > 0)
-				<div class="alert alert-danger">
-					@foreach($errors->all() as $err)
-						{{$err}}<br>
-					@endforeach
-				</div>
-				@endif
+                                    @if (count($errors) > 0)
+                                        <div class="alert alert-danger">
+                                            @foreach ($errors->all() as $err)
+                                                {{ $err }}<br>
+                                            @endforeach
+                                        </div>
+                                    @endif
 
-				@if(session('thongbao'))
-				<div class="alert alert-success">
-					{{session('thongbao')}}
-				</div>
-				@endif
-                                    <input type="text" name="name" placeholder="Tài khoản">
+                                    @if (session('thongbao'))
+                                        <div class="alert alert-success">
+                                            {{ session('thongbao') }}
+                                        </div>
+                                    @endif
+                                    <input type="text" name="phone" placeholder="Số điện thoại">
                                     <input type="password" name="password" placeholder="Mật khẩu">
                                     <input type="submit" value="Login" name="Đăng nhập">
                                 </form>
-                                
+
                             </div>
                         </li>
 
                         <li>
                             <div class="content__wrapper">
-                                <form method="POST" action="{{route('user.register')}}">
+                                <form method="POST" action="{{ route('user.register') }}">
                                     @csrf
-                                    <input type="name" name="name" placeholder="Tên tài khoản">
-                                    <input type="email" name="email" placeholder="email">
                                     <input type="number" name="phone" placeholder="Số điện thoại">
                                     <input type="password" name="password" placeholder="Mật khẩu">
                                     <input type="password" name="passwordAgain" placeholder="Nhập lại mật khẩu">

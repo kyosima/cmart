@@ -14,10 +14,11 @@
     <style type="text/css">
         .styled-table {
             border-collapse: collapse;
-            margin: 25px 20px;
+            /* margin: 25px 20px; */
             font-size: 0.9em;
             font-family: sans-serif;
-            min-width: 400px;
+            /* min-width: 400px; */
+            width: 100%;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
         }
 
@@ -78,10 +79,10 @@
         <thead>
             <tr style="text-align:center">
                 <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Level</th>
+                <th>Họ và tên</th>
+                <!-- <th>Email</th> -->
+                <th>Số điện thoại</th>
+                <th>Cấp độ</th>
                 <th>Điểm tích lũy</th>
                 <th>Thông tin chi tiết</th>
                 <th>Trạng thái KYC</th>
@@ -92,8 +93,8 @@
             @foreach($user as $k)
                 <tr style="text-align:center">
                     <td>{{$k->id}}</td>
-                    <td>{{$k->name}}</td>
-                    <td>{{$k->email}}</td>
+                    <td>{{$k->hoten}}</td>
+                    <!-- <td>{{$k->email}}</td> -->
                     <td>{{$k->phone}}</td>
                     <td>@if($k->level == 1)
                             {{"Member Vip"}}
@@ -116,7 +117,9 @@
                     </td>
                     <td>
                         @if($k->tichluyC >= 5000000)
-                                <button type="submit" class="alert alert-success m-0" name="levelUP" value="1" >Nâng cấp lên thân thiết</button> 
+                                <button type="submit" class="alert alert-success m-0" name="levelUP" value="1" >
+                                    Nâng cấp lên thân thiết
+                                </button> 
                         @elseif($k->tichluyC >= 30000000)
                                 <button class="alert alert-warning m-0" type="button" name="levelUP" data-url="2" value="2" >Nâng cấp lên VIP</button>
                         @else

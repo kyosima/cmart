@@ -10,11 +10,10 @@
 <style type="text/css">
 .styled-table {
     border-collapse: collapse;
-    margin: 25px 0;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
 }
 
 .styled-table thead tr {
@@ -81,9 +80,9 @@
 
                     <div class="profile-card__cnt js-profile-cnt">
                         <div class="profile-card__name" style="text-transform: uppercase">{{$user->name}}</div>
-                        <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
+                        <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
                         <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
-                        <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button>
+                        <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
                         <div class="info">
                             <form action="{{$user->id}}" method="POST">
                             <input type="hidden" class="form-control mb-2" name="_token" value="{{csrf_token()}}" />
@@ -300,6 +299,29 @@
                                                 @endforeach
                                                     <!-- and so on... -->
                                                 </tbody>
+                                            </table>
+                                        </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-12">
+                                            <label for="exampleFormControlInput1" class="form-label">Lịch sử nhận point</label><br>
+                                            <table class="styled-table table-sortable">
+                                            <thead>
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Số điểm nhận đc</th>
+                <th>Ngày nhận</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($orders as $k)
+            <tr>
+                <td>{{$k->order_code}}</td>
+                <td>{{$k->cpoint}}</td>
+                <td>{{$k->created_at}}</td>
+            </tr>
+            @endforeach
+            <!-- and so on... -->
+        </tbody>
                                             </table>
                                         </div>
                                     </div>

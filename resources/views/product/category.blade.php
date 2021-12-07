@@ -236,7 +236,7 @@
                                     <div class="product-box row">
                                         <div class="box-image col-lg-12 col-md-4 col-4">
                                             <div class="image-cover">
-                                                <a href="#">
+                                                <a href="{{ route('san-pham.show', $item->slug) }}">
                                                     <img src="{{ $item->feature_img }}" alt="">
                                                 </a>
                                             </div>

@@ -115,13 +115,14 @@
              
               <li class="nav-item">
                 <div class="btn-group">
-                  <a class="btn btn-light text-dark" href="{{url('/xac-thuc-ho-so')}}"><i class="fas fa-user text-dark"></i> {{ Auth::user()->name}}</a>
+                  <a class="btn btn-light text-dark" href="{{url('/xac-thuc-ho-so')}}"><i class="fas fa-user text-dark"></i> {{ Auth::user()->phone}}</a>
                   <button type="button" class="btn  btn-light text-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu text-dark">
                     <a class="dropdown-item text-dark" href="{{url('/xac-thuc-ho-so')}}">Thông tin tài khoản</a>
                     <a class="dropdown-item text-dark" href="{{url('/lichsu')}}">Lịch sử đơn hàng</a>
+                    <a class="dropdown-item text-dark" href="{{url('/cpoint')}}">Lịch sử nhận point</a>
                     <a class="dropdown-item text-dark" href="#">Ví của bạn</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{route('logoutuser')}}">Đăng xuất</a>
@@ -174,9 +175,7 @@
 </header>
 <!-- menu-tablet-mobile -->
 <header class="header-tablet-mobile">
-    <a class="banner-header" href="{{ url('/khuyen-mai') }}" title="Sức khỏe">
-        <img src="https://japana.vn/uploads/banner/1629687032-topbar-new-mb.gif" alt="Sức khỏe">
-    </a>
+   
     <div class="top-header">
         <div class="container">
             <div class="d-flex justify-content-between  align-items-center pb-2">

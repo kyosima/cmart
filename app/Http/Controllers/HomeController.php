@@ -41,18 +41,17 @@ class HomeController extends Controller
 
     public function postLogin(Request $request) {
         $this->validate($request, [
-            'name' => 'required|min:5',
+            'phone' => 'required|min:5',
             'password' => 'required|min:3|max:30',
         ],[
-            'name.required' => 'Bạn chưa nhập username',
-            'name.min' => 'Tên người dùng ít nhất 5 ký tự',
-            'name.max' => 'Tên người dùng nhìu nhất 30 ký tự',
+            'phone.required' => 'Bạn chưa nhập username',
+            'phone.min' => 'Tên người dùng ít nhất 5 số',
             'password.required' => 'Bạn chưa nhập mật khẩu',
             'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
         ]);
 
-        if(Auth::attempt(['name'=>$request->name,'password'=>$request->password])){
+        if(Auth::attempt(['phone'=>$request->phone,'password'=>$request->password])){
             return redirect('/');
         }
         else {
@@ -73,18 +72,18 @@ class HomeController extends Controller
     public function postRegister (Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:5|unique:users,name',
-            'email' => 'required|email|unique:users,email',
+            // 'name' => 'required|min:5|unique:users,name',
+            // 'email' => 'required|email|unique:users,email',
             'password' => 'required|min:3|max:30',
             'passwordAgain' => 'required|same:password',
             'phone' => 'required|min:8|unique:users,phone',
         ],[
-            'name.required' => 'Bạn chưa nhập username',
-            'name.unique' => 'Tên đăng nhập đã được sử dụng',
-            'name.min' => 'Tên người dùng ít nhất 5 ký tự',
-            'name.max' => 'Tên người dùng nhìu nhất 30 ký tự',
-            'email.email' => 'Email không đúng',
-            'email.unique' => 'Email đã được sử dụng',
+            // 'name.required' => 'Bạn chưa nhập username',
+            // 'name.unique' => 'Tên đăng nhập đã được sử dụng',
+            // 'name.min' => 'Tên người dùng ít nhất 5 ký tự',
+            // 'name.max' => 'Tên người dùng nhìu nhất 30 ký tự',
+            // 'email.email' => 'Email không đúng',
+            // 'email.unique' => 'Email đã được sử dụng',
             'password.required' => 'Bạn chưa nhập mật khẩu',
             'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
@@ -95,14 +94,14 @@ class HomeController extends Controller
         ]);
 
         $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
+        // $user->name = $request->name;
+        // $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->level = 0;
         $user->phone = $request->phone;
         $user->save();
 
-        return redirect('tai-khoan')->with('thongbao','Register success');
+        return redirect('tai-khoan')->with('thongbao','Đăng ký thành công');
     }
 
     public function getLogout() {
@@ -230,14 +229,12 @@ class HomeController extends Controller
     public function mount($order_id) {
         $this->order_id = $order_id;
     }
-
-
+    
     public function getLichsu() {
         if (Auth::check()) {
-            // $orders = Order::where('user_id',Auth::user()->id);
-            $orders = DB::table("orders")->join('users', 'users.id', '=', 'orders.user_id')->get();
-            // dd($orders); die;
-            // $orders = Order::all
+            $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')->where('orders.user_id','=',auth()->user()->id)->select('orders.*')->get();
+            
+            //dd($orders); die;
             return view('account.lichsu', compact('orders'));
         }
         else {

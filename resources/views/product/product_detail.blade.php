@@ -48,7 +48,7 @@
                             @endforeach
                         </div>
                     </div>
-          
+
                     <div class="col-sm-12 col-md-12 col-lg-6">
                         <div class="short-desc">
                             <div class="title">
@@ -62,15 +62,54 @@
                             <div class="trademark info-detail">
                                 <p><span>Thương hiệu:</span>{{ $product->productBrand()->value('name') }}</p>
                             </div>
-                      
-                            
-                            <div class="manufacture info-detail">
-                                <p><span>Điểm C nhận được:</span>{{number_format($product->productPrice()->value('cpoint'), 0, '.', ',')}} điểm 
-                                    <span><i  class="text-danger fa fa-question-circle-o" data-toggle="modal" data-target="#gioithieudiem" ></i></span></p>
-                                <p><span>Điểm M nhận được:</span>{{number_format($product->productPrice()->value('mpoint'), 0, '.', ',')}} điểm</p>
 
+
+                            <div class="manufacture info-detail">
+                                <p>   <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
+                                    class="ttt">C là Tiền Tích Lũy nhận được khi mua sản phẩm, có giá trị
+                                    thanh toán tại C-Mart và các Đối Tác Liên Liên Kết, giá trị đầu tư tốt theo
+                                    Chính sách Tiết Kiệm Tích Tài C-Saving, giá trị lưu trữ không giới hạn
+                                </span></span><span>Điểm C nhận
+                                        được:</span>{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
+                                    điểm
+                                 
+                                </p>
+                                <p> <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
+                                    class="ttt">M là Điểm Dịch Vụ nhận được khi mua sản phẩm, có chức
+                                    năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển,
+                                    phí thanh toán...) và chỉ có giá trị trong chính đơn hàng đó.
+                                </span></span><span>Điểm M nhận
+                                        được:</span>{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
+                                    điểm
+                                   
+                                </p>
+
+                                <style>
+                                    .tt {
+                                        position: relative;
+                                        display: inline-block;
+                                    }
+
+                                    .tt .ttt {
+                                        visibility: hidden;
+                                        top: -25px;
+                                        width: 400px;
+                                        background-color: #0000008c;
+                                        color: #fff !important;
+                                        text-align: center;
+                                        border-radius: 6px;
+                                        padding: 5px 0;
+                                        position: absolute;
+                                        z-index: 1;
+                                    }
+
+                                    .tt:hover .ttt {
+                                        visibility: visible;
+                                    }
+
+                                </style>
                             </div>
-                        
+
                             <div class="all-price">
                                 <p class="new-price">{{ formatPriceOfLevel($product) }}</p>
                                 {{-- @if ($product->shock_price != null || $product->shock_price != 0)
@@ -103,35 +142,20 @@
                                         value="{{ $product->id }}">
                                     <div class="qty-block">
                                         <div class="qty">
-                                            <input type="text" name="qty" maxlength="12" value="1" title="" class="input-text" />
+                                            <input type="text" name="qty" maxlength="12" value="1" title=""
+                                                class="input-text" />
                                             <div class="qty_inc_dec">
-                                            <i class="increment" onclick="incrementQty()">+</i>
-                                            <i class="decrement" onclick="decrementQty()">-</i>
+                                                <i class="increment" onclick="incrementQty()">+</i>
+                                                <i class="decrement" onclick="decrementQty()">-</i>
                                             </div>
                                         </div>
-                                        <button type="submit" title="Add to Cart" class="btn-cart">Thêm vào giỏ</button>
-                                        </div>
+                                        <button type="submit" title="Add to Cart" class="btn-cart">Thêm vào
+                                            giỏ</button>
+                                    </div>
                                 </form>
                             </div>
-                           
-                            <div class="modal fade" id="gioithieudiem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalCenterTitle">Giới thiệu về điểm tích lũy</h5>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      ...
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+
+
 
                         </div>
                     </div>
@@ -167,7 +191,7 @@
                                     <li id="li-mobile">Thông tin chi tiết</li>
                                     <li id="li-pc">Mô tả sản phẩm</li>
                                 </ul> --}}
-                                <h5 class="text-center">Thông tin sản phẩm</h5> 
+                                <h5 class="text-center">Thông tin sản phẩm</h5>
                             </div>
                             <div class="text">
                                 <div class="text_d long-desc-product">
@@ -188,76 +212,7 @@
                                         <p><span>Sản xuất tại:</span>Nhật Bản</p>
                                     </div>
                                 </div>
-                                <div class="row row-mobile">
-                                    <div class="col-sm-12 col-md-9 col-lg-9">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                                <div class="item">
-                                                    <img src="{{ asset('public/image/chinhhang.png') }}" alt="">
-                                                    <div class="item__info">
-                                                        <p class="p1">Chính hãng</p>
-                                                        <p class="p2">100%</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                                <div class="item">
-                                                    <img src="{{ asset('public/image/doitra.png') }}" alt="">
-                                                    <div class="item__info">
-                                                        <p class="p1">Miễn phí đổi trả</p>
-                                                        <p class="p2">LÊN ĐẾN 90 NGÀY</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                                <div class="item">
-                                                    <img src="{{ asset('public/image/giaohanh.png') }}" alt="">
-                                                    <div class="item__info">
-                                                        <p class="p1">Giao hàng</p>
-                                                        <p class="p2">NHANH CHÓNG</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                                <div class="note_list">
-                                                    <ul>
-                                                        <li><a href="#">* Bạn có thể mua hàng ngay tại website bằng cách
-                                                                nhấn vào nút Mua Ngay, hoặc liên hệ với chúng tôi qua các
-                                                                thông tin bên dưới.</a></li>
-                                                        <li><a href="#">*cam kết bán hàng chính hãng từ Nhật Bản. Những
-                                                                thông tin bên trên được nhà sản xuất đưa ra, các sản phẩm
-                                                                làm đẹp và sức khỏe tùy vào cơ địa của mỗi khách hàng sẽ có
-                                                                hiệu quả tương thích.</a></li>
-                                                        <li><a href="#">* Mẫu mã của sản phẩm có thể được thay đổi khi bạn
-                                                                mua hàng.</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-3 col-lg-3">
-                                        <div class="product product1">
-                                            <div class="product1_img">
-                                                <img src="{{ asset($product->feature_img) }}" alt="">
-                                            </div>
-                                            <div class="product_text">
-                                                <p>{{ $product->name }}</p>
-                                                <h5 class="text-danger">{{ formatPrice($product->regular_price) }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <div class="contact">
-                                            <div class="contact_item fb">
-                                                <img src="{{ asset('public/image/icon/facebook.jpg') }}" alt="">
-                                            </div>
-                                            <div class="contact_item phone">
-                                                <img src="{{ asset('public/image/icon/telephone.jpg') }}" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
 
                             </div>
                             {{-- <div class="product-comment">
@@ -501,10 +456,16 @@
                             @foreach ($new_products as $item)
                                 <div class="product">
                                     <div class="product_img">
-                                        <img src="{{ asset($item->feature_img) }}" alt="">
+                                        <a href="{{ route('san-pham.show', $item->slug) }}">
+
+                                            <img src="{{ asset($item->feature_img) }}" alt="">
+                                        </a>
                                     </div>
                                     <div class="product_text">
-                                        <p>{{ $item->name }}</p>
+                                        <a href="{{ route('san-pham.show', $item->slug) }}">
+
+                                            <p>{{ $item->name }}</p>
+                                        </a>
                                         @if ($item->productPrice()->value('shock_price') != null || $item->productPrice()->value('shock_price') != 0)
                                             <h5>{{ formatPrice($item->productPrice()->value('shock_price')) }}</h5>
                                             <h5 id="h5">{{ formatPrice($item->productPrice()->value('regular_price')) }}
@@ -533,7 +494,10 @@
 
                                 <div class="product">
                                     <div class="product-top">
-                                        <img class="product-image" src="{{ asset($item->feature_img) }}" />
+                                        <a href="{{ route('san-pham.show', $item->slug) }}">
+
+                                            <img class="product-image" src="{{ asset($item->feature_img) }}" />
+                                        </a>
                                         <div class="product-name">
                                             <a href="{{ route('san-pham.show', $item->slug) }}">
                                                 <p class="product-title">{{ $item->name }}</p>

@@ -130,7 +130,7 @@
                                                 </a>
                                             </span>
                                             <b></b>
-                                            <a href="{{route('proCat.index', $proCat->slug)}}" class="view-more text-dark text-right">
+                                            <a href="{{route('proCat.index', $proCat->slug)}}" class="view-more  text-right">
                                                 Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                             </a>
                                         </p>

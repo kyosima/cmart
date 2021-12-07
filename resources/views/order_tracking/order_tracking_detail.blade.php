@@ -29,7 +29,7 @@
                             <div class="top-order">
                                 <p><span>Mã đơn hàng:</span> {{ $order->order_code }}</p>
                                 <p><span>Thời gian đặt hàng:</span> <span class="action-order">
-                                        <b style="color:#15b02a">{{ date('d/m/Y H:i:s') }}</b> </span></p>
+                                        <b style="color:#15b02a">{{ date('d/m/Y H:i:s', strtotime($order->created_at)) }}</b> </span></p>
                             </div>
 
                             <div class="middle-order">
@@ -40,28 +40,28 @@
                                         </p>
                                     </li>
                                     <li
-                                        class="pause-complete @if ($order->status > 1)success @endif
+                                        class="pause-complete @if ($order->status >= 1)success @endif
                                     ">
                                         <p>
                                             Đã xác nhận <span></span>
                                         </p>
                                     </li>
                                     <li
-                                        class="pause-complete @if ($order->status > 2)success @endif
+                                        class="pause-complete @if ($order->status >= 2)success @endif
                                     ">
                                         <p>
                                             Đang xử lý <span></span>
                                         </p>
                                     </li>
                                     <li
-                                        class="pause-complete @if ($order->status > 3)success @endif
+                                        class="pause-complete @if ($order->status >= 3)success @endif
                                     ">
                                         <p>
                                             Đang giao hàng <span></span>
                                         </p>
                                     </li>
                                     <li
-                                        class="pause-complete @if ($order->status > 4)success @endif
+                                        class="pause-complete @if ($order->status >= 4)success @endif
                                     ">
                                         <p>
                                             Giao hàng thành công <span></span>
@@ -138,19 +138,7 @@
 
         </div>
         <!-- Detail DVVC -->
-        <div class="custom_modal modal fade" id="DVVC" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="box-modal">
-                            <p class="title-log">Thông tin giao hàng</p>
-                            <p class="intro-log" style="color:#000;"><b>Đơn vị giao:</b> </p>
-                            <p class="intro-log" style="color:#000;"><b>Mã vận đơn:</b> </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+     
 
     </div>
 @endsection

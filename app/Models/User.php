@@ -52,4 +52,16 @@ class User extends Authenticatable
     public function getstoreAddress(){
         return $this->hasMany(StoreAddress::class, 'id_user', 'id');
     }
+
+	// public function orders()
+	// {
+	// 	return $this->belongsToMany(Order::class, 'order_products', 'id_order', 'id_product')
+	// 				->withPivot('id', 'quantity', 'price')
+	// 				->withTimestamps();
+	// }
+
+    // public function cpoint_history()
+	// {
+	// 	return $this->hasMany(CPointHistory::class, 'user_id', 'id');
+	// }
 }

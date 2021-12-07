@@ -65,7 +65,7 @@ img {
                     <div class="col">
                         <div class="row align-items-center">
                             <div class="col-md-7">
-                                <h4 class="mb-1">{{$profileUser->name}}</h4>
+                                <h4 class="mb-1">{{$profileUser->phone}}</h4>
                             </div>
                         </div>
                         <div class="row mb-4">
@@ -98,7 +98,7 @@ img {
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lastname">Số điện thoại</label>
-                        <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}">
+                        <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}" readonly>
                     </div>
                 </div>
                 <div class="form-group">
@@ -134,28 +134,27 @@ img {
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND</label>
                         @if($profileUser->cmnd_image != null)
-                        <img id="imgFileUpload" alt="Select File" title="Select File" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image)}}" width="100%" height="250px" style="cursor: pointer" />
+                        <img id="imgFileUpload" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image)}}" width="100%" height="250px" style="cursor: pointer" />
                         <br />
                         <span id="spnFilePath"></span>
                         <input type="file" id="FileUpload1" style="display: none" name="image_cmnd" id="img_cmnd" />
+
                         @else
                         <p style="color:red">
-                            <input type="file" class="form-control" name="image_cmnd" id="img_cmnd" style="display: none">
-                            <label for="img_cmnd">Click vào đây để chọn ảnh CMND của bạn</label>
+                            <input type="file" class="form-control" name="image_cmnd" id="img_cmnd">
                         </p>
                         @endif
                 </div>
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND mặt sau</label>
                         @if($profileUser->cmnd_image2 != null)
-                        <img id="imgFileUpload" alt="Select File" title="Select File" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image2)}}" width="100%" height="250px" style="cursor: pointer" />
+                        <img id="imgFileUpload" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image2)}}" width="100%" height="250px" style="cursor: pointer" />
                         <br />
                         <span id="spnFilePath"></span>
                         <input type="file" id="FileUpload1" style="display: none" name="image_cmnd2" id="img_cmnd2" />
                         @else
                         <p style="color:red">
-                            <input type="file" class="form-control" name="image_cmnd2" id="img_cmnd2" style="display: none">
-                            <label for="img_cmnd2">Click vào đây để chọn ảnh CMND của bạn</label>
+                            <input type="file" class="form-control" name="image_cmnd2" id="img_cmnd2" >
                         </p>
                         @endif
                 </div>
@@ -179,7 +178,7 @@ img {
                         <select name="sel_province" class="form-control select2"
                             data-placeholder="---Chọn tỉnh thành---" required>
                                 <option value="{{ $profileUser->id_tinhthanh }}">
-                                {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->pluck("tentinhthanh")}}
+                                {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->first()->tentinhthanh}}
                                 </option>
                                 @foreach ($province as $value)
                                     <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
@@ -199,7 +198,7 @@ img {
                         <select class="form-control select2" name="sel_district"
                             data-placeholder="---Chọn quận huyên---" required>
                             <option value="{{ $profileUser->id_tinhthanh }}">
-                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->pluck("tenquanhuyen")}}
+                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->first()->tenquanhuyen}}
                             </option>
                         </select>
                         @endif
@@ -215,7 +214,7 @@ img {
                         <select class="form-control select2" name="sel_ward"
                             data-placeholder="---Chọn phường xã---" required>
                             <option value="{{$profileUser->id_phuongxa}}">
-                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->pluck("tenphuongxa")}}
+                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->first()->tenphuongxa}}
                             </option>
                         </select>
                         @endif

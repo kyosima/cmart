@@ -15,19 +15,19 @@
 
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <a class="img-pc" href="{{url('/khuyen-mai ')}}" title="Chung tay đánh bay COVID">
+                    <a class="img-pc" href="#" title="Chung tay đánh bay COVID">
                         <img src="https://s3.cloud.cmctelecom.vn/tinhte1/2018/06/4326778_banner-e-commerce.jpg" alt="Chung tay đánh bay COVID">
                     </a>
-                    <a class="img-mobile" href="{{url('/khuyen-mai ')}}" title="Chung tay đánh bay COVID">
+                    <a class="img-mobile" href="#" title="Chung tay đánh bay COVID">
                         <img alt="Chung tay đánh bay COVID" src="https://s3.cloud.cmctelecom.vn/tinhte1/2018/06/4326778_banner-e-commerce.jpg">
                     </a>
 
                 </div>
                 <div class="carousel-item ">
-                    <a class="img-pc" href="{{url('/khuyen-mai ')}}" title="Chung tay đánh bay COVID">
+                    <a class="img-pc" href="#" title="Chung tay đánh bay COVID">
                         <img src="https://s3.cloud.cmctelecom.vn/tinhte1/2018/06/4326778_banner-e-commerce.jpg" alt="Chung tay đánh bay COVID">
                     </a>
-                    <a class="img-mobile" href="{{url('/khuyen-mai ')}}" title="Chung tay đánh bay COVID">
+                    <a class="img-mobile" href="#" title="Chung tay đánh bay COVID">
                         <img alt="Chung tay đánh bay COVID" src="https://s3.cloud.cmctelecom.vn/tinhte1/2018/06/4326778_banner-e-commerce.jpg">
                     </a>
 
@@ -41,7 +41,7 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
-            <ul class="carousel-indicators carousel-pc" style="" role="tablist">
+            {{-- <ul class="carousel-indicators carousel-pc" style="" role="tablist"> --}}
                 <!--<li data-target="#demo" data-slide-to="0" class="active"><a class="pager-item" title="Chung tay đánh bay COVID"> Chung tay đánh bay COVID </a></li>-->
                 <!--<li class="" data-target="#demo" data-slide-to="1"><a class="pager-item" title="Thương Hiệu Tặng Quà 2 Triệu"> Thương Hiệu Tặng Quà 2 Triệu </a></li>-->
                 <!--<li class="" data-target="#demo" data-slide-to="2"><a class="pager-item" title="Top Bán Chạy Mua 2 Tặng 1"> Top Bán Chạy Mua 2 Tặng 1 </a></li>-->
@@ -49,7 +49,7 @@
                 <!--<li class="" data-target="#demo" data-slide-to="4"><a class="pager-item" title="Khỏe Đẹp Tại Nhà Sale 52%"> Khỏe Đẹp Tại Nhà Sale 52% </a></li>-->
                 <!--<li class="" data-target="#demo" data-slide-to="5"><a class="pager-item" title="Mẹ và Bé Giảm 30%++"> Mẹ và Bé Giảm 30%++ </a></li>-->
                 <!--<li class="" data-target="#demo" data-slide-to="6"><a class="pager-item" title="Chăm Da Đẹp Dáng Giảm 50%"> Chăm Da Đẹp Dáng Giảm 50% </a></li>-->
-            </ul>
+            {{-- </ul> --}}
         </div>
     </div>
     <div class="product">
@@ -122,7 +122,7 @@
                                             </a>
                                         </span>
                                         <b></b>
-                                        <a href="{{route('proCat.index', $proCat->slug)}}" class="view-more text-dark text-right">
+                                        <a href="{{route('proCat.index', $proCat->slug)}}" class="view-more  text-right">
                                             Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                           </a>
                                     </p>

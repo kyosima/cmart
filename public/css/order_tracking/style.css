@@ -658,6 +658,25 @@ textarea.form-control {
     background: #f5f3f3;
     box-shadow: inset 2px -2px 5px 0 rgba(0, 0, 0, .1);
 }
+.progress>li.success:before {
+    content: url(../../images/check1.png);
+}
+.progress>li.success:before {
+    display: block;
+    margin: 0 auto;
+    background: transparent;
+    width: 2.5em;
+    height: 3em;
+    text-align: center;
+    margin-bottom: 0.25em;
+    line-height: 3em;
+    border-radius: 100%;
+    position: relative;
+    z-index: 1;
+}
+.progress>li.pause-complete.success:after{
+    background: #1ab02a !important;
+}
 
 
 .submit-btn{

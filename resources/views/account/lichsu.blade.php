@@ -120,7 +120,6 @@
                 <td>{{formatPrice($k->tax)}}</td>
                 <td>{{formatPrice($k->process_fee)}}</td>
                 <td>{{formatPrice($k->total)}}</td>
-
                 <td>
                     @if($k->payment_method == 1)
                         Đang vận chuyển
