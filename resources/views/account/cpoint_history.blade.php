@@ -98,7 +98,7 @@
             @foreach ($data as $k)
             <tr>
                 <td>{{$k->order_code}}</td>
-                <td>{{$k->cpoint}}</td>
+                <td>{{$k->c_point}}</td>
                 <td>{{$k->created_at}}</td>
             </tr>
             @endforeach
@@ -106,7 +106,7 @@
         </tbody>
     </table>
     </div>
-</body>
+</body> 
 </html>
 
 @endsection

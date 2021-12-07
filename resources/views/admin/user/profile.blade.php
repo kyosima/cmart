@@ -85,6 +85,7 @@
                         <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
                         <div class="info">
                             <form action="{{$user->id}}" method="POST">
+@csrf
                             <input type="hidden" class="form-control mb-2" name="_token" value="{{csrf_token()}}" />
                             <div class="row m-5">
                                 <div class="col-lg-12 text-start">
@@ -304,8 +305,11 @@
                                     <div class="row mb-3">
                                         <div class="col-lg-12">
                                             <label for="exampleFormControlInput1" class="form-label">Lịch sử nhận point</label><br>
-                                            <table class="styled-table table-sortable">
-                                            <thead>
+                                            <div style="text-align: -webkit-center;">
+    <form data-action="cpoint" method="POST">
+    @csrf 
+    <table class="styled-table table-sortable">
+        <thead>
             <tr>
                 <th>Mã đơn hàng</th>
                 <th>Số điểm nhận đc</th>
@@ -316,13 +320,14 @@
             @foreach ($orders as $k)
             <tr>
                 <td>{{$k->order_code}}</td>
-                <td>{{$k->cpoint}}</td>
+                <td>{{$k->c_point}}</td>
                 <td>{{$k->created_at}}</td>
             </tr>
             @endforeach
             <!-- and so on... -->
         </tbody>
-                                            </table>
+    </table>
+    </div>
                                         </div>
                                     </div>
                                     

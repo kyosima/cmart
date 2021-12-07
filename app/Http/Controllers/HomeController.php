@@ -232,7 +232,8 @@ class HomeController extends Controller
     
     public function getLichsu() {
         if (Auth::check()) {
-            $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')->where('orders.user_id','=',auth()->user()->id)->select('orders.*')->get();
+            $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
+            ->where('orders.user_id','=',auth()->user()->id)->select('orders.*')->get();
             
             //dd($orders); die;
             return view('account.lichsu', compact('orders'));
