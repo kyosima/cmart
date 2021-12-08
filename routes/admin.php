@@ -1,4 +1,6 @@
 <?php
+
+use App\Admin\Controllers\AdminCouponController;
 use Illuminate\Support\Facades\Route;
 use App\Admin\Controllers\AdminHomeController;
 use App\Admin\Controllers\AdminRolesController;
@@ -58,7 +60,15 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('edit', [InfoCompanyController::class, 'edit'])->name('info-company.edit');
         Route::put('update', [InfoCompanyController::class, 'update'])->name('info-company.update');
     });
-    
+
+    // COUPON
+    Route::get('/coupon', [AdminCouponController::class, 'index'])->name('coupon.index');
+    Route::get('/coupon/getDatatable', [AdminCouponController::class, 'indexDatatable'])->name('coupon.indexDatatable');
+    Route::get('/coupon/modal-edit', [AdminCouponController::class, 'modalEdit'])->name('coupon.modalEdit');
+    Route::post('/coupon', [AdminCouponController::class, 'store'])->name('coupon.store');
+    Route::put('/coupon', [AdminCouponController::class, 'update'])->name('coupon.update');
+    Route::delete('/coupon', [AdminCouponController::class, 'delete'])->name('coupon.delete');
+    Route::delete('/coupon/multiple-delete', [AdminCouponController::class, 'multipleDestory'])->name('coupon.multipleDestory');
 
     // PRODUCT
     // được phép xem sản phẩm

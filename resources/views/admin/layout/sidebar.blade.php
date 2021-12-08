@@ -58,7 +58,7 @@
              <span class="links_name w-100 align-items-center d-flex">Cài đặt khuyến mãi <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             <span class="dropdown-content">
-                <a href="cau-hinh-khuyen-mai.html">Cấu hình khuyến mại</a>
+                <a href="{{route('coupon.index')}}">Cấu hình khuyến mại</a>
                 <a href="loai-khuyen-mai.html">Loại khuyến mãi</a>
             </span>
          </li>

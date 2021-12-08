@@ -168,7 +168,7 @@
                             text: [
                                 'Thực hiện không thành công',
                                 response.responseJSON.errorSlug,
-                                response.responseJSON.errorName
+                                response.responseJSON.errorName,
                             ],
                             position: 'top-right',
                             icon: 'error'
@@ -265,12 +265,6 @@
                         id: $(this).data('unitid'),
                     },
                     success: function (response) {
-                        $.toast({
-                            heading: 'Thành công',
-                            text: 'Thực hiện thành công',
-                            position: 'top-right',
-                            icon: 'success'
-                        });
                         $('#calculation_unit_create').after(response.html)
                         $('#calculation_unit_update').modal('show')
                     },
@@ -335,9 +329,9 @@
                     targets: 4,
                     data: null,
                     render: function(data, type, row) {
-                        return `<button class="btn btn-warning modal-edit-unit" 
+                        return `<span class="btn btn-warning modal-edit-unit" 
                         data-route="{{ route('chuyenmuc-baiviet.modalEdit') }}"
-                        data-unitid="${row.id}"><i class="fa fa-pencil"></i></button>`
+                        data-unitid="${row.id}"><i class="fa fa-pencil"></i></span>`
                     }
                 },
                 @elseif(auth()->guard('admin')->user()->can('Xóa danh mục bài viết') && auth()->guard('admin')->user()->cannot('Chỉnh sửa danh mục bài viết'))
@@ -345,7 +339,7 @@
                     targets: 4,
                     data: null,
                     render: function(data, type, row) {
-                        return ` <button class="btn btn-danger item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');"><i class="fa fa-trash"></i></button>
+                        return ` <span class="btn btn-danger item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');"><i class="fa fa-trash"></i></span>
                         `
                     }
                 },
@@ -354,10 +348,10 @@
                     targets: 4,
                     data: null,
                     render: function(data, type, row) {
-                        return `<button class="btn btn-warning modal-edit-unit" 
+                        return `<span class="btn btn-warning modal-edit-unit" 
                         data-route="{{ route('chuyenmuc-baiviet.modalEdit') }}"
-                        data-unitid="${row.id}"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');"><i class="fa fa-trash"></i></button>
+                        data-unitid="${row.id}"><i class="fa fa-pencil"></i></span>
+                        <span class="btn btn-danger item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');"><i class="fa fa-trash"></i></span>
                         `
                     }
                 },

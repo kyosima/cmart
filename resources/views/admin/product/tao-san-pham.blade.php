@@ -304,8 +304,8 @@
                                             required data-placeholder="Chọn thuế suất">
                                             <option></option>
                                             <option value="0" {{ old("tax") == 0 && old("tax") != null ? "selected":"" }}>0%</option>
-                                            <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
-                                            <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
+                                            <option value="5" {{ old("tax") == 5 ? "selected":"" }}>5%</option>
+                                            <option value="10" {{ old("tax") == 10 ? "selected":"" }}>10%</option>
                                         </select>
                                     </div>
                                 </div>

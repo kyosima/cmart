@@ -102,10 +102,16 @@ class BlogCategoryController extends Controller
             $slug = Str::slug($request->unitSlug, '-');
         }
 
-        // if(BlogCategory::whereSlug($slug)->exists()){
-        //     $int = random_int(1, 99999999);
-        //     $slug .= '-'.$int;
-        // }
+        $validator = Validator::make($request->all(), [
+            'unitName' => 'required',
+            'unitSlug' => 'unique:blog_category,slug,'.$request->id,
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'errorSlug' => $validator->errors()->first('unitSlug'),
+                'errorName' => $validator->errors()->first('unitName'),
+            ], 400);
+        }
 
         $blogCategory = BlogCategory::where('id', $request->id)->update([
             'name' => $request->unitName,
