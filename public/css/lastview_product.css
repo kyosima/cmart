@@ -2,7 +2,7 @@
     background: #4a4a4a;
     color: #ffffff;
     box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
+
     padding: 10px 14px;
     width: 100%;
 }
@@ -10,7 +10,7 @@
     background: #ffffff;
     border: 1px solid #4a4a4a;
     box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
+
     width: 100%;
 }
 .product-carousel .product {

@@ -4,6 +4,8 @@ namespace App\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Province;
@@ -32,12 +34,13 @@ class UserController extends Controller
         $province = Province::select('matinhthanh', 'tentinhthanh')->get();
         $district = District::select('maquanhuyen', 'tenquanhuyen')->get();
         $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
-        $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')->where('orders.user_id','=',auth()->user()->id)->select('orders.*')->get();
-        return view('admin.user.profile',['user'=>$user,'province'=>$province, 'district'=>$district, 'ward'=>$ward],compact('orders'));
+        $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
+        ->where('orders.user_id','=',$user->id)->select('orders.*')->get();
+        return view('admin.user.profile',['user'=>$user,'province'=>$province,
+         'district'=>$district, 'ward'=>$ward],compact('orders'));
     }
 
     public function postEdit(Request $request, $id) {
-        $this->validate($request, ['name' => 'required|min:3'],);
         $user = User::find($id);
         $user->name = $request->name;
         $user->level = $request->level;

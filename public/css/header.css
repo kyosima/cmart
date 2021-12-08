@@ -117,12 +117,15 @@ li {
     }
     .dropdown-navcmart li{
         padding: 5px 0px 5px 5px ;
-        border-top: thin solid #b1154a
+        border-top: thin solid #7e495b65
     }
     .dropdown-navcmart li a{
         font-weight: 400;
         
 
+    }
+    .dropdown-navcmart li:last-child{
+        border-bottom: none;
     }
     .dropdown-navcmart li:hover{
         background-color:#ffba00;
@@ -413,7 +416,7 @@ li {
     .bottom-header .follow-order span {
         color: #666;
         font-size: 12.5px;
-        font-family: "Open Sans", sans-serif;
+    
         font-weight: 400;
 
         line-height: 1.3;
