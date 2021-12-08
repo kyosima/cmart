@@ -113,7 +113,7 @@
                 <td>{{$k->shipping_method}}</td>
                 <td>{{$k->shipping_total}}</td>
                 <td>{{$k->sub_total}}</td>
-                <td>{{$k->cpoint}}</td>
+                <td>{{$k->c_point}}</td>
                 <td>
                     @if($k->payment_method == 1)
                         Đang vận chuyển

@@ -73,14 +73,12 @@
         }
     </style>
 <body>
-<form data-action="danh-sach-user" method="POST" style="    text-align: -webkit-center;">
-@csrf
+
     <table class="styled-table table-sortable">
         <thead>
             <tr style="text-align:center">
                 <th>ID</th>
                 <th>Họ và tên</th>
-                <!-- <th>Email</th> -->
                 <th>Số điện thoại</th>
                 <th>Cấp độ</th>
                 <th>Điểm tích lũy</th>
@@ -90,14 +88,16 @@
             </tr>
         </thead>
         <tbody>
+
             @foreach($user as $k)
                 <tr style="text-align:center">
                     <td>{{$k->id}}</td>
                     <td>{{$k->hoten}}</td>
-                    <!-- <td>{{$k->email}}</td> -->
                     <td>{{$k->phone}}</td>
                     <td>@if($k->level == 1)
-                            {{"Member Vip"}}
+                            {{"Member Thân Thiết"}}
+                        @elseif($k->level == 2)
+                            {{"Member VIP"}}
                         @else
                             {{"Member Thuong"}}
                         @endif
@@ -116,13 +116,21 @@
                         @endif
                     </td>
                     <td>
-                        @if($k->tichluyC >= 5000000)
-                                <button type="submit" class="alert alert-success m-0" name="levelUP" value="1" >
+                        <form data-action="danh-sach-user/{{$k->id}}" method="POST" style="text-align: -webkit-center;">
+                        @csrf
+
+                        @if($k->tichluyC >= 5000000 && $k->level == 0)
+                                <a class="alert alert-warning m-0" style="color:black;text-decoration: none;" 
+                                href="nang-cap-user/{{$k->id}}"> 
                                     Nâng cấp lên thân thiết
-                                </button> 
-                        @elseif($k->tichluyC >= 30000000)
-                                <button class="alert alert-warning m-0" type="button" name="levelUP" data-url="2" value="2" >Nâng cấp lên VIP</button>
-                        @else
+                                </a>
+                        @elseif($k->tichluyC >= 30000000 && $k->level == 1)
+                                <a class="alert alert-warning m-0" style="color:black;text-decoration: none;" 
+                                href="nang-cap-user/{{$k->id}}"> 
+                                    Nâng cấp lên VIP
+                                </a>
+                        @elseif(($k->tichluyC >= 5000000 && $k->level == 1) || ($k->tichluyC >= 30000000 && $k->level == 2))
+
                         @endif
                     </td>
                 </tr>

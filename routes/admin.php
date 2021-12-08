@@ -18,12 +18,14 @@ use App\Admin\UserController;
 Route::group(['middleware' => ['admin']], function () {
     // Route::resource('permissions', AdminPermissionsController::class);
     Route::get('danh-sach-user',[UserController::class, 'getDanhsach']);
-    Route::post('danh-sach-user',[UserController::class, 'postDanhsach']);
+    Route::get('/nang-cap-user/{id}',[UserController::class, 'postDanhsach']);
     
     Route::group(['prefix'=>'danh-sach-user'], function() {
         Route::get('{id}',[UserController::class, 'getEdit']);
         Route::post('{id}',[UserController::class, 'postEdit']);
     });
+
+    // Route::get('',[UserController::class,'postDanhsach']);
 
     Route::get('logout', [AdminHomeController::class, 'logout'])->name('logout');
 

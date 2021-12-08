@@ -19,14 +19,29 @@ class UserController extends Controller
 
     public function getDanhSach() {
         $user = User::all();
+        
         return view('admin.user.listuser',['user'=>$user]);
     }
 
-    public function postDanhsach(Request $request) {
-        $user = User::all();
-        $user->level = $request->levelUP;
-        $user->save();
-        return redirect('admin/danh-sach-user');
+    public function postDanhsach(Request $request,$id) {
+        $user = User::find($id);
+        $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
+        ->where('orders.user_id','=',$user->id)->select('orders.status')->get()->where('status','=',4)->count();
+
+        if($user->level == 0 && ($orders >= 3 || $user->tichluyC >= 5000000)){
+            $user->level = 1;
+            $user->save();
+            return back();
+        }
+        elseif($user->level == 1 && ($orders >= 5 || $user->tichluyC >= 300000000)) {
+            $user->level = 2;
+            $user->save();
+            return back();
+        }
+        else 
+            return back();
+
+
     }
 
     public function getEdit($id) {
@@ -36,8 +51,15 @@ class UserController extends Controller
         $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
         $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
         ->where('orders.user_id','=',$user->id)->select('orders.*')->get();
+
+
+        $sodonhang = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
+        ->where('orders.user_id','=',$user->id)->select('orders.status')->get()->count();
+        // dd($orders); die;
+
+
         return view('admin.user.profile',['user'=>$user,'province'=>$province,
-         'district'=>$district, 'ward'=>$ward],compact('orders'));
+         'district'=>$district, 'ward'=>$ward],compact('orders','sodonhang'));
     }
 
     public function postEdit(Request $request, $id) {
