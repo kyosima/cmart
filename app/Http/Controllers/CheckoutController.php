@@ -42,12 +42,12 @@ class CheckoutController extends Controller
             $process_fee = 0;
             foreach($carts as $row){
                 $price = $row->model->productPrice()->first();
-                $tax += $row->price * $price->tax / 100;
-                $c_ship += $price->cship;
-                $v_ship += $price->viettel_ship;
-                $m_point += $price->mpoint;
-                $c_point += $price->cpoint;
-                $process_fee += $price->phi_xuly;
+                $tax += ($row->price * $price->tax / 100) * $row->qty;
+                $c_ship += $price->cship * $row->qty;
+                $v_ship += $price->viettel_ship * $row->qty;
+                $m_point += $price->mpoint * $row->qty;
+                $c_point += $price->cpoint * $row->qty;
+                $process_fee += $price->phi_xuly * $row->qty;
             }
 
             return view('checkout.thanhtoan', [
@@ -101,12 +101,12 @@ class CheckoutController extends Controller
         $process_fee = 0;
         foreach($cart as $row){
             $price = $row->model->productPrice()->first();
-            $tax += $row->price * $price->tax / 100;
-            $c_ship += $price->cship;
-            $v_ship += $price->viettel_ship;
-            $m_point += $price->mpoint;
-            $c_point += $price->cpoint;
-            $process_fee += $price->phi_xuly;
+            $tax += ($row->price * $price->tax / 100) * $row->qty;
+            $c_ship += $price->cship * $row->qty;
+            $v_ship += $price->viettel_ship * $row->qty;
+            $m_point += $price->mpoint * $row->qty;
+            $c_point += $price->cpoint * $row->qty;
+            $process_fee += $price->phi_xuly * $row->qty;
         }
         switch ($request->shipping_method) {
             case'v_ship':
