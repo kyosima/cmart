@@ -52,7 +52,7 @@ img {
                     <div class="col-md-3 text-center mb-5">
                         <div class="avatar avatar-xl">
                             @if($profileUser->avatar != null)
-                                <img src="{{asset('/public/storage/upload/'.$profileUser->avatar)}}" width="150px" height="150px"/>
+                                <img src="{{asset('/public/images/'.$profileUser->avatar)}}" width="150px" height="150px"/>
                                 <input type="file" class="form-control" name="avatar" id="img_avatar" style="display: none">
                                 <label for="img_avatar" class="btn btn-primary profile-button mt-2">Cập nhật avatar</label>
                             @else
@@ -134,7 +134,7 @@ img {
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND</label>
                         @if($profileUser->cmnd_image != null)
-                        <img id="imgFileUpload" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image)}}" width="100%" height="250px" style="cursor: pointer" />
+                        <img id="imgFileUpload" src="{{asset('/public/images/'.$profileUser->cmnd_image)}}" width="100%" height="250px" style="cursor: pointer" />
                         <br />
                         <span id="spnFilePath"></span>
                         <input type="file" id="FileUpload1" style="display: none" name="image_cmnd" id="img_cmnd" />
@@ -149,7 +149,7 @@ img {
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND mặt sau</label>
                         @if($profileUser->cmnd_image2 != null)
-                        <img id="imgFileUpload" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image2)}}" width="100%" height="250px" style="cursor: pointer" />
+                        <img id="imgFileUpload" src="{{asset('/public/images/'.$profileUser->cmnd_image2)}}" width="100%" height="250px" style="cursor: pointer" />
                         <br />
                         <span id="spnFilePath"></span>
                         <input type="file" id="FileUpload1" style="display: none" name="image_cmnd2" id="img_cmnd2" />

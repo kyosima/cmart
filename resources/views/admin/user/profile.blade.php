@@ -75,7 +75,7 @@
             <div class="wrapper">
                 <div class="profile-card js-profile-card">
                     <div class="profile-card__img">
-                        <img src="{{asset('/public/storage/upload/'.$user->avatar)}}" alt="profile">
+                        <img src="{{asset('/public/images/'.$user->avatar)}}" alt="profile">
                     </div>
 
                     <div class="profile-card__cnt js-profile-cnt">
@@ -246,12 +246,12 @@
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-lg-4">
-                                            <label for="exampleFormControlInput1" class="form-label">Mặt trước CMND</label><br>
-                                            <img src="{{asset('/public/storage/upload/'.$user->cmnd_image)}}" alt="profile" height="200px">
+                                            <label for="exampleFormControlInput1" cla`ss="form-label">Mặt trước CMND</label><br>
+                                            <img src="{{asset('/public/images/'.$user->cmnd_image)}}" alt="profile" height="200px">
                                         </div>
                                         <div class="col-lg-4">
                                             <label for="exampleFormControlInput1" class="form-label">Mặt sau CMND</label><br>
-                                            <img src="{{asset('/public/storage/upload/'.$user->cmnd_image2)}}" alt="profile" height="200px">
+                                            <img src="{{asset('/public/images/'.$user->cmnd_image2)}}" alt="profile" height="200px">
                                         </div>
                                     </div>
                                     

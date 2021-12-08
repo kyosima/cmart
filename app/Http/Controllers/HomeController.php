@@ -166,33 +166,39 @@ class HomeController extends Controller
                 }
             }
         }
+        // if($request->hasFile('image_cmnd')) {
+        //     $destination_path = 'public\upload';
+        //     $image = $request->file('image_cmnd');
+        //     $image_name = $image->getClientOriginalName();
+        //     $user->cmnd_image = $image_name;
+        //     $path = $request->file('image_cmnd')->storeAs($destination_path,$image_name);
+        //     $input['image_cmnd'] = $image_name;
+        // }
+
         if($request->hasFile('image_cmnd')) {
-            $destination_path = 'public\upload';
-            $image = $request->file('image_cmnd');
-            $image_name = $image->getClientOriginalName();
-            $user->cmnd_image = $image_name;
-            $path = $request->file('image_cmnd')->storeAs($destination_path,$image_name);
-            $input['image_cmnd'] = $image_name;
-        }
+            $user_img_name = $request->file('image_cmnd');
+            $user_name = time().'.'.$user_img_name->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $user_img_name->move($destinationPath, $user_name);
+            $user->cmnd_image = $user_name;
+          }
         // $idfinal = Province::where('$user->id_phuongxa',$request->id_phuongxa)
        // $abc = DB::table('province')->where($user->id = $province->user_id)->get();
 
         if($request->hasFile('avatar')) {
-            $destination_path = 'public\upload';
-            $image_avatar = $request->file('avatar');
-            $image_avatar_name = $image_avatar->getClientOriginalName();
-            $user->avatar = $image_avatar_name;
-            $path = $request->file('avatar')->storeAs($destination_path,$image_avatar_name);
-            $input['avatar'] = $image_avatar_name;
+            $user_img_avatar = $request->file('avatar');
+            $user_avatar = time().'.'.$user_img_avatar->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $user_img_avatar->move($destinationPath, $user_avatar);
+            $user->avatar = $user_avatar;
         }
 
         if($request->hasFile('image_cmnd2')) {
-            $destination_path = 'public\upload';
-            $image = $request->file('image_cmnd2');
-            $image_name = $image->getClientOriginalName();
-            $user->cmnd_image2 = $image_name;
-            $path = $request->file('image_cmnd2')->storeAs($destination_path,$image_name);
-            $input['image_cmnd2'] = $image_name;
+            $user_img_cmnd2 = $request->file('image_cmnd2');
+            $user_cm2 = time().'.'.$user_img_cmnd2->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $user_img_cmnd2->move($destinationPath, $user_cm2);
+            $user->cmnd_image2 = $user_cm2;
         }
 
         if($request->changePassword == "on"){
