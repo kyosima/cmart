@@ -9,7 +9,7 @@
 
 @section('content')
 
-    @if (auth()->guard('admin')->user()->can('Thêm thương hiệu'))
+    @if (auth()->guard('admin')->user()->can('Thêm mã ưu đãi'))
         <!-- Modal -->
         <div class="modal fade" id="brand_create" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -128,7 +128,7 @@
                             DANH SÁCH CÁC VOUCHER/COUPON </span>
                         <span class="caption-helper"></span>
                     </div>
-                    @if (auth()->guard('admin')->user()->can('Thêm thương hiệu'))
+                    @if (auth()->guard('admin')->user()->can('Thêm mã ưu đãi'))
                         <div class="ps-5">
                             <a href="#brand_create" data-toggle="modal" class="btn btn-add"><i
                                     class="fa fa-plus"></i>
@@ -141,7 +141,7 @@
             <hr>
             <div class="portlet-body">
                 <div class="pt-3" style="overflow-x: auto;">
-                    @if (auth()->guard('admin')->user()->can('Xóa thương hiệu'))
+                    @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
                         <form id="myform" action="{{ route('coupon.multipleDestory') }}" method="post">
                             @csrf
                             @method('DELETE')
@@ -172,7 +172,7 @@
 
                         </tbody>
                     </table>
-                    @if (auth()->guard('admin')->user()->can('Xóa thương hiệu'))
+                    @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
                         <select name="action" id="">
                             <option value="-1" selected>Chọn tác vụ</option>
                             <option value="delete">Xóa</option>
@@ -196,7 +196,7 @@
 {{-- function get put post coupon --}}
 <script>
     $(document).ready(function() {
-        @if(auth()->guard('admin')->user()->can('Thêm thương hiệu'))
+        @if(auth()->guard('admin')->user()->can('Thêm mã ưu đãi'))
             // CREATE NEW CALCULATION UNIT
             $("#formCreateBrand").submit(function (e) {
                 e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -240,7 +240,7 @@
             });
         @endif
 
-        @if(auth()->guard('admin')->user()->can('Chỉnh sửa thương hiệu'))
+        @if(auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
             // UPDATE 
             $(document).on("submit", '#formUpdateUnit', function (e) {
                 e.preventDefault();
@@ -285,7 +285,7 @@
             });
         @endif
 
-        @if(auth()->guard('admin')->user()->can('Xóa thương hiệu'))
+        @if(auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
             // DELETE
             $(document).on('click', '.item-delete', function () {
                 var id = $(this).data('unitid')
@@ -362,7 +362,7 @@
                         return `${row.id}`
                     }
                 },
-                @if(auth()->guard('admin')->user()->can('Chỉnh sửa thương hiệu'))
+                @if(auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
                 {
                     targets: 2,
                     data: 'code',
@@ -411,7 +411,7 @@
                         return `${row.start_date.split('-').reverse().join('/')} - ${row.end_date.split('-').reverse().join('/')}`
                     }
                 },
-                @if(auth()->guard('admin')->user()->can('Xóa thương hiệu'))
+                @if(auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
                 {
                     targets: 7,
                     render: function(data, type, row){
@@ -431,6 +431,7 @@
     });
 </script>
 
+@if(auth()->guard('admin')->user()->can('Thêm mã ưu đãi'))
     {{-- calendar --}}
     <script>
         jQuery(function($) {
@@ -566,5 +567,6 @@
             }
         })
     </script>
+@endif
 
 @endpush

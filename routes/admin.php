@@ -62,21 +62,37 @@ Route::group(['middleware' => ['admin']], function () {
     });
 
     // COUPON
-    Route::get('/coupon', [AdminCouponController::class, 'index'])->name('coupon.index');
-    Route::get('/coupon/edit/{id?}', [AdminCouponController::class, 'edit'])->name('coupon.edit');
-    Route::get('/coupon/getDatatable', [AdminCouponController::class, 'indexDatatable'])->name('coupon.indexDatatable');
+    // được phép xem mã ưu đãi
+    Route::group(['middleware' => ['permission:Xem mã ưu đãi,admin']], function () {
+        Route::get('/coupon', [AdminCouponController::class, 'index'])->name('coupon.index');
+        Route::get('/coupon/getDatatable', [AdminCouponController::class, 'indexDatatable'])->name('coupon.indexDatatable');
+    });
 
-    Route::post('/coupon', [AdminCouponController::class, 'store'])->name('coupon.store');
-    Route::put('/coupon/{id}', [AdminCouponController::class, 'update'])->name('coupon.update');
-    Route::delete('/coupon/{id?}/{form?}', [AdminCouponController::class, 'delete'])->name('coupon.delete');
+    // được phép thêm mã ưu đãi
+    Route::group(['middleware' => ['permission:Thêm mã ưu đãi,admin']], function () {
+        Route::post('/coupon', [AdminCouponController::class, 'store'])->name('coupon.store');
+    });
+
+    // được phép chỉnh sửa mã ưu đãi
+    Route::group(['middleware' => ['permission:Chỉnh sửa mã ưu đãi,admin']], function () {
+        Route::get('/coupon/edit/{id?}', [AdminCouponController::class, 'edit'])->name('coupon.edit');
+        Route::put('/coupon/{id}', [AdminCouponController::class, 'update'])->name('coupon.update');
+    });
+
+    // được phép XÓA mã ưu đãi
+    Route::group(['middleware' => ['permission:Xóa mã ưu đãi,admin']], function () {
+        Route::delete('/coupon/{id?}/{form?}', [AdminCouponController::class, 'delete'])->name('coupon.delete');
+        Route::delete('/coupon/multiple-delete', [AdminCouponController::class, 'multipleDestory'])->name('coupon.multipleDestory');
+    });
+
+    Route::group(['middleware' => ['permission:Thêm mã ưu đãi,admin', 'permission:Chỉnh sửa mã ưu đãi,admin']], function () {
+        Route::get('/coupon/searchProduct', [AdminCouponController::class, 'getProduct'])->name('coupon.getProduct');
+        Route::get('/coupon/searchProCat', [AdminCouponController::class, 'getProCat'])->name('coupon.getProCat');
+        Route::get('/coupon/select-product', [AdminCouponController::class, 'selectProduct'])->name('coupon.selectProduct');
+        Route::get('/coupon/select-procat', [AdminCouponController::class, 'selectProCat'])->name('coupon.selectProCat');
+    });
     // Route::delete('/coupon/{id}', [AdminCouponController::class, 'deleteForm'])->name('coupon.deleteForm');
-    Route::delete('/coupon/multiple-delete', [AdminCouponController::class, 'multipleDestory'])->name('coupon.multipleDestory');
-
-    Route::get('/coupon/searchProduct', [AdminCouponController::class, 'getProduct'])->name('coupon.getProduct');
-    Route::get('/coupon/searchProCat', [AdminCouponController::class, 'getProCat'])->name('coupon.getProCat');
-    Route::get('/coupon/select-product', [AdminCouponController::class, 'selectProduct'])->name('coupon.selectProduct');
-    Route::get('/coupon/select-procat', [AdminCouponController::class, 'selectProCat'])->name('coupon.selectProCat');
-
+    
     // PRODUCT
     // được phép xem sản phẩm
     Route::group(['middleware' => ['permission:Xem sản phẩm,admin']], function () {
