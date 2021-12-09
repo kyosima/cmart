@@ -117,7 +117,7 @@
                         <option value="-1" selected>Chọn tác vụ</option>
                         <option value="delete">Xóa</option>
                     </select>
-                    <button type="submit" class="btn btn-warning" onclick="confirm('Bạn chắc chắn muốn thực hiện tác vụ này?')">Thực hiện tác vụ</button>
+                    <button type="submit" class="btn btn-warning" onclick="return confirm('Bạn chắc chắn muốn thực hiện tác vụ này?')">Thực hiện tác vụ</button>
                 </form>
                 @endif
             </div>
@@ -403,7 +403,7 @@
                                     data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
                                         aria-hidden="true"></i></button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button></li>
+                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="return confirm('Bạn có chắc muốn xóa');">Xoá</button></li>
                             </ul>`
                         } else {
                             return `<span type="text"
@@ -412,7 +412,7 @@
                                 data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
                                     aria-hidden="true"></i></button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');">Xoá</span></li>
+                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="return confirm('Bạn có chắc muốn xóa');">Xoá</span></li>
                             </ul>`
                         }
                     }
@@ -431,7 +431,7 @@
                                         aria-hidden="true"></i></button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                 <li><span class="dropdown-item item-deactive changeStatus" data-unitid="${row.id}" data-status="0">Ngừng</span></li>
-                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');">Xoá</span></li>
+                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="return confirm('Bạn có chắc muốn xóa');">Xoá</span></li>
                             </ul>`
                         } else {
                             return `<span type="text"
@@ -441,7 +441,7 @@
                                     aria-hidden="true"></i></button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><span class="dropdown-item item-active changeStatus" data-unitid="${row.id}" data-status="1">Hoạt động</span></li>
-                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');">Xoá</span></li>
+                                <li><span class="dropdown-item item-delete" data-unitid="${row.id}" onclick="return confirm('Bạn có chắc muốn xóa');">Xoá</span></li>
                             </ul>`
                         }
                     }

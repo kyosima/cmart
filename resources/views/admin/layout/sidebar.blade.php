@@ -53,14 +53,11 @@
          </li>
          @endif
          <li class="dropdown">
-            <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Cài đặt khuyến mãi <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            <a href="{{route('coupon.index')}}" class="dropbtn">
+                <i class="fa fa-frown-o" aria-hidden="true"></i>
+                <span class="links_name w-100 align-items-center d-flex">Tất cả khuyến mại</span>
             </a>
-            <span class="dropdown-content">
-                <a href="{{route('coupon.index')}}">Cấu hình khuyến mại</a>
-                <a href="loai-khuyen-mai.html">Loại khuyến mãi</a>
-            </span>
+            
          </li>
          <li class="dropdown">
             <a href="{{route('order.index')}}" class="dropbtn">

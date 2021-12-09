@@ -39,14 +39,14 @@
                                             value="{{ old('couponName') }}">
                                     </div>
                                 </div>
-                                <div class="form-group d-flex mb-2">
+                                <div class="form-group d-flex mb-2 couponType">
                                     <label class="col-md-3 control-label">Loại ưu đãi<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="couponType">
-                                            <option value="1">Giảm giá cho toàn bộ giỏ hàng</option>
-                                            <option value="2">Giảm giá theo sản phẩm</option>
-                                            <option value="3">Giảm giá theo danh mục sản phẩm</option>
+                                        <select class="form-control" name="couponType" id="couponType">
+                                            <option value="0">Giảm giá cho toàn bộ giỏ hàng</option>
+                                            <option value="1">Giảm giá theo sản phẩm</option>
+                                            <option value="2">Giảm giá theo danh mục sản phẩm</option>
                                         </select>
                                     </div>
                                 </div>
@@ -113,6 +113,13 @@
 
     <div class="m-3">
         <div class="wrapper bg-white p-4">
+            @if (session('success'))
+                <div class="portlet-status mb-2">
+                    <div class="caption bg-success p-3">
+                        <span class="caption-subject bold uppercase text-light">{{ session('success') }}</span>
+                    </div>
+                </div>
+            @endif
             <div class="portlet-title d-flex justify-content-between align-items-center">
                 <div class="title-name d-flex align-items-center">
                     <div class="caption">
@@ -171,7 +178,7 @@
                             <option value="delete">Xóa</option>
                         </select>
                         <button type="submit" class="btn btn-warning"
-                            onclick="confirm('Bạn chắc chắn muốn thực hiện tác vụ này?')">Thực hiện tác vụ</button>
+                            onclick="return confirm('Bạn chắc chắn muốn thực hiện tác vụ này?')">Thực hiện tác vụ</button>
                         </form>
                     @endif
                 </div>
@@ -186,9 +193,9 @@
 
 @push('scripts')
 
+{{-- function get put post coupon --}}
 <script>
     $(document).ready(function() {
-
         @if(auth()->guard('admin')->user()->can('Thêm thương hiệu'))
             // CREATE NEW CALCULATION UNIT
             $("#formCreateBrand").submit(function (e) {
@@ -266,7 +273,10 @@
                     error: function(response) {
                         $.toast({
                             heading: 'Thất bại',
-                            text: 'Thực hiện không thành công',
+                            text: [
+                                'Thực hiện không thành công',
+                                response.responseJSON.error
+                            ],
                             position: 'top-right',
                             icon: 'error'
                         });
@@ -358,8 +368,7 @@
                     data: 'code',
                     render: function(data, type, row) {
                         return `<a style="text-decoration: none; cursor: pointer;" 
-                        data-route="{{ route('coupon.modalEdit') }}" 
-                        data-unitid="${row.id}" class="modal-edit-unit">${row.code}</a>`
+                        href="{{ route('coupon.edit') }}/${row.id}">${row.code}</a>`
                     }
                 },
                 @else 
@@ -371,10 +380,10 @@
                 {
                     targets: 3,
                     render: function(data, type, row) {
-                        if (row.promo.id_type == 1) {
+                        if (row.type == 0) {
                             return 'Giảm giá cho toàn bộ giỏ hàng'
                         }
-                        else if (row.promo.id_type == 2) {
+                        else if (row.type == 1) {
                             return 'Giảm giá theo sản phẩm'
                         }
                         else {
@@ -406,7 +415,7 @@
                 {
                     targets: 7,
                     render: function(data, type, row){
-                        return `<span class="btn btn-danger item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');"><i class="fa fa-trash"></i></span>`
+                        return `<span class="btn btn-danger item-delete" data-unitid="${row.id}" onclick="return confirm('Bạn có chắc muốn xóa');"><i class="fa fa-trash"></i></span>`
                     }
                 },
                 @else 
@@ -422,8 +431,7 @@
     });
 </script>
 
-    <script type="text/javascript" src="{{ asset('/js/admin/productBrand.js') }}"></script>
-
+    {{-- calendar --}}
     <script>
         jQuery(function($) {
             $.datepicker.regional["vi-VN"] = {
@@ -453,6 +461,110 @@
             $( "#to" ).datepicker({minDate: 0})
         });
 
+    </script>
+
+    {{-- select product and procat for promo --}}
+
+    <script>
+        $(document).on('change', '#couponType', function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            if ($(this).val() == 0) {
+                $('.div-select-product').remove()
+                $('.div-select-procat').remove()
+            }
+            else if($(this).val() == 1) {
+                $('.div-select-procat').remove()
+                $.ajax({
+                    type: "GET",
+                    url: `{{route('coupon.selectProduct')}}`,
+                    data: {
+                        id: $(this).val()
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        $('.couponType').after(response.html)
+                        $('#select-product').select2({
+                            width: '100%',
+                            multiple: true,
+                            minimumInputLength: 3,
+                            dropdownParent: $('#brand_create'),
+                            dataType: 'json',
+                            delay: 250,
+                            ajax: {
+                                url: `{{ route('coupon.getProduct') }}`,
+                                dataType: 'json',
+                                data: function (params) {
+                                    var query = {
+                                        search: params.term,
+                                    }
+                                    return query;
+                                },
+                                processResults: function (data) {
+                                    return {
+                                        results: data.data
+                                    };
+                                },
+                                cache: true
+                            },
+                            placeholder: 'Tìm kiếm sản phẩm...',
+                            templateResult: formatRepoSelection,
+                            templateSelection: formatRepoSelection
+                        })
+                        function formatRepoSelection (repo) {
+                            return `${repo.name} (#${repo.id})`;
+                        }
+                    }
+                });
+            }
+            else {
+                $('.div-select-product').remove()
+                $.ajax({
+                    type: "GET",
+                    url: `{{route('coupon.selectProCat')}}`,
+                    data: {
+                        id: $(this).val()
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        $('.couponType').after(response.html)
+                        $('#select-procat').select2({
+                            width: '100%',
+                            multiple: true,
+                            minimumInputLength: 3,
+                            dropdownParent: $('#brand_create'),
+                            dataType: 'json',
+                            delay: 250,
+                            ajax: {
+                                url: `{{ route('coupon.getProCat') }}`,
+                                dataType: 'json',
+                                data: function (params) {
+                                    var query = {
+                                        search: params.term,
+                                    }
+                                    return query;
+                                },
+                                processResults: function (data) {
+                                    return {
+                                        results: data.data
+                                    };
+                                },
+                                cache: true
+                            },
+                            placeholder: 'Tìm kiếm sản phẩm...',
+                            templateResult: formatRepoSelection,
+                            templateSelection: formatRepoSelection
+                        })
+                        function formatRepoSelection (repo) {
+                            return `${repo.name} (#${repo.id})`;
+                        }
+                    }
+                });
+            }
+        })
     </script>
 
 @endpush

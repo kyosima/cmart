@@ -63,12 +63,19 @@ Route::group(['middleware' => ['admin']], function () {
 
     // COUPON
     Route::get('/coupon', [AdminCouponController::class, 'index'])->name('coupon.index');
+    Route::get('/coupon/edit/{id?}', [AdminCouponController::class, 'edit'])->name('coupon.edit');
     Route::get('/coupon/getDatatable', [AdminCouponController::class, 'indexDatatable'])->name('coupon.indexDatatable');
-    Route::get('/coupon/modal-edit', [AdminCouponController::class, 'modalEdit'])->name('coupon.modalEdit');
+
     Route::post('/coupon', [AdminCouponController::class, 'store'])->name('coupon.store');
-    Route::put('/coupon', [AdminCouponController::class, 'update'])->name('coupon.update');
-    Route::delete('/coupon', [AdminCouponController::class, 'delete'])->name('coupon.delete');
+    Route::put('/coupon/{id}', [AdminCouponController::class, 'update'])->name('coupon.update');
+    Route::delete('/coupon/{id?}/{form?}', [AdminCouponController::class, 'delete'])->name('coupon.delete');
+    // Route::delete('/coupon/{id}', [AdminCouponController::class, 'deleteForm'])->name('coupon.deleteForm');
     Route::delete('/coupon/multiple-delete', [AdminCouponController::class, 'multipleDestory'])->name('coupon.multipleDestory');
+
+    Route::get('/coupon/searchProduct', [AdminCouponController::class, 'getProduct'])->name('coupon.getProduct');
+    Route::get('/coupon/searchProCat', [AdminCouponController::class, 'getProCat'])->name('coupon.getProCat');
+    Route::get('/coupon/select-product', [AdminCouponController::class, 'selectProduct'])->name('coupon.selectProduct');
+    Route::get('/coupon/select-procat', [AdminCouponController::class, 'selectProCat'])->name('coupon.selectProCat');
 
     // PRODUCT
     // được phép xem sản phẩm

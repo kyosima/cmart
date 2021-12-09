@@ -185,7 +185,7 @@
                                                                 @csrf
                                                                 @method('delete')
                                                                 <button type="submit" class="dropdown-item"
-                                                                    onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
+                                                                    onclick="return confirm('Bạn có chắc muốn xóa');">Xoá</button>
                                                             </form>
                                                             @endif
                                                         </li>
@@ -219,7 +219,7 @@
                                                                 @csrf
                                                                 @method('delete')
                                                                 <button type="submit" class="dropdown-item"
-                                                                    onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
+                                                                    onclick="return confirm('Bạn có chắc muốn xóa');">Xoá</button>
                                                             </form>
                                                             @endif
                                                         </li>
