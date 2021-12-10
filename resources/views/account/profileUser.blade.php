@@ -140,8 +140,9 @@ img {
                         <input type="file" id="FileUpload1" style="display: none" name="image_cmnd" id="img_cmnd" />
 
                         @else
-                        <p style="color:red">
-                            <input type="file" class="form-control" name="image_cmnd" id="img_cmnd">
+                        <p>
+                            <input class="form-control" type="file" accept="image/*" onchange="loadFile(event)" name="image_cmnd">
+                            <img id="output"/>
                         </p>
                         @endif
                 </div>
@@ -153,9 +154,8 @@ img {
                         <span id="spnFilePath"></span>
                         <input type="file" id="FileUpload1" style="display: none" name="image_cmnd2" id="img_cmnd2" />
                         @else
-                        <p style="color:red">
-                            <input type="file" class="form-control" name="image_cmnd2" id="img_cmnd2" >
-                        </p>
+                            <input class="form-control" type="file" accept="image/*" onchange="loadFile2(event)" name="image_cmnd2">
+                            <img id="output2"/>
                         @endif
                 </div>
                 <div class="form-group">
@@ -326,5 +326,22 @@ src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
             });
         })
     </script> -->
+
+    <script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+  var loadFile2 = function(event) {
+    var output = document.getElementById('output2');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+    </script>   
 @endpush
 

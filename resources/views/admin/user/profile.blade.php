@@ -83,6 +83,9 @@
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
                         <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
                         <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
+                        <button class="alert alert-success m-0">Số đơn hàng đã hoàn thành: {{$sodonhang}}</button>
+                        <button class="alert alert-warning m-0">Số điểm tích luỹ C: {{$user->tichluyC}}</button>
+                        <button class="alert alert-danger m-0">Số điểm tích luỹ M: 0</button>
                         <div class="info">
                             <form action="{{$user->id}}" method="POST">
 @csrf
@@ -135,7 +138,7 @@
                                             </select>
                                     <label for="exampleFormControlInput1" class="form-label">Loại giấy tờ</label>
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <select class="form-select" name="type_cmnd" aria-label="Default select example">
                                               <option selected>
                                                     @if($user->type_cmnd == 0)
@@ -165,9 +168,6 @@
                                               @else
                                               @endif
                                             </select>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input type="cmnd" class="form-control mb-2" name="Số CMND" placeholder="Level" value="{{$user->cmnd}}">
                                         </div>
                                     </div>
 
@@ -395,5 +395,7 @@
 @endsection
 
 @push('scripts')
-
+<script type="text/JavaScript" 
+src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
+</script>
 @endpush
