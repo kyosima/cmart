@@ -69,6 +69,7 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->address = $request->address;
         $user->check_kyc = $request->check_kyc;
+        $user->type_cmnd = $request->type_cmnd;
         $user->save();
         return redirect('admin/danh-sach-user');
     }

@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Dashboard')
+@section('title', 'Danh sách khách hàng')
 
 @push('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin/dashboard.css') }}">

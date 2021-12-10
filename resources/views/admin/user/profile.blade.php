@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Quản lý tài khoản')
+@section('title', 'Thông tin tài khoản')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/profile.css') }}" type="text/css">
@@ -25,6 +25,10 @@
 .styled-table th,
 .styled-table td {
     padding: 12px 15px;
+}
+
+tbody tr:nth-child(even) td {
+    color: white;
 }
 
 .styled-table tbody tr {
@@ -75,40 +79,62 @@
             <div class="wrapper">
                 <div class="profile-card js-profile-card">
                     <div class="profile-card__img">
-                        <img src="{{asset('/public/images/'.$user->avatar)}}" alt="profile">
+                        @if($user->avatar != null)
+                            <img src="{{asset('/public/images/'.$user->avatar)}}" alt="profile">
+                        @else
+                            <img src="{{asset('/public/avatar.png')}}" alt="profile">
+                        @endif
                     </div>
 
                     <div class="profile-card__cnt js-profile-cnt">
-                        <div class="profile-card__name" style="text-transform: uppercase">{{$user->name}}</div>
+                        <div class="profile-card__name pb-3" style="text-transform: uppercase">
+                            @if($user->name != null)
+                                - {{$user->name}} -
+                            @else
+                                - ID: {{$user->id}} -
+                            @endif
+                        </div>
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
                         <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
                         <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
-                        <button class="alert alert-success m-0">Số đơn hàng đã hoàn thành: {{$sodonhang}}</button>
-                        <button class="alert alert-warning m-0">Số điểm tích luỹ C: {{$user->tichluyC}}</button>
-                        <button class="alert alert-danger m-0">Số điểm tích luỹ M: 0</button>
-                        <div class="info">
+                        <div class="row">
+                            <div class="col-4">
+                                <button class="alert alert-success m-0 text-center" style="width: 85%;border-radius: 40px; background: orangered; color: white;">Số đơn hàng đã hoàn thành: {{$sodonhang}}</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số điểm tích luỹ C: {{$user->tichluyC}}</button>
+                            </div>
+                            <div class="col-4">
+                            <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số điểm tích luỹ M: 0</button>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="info pt-5">
                             <form action="{{$user->id}}" method="POST">
-@csrf
+                            @csrf
                             <input type="hidden" class="form-control mb-2" name="_token" value="{{csrf_token()}}" />
-                            <div class="row m-5">
+                            <h3 class="text-uppercase text-center">- Thông tin khách hàng -</h3>
+                            <div class="row">
                                 <div class="col-lg-12 text-start">
                                     
                                     
                                     <div class="form-group">
-                                        <label>Họ và tên</label>
+                                        <span class="text-uppercase">Họ và tên</span>
                                         <input type="name" class="form-control mb-2" name="name" placeholder="Nhập tên người dùng" value="{{$user->name}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 text-start">
-                                    <label for="exampleFormControlInput1" class="form-label">Số điện thoại</label>
+                                    <span class="text-uppercase">Số điện thoại</span>
                                     <input type="phone" class="form-control mb-2" name="phone" placeholder="Nhập số điện thoại"
                                         value="{{$user->phone}}">
-                                    <label for="exampleFormControlInput1" class="form-label">Email</label>
+                                        <span class="text-uppercase">Email</span>
                                     <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
                                         value="{{$user->email}}" readonly="">
                                 </div>
                                 <div class="col-lg-6 text-start">
-                                    <label for="exampleFormControlInput1" class="form-label">Cấp độ thành viên</label>
+                                <span class="text-uppercase">Cấp độ thành viên</span>
                                             <select class="form-select mb-2" name="level" aria-label="Default select example">
                                               <option value="{{$user->level}}" selected>
                                                     @if($user->level == 0)
@@ -136,37 +162,34 @@
                                               @endif
 
                                             </select>
-                                    <label for="exampleFormControlInput1" class="form-label">Loại giấy tờ</label>
+                                            <span class="text-uppercase">Loại giấy tờ</span>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <select class="form-select" name="type_cmnd" aria-label="Default select example">
-                                              <option selected>
-                                                    @if($user->type_cmnd == 0)
-                                                        Chọn loại giấy tờ tùy thân
-                                                    @elseif($user->type_cmnd == 1)
-                                                        Chứng minh nhân dân
-                                                    @elseif($user->type_cmnd == 2)
-                                                        Căn cước công dân
-                                                    @elseif($user->type_cmnd == 3)
-                                                        Hộ chiếu
-                                                    @else
-                                                    @endif  
-                                              </option>
-                                              
-                                              @if($user->level != 1)
+                                            
+                                            @if($user->type_cmnd == 0)
+                                              <option value="0">Chọn loại giấy tờ tùy thân</option>
                                               <option value="1">Chứng minh nhân dân</option>
-                                              @else
-                                              @endif
-
-                                              @if($user->level != 2)
                                               <option value="2">Căn cước công dân</option>
-                                              @else
-                                              @endif
-
-                                              @if($user->level != 3)
                                               <option value="3">Hộ chiếu</option>
-                                              @else
-                                              @endif
+                                              
+                                            @elseif($user->type_cmnd == 1)
+                                              <option value="1">Chứng minh nhân dân</option>
+                                              <option value="2">Căn cước công dân</option>
+                                              <option value="3">Hộ chiếu</option>
+                                            
+                                            @elseif($user->type_cmnd == 2)
+                                              <option value="2">Căn cước công dân</option>
+                                              <option value="1">Chứng minh nhân dân</option>
+                                              <option value="3">Hộ chiếu</option>
+
+                                            @elseif($user->type_cmnd == 3)  
+                                              <option value="3">Hộ chiếu</option>
+                                              <option value="1">Chứng minh nhân dân</option>
+                                              <option value="2">Căn cước công dân</option>
+
+                                            @else
+                                            @endif
                                             </select>
                                         </div>
                                     </div>
@@ -175,7 +198,7 @@
                                 </div>
 
                                 <div class="col-lg-12 text-start">
-                                    <label for="exampleFormControlInput1" class="form-label">Địa chỉ</label>
+                                    <span class="text-uppercase">Địa chỉ</span>
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <input type="text" class="form-control mb-2" name="address" placeholder="Nhập địa chỉ"
@@ -225,8 +248,8 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <div class="col-lg-3">
-                                            <label for="exampleFormControlInput1" class="form-label">Trạng thái KYC</label>
+                                        <div class="col-lg-6">
+                                            <span class="text-uppercase">Trạng thái KYC</span>
                                             <select class="form-select" name="check_kyc" aria-label="Default select example">
                                                 @if($user->check_kyc == 0)
                                                     <option value="{{$user->check_kyc}}" selected>Chọn trạng thái KYC</option>
@@ -245,19 +268,20 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <div class="col-lg-4">
-                                            <label for="exampleFormControlInput1" cla`ss="form-label">Mặt trước CMND</label><br>
-                                            <img src="{{asset('/public/images/'.$user->cmnd_image)}}" alt="profile" height="200px">
+                                        <div class="col-lg-6">
+                                            <p class="text-uppercase text-center">Mặt trước CMND</p>
+                                            <img src="{{asset('/public/images/'.$user->cmnd_image)}}" width="100%" alt="profile" height="300px">
                                         </div>
-                                        <div class="col-lg-4">
-                                            <label for="exampleFormControlInput1" class="form-label">Mặt sau CMND</label><br>
-                                            <img src="{{asset('/public/images/'.$user->cmnd_image2)}}" alt="profile" height="200px">
+                                        <div class="col-lg-6">
+                                            <p class="text-uppercase text-center">Mặt sau CMND</p>
+                                            <img src="{{asset('/public/images/'.$user->cmnd_image2)}}" alt="profile" height="300px">
                                         </div>
                                     </div>
                                     
-                                    <div class="row mb-3">
+                                    <div class="pt-5">
                                         <div class="col-lg-12">
-                                            <label for="exampleFormControlInput1" class="form-label">Lịch sử đơn hàng</label><br>
+                                            <h3 class="text-uppercase text-center">- Lịch sử nhận đơn hàng -</h3>
+                                            @if ($sodonhang != null)
                                             <table class="styled-table table-sortable">
                                                 <thead>
                                                     <tr>
@@ -268,7 +292,7 @@
                                                         <th>Giá trị đơn hàng</th>
                                                         <th>Points</th>
                                                         <th>Trạng thái</th>
-                                                        <th>Chi tiết đơn hàng</th>
+                                                        <!-- <th>Chi tiết đơn hàng</th> -->
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -295,93 +319,55 @@
                                                             Đang vận chuyển
                                                         @endif
                                                     </td>
-                                                    <td style="text-align: center"><a href="#">Xem</a></td>
+                                                    <!-- <td style="text-align: center"><a href="#">Xem</a></td> -->
                                                 </tr>
                                                 @endforeach
                                                     <!-- and so on... -->
                                                 </tbody>
                                             </table>
+                                            @else
+                                                <p class="text-center text-danger">Hiện tại khách hàng này chưa thực hiện đơn hàng nào</p>
+                                            @endif
                                         </div>
-                                    <div class="row mb-3">
+                                    <div class="row mb-3 pt-3">
                                         <div class="col-lg-12">
-                                            <label for="exampleFormControlInput1" class="form-label">Lịch sử nhận point</label><br>
-                                            <div style="text-align: -webkit-center;">
-    <form data-action="cpoint" method="POST">
-    @csrf 
-    <table class="styled-table table-sortable">
-        <thead>
-            <tr>
-                <th>Mã đơn hàng</th>
-                <th>Số điểm nhận đc</th>
-                <th>Ngày nhận</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($orders as $k)
-            <tr>
-                <td>{{$k->order_code}}</td>
-                <td>{{$k->c_point}}</td>
-                <td>{{$k->created_at}}</td>
-            </tr>
-            @endforeach
-            <!-- and so on... -->
-        </tbody>
-    </table>
-    </div>
+                                            <h3 class="text-uppercase text-center">- Lịch sử nhận point -</h3>
+                                            @if($sodonhang != null)
+                                                <form data-action="cpoint" method="POST">
+                                                @csrf 
+                                                <table class="styled-table table-sortable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Mã đơn hàng</th>
+                                                            <th>Số điểm nhận đc</th>
+                                                            <th>Ngày nhận</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($orders as $k)
+                                                        <tr>
+                                                            <td>{{$k->order_code}}</td>
+                                                            <td>{{$k->c_point}}</td>
+                                                            <td>{{$k->created_at}}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                        <!-- and so on... -->
+                                                    </tbody>
+                                                </table>
+                                            @else
+                                                <p class="text-center text-danger">Hiện tại khách hàng này chưa thực hiện đơn hàng nào</p>
+                                            @endif   
                                         </div>
                                     </div>
                                     
                                 </div>
-                                <button type="submit" class="btn btn-danger">Save Changes</button>
+                                <div class="text-center ">
+                                <button type="submit" class="btn btn-danger">Lưu thay đổi</button>
+                                </div>
                             </div>
                             </form>
                         </div>
 
-
-                        <div class="profile-card-social">
-                            <a href="#" class="profile-card-social__item facebook">
-                                <span class="icon-font">
-                                    <i class="fa fa-facebook icon "></i>
-                                </span>
-                            </a>
-
-                            <a href="#" class="profile-card-social__item twitter">
-                                <span class="icon-font">
-                                    <i class="fa fa-twitter icon "></i>
-                                </span>
-                            </a>
-
-                            <a href="#" class="profile-card-social__item instagram">
-                                <span class="icon-font">
-                                    <i class="fa fa-instagram icon "></i>
-                                </span>
-                            </a>
-
-                            <a href="#" class="profile-card-social__item behance">
-                                <span class="icon-font">
-                                    <i class="fa fa-google icon "></i>
-                                </span>
-                            </a>
-
-                            <a href="#" class="profile-card-social__item github">
-                                <span class="icon-font">
-                                    <i class="fa fa-youtube icon "></i>
-                                </span>
-                            </a>
-
-                            <a href="#" class="profile-card-social__item codepen">
-                                <span class="icon-font">
-                                    <i class="fa fa-pinterest icon "></i>
-                                </span>
-                            </a>
-
-                            <a href="#" class="profile-card-social__item link">
-                                <span class="icon-font">
-                                    <i class="fa fa-behance icon "></i>
-                                </span>
-                            </a>
-
-                        </div>
 
                     </div>
                 </div>
