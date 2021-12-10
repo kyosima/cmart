@@ -46,8 +46,8 @@ class UserController extends Controller
 
     public function getEdit($id) {
         $user = User::find($id);
-        $province = Province::select('matinhthanh', 'tentinhthanh')->get();
         $district = District::select('maquanhuyen', 'tenquanhuyen')->get();
+        $province = Province::select('matinhthanh', 'tentinhthanh')->get();
         $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
         $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
         ->where('orders.user_id','=',$user->id)->select('orders.*')->get();
@@ -55,6 +55,7 @@ class UserController extends Controller
 
         $sodonhang = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
         ->where('orders.user_id','=',$user->id)->select('orders.status')->get()->count();
+        
         // dd($orders); die;
 
 
