@@ -110,7 +110,7 @@
                                                     </form> --}}
                                                     <span
                                                         data-id="{{$item->id}}"
-                                                        onclick="confirm('Bạn có chắc muốn xóa');"
+                                                        onclick="return confirm('Bạn có chắc muốn xóa');"
                                                         data-url="{{ route('baiviet.delete', $item->id) }}"
                                                         class="dropdown-item btn-delete">
                                                         Xóa
@@ -160,7 +160,7 @@
                                                     </form> --}}
                                                     <span
                                                         data-id="{{$item->id}}"
-                                                        onclick="confirm('Bạn có chắc muốn xóa');"
+                                                        onclick="return confirm('Bạn có chắc muốn xóa');"
                                                         data-url="{{ route('baiviet.delete', $item->id) }}"
                                                         class="dropdown-item btn-delete">
                                                         Xóa
@@ -179,7 +179,7 @@
                         <option value="-1" selected>Chọn tác vụ</option>
                         <option value="delete">Xóa</option>
                     </select>
-                    <button type="submit" class="btn btn-warning" onclick="confirm('Bạn chắc chắn muốn thực hiện tác vụ này?')">Thực hiện tác vụ</button>
+                    <button type="submit" class="btn btn-warning" onclick="return confirm('Bạn chắc chắn muốn thực hiện tác vụ này?')">Thực hiện tác vụ</button>
                 </form>
                 @endif
             </div>

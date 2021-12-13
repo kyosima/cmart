@@ -347,12 +347,12 @@
                                             <option></option>
                                             @if (old("tax") != null)
                                                 <option value="0" {{ old("tax") == 0 ? "selected":"" }}>0%</option>
-                                                <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
-                                                <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
+                                                <option value="5" {{ old("tax") == 5 ? "selected":"" }}>5%</option>
+                                                <option value="10" {{ old("tax") == 10 ? "selected":"" }}>10%</option>
                                             @else
                                                 <option value="0" {{$product->productPrice->tax == 0 ? 'selected' : ''}}>0%</option>
-                                                <option value="0.05" {{$product->productPrice->tax == 0.05 ? 'selected' : ''}}>5%</option>
-                                                <option value="0.1" {{$product->productPrice->tax == 0.1 ? 'selected' : ''}}>10%</option>
+                                                <option value="5" {{$product->productPrice->tax == 5 ? 'selected' : ''}}>5%</option>
+                                                <option value="10" {{$product->productPrice->tax == 10 ? 'selected' : ''}}>10%</option>
                                             @endif
                                         </select>
                                     </div>

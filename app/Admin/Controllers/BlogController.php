@@ -85,7 +85,7 @@ class BlogController extends Controller
         // }
 
         $request->validate([
-            'blog_title' => 'required|unique:blogs,name',
+            'blog_title' => 'required|unique:blogs,name,'.$id,
             'blog_category' => 'required',
         ], [
             'blog_title.required' => 'Tên bài viết không được để trống',

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class BrandController extends Controller
@@ -54,7 +55,20 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
-        $slug = Str::slug($request->brandName, '-');
+        $slug = Str::slug($request->name, '-');
+
+        $validator = Validator::make($request->all(), [
+            'code' => 'required|unique:product_brand,code',
+            'slug' => 'required|unique:product_brand,slug',
+            'name' => 'required|unique:product_brand,name',
+        ]);
+        
+        if($validator->fails()){
+            return response()->json([
+                'error' => $validator->errors()->first('code') .' '. $validator->errors()->first('slug') .' '. $validator->errors()->first('name'),
+            ], 400);
+        }
+
         $brand = Brand::create([
             'code' => $request->brandCode,
             'slug' => $slug,
@@ -81,6 +95,17 @@ class BrandController extends Controller
     public function update(Request $request)
     {
         $slug = Str::slug($request->name, '-');
+
+        $validator = Validator::make($request->all(), [
+            'couponCode' => 'required|unique:coupons,code,'.$request->id,
+            'couponName' => 'required|unique:coupons,name,'.$request->id,
+        ]);
+        
+        if($validator->fails()){
+            return response()->json([
+                'error' => $validator->errors()->first('couponCode') .' '. $validator->errors()->first('couponName'),
+            ], 400);
+        }
 
         $brand = Brand::where('id', $request->id)->update([
             'code' => $request->brandCode,
