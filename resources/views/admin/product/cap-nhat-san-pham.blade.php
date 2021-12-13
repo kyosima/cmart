@@ -157,8 +157,19 @@
                                 <div class="form-group">
                                     <label class="col-md-12 control-label text-left">Sản phẩm upsell:</label>
                                     <div class="col-md-12">
-                                        <select class="form-control select-upsell" name="upsell[]" multiple>
-                                            @php
+                                        <select id="select-upsell" class="form-control select-upsell" name="upsell[]" multiple>
+                                            @if (is_array(old('upsell')))
+                                                @foreach (old('upsell') as $upsell)
+                                                    <option value="{{ $upsell }}" selected="selected">{{ App\Models\Product::where('id', $upsell)->value('name') }} (#{{$upsell}})</option>
+                                                @endforeach
+                                            @else 
+                                                @if (count($upsells) > 0)
+                                                    @foreach ($upsells as $item)
+                                                        <option value="{{$item->id}}" selected>{{$item->name}} (#{{$item->id}})</option>
+                                                    @endforeach
+                                                @endif
+                                            @endif
+                                            {{-- @php
                                                 $upsells = explode(',', $product->upsell);
                                             @endphp
                                             @foreach ($products as $item)
@@ -177,7 +188,7 @@
                                                         @endphp
                                                         >{{ $item->name }}</option>
                                                 @endif
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                 </div>
@@ -470,10 +481,41 @@
             multiple: true
         });
 
-        $('select.select-upsell').select2({
-            placeholder: "Chọn sản phẩm Upsell",
-            multiple: true
-        });
+        $('#select-upsell').select2({
+            width: '100%',
+            multiple: true,
+            minimumInputLength: 3,
+            dataType: 'json',
+            delay: 250,
+            ajax: {
+                url: `{{ route('san-pham.getProduct') }}`,
+                dataType: 'json',
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                        id: {{$product->id}},
+                    }
+                    return query;
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.data
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Chọn sản phẩm Upsell...',
+            templateResult: formatRepoSelection,
+            templateSelection: formatRepoSelection
+        })
+
+        function formatRepoSelection(repo) {
+            if (repo.text) {
+               return repo.text
+            } else {
+                return `${repo.name} (#${repo.id})`;
+            }
+        }
 
         easyNumberSeparator({
             selector: '.number-separator',

@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Traits\ajaxProductTrait;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\CalculationUnit;
@@ -16,6 +17,8 @@ use Illuminate\Support\Str;
 
 class AdminProductController extends Controller
 {
+    use ajaxProductTrait;
+
     public function index()
     {
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
@@ -163,10 +166,15 @@ class AdminProductController extends Controller
         $brands = Brand::all();
         $payments = Payment::all();
 
+        $upsells = [];
+        if ($product->upsell != null) {
+            $upsells = explode(',', $product->upsell);
+            $upsells = Product::whereIn('id', $upsells)->get();
+        }
         $message = 'User: '. auth()->guard('admin')->user()->name . ' truy cập trang cập nhật sản phẩm';
         Log::info($message);
 
-        return view('admin.product.cap-nhat-san-pham', compact('product', 'products', 'nganhHang', 'calculationUnits', 'brands', 'payments'));
+        return view('admin.product.cap-nhat-san-pham', compact('product', 'products', 'nganhHang', 'calculationUnits', 'brands', 'payments', 'upsells'));
     }
 
     public function update(Request $request, $id)
@@ -307,4 +315,11 @@ class AdminProductController extends Controller
         }
     }
 
+    public function getProduct(Request $request)
+    {
+        return response()->json([
+            'code' => 200,
+            'data' => $this->ajaxGetProduct($request->search, $request->id)
+        ]);
+    }
 }

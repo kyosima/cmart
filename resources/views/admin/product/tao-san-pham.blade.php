@@ -130,18 +130,12 @@
                                 <div class="form-group">
                                     <label class="col-md-12 control-label text-left">Sản phẩm upsell:</label>
                                     <div class="col-md-12">
-                                        <select class="form-control select-upsell" name="upsell[]" multiple>
-                                            @foreach ($products as $item)
-                                                <option value="{{ $item->id }}"
-                                                    @php
-                                                        if(old('upsell')) {
-                                                            if(in_array($item->id, old('upsell'))) {
-                                                                echo "selected";
-                                                            }
-                                                        }
-                                                    @endphp
-                                                    >{{ $item->name }}</option>
-                                            @endforeach
+                                        <select class="form-control select-upsell" id="select-upsell" name="upsell[]" multiple>
+                                            @if (is_array(old('upsell')))
+                                                @foreach (old('upsell') as $upsell)
+                                                    <option value="{{ $upsell }}" selected="selected">{{ App\Models\Product::where('id', $upsell)->value('name') }} (#{{$upsell}})</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
@@ -324,7 +318,6 @@
                                                             }
                                                         }
                                                     @endphp
-                                                    
                                                     >{{$item->name}}</option>
                                             @endforeach
                                         </select>
@@ -406,11 +399,6 @@
             multiple: true
         });
 
-        $('select.select-upsell').select2({
-            placeholder: "Chọn sản phẩm Upsell",
-            multiple: true
-        });
-
         easyNumberSeparator({
             selector: '.number-separator',
             separator: '.',
@@ -442,12 +430,40 @@
             resultInput: '#viettel_ship',
         })
 
-        // $(document).on('change', '.number-separator', function() {
-        //     let number = $(this).val()
-        //     let vn = new Intl.NumberFormat('vi-VN').format(number);
-        //     $(this).next().val(number)
-        //     $(this).val(vn)
-        // })
+        $('#select-upsell').select2({
+            width: '100%',
+            multiple: true,
+            minimumInputLength: 3,
+            dataType: 'json',
+            delay: 250,
+            ajax: {
+                url: `{{ route('san-pham.getProduct') }}`,
+                dataType: 'json',
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                    }
+                    return query;
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.data
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Chọn sản phẩm Upsell...',
+            templateResult: formatRepoSelection,
+            templateSelection: formatRepoSelection
+        })
+
+        function formatRepoSelection(repo) {
+            if (repo.text) {
+               return repo.text
+            } else {
+                return `${repo.name} (#${repo.id})`;
+            }
+        }
 
         $('#meta_description').keyup(function() {
             var characterCount = $(this).val().length,

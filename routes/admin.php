@@ -67,25 +67,21 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('/coupon', [AdminCouponController::class, 'index'])->name('coupon.index');
         Route::get('/coupon/getDatatable', [AdminCouponController::class, 'indexDatatable'])->name('coupon.indexDatatable');
     });
-
     // được phép thêm mã ưu đãi
     Route::group(['middleware' => ['permission:Thêm mã ưu đãi,admin']], function () {
         Route::post('/coupon', [AdminCouponController::class, 'store'])->name('coupon.store');
     });
-
     // được phép chỉnh sửa mã ưu đãi
     Route::group(['middleware' => ['permission:Chỉnh sửa mã ưu đãi,admin']], function () {
         Route::get('/coupon/edit/{id?}', [AdminCouponController::class, 'edit'])->name('coupon.edit');
         Route::put('/coupon/{id}', [AdminCouponController::class, 'update'])->name('coupon.update');
     });
-
     // được phép XÓA mã ưu đãi
     Route::group(['middleware' => ['permission:Xóa mã ưu đãi,admin']], function () {
         Route::delete('/coupon/{id?}/{form?}', [AdminCouponController::class, 'delete'])->name('coupon.delete');
         Route::delete('/coupon/multiple-delete', [AdminCouponController::class, 'multipleDestory'])->name('coupon.multipleDestory');
     });
-
-    Route::group(['middleware' => ['permission:Thêm mã ưu đãi,admin', 'permission:Chỉnh sửa mã ưu đãi,admin']], function () {
+    Route::group(['middleware' => ['permission:Thêm mã ưu đãi|Chỉnh sửa mã ưu đãi,admin']], function () {
         Route::get('/coupon/searchProduct', [AdminCouponController::class, 'getProduct'])->name('coupon.getProduct');
         Route::get('/coupon/searchProCat', [AdminCouponController::class, 'getProCat'])->name('coupon.getProCat');
         Route::get('/coupon/select-product', [AdminCouponController::class, 'selectProduct'])->name('coupon.selectProduct');
@@ -117,6 +113,10 @@ Route::group(['middleware' => ['admin']], function () {
     Route::group(['middleware' => ['permission:Xóa sản phẩm,admin']], function () {
         Route::delete('/san-pham/delete/{id}', [AdminProductController::class, 'destroy'])->name('san-pham.delete');
         Route::delete('/san-pham/multiple-delete', [AdminProductController::class, 'multipleDestory'])->name('san-pham.multipleDestory');
+    });
+
+    Route::group(['middleware' => ['permission:Thêm sản phẩm|Chỉnh sửa sản phẩm,admin']], function () {
+        Route::get('/san-pham/searchProduct', [AdminProductController::class, 'getProduct'])->name('san-pham.getProduct');
     });
 
 
