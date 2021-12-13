@@ -179,7 +179,8 @@ img {
                         <select name="sel_province" class="form-control select2"
                             data-placeholder="---Chọn tỉnh thành---" required>
                                 <option value="{{ $profileUser->id_tinhthanh }}">
-                                {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->first()->tentinhthanh}}
+                                {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')
+                                    ->where('province.matinhthanh','=',auth()->user()->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh}}
                                 </option>
                                 @foreach ($province as $value)
                                     <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
@@ -199,7 +200,8 @@ img {
                         <select class="form-control select2" name="sel_district"
                             data-placeholder="---Chọn quận huyên---" required>
                             <option value="{{ $profileUser->id_tinhthanh }}">
-                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->first()->tenquanhuyen}}
+                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')
+                                ->where('district.maquanhuyen','=',auth()->user()->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen}}
                             </option>
                         </select>
                         @endif
@@ -215,7 +217,8 @@ img {
                         <select class="form-control select2" name="sel_ward"
                             data-placeholder="---Chọn phường xã---" required>
                             <option value="{{$profileUser->id_phuongxa}}">
-                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->first()->tenphuongxa}}
+                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')
+                                    ->where('ward.maphuongxa','=',auth()->user()->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa}}
                             </option>
                         </select>
                         @endif

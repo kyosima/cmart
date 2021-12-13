@@ -52,7 +52,16 @@ class UserController extends Controller
         $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
         ->where('orders.user_id','=',$user->id)->select('orders.*')->get();
 
+        $tinh = DB::table('users')->join('province', 'province.matinhthanh', '=', 'users.id_tinhthanh')
+        ->where('province.matinhthanh','=',$user->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh;
 
+        $quan = DB::table('users')->join('district', 'district.maquanhuyen', '=', 'users.id_quanhuyen')
+        ->where('district.maquanhuyen','=',$user->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen;
+
+        $phuongxa = DB::table('users')->join('ward', 'ward.maphuongxa', '=', 'users.id_phuongxa')
+        ->where('ward.maphuongxa','=',$user->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa;
+        
+        // $tinh =DB::table("province")->where('province.matinhthanh','=',$user->matinhthanh)->pluck("tentinhthanh");
         $sodonhang = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
         ->where('orders.user_id','=',$user->id)->select('orders.status')->get()->count();
         
@@ -60,7 +69,7 @@ class UserController extends Controller
 
 
         return view('admin.user.profile',['user'=>$user,'province'=>$province,
-         'district'=>$district, 'ward'=>$ward],compact('orders','sodonhang'));
+         'district'=>$district, 'ward'=>$ward],compact('orders','sodonhang','tinh','quan','phuongxa'));
     }
 
     public function postEdit(Request $request, $id) {

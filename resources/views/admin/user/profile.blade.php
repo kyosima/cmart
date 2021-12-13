@@ -219,7 +219,7 @@ tbody tr:nth-child(even) td {
                                         <select name="sel_province" class="form-control select2"
                                             data-placeholder="---Chọn tỉnh thành---" required>
                                                 <option value="{{ $user->id_tinhthanh }}">
-                                                {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->first()->tentinhthanh}}
+                                                {{$tinh}}
                                                 </option>
                                                 @foreach ($province as $value)
                                                     <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
@@ -239,7 +239,8 @@ tbody tr:nth-child(even) td {
                                         <select class="form-control select2" name="sel_district"
                                             data-placeholder="---Chọn quận huyên---" required>
                                             <option value="{{ $user->id_tinhthanh }}">
-                                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->first()->tenquanhuyen}}
+                                                {{$quan}}
+                                            
                                             </option>
                                         </select>
                                         @endif
@@ -254,7 +255,8 @@ tbody tr:nth-child(even) td {
                         <select class="form-control select2" name="sel_ward"
                             data-placeholder="---Chọn phường xã---" required>
                             <option value="{{$user->id_phuongxa}}">
-                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->first()->tenphuongxa}}
+                            {{$phuongxa}}
+                                
                             </option>
                         </select>
                         @endif
