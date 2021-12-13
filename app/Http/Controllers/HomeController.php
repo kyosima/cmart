@@ -41,17 +41,17 @@ class HomeController extends Controller
 
     public function postLogin(Request $request) {
         $this->validate($request, [
-            'phone' => 'required|min:5',
+            'name' => 'required|min:5',
             'password' => 'required|min:3|max:30',
         ],[
-            'phone.required' => 'Bạn chưa nhập username',
-            'phone.min' => 'Tên người dùng ít nhất 5 số',
+            'name.required' => 'Bạn chưa nhập username',
+            // 'name.min' => 'Tên người dùng ít nhất 5 số',
             'password.required' => 'Bạn chưa nhập mật khẩu',
             'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
         ]);
 
-        if(Auth::attempt(['phone'=>$request->phone,'password'=>$request->password])){
+        if(Auth::attempt(['name'=>$request->name,'password'=>$request->password])){
             return redirect('/');
         }
         else {
@@ -72,20 +72,20 @@ class HomeController extends Controller
     public function postRegister (Request $request)
     {
         $this->validate($request, [
-            // 'name' => 'required|min:5|unique:users,name',
+            'name' => 'required|min:5|unique:users,name',
             // 'email' => 'required|email|unique:users,email',
             'password' => 'required|min:3|max:30',
             'passwordAgain' => 'required|same:password',
-            'phone' => 'required|min:8|unique:users,phone',
+            // 'phone' => 'required|min:8|unique:users,phone',
         ],[
-            // 'name.required' => 'Bạn chưa nhập username',
-            // 'name.unique' => 'Tên đăng nhập đã được sử dụng',
+            'name.required' => 'Bạn chưa nhập username',
+            'name.unique' => 'Tên đăng nhập đã được sử dụng',
             // 'name.min' => 'Tên người dùng ít nhất 5 ký tự',
             // 'name.max' => 'Tên người dùng nhìu nhất 30 ký tự',
             // 'email.email' => 'Email không đúng',
             // 'email.unique' => 'Email đã được sử dụng',
-            'password.required' => 'Bạn chưa nhập mật khẩu',
-            'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
+            // 'password.required' => 'Bạn chưa nhập mật khẩu',
+            // 'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
             'passwordAgain.required' => 'Bạn chưa nhập lại mật khẩu',
             'passwordAgain.same' => 'Mật khẩu nhập lại chưa khớp',
@@ -94,7 +94,7 @@ class HomeController extends Controller
         ]);
 
         $user = new User;
-        // $user->name = $request->name;
+        $user->name = $request->name;
         // $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->level = 0;

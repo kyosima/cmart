@@ -98,7 +98,8 @@ img {
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lastname">Số điện thoại</label>
-                        <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}" readonly>
+                        <!-- <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}" readonly> -->
+                        <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}">
                     </div>
                 </div>
                 <div class="form-group">
