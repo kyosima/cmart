@@ -225,40 +225,39 @@ tbody tr:nth-child(even) td {
                                                     <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
                                                     </option>
                                                 @endforeach
-                                                
                                         </select>
                                         @endif
 
                                         </div>
                                         <div class="col-lg-3">
-                                            @if($user->id_quanhuyen == null)
-                                            <select class="form-control select2" name="sel_district"
-                                                data-placeholder="---Chọn quận huyên---" required>
-                                                <option value="">---Chọn quận huyên---</option>
-                                            </select>
-                                            @else
-                                            <select class="form-control select2" name="sel_district"
-                                                data-placeholder="---Chọn quận huyên---" required>
-                                                <option value="{{ $user->id_tinhthanh }}">
-                                                {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->first()->tenquanhuyen}}
-                                                </option>
-                                            </select>
-                                            @endif
+                                        @if($user->id_quanhuyen == null)
+                                        <select class="form-control select2" name="sel_district"
+                                            data-placeholder="---Chọn quận huyên---" required>
+                                            <option value="">---Chọn quận huyên---</option>
+                                        </select>
+                                        @else
+                                        <select class="form-control select2" name="sel_district"
+                                            data-placeholder="---Chọn quận huyên---" required>
+                                            <option value="{{ $user->id_tinhthanh }}">
+                                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->first()->tenquanhuyen}}
+                                            </option>
+                                        </select>
+                                        @endif
                                         </div>
                                         <div class="col-lg-3">
-                                            @if($user->id_phuongxa == null)
-                                            <select class="form-control select2" name="sel_ward"
-                                                data-placeholder="---Chọn phường xã---" required>
-                                                <option value="">---Chọn phường xã---</option>
-                                            </select>
-                                            @else
-                                            <select class="form-control select2" name="sel_ward"
-                                                data-placeholder="---Chọn phường xã---" required>
-                                                <option value="{{$user->id_phuongxa}}">
-                                                    {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->first()->tenphuongxa}}
-                                                </option>
-                                            </select>
-                                            @endif
+                        @if($user->id_phuongxa == null)
+                        <select class="form-control select2" name="sel_ward"
+                            data-placeholder="---Chọn phường xã---" required>
+                            <option value="">---Chọn phường xã---</option>
+                        </select>
+                        @else
+                        <select class="form-control select2" name="sel_ward"
+                            data-placeholder="---Chọn phường xã---" required>
+                            <option value="{{$user->id_phuongxa}}">
+                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->first()->tenphuongxa}}
+                            </option>
+                        </select>
+                        @endif
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -398,6 +397,4 @@ tbody tr:nth-child(even) td {
 <script type="text/JavaScript" 
 src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
 </script>
-
-<script src="{{ asset('public/js/shipping.js') }}"></script>
 @endpush
