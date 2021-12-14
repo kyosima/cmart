@@ -114,7 +114,6 @@ tbody tr:nth-child(even) td {
                         <div class="info pt-5">
                             <form action="{{$user->id}}" method="POST">
                             @csrf
-                            <input type="hidden" class="form-control mb-2" name="_token" value="{{csrf_token()}}" />
                             <h3 class="text-uppercase text-center">- Thông tin khách hàng -</h3>
                             <div class="row">
                                 <div class="col-lg-12 text-start">
@@ -122,7 +121,7 @@ tbody tr:nth-child(even) td {
                                     
                                     <div class="form-group">
                                         <span class="text-uppercase">Họ và tên</span>
-                                        <input type="name" class="form-control mb-2" name="name" placeholder="Nhập tên người dùng" value="{{$user->name}}">
+                                        <input type="name" class="form-control mb-2" name="hoten" placeholder="Nhập tên người dùng" value="{{$user->hoten}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 text-start">
@@ -208,7 +207,7 @@ tbody tr:nth-child(even) td {
                                             
                                         @if($user->id_tinhthanh == null)
                                         <select name="sel_province" class="form-control select2"
-                                            data-placeholder="---Chọn tỉnh thành---" required>
+                                            data-placeholder="---Chọn tỉnh thành---">
                                             <option value="">---Chọn tỉnh thành---</option>
                                                 @foreach ($province as $value)
                                                     <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
@@ -217,7 +216,7 @@ tbody tr:nth-child(even) td {
                                         </select>
                                         @else
                                         <select name="sel_province" class="form-control select2"
-                                            data-placeholder="---Chọn tỉnh thành---" required>
+                                            data-placeholder="---Chọn tỉnh thành---">
                                                 <option value="{{ $user->id_tinhthanh }}">
                                                 {{$tinh}}
                                                 </option>
@@ -232,13 +231,13 @@ tbody tr:nth-child(even) td {
                                         <div class="col-lg-3">
                                         @if($user->id_quanhuyen == null)
                                         <select class="form-control select2" name="sel_district"
-                                            data-placeholder="---Chọn quận huyên---" required>
+                                            data-placeholder="---Chọn quận huyên---">
                                             <option value="">---Chọn quận huyên---</option>
                                         </select>
                                         @else
                                         <select class="form-control select2" name="sel_district"
-                                            data-placeholder="---Chọn quận huyên---" required>
-                                            <option value="{{ $user->id_tinhthanh }}">
+                                            data-placeholder="---Chọn quận huyên---">
+                                            <option value="{{ $user->id_quanhuyen }}">
                                                 {{$quan}}
                                             
                                             </option>
@@ -248,12 +247,12 @@ tbody tr:nth-child(even) td {
                                         <div class="col-lg-3">
                         @if($user->id_phuongxa == null)
                         <select class="form-control select2" name="sel_ward"
-                            data-placeholder="---Chọn phường xã---" required>
+                            data-placeholder="---Chọn phường xã---">
                             <option value="">---Chọn phường xã---</option>
                         </select>
                         @else
                         <select class="form-control select2" name="sel_ward"
-                            data-placeholder="---Chọn phường xã---" required>
+                            data-placeholder="---Chọn phường xã---">
                             <option value="{{$user->id_phuongxa}}">
                             {{$phuongxa}}
                                 
@@ -348,8 +347,6 @@ tbody tr:nth-child(even) td {
                                         <div class="col-lg-12">
                                             <h3 class="text-uppercase text-center">- Lịch sử nhận point -</h3>
                                             @if($sodonhang != null)
-                                                <form data-action="cpoint" method="POST">
-                                                @csrf 
                                                 <table class="styled-table table-sortable">
                                                     <thead>
                                                         <tr>
@@ -399,4 +396,5 @@ tbody tr:nth-child(even) td {
 <script type="text/JavaScript" 
 src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
 </script>
+<script src="{{ asset('public/js/shipping.js') }}"></script>
 @endpush

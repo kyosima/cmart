@@ -52,15 +52,22 @@ class UserController extends Controller
         $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
         ->where('orders.user_id','=',$user->id)->select('orders.*')->get();
 
-        $tinh = DB::table('users')->join('province', 'province.matinhthanh', '=', 'users.id_tinhthanh')
-        ->where('province.matinhthanh','=',$user->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh;
+        if(($user->id_tinhthanh != null) || ($user->id_quanhuyen != null) || ($user->id_phuongxa != null)) {
+            $tinh = DB::table('users')->join('province', 'province.matinhthanh', '=', 'users.id_tinhthanh')
+            ->where('province.matinhthanh','=',$user->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh;
 
-        $quan = DB::table('users')->join('district', 'district.maquanhuyen', '=', 'users.id_quanhuyen')
-        ->where('district.maquanhuyen','=',$user->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen;
+            $quan = DB::table('users')->join('district', 'district.maquanhuyen', '=', 'users.id_quanhuyen')
+            ->where('district.maquanhuyen','=',$user->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen;
 
-        $phuongxa = DB::table('users')->join('ward', 'ward.maphuongxa', '=', 'users.id_phuongxa')
-        ->where('ward.maphuongxa','=',$user->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa;
-        
+            $phuongxa = DB::table('users')->join('ward', 'ward.maphuongxa', '=', 'users.id_phuongxa')
+            ->where('ward.maphuongxa','=',$user->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa;
+        } else {
+            $tinh = DB::table('users')->join('province', 'province.matinhthanh', '=', 'users.id_tinhthanh')->first()->tentinhthanh;
+
+            $quan = DB::table('users')->join('district', 'district.maquanhuyen', '=', 'users.id_quanhuyen')->first()->tenquanhuyen;
+
+            $phuongxa = DB::table('users')->join('ward', 'ward.maphuongxa', '=', 'users.id_phuongxa')->first()->tenphuongxa;
+        }
         // $tinh =DB::table("province")->where('province.matinhthanh','=',$user->matinhthanh)->pluck("tentinhthanh");
         $sodonhang = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
         ->where('orders.user_id','=',$user->id)->select('orders.status')->get()->count();
@@ -74,12 +81,15 @@ class UserController extends Controller
 
     public function postEdit(Request $request, $id) {
         $user = User::find($id);
-        $user->name = $request->name;
+        $user->hoten = $request->hoten;
         $user->level = $request->level;
         $user->phone = $request->phone;
         $user->address = $request->address;
         $user->check_kyc = $request->check_kyc;
         $user->type_cmnd = $request->type_cmnd;
+        $user->id_tinhthanh = $request->sel_province;
+        $user->id_quanhuyen = $request->sel_district;
+        $user->id_phuongxa = $request->sel_ward;
         $user->save();
         return redirect('admin/danh-sach-user');
     }

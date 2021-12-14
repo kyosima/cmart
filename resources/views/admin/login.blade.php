@@ -29,11 +29,8 @@
             <div class="form-login m-auto mt-4 shadow-sm">
                 <form action="{{route('admin.login')}}" class="px-4 pt-4" method="POST">
                     @csrf
-                    <h3 class="text-center header-title mt-3 mb-4">Đăng nhập</h3>
-                    <!-- <div class="input-group mb-3">
-                        <span class="input-group-text w-input-group" id="basic-addon1"><i class="fa fa-calculator"></i></span>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                    </div> -->
+                    <h3 class="text-center header-title mt-3 mb-4 text-uppercase">Đăng nhập</h3>
+                    
                     <div class="input-group mb-3">
                         <span class="input-group-text w-input-group" id="basic-addon1"><i class="fa fa-user-o"></i></span>
                         <input type="text" class="form-control" name="in_name" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
