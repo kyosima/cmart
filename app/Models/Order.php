@@ -48,12 +48,18 @@ class Order extends Model
 		'total',
 		'status',
 		'fullname',
-		'user_id'
+		'user_id',
+		'status_cpoint'
 	];
 
 	public function order_address()
 	{
 		return $this->hasOne(OrderAddress::class, 'id_order');
+	}
+
+	public function user()
+	{
+		return $this->belongsto(User::class, 'user_id');
 	}
 
 	public function order_products(){

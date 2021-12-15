@@ -140,7 +140,6 @@ class AdminManagerAdminController extends Controller
         $admin = Admin::find($request->in_id_edit);
         $admin->name = $request->in_name_edit;
         $admin->email = $request->in_email_edit;
-        $admin->name = $request->in_name_edit;
         if ($request->in_new_password != null) {
             $admin->password = bcrypt($request->in_new_password);
         }

@@ -104,6 +104,8 @@ class AdminOrderController extends Controller
     }  
     public function update(Request $request, Order $order){
 
+        $this->proccessCpoint($order->user, $request->sel_status, $order->status, $order->c_point);
+
         $order->status = $request->sel_status;
         $order->created_at = $request->in_created_at;
         $order->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
@@ -138,6 +140,18 @@ class AdminOrderController extends Controller
         
         return response('Thành công', 200);
         
+    }
+
+    public function proccessCpoint($user, $request_status, $order_status, $order_cpoint){
+        if($request_status == 4 && $order_status != 4){
+            $user->tichluyC = $user->tichluyC + $order_cpoint;
+            $user->save();
+        }elseif($request_status != 4 && $order_status == 4){
+            $user = $order->user;
+            $user->tichluyC = $user->tichluyC - $order_cpoint;
+            $user->save();
+        }
+        return true;
     }
 
     public function export() 
