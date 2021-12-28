@@ -11,7 +11,7 @@
              <span class="links_name">Dashboard</span>
             </a>
          </li>
-         @if(auth()->guard('admin')->user()->can('Xem bài viết', 'Xem danh mục bài viết'))
+         {{-- @if(auth()->guard('admin')->user()->can('Xem bài viết', 'Xem danh mục bài viết'))
          <li class="dropdown">
             <a href="#" class="dropbtn">
              <i class="fa fa-frown-o" aria-hidden="true"></i>
@@ -26,7 +26,7 @@
                 @endif
             </span>
          </li>
-         @endif
+         @endif --}}
          @if(auth()->guard('admin')->user()->can('Xem sản phẩm', 'Xem danh mục sản phẩm', 'Xem thương hiệu', 'Xem đơn vị tính'))
          <li class="dropdown">
             <a href="#" class="dropbtn">
@@ -55,7 +55,7 @@
          <li class="dropdown">
             <a href="{{route('coupon.index')}}" class="dropbtn">
                 <i class="fa fa-frown-o" aria-hidden="true"></i>
-                <span class="links_name w-100 align-items-center d-flex">Tất cả mã ưu đãi</span>
+                <span class="links_name w-100 align-items-center d-flex">Quản lý mã ưu đãi</span>
             </a>
             
          </li>

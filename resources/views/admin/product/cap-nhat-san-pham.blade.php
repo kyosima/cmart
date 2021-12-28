@@ -155,7 +155,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Sản phẩm upsell:</label>
+                                    <label class="col-md-12 control-label text-left">Sản phẩm liên quan:</label>
                                     <div class="col-md-12">
                                         <select id="select-upsell" class="form-control select-upsell" name="upsell[]" multiple>
                                             @if (is_array(old('upsell')))
@@ -323,30 +323,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Phí xử lý<span
-                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <label class="col-md-12 control-label text-left">Phí xử lý:</label>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator-3" required
+                                        <input type="text" class="form-control number-separator-3"
                                             value="{{ old('phi_xuly', $product->productPrice->phi_xuly) }}">
-                                        <input type="hidden" id="phi_xuly" required name="phi_xuly" value="{{ old('phi_xuly', $product->productPrice->phi_xuly) }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Phí giao hàng (C-Ship)<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator-4" required
-                                            value="{{ old('cship', $product->productPrice->cship) }}">
-                                        <input type="hidden" id="cship" required name="cship" value="{{ old('cship', $product->productPrice->cship) }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Phí ship Viettel Post<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator-5" required
-                                            value="{{ old('viettel_ship', $product->productPrice->viettel_ship) }}">
-                                        <input type="hidden" id="viettel_ship" required name="viettel_ship" value="{{ old('viettel_ship', $product->productPrice->viettel_ship) }}">
+                                        <input type="hidden" id="phi_xuly" name="phi_xuly" value="{{ old('phi_xuly', $product->productPrice->phi_xuly) }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -358,12 +339,12 @@
                                             <option></option>
                                             @if (old("tax") != null)
                                                 <option value="0" {{ old("tax") == 0 ? "selected":"" }}>0%</option>
-                                                <option value="5" {{ old("tax") == 5 ? "selected":"" }}>5%</option>
-                                                <option value="10" {{ old("tax") == 10 ? "selected":"" }}>10%</option>
+                                                <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
+                                                <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
                                             @else
                                                 <option value="0" {{$product->productPrice->tax == 0 ? 'selected' : ''}}>0%</option>
-                                                <option value="5" {{$product->productPrice->tax == 5 ? 'selected' : ''}}>5%</option>
-                                                <option value="10" {{$product->productPrice->tax == 10 ? 'selected' : ''}}>10%</option>
+                                                <option value="0.05" {{$product->productPrice->tax == 0.05 ? 'selected' : ''}}>5%</option>
+                                                <option value="0.1" {{$product->productPrice->tax == 0.1 ? 'selected' : ''}}>10%</option>
                                             @endif
                                         </select>
                                     </div>
@@ -425,14 +406,6 @@
                             </div>
                         </div>
                         
-                        
-                        <div class="form-group mb-2">
-                            <label class="col-md-12 control-label vertical text-left">Mô tả ngắn:</label>
-                            <div class="col-md-12">
-                                <textarea name="short_description" id="short_description" class="form-control" rows="2"
-                                    placeholder="...">{{ old('short_description', $product->short_desc) }}</textarea>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label class="col-md-12 control-label vertical text-left text-danger">Mô tả chi tiết:</label>
                             <div class="col-md-12">
@@ -504,7 +477,7 @@
                 },
                 cache: true
             },
-            placeholder: 'Chọn sản phẩm Upsell...',
+            placeholder: 'Chọn sản phẩm liên quan...',
             templateResult: formatRepoSelection,
             templateSelection: formatRepoSelection
         })
@@ -578,23 +551,6 @@
         }, 1500);
 
         CKEDITOR.replace('description', {
-            toolbar :
-            [
-                { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-                { name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },
-                { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-                { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv',
-                '-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
-                { name: 'links', items : [ 'Link','Unlink','Anchor' ] },
-                { name: 'insert', items : [ 'Image','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ] },
-                '/',
-                { name: 'styles', items : [ 'Styles','Format','Font','FontSize' ] },
-                { name: 'colors', items : [ 'TextColor','BGColor' ] },
-                { name: 'tools', items : [ 'Maximize', 'ShowBlocks','-','About' ] }
-            ]
-        });
-
-        CKEDITOR.replace('short_description', {
             toolbar :
             [
                 { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },

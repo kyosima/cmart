@@ -61,11 +61,9 @@ class AdminProductController extends Controller
             'product_regular_price' => 'required|numeric',
             'product_wholesale_price' => 'required|numeric',
             'product_shock_price' => 'required|numeric',
-            'cpoint' => 'numeric',
-            'mpoint' => 'numeric',
-            'phi_xuly' => 'required|numeric',
-            'cship' => 'required|numeric',
-            'viettel_ship' => 'required|numeric',
+            'cpoint' => 'nullable|numeric',
+            'mpoint' => 'nullable|numeric',
+            'phi_xuly' => 'nullable|numeric',
             'tax' => 'required',
         ], [
             'product_sku.required' => 'SKU không được để trống',
@@ -87,15 +85,10 @@ class AdminProductController extends Controller
             'product_regular_price.required' => 'Giá bán lẻ không được để trống',
             'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
             'product_shock_price.required' => 'Giá shock không được để trống',
-            'phi_xuly.required' => 'Phí xử lý không được để trống',
-            'cship.required' => 'CShip không được để trống',
-            'viettel_ship.required' => 'Viettel Ship không được để trống',
             'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
             'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
             'product_shock_price.numeric' => 'Giá shock phải là số',
             'phi_xuly.numeric' => 'Phí xử lý phải là số',
-            'cship.numeric' => 'CShip phải là số',
-            'viettel_ship.numeric' => 'Viettel Ship phải là số',
             'tax' => 'Thuế không được để trống',
         ]);
 
@@ -125,7 +118,6 @@ class AdminProductController extends Controller
                     'upsell' => isset($request->upsell) != false ? implode(',',$request->upsell) : null,
                     'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,
-                    'short_desc' => $request->short_description,
                     'long_desc' => $request->description,
                     'meta_desc' => $request->meta_description,
                     'meta_keyword' => $request->meta_keyword,
@@ -138,8 +130,6 @@ class AdminProductController extends Controller
                 $productPrice->cpoint = $request->cpoint;
                 $productPrice->mpoint = $request->mpoint;
                 $productPrice->phi_xuly = $request->phi_xuly;
-                $productPrice->cship = $request->cship;
-                $productPrice->viettel_ship = $request->viettel_ship;
                 $productPrice->tax = $request->tax;
 
                 $product->productPrice()->save($productPrice);
@@ -195,11 +185,9 @@ class AdminProductController extends Controller
             'product_regular_price' => 'required|numeric',
             'product_wholesale_price' => 'required|numeric',
             'product_shock_price' => 'required|numeric',
-            'cpoint' => 'numeric',
-            'mpoint' => 'numeric',
-            'phi_xuly' => 'required|numeric',
-            'cship' => 'required|numeric',
-            'viettel_ship' => 'required|numeric',
+            'cpoint' => 'nullable|numeric',
+            'mpoint' => 'nullable|numeric',
+            'phi_xuly' => 'nullable|numeric',
             'tax' => 'required',
         ], [
             'product_sku.required' => 'SKU không được để trống',
@@ -221,15 +209,10 @@ class AdminProductController extends Controller
             'product_regular_price.required' => 'Giá bán lẻ không được để trống',
             'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
             'product_shock_price.required' => 'Giá shock không được để trống',
-            'phi_xuly.required' => 'Phí xử lý không được để trống',
-            'cship.required' => 'CShip không được để trống',
-            'viettel_ship.required' => 'Viettel Ship không được để trống',
             'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
             'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
             'product_shock_price.numeric' => 'Giá shock phải là số',
             'phi_xuly.numeric' => 'Phí xử lý phải là số',
-            'cship.numeric' => 'CShip phải là số',
-            'viettel_ship.numeric' => 'Viettel Ship phải là số',
             'tax' => 'Thuế không được để trống',
         ]);
 
@@ -259,7 +242,6 @@ class AdminProductController extends Controller
                     'upsell' => isset($request->upsell) != false ? implode(',',$request->upsell) : null,
                     'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,
-                    'short_desc' => $request->short_description,
                     'long_desc' => $request->description,
                     'meta_desc' => $request->meta_description,
                     'meta_keyword' => $request->meta_keyword,
@@ -272,8 +254,6 @@ class AdminProductController extends Controller
                     'cpoint' => $request->cpoint,
                     'mpoint' => $request->mpoint,
                     'phi_xuly' => $request->phi_xuly,
-                    'cship' => $request->cship,
-                    'viettel_ship' => $request->viettel_ship,
                     'tax' => $request->tax,
                 ]);
 
@@ -299,9 +279,9 @@ class AdminProductController extends Controller
         return redirect()->route('san-pham.index');
     }
 
-    public function multipleDestory(Request $request)
+    public function multipleDestroy(Request $request)
     {
-        if($request->action == 'delete' && $request->id != null) {
+        if($request->id != null) {
             foreach($request->id as $item) {
                 $product = Product::findOrFail($item);
                 Product::destroy($item);

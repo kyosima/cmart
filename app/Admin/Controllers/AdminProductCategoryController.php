@@ -200,7 +200,6 @@ class AdminProductCategoryController extends Controller
             $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục sản phẩm '. $proCat->name;
             Log::info($message);
         }
-        return redirect()->route('nganh-nhom-hang.index');
     }
 
     public function modalEdit(Request $request)
@@ -217,12 +216,31 @@ class AdminProductCategoryController extends Controller
         ], 200);
     }
 
+    public function multipleDestroy(Request $request)
+    {
+        if($request->id != null) {
+            foreach($request->id as $item) {
+                if ($item != 1) {
+                    $this->recursive($item, 2, 0);
+                    Product::where('category_id', $item)->update(['category_id' => 1]);
+
+                    $proCat = ProductCategory::findOrFail($item);
+                    ProductCategory::destroy($item);
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa danh mục sản phẩm ' . $proCat->name;
+                    Log::info($message);
+                }
+            }
+            return redirect(route('nganh-nhom-hang.index'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
     public function updateStatus(Request $request, $id)
     {
         ProductCategory::where('id', $id)->update([
             'status' => $request->unitStatus
         ]);
-
-        return redirect()->route('nganh-nhom-hang.index');
     }
 }

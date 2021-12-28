@@ -188,9 +188,9 @@ class AdminCouponController extends Controller
         }
     }
 
-    public function multipleDestory(Request $request)
+    public function multipleDestroy(Request $request)
     {
-        if($request->action == 'delete' && $request->id != null) {
+        if($request->id != null) {
             foreach($request->id as $item) {
                 CouponPromo::where('id_ofcoupon', $item)->delete();
                 Coupon::destroy($item);

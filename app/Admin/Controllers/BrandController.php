@@ -55,12 +55,11 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
-        $slug = Str::slug($request->name, '-');
+        $slug = Str::slug($request->brandName, '-');
 
         $validator = Validator::make($request->all(), [
-            'code' => 'required|unique:product_brand,code',
-            'slug' => 'required|unique:product_brand,slug',
-            'name' => 'required|unique:product_brand,name',
+            'brandCode' => 'required|unique:product_brand,code',
+            'brandName' => 'required|unique:product_brand,name',
         ]);
         
         if($validator->fails()){
@@ -172,7 +171,7 @@ class BrandController extends Controller
 
     public function multipleDestory(Request $request)
     {
-        if($request->action == 'delete' && $request->id != null) {
+        if($request->id != null) {
             foreach($request->id as $item) {
                 $b = Brand::findOrFail($item);
                 Brand::destroy($item);

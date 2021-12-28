@@ -71,19 +71,8 @@ $(document).ready(function () {
             tax: {
                 required: true,
             },
-            cship: {
-                min: 1,
-                required: true,
-                number: true,
-            },
-            viettel_ship: {
-                min: 1,
-                required: true,
-                number: true,
-            },
             phi_xuly: {
-                min: 1,
-                required: true,
+                min: 0,
                 number: true,
             },
             payments: {

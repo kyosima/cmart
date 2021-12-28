@@ -5,7 +5,6 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 
 trait ajaxProductTrait {
-
     public function ajaxGetProduct($search, $id = 0) {
         $products = Product::where('name', 'LIKE', '%'.$search.'%')->where('id', '!=', $id)->get();
         return $products;

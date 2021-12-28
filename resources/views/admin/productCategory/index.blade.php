@@ -107,7 +107,7 @@
                     </ul>
                 </div>
             @endif
-            <div class="portlet-title d-flex justify-content-between align-items-center">
+            <div class="portlet-title">
                 <div class="title-name d-flex align-items-center">
                     <div class="caption">
                         <i class="fa fa-product-hunt icon-drec" aria-hidden="true"></i>
@@ -116,11 +116,18 @@
                         <span class="caption-helper"></span>
                     </div>
                     @if(auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
-                    <div class="ps-5">
+                    <div class="ps-4">
                         <a href="#product_category_create" data-toggle="modal" class="btn btn-add"><i
                                 class="fa fa-plus"></i>
                             Thêm mới </a>
                     </div>
+                    @endif
+                    @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+                        <div class="ps-4">
+                            <a href="javascript:multiDel()" class="btn btn-danger btn-multi-del">
+                                <i class="fa fa-trash"></i>
+                                Xóa mục đã chọn </a>
+                        </div>
                     @endif
                 </div>
 
@@ -128,9 +135,15 @@
             <hr>
             <div class="portlet-body">
                 <div class="pt-3" style="overflow-x: auto;">
-                    <table id="table-product-category" class="table table-hover table-main">
+                    @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+                        <form id="myform" action="{{route('nganh-nhom-hang.multipleDestroy')}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                    @endif
+                    <table id="table-product-category" class="table table-hover table-main" width="100%">
                         <thead class="thead1" style="vertical-align: middle;">
                             <tr>
+                                <th style="width: 3%;"></th>
                                 <th class="title title-text">
                                     Tên ngành hàng
                                 </th>
@@ -145,6 +158,11 @@
                         <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
                             @foreach ($categories as $category)
                                 <tr>
+                                    <td style="width: 3%;">
+                                        @if ($category->id != 1)
+                                        <input type="checkbox" name="id[]" value="{{$category->id}}">
+                                        @endif    
+                                    </td>
                                     <td>
                                         @if ($category->slug != 'uncategorized' && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
                                             <a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
@@ -167,26 +185,19 @@
                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                         <li>
                                                             @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
-                                                            <form
-                                                                action="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('put')
-                                                                <input type="hidden" name="unitStatus" value="0">
-                                                                <button type="submit" class="dropdown-item">Ngừng</button>
-                                                            </form>
+                                                                <span data-value="0" data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" class="dropdown-item changeStatus">
+                                                                    Ngừng
+                                                                </span>
                                                             @endif
                                                         </li>
                                                         <li>
                                                             @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
-                                                            <form
-                                                                action="{{ route('nganh-nhom-hang.delete', $category->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit" class="dropdown-item"
-                                                                    onclick="return confirm('Bạn có chắc muốn xóa');">Xoá</button>
-                                                            </form>
+                                                                <span
+                                                                    onclick="return confirm('Bạn có chắc muốn xóa');"
+                                                                    data-url="{{ route('nganh-nhom-hang.delete', $category->id) }}"
+                                                                    class="dropdown-item btn-delete">
+                                                                    Xóa
+                                                                </span>
                                                             @endif
                                                         </li>
                                                     </ul>
@@ -200,27 +211,19 @@
                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                         <li>
                                                             @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
-                                                            <form
-                                                                action="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('put')
-                                                                <input type="hidden" name="unitStatus" value="1">
-                                                                <button type="submit" class="dropdown-item">Hoạt
-                                                                    động</button>
-                                                            </form>
+                                                                <span data-value="1" data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" class="dropdown-item changeStatus">
+                                                                    Hoạt động
+                                                                </span>
                                                             @endif
                                                         </li>
                                                         <li>
                                                             @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
-                                                            <form
-                                                                action="{{ route('nganh-nhom-hang.delete', $category->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit" class="dropdown-item"
-                                                                    onclick="return confirm('Bạn có chắc muốn xóa');">Xoá</button>
-                                                            </form>
+                                                                <span
+                                                                    onclick="return confirm('Bạn có chắc muốn xóa');"
+                                                                    data-url="{{ route('nganh-nhom-hang.delete', $category->id) }}"
+                                                                    class="dropdown-item btn-delete">
+                                                                    Xóa
+                                                                </span>
                                                             @endif
                                                         </li>
                                                     </ul>
@@ -245,6 +248,11 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+                    <button type="submit">sadcx</button>
+                        </form>
+                    @endif
                 </div>
 
             </div>
@@ -258,6 +266,10 @@
 @push('scripts')
 
     <script>
+        function multiDel() {
+            confirm('Bạn chắc chắn muốn xóa sản phẩm này?') == true && $('#myform').submit()
+        }
+
         var ajaxSelectCategory = {!! json_encode(route('nganh-nhom-hang.getCategory')) !!}
 
         $(document).ready(function() {
@@ -291,23 +303,75 @@
                 });
             })
 
-            // var val = $('#table-product-category_filter input').val();
-            // var rowChild = $('tr.child-category')
-            // var hasChild = $('tr.has-child')
+            $('.changeStatus').click(function(){
+                var id = $(this).data('id')
+                var value = $(this).data('value')
+                var url = $(this).data('url')
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "PUT",
+                    url: url,
+                    data: {
+                        unitStatus: value
+                    },
+                    success: function (response) {
+                        $.toast({
+                            heading: 'Thành công',
+                            text: 'Thực hiện thành công',
+                            position: 'top-right',
+                            icon: 'success'
+                        });
+                        location.reload();
+                    },
+                    error: function (response) {
+                        $.toast({
+                            heading: 'Thất bại',
+                            text: 'Thực hiện không thành công',
+                            position: 'top-right',
+                            icon: 'error'
+                        });
+                    }
+                });
+            })
 
-            // table.on('search.dt', function() {
-            //     var value = $('#table-product-category_filter input').val();
-            //     if (value != '') {
-            //         $('#table-product-category tr.child-category').css('display', 'table-row')
-            //     } else {
-            //         $(rowChild).css('display', '')
-            //         $(hasChild).removeClass('selected')
-            //     }
-            // });
-
-            // if (val == '') {
-            //     $('tr.child-category').css('display', '')
-            // }
+            // DELETE
+            @if(auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+                $(document).on('click', '.btn-delete', function () {
+                    var url = $(this).data('url')
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    if(confirm('Bạn có chắc muốn xóa')){
+                        $.ajax({
+                            type: "DELETE",
+                            url: url,
+                            success: function (response) {
+                                $.toast({
+                                    heading: 'Thành công',
+                                    text: 'Thực hiện thành công',
+                                    position: 'top-right',
+                                    icon: 'success'
+                                });
+                                location.reload();
+                            },
+                            error: function(response) {
+                                $.toast({
+                                    heading: 'Thất bại',
+                                    text: 'Thực hiện không thành công',
+                                    position: 'top-right',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+                    }
+                })
+            @endif
         });
     </script>
 
