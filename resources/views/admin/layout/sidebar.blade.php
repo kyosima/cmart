@@ -7,14 +7,14 @@
     <ul class="nav-list p-0">
         <li class="dropdown">
             <a href="{{route('admin.index')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fa fa-tachometer" aria-hidden="true"></i>
              <span class="links_name">Dashboard</span>
             </a>
          </li>
          @if(auth()->guard('admin')->user()->can('Xem bài viết', 'Xem danh mục bài viết'))
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fa fa-commenting" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Quản lý bài viết <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             <span class="dropdown-content">
@@ -30,7 +30,7 @@
          @if(auth()->guard('admin')->user()->can('Xem sản phẩm', 'Xem danh mục sản phẩm', 'Xem thương hiệu', 'Xem đơn vị tính'))
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Quản lý sản phẩm <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             <span class="dropdown-content">
@@ -54,7 +54,7 @@
          @endif
          <li class="dropdown">
             <a href="{{route('coupon.index')}}" class="dropbtn">
-                <i class="fa fa-frown-o" aria-hidden="true"></i>
+                <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
                 <span class="links_name w-100 align-items-center d-flex">Tất cả mã ưu đãi</span>
             </a>
             
@@ -62,7 +62,7 @@
          @if(auth()->guard('admin')->user()->can('Xem DS đơn hàng'))
          <li class="dropdown">
             <a href="{{route('order.index')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Đơn hàng <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
          </li>
@@ -70,7 +70,7 @@
          @if (auth()->guard('admin')->user()->can('Xem kho'))
          <li class="dropdown">
             <a href="{{route('warehouse.index')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fa fa-home" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Tồn kho <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
          </li>
@@ -78,7 +78,7 @@
          @role('Boss', 'admin')
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fa fa-user" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Quản lý Admin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             <span class="dropdown-content">
@@ -92,7 +92,7 @@
          @if (auth()->guard('admin')->user()->can('QL thông tin'))
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fa fa-info-circle" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Thông tin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             
@@ -108,7 +108,7 @@
          </li>
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fa fa-users" aria-hidden="true"></i>
              <span class="links_name w-100 align-items-center d-flex">Quản lý user <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
@@ -121,7 +121,7 @@
          @hasanyrole('Manager|Boss', 'admin')
          <li class="dropdown">
             <a href="{{route('setting.index')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fa fa-cogs" aria-hidden="true"></i>
              <span class="links_name">Cài đặt</span>
             </a>
          </li>

@@ -35,17 +35,20 @@ class HomeController extends Controller
             return view('home');
         }
         else {
-            return view('account.account');
+            $province = Province::select('matinhthanh', 'tentinhthanh')->get();
+            $district = District::select('maquanhuyen', 'tenquanhuyen')->get();
+            $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
+            $name_province = DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->pluck("tentinhthanh");
+            return view('account.account',['province'=>$province, 'district'=>$district, 'ward'=>$ward])->with(compact('province','name_province'));
         } 
     }
 
     public function postLogin(Request $request) {
         $this->validate($request, [
-            'phone' => 'required|min:5',
+            'phone' => 'required|min:5|numeric',
             'password' => 'required|min:3|max:30',
         ],[
-            'phone.required' => 'Bạn chưa nhập username',
-            'phone.min' => 'Tên người dùng ít nhất 5 số',
+            'phone.required' => 'Bạn chưa nhập số điện thoại đăng nhập',
             'password.required' => 'Bạn chưa nhập mật khẩu',
             'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
@@ -72,20 +75,14 @@ class HomeController extends Controller
     public function postRegister (Request $request)
     {
         $this->validate($request, [
-            // 'name' => 'required|min:5|unique:users,name',
-            // 'email' => 'required|email|unique:users,email',
+            'hoten' => 'required|min:5|max:30',
+            'phone' => 'required|min:8|unique:users,name,phone',
             'password' => 'required|min:3|max:30',
             'passwordAgain' => 'required|same:password',
-            'phone' => 'required|min:8|unique:users,phone',
         ],[
-            // 'name.required' => 'Bạn chưa nhập username',
-            // 'name.unique' => 'Tên đăng nhập đã được sử dụng',
-            // 'name.min' => 'Tên người dùng ít nhất 5 ký tự',
-            // 'name.max' => 'Tên người dùng nhìu nhất 30 ký tự',
-            // 'email.email' => 'Email không đúng',
-            // 'email.unique' => 'Email đã được sử dụng',
-            'password.required' => 'Bạn chưa nhập mật khẩu',
-            'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
+            'hoten.min' => 'Tên người dùng ít nhất 5 ký tự',
+            'hoten.max' => 'Tên người dùng nhìu nhất 30 ký tự',
+            'password.min' => 'Mật khẩu ít nhất có 3 ký tự',
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
             'passwordAgain.required' => 'Bạn chưa nhập lại mật khẩu',
             'passwordAgain.same' => 'Mật khẩu nhập lại chưa khớp',
@@ -94,11 +91,51 @@ class HomeController extends Controller
         ]);
 
         $user = new User;
-        // $user->name = $request->name;
-        // $user->email = $request->email;
+        $user->hoten = $request->hoten;
         $user->password = bcrypt($request->password);
         $user->level = 0;
         $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->id_phuongxa = $request->sel_ward;
+        $user->id_quanhuyen = $request->sel_district;
+        $user->id_tinhthanh = $request->sel_province;
+        $user->type_cmnd = $request->type_cmnd;
+
+        $data = $request->all();
+        if($user['action']) {
+            $output = '';
+            if($user['action']=="city") {
+                $select_city = District::where('matinhthanh',$user['ma_id'])->orderby('maquanhuyen','ASC')->get();
+                $output.='<option>--Chon quan huyen--</option>';
+                foreach ($select_city as $key => $district){
+                    $output.='<option value="'.$district->maquanhuyen.'">'.$district->tenquanhuyen.'</option>';
+                }
+            } else {
+                $select_ward = Ward::where('maquanhuyen',$user['ma_id'])->orderby('maphuongxa','ASC')->get();
+                $output.='<option>--Chon xa phuong--</option>';
+                foreach ($select_ward as $key => $ward){
+                    $output.='<option value="'.$ward->maphuongxa.'"'.$ward->tenphuongxa.'</option>';
+                }
+            }
+        }
+        
+        if($request->hasFile('image_cmnd')) {
+            $user_img_name = $request->image_cmnd;
+            $user_name = time().'.'.$user_img_name->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $user_img_name->move($destinationPath, $user_name);
+            $user->cmnd_image = $user_name;
+          }
+          
+        if($request->hasFile('image_cmnd2')) {
+            $user_img_cmnd2 = $request->image_cmnd2;
+            $user_cm2 = time().'.'.$user_img_cmnd2->getClientOriginalExtension();
+            $destinationPath2 = public_path('/images2');
+            $user_img_cmnd2->move($destinationPath2, $user_cm2);
+            $user->cmnd_image2 = $user_cm2;
+        }
+        
+
         $user->save();
 
         return redirect('tai-khoan')->with('thongbao','Đăng ký thành công');
@@ -142,7 +179,6 @@ class HomeController extends Controller
     public function postProfile(Request $request) {
         $user = Auth::user();
         $user->hoten = $request->hoten;
-        $user->phone = $request->phone;
         $user->cmnd = $request->cmnd;
         $user->address = $request->address;
         $user->id_phuongxa = $request->sel_ward;
@@ -166,33 +202,29 @@ class HomeController extends Controller
                 }
             }
         }
+        
         if($request->hasFile('image_cmnd')) {
-            $destination_path = 'public\upload';
-            $image = $request->file('image_cmnd');
-            $image_name = $image->getClientOriginalName();
-            $user->cmnd_image = $image_name;
-            $path = $request->file('image_cmnd')->storeAs($destination_path,$image_name);
-            $input['image_cmnd'] = $image_name;
-        }
-        // $idfinal = Province::where('$user->id_phuongxa',$request->id_phuongxa)
-       // $abc = DB::table('province')->where($user->id = $province->user_id)->get();
-
+            $user_img_name = $request->image_cmnd;
+            $user_name = time().'.'.$user_img_name->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $user_img_name->move($destinationPath, $user_name);
+            $user->cmnd_image = $user_name;
+          }
+          
         if($request->hasFile('avatar')) {
-            $destination_path = 'public\upload';
-            $image_avatar = $request->file('avatar');
-            $image_avatar_name = $image_avatar->getClientOriginalName();
-            $user->avatar = $image_avatar_name;
-            $path = $request->file('avatar')->storeAs($destination_path,$image_avatar_name);
-            $input['avatar'] = $image_avatar_name;
+            $user_img_avatar = $request->file('avatar');
+            $user_avatar = time().'.'.$user_img_avatar->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $user_img_avatar->move($destinationPath, $user_avatar);
+            $user->avatar = $user_avatar;
         }
 
         if($request->hasFile('image_cmnd2')) {
-            $destination_path = 'public\upload';
-            $image = $request->file('image_cmnd2');
-            $image_name = $image->getClientOriginalName();
-            $user->cmnd_image2 = $image_name;
-            $path = $request->file('image_cmnd2')->storeAs($destination_path,$image_name);
-            $input['image_cmnd2'] = $image_name;
+            $user_img_cmnd2 = $request->image_cmnd2;
+            $user_cm2 = time().'.'.$user_img_cmnd2->getClientOriginalExtension();
+            $destinationPath2 = public_path('/images2');
+            $user_img_cmnd2->move($destinationPath2, $user_cm2);
+            $user->cmnd_image2 = $user_cm2;
         }
 
         if($request->changePassword == "on"){
@@ -234,7 +266,6 @@ class HomeController extends Controller
         if (Auth::check()) {
             $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
             ->where('orders.user_id','=',auth()->user()->id)->select('orders.*')->get();
-            
             //dd($orders); die;
             return view('account.lichsu', compact('orders'));
         }
