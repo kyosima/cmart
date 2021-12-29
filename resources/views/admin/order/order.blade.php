@@ -83,7 +83,7 @@
 															<td><input type="checkbox" name="id[]" value="{{ $order->id }}"></td>
 															<td>{{$order->order_code}}</td>
 															
-															<td>{{$order->order_info->fullname}}</td>
+															<td>{{optional($order->order_info)->fullname}}</td>
 															<td class="change-status-{{$order->id}}">{!! orderStatus($order->status) !!}</td>
 															<td>{{number_format($order->total)}} đ</td>
 															<td>{{date('d-m-Y H:i:s', strtotime($order->created_at))}}</td>
