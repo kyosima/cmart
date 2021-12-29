@@ -10,7 +10,7 @@ class OrderExport implements FromView
 {
     public function view(): View
     {
-        $order = Order::select('id', 'payment_method', 'shipping_method', 'shipping_total', 'total', 'status', 'created_at')->with('order_info', 'order_address')->get();
+        $order = Order::select('id', 'order_code', 'payment_method', 'shipping_method', 'shipping_total', 'total', 'status', 'created_at')->with('order_info', 'order_address')->get();
         return view('admin.exports.order', compact('order'));
     }
 }
