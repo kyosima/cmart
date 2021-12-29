@@ -1,9 +1,19 @@
 <?php
+
+use App\Admin\Controllers\AdminProductCategoryController;
+use App\Admin\Controllers\AdminProductController;
+use App\Admin\Controllers\BlogCategoryController;
+use App\Admin\Controllers\BlogController;
+use App\Admin\Controllers\BrandController;
+use App\Admin\Controllers\CalculationUnitController;
+use App\Admin\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PolicyController;
-use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
+use App\Admin\Controllers\AdminHomeController;
+use App\Admin\Controllers\AdminRolesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,46 +26,8 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-
-// ADMIN
-
-Route::prefix('admin')->group(function () {
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    });
-    Route::get('/login', function () {
-        return view('admin.login');
-    });
-    Route::get('/don-hang', function () {
-        return view('admin.don-hang');
-    });
-    Route::get('/don-vi-tinh', function () {
-        return view('admin.don-vi-tinh');
-    });
-    Route::get('/danh-muc-san-pham', function () {
-        return view('admin.productCategory');
-    });
-    Route::get('/san-pham', function () {
-        return view('admin.product');
-    });
-    Route::get('/phan-quyen', function () {
-        return view('admin.phan-quyen');
-    });
-    Route::get('/profile', function () {
-        return view('admin.profile');
-    });
-    Route::get('/setting', function () {
-        return view('admin.setting');
-    });
-    Route::get('/ton-kho', function () {
-        return view('admin.ton-kho');
-    });
-});
-// END ADMIN
-
-
-Route::get('/product', [ProductController::class, 'product']);
-Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'getdanhmucsanpham']);
+Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
+Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
 Route::get('/', [HomeController::class, 'home']);
 
 

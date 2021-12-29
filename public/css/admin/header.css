@@ -6,6 +6,11 @@
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
 }
+
+img, svg {
+  max-width: 100%;
+}
+
 .sidebar {
   position: fixed;
   left: 0;
@@ -70,7 +75,6 @@
 }
 .sidebar li {
   position: relative;
-  margin: 8px 0;
   list-style: none;
 }
 .sidebar li .tooltip {
@@ -221,6 +225,7 @@
 .sidebar.open .profile #log_out {
   width: 50px;
   background: none;
+  cursor: pointer;
 }
 .home-section {
   position: relative;
@@ -230,7 +235,7 @@
   left: 78px;
   width: calc(100% - 78px);
   transition: all 0.5s ease;
-  z-index: 2;
+  /* z-index: 2; */
   background-color: #eef1f5;
 }
 .sidebar.open ~ .home-section {
@@ -356,4 +361,8 @@ label {
 
 .btn-check:focus+.btn, .btn:focus {
   box-shadow: none;
+}
+
+ul.nav-list::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
 }
