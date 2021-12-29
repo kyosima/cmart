@@ -160,8 +160,11 @@ $config['debug'] = false;
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_plugins
 
 $config['pluginsDirectory'] = __DIR__ . '/plugins';
-$config['plugins'] = array();
+$config['plugins'] = array('ImageWatermark');
 
+$config['ImageWatermark'] = [
+    'imagePath' => url().'/public/image/logo-c-v.png'
+];
 /*================================ Cache settings =====================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_cache
 
