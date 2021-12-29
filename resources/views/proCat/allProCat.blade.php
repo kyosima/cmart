@@ -105,10 +105,8 @@
                 <!-- bên phải -->
                 <div class="shop-container col-lg-9 col-md-12 col-sm-12">
                     <div class="shop-container-inner">
-                        @foreach ($categories as $proCat)
-                            @php
-                                $products = $proCat->products->where('status', 1)->merge($proCat->subproducts)->sortBy(['created_at', 'desc']);
-                            @endphp
+                        @foreach ($categories as $key => $proCat)
+                            
                             {{-- BANNER --}}
                             @if ($proCat->feature_img != null)
                             <div class="banner row">
@@ -141,7 +139,7 @@
                             <div class="product-p c">
                                 <div class="silder-product-1">
                                     <div class="items">
-                                        @foreach ($products as $item)
+                                        @foreach ($arrProducts[$key] as $item)
 
                                         <div class="sp">
                                             <div class="box3item">
@@ -175,7 +173,6 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -228,6 +225,6 @@
     </script>
 
 
-    {{-- <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script> --}}
+    <!-- <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script> -->
 
 @endpush

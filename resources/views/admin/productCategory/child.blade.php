@@ -1,5 +1,10 @@
 <tr class="child-category {{ count($child_category->childrenCategories) > 0 ? 'has-child' : '' }}"
     data-categoryid="{{ $child_category->id }}" data-parentcat="{{ $child_category->category_parent }}">
+    <td style="width: 3%;">
+        @if ($category->id != 1)
+        <input type="checkbox" name="id[]" value="{{$child_category->id}}">
+        @endif    
+    </td>
     <td>
         @if (auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
             <a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
@@ -21,22 +26,19 @@
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
                         @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
-                            <form action="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" method="post">
-                                @csrf
-                                @method('put')
-                                <input type="hidden" name="unitStatus" value="0">
-                                <button type="submit" class="dropdown-item">Ngừng</button>
-                            </form>
+                            <span data-value="0" data-url="{{ route('nganh-nhom-hang.updateStatus', $child_category->id) }}" class="dropdown-item changeStatus">
+                                Ngừng
+                            </span>
                         @endif
                     </li>
                     <li>
                         @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
-                            <form action="{{ route('nganh-nhom-hang.delete', $category->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="dropdown-item"
-                                    onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
-                            </form>
+                            <span
+                                onclick="return confirm('Bạn có chắc muốn xóa');"
+                                data-url="{{ route('nganh-nhom-hang.delete', $child_category->id) }}"
+                                class="dropdown-item btn-delete">
+                                Xóa
+                            </span>
                         @endif
                     </li>
                 </ul>
@@ -49,23 +51,19 @@
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
                         @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
-                            <form action="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" method="post">
-                                @csrf
-                                @method('put')
-                                <input type="hidden" name="unitStatus" value="1">
-                                <button type="submit" class="dropdown-item">Hoạt
-                                    động</button>
-                            </form>
+                            <span data-value="1" data-url="{{ route('nganh-nhom-hang.updateStatus', $child_category->id) }}" class="dropdown-item changeStatus">
+                                Hoạt động
+                            </span>
                         @endif
                     </li>
                     <li>
                         @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
-                            <form action="{{ route('nganh-nhom-hang.delete', $category->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="dropdown-item"
-                                    onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
-                            </form>
+                            <span
+                                onclick="return confirm('Bạn có chắc muốn xóa');"
+                                data-url="{{ route('nganh-nhom-hang.delete', $child_category->id) }}"
+                                class="dropdown-item btn-delete">
+                                Xóa
+                            </span>
                         @endif
                     </li>
                 </ul>

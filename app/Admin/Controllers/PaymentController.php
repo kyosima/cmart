@@ -142,17 +142,43 @@ class PaymentController extends Controller
         }
     }
 
-    public function multipleDestory(Request $request)
-    {
-        if($request->action == 'delete' && $request->id != null) {
-            foreach($request->id as $item) {
-                $c = Payment::findOrFail($item);
-                Payment::destroy($item);
-                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa hình thức thanh toán ' . $c->name;
-                Log::info($message);
+    public function multiChange(Request $request) {
+        if ($request->id == null) {
+            return redirect()->back();
+        } 
+        else {
+            if ($request->action == 'delete') {
+                foreach($request->id as $item) {
+                    $payment = Payment::findOrFail($item);
+                    Payment::destroy($item);
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa HTTT ' . $payment->name;
+                    Log::info($message);
+                }
+                return redirect(route('payment.index'));
             }
-            return redirect(route('payment.index'));
-        } else {
+            else if($request->action == 'show') {
+                foreach($request->id as $item) {
+                    $payment = Payment::findOrFail($item);
+                    $payment->status = 1;
+                    $payment->save();
+
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện thay đổi trạng thái HTTT ' . $payment->name;
+                    Log::info($message);
+                }
+                return redirect(route('payment.index'));
+            }
+            else if($request->action == 'hidden') {
+                foreach($request->id as $item) {
+                    $payment = Payment::findOrFail($item);
+                    $payment->status = 0;
+                    $payment->save();
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện thay đổi trạng thái HTTT ' . $payment->name;
+                    Log::info($message);
+                }
+                return redirect(route('payment.index'));
+            }
             return redirect()->back();
         }
     }

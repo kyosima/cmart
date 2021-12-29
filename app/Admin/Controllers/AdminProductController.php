@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Traits\ajaxProductTrait;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\CalculationUnit;
@@ -16,6 +17,8 @@ use Illuminate\Support\Str;
 
 class AdminProductController extends Controller
 {
+    use ajaxProductTrait;
+
     public function index()
     {
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
@@ -58,11 +61,9 @@ class AdminProductController extends Controller
             'product_regular_price' => 'required|numeric',
             'product_wholesale_price' => 'required|numeric',
             'product_shock_price' => 'required|numeric',
-            'cpoint' => 'numeric',
-            'mpoint' => 'numeric',
-            'phi_xuly' => 'required|numeric',
-            'cship' => 'required|numeric',
-            'viettel_ship' => 'required|numeric',
+            'cpoint' => 'nullable|numeric',
+            'mpoint' => 'nullable|numeric',
+            'phi_xuly' => 'nullable|numeric',
             'tax' => 'required',
         ], [
             'product_sku.required' => 'SKU không được để trống',
@@ -84,15 +85,10 @@ class AdminProductController extends Controller
             'product_regular_price.required' => 'Giá bán lẻ không được để trống',
             'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
             'product_shock_price.required' => 'Giá shock không được để trống',
-            'phi_xuly.required' => 'Phí xử lý không được để trống',
-            'cship.required' => 'CShip không được để trống',
-            'viettel_ship.required' => 'Viettel Ship không được để trống',
             'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
             'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
             'product_shock_price.numeric' => 'Giá shock phải là số',
             'phi_xuly.numeric' => 'Phí xử lý phải là số',
-            'cship.numeric' => 'CShip phải là số',
-            'viettel_ship.numeric' => 'Viettel Ship phải là số',
             'tax' => 'Thuế không được để trống',
         ]);
 
@@ -122,7 +118,6 @@ class AdminProductController extends Controller
                     'upsell' => isset($request->upsell) != false ? implode(',',$request->upsell) : null,
                     'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,
-                    'short_desc' => $request->short_description,
                     'long_desc' => $request->description,
                     'meta_desc' => $request->meta_description,
                     'meta_keyword' => $request->meta_keyword,
@@ -135,8 +130,6 @@ class AdminProductController extends Controller
                 $productPrice->cpoint = $request->cpoint;
                 $productPrice->mpoint = $request->mpoint;
                 $productPrice->phi_xuly = $request->phi_xuly;
-                $productPrice->cship = $request->cship;
-                $productPrice->viettel_ship = $request->viettel_ship;
                 $productPrice->tax = $request->tax;
 
                 $product->productPrice()->save($productPrice);
@@ -163,10 +156,15 @@ class AdminProductController extends Controller
         $brands = Brand::all();
         $payments = Payment::all();
 
+        $upsells = [];
+        if ($product->upsell != null) {
+            $upsells = explode(',', $product->upsell);
+            $upsells = Product::whereIn('id', $upsells)->get();
+        }
         $message = 'User: '. auth()->guard('admin')->user()->name . ' truy cập trang cập nhật sản phẩm';
         Log::info($message);
 
-        return view('admin.product.cap-nhat-san-pham', compact('product', 'products', 'nganhHang', 'calculationUnits', 'brands', 'payments'));
+        return view('admin.product.cap-nhat-san-pham', compact('product', 'products', 'nganhHang', 'calculationUnits', 'brands', 'payments', 'upsells'));
     }
 
     public function update(Request $request, $id)
@@ -187,11 +185,9 @@ class AdminProductController extends Controller
             'product_regular_price' => 'required|numeric',
             'product_wholesale_price' => 'required|numeric',
             'product_shock_price' => 'required|numeric',
-            'cpoint' => 'numeric',
-            'mpoint' => 'numeric',
-            'phi_xuly' => 'required|numeric',
-            'cship' => 'required|numeric',
-            'viettel_ship' => 'required|numeric',
+            'cpoint' => 'nullable|numeric',
+            'mpoint' => 'nullable|numeric',
+            'phi_xuly' => 'nullable|numeric',
             'tax' => 'required',
         ], [
             'product_sku.required' => 'SKU không được để trống',
@@ -213,15 +209,10 @@ class AdminProductController extends Controller
             'product_regular_price.required' => 'Giá bán lẻ không được để trống',
             'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
             'product_shock_price.required' => 'Giá shock không được để trống',
-            'phi_xuly.required' => 'Phí xử lý không được để trống',
-            'cship.required' => 'CShip không được để trống',
-            'viettel_ship.required' => 'Viettel Ship không được để trống',
             'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
             'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
             'product_shock_price.numeric' => 'Giá shock phải là số',
             'phi_xuly.numeric' => 'Phí xử lý phải là số',
-            'cship.numeric' => 'CShip phải là số',
-            'viettel_ship.numeric' => 'Viettel Ship phải là số',
             'tax' => 'Thuế không được để trống',
         ]);
 
@@ -251,7 +242,6 @@ class AdminProductController extends Controller
                     'upsell' => isset($request->upsell) != false ? implode(',',$request->upsell) : null,
                     'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,
-                    'short_desc' => $request->short_description,
                     'long_desc' => $request->description,
                     'meta_desc' => $request->meta_description,
                     'meta_keyword' => $request->meta_keyword,
@@ -264,8 +254,6 @@ class AdminProductController extends Controller
                     'cpoint' => $request->cpoint,
                     'mpoint' => $request->mpoint,
                     'phi_xuly' => $request->phi_xuly,
-                    'cship' => $request->cship,
-                    'viettel_ship' => $request->viettel_ship,
                     'tax' => $request->tax,
                 ]);
 
@@ -291,20 +279,52 @@ class AdminProductController extends Controller
         return redirect()->route('san-pham.index');
     }
 
-    public function multipleDestory(Request $request)
-    {
-        if($request->action == 'delete' && $request->id != null) {
-            foreach($request->id as $item) {
-                $product = Product::findOrFail($item);
-                Product::destroy($item);
-
-                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name;
-                Log::info($message);
+    public function multiChange(Request $request) {
+        if ($request->id == null) {
+            return redirect()->back();
+        } 
+        else {
+            if ($request->action == 'delete') {
+                foreach($request->id as $item) {
+                    $product = Product::findOrFail($item);
+                    Product::destroy($item);
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name;
+                    Log::info($message);
+                }
+                return redirect(route('san-pham.index'));
             }
-            return redirect(route('san-pham.index'));
-        } else {
+            else if($request->action == 'show') {
+                foreach($request->id as $item) {
+                    $product = Product::findOrFail($item);
+                    $product->status = 1;
+                    $product->save();
+
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện thay đổi trạng thái sản phẩm ' . $product->name;
+                    Log::info($message);
+                }
+                return redirect(route('san-pham.index'));
+            }
+            else if($request->action == 'hidden') {
+                foreach($request->id as $item) {
+                    $product = Product::findOrFail($item);
+                    $product->status = 0;
+                    $product->save();
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện thay đổi trạng thái sản phẩm ' . $product->name;
+                    Log::info($message);
+                }
+                return redirect(route('san-pham.index'));
+            }
             return redirect()->back();
         }
     }
 
+    public function getProduct(Request $request)
+    {
+        return response()->json([
+            'code' => 200,
+            'data' => $this->ajaxGetProduct($request->search, $request->id)
+        ]);
+    }
 }

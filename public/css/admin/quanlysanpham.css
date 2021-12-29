@@ -206,3 +206,10 @@
 .changeStatus {
   cursor: pointer;
 }
+
+.btn-multi-del  {
+  padding: 4px 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 25px;
+}

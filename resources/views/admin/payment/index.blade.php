@@ -73,7 +73,7 @@
 
     <div class="m-3">
         <div class="wrapper bg-white p-4">
-            <div class="portlet-title d-flex justify-content-between align-items-center">
+            <div class="portlet-title d-flex align-items-center justify-content-between">
                 <div class="title-name d-flex align-items-center">
                     <div class="caption">
                         <i class="fa fa-anchor icon-drec" aria-hidden="true"></i>
@@ -82,24 +82,40 @@
                         <span class="caption-helper"></span>
                     </div>
                     @if(auth()->guard('admin')->user()->can('Thêm HTTT'))
-                    <div class="ps-5">
+                    <div class="ps-4">
                         <a href="#calculation_unit_create" data-toggle="modal" class="btn btn-add"><i
                                 class="fa fa-plus"></i>
                             Thêm mới </a>
                     </div>
                     @endif
                 </div>
+                @if (auth()->guard('admin')->user()->can('Xóa HTTT') && auth()->guard('admin')->user()->can('Chỉnh sửa HTTT'))
+                <div>   
+                    <div class="input-group action-multiple">
+                        <select class="custom-select" name="action" required="">
+                            <option value="">Chọn hành động</option>
+                            @if (auth()->guard('admin')->user()->can('Xóa HTTT'))
+                            <option value="delete">Xóa</option>
+                            @endif
+                            <option value="show">Hiện</option>
+                            <option value="hidden">Ẩn</option>
+                        </select>
+                        <div class="input-group-append">
+                            <a href="javascript:multiDel()" class="btn btn-outline-secondary">Áp dụng</a>
+                        </div>
+                    </div>
+                </div>
+                @endif
 
             </div>
-            <hr>
             <div class="portlet-body">
                 <div class="pt-3" style="overflow-x: auto;">
-                    @if (auth()->guard('admin')->user()->can('Xóa HTTT'))
-                        <form id="myform" action="{{route('payment.multipleDestory')}}" method="post">
+                    @if (auth()->guard('admin')->user()->can('Xóa HTTT') && auth()->guard('admin')->user()->can('Chỉnh sửa HTTT'))
+                        <form id="myform" action="{{route('payment.multiChange')}}" method="post">
                         @csrf
-                        @method('DELETE')
+                        <input type="hidden" name="action" value="" id="input-action">
                     @endif
-                        <table id="table-calculation-unit" class="table table-hover table-main">
+                        <table id="table-calculation-unit" class="table table-hover table-main" width="100%">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -122,12 +138,7 @@
                             </thead>
                             <tbody style="color: #748092; font-size: 14px; vertical-align: middle;"></tbody>
                         </table>
-                    @if (auth()->guard('admin')->user()->can('Xóa HTTT'))
-                        <select name="action" id="">
-                            <option value="-1" selected>Chọn tác vụ</option>
-                            <option value="delete">Xóa</option>
-                        </select>
-                        <button type="submit" class="btn btn-warning" onclick="confirm('Bạn chắc chắn muốn thực hiện tác vụ này?')">Thực hiện tác vụ</button>
+                    @if (auth()->guard('admin')->user()->can('Xóa HTTT') && auth()->guard('admin')->user()->can('Chỉnh sửa HTTT'))
                     </form>
                     @endif
                 </div>
@@ -143,7 +154,16 @@
 @push('scripts')
 
 <script>
+
+    function multiDel() {
+        confirm('Bạn chắc chắn muốn thực hiện tác vụ này?') == true && $('#myform').submit()
+    }
+
     $(document).ready(function() {
+        $('.custom-select').change(function (e) { 
+            e.preventDefault();
+            $('#input-action').val($(this).val())
+        });
 
     @if(auth()->guard('admin')->user()->can('Thêm HTTT'))
         // CREATE NEW CALCULATION UNIT

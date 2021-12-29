@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Traits\ajaxProductTrait;
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\CouponPromo;
@@ -9,10 +10,12 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class AdminCouponController extends Controller
 {
+    use ajaxProductTrait;
     public function index()
     {
         // $coupons = Coupon::with('promo')->get();
@@ -34,18 +37,6 @@ class AdminCouponController extends Controller
                 'code' => 500,
             ]);
         }
-    }
-
-    public function modalEdit(Request $request)
-    {
-        $id = $request->id;
-        $unit = Coupon::where('id', $id)->with('promo')->first();
-        // $startDate = date('d-m-Y', strtotime($unit->start_date));
-        $returnHTML = view('admin.coupon.formUpdate', compact('unit', 'id'))->render();
-
-        return response()->json([
-            'html' => $returnHTML
-        ], 200);
     }
 
     public function edit(Request $request)
@@ -198,34 +189,38 @@ class AdminCouponController extends Controller
         }
     }
 
-    public function multipleDestory(Request $request)
-    {
-        if($request->action == 'delete' && $request->id != null) {
-            foreach($request->id as $item) {
-                CouponPromo::where('id_ofcoupon', $item)->delete();
-                Coupon::destroy($item);
+    public function multiChange(Request $request) {
+        if ($request->id == null) {
+            return redirect()->back();
+        } 
+        else {
+            if ($request->action == 'delete') {
+                foreach($request->id as $item) {
+                    $coupon = Coupon::findOrFail($item);
+                    Coupon::destroy($item);
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa coupon/voucher ' . $coupon->name;
+                    Log::info($message);
+                }
+                return redirect(route('coupon.index'));
             }
-            return redirect(route('coupon.index'));
-        } else {
             return redirect()->back();
         }
     }
 
     public function getProduct(Request $request)
     {
-        $products = Product::where('name', 'LIKE', '%'.$request->search.'%')->get();
         return response()->json([
             'code' => 200,
-            'data' => $products
+            'data' => $this->ajaxGetProduct($request->search)
         ]);
     }
 
     public function getProCat(Request $request)
     {
-        $products = ProductCategory::where('name', 'LIKE', '%'.$request->search.'%')->get();
         return response()->json([
             'code' => 200,
-            'data' => $products
+            'data' => $this->ajaxGetProCat($request->search)
         ]);
     }
 

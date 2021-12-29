@@ -55,12 +55,11 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
-        $slug = Str::slug($request->name, '-');
+        $slug = Str::slug($request->brandName, '-');
 
         $validator = Validator::make($request->all(), [
-            'code' => 'required|unique:product_brand,code',
-            'slug' => 'required|unique:product_brand,slug',
-            'name' => 'required|unique:product_brand,name',
+            'brandCode' => 'required|unique:product_brand,code',
+            'brandName' => 'required|unique:product_brand,name',
         ]);
         
         if($validator->fails()){
@@ -170,17 +169,43 @@ class BrandController extends Controller
         }
     }
 
-    public function multipleDestory(Request $request)
-    {
-        if($request->action == 'delete' && $request->id != null) {
-            foreach($request->id as $item) {
-                $b = Brand::findOrFail($item);
-                Brand::destroy($item);
-                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa thương hiệu ' . $b->name;
-                Log::info($message);
+    public function multiChange(Request $request) {
+        if ($request->id == null) {
+            return redirect()->back();
+        } 
+        else {
+            if ($request->action == 'delete') {
+                foreach($request->id as $item) {
+                    $brand = Brand::findOrFail($item);
+                    Brand::destroy($item);
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa thương hiệu ' . $brand->name;
+                    Log::info($message);
+                }
+                return redirect(route('thuong-hieu.index'));
             }
-            return redirect(route('thuong-hieu.index'));
-        } else {
+            else if($request->action == 'show') {
+                foreach($request->id as $item) {
+                    $brand = Brand::findOrFail($item);
+                    $brand->status = 1;
+                    $brand->save();
+
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện thay đổi trạng thái thương hiệu ' . $brand->name;
+                    Log::info($message);
+                }
+                return redirect(route('thuong-hieu.index'));
+            }
+            else if($request->action == 'hidden') {
+                foreach($request->id as $item) {
+                    $brand = Brand::findOrFail($item);
+                    $brand->status = 0;
+                    $brand->save();
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện thay đổi trạng thái thương hiệu ' . $brand->name;
+                    Log::info($message);
+                }
+                return redirect(route('thuong-hieu.index'));
+            }
             return redirect()->back();
         }
     }

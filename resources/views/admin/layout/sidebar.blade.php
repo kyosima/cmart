@@ -55,7 +55,7 @@
          <li class="dropdown">
             <a href="{{route('coupon.index')}}" class="dropbtn">
               <i class="fas fa-tag"></i>
-                <span class="links_name w-100 align-items-center d-flex">Tất cả mã ưu đãi</span>
+                <span class="links_name w-100 align-items-center d-flex">Quản lý mã ưu đãi</span>
             </a>
             
          </li>

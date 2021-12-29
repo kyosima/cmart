@@ -200,7 +200,6 @@ class AdminProductCategoryController extends Controller
             $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục sản phẩm '. $proCat->name;
             Log::info($message);
         }
-        return redirect()->route('nganh-nhom-hang.index');
     }
 
     public function modalEdit(Request $request)
@@ -217,12 +216,54 @@ class AdminProductCategoryController extends Controller
         ], 200);
     }
 
+    public function multiChange(Request $request) {
+        if ($request->id == null) {
+            return redirect()->back();
+        } 
+        else {
+            if ($request->action == 'delete') {
+                foreach($request->id as $item) {
+                    $this->recursive($item, 2, 0);
+                    Product::where('category_id', $item)->update(['category_id' => 1]);
+
+                    $proCat = ProductCategory::findOrFail($item);
+                    ProductCategory::destroy($item);
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa danh mục sản phẩm ' . $proCat->name;
+                    Log::info($message);
+                }
+                return redirect(route('nganh-nhom-hang.index'));
+            }
+            else if($request->action == 'show') {
+                foreach($request->id as $item) {
+                    $proCat = ProductCategory::findOrFail($item);
+                    $proCat->status = 1;
+                    $proCat->save();
+
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện thay đổi trạng thái danh mục sản phẩm ' . $proCat->name;
+                    Log::info($message);
+                }
+                return redirect(route('nganh-nhom-hang.index'));
+            }
+            else if($request->action == 'hidden') {
+                foreach($request->id as $item) {
+                    $proCat = ProductCategory::findOrFail($item);
+                    $proCat->status = 0;
+                    $proCat->save();
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện thay đổi trạng thái danh mục sản phẩm ' . $proCat->name;
+                    Log::info($message);
+                }
+                return redirect(route('nganh-nhom-hang.index'));
+            }
+            return redirect()->back();
+        }
+    }
+
     public function updateStatus(Request $request, $id)
     {
         ProductCategory::where('id', $id)->update([
             'status' => $request->unitStatus
         ]);
-
-        return redirect()->route('nganh-nhom-hang.index');
     }
 }

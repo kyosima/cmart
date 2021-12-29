@@ -79,7 +79,7 @@
                                                     class="required" aria-required="true">(*)</span></label>
                                             <div class="col-md-9">
                                                 <select name="product_promo[]" id="select-product" class="form-control"
-                                                    multiple>
+                                                    multiple required>
                                                     @if (count($arr) > 0)
                                                         @foreach ($arr as $item)
                                                             <option value="{{$item->id}}" selected>{{$item->name}} (#{{$item->id}})</option>
@@ -94,7 +94,7 @@
                                                     class="required" aria-required="true">(*)</span></label>
                                             <div class="col-md-9">
                                                 <select name="procat_promo[]" id="select-procat" class="form-control"
-                                                    multiple>
+                                                    multiple required>
                                                     @if (count($arr) > 0)
                                                         @foreach ($arr as $item)
                                                             <option value="{{$item->id}}" selected>{{$item->name}} (#{{$item->id}})</option>
@@ -309,6 +309,9 @@
                         id: $(this).val()
                     },
                     dataType: "json",
+                    beforeSend: function() {
+                        $('form button[type=submit]').attr('disabled', 'disabled');
+                    },
                     success: function(response) {
                         $('.couponType').after(response.html)
                         $('#select-product').select2({
@@ -341,6 +344,8 @@
                         function formatRepoSelection(repo) {
                             return `${repo.name} (#${repo.id})`;
                         }
+                        $('form button[type=submit]').prop('disabled', false);
+
                     }
                 });
             } 
@@ -352,6 +357,9 @@
                         id: $(this).val()
                     },
                     dataType: "json",
+                    beforeSend: function() {
+                        $('form button[type=submit]').attr('disabled', 'disabled');
+                    },
                     success: function(response) {
                         $('.couponType').after(response.html)
                         $('#select-procat').select2({
@@ -384,6 +392,7 @@
                         function formatRepoSelection(repo) {
                             return `${repo.name} (#${repo.id})`;
                         }
+                        $('form button[type=submit]').prop('disabled', false);
                     }
                 });
             }
