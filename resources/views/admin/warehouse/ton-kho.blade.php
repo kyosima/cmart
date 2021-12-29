@@ -215,12 +215,9 @@
                                     <thead>
                                         <tr>
                                             <th class="title">STT</th>
-                                            <th class="title">Mã chi nhánh NPP</th>
-                                            <th class="title">Tên chi nhánh NPP</th>
-                                            <th class="title">Loại kho</th>
-                                            <th class="title">Model</th>
+                                            <th class="title">Mã kho</th>
+                                            <th class="title">Tên kho</th>
                                             <th class="title">Tên sản phẩm</th>
-                                            <th class="title">Đơn vị tính</th>
                                             <th class="title">Ngành hàng</th>
                                             <th class="title">Số lượng tồn kho</th>
                                             <th class="title">Thời gian</th>
@@ -234,10 +231,7 @@
                                                 <td>{{$index}}</td>
                                                 <td>{{$item->code}}</td>
                                                 <td>{{$item->name}}</td>
-                                                <td>Promotion</td>
-                                                <td>PerfectCream01</td>
                                                 <td>{{$product->name}}</td>
-                                                <td>{{$product->productCalculationUnit->name}}</td>
                                                 <td>{{$product->productCategory->name}}</td>
                                                 <td>{{$product->getOriginal('pivot_quantity')}}</td>
                                                 <td>{{$product->getOriginal('pivot_created_at')}}</td>

@@ -9,7 +9,7 @@
 @section('content')
 <div class="m-3">
     <div class="wrapper bg-white p-4">
-        <div class="portlet-title">
+        <div class="portlet-title d-flex justify-content-between align-items-center">
             <div class="title-name d-flex align-items-center">
                 <div class="caption">
                     <i class="fa fa-product-hunt icon-drec" aria-hidden="true"></i>
@@ -23,21 +23,33 @@
                         Thêm mới </a>
                 </div>
                 @endif
-                @if (auth()->guard('admin')->user()->can('Xóa sản phẩm'))
-                    <div class="ps-4">
-                        <a href="javascript:multiDel()" class="btn btn-danger btn-multi-del">
-                            <i class="fa fa-trash"></i>
-                            Xóa mục đã chọn </a>
-                    </div>
-                @endif
             </div>
+
+            @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') && auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+                <div>   
+                    <div class="input-group action-multiple">
+                        <select class="custom-select" name="action" required="">
+                            <option value="">Chọn hành động</option>
+                            @if (auth()->guard('admin')->user()->can('Xóa sản phẩm'))
+                            <option value="delete">Xóa</option>
+                            @endif
+                            <option value="show">Hiện</option>
+                            <option value="hidden">Ẩn</option>
+                        </select>
+                        <div class="input-group-append">
+                            <a href="javascript:multiDel()" class="btn btn-outline-secondary">Áp dụng</a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
         </div>
         <div class="portlet-body">
             <div class="pt-3" style="overflow-x: auto;">
-                @if (auth()->guard('admin')->user()->can('Xóa sản phẩm'))
-                <form id="myform" action="{{route('san-pham.multipleDestroy')}}" method="post">
+                @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') && auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+                <form id="myform" action="{{route('san-pham.multiChange')}}" method="post">
                     @csrf
-                    @method('delete')
+                    <input type="hidden" name="action" value="" id="input-action">
                 @endif
                     <table id="table-product" class="table table-hover table-main" width="100%">
                         <thead class="thead1" style="vertical-align: middle;">
@@ -118,7 +130,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                @if (auth()->guard('admin')->user()->can('Xóa sản phẩm'))
+                @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') && auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
                 </form>
                 @endif
             </div>
@@ -135,8 +147,15 @@
 <script>
 
     function multiDel() {
-        confirm('Bạn chắc chắn muốn xóa sản phẩm này?') == true && $('#myform').submit()
+        confirm('Bạn chắc chắn muốn thực hiện tác vụ này?') == true && $('#myform').submit()
     }
+
+    $(document).ready(function () {
+        $('.custom-select').change(function (e) { 
+            e.preventDefault();
+            $('#input-action').val($(this).val())
+        });
+    });
 
     jQuery.fn.dataTableExt.aTypes.unshift(
         function ( sData )

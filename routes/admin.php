@@ -87,6 +87,10 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('/coupon/select-product', [AdminCouponController::class, 'selectProduct'])->name('coupon.selectProduct');
         Route::get('/coupon/select-procat', [AdminCouponController::class, 'selectProCat'])->name('coupon.selectProCat');
     });
+
+    Route::group(['middleware' => ['permission:Xóa mã ưu đãi|Chỉnh sửa mã ưu đãi,admin']], function () {
+        Route::post('/coupon/multiple-change', [AdminCouponController::class, 'multiChange'])->name('coupon.multiChange');
+    });
     // Route::delete('/coupon/{id}', [AdminCouponController::class, 'deleteForm'])->name('coupon.deleteForm');
     
     // PRODUCT
@@ -112,11 +116,14 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA sản phẩm
     Route::group(['middleware' => ['permission:Xóa sản phẩm,admin']], function () {
         Route::delete('/san-pham/delete/{id}', [AdminProductController::class, 'destroy'])->name('san-pham.delete');
-        Route::delete('/san-pham/multiple-delete', [AdminProductController::class, 'multipleDestory'])->name('san-pham.multipleDestroy');
     });
 
     Route::group(['middleware' => ['permission:Thêm sản phẩm|Chỉnh sửa sản phẩm,admin']], function () {
         Route::get('/san-pham/searchProduct', [AdminProductController::class, 'getProduct'])->name('san-pham.getProduct');
+    });
+
+    Route::group(['middleware' => ['permission:Xóa sản phẩm|Chỉnh sửa sản phẩm,admin']], function () {
+        Route::post('/san-pham/multiple-change', [AdminProductController::class, 'multiChange'])->name('san-pham.multiChange');
     });
 
 
@@ -144,7 +151,10 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA danh mục sản phẩm
     Route::group(['middleware' => ['permission:Xóa danh mục sản phẩm,admin']], function () {
         Route::delete('/nganh-nhom-hang/delete/{id}', [AdminProductCategoryController::class, 'destroy'])->name('nganh-nhom-hang.delete');
-        Route::delete('/nganh-nhom-hang/multiple-delete', [AdminProductCategoryController::class, 'multipleDestroy'])->name('nganh-nhom-hang.multipleDestroy');
+    });
+
+    Route::group(['middleware' => ['permission:Xóa danh mục sản phẩm|Chỉnh sửa danh mục sản phẩm,admin']], function () {
+        Route::post('/nganh-nhom-hang/multiple-change', [AdminProductCategoryController::class, 'multiChange'])->name('nganh-nhom-hang.multiChange');
     });
 
     // Route::get('/nganh-nhom-hang/test/{id}/{status}/{levelChange}', [AdminProductCategoryController::class, 'recursive'])->name('nganh-nhom-hang.recursive');
@@ -247,6 +257,10 @@ Route::group(['middleware' => ['admin']], function () {
         Route::delete('/payment/multiple-delete', [PaymentController::class, 'multipleDestroy'])->name('payment.multipleDestroy');
     });
 
+    Route::group(['middleware' => ['permission:Xóa HTTT|Chỉnh sửa HTTT,admin']], function () {
+        Route::post('/payment/multiple-change', [PaymentController::class, 'multiChange'])->name('payment.multiChange');
+    });
+
     // BRAND
     // được phép xem thương hiệu
     Route::group(['middleware' => ['permission:Xem thương hiệu,admin']], function () {
@@ -270,6 +284,10 @@ Route::group(['middleware' => ['admin']], function () {
     Route::group(['middleware' => ['permission:Xóa thương hiệu,admin']], function () {
         Route::delete('/thuong-hieu', [BrandController::class, 'destroy'])->name('thuong-hieu.delete');
         Route::delete('/thuong-hieu/multiple-delete', [BrandController::class, 'multipleDestroy'])->name('thuong-hieu.multipleDestroy');
+    });
+
+    Route::group(['middleware' => ['permission:Xóa thương hiệu|Chỉnh sửa thương hiệu,admin']], function () {
+        Route::post('/thuong-hieu/multiple-change', [BrandController::class, 'multiChange'])->name('thuong-hieu.multiChange');
     });
 
     // WAREHOUSE 

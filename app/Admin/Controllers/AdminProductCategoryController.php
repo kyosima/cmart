@@ -216,11 +216,13 @@ class AdminProductCategoryController extends Controller
         ], 200);
     }
 
-    public function multipleDestroy(Request $request)
-    {
-        if($request->id != null) {
-            foreach($request->id as $item) {
-                if ($item != 1) {
+    public function multiChange(Request $request) {
+        if ($request->id == null) {
+            return redirect()->back();
+        } 
+        else {
+            if ($request->action == 'delete') {
+                foreach($request->id as $item) {
                     $this->recursive($item, 2, 0);
                     Product::where('category_id', $item)->update(['category_id' => 1]);
 
@@ -230,9 +232,30 @@ class AdminProductCategoryController extends Controller
                     $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa danh mục sản phẩm ' . $proCat->name;
                     Log::info($message);
                 }
+                return redirect(route('nganh-nhom-hang.index'));
             }
-            return redirect(route('nganh-nhom-hang.index'));
-        } else {
+            else if($request->action == 'show') {
+                foreach($request->id as $item) {
+                    $proCat = ProductCategory::findOrFail($item);
+                    $proCat->status = 1;
+                    $proCat->save();
+
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện thay đổi trạng thái danh mục sản phẩm ' . $proCat->name;
+                    Log::info($message);
+                }
+                return redirect(route('nganh-nhom-hang.index'));
+            }
+            else if($request->action == 'hidden') {
+                foreach($request->id as $item) {
+                    $proCat = ProductCategory::findOrFail($item);
+                    $proCat->status = 0;
+                    $proCat->save();
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện thay đổi trạng thái danh mục sản phẩm ' . $proCat->name;
+                    Log::info($message);
+                }
+                return redirect(route('nganh-nhom-hang.index'));
+            }
             return redirect()->back();
         }
     }

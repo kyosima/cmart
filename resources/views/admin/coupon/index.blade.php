@@ -120,7 +120,7 @@
                     </div>
                 </div>
             @endif
-            <div class="portlet-title">
+            <div class="portlet-title d-flex align-items-center justify-content-between">
                 <div class="title-name d-flex align-items-center">
                     <div class="caption">
                         <i class="fa fa-anchor icon-drec" aria-hidden="true"></i>
@@ -135,23 +135,33 @@
                                 Thêm mới </a>
                         </div>
                     @endif
-                    @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
-                        <div class="ps-4">
-                            <a href="javascript:multiDel()" class="btn btn-danger btn-multi-del">
-                                <i class="fa fa-trash"></i>
-                                Xóa mục đã chọn </a>
-                        </div>
-                    @endif
                 </div>
+                @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi') && auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
+                    <div>   
+                        <div class="input-group action-multiple">
+                            <select class="custom-select" name="action" required="">
+                                <option value="">Chọn hành động</option>
+                                @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
+                                <option value="delete">Xóa</option>
+                                @endif
+                                <option value="show">Hiện</option>
+                                <option value="hidden">Ẩn</option>
+                            </select>
+                            <div class="input-group-append">
+                                <a href="javascript:multiDel()" class="btn btn-outline-secondary">Áp dụng</a>
+                            </div>
+                        </div>
+                    </div>
+                @endif
 
             </div>
             <hr>
             <div class="portlet-body">
                 <div class="pt-3" style="overflow-x: auto;">
-                    @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
-                        <form id="myform" action="{{ route('coupon.multipleDestroy') }}" method="post">
+                    @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi') && auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
+                        <form id="myform" action="{{ route('coupon.multiChange') }}" method="post">
                             @csrf
-                            @method('DELETE')
+                            <input type="hidden" name="action" value="" id="input-action">
                     @endif
                     <table id="table-calculation-unit" class="table table-hover table-main" width="100%">
                         <thead class="thead1" style="vertical-align: middle;">
@@ -179,7 +189,7 @@
 
                         </tbody>
                     </table>
-                    @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
+                    @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi') && auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
                     </form>
                     @endif
                 </div>
@@ -197,9 +207,15 @@
 {{-- function get put post coupon --}}
 <script>
     function multiDel() {
-        confirm('Bạn chắc chắn muốn xóa sản phẩm này?') == true && $('#myform').submit()
+        confirm('Bạn chắc chắn muốn thực hiện tác vụ này?') == true && $('#myform').submit()
     }
+
     $(document).ready(function() {
+        $('.custom-select').change(function (e) { 
+            e.preventDefault();
+            $('#input-action').val($(this).val())
+        });
+
         @if(auth()->guard('admin')->user()->can('Thêm mã ưu đãi'))
             // CREATE NEW CALCULATION UNIT
             $("#formCreateBrand").submit(function (e) {

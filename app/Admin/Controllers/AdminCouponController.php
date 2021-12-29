@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class AdminCouponController extends Controller
@@ -188,15 +189,21 @@ class AdminCouponController extends Controller
         }
     }
 
-    public function multipleDestroy(Request $request)
-    {
-        if($request->id != null) {
-            foreach($request->id as $item) {
-                CouponPromo::where('id_ofcoupon', $item)->delete();
-                Coupon::destroy($item);
+    public function multiChange(Request $request) {
+        if ($request->id == null) {
+            return redirect()->back();
+        } 
+        else {
+            if ($request->action == 'delete') {
+                foreach($request->id as $item) {
+                    $coupon = Coupon::findOrFail($item);
+                    Coupon::destroy($item);
+    
+                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa coupon/voucher ' . $coupon->name;
+                    Log::info($message);
+                }
+                return redirect(route('coupon.index'));
             }
-            return redirect(route('coupon.index'));
-        } else {
             return redirect()->back();
         }
     }
