@@ -94,5 +94,30 @@ class AdminInfoCompanyController extends Controller
         }
         return response('Thành công', 200);
     }
+
+    public function multiple(Request $request){
+        $this->validate($request, [
+            'action' => 'required',
+            'id' => 'required'
+        ]);
+        if($request->action == 'delete'){
+            foreach($request->id as $value){
+                InfoCompany::find($value)->delete();
+            }
+            Session::flash('success', 'Thực hiện thành công');
+        }
+        elseif($request->action == 'show'){
+            InfoCompany::whereIn('id', $request->id)->update(['status' => 1]);
+            Session::flash('success', 'Thực hiện thành công');
+        }
+        elseif($request->action == 'hidden'){
+            InfoCompany::whereIn('id', $request->id)->update(['status' => 0]);
+            Session::flash('success', 'Thực hiện thành công');
+        }
+        else{
+            Session::flash('warning', 'Thực hiện không thành công');
+        }
+        return back();
+    }
 }
 

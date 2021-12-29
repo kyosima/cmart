@@ -163,4 +163,27 @@ class AdminManagerAdminController extends Controller
         Admin::find($id)->delete();
         return response('Thành công', 200);
     }
+
+    public function multiple(Request $request){
+        $this->validate($request, [
+            'action' => 'required',
+            'id' => 'required'
+        ]);
+        if($request->action == 'delete'){
+            foreach($request->id as $value){
+                Admin::find($value)->delete();
+            }
+            Session::flash('success', 'Thực hiện thành công');
+        }
+        elseif($request->action == 'show'){
+            Admin::whereIn('id', $request->id)->update(['status' => 1]);
+        }
+        elseif($request->action == 'hidden'){
+            Admin::whereIn('id', $request->id)->update(['status' => 0]);
+        }
+        else{
+            Session::flash('warning', 'Thực hiện không thành công');
+        }
+        return back();
+    }
 }

@@ -47,6 +47,8 @@ Route::group(['middleware' => ['admin']], function () {
     // xóa đơn Hàng
     Route::match(['delete', 'get'],'xoa-don-hang/{order:id}', [AdminOrderController::class, 'delete'])->name('order.delete')->middleware('permission:Xóa đơn hàng,admin');
 
+    Route::post('xu-ly-nhieu-don-hang', [AdminOrderController::class,'multiple'])->name('order.multiple');
+
     //Load ajax adrress
     Route::get('lay-quan-huyen-theo-tinh-thanh', [AdminOrderController::class, 'districtOfProvince']);
 
@@ -68,6 +70,7 @@ Route::group(['middleware' => ['admin']], function () {
 
         //xóa
         Route::match(['delete', 'get'], 'delete/{info_company:id}', [AdminInfoCompanyController::class, 'delete'])->name('info-company.delete')->middleware('permission:Xóa trang đơn,admin');
+        Route::post('xu-ly-nhieu', [AdminInfoCompanyController::class,'multiple'])->name('info-company.multiple');
     });
 
     //banner
@@ -86,6 +89,9 @@ Route::group(['middleware' => ['admin']], function () {
         Route::resource('roles', AdminRolesController::class);
         Route::resource('permissions', AdminPermissionsController::class);
         Route::resource('manager-admin', AdminManagerAdminController::class);
+        Route::post('xu-ly-nhieu-role', [AdminRolesController::class,'multiple'])->name('roles.multiple');
+        Route::post('xu-ly-nhieu-permission', [AdminPermissionsController::class,'multiple'])->name('permissions.multiple');
+        Route::post('xu-ly-nhieu-admin', [AdminManagerAdminController::class,'multiple'])->name('manager-admin.multiple');
         
     });
 

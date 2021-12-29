@@ -7,30 +7,30 @@
     <ul class="nav-list p-0">
         <li class="dropdown">
             <a href="{{route('admin.index')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fas fa-tachometer-alt"></i>
              <span class="links_name">Dashboard</span>
             </a>
          </li>
-         @if(auth()->guard('admin')->user()->can('Xem bài viết', 'Xem danh mục bài viết'))
+         @if(auth()->guard('admin')->user()->can('Xem DS đơn hàng'))
          <li class="dropdown">
-            <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Quản lý bài viết <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            <a href="{{route('order.index')}}" class="dropbtn">
+             <i class="fas fa-shopping-cart"></i>
+             <span class="links_name w-100 align-items-center d-flex">Đơn hàng</span>
             </a>
-            <span class="dropdown-content">
-                @if(auth()->guard('admin')->user()->can('Xem danh mục bài viết'))
-                    <a href="{{route('chuyenmuc-baiviet.index')}}">Chuyên mục bài viết</a>
-                @endif
-                @if(auth()->guard('admin')->user()->can('Xem bài viết'))
-                    <a href="{{route('baiviet.index')}}">Bài viết</a>
-                @endif
-            </span>
+         </li>
+         @endif
+         @if (auth()->guard('admin')->user()->can('Xem kho'))
+         <li class="dropdown">
+            <a href="{{route('warehouse.index')}}" class="dropbtn">
+             <i class="fas fa-laptop-house"></i>
+             <span class="links_name w-100 align-items-center d-flex">Tồn kho <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            </a>
          </li>
          @endif
          @if(auth()->guard('admin')->user()->can('Xem sản phẩm', 'Xem danh mục sản phẩm', 'Xem thương hiệu', 'Xem đơn vị tính'))
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fas fa-cube"></i>
              <span class="links_name w-100 align-items-center d-flex">Quản lý sản phẩm <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             <span class="dropdown-content">
@@ -51,7 +51,7 @@
          @endif
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fas fa-tag"></i>
              <span class="links_name w-100 align-items-center d-flex">Cài đặt khuyến mãi <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             <span class="dropdown-content">
@@ -59,41 +59,26 @@
                 <a href="loai-khuyen-mai.html">Loại khuyến mãi</a>
             </span>
          </li>
-         @if(auth()->guard('admin')->user()->can('Xem DS đơn hàng'))
-         <li class="dropdown">
-            <a href="{{route('order.index')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Đơn hàng <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
-            </a>
-         </li>
-         @endif
-         @if (auth()->guard('admin')->user()->can('Xem kho'))
-         <li class="dropdown">
-            <a href="{{route('warehouse.index')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Tồn kho <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
-            </a>
-         </li>
-         @endif
+         
          @role('Boss', 'admin')
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fas fa-user-shield"></i>
              <span class="links_name w-100 align-items-center d-flex">Quản lý Admin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             <span class="dropdown-content">
                 <a href="{{route('roles.index')}}">Vai trò</a>
                 <a href="{{route('permissions.index')}}">Quyền</a>
                 <a href="{{route('manager-admin.index')}}">DS Admin</a>
-                <a href="{{URL::to('/admin/log-viewer/logs')}}">Theo dõi Admin</a>
+                <!-- <a href="{{URL::to('/admin/log-viewer/logs')}}">Theo dõi Admin</a> -->
             </span>
          </li>
          @endrole
          @if (auth()->guard('admin')->user()->can('QL thông tin'))
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Thông tin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+             <i class="fas fa-book"></i>
+             <span class="links_name w-100 align-items-center d-flex">Trang - banner <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             
             <span class="dropdown-content">
@@ -110,7 +95,7 @@
          @hasanyrole('Manager|Boss', 'admin')
          <li class="dropdown">
             <a href="{{route('setting.index')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fas fa-cog"></i>
              <span class="links_name">Cài đặt</span>
             </a>
          </li>

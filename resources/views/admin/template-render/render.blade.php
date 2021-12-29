@@ -1,5 +1,6 @@
 @if($type == 'roles')
 <tr class="replaywith-{{$role->id}}">
+    <td><input type="checkbox" name="id[]" value="{{ $role->id }}"></td>
     <td>{{$role->name}}</td>
     <td>{!! permissionOfRole($permission) !!}</td>
     <td>
@@ -13,6 +14,7 @@
 
 @if($type == 'permission')
 <tr class="replaywith-{{$permission->id}}">
+    <td><input type="checkbox" name="id[]" value="{{ $permission->id }}"></td>
     <td>{{$permission->name}}</td>
     <td>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">

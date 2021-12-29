@@ -8,10 +8,12 @@
 @endpush
 
 @section('content')
-
+<x-alert />
+<form action="{{ route('info-company.multiple') }}" method="post">
+    @csrf
 <div class="m-3">
     <div class="wrapper bg-white p-4">
-        <div class="portlet-title d-flex justify-content-between align-items-center">
+        <div class="portlet-title d-flex justify-content-between">
             <div class="title-name d-flex align-items-center">
                 <div class="caption">
                     <i class="fa fa-anchor icon-drec" aria-hidden="true"></i>
@@ -27,14 +29,28 @@
                 </div>
                 @endif
             </div>
-
+            <div>   
+                <div class="input-group action-multiple" style="display:none">
+                    <select class="custom-select" name="action" required >
+                        <option value="">Chọn hành động</option>
+                        <option value="delete">Xóa</option>
+                        <option value="show">Hiện</option>
+                        <option value="hidden">Ẩn</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Áp dụng</button>
+                    </div>
+                </div>
+            </div>
         </div>
+        
         <hr>
         <div class="portlet-body">
             <div class="pt-3" style="overflow-x: auto;">
                 <table id="tblInfoCompany" class="table table-hover table-main">
                     <thead class="thead1" style="vertical-align: middle;">
                         <tr>
+                            <th class="title" style="width: 30px;"><input class="form-check" name="checkAll" type="checkbox"></th>
                             <th class="title-text" style="width: 50px">
                                 STT </th>
                             <th class="title-text title1">
@@ -52,6 +68,7 @@
                     <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
                         @foreach ($page as $item)
                             <tr>
+                                <td><input type="checkbox" name="id[]" value="{{ $item->id }}"></td>
                                 <td>{{$item->id}}</td>
                                 <td>
                                     @if(auth()->guard('admin')->user()->can('Xem trang đơn'))
@@ -90,6 +107,7 @@
         </div>
     </div>
 </div>
+</form>
 <div class="footer text-center">
     <spans style="font-size: 12px; color: #333;">Copyright©2005-2021 . All rights reserved</spans>
 </div>
@@ -100,11 +118,12 @@
 <script type="text/javascript" src="{{ asset('js/admin/ajax-form.js') }}"></script>
 <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/checklist.js') }}"></script>
 <script>
     $(document).ready(function() {
         $('#tblInfoCompany').DataTable({
             columnDefs: [
-                { orderable: false, targets: 5 }
+                { orderable: false, targets: [0, 6] }
             ],
             "language": {
                 "emptyTable": "Không có dữ liệu nào !",

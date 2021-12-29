@@ -33,57 +33,78 @@
 									</span>
 								</div>
 								<div class="collapse show" id="collapseExample">
-									<div class="row mb-3">
-										<div class="col-sm-9"></div>
-										<div class="col-sm-3">
-											<button type="button" class="btn btn-success"
-												style="max-width: 400px; background-color: #11101D; color: #fff;">
-												<str>Tổng doanh thu trong tháng</str><br>
-												<span
-													style="font-size: 20px; font-weight: bold; text-align: left;">{{number_format($doanh_thu)}} đ</span>
-											</button>
+									<form action="{{ route('order.multiple') }}" method="post">
+										@csrf
+										<div class="row align-items-center mb-3">
+											<div class="col-sm-9">
+												<div class="input-group action-multiple" style="display:none">
+							                    <select class="custom-select" name="action" required >
+							                        <option value="">Chọn hành động</option>
+							                        <option value="delete">Xóa</option>
+							                        <optgroup label="Trạng thái">
+													    <option value="0">Đã đặt hàng</option>
+													    <option value="1">Đã xác nhận thanh toán</option>
+													    <option value="2">Đang xử lý</option>
+													    <option value="3">Đang vận chuyển</option>
+													    <option value="4">Hoàn thành</option>
+													    <option value="5">Đã hủy</option>
+													</optgroup>
+							                    </select>
+							                    <div class="input-group-append">
+							                        <button class="btn btn-outline-secondary" type="submit">Áp dụng</button>
+							                    </div>
+							                </div></div>
+											<div class="col-sm-3">
+												<button type="button" class="btn btn-success"
+													style="max-width: 400px; background-color: #11101D; color: #fff;">
+													<str>Tổng doanh thu trong tháng</str><br>
+													<span
+														style="font-size: 20px; font-weight: bold; text-align: left;">{{number_format($doanh_thu)}} đ</span>
+												</button>
+											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12" style="overflow-x: auto;">
-											<table id="tblOrder" class="table table-hover align-middle">
-												<thead>
-													<tr>
-														<th class="title">ID</th>
-														<!-- <th class="title"><input class="form-check" type="checkbox"></th> -->
-														<th class="title">Người đặt</th>
-														<th class="title">Trạng thái</th>
-														<th class="title">Tổng tiền</th>
-														<th class="title">Ngày tạo</th>
-														<th class="title" style="width:75px;">Thao tác</th>
-													</tr>
-												</thead>
-												<tbody style="color: #748092; font-size: 14px;">
-													@foreach ( $orders as $order)
-													<tr>
-														<td>#{{$order->id}}</td>
-														<!-- <td><input type="checkbox" name="" id=""></td> -->
-														<td>{{$order->order_info->fullname}}</td>
-														<td class="change-status-{{$order->id}}">{!! orderStatus($order->status) !!}</td>
-														<td>{{number_format($order->total)}} đ</td>
-														<td>{{date('d-m-Y H:i:s', strtotime($order->created_at))}}</td>
-														
-														<td>
-															<div class="btn-group" role="group" aria-label="Basic mixed styles example">
-																@if(auth()->guard('admin')->user()->can('Xem đơn hàng'))
-																<a href="{{route('order.show', ['order' => $order->id])}}" class="btn bg-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-																@endif
-																@if(auth()->guard('admin')->user()->can('Xem DS đơn hàng'))
-																<button type="button" data-url="{{route('order.delete', ['order' => $order->id])}}" class="btn btn-danger ajax-delete"><i class="fa fa-trash"></i></button>
-																@endif
-															</div>
-														</td>
-													</tr>
-													@endforeach
-												</tbody>
-											</table>
+										<div class="row">
+											<div class="col-sm-12" style="overflow-x: auto;">
+												<table id="tblOrder" class="table table-hover align-middle">
+													<thead>
+														<tr>
+															<th class="title" style="width: 30px;"><input class="form-check" name="checkAll" type="checkbox"></th>
+															<th class="title">Mã đơn hàng</th>
+															<th class="title">Người đặt</th>
+															<th class="title">Trạng thái</th>
+															<th class="title">Tổng tiền</th>
+															<th class="title">Ngày tạo</th>
+															<th class="title" style="width:75px;">Thao tác</th>
+														</tr>
+													</thead>
+													<tbody style="color: #748092; font-size: 14px;">
+														@foreach ( $orders as $order)
+														<tr>
+															<td><input type="checkbox" name="id[]" value="{{ $order->id }}"></td>
+															<td>{{$order->order_code}}</td>
+															
+															<td>{{$order->order_info->fullname}}</td>
+															<td class="change-status-{{$order->id}}">{!! orderStatus($order->status) !!}</td>
+															<td>{{number_format($order->total)}} đ</td>
+															<td>{{date('d-m-Y H:i:s', strtotime($order->created_at))}}</td>
+															
+															<td>
+																<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+																	@if(auth()->guard('admin')->user()->can('Xem đơn hàng'))
+																	<a href="{{route('order.show', ['order' => $order->id])}}" class="btn bg-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+																	@endif
+																	@if(auth()->guard('admin')->user()->can('Xem DS đơn hàng'))
+																	<button type="button" data-url="{{route('order.delete', ['order' => $order->id])}}" class="btn btn-danger ajax-delete"><i class="fa fa-trash"></i></button>
+																	@endif
+																</div>
+															</td>
+														</tr>
+														@endforeach
+													</tbody>
+												</table>
+											</div>
 										</div>
-									</div>
+									</form>
 								</div>
 						</ul>
 					</div>
@@ -101,6 +122,7 @@
 	<script type="text/javascript" src="{{ asset('js/admin/ajax-form.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/admin/select2.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/admin/order.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/checklist.js') }}"></script>
     <!-- format language -->
 
     <script>
@@ -108,7 +130,7 @@
 
             $('#tblOrder').DataTable({
                 columnDefs: [
-                    { orderable: false, targets: 5 }
+                    { orderable: false, targets: [0, 6] }
                 ],
                 "language": {
                     "emptyTable": "Không có dữ liệu nào !",

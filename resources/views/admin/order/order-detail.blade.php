@@ -15,7 +15,7 @@
                     <div class="card-body">	
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h3 class="card-title">Đơn hàng #{{$order->id}}</h3>
+                                <h3 class="card-title">Đơn hàng #{{$order->order_code}}</h3>
                             </div>
                             
                         </div>
@@ -138,16 +138,16 @@
                                                             <th>Tạm tính</th>
                                                             <td><span class="amount">{{number_format($order->sub_total)}} đ</span></td>
                                                         </tr>
-                                                        <tr class="checkout-shipping-label-curent">
+                                                        <!-- <tr class="checkout-shipping-label-curent">
                                                             <th>Phí ship hiện tại</th>
                                                             <td>Giao hàng miễn phí</td>
                                                         </tr>
                                                         <tr class="checkout-shipping-label-curent">
                                                             <th>Phương thức hiện tại</th>
                                                             <td>COD</td>
-                                                        </tr>
+                                                        </tr> -->
                                                         <tr class="order-total">
-                                                            <th>Tổng cộng</th>
+                                                            <th>Giá trị giao dịch</th>
                                                             <td><strong><span class="amount" data-total={{number_format($order->total)}}>{{number_format($order->total + $order->shipping_total)}} ₫</span></strong> </td>
                                                         </tr>
                                                     </tfoot>

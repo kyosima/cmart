@@ -71,6 +71,7 @@ class AdminOrderController extends Controller
             }
             $order = Order::create([
                 'user_id' => $request->sel_user,
+                'order_code' => 'CMART-'.time(),
                 'shipping_method' => 'ems',
                 'shipping_total' => 0,
                 'sub_total' => $sub_total,
@@ -147,11 +148,31 @@ class AdminOrderController extends Controller
             $user->tichluyC = $user->tichluyC + $order_cpoint;
             $user->save();
         }elseif($request_status != 4 && $order_status == 4){
-            $user = $order->user;
             $user->tichluyC = $user->tichluyC - $order_cpoint;
             $user->save();
+        }else{
+            return true;
         }
         return true;
+    }
+
+    public function multiple(Request $request){
+        $this->validate($request, [
+            'action' => 'required',
+            'id' => 'required'
+        ]);
+        $order = Order::find($request->id);
+        if($request->action == 'delete'){
+            Order::whereIn('id', $request->id)->delete();
+            Session::flash('success', 'Thực hiện thành công');
+        }else{
+            foreach ($order as $value) {
+                $this->proccessCpoint($value->user, $request->action, $value->status, $value->c_point);
+            }
+            Order::whereIn('id', $request->id)->update(['status' => $request->action]);
+            Session::flash('success', 'Thực hiện thành công');
+        }
+        return back();
     }
 
     public function export() 

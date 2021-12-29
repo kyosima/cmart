@@ -72,35 +72,49 @@
                     </form>
                 </div>
                 <div class="col-xs-12 col-md-9">
-                    <!-- table -->
-                    <div class="table__container mt-2">
-                        <table class="table table-hover" id="tblAdmin" class="display" style="width:100%">
-                            <thead class="table__daily">
-                                <tr>
-                                    <th scope="col">Tên</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Vai trò</th>
-                                    <th scope="col">Thao tác</th>
-                                </tr>
-                            </thead>
-                            <tbody class="font-size-1">
-                                @foreach ($admins as $value)
-                                <tr class="replaywith-{{$value->id}}">
-                                    <td>{{$value->name}}</td>
-                                    <td>{{$value->email}}</td>
-                                    <td>{!! showAdminWithRoles($value->roles) !!}</td>
-                                    <td>
-                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                            <button type="button" class="btn btn-warning ajax-edit ajax-get-admin" data-id="{{$value->id}}" data-name="{{$value->name}}" data-email="{{$value->email}}" data-url="{{route('manager-admin.edit', $value->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                            <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('manager-admin.destroy', $value->id)}}"><i class="fa fa-trash"></i></button>
-                                        </div>
-                                    </td> 
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- end table -->
+                    <form action="{{ route('manager-admin.multiple') }}" method="post">
+                        @csrf
+                        <div class="input-group action-multiple" style="display:none">
+                            <select class="custom-select" name="action" required >
+                                <option value="">Chọn hành động</option>
+                                <option value="delete">Xóa</option>
+                            </select>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit">Áp dụng</button>
+                            </div>
+                        </div>
+                        <!-- table -->
+                        <div class="table__container mt-2">
+                            <table class="table table-hover" id="tblAdmin" class="display" style="width:100%">
+                                <thead class="table__daily">
+                                    <tr>
+                                        <th class="title" style="width: 30px;"><input class="form-check" name="checkAll" type="checkbox"></th>
+                                        <th scope="col">Tên</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Vai trò</th>
+                                        <th scope="col">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="font-size-1">
+                                    @foreach ($admins as $value)
+                                    <tr class="replaywith-{{$value->id}}">
+                                        <td><input type="checkbox" name="id[]" value="{{ $value->id }}"></td>
+                                        <td>{{$value->name}}</td>
+                                        <td>{{$value->email}}</td>
+                                        <td>{!! showAdminWithRoles($value->roles) !!}</td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                <button type="button" class="btn btn-warning ajax-edit ajax-get-admin" data-id="{{$value->id}}" data-name="{{$value->name}}" data-email="{{$value->email}}" data-url="{{route('manager-admin.edit', $value->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                                <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('manager-admin.destroy', $value->id)}}"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </td> 
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table -->
+                    </form>
                 </div>
             </div>
             
@@ -190,12 +204,13 @@
     <script type="text/javascript" src="{{ asset('js/admin/ajax-form.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/admin/checklist.js') }}"></script>
     <!-- format language -->
     <script>
         $(document).ready(function() {
             $('#tblAdmin').DataTable({
                 columnDefs: [
-                    { orderable: false, targets: 3 }
+                    { orderable: false, targets: [0, 4] }
                 ],
                 "language": {
                     "emptyTable": "Không có dữ liệu nào !",
