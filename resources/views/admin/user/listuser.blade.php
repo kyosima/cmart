@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Dashboard')
+@section('title', 'Danh sách khách hàng')
 
 @push('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin/dashboard.css') }}">
@@ -105,7 +105,7 @@
                     <td>
                         {{$k->tichluyC}}
                     </td>
-                    <td><i class="fa fa-trash-o fa-fw"></i><a class="alert alert-primary" style="text-decoration: none" href="{{url('admin/danh-sach-user')}}/{{$k->id}}"> Kiểm tra</a></td>
+                    <td><a class="alert alert-primary" style="text-decoration: none" href="{{url('admin/danh-sach-user')}}/{{$k->id}}"> Kiểm tra</a></td>
                     <td>
                         @if($k->check_kyc == 0)
                             <p class="alert alert-warning m-0">Đang chờ xét</p>

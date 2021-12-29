@@ -52,7 +52,7 @@ img {
                     <div class="col-md-3 text-center mb-5">
                         <div class="avatar avatar-xl">
                             @if($profileUser->avatar != null)
-                                <img src="{{asset('/public/storage/upload/'.$profileUser->avatar)}}" width="150px" height="150px"/>
+                                <img src="{{asset('/public/images/'.$profileUser->avatar)}}" width="150px" height="150px"/>
                                 <input type="file" class="form-control" name="avatar" id="img_avatar" style="display: none">
                                 <label for="img_avatar" class="btn btn-primary profile-button mt-2">Cập nhật avatar</label>
                             @else
@@ -73,6 +73,7 @@ img {
                                 <p class="text-muted" style="margin:0">
                                     <span class="text-black-50">{{$profileUser->email}}</span><span> 
                                 </p>
+                                {{$profileUser->name}}
                                 <p class="text-muted">
                                     @if($profileUser->level==1)
                                         Member Vip
@@ -82,7 +83,7 @@ img {
                                         Member bình thường
                                     @endif
                                 </p>
-                                <div class="">Tích lũy: {{$profileUser->tichluyC}} point</div>
+                                <!--<div class="">Tích lũy: {{$profileUser->tichluyC}} point</div>-->
                             </div>
                             <div class="col">
                                 
@@ -98,6 +99,7 @@ img {
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lastname">Số điện thoại</label>
+                        <!-- <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}" readonly> -->
                         <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}" readonly>
                     </div>
                 </div>
@@ -134,11 +136,10 @@ img {
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND</label>
                         @if($profileUser->cmnd_image != null)
-                        <img id="imgFileUpload" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image)}}" width="100%" height="250px" style="cursor: pointer" />
+                        <img id="imgFileUpload" src="{{asset('/public/images/'.$profileUser->cmnd_image)}}" width="100%" height="250px" style="cursor: pointer" />
                         <br />
                         <span id="spnFilePath"></span>
                         <input type="file" id="FileUpload1" style="display: none" name="image_cmnd" id="img_cmnd" />
-
                         @else
                         <p>
                             <input class="form-control" type="file" accept="image/*" onchange="loadFile(event)" name="image_cmnd">
@@ -149,15 +150,16 @@ img {
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND mặt sau</label>
                         @if($profileUser->cmnd_image2 != null)
-                        <img id="imgFileUpload" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image2)}}" width="100%" height="250px" style="cursor: pointer" />
+                        <img id="imgFileUpload2" src="{{asset('/public/images2/'.$profileUser->cmnd_image2)}}" width="100%" height="250px" style="cursor: pointer" />
                         <br />
-                        <span id="spnFilePath"></span>
-                        <input type="file" id="FileUpload1" style="display: none" name="image_cmnd2" id="img_cmnd2" />
+                        <span id="spnFilePath2"></span>
+                        <input type="file" id="FileUpload2" style="display: none" name="image_cmnd2" id="img_cmnd2" />
                         @else
                             <input class="form-control" type="file" accept="image/*" onchange="loadFile2(event)" name="image_cmnd2">
                             <img id="output2"/>
                         @endif
                 </div>
+
                 <div class="form-group">
                     <label for="inputAddress5">Địa chỉ</label>
                     <input type="text" name="address" class="form-control" value="{{$profileUser->address}}">
@@ -178,7 +180,8 @@ img {
                         <select name="sel_province" class="form-control select2"
                             data-placeholder="---Chọn tỉnh thành---" required>
                                 <option value="{{ $profileUser->id_tinhthanh }}">
-                                {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->first()->tentinhthanh}}
+                                {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')
+                                    ->where('province.matinhthanh','=',auth()->user()->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh}}
                                 </option>
                                 @foreach ($province as $value)
                                     <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
@@ -197,8 +200,9 @@ img {
                         @else
                         <select class="form-control select2" name="sel_district"
                             data-placeholder="---Chọn quận huyên---" required>
-                            <option value="{{ $profileUser->id_tinhthanh }}">
-                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->first()->tenquanhuyen}}
+                            <option value="{{ $profileUser->id_quanhuyen }}">
+                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')
+                                ->where('district.maquanhuyen','=',auth()->user()->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen}}
                             </option>
                         </select>
                         @endif
@@ -214,7 +218,8 @@ img {
                         <select class="form-control select2" name="sel_ward"
                             data-placeholder="---Chọn phường xã---" required>
                             <option value="{{$profileUser->id_phuongxa}}">
-                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->first()->tenphuongxa}}
+                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')
+                                    ->where('ward.maphuongxa','=',auth()->user()->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa}}
                             </option>
                         </select>
                         @endif
@@ -233,19 +238,18 @@ img {
                             <input type="password" class="form-control password" name="passwordAgain" placeholder="Re-Password" disabled>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <p class="mb-2">Làm mới mật khẩu</p>
-                        <p class="small text-muted mb-2">Để làm mới mật khẩu bạn phải đạt đủ yêu cầu như sau</p>
+                    <!-- <div class="col-md-6">
+                        <p class="mb-2">Đổi mật khẩu</p>
+                        <p class="small text-muted mb-2">Để đổi mật khẩu bạn phải đạt đủ yêu cầu như sau</p>
                         <ul class="small text-muted pl-4 mb-0">
                             <li>Có ít nhất 8 ký tự</li>
                             <li>Không có ký tự đặc biệt</li>
-                            <!-- <li>At least one special character</li>
-                            <li>At least one number</li>
-                            <li>Can’t be the same as a previous password</li> -->
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
-                <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
+                </div>
             </form>
         </div>
     </div>
@@ -262,35 +266,45 @@ src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
 </script>
 <script src="{{ asset('public/js/shipping.js') }}"></script>
 
-
-
-
-
-<script>
-    window.addEventListener("load", function() {
-        const slider = document.querySelector(".slider");
-        const sliderMain = document.querySelector(".slider-product");
-        const sliderItems = document.querySelectorAll(".slider-product-item");
-        const nextBtn = document.querySelector(".slide-btn-next");
-        const prevBtn = document.querySelector(".slide-btn-prev");
-        const slideritemWidth = sliderItems[0].offsetWidth;
-        console.log("slideritemWidth", slideritemWidth);
-    });
-</script>
-    <script type='text/javascript'>
-    window.onload = function () {
-        var fileupload = document.getElementById("FileUpload1");
-        var filePath = document.getElementById("spnFilePath");
-        var image = document.getElementById("imgFileUpload");
-        image.onclick = function () {
-            fileupload.click();
-        };
-        fileupload.onchange = function () {
-            var fileName = fileupload.value.split('\\')[fileupload.value.split('\\').length - 1];
-            filePath.innerHTML = "<b>Selected File: </b>" + fileName;
-        };
-    };
+    <script>
+        window.addEventListener("load", function() {
+            const slider = document.querySelector(".slider");
+            const sliderMain = document.querySelector(".slider-product");
+            const sliderItems = document.querySelectorAll(".slider-product-item");
+            const nextBtn = document.querySelector(".slide-btn-next");
+            const prevBtn = document.querySelector(".slide-btn-prev");
+            const slideritemWidth = sliderItems[0].offsetWidth;
+            console.log("slideritemWidth", slideritemWidth);
+        });
     </script>
+
+    <script type='text/javascript'>
+            var fileupload = document.getElementById("FileUpload1");
+            var filePath = document.getElementById("spnFilePath");
+            var image = document.getElementById("imgFileUpload");
+            image.onclick = function () {
+                fileupload.click();
+            };
+            fileupload.onchange = function () {
+                var fileName = fileupload.value.split('\\')[fileupload.value.split('\\').length - 1];
+                filePath.innerHTML = "<b>Selected File: </b>" + fileName;
+            };
+    </script>
+    
+    <script type='text/javascript'>
+            var fileupload2 = document.getElementById("FileUpload2");
+            var filePath2 = document.getElementById("spnFilePath2");
+            var image2 = document.getElementById("imgFileUpload2");
+            image2.onclick = function () {
+                fileupload2.click();
+            };
+
+            fileupload2.onchange = function () {
+                var fileName2 = fileupload2.value.split('\\')[fileupload2.value.split('\\').length - 1];
+                filePath2.innerHTML = "<b>Selected File: </b>" + fileName2;
+            };
+    </script>
+
     <script type='text/javascript'>
         $(document).ready(function(){
             $("#changePassword").change(function(){
@@ -303,45 +317,23 @@ src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
             });
         });
     </script>
-    <!-- <script type='text/javascript'>
-        $(document).ready(function(){
-            $('.choose').on('change',function(){
-                var action = $(this).attr('id');
-                var ma_id = $(this).val();
-                var _token = $('input[name="_token"]').val();
-                var result = '';
-                if(action == 'city') {
-                    result = 'district';
-                } else {
-                    result = 'ward';
-                }
-                $.ajax({
-                    url : '{{url('/thong-tin-tai-khoan')}}',
-                    method: 'POST',
-                    data:{action:action, ma_id:ma_id,_token:_token},
-                    success: function (data) {
-                        $('#'+result).html(data);
-                    }
-                })
-            });
-        })
-    </script> -->
 
     <script>
-  var loadFile = function(event) {
-    var output = document.getElementById('output');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function() {
-      URL.revokeObjectURL(output.src) // free memory
-    }
-  };
-  var loadFile2 = function(event) {
-    var output = document.getElementById('output2');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function() {
-      URL.revokeObjectURL(output.src) // free memory
-    }
-  };
-    </script>   
+        var loadFile = function(event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+                URL.revokeObjectURL(output.src)
+            }
+        };
+        var loadFile2 = function(event) {
+            var output2 = document.getElementById('output2');
+            output2.src = URL.createObjectURL(event.target.files[0]);
+            output2.onload = function() {
+                URL.revokeObjectURL(output2.src)
+            }
+        };
+    </script>
+
 @endpush
 
