@@ -10,7 +10,7 @@
 
     @section('content')
 
-        
+    
     <style type="text/css">
         .styled-table {
             border-collapse: collapse;
@@ -78,6 +78,7 @@
         <thead>
             <tr style="text-align:center">
                 <th>ID</th>
+                <th>Mã khách hàng</th>
                 <th>Họ và tên</th>
                 <th>Số điện thoại</th>
                 <th>Cấp độ</th>
@@ -92,6 +93,7 @@
             @foreach($user as $k)
                 <tr style="text-align:center">
                     <td>{{$k->id}}</td>
+                    <td>{{$k->code_customer}}</td>
                     <td>{{$k->hoten}}</td>
                     <td>{{$k->phone}}</td>
                     <td>@if($k->level == 1)

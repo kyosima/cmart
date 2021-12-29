@@ -91,7 +91,7 @@ tbody tr:nth-child(even) td {
                             @if($user->name != null)
                                 - {{$user->name}} -
                             @else
-                                - ID: {{$user->id}} -
+                                - ID: {{$user->code_customer}} -
                             @endif
                         </div>
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
