@@ -34,13 +34,13 @@
                             <!--    <div class="d7e-f7453d d7e-57f266 d7e-a20916"><a aria-label="google play" href="#"><img data-src="https://media3.scdn.vn/img4/2020/12_16/cNCdLw5GOKAorF6nosY1.png" src="https://media3.scdn.vn/img4/2020/12_16/cNCdLw5GOKAorF6nosY1.png" alt="google-play" class="a25-374f6b lazyloaded"></a></div>-->
                             <!--</div>-->
                         </div>
-                        <div class=" col-lg-4 col-md-12 col-sm-12 col-xs-12 col-12  ">
+                        <!-- <div class=" col-lg-4 col-md-12 col-sm-12 col-xs-12 col-12  ">
                             <p class="title-info text-center">KẾT NỐI VỚI CHÚNG TÔI</p>
                             <div class="d-flex justify-content-center ">
                                 <a rel="noreferrer" href="#" class="icon" target="_blank" title="Zalo"><i class="icon tikicon icon-footer-zalo mr-4"></i></a>
                                 <a rel="noreferrer" href="#" class="icon" target="_blank" title="Facebook"><img src="https://frontend.tikicdn.com/_desktop-next/static/img/footer/fb.svg" width="32" alt=""></a>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-lg-4  col-md-12 col-sm-12 col-xs-12 col-12">
                             <p class="title-info">Kênh CSKH Trực tuyến C-A-Z</p>
                         </div>
