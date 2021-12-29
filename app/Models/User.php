@@ -43,7 +43,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function orders() {
+        return $this->hasMany(Order::class, 'user_id', 'id');
+    }
     public function user_info(){
         return $this->hasOne(UserInfo::class, 'user_id', 'id');
     }
+    public function getstoreAddress(){
+        return $this->hasMany(StoreAddress::class, 'id_user', 'id');
+    }
+
+	// public function orders()
+	// {
+	// 	return $this->belongsToMany(Order::class, 'order_products', 'id_order', 'id_product')
+	// 				->withPivot('id', 'quantity', 'price')
+	// 				->withTimestamps();
+	// }
+
+    // public function cpoint_history()
+	// {
+	// 	return $this->hasMany(CPointHistory::class, 'user_id', 'id');
+	// }
 }

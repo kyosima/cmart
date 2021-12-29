@@ -15,7 +15,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title"><i class="fas fa-map-signs"></i> Thông tin ngành hàng </h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" id="formCreateProductCategory"
@@ -29,10 +29,14 @@
                                     <select name="proCatParent" class="form-control proCatType">
                                         <option value="0" selected>None</option>
                                         @foreach ($categories as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->id }}"
+                                                @if (old('proCatParent') == $item->id)
+                                                    selected
+                                                @endif
+                                                >{{ $item->name }}</option>
                                             @if (count($item->childrenCategories) > 0)
                                                 @foreach ($item->childrenCategories as $childCategory)
-                                                    @include('admin.productCategory.selectChild', [
+                                                    @include('admin.productCategory.selectChildForProCat', [
                                                     'child_category' => $childCategory,
                                                     'prefix' => '&nbsp;&nbsp;&nbsp;',
                                                     ])
@@ -58,15 +62,27 @@
                                 </div>
                             </div>
                             <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Miêu tả</label>
+                                <label class="col-md-3 control-label">Liên kết tới danh mục khác</label>
                                 <div class="col-md-9">
-                                    <textarea class="form-control" name="proCatDescription" rows="3"
-                                        value="{{ old('proCatDescription') }}"></textarea>
+                                    <select name="linkProCat" class="form-control proCatType">
+                                        <option value="0" selected>None</option>
+                                        @foreach ($categories as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @if (count($item->childrenCategories) > 0)
+                                                @foreach ($item->childrenCategories as $childCategory)
+                                                    @include('admin.productCategory.selectChildLinkProCat', [
+                                                    'child_category' => $childCategory,
+                                                    'prefix' => '&nbsp;&nbsp;&nbsp;',
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Hủy</button>
                             <button type="submit" class="btn btn-info btn-submit-unit">Lưu</button>
                         </div>
                     </form>
@@ -82,6 +98,15 @@
 
     <div class="m-3">
         <div class="wrapper bg-white p-4">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="portlet-title d-flex justify-content-between align-items-center">
                 <div class="title-name d-flex align-items-center">
                     <div class="caption">
@@ -160,7 +185,7 @@
                                                                 @csrf
                                                                 @method('delete')
                                                                 <button type="submit" class="dropdown-item"
-                                                                    onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
+                                                                    onclick="return confirm('Bạn có chắc muốn xóa');">Xoá</button>
                                                             </form>
                                                             @endif
                                                         </li>
@@ -194,7 +219,7 @@
                                                                 @csrf
                                                                 @method('delete')
                                                                 <button type="submit" class="dropdown-item"
-                                                                    onclick="confirm('Bạn có chắc muốn xóa');">Xoá</button>
+                                                                    onclick="return confirm('Bạn có chắc muốn xóa');">Xoá</button>
                                                             </form>
                                                             @endif
                                                         </li>

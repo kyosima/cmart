@@ -17,9 +17,9 @@ $(document).ready(function () {
             product_brand: {
                 required: true,
             },
-            product_calculation_unit: {
-                required: true,
-            },
+            // product_calculation_unit: {
+            //     required: true,
+            // },
             product_weight: {
                 required: true,
                 min: 0.1,
@@ -50,46 +50,45 @@ $(document).ready(function () {
                 required: true,
                 number: true,
             },
-            product_vpoint: {
-                min: 0.1,
+            product_wholesale_price: {
+                min: 1,
                 required: true,
                 number: true,
             },
-            product_discount_2: {
-                min: 0.1,
+            cpoint: {
+                min: 0,
+                number: true,
+            },
+            mpoint: {
+                min: 0,
+                number: true,
+            },
+            product_shock_price: {
+                min: 1,
                 required: true,
                 number: true,
             },
-            product_discount_1: {
-                min: 0.1,
+            tax: {
+                required: true,
+            },
+            cship: {
+                min: 1,
                 required: true,
                 number: true,
             },
-            product_discount_platinum: {
-                min: 0.1,
+            viettel_ship: {
+                min: 1,
                 required: true,
                 number: true,
             },
-            product_discount_diamond: {
-                min: 0.1,
+            phi_xuly: {
+                min: 1,
                 required: true,
                 number: true,
             },
-            product_discount_gold: {
-                min: 0.1,
-                required: true,
-                number: true,
-            },
-            product_discount_silver: {
-                min: 0.1,
-                required: true,
-                number: true,
-            },
-            product_discount_member: {
-                min: 0.1,
-                required: true,
-                number: true,
-            },
+            payments: {
+                required: true
+            }
         },
         messages: {
             feature_img: "Không được để trống",
@@ -98,21 +97,20 @@ $(document).ready(function () {
             product_name: "Không được để trống",
             category_parent: "Không được để trống",
             product_brand: "Không được để trống",
-            product_calculation_unit: "Không được để trống",
+            // product_calculation_unit: "Không được để trống",
             product_quantity: "Không được để trống",
             product_weight: "Không được để trống",
             product_length: "Không được để trống",
             product_height: "Không được để trống",
             product_width: "Không được để trống",
             product_regular_price: "Không được để trống",
-            product_vpoint: "Không được để trống",
-            product_discount_2: "Không được để trống",
-            product_discount_1: "Không được để trống",
-            product_discount_platinum: "Không được để trống",
-            product_discount_diamond: "Không được để trống",
-            product_discount_gold: "Không được để trống",
-            product_discount_silver: "Không được để trống",
-            product_discount_member: "Không được để trống",
+            product_wholesale_price: "Không được để trống",
+            product_shock_price: "Không được để trống",
+            cship: "Không được để trống",
+            viettel_ship: "Không được để trống",
+            phi_xuly: "Không được để trống",
+            payments: "Không được để trống",
+            tax: "Không được để trống"
         }
     });
 });

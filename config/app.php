@@ -161,6 +161,9 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
+
 
         /*
          * Package Service Providers...
@@ -233,6 +236,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+
         'SEOMeta'       => Artesaos\SEOTools\src\SEOTools\Facades\SEOMeta::class,
         'OpenGraph'     => Artesaos\SEOTools\src\SEOTools\Facades\OpenGraph::class,
         'Twitter'       => Artesaos\SEOTools\src\SEOTools\Facades\TwitterCard::class,

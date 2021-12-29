@@ -164,6 +164,7 @@ body{
   .detail-static p{
     font-weight: 400;
     font-size: 14px;
+    line-height: 25px;
     color: #000;
 
 
@@ -191,7 +192,7 @@ body{
 
   }
 
-
+  
   /*phan giu mau khi chon vao dương link*/
   .active-cs{
     background-color:#bb0029;

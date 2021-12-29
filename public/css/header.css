@@ -7,16 +7,28 @@
 body {
     background: #f8f8f8;
     color: #000;
-    font-family: "Roboto", sans-serif;
-    font-size: 14px;
-    line-height: 1;
+    font-family: 'Times New Roman';
+        font-size: 14px;
     -webkit-backface-visibility: hidden;
     -webkit-overflow-scrolling: touch;
+}
+header{
+    line-height: 1;
+
 }
 a,
 a:hover {
     text-decoration: none;
     cursor: pointer;
+}
+
+img, svg {
+    max-width: 100%;
+}
+.slick-track{
+    margin-left: unset !important;
+    margin-right: unset !important;
+
 }
 
 li {
@@ -25,6 +37,9 @@ li {
 /* header pc */
 .toolbar2 {
     display: none;
+}
+.dropdown-navcmart{
+    z-index: 999999999 !important;
 }
 
 @media all and (min-width: 1025px) {
@@ -40,7 +55,7 @@ li {
     .bannercmart {
         line-height: 1.5;
     }
-    .text {
+    .bannercmart .text {
         color: transparent;
         font-size: 1.8em;
         display: inline-block;
@@ -102,12 +117,15 @@ li {
     }
     .dropdown-navcmart li{
         padding: 5px 0px 5px 5px ;
-        border-top: thin solid #b1154a
+        border-top: thin solid #7e495b65
     }
     .dropdown-navcmart li a{
         font-weight: 400;
         
 
+    }
+    .dropdown-navcmart li:last-child{
+        border-bottom: none;
     }
     .dropdown-navcmart li:hover{
         background-color:#ffba00;
@@ -398,7 +416,7 @@ li {
     .bottom-header .follow-order span {
         color: #666;
         font-size: 12.5px;
-        font-family: "Open Sans", sans-serif;
+    
         font-weight: 400;
 
         line-height: 1.3;
@@ -471,7 +489,7 @@ li {
         height: 100%;
     }
     .bottom-header {
-        background-color: #c90005;
+        background-color: #00e6f8;
         padding-bottom: 10px;
     }
     .logo-header img {
@@ -479,7 +497,7 @@ li {
         width: 100%;
     }
     .logo-header {
-        width: 206px;
+        width: 135px;
 
         padding-top: 4px;
         padding-left: 0px;
@@ -491,6 +509,9 @@ li {
     .offcanvas-header {
         display: none;
     }
+}
+p{
+    line-height: 20px;
 }
 /* header-tablet-mobile */
 @media (max-width: 991px) {
@@ -551,12 +572,14 @@ li {
     .banner-header img {
         width: 100%;
     }
-
+    .header-tablet-mobile .logo-nav img{
+        width: 100%;
+    }
     .header-tablet-mobile {
         top: 0;
         left: 0;
         width: 100%;
-        background: #dc0000;
+        background: #00e6f8;
         z-index: 999;
         position: -webkit-sticky;
         position: sticky;
@@ -609,12 +632,12 @@ li {
     .header-search {
         position: relative;
     }
-
+   
     .form-search {
         padding-bottom: 10px;
     }
 
-    .form-control {
+    header .form-control {
         border: thin;
         padding-left: 40px;
     }
@@ -677,9 +700,9 @@ li {
         display: inline-block;
     }
 
-    .menu-mobile .item .sub-nav li {
+    /* .menu-mobile .item .sub-nav li {
         padding-bottom: 25px;
-    }
+    } */
 
     .menu-mobile .item .sub-nav li a {
         position: static;
@@ -712,12 +735,26 @@ li {
         position: relative;
     }
 
-    .fas.fa-angle-right {
-        position: absolute;
-        right: 12px;
-        top: 9px;
+    .menu-mobile .item ul.collapse.show {
+        border-left: 1px solid #cbcbcb;
+        padding-left: 15px;
+        border-bottom: 1px solid #cbcbcb;
+    }
+
+    .fas.fas-custom {
         color: gray;
     }
+    
+    span.expand-menu {
+        display: inline-block;
+        width: 50px;
+        height: 46px;
+        line-height: 46px;
+        position: absolute;
+        right: 0;
+        top: 0px;
+    }
+
 
     .screen-darken {
         height: 100%;
@@ -754,11 +791,12 @@ li {
     }
 
     .box-tab .menu-mobile .item .title a {
+        width: 85%;
         font-size: 4vw;
         color: #333;
         left: 15px;
         height: 46px;
-
+        text-align: left;
         font-family: Roboto, sans-serif;
         font-weight: 400;
 
@@ -769,6 +807,11 @@ li {
         display: -ms-flexbox;
         display: flex;
     }
+
+    .menu-mobile .item button.title[aria-expanded="true"] > a {
+        color: #223c9d;
+    }
+
     .nav.nav-tabs .nav-item a {
         color: #222;
         font-size: 3.5vw;

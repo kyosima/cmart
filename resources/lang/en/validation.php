@@ -137,8 +137,14 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'unitSlug' => [
+            'unique' => 'Đường dẫn đã bị trùng, vui lòng sử dụng đường dẫn khác',
+        ],
+        'couponCode' => [
+            'unique' => 'Mã ưu đãi đã bị trùng, vui lòng sử dụng mã ưu đãi khác',
+        ],
+        'couponName' => [
+            'unique' => 'Tên ưu đãi đã bị trùng, vui lòng sử dụng tên khác',
         ],
     ],
 

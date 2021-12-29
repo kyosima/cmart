@@ -36,6 +36,8 @@ $(document).ready(function () {
             success: function (response) {
                 $('#brand_create').after(response.html)
                 $('#calculation_unit_update').modal('show')
+                $( "#from-update" ).datepicker({minDate: 0})
+                $( "#to-update" ).datepicker({minDate: 0})
             }
         });
     })

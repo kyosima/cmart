@@ -94,7 +94,7 @@
                                                 <div class="form-group mb-3 w-100">
                                                 <label for="fullname">Ngày đặt <abbr class="required"
                                                         title="bắt buộc">*</abbr></label>
-                                                
+                                                 
                                                 <input type="text" class="form-control" name="in_created_at" id="fdate" value="{{date('Y-m-d H:i:s', strtotime($order->created_at))}}" required>
                                             </div>
                                         </div>

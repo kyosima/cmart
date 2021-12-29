@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Chỉnh sửa bài viết')
+@section('title', 'Sửa bài viết')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/quanlysanpham.css') }}" type="text/css">
@@ -10,10 +10,19 @@
 <div class="m-3">
     <div class="wrapper bg-white p-4">
         @if (session('success'))
-            <div class="portlet-status">
+            <div class="portlet-status mb-2">
                 <div class="caption bg-success p-3">
                     <span class="caption-subject bold uppercase text-light">{{session('success')}}</span>
                 </div>
+            </div>
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
         <div class="portlet-title">
@@ -21,7 +30,7 @@
                 <div class="caption">
                     <i class="fa fa-product-hunt icon-drec" aria-hidden="true"></i>
                     <span class="caption-subject bold uppercase">
-                        Thông tin bài viết</span>
+                        Chỉnh sửa bài viết</span>
                 </div>
             </div>
         </div>
@@ -35,13 +44,13 @@
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail size-img-profile">
                                 @if ($blog->feature_img != null)
-                                    <img src="{{$blog->feature_img}}">
+                                    <img src="{{old('feature_img' ,$blog->feature_img)}}">
                                 @else
                                     <img src="http://api.salefie.vn/images/new_product_default.jpg">
                                 @endif
                             </div>
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-1" type="hidden" name="feature_img" class="form-control" value="{{$blog->feature_img}}">
+                                <input id="ckfinder-input-1" type="hidden" name="feature_img" class="form-control" value="{{old('feature_img' ,$blog->feature_img)}}">
                                 <a style="cursor: pointer;" id="ckfinder-popup-1" class="btn btn-success">Chọn ảnh đại diện</a>
                             </div>
                         </div>
@@ -78,10 +87,11 @@
                                     <div class="col-md-12">
                                         <select class="selectpicker form-control" name="blog_category"
                                             required>
-                                            <option value="-1">Chuyên mục bài viết</option>
+                                            <option></option>
                                             @foreach ($categories as $item)
                                                 <option value="{{$item->id}}"
                                                     {{$blog->id_ofcategory == $item->id ? 'selected' : ''}}
+                                                    {{old('blog_category') == $item->id ? 'selected' : ''}}
                                                     >{{$item->name}}</option>
                                             @endforeach
                                         </select>
@@ -149,6 +159,7 @@
 <script>
     $(document).ready(function() {
         $('select.selectpicker').select2({
+            placeholder: "Chọn danh mục bài viết",
             width: '100%',
         });
 
@@ -213,4 +224,29 @@
 
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        $("form").validate({
+            ignore: [],
+            rules: {
+                feature_img: {
+                    required: true,
+                },
+                blog_title: {
+                    required: true,
+                },
+                blog_category: {
+                    required: true,
+                },
+            },
+            messages: {
+                feature_img: "Không được để trống",
+                blog_title: "Không được để trống",
+                blog_category: "Không được để trống",
+            }
+        });
+    });
+    </script>
+
 @endpush

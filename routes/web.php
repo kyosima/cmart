@@ -1,20 +1,18 @@
 <?php
-
-use App\Admin\Controllers\AdminProductCategoryController;
-use App\Admin\Controllers\AdminProductController;
-use App\Admin\Controllers\BlogCategoryController;
-use App\Admin\Controllers\BlogController;
-use App\Admin\Controllers\BrandController;
-use App\Admin\Controllers\CalculationUnitController;
-use App\Admin\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
-use App\Admin\Controllers\AdminHomeController;
-use App\Admin\Controllers\AdminRolesController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ShippingController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\InfoCompanyController;
 
+use App\Http\Controllers\CPointController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,42 +24,44 @@ use App\Admin\Controllers\AdminRolesController;
 |
 */
 
-Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
+// Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
+// Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
+Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'showAll'])->name('proCat.showAll');
 Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
 Route::get('/', [HomeController::class, 'home']);
 
 
-Route::get('/huong-dan-dat-hang', [PolicyController::class,'hddh'])->name('policy.hddh');
-Route::get('/chinh-sach-thanh-toan', [PolicyController::class,'cstt'])->name('policy.cstt');
-Route::get('/chinh-sach-giao-nhan', [PolicyController::class,'csgn'])->name('policy.csgn');
-Route::get('/chinh-sach-doi-tra', [PolicyController::class,'csdt'])->name('policy.csdt');
-Route::get('/chinh-sach-bao-hanh', [PolicyController::class,'csbh'])->name('policy.csbh');
-Route::get('/quy-dinh-ban-hang', [PolicyController::class,'qddk'])->name('policy.qddk');
-Route::get('/khach-hanh-dat-biet', [PolicyController::class,'khdb'])->name('policy.khdb');
-Route::get('/doi-tac', [PolicyController::class,'dt'])->name('policy.dt');
-Route::get('/goi-thieu', [PolicyController::class, 'gt'])->name('policy.gt');
+// Route::get('/huong-dan-dat-hang', [PolicyController::class,'hddh'])->name('policy.hddh');
+// Route::get('/chinh-sach-thanh-toan', [PolicyController::class,'cstt'])->name('policy.cstt');
+// Route::get('/chinh-sach-giao-nhan', [PolicyController::class,'csgn'])->name('policy.csgn');
+// Route::get('/chinh-sach-doi-tra', [PolicyController::class,'csdt'])->name('policy.csdt');
+// Route::get('/chinh-sach-bao-hanh', [PolicyController::class,'csbh'])->name('policy.csbh');
+// Route::get('/quy-dinh-ban-hang', [PolicyController::class,'qddk'])->name('policy.qddk');
+// Route::get('/khach-hanh-dat-biet', [PolicyController::class,'khdb'])->name('policy.khdb');
+// Route::get('/doi-tac', [PolicyController::class,'dt'])->name('policy.dt');
+// Route::get('/goi-thieu', [PolicyController::class, 'gt'])->name('policy.gt');
 
 Route::get('/khuyen-mai', function () {
     return view('cart.khuyenmai');
 });
 
-Route::get('/gio-hang', function () {
-    return view('cart.giohang');
+Route::prefix('gio-hang')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::post('add', [CartController::class, 'addCart'])->name('cart.add');
+    Route::post('update', [CartController::class, 'updateCart'])->name('cart.update');
+    Route::post('delete', [CartController::class, 'deleteCart'])->name('cart.delete');
 });
 
-Route::get('/thanh-toan', function () {
-    return view('cart.thanhtoan');
+Route::prefix('thanh-toan')->group(function () {
+    Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('post', [CheckoutController::class, 'postOrder'])->name('checkout.post');
+    Route::get('get-address', [CheckoutController::class, 'getAddress'])->name('checkout.getAddress');
+    Route::get('thanh-cong', [CheckoutController::class, 'orderSuccess'])->name('checkout.orderSuccess');
+
 });
 
-//Route - Theo dõi đơn hàng
-Route::get('/theo-doi-don-hang', function () {
-    return view('order_tracking.theo-doi-don-hang_main-layout');
-});
-
-//Route - Đơn hàng sau khi tra cứu
-Route::get('/don-hang-sau-khi-tra-cuu', function () {
-    return view('order_tracking.don-hang-sau-khi-tra-cuu');
-});
+Route::get('tim-kiem', [ProductCategoryController::class, 'getSearch'])->name('search');
+Route::get('tim-kiem/goi-y', [ProductCategoryController::class, 'getSearchSuggest'])->name('search.suggest');
 
 //Route - Liên hệ
 Route::get('/lien-he', function () {
@@ -69,10 +69,52 @@ Route::get('/lien-he', function () {
 });
 
 //Route - Tài Khoản
-Route::get('/tai-khoan', function () {
-    return view('account.account');
-});
 
 Route::get('/quen-mat-khau', function () {
     return view('account.quen-mat-khau');
+});
+
+// Route::resources([
+//     'san-pham' => ProductController::class
+// ]);
+
+Route::prefix('san-pham')->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('san-pham.index');
+    Route::get('/{slug}', [ProductController::class, 'show'])->name('san-pham.show');
+
+    Route::post('danh-gia', [ProductController::class, 'postRating'])->name('san-pham.danhgia');
+});
+
+// Route::prefix('theo-doi-don-hang')->group(function () {
+//     Route::get('/', [OrderController::class, 'index'])->name('don-hang.index');
+//     Route::get('/{slug}', [OrderController::class, 'show'])->name('don-hang.show');
+
+// });
+Route::resources([
+    'theo-doi-don-hang' => OrderController::class,
+    'chinh-sach' => InfoCompanyController::class,
+]);
+
+Route::get('lay-quan-huyen-theo-tinh-thanh', [ShippingController::class, 'districtOfProvince']);
+
+Route::get('lay-phuong-xa-theo-quan-huyen', [ShippingController::class, 'wardOfDistrict']);
+// Route::get('danhsach',[UserController::class, 'getDanhsach']);
+
+
+Route::get('/tai-khoan', [HomeController::class, 'getAccessAccount'])->name('account');
+Route::post('/dang-nhap', [HomeController::class, 'postLogin'])->name('user.login');
+
+Route::post('/dang-ky', [HomeController::class, 'postRegister'])->name('user.register');
+
+Route::get('/dang-xuat', [HomeController::class, 'getLogout'])->name('logoutuser');
+
+Route::get('/thong-tin-tai-khoan', [HomeController::class, 'getProfile'])->name('account.info');
+Route::post('/thong-tin-tai-khoan', [HomeController::class, 'postProfile']);
+
+Route::get('/xac-thuc-ho-so', [HomeController::class, 'getXacthuc']);
+
+Route::get('/lichsu', [HomeController::class, 'getLichsu']);
+
+Route::prefix('/cpoint')->group(function () {
+    Route::get('/', [CPointController::class, 'index'])->name('account.cpoint_history');
 });

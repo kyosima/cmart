@@ -29,7 +29,7 @@ class AdminOrderController extends Controller
         $doanh_thu = Order::where('status', 4)->sum('total');
         return view('admin.order.order', compact('orders', 'doanh_thu'));
     }
-
+ 
     public function show(Request $request,Order $order){
         $order = $order->load(['order_info', 'products','order_address' => function ($query){
             $query->with('province', 'district', 'ward');

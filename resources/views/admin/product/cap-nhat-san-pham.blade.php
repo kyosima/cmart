@@ -1,19 +1,29 @@
 @extends('admin.layout.master')
 
-@section('title', 'Cập nhật sản phẩm')
+@section('title', 'Sửa sản phẩm')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/quanlysanpham.css') }}" type="text/css">
 @endpush
 
 @section('content')
+
 <div class="m-3">
     <div class="wrapper bg-white p-4">
         @if (session('success'))
-            <div class="portlet-status">
+            <div class="portlet-status mb-2">
                 <div class="caption bg-success p-3">
                     <span class="caption-subject bold uppercase text-light">{{session('success')}}</span>
                 </div>
+            </div>
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
         <div class="portlet-title">
@@ -21,7 +31,7 @@
                 <div class="caption">
                     <i class="fa fa-product-hunt icon-drec" aria-hidden="true"></i>
                     <span class="caption-subject bold uppercase">
-                        Thông tin sản phẩm</span>
+                        Chỉnh sửa sản phẩm</span>
                 </div>
             </div>
         </div>
@@ -34,10 +44,10 @@
                     <div class="col-sm-3">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail size-img-profile">
-                                <img src="{{$product->feature_img}}">
+                                <img src="{{old('feature_img', $product->feature_img)}}">
                             </div>
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-1" type="hidden" name="feature_img" class="form-control" value="{{old('feature_img', $product->feature_img)}}" readonly required>
+                                <input id="ckfinder-input-1" type="hidden" required name="feature_img" class="form-control" value="{{old('feature_img', $product->feature_img)}}" readonly required>
                                 <a style="cursor: pointer;" id="ckfinder-popup-1" class="btn btn-success">Chọn ảnh</a>
                             </div>
                         </div>
@@ -47,23 +57,41 @@
                                 <input id="ckfinder-input-2" type="hidden" name="gallery_img"
                                 data-type="multiple" data-hasid="{{$product->id}}"
                                 readonly class="form-control"
-                                value="{{old('gallery_img', $product->gallery)}}">
+                                value="{{old('gallery_img', $product->gallery.',').' '}}">
                                 <a style="cursor: pointer;" id="ckfinder-popup-2" class="btn btn-success">Chọn nhiều ảnh</a>
                             </div>
                             <div class="fileinput-gallery thumbnail">
                                 <div class="row">
-                                    @php
-                                        $gallery = explode(", ",$product->gallery);
-                                    @endphp
-                                    @if ($product->gallery != null)
-                                        @foreach ($gallery as $img)
+                                    @if (old('gallery_img') && old('gallery_img') != $product->gallery.',')
+                                        @php
+                                        $galleries = explode(',', old('gallery_img'));
+                                        @endphp
+                                        @foreach($galleries as $img)
+                                            @if ($img != null || $img != '')
                                             <div class="col-md-3">
-                                                <span style="cursor: pointer;" data-id='{{$product->id}}' data-url="{{$img}}" class="delete_gallery">
+                                                <span style="cursor: pointer;" data-id='' data-url="{{trim($img)}}" class="delete_gallery">
                                                     <i class="fas fa-times"></i>
                                                 </span>
-                                                <img src="{{$img}}">
+                                                <img src="{{trim($img)}}">
                                             </div>
+                                            @endif
                                         @endforeach
+
+                                    @else 
+
+                                        @php
+                                            $gallery = explode(", ",$product->gallery);
+                                        @endphp
+                                        @if ($product->gallery != null)
+                                            @foreach ($gallery as $img)
+                                                <div class="col-md-3">
+                                                    <span style="cursor: pointer;" data-id='{{$product->id}}' data-url="{{$img}}" class="delete_gallery">
+                                                        <i class="fas fa-times"></i>
+                                                    </span>
+                                                    <img src="{{$img}}">
+                                                </div>
+                                            @endforeach
+                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -85,7 +113,6 @@
                                                 <select name="product_status" class="selectpicker form-control">
                                                     <option value="0" {{ $product->status == 0 ? 'selected' : ''}}>Ngưng hoạt động</option>
                                                     <option value="1" {{ $product->status == 1 ? 'selected' : ''}}>Hoạt động</option>
-                                                    <option value="2" {{ $product->status == 2 ? 'selected' : ''}}>Mới</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -95,7 +122,7 @@
                                     <label class="col-md-12 control-label text-left">Tên sản phẩm<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="text" name="product_name" class="form-control" placeholder=""
+                                        <input type="text" name="product_name" class="form-control"
                                             required value="{{ old('product_name', $product->name) }}">
                                     </div>
                                 </div>
@@ -107,7 +134,11 @@
                                             required data-placeholder="Chọn danh mục sản phẩm" data-type="megaParent">
                                             @foreach ($nganhHang as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $product->category_id == $item->id ? 'selected' : ''}}
+                                                    @if (old('category_parent') != null && old('category_parent') != '')
+                                                        {{ old('category_parent') == $item->id ? 'selected' : '' }}
+                                                    @else
+                                                        {{ $product->category_id == $item->id ? 'selected' : ''}}
+                                                    @endif
                                                     >{{ $item->name }}</option>
                                                 @if (count($item->childrenCategories) > 0)
                                                     @foreach ($item->childrenCategories as $childCategory)
@@ -122,6 +153,35 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Sản phẩm upsell:</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control select-upsell" name="upsell[]" multiple>
+                                            @php
+                                                $upsells = explode(',', $product->upsell);
+                                            @endphp
+                                            @foreach ($products as $item)
+                                                @if ($item->id != $product->id)
+                                                    <option value="{{ $item->id }}"
+                                                        @php
+                                                            if(old('upsell')) {
+                                                                if(in_array($item->id, $upsells) || in_array($item->id, old('upsell'))) {
+                                                                    echo "selected";
+                                                                }
+                                                            } else {
+                                                                if(in_array($item->id, $upsells)) {
+                                                                    echo "selected";
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        >{{ $item->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -129,15 +189,21 @@
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <select name="product_brand" class="selectpicker form-control" required
-                                            title="Thương hiệu" data-placeholder="Thương hiệu">
-                                            <option value="-1">Chọn thương hiệu</option>
+                                            title="Thương hiệu" data-placeholder="Chọn thương hiệu">
+                                            <option></option>
                                             @foreach ($brands as $item)
-                                                <option value="{{ $item->id }}" {{$item->id == $product->productBrand->id ? 'selected' : ''}}>{{ $item->name }}</option>
+                                                <option value="{{ $item->id }}" 
+                                                    @if (old('product_brand') != null && old('product_brand') != '')
+                                                        {{ old('product_brand') == $item->id ? 'selected' : '' }}
+                                                    @else
+                                                        {{$item->id == $product->productBrand->id ? 'selected' : ''}}
+                                                    @endif
+                                                    >{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label class="col-md-12 control-label text-left">Đơn vị tính<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
@@ -149,7 +215,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="form-group">
                                     <label class="col-md-12 control-label text-left">Tồn kho<span
                                             class="required" aria-required="true">(*)</span>:</label>
@@ -163,7 +229,7 @@
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
                                         <input type="number" step="0.1" max="1000000" min="1" name="product_weight" class="form-control"
-                                            placeholder="" value="{{ old('product_weight', $product->weight) }}">
+                                        required value="{{ old('product_weight', $product->weight) }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -173,7 +239,7 @@
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
                                                 <input type="number" step="0.1" max="10000" min="1" name="product_length"
-                                                    class="form-control" placeholder=""
+                                                    class="form-control" required
                                                     value="{{ old('product_length', $product->length) }}">
                                             </div>
                                         </div>
@@ -182,7 +248,7 @@
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
                                                 <input type="number" step="0.1" max="10000" min="1" name="product_height"
-                                                    class="form-control" placeholder=""
+                                                    class="form-control" required
                                                     value="{{ old('product_height', $product->height) }}">
                                             </div>
                                         </div>
@@ -191,7 +257,7 @@
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
                                                 <input type="number" step="0.1" max="10000" min="1" name="product_width"
-                                                    class="form-control" placeholder=""
+                                                    class="form-control" required
                                                     value="{{ old('product_width', $product->width) }}">
                                             </div>
                                         </div>
@@ -201,51 +267,123 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Đơn giá thị trường<span
+                                    <label class="col-md-12 control-label text-left">Đơn giá Bán lẻ<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="number" step="1" min="1" name="product_market_price"
-                                            class="form-control" required
-                                            value="{{ old('product_market_price', $product->productPrice->market_price) }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Đơn giá bán lẻ<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="number" step="1" min="1" name="product_regular_price"
-                                            class="form-control" required
+                                        <input type="text" class="form-control number-separator" required
                                             value="{{ old('product_regular_price', $product->productPrice->regular_price) }}">
+                                        <input type="hidden" id="product_regular_price" required name="product_regular_price"
+                                        value="{{ old('product_regular_price', $product->productPrice->regular_price) }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Đơn giá bán buôn<span
+                                    <label class="col-md-12 control-label text-left">Đơn giá Shock<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="number" step="1" min="1" name="product_wholesale_price"
-                                            class="form-control" required
-                                            value="{{ old('product_wholesale_price', $product->productPrice->wholesale_price) }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Giá shock khuyến mãi<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="number" step="1" min="1" name="product_shock_price"
-                                            class="form-control" required
+                                        <input type="text" class="form-control number-separator-1" required
                                             value="{{ old('product_shock_price', $product->productPrice->shock_price) }}">
+                                        <input type="hidden" id="product_shock_price" required name="product_shock_price"
+                                        value="{{ old('product_shock_price', $product->productPrice->shock_price) }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Tích lũy (C)<span
+                                    <label class="col-md-12 control-label text-left">Đơn giá Buôn<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <input type="number" step="1" min="1" name="cpoint"
-                                            class="form-control" required
-                                            value="{{ old('cpoint', $product->productPrice->cpoint) }}">
+                                        <input type="text" class="form-control number-separator-2" required
+                                            value="{{ old('product_wholesale_price', $product->productPrice->wholesale_price) }}">
+                                        <input type="hidden" id="product_wholesale_price" required name="product_wholesale_price"
+                                        value="{{ old('product_wholesale_price', $product->productPrice->wholesale_price) }}">
+
                                     </div>
                                 </div>
-                                
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Tích lũy (C):</label>
+                                    <div class="col-md-12">
+                                        <input type="number" step="1" min="0" name="cpoint"
+                                            class="form-control" value="{{ old('cpoint', $product->productPrice->cpoint) }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Tích lũy (M):</label>
+                                    <div class="col-md-12">
+                                        <input type="number" step="1" min="0" name="mpoint"
+                                            class="form-control" value="{{ old('mpoint', $product->productPrice->mpoint) }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Phí xử lý<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control number-separator-3" required
+                                            value="{{ old('phi_xuly', $product->productPrice->phi_xuly) }}">
+                                        <input type="hidden" id="phi_xuly" required name="phi_xuly" value="{{ old('phi_xuly', $product->productPrice->phi_xuly) }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Phí giao hàng (C-Ship)<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control number-separator-4" required
+                                            value="{{ old('cship', $product->productPrice->cship) }}">
+                                        <input type="hidden" id="cship" required name="cship" value="{{ old('cship', $product->productPrice->cship) }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Phí ship Viettel Post<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control number-separator-5" required
+                                            value="{{ old('viettel_ship', $product->productPrice->viettel_ship) }}">
+                                        <input type="hidden" id="viettel_ship" required name="viettel_ship" value="{{ old('viettel_ship', $product->productPrice->viettel_ship) }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Thuế suất<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <select class="selectpicker form-control" name="tax"
+                                            required title="Thuế suất" data-placeholder="Chọn thuế suất">
+                                            <option></option>
+                                            @if (old("tax") != null)
+                                                <option value="0" {{ old("tax") == 0 ? "selected":"" }}>0%</option>
+                                                <option value="5" {{ old("tax") == 5 ? "selected":"" }}>5%</option>
+                                                <option value="10" {{ old("tax") == 10 ? "selected":"" }}>10%</option>
+                                            @else
+                                                <option value="0" {{$product->productPrice->tax == 0 ? 'selected' : ''}}>0%</option>
+                                                <option value="5" {{$product->productPrice->tax == 5 ? 'selected' : ''}}>5%</option>
+                                                <option value="10" {{$product->productPrice->tax == 10 ? 'selected' : ''}}>10%</option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Hình thức thanh toán<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control multiple-payments" name="payments[]"
+                                            required multiple>
+                                            @php
+                                                $proPay = explode(',', $product->payments);
+                                            @endphp
+                                            @foreach ($payments as $item)
+                                                <option value="{{$item->id}}" 
+                                                    @php
+                                                        if(old('payments')) {
+                                                            if(in_array($item->id, $proPay) || in_array($item->id, old('payments'))) {
+                                                                echo "selected";
+                                                            }
+                                                        } else {
+                                                            if(in_array($item->id, $proPay)) {
+                                                                echo "selected";
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    >{{$item->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -320,10 +458,60 @@
 
 <script src={{ asset('/public/packages/ckeditor/ckeditor.js') }}></script>
 <script src={{ asset('/public/packages/ckfinder/ckfinder.js') }}></script>
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+
 
 <script>
     $(document).ready(function() {
         $('select.selectpicker').select2();
+
+        $('select.multiple-payments').select2({
+            placeholder: "Chọn hình thức thanh toán",
+            multiple: true
+        });
+
+        $('select.select-upsell').select2({
+            placeholder: "Chọn sản phẩm Upsell",
+            multiple: true
+        });
+
+        easyNumberSeparator({
+            selector: '.number-separator',
+            separator: '.',
+            resultInput: '#product_regular_price',
+        })
+        easyNumberSeparator({
+            selector: '.number-separator-1',
+            separator: '.',
+            resultInput: '#product_shock_price',
+        })
+        easyNumberSeparator({
+            selector: '.number-separator-2',
+            separator: '.',
+            resultInput: '#product_wholesale_price',
+        })
+        easyNumberSeparator({
+            selector: '.number-separator-3',
+            separator: '.',
+            resultInput: '#phi_xuly',
+        })
+        easyNumberSeparator({
+            selector: '.number-separator-4',
+            separator: '.',
+            resultInput: '#cship',
+        })
+        easyNumberSeparator({
+            selector: '.number-separator-5',
+            separator: '.',
+            resultInput: '#viettel_ship',
+        })
+
+        // $(document).on('change', '.number-separator', function() {
+        //     let number = $(this).val()
+        //     let vn = new Intl.NumberFormat('vi-VN').format(number);
+        //     $(this).next().val(number)
+        //     $(this).val(vn)
+        // })
 
         $('#meta_description').keyup(function() {
             var characterCount = $(this).val().length,
@@ -401,21 +589,24 @@
                         if(type == "multiple") {
                             var files = evt.data.files;
                             var chosenFiles = $(`#${elementId}`).val();
+                            // if(chosenFiles != '') {
+                            //     chosenFiles += ', ';
+                            // }
                             files.forEach( function(file, idx, array) {
                                 chosenFiles += new URL(file.getUrl()).pathname + ', ';
                                 if(hasid != ''){
                                     $('.fileinput-gallery .row').append(`<div class="col-md-3">
-                                    <span style="cursor: pointer;" data-id='${hasid}' data-url="${file.getUrl()}" class="delete_gallery">
+                                    <span style="cursor: pointer;" data-id='${hasid}' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
                                         <i class="fas fa-times"></i>
                                         </span>
-                                                <img src="${file.getUrl()}">
+                                                <img src="${new URL(file.getUrl()).pathname}">
                                             </div>`)
                                 } else {
                                     $('.fileinput-gallery .row').append(`<div class="col-md-3">
-                                        <span style="cursor: pointer;" data-id='' data-url="${file.getUrl()}" class="delete_gallery">
+                                        <span style="cursor: pointer;" data-id='' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
                                             <i class="fas fa-times"></i>
                                             </span>
-                                                    <img src="${file.getUrl()}">
+                                                    <img src="${new URL(file.getUrl()).pathname}">
                                                 </div>`)
                                 }
                             });
@@ -455,3 +646,5 @@
 <script type="text/javascript" src="{{ asset('/js/admin/adminProductCreateUpdate.js') }}"></script>
     
 @endpush
+
+

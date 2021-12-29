@@ -1,4 +1,6 @@
 <?php
+
+use App\Admin\Controllers\AdminCouponController;
 use Illuminate\Support\Facades\Route;
 use App\Admin\Controllers\AdminHomeController;
 use App\Admin\Controllers\AdminRolesController;
@@ -14,9 +16,22 @@ use App\Admin\Controllers\WarehouseController;
 use App\Admin\Controllers\AdminOrderController;
 use App\Admin\Controllers\AdminInfoCompanyController;
 use App\Admin\Controllers\AdminSettingController;
+use App\Admin\UserController;
+use App\Admin\Controllers\InfoCompanyController;
+use App\Admin\Controllers\PaymentController;
 use App\Admin\Controllers\AdminBannerController;
 
 Route::group(['middleware' => ['admin']], function () {
+    // Route::resource('permissions', AdminPermissionsController::class);
+    Route::get('danh-sach-user',[UserController::class, 'getDanhsach']);
+    Route::get('/nang-cap-user/{id}',[UserController::class, 'postDanhsach']);
+    
+    Route::group(['prefix'=>'danh-sach-user'], function() {
+        Route::get('{id}',[UserController::class, 'getEdit']);
+        Route::post('{id}',[UserController::class, 'postEdit']);
+    });
+
+    // Route::get('',[UserController::class,'postDanhsach']);
 
     Route::get('logout', [AdminHomeController::class, 'logout'])->name('logout');
 
@@ -107,6 +122,38 @@ Route::group(['middleware' => ['admin']], function () {
 
     });
 
+    // COUPON
+    // được phép xem mã ưu đãi
+    Route::group(['middleware' => ['permission:Xem mã ưu đãi,admin']], function () {
+        Route::get('/coupon', [AdminCouponController::class, 'index'])->name('coupon.index');
+        Route::get('/coupon/getDatatable', [AdminCouponController::class, 'indexDatatable'])->name('coupon.indexDatatable');
+    });
+
+    // được phép thêm mã ưu đãi
+    Route::group(['middleware' => ['permission:Thêm mã ưu đãi,admin']], function () {
+        Route::post('/coupon', [AdminCouponController::class, 'store'])->name('coupon.store');
+    });
+
+    // được phép chỉnh sửa mã ưu đãi
+    Route::group(['middleware' => ['permission:Chỉnh sửa mã ưu đãi,admin']], function () {
+        Route::get('/coupon/edit/{id?}', [AdminCouponController::class, 'edit'])->name('coupon.edit');
+        Route::put('/coupon/{id}', [AdminCouponController::class, 'update'])->name('coupon.update');
+    });
+
+    // được phép XÓA mã ưu đãi
+    Route::group(['middleware' => ['permission:Xóa mã ưu đãi,admin']], function () {
+        Route::delete('/coupon/{id?}/{form?}', [AdminCouponController::class, 'delete'])->name('coupon.delete');
+        Route::delete('/coupon/multiple-delete', [AdminCouponController::class, 'multipleDestory'])->name('coupon.multipleDestory');
+    });
+
+    Route::group(['middleware' => ['permission:Thêm mã ưu đãi,admin', 'permission:Chỉnh sửa mã ưu đãi,admin']], function () {
+        Route::get('/coupon/searchProduct', [AdminCouponController::class, 'getProduct'])->name('coupon.getProduct');
+        Route::get('/coupon/searchProCat', [AdminCouponController::class, 'getProCat'])->name('coupon.getProCat');
+        Route::get('/coupon/select-product', [AdminCouponController::class, 'selectProduct'])->name('coupon.selectProduct');
+        Route::get('/coupon/select-procat', [AdminCouponController::class, 'selectProCat'])->name('coupon.selectProCat');
+    });
+    // Route::delete('/coupon/{id}', [AdminCouponController::class, 'deleteForm'])->name('coupon.deleteForm');
+    
     // PRODUCT
     // được phép xem sản phẩm
     Route::group(['middleware' => ['permission:Xem sản phẩm,admin']], function () {
@@ -130,6 +177,7 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA sản phẩm
     Route::group(['middleware' => ['permission:Xóa sản phẩm,admin']], function () {
         Route::delete('/san-pham/delete/{id}', [AdminProductController::class, 'destroy'])->name('san-pham.delete');
+        Route::delete('/san-pham/multiple-delete', [AdminProductController::class, 'multipleDestory'])->name('san-pham.multipleDestory');
     });
 
 
@@ -141,7 +189,7 @@ Route::group(['middleware' => ['admin']], function () {
 
     // được phép thêm danh mục sản phẩm
     Route::group(['middleware' => ['permission:Thêm danh mục sản phẩm,admin']], function () {
-        Route::post('/nganh-nhom-hang', [AdminProductCategoryController::class, 'store'])->name('nganh-nhom-hang.store');\
+        Route::post('/nganh-nhom-hang', [AdminProductCategoryController::class, 'store'])->name('nganh-nhom-hang.store');
         Route::get('/nganh-nhom-hang/get-category', [AdminProductCategoryController::class, 'getCategory'])->name('nganh-nhom-hang.getCategory');
     });
 
@@ -184,6 +232,8 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA bài viết
     Route::group(['middleware' => ['permission:Xóa bài viết,admin']], function () {
         Route::delete('/tat-ca-bai-viet/{id}', [BlogController::class, 'destroy'])->name('baiviet.delete');
+        Route::post('/tat-ca-bai-viet/multiple-delete', [BlogController::class, 'multipleDestory'])->name('baiviet.multipleDestory');
+
     });
 
     // BLOG CATEGORY
@@ -207,6 +257,8 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA danh mục bài viết
     Route::group(['middleware' => ['permission:Xóa danh mục bài viết,admin']], function () {
         Route::delete('/chuyen-muc-bai-viet', [BlogCategoryController::class, 'destroy'])->name('chuyenmuc-baiviet.delete');
+        Route::delete('/chuyen-muc-bai-viet/multiple-delete', [BlogCategoryController::class, 'multipleDestory'])->name('chuyenmuc-baiviet.multipleDestory');
+
     });
 
     
@@ -232,6 +284,29 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA đơn vị tính
     Route::group(['middleware' => ['permission:Xóa đơn vị tính,admin']], function () {
         Route::delete('/don-vi-tinh', [CalculationUnitController::class, 'destroy'])->name('don-vi-tinh.delete');
+        Route::delete('/don-vi-tinh/multiple-delete', [CalculationUnitController::class, 'multipleDestory'])->name('don-vi-tinh.multipleDestory');
+    });
+
+    // HÌNH THỨC THANH TOÁN
+    // được phép xem HTTT
+    Route::group(['middleware' => ['permission:Xem HTTT,admin']], function () {
+        Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+        Route::get('/payment/getDatatable', [PaymentController::class, 'indexDatatable'])->name('payment.indexDatatable');
+    });
+    // được phép thêm HTTT
+    Route::group(['middleware' => ['permission:Thêm HTTT,admin']], function () {
+        Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+    });
+    // được phép chỉnh sửa HTTT
+    Route::group(['middleware' => ['permission:Chỉnh sửa HTTT,admin']], function () {
+        Route::get('/payment/modal-edit', [PaymentController::class, 'modalEdit'])->name('payment.modalEdit');
+        Route::put('/payment/update', [PaymentController::class, 'update'])->name('payment.update');
+        Route::put('/payment/update-status', [PaymentController::class, 'updateStatus'])->name('payment.updateStatus');
+    });
+    // được phép XÓA HTTT
+    Route::group(['middleware' => ['permission:Xóa HTTT,admin']], function () {
+        Route::delete('/payment/delete', [PaymentController::class, 'destroy'])->name('payment.delete');
+        Route::delete('/payment/multiple-delete', [PaymentController::class, 'multipleDestory'])->name('payment.multipleDestory');
     });
 
     // BRAND
@@ -256,6 +331,7 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép XÓA thương hiệu
     Route::group(['middleware' => ['permission:Xóa thương hiệu,admin']], function () {
         Route::delete('/thuong-hieu', [BrandController::class, 'destroy'])->name('thuong-hieu.delete');
+        Route::delete('/thuong-hieu/multiple-delete', [BrandController::class, 'multipleDestory'])->name('thuong-hieu.multipleDestory');
     });
 
     // WAREHOUSE 

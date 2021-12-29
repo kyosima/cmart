@@ -19,8 +19,30 @@ class Product extends Model
         return $this->belongsto(Brand::class, 'brand', 'id');
     }
 
-    public function productCalculationUnit() {
-        return $this->belongsto(CalculationUnit::class, 'calculation_unit', 'id');
+    // public function productCalculationUnit() {
+    //     return $this->belongsto(CalculationUnit::class, 'calculation_unit', 'id');
+    // }
+
+    public function productPayment($id)
+    {
+        $product = self::where('id', $id)->first();
+        $payments = explode(',', $product->payments); 
+        $arr = array();
+        foreach ($payments as $index) {
+           array_push($arr, Payment::where('id', $index)->first());
+        }
+        return $arr;
+    }
+
+    public function productUpsell($id)
+    {
+        $product = self::where('id', $id)->first();
+        $upsells = explode(',', $product->upsell); 
+        $arr = array();
+        foreach ($upsells as $index) {
+           array_push($arr, self::where('id', $index)->first());
+        }
+        return $arr;
     }
 
     public function productCategory() {
@@ -29,5 +51,10 @@ class Product extends Model
 
     public function warehouses() {
         return $this->belongstoMany(Warehouse::class, 'warehouse_product', 'product_id', 'warehouse_id');
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(ProductRating::class, 'product_id', 'id');
     }
 }

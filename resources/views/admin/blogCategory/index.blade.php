@@ -16,7 +16,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title"><i class="fas fa-anchor"></i> Thông tin chuyên mục bài viết </h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" id="formCreateUnit" action="{{ route('chuyenmuc-baiviet.store') }}"
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Hủy</button>
                             <button type="submit" class="btn btn-info btn-submit-unit">Lưu</button>
                         </div>
                     </form>
@@ -77,24 +77,37 @@
         <hr>
         <div class="portlet-body">
             <div class="pt-3" style="overflow-x: auto;">
-                <table id="table-calculation-unit" class="table table-hover table-main">
-                    <thead class="thead1" style="vertical-align: middle;">
-                        <tr>
-                            <th class="title-text" style="width: 100px">
-                                STT </th>
-                            <th class="title-text title2">
-                                Tên chuyên mục
-                            </th>
-                            <th class="title-text title3">
-                                Đường dẫn</th>
-                            <th class="title-text title4">
-                                Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
-                        {{-- @include('admin.donViTinh.indexTable') --}}
-                    </tbody>
-                </table>
+                @if (auth()->guard('admin')->user()->can('Xóa danh mục bài viết'))
+                <form id="myform" action="{{route('chuyenmuc-baiviet.multipleDestory')}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                @endif
+                    <table id="table-calculation-unit" class="table table-hover table-main">
+                        <thead class="thead1" style="vertical-align: middle;">
+                            <tr>
+                                <th></th>
+                                <th class="title-text" style="width: 100px">
+                                    STT </th>
+                                <th class="title-text title2">
+                                    Tên chuyên mục
+                                </th>
+                                <th class="title-text title3">
+                                    Đường dẫn</th>
+                                <th class="title-text title4">
+                                    Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
+                        </tbody>
+                    </table>
+                @if (auth()->guard('admin')->user()->can('Xóa danh mục bài viết'))
+                    <select name="action" id="">
+                        <option value="-1" selected>Chọn tác vụ</option>
+                        <option value="delete">Xóa</option>
+                    </select>
+                    <button type="submit" class="btn btn-warning" onclick="return confirm('Bạn chắc chắn muốn thực hiện tác vụ này?')">Thực hiện tác vụ</button>
+                </form>
+                @endif
             </div>
 
         </div>
@@ -136,43 +149,30 @@
                     data: form.serialize(), // serializes the form's elements.
                     success: function (response) {
                         $("#formCreateUnit")[0].reset();
-                        $('#calculation_unit_create .form-body').prepend(`<div class="bg-success p-2 mb-2">
-                            <p class="text-light m-0">Đã thêm mới đơn vị tính thành công</p>
-                            </div>`);
+                        $.toast({
+                            heading: 'Thành công',
+                            text: 'Thực hiện thành công',
+                            position: 'top-right',
+                            icon: 'success'
+                        });
                         setTimeout(function () {
                             $('#calculation_unit_create').modal('dispose')
                             $('#calculation_unit_create').hide()
                             $('.modal-backdrop.fade.show').remove()
                         }, 1500);
                         table.ajax.reload();
-                    }
-                });
-            });
-
-            $(document).on("submit", '#formUpdateUnit', function (e) {
-                e.preventDefault();
-                var form = $(this)
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: "PUT",
-                    url: form.attr('action'),
-                    data: form.serialize(),
-                    success: function (response) {
-                        $('#calculation_unit_update .form-body').prepend(`<div class="bg-success p-2 mb-2">
-                            <p class="text-light m-0">Đã chỉnh sửa đơn vị tính thành công</p>
-                            </div>`);
-                        setTimeout(function () {
-                            $('#calculation_unit_update').modal('dispose')
-                            $('#calculation_unit_update').remove()
-                            $('.modal-backdrop.fade.show').remove()
-                            $('body').removeClass('modal-open')
-                            $('body').css({'padding-right': 'unset', 'overflow': 'unset'})
-                        }, 1500);
-                        table.ajax.reload();
+                    },
+                    error: function(response) {
+                        $.toast({
+                            heading: 'Thất bại',
+                            text: [
+                                'Thực hiện không thành công',
+                                response.responseJSON.errorSlug,
+                                response.responseJSON.errorName,
+                            ],
+                            position: 'top-right',
+                            icon: 'error'
+                        });
                     }
                 });
             });
@@ -195,7 +195,21 @@
                             id: id
                         },
                         success: function (response) {
+                            $.toast({
+                                heading: 'Thành công',
+                                text: 'Thực hiện thành công',
+                                position: 'top-right',
+                                icon: 'success'
+                            });
                             table.ajax.reload();
+                        },
+                        error: function(response) {
+                            $.toast({
+                                heading: 'Thất bại',
+                                text: 'Thực hiện không thành công',
+                                position: 'top-right',
+                                icon: 'error'
+                            });
                         }
                     });
                 }
@@ -203,6 +217,45 @@
         @endif
 
         @if(auth()->guard('admin')->user()->can('Chỉnh sửa danh mục bài viết'))
+            // UPDATE 
+            $(document).on("submit", '#formUpdateUnit', function (e) {
+                e.preventDefault();
+                var form = $(this)
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "PUT",
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    success: function (response) {
+                        $.toast({
+                            heading: 'Thành công',
+                            text: 'Thực hiện thành công',
+                            position: 'top-right',
+                            icon: 'success'
+                        });
+                        setTimeout(function () {
+                            $('#calculation_unit_update').modal('dispose')
+                            $('#calculation_unit_update').remove()
+                            $('.modal-backdrop.fade.show').remove()
+                            $('body').removeClass('modal-open')
+                            $('body').css({'padding-right': 'unset', 'overflow': 'unset'})
+                        }, 1500);
+                        table.ajax.reload();
+                    },
+                    error: function(response) {
+                        $.toast({
+                            heading: 'Thất bại',
+                            text: 'Thực hiện không thành công',
+                            position: 'top-right',
+                            icon: 'error'
+                        });
+                    }
+                });
+            });
             // SHOW MODAL WHEN CLICK ELEMENT TO UPDATE
             $(document).on('click', '.modal-edit-unit', function () {
                 $.ajax({
@@ -214,6 +267,14 @@
                     success: function (response) {
                         $('#calculation_unit_create').after(response.html)
                         $('#calculation_unit_update').modal('show')
+                    },
+                    error: function(response) {
+                        $.toast({
+                            heading: 'Thất bại',
+                            text: 'Thực hiện không thành công',
+                            position: 'top-right',
+                            icon: 'error'
+                        });
                     }
                 });
             })
@@ -237,45 +298,66 @@
             },
             dom: '<"wrapper d-flex justify-content-between mb-3"lf>tip',
             ajax: "{{ route('chuyenmuc-baiviet.indexDatatable') }}",
-            columns: [{
+            columnDefs: [
+                {
+                    targets: 0,
+                    defaultContent: '',
+                    'render': function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = `<input type="checkbox" class="dt-checkboxes" name="id[]" value="${row.id}">`;
+                        }
+                        return data;
+                    },
+                    'checkboxes': {
+                        'selectRow': true,
+                    }
+                },
+                {
+                    targets: 1,
                     data: 'id'
                 },
                 {
+                    targets: 2,
                     data: 'name',
                 },
                 {
+                    targets: 3,
                     data: 'slug'
                 },
                 @if(auth()->guard('admin')->user()->can('Chỉnh sửa danh mục bài viết') && auth()->guard('admin')->user()->cannot('Xóa danh mục bài viết'))
                 {
+                    targets: 4,
                     data: null,
                     render: function(data, type, row) {
-                        return `<button class="btn btn-warning modal-edit-unit" 
+                        return `<span class="btn btn-warning modal-edit-unit" 
                         data-route="{{ route('chuyenmuc-baiviet.modalEdit') }}"
-                        data-unitid="${row.id}"><i class="fa fa-pencil"></i></button>`
+                        data-unitid="${row.id}"><i class="fa fa-pencil"></i></span>`
                     }
                 },
                 @elseif(auth()->guard('admin')->user()->can('Xóa danh mục bài viết') && auth()->guard('admin')->user()->cannot('Chỉnh sửa danh mục bài viết'))
                 {
+                    targets: 4,
                     data: null,
                     render: function(data, type, row) {
-                        return ` <button class="btn btn-danger item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');"><i class="fa fa-trash"></i></button>
+                        return ` <span class="btn btn-danger item-delete" data-unitid="${row.id}" onclick="return confirm('Bạn có chắc muốn xóa');"><i class="fa fa-trash"></i></span>
                         `
                     }
                 },
                 @elseif(auth()->guard('admin')->user()->can('Xóa danh mục bài viết') && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục bài viết'))
                 {
+                    targets: 4,
                     data: null,
                     render: function(data, type, row) {
-                        return `<button class="btn btn-warning modal-edit-unit" 
+                        return `<span class="btn btn-warning modal-edit-unit" 
                         data-route="{{ route('chuyenmuc-baiviet.modalEdit') }}"
-                        data-unitid="${row.id}"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger item-delete" data-unitid="${row.id}" onclick="confirm('Bạn có chắc muốn xóa');"><i class="fa fa-trash"></i></button>
+                        data-unitid="${row.id}"><i class="fa fa-pencil"></i></span>
+                        <span class="btn btn-danger item-delete" data-unitid="${row.id}" onclick="return confirm('Bạn có chắc muốn xóa');"><i class="fa fa-trash"></i></span>
                         `
                     }
                 },
                 @else 
                     {
+                        targets: 4,
                         data: null,
                         render: function(data, type, row) {
                             return ``;

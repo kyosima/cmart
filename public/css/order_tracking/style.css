@@ -1,13 +1,5 @@
 /* -----------------------------------defaults page----------------------------------- */
 
-
-html {
-    box-sizing: border-box;
-}
-
-body {
-    background-color: #F8F8F8;
-}
 h1 {
     font-size: 2em;
     margin: 0.67em 0;
@@ -17,10 +9,10 @@ h1 {
 /* Thanh sidebar */
 .check-order {
     background: #f1f1f1;
-    width: 270px;
+    /* width: 270px; */
     margin-top: 0;
     border: 1px solid #e3e3e3;
-    float: left;
+    /* float: left; */
     margin-top: 10px;
 }
 
@@ -31,7 +23,7 @@ h1 {
     border-bottom: 0;
 }
 .check-order ul li a {
-    font-family: "Roboto", sans-serif;
+    
     font-weight: 400;
     font-size: 14px;
     color: #333;
@@ -86,7 +78,7 @@ h1 {
 }
 .check-order ul li ul li a {
     color: #666666 !important;
-    font-family: "Roboto", sans-serif;
+    
     font-size: 14px;
     font-weight: 400;
     padding: 0;
@@ -102,14 +94,14 @@ h1 {
 /* Tra cứu đơn hàng */
 .checkorder {
     background: #f1f1f1;
-    width: 810px;
-    float: right;
+    /* width: 810px; */
+    /* float: right; */
     padding: 25px;
     margin-top: 10px;
 }
 .checkorder .title {
     font-size: 18px;
-    font-family: "Roboto", sans-serif;
+    
     font-weight: 400;
     color: #2a2a2a;
     border-bottom: 2px solid #bb0029;
@@ -129,7 +121,7 @@ h1 {
     border: 1px solid #cbcbcb;
     width: 243px;
     padding: 11px;
-    font-family: "Roboto", sans-serif;
+    
     font-weight: 400;
     font-style: italic;
     border-radius: 0;
@@ -137,7 +129,7 @@ h1 {
     float: left;
 }
 .write-order .btn-check {
-    font-family: "Roboto", sans-serif;
+    
     font-size: 16px;
     font-weight: 400;
     float: left;
@@ -181,7 +173,7 @@ li a:hover {
 
 .static-detail .title {
     text-transform: uppercase;
-    font-family: 'Roboto',sans-serif;
+
     color: #111;
     border-bottom: 2px solid #bb0029;
     padding-bottom: 5px;
@@ -253,20 +245,20 @@ a, a:hover {
     transform: translate(0,-50%);
 }
 .box-contact .title {
-    font-family: 'Roboto',sans-serif;
+
     font-weight: 500;
     font-size: 22px;
     color: #fff;
 }
 .box-contact .sapo {
-    font-family: 'Roboto',sans-serif;
+
     font-weight: 400;
     font-size: 14px;
     color: #fff;
     margin-bottom: 28px;
 }
 .box-contact .ipt-contact {
-    font-family: 'Roboto',sans-serif;
+
     font-weight: 400;
     font-size: 14px;
     font-style: italic;
@@ -280,7 +272,7 @@ textarea.form-control {
     background: #bb0029;
     padding: 16px 0;
     color: #fff;
-    font-family: 'Roboto',sans-serif;
+
     font-weight: 500;
     font-size: 16px;
     text-align: center;
@@ -306,7 +298,7 @@ textarea.form-control {
     margin-top: 19px;
 }
 .top-order p, .top-order .action-order {
-    font-family: 'Roboto',sans-serif;
+
     font-size: 16px;
     font-weight: 500;
     color: #333;
@@ -315,7 +307,7 @@ textarea.form-control {
 .top-order span {
     color: #666;
     font-size: 16px;
-    font-family: 'Roboto',sans-serif;
+
     font-weight: 400;
 }
 .top-order p:last-child {
@@ -323,7 +315,7 @@ textarea.form-control {
 }
 
 .top-order p, .top-order .action-order {
-    font-family: 'Roboto',sans-serif;
+
     font-size: 16px;
     font-weight: 500;
     color: #333;
@@ -356,7 +348,7 @@ textarea.form-control {
     padding: 60px 0;
 }
 .progress>li:first-child:before {
-    content: url(http://localhost:8081/japana/public/images/check1.png);
+    content: url(../../images/check1.png);
 }
 .progress>li:before {
     display: block;
@@ -375,7 +367,7 @@ textarea.form-control {
     top: 0;
 }
 .progress>li p {
-    font-family: 'Roboto',sans-serif;
+
     font-weight: 500;
     font-size: 14px;
     color: #2a2a2a;
@@ -399,8 +391,8 @@ textarea.form-control {
     right: 50%;
     z-index: 0;
 }
-.progress>li.pause-complete:before {
-    content: url(http://localhost:8081/japana/public/images/check2.png);
+.progress>li.pause-complete.active:before {
+    content: url(../../images/check1.png);
 }
 .progress>li.pause-complete:after {
     background: #cbcbcb;
@@ -410,7 +402,7 @@ textarea.form-control {
     padding: 20px 25px;
 }
 .info-order .title, .list-order .title {
-    font-family: 'Roboto',sans-serif;
+
     font-weight: 500;
     font-size: 16px;
     color: #2a2a2a;
@@ -427,7 +419,7 @@ textarea.form-control {
     text-align: center;
     background: #15b02a;
     color: #fff;
-    font-family: 'Roboto',sans-serif;
+
     font-size: 14px;
     font-weight: 500;
     padding: 7px;
@@ -440,14 +432,14 @@ textarea.form-control {
     margin-bottom: 0;
     font-size: 16px;
     font-weight: 400;
-    font-family: 'Roboto',sans-serif;
+
     color: #333;
 }
 .box-allprice p span {
     float: right;
     font-size: 16px;
     font-weight: 500;
-    font-family: 'Roboto',sans-serif;
+
     color: #111;
 }
 .box-allprice .last-price, .box-allprice .last-price span {
@@ -470,25 +462,9 @@ textarea.form-control {
     float: right;
     font-size: 16px;
     font-weight: 500;
-    font-family: 'Roboto',sans-serif;
+
     color: #111;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .custom_modal {
     width: 450px;
     display: block;
@@ -600,7 +576,7 @@ textarea.form-control {
     display: none;
 }
 .btn-red {
-    background: #bb0029;
+    background: #00e6f8;
     color: #fff;
     text-transform: uppercase;
     font-size: 14px;
@@ -617,8 +593,6 @@ textarea.form-control {
 
 
 .form-box {
-    width: 500px;
-    height: 700px;
     position: relative;
     margin: 6% auto;
     background: #fff;
@@ -684,6 +658,25 @@ textarea.form-control {
     background: #f5f3f3;
     box-shadow: inset 2px -2px 5px 0 rgba(0, 0, 0, .1);
 }
+.progress>li.success:before {
+    content: url(../../images/check1.png);
+}
+.progress>li.success:before {
+    display: block;
+    margin: 0 auto;
+    background: transparent;
+    width: 2.5em;
+    height: 3em;
+    text-align: center;
+    margin-bottom: 0.25em;
+    line-height: 3em;
+    border-radius: 100%;
+    position: relative;
+    z-index: 1;
+}
+.progress>li.pause-complete.success:after{
+    background: #1ab02a !important;
+}
 
 
 .submit-btn{
@@ -700,10 +693,10 @@ textarea.form-control {
 .check-box{
     margin: 30px 10px 30px 0;
 }
-span{
+.form-box span{
     color: #777;
     font-size: 15px;
-    bottom: 68px;
+    /* bottom: 68px; */
 }
 #login{
     left: 50px;
