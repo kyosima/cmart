@@ -69,12 +69,11 @@
                         </li>
 <!-- Register -->
                         <li>
-                            <form method="POST" action="{{ route('user.login') }}" role="form" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('user.register') }}" role="form" enctype="multipart/form-data">
+                            @csrf
                             <div class="content__wrapper">
                                 <div class="thongbao_register">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, và chúng tôi thực hiện vô cùng nghiêm ngặt. <br>Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, 
                                     tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết.</div>
-                                <form method="POST" action="{{ route('user.register') }}">
-                                    @csrf
                                     <input type="text" name="hoten" placeholder="Mời nhập họ và tên có dấu">
                                     <input type="text" name="phone" placeholder="Mời nhập số điện thoại đăng ký giao dịch">
                                     
@@ -124,7 +123,6 @@
                                     </div>
                                     <input type="submit" value="Register" name="Đăng ký">
 
-                                </form>
                             </div>
                             </form>
                         </li>

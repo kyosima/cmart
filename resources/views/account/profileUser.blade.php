@@ -65,7 +65,7 @@ img {
                     <div class="col">
                         <div class="row align-items-center">
                             <div class="col-md-7">
-                                <h4 class="mb-1">{{$profileUser->phone}}</h4>
+                                <h4 class="mb-1">Mã khách hàng: <strong>{{$profileUser->code_customer}}</strong></h4>
                             </div>
                         </div>
                         <div class="row mb-4">
@@ -131,7 +131,7 @@ img {
                         @else
                         @endif
                     </select>
-                    <input type="text" class="form-control" name="cmnd" value="{{$profileUser->cmnd}}">
+                    <!-- <input type="text" class="form-control" name="cmnd" value="{{$profileUser->cmnd}}"> -->
                 </div>
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND</label>

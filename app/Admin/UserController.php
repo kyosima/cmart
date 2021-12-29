@@ -12,6 +12,7 @@ use App\Models\Province;
 use App\Models\District;
 use App\Models\Ward;
 use App\Models\Order;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -19,7 +20,6 @@ class UserController extends Controller
 
     public function getDanhSach() {
         $user = User::all();
-        
         return view('admin.user.listuser',['user'=>$user]);
     }
 

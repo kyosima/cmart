@@ -13,7 +13,7 @@ use App\Models\Order;
 use App\Models\Province;
 use App\Models\District;
 use App\Models\Ward;
-
+use Carbon\Carbon;
 class HomeController extends Controller
 {
     public function home() {
@@ -134,7 +134,15 @@ class HomeController extends Controller
             $user_img_cmnd2->move($destinationPath2, $user_cm2);
             $user->cmnd_image2 = $user_cm2;
         }
-        
+
+        // Tinh ma khach hang
+        $userToday= DB::table('users')->where('created_at', '>=', Carbon::today())->count();
+        $userOrder = $userToday + 1;
+        $dt = Carbon::now();
+        $getday =  $dt->format("Ymd") * 10000;
+        $userID = $getday + $userOrder;
+        $user->code_customer = $userID;
+
 
         $user->save();
 
