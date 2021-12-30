@@ -32,7 +32,6 @@
                     </form>
                 </div>
                 <div class="col-xs-12 col-md-9">
-<<<<<<< HEAD
                     <form action="{{ route('permissions.multiple') }}" method="post">
                         @csrf
                         <div class="input-group action-multiple" style="display:none">
@@ -70,32 +69,6 @@
                         </div>
                         <!-- end table -->
                     </form>
-=======
-                    <!-- table -->
-                    <div class="table__container mt-2">
-
-                        <table class="table table-hover" id="tblPermission" class="display" style="width:100%">
-                            <thead class="table__daily">
-                                <tr>
-                                    <th scope="col">Tên</th>
-                                    <th scope="col">Thao tác</th>
-                                </tr>
-                            </thead>
-                            <tbody class="font-size-1">
-                                @foreach ($permissions as $value)
-                                <tr class="replaywith-{{$value->id}}">
-                                    <td>{{$value->name}}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning ajax-edit" data-id="{{$value->id}}" data-name="{{$value->name}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                        <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('permissions.destroy', $value->id)}}"><i class="fa fa-trash"></i></button>
-                                    </td> 
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- end table -->
->>>>>>> origin/hung
                 </div>
             </div>
             
