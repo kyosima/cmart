@@ -124,76 +124,74 @@ tbody tr:nth-child(even) td {
                                         <input type="name" class="form-control mb-2" name="hoten" placeholder="Nhập tên người dùng" value="{{$user->hoten}}">
                                     </div>
                                 </div>
-                                <div class="col-lg-6 text-start">
+                                <div class="col-lg-4 text-start">
                                     <span class="text-uppercase">Số điện thoại</span>
                                     <input type="phone" class="form-control mb-2" name="phone" placeholder="Nhập số điện thoại"
                                         value="{{$user->phone}}">
-                                        <span class="text-uppercase">Email</span>
+                                        <!-- <span class="text-uppercase">Email</span>
                                     <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
-                                        value="{{$user->email}}" readonly="">
+                                        value="{{$user->email}}" readonly=""> -->
                                 </div>
-                                <div class="col-lg-6 text-start">
-                                <span class="text-uppercase">Định danh Khách Hàng</span>
-                                            <select class="form-select mb-2" name="level" aria-label="Default select example">
-                                              <option value="{{$user->level}}" selected>
-                                                    @if($user->level == 0)
-                                                        Khách hàng bình thường
-                                                    @elseif($user->level == 1)
-                                                        Khách hàng thân thiết
-                                                    @elseif($user->level == 2)
-                                                        Khách hàng VIP
-                                                    @else
-                                                    @endif  
-                                              </option>
-                                              @if($user->level != 0)
-                                              <option value="0">Khách hàng bình thường</option>
-                                              @else
-                                              @endif
-
-                                              @if($user->level != 1)
-                                              <option value="1">Khách hàng thân thiết</option>
-                                              @else
-                                              @endif
-
-                                              @if($user->level != 2)
-                                              <option value="2">Khách hàng VIP</option>
-                                              @else
-                                              @endif
-
-                                            </select>
-                                            <span class="text-uppercase">Loại giấy tờ</span>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <select class="form-select" name="type_cmnd" aria-label="Default select example">
-                                            
-                                            @if($user->type_cmnd == 0)
-                                              <option value="0">Chọn loại giấy tờ tùy thân</option>
-                                              <option value="1">Chứng minh nhân dân</option>
-                                              <option value="2">Căn cước công dân</option>
-                                              <option value="3">Hộ chiếu</option>
-                                              
-                                            @elseif($user->type_cmnd == 1)
-                                              <option value="1">Chứng minh nhân dân</option>
-                                              <option value="2">Căn cước công dân</option>
-                                              <option value="3">Hộ chiếu</option>
-                                            
-                                            @elseif($user->type_cmnd == 2)
-                                              <option value="2">Căn cước công dân</option>
-                                              <option value="1">Chứng minh nhân dân</option>
-                                              <option value="3">Hộ chiếu</option>
-
-                                            @elseif($user->type_cmnd == 3)  
-                                              <option value="3">Hộ chiếu</option>
-                                              <option value="1">Chứng minh nhân dân</option>
-                                              <option value="2">Căn cước công dân</option>
-
+                                
+                                <div class="col-lg-4 text-start">
+                                    <span class="text-uppercase">Định danh Khách Hàng</span>
+                                    <select class="form-select mb-2" name="level" aria-label="Default select example">
+                                        <option value="{{$user->level}}" selected>
+                                            @if($user->level == 0)
+                                                Khách hàng bình thường
+                                            @elseif($user->level == 1)
+                                                Khách hàng thân thiết
+                                            @elseif($user->level == 2)
+                                                Khách hàng VIP
                                             @else
-                                            @endif
-                                            </select>
-                                        </div>
-                                    </div>
+                                            @endif  
+                                        </option>
+                                        @if($user->level != 0)
+                                        <option value="0">Khách hàng bình thường</option>
+                                        @else
+                                        @endif
 
+                                        @if($user->level != 1)
+                                        <option value="1">Khách hàng thân thiết</option>
+                                        @else
+                                        @endif
 
+                                        @if($user->level != 2)
+                                        <option value="2">Khách hàng VIP</option>
+                                        @else
+                                        @endif
+
+                                    </select>
+                                    
+                                </div>
+                                <div class="col-lg-4 text-start">
+                                    <span class="text-uppercase">Loại giấy tờ</span>
+                                    <select class="form-select" name="type_cmnd" aria-label="Default select example">
+                                    
+                                    @if($user->type_cmnd == 0)
+                                        <option value="0">Chọn loại giấy tờ tùy thân</option>
+                                        <option value="1">Chứng minh nhân dân</option>
+                                        <option value="2">Căn cước công dân</option>
+                                        <option value="3">Hộ chiếu</option>
+                                        
+                                    @elseif($user->type_cmnd == 1)
+                                        <option value="1">Chứng minh nhân dân</option>
+                                        <option value="2">Căn cước công dân</option>
+                                        <option value="3">Hộ chiếu</option>
+                                    
+                                    @elseif($user->type_cmnd == 2)
+                                        <option value="2">Căn cước công dân</option>
+                                        <option value="1">Chứng minh nhân dân</option>
+                                        <option value="3">Hộ chiếu</option>
+
+                                    @elseif($user->type_cmnd == 3)  
+                                        <option value="3">Hộ chiếu</option>
+                                        <option value="1">Chứng minh nhân dân</option>
+                                        <option value="2">Căn cước công dân</option>
+
+                                    @else
+                                    @endif
+                                    </select>
                                 </div>
 
                                 <div class="col-lg-12 text-start">
