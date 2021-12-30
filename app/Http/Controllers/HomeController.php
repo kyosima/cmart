@@ -54,7 +54,7 @@ class HomeController extends Controller
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
         ]);
 
-        if(Auth::attempt(['phone'=>$request->phone,'password'=>$request->password])){
+        if(Auth::attempt(['name'=>$request->name,'password'=>$request->password])){
             return redirect('/');
         }
         else {

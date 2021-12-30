@@ -78,12 +78,12 @@
                                 <th class="title-text">
                                     Giá buôn
                                 </th>
-                                <th class="title-text">
-                                    C
-                                </th>
-                                <th class="title-text">
-                                    M
-                                </th>
+                                <!--<th class="title-text">-->
+                                <!--    C-->
+                                <!--</th>-->
+                                <!--<th class="title-text">-->
+                                <!--    M-->
+                                <!--</th>-->
                                 <th class="title-text">
                                     Phí xử lý
                                 </th>
@@ -114,8 +114,8 @@
                                     <td>{{ number_format($item->productPrice->regular_price) }}đ</td>
                                     <td>{{ number_format($item->productPrice->shock_price) }}đ</td>
                                     <td>{{ number_format($item->productPrice->wholesale_price) }}đ</td>
-                                    <td>{{ $item->productPrice->cpoint }}(C)</td>
-                                    <td>{{ $item->productPrice->mpoint }}(M)</td>
+                                    <!--<td>{{ $item->productPrice->cpoint }}(C)</td>-->
+                                    <!--<td>{{ $item->productPrice->mpoint }}(M)</td>-->
                                     <td>{{ number_format($item->productPrice->phi_xuly) }}đ</td>
                                     <td>{{ number_format($item->productPrice->cship) }}đ</td>
                                     {{-- <td>{{dd($item->productPayment())}}</td> --}}

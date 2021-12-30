@@ -13,6 +13,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-8 col-sm-12 col-12">
+                    <a href="{{ route('cart.index') }}" class="text-dark back-cart"><i class="fas fa-chevron-left"></i> Quay
+                        lại giỏ hàng</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-8 col-sm-12 col-12">
                     <div class="card-left">
                         <div class="card-information">
                             <div class="card-information-header pt-4">
@@ -21,15 +27,16 @@
                                         <h3>THÔNG TIN GIAO HÀNG</h3>
                                     </div>
                                     <div class="col-xl-6 col-md-6 col-xs-12 col-sm-12">
-                                        <select id="pickAdress" class="form-control" data-url="{{route('checkout.getAddress')}}">
-                                            <option value="" >Chọn địa chỉ đã lưu</option>
-                                            @foreach($store_address as $adr)
-                                                <option value="{{$adr->id}}">{{$adr->fullname}}</option>
+                                        <select id="pickAdress" class="form-control"
+                                            data-url="{{ route('checkout.getAddress') }}">
+                                            <option value="">Chọn địa chỉ đã lưu</option>
+                                            @foreach ($store_address as $adr)
+                                                <option value="{{ $adr->id }}">{{ $adr->fullname }}</option>
                                             @endforeach
-                                          </select>
+                                        </select>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <hr>
                             @if ($errors->any())
@@ -44,8 +51,8 @@
                             <div class="card-information-body">
                                 <div class="col-xl-6 ">
                                     <div class="form-group">
-                                        <label for="">Tên đẩy đủ<sup class="text-danger">*</sup></label>
-                                        <input type="text" class="form-control" name="fullname" placeholder="Họ và tên"
+                                        <label for="">Họ và tên<sup class="text-danger">*</sup></label>
+                                        <input type="text" class="form-control" name="fullname" placeholder="Mời nhập họ và tên có dấu"
                                             required value="{{ $user->hoten }}">
                                     </div>
                                     <div class="form-group">
@@ -81,16 +88,16 @@
                                             @endif
                                         </select>
                                     </div>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="">Email<sup class="text-danger">*</sup></label>
                                         <input type="email" class="form-control" name="email" placeholder="Nhập email"
                                             value="{{ $user->email }}">
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="col-xl-6 ">
                                     <div class="form-group">
                                         <label for="">Số điện thoại<sup class="text-danger">*</sup></label>
-                                        <input type="text" class="form-control" name="phone" placeholder="Số điện thoại"
+                                        <input type="text" class="form-control" name="phone" placeholder="Mời nhập số điện thoại"
                                             value="{{ $user->phone }}" required>
                                     </div>
                                     <div class="form-group">
@@ -109,29 +116,32 @@
                                     <div class="form-group">
                                         <label for="">Địa chỉ<sup class="text-danger">*</sup></label>
                                         <input type="text" name="address" class="form-control"
-                                            value="{{ $user->address }}" placeholder="Địa chỉ" required>
+                                            value="{{ $user->address }}" placeholder="Mời nhập địa chỉ" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="">Ghi chú</label>
-                                        <input type="text" name="note" class="form-control"
-                                            placeholder="Nhập ghi chú đơn hàng">
-                                    </div>
+
 
                                 </div>
 
                             </div>
                             <div class="col-xl-12">
                                 <div class="form-group">
+                                    <label for="">Ghi chú</label>
+                                    <input type="text" name="note" class="form-control"
+                                        placeholder="Mời nhập ghi chú đơn hàng">
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="form-group">
 
-                                    <label onclick="storeaddress()"><input type="checkbox" id="store-address" name="store_address" value="1"> Lưu lại thông
+                                    <label onclick="storeaddress()"><input type="checkbox" id="store-address"
+                                            name="store_address" value="1"> Lưu lại thông
                                         tin người nhận</label>
 
-                                    <input id="name-address" class="form-control" style="display:none"
-                                        placeholder="Nhập tên địa chỉ ghi nhớ" name="name_address">
+                               
                                 </div>
 
                             </div>
-                            <br/>
+                            <br />
                         </div>
                         <div class="phuongthuc-thanhtoan">
                             <div class="phuongthuc-thanhtoan-card-header">
@@ -202,7 +212,7 @@
                             </div>
                             <div class="donhang-footer">
                                 <div class="card-right">
-                                    <div class="card-body">
+                                    {{-- <div class="card-body">
                                         <p class="tamtinh"> <span class="tamtinh-title">Tạm tính:</span> <span
                                                 class="tamtinh-price">{{ $cart_subtotal }} đ</span> </p>
                                         <hr>
@@ -211,14 +221,14 @@
                                                 class="tamtinh-price">{{ formatPrice($tax) }} </span> </p>
                                         <p class="tamtinh"> <span class="tamtinh-title">Phí xử lý:</span> <span
                                                 class="tamtinh-price">{{ formatPrice($process_fee) }} </span> </p>
-                                        <p class="tamtinh"> <span class="tamtinh-title">Điểm M quy đổi:</span> <span
-                                                class="tamtinh-price">{{ formatPrice($m_point * 100) }} </span> </p>
-                                        <p class="tamtinh"> <span class="tamtinh-title">Điểm C tích lũy:</span>
-                                            <span class="tamtinh-price">{{ $c_point }} </span> </p>
-                                        <p class="tamtinh"> <span class="tamtinh-title">Tổng phí dịch vụ:</span>
-                                            <span
-                                                class="tamtinh-price">{{ formatPrice($tax + $process_fee - $m_point * 100) }}
-                                            </span> </p>
+                                        <!--<p class="tamtinh"> <span class="tamtinh-title">Điểm M quy đổi:</span> <span-->
+                                        <!--        class="tamtinh-price">{{ formatPrice($m_point * 100) }} </span> </p>-->
+                                        <!--<p class="tamtinh"> <span class="tamtinh-title">Điểm C tích lũy:</span>-->
+                                        <!--    <span class="tamtinh-price">{{ $c_point }} </span> </p>-->
+                                        <!--<p class="tamtinh"> <span class="tamtinh-title">Tổng phí dịch vụ:</span>-->
+                                        <!--    <span-->
+                                        <!--        class="tamtinh-price">{{ formatPrice($tax + $process_fee - $m_point * 100) }}-->
+                                        <!--    </span> </p>-->
                                         <hr>
                                         <p><b>Phí vận chuyển:</b></p>
                                         <div class="form-group">
@@ -228,15 +238,86 @@
                                             <label for="cship">CMart Shipping ({{ formatPrice($c_ship) }})</label><br>
                                         </div>
                                         <hr>
-                                        <p class="total"> <span>Tổng cộng:</span> <span
+                                        <p class="total"> <span>Giá trị giao dịch:</span> <span
                                                 class="total-price">{{ formatPrice(str_replace(',', '', $cart_total) + $tax + $process_fee - $m_point * 100) }}
+                                            </span> </p>
+                                    </div> --}}
+                                    <div class="card-body">
+                                        <p class="tamtinh"> <span class="tamtinh-title">Tạm tính:</span> <span
+                                                class="tamtinh-price">{{ $cart_subtotal }} đ</span> </p>
+
+                                        <hr>
+                                        <p><b>Phí vận chuyển:</b></p>
+                                        <div class="form-group">
+                                            <input type="radio" id="vship" name="shipping_method" value="v_ship" checked style="display:none">
+                                            <label for="vship" id="lbvship" style="display:none">Viettel Shipping ({{ formatPrice($v_ship) }})</label>
+                                            <input type="radio" id="cship" name="shipping_method" value="c_ship" style="display:none">
+                                            <label for="cship"  id="lbcship" style="display:none">CMart Shipping ({{ formatPrice($c_ship) }})</label>
+                                        </div>
+                                        <hr>
+                                        <p class="total"> <span>Giá trị giao dịch:</span> <span
+                                                class="total-price">{{ formatPrice(str_replace(',', '', $cart_total)) }}
                                             </span> </p>
                                     </div>
                                 </div>
 
                             </div>
+                            
                         </div>
-                        <button class="btn-dathang" type="submit">Đặt hàng</button>
+                        <div class="chinhsach">
+                            <div class="chinhsach-header">
+                                <h3>Điều khoản và chính sách</h3>
+                            </div>
+                            <div class="chinhsach-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                      <!-- Default checked -->
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="nhanhang" id="check1" >
+                                        <label class="custom-control-label" for="check1">Tôi đã đọc và đồng ý với Quy định Thao tác khi nhận hàng
+                                        </label>
+                                      </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <!-- Default checked -->
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="giaonhan" id="check2">
+                                        <label class="custom-control-label" for="check2">Tôi đã đọc và đồng ý với Chính sách Giao - Nhận</label>
+                                      </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <!-- Default checked -->
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="doitra" id="check3" >
+                                        <label class="custom-control-label" for="check3">Tôi đã đọc và đồng ý với Chính sách Đổi - Trả</label>
+                                      </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <!-- Default checked -->
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="baohanh" id="check4" >
+                                        <label class="custom-control-label" for="check4">Tôi đã đọc và đồng ý với Chính sách Bảo hành</label>
+                                      </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <!-- Default checked -->
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="dieukhoan" id="check5">
+                                        <label class="custom-control-label" for="check5">Tôi đã đọc và đồng ý với Quy định Điều khoản & Điều kiện giao dịch</label>
+                                      </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <!-- Default checked -->
+                                        <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" name="checkall" id="check6">
+                                          <label class="custom-control-label" for="check6">Chọn tất cả</label>
+                                        </div>
+                                      </li>
+                                  </ul>
+                                  <p class="text-danger error-chinhsach p-1" style="display: none">Bạn phải đồng ý tất cả chính sách của Cmart</p>
+                            </div>
+                        </div>
+                        <button class="btn-dathang" type="submit">Tiếp tục thanh toán</button>
                     </div>
                 </div>
             </div>
@@ -248,6 +329,36 @@
     <script src="{{ asset('public/js/shipping.js') }}"></script>
 
     <script>
+        $("select[name='sel_province']").change(function(){
+            if($(this).val() == '70'){
+                $('#cship').prop('checked', true);
+                $('#vship').prop('checked', false);
+                $('#vship').css('display', 'none');
+                $('#lbvship').css('display', 'none');
+                $('#lbcship').css('display', 'inline-block');
+                $('#cship').css('display', 'inline-block');
+
+            }else{
+                $('#vship').prop('checked', true);
+                $('#cship').prop('checked', false);
+                $('#cship').css('display', 'none');
+                $('#lbcship').css('display', 'none');
+                $('#lbvship').css('display', 'inline-block');
+                $('#vship').css('display', 'inline-block');
+
+            }
+        });
+        $("input[name='checkall']").click(function(){
+            $('.chinhsach-body input:checkbox').not(this).prop('checked', this.checked);
+        });
+        $('.btn-dathang').click(function(e){
+            if($('.chinhsach-body input:checkbox').is(':checked')){
+
+            }else{
+                e.preventDefault();
+                $('.error-chinhsach').css('display', 'block');
+            }
+        })
         function storeaddress() {
             if ($('#store-address').is(':checked')) {
                 $('#name-address').css("display", "block");
@@ -258,39 +369,47 @@
         $('#pickAdress').on('change', function() {
             id_address = $('#pickAdress').val();
             url = $('#pickAdress').data('url');
-            if(id_address != ''){
+            if (id_address != '') {
                 $.ajax({
-                    url: url,
-                    type: 'GET',
-                    dataType: 'json',
-                    data: {id: id_address},
-                })
-                .done(function(data) {
-                    console.log(data);
-                    $('input[name="fullname"]').val(data[0].fullname);
-                    $('input[name="phone"]').val(data[0].phone);
-                    $('input[name="email"]').val(data[0].email);
-                    $('input[name="address"]').val(data[0].address);
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            id: id_address
+                        },
+                    })
+                    .done(function(data) {
+                        console.log(data);
+                        $('input[name="fullname"]').val(data[0].fullname);
+                        $('input[name="phone"]').val(data[0].phone);
+                        $('input[name="email"]').val(data[0].email);
+                        $('input[name="address"]').val(data[0].address);
 
-                    var province = '<option value="'+data[1].matinhthanh+'">'+data[1].tentinhthanh+'</option>';
-                    $.each(data[4], function( index, value ) {
-                        province += '<option value="'+value.matinhthanh+'">'+value.tentinhthanh+'</option>';
-                    });
-                    $('select[name="sel_province"]').empty().html(province);
+                        var province = '<option value="' + data[1].matinhthanh + '">' + data[1].tentinhthanh +
+                            '</option>';
+                        $.each(data[4], function(index, value) {
+                            province += '<option value="' + value.matinhthanh + '">' + value
+                                .tentinhthanh + '</option>';
+                        });
+                        $('select[name="sel_province"]').empty().html(province);
 
-                    var district = '<option value="'+data[2].maquanhuyen+'">'+data[2].tenquanhuyen+'</option>';
-                    $.each(data[5], function( index, value ) {
-                        district += '<option value="'+value.maquanhuyen+'">'+value.tenquanhuyen+'</option>';
-                    });
-                    $('select[name="sel_district"]').empty().html(district);
+                        var district = '<option value="' + data[2].maquanhuyen + '">' + data[2].tenquanhuyen +
+                            '</option>';
+                        $.each(data[5], function(index, value) {
+                            district += '<option value="' + value.maquanhuyen + '">' + value
+                                .tenquanhuyen + '</option>';
+                        });
+                        $('select[name="sel_district"]').empty().html(district);
 
-                    var ward = '<option value="'+data[3].maphuongxa+'">'+data[3].tenphuongxa+'</option>';
-                    $.each(data[6], function( index, value ) {
-                        ward += '<option value="'+value.maphuongxa+'">'+value.tenphuongxa+'</option>';
+                        var ward = '<option value="' + data[3].maphuongxa + '">' + data[3].tenphuongxa +
+                            '</option>';
+                        $.each(data[6], function(index, value) {
+                            ward += '<option value="' + value.maphuongxa + '">' + value.tenphuongxa +
+                                '</option>';
+                        });
+                        $('select[name="sel_ward"]').empty().html(ward);
+
                     });
-                    $('select[name="sel_ward"]').empty().html(ward);
-                    
-                });
             }
         });
         window.addEventListener("load", function() {

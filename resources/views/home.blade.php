@@ -9,6 +9,7 @@
     
 @section('content')
 <section class="home-pc">
+    <div class="container">
 
     <div class="slider-pc">
         <div id="demo" class="carousel slide carousel-fade" data-ride="carousel">
@@ -51,6 +52,7 @@
                 <!--<li class="" data-target="#demo" data-slide-to="6"><a class="pager-item" title="Chăm Da Đẹp Dáng Giảm 50%"> Chăm Da Đẹp Dáng Giảm 50% </a></li>-->
             {{-- </ul> --}}
         </div>
+    </div>
     </div>
     <div class="product">
         <div class="container">

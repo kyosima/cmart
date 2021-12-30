@@ -20,7 +20,7 @@
                     <form action="" method="get">
                         <div class="write-order form-group">
                             <input value="" type="text" name="order_code" class="form-control ipt-order"
-                                placeholder="Nhập mã đơn hàng">
+                                placeholder="Nhập mã giao dịch">
                             <button type="submit" class="btn-check">Tra cứu</button>
                         </div>
                     </form>

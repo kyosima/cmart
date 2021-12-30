@@ -90,13 +90,13 @@
         <thead>
             <tr>
                 <th>Mã đơn hàng</th>
-                <th>Cách thức thanh toán</th>
+                {{-- <th>Cách thức thanh toán</th>
                 <th>Phương thức vận chuyển</th>
-                <th>Phí vận chuyển</th>
-                <th>CPoints</th>
-                <th>MPoints</th>
-                <th>Thuế</th>
-                <th>Phí xử lý</th>
+                <th>Phí vận chuyển</th> --}}
+                <!--<th>CPoints</th>-->
+                <!--<th>MPoints</th>-->
+                {{-- <th>Thuế</th>
+                <th>Phí xử lý</th> --}}
                 <th>Tổng cộng</th>
                 <th>Trạng thái</th>
                 <th>Chi tiết đơn hàng</th>
@@ -106,19 +106,19 @@
             @foreach ($orders as $k)
             <tr>
                 <td>{{$k->order_code}}</td>
-                <td>
+                {{-- <td>
                     @if($k->payment_method == 1)
                         Thanh toán khi nhận hàng
                     @else
                         Thanh toán bằng chuyển khoản
                     @endif
-                </td>
-                <td>{{$k->shipping_method}}</td>
-                <td>{{formatPrice($k->shipping_total)}}</td>
-                <td>{{$k->c_point}}</td>
-                <td>{{$k->m_point}}</td>
-                <td>{{formatPrice($k->tax)}}</td>
-                <td>{{formatPrice($k->process_fee)}}</td>
+                </td> --}}
+                {{-- <td>{{$k->shipping_method}}</td>
+                <td>{{formatPrice($k->shipping_total)}}</td> --}}
+                <!--<td>{{$k->c_point}}</td>-->
+                <!--<td>{{$k->m_point}}</td>-->
+                {{-- <td>{{formatPrice($k->tax)}}</td>
+                <td>{{formatPrice($k->process_fee)}}</td> --}}
                 <td>{{formatPrice($k->total)}}</td>
                 <td>
                     @if($k->payment_method == 1)
