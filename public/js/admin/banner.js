@@ -30,10 +30,14 @@ function selectFileWithCKFinder( preview) {
               url_file = file.getUrl().replace(url_home, '');
 
               html += `<div class="col-xs-12 col-md-12 ui-sortable-handle mt-4">
-                        <a href="javascript:void(0);" style="float:none;position: relative;" class="image_link">
+                        <div style="float:none;position: relative;" class="image_link">
+                            <div class="form-group mb-3">
+                                <label for="">Liên kết</label>
+                                <input type="text" name="link[]" class="form-control" placeholder="Liên hết">
+                            </div>
                             <img class="img-thumbnail show_img" src="${file.getUrl()}" alt="">
                             <i class="fas fa-trash-alt"></i>
-                        </a>
+                        </div>
                         <input type="hidden" name="image[]" value="${url_file}">
                         <input type="hidden" name="id[]" value="0">
                     </div>`;

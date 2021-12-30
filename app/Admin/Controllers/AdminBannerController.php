@@ -28,7 +28,7 @@ class AdminBannerController extends Controller
 		foreach ($request->id as $key => $value) {
 			$banner = Banner::updateOrCreate(
 	    		['id' => $value],
-	    		['type' => $request->type, 'image' => $request->image[$key], 'sort' => $key]
+	    		['type' => $request->type, 'link' => $request->link[$key], 'image' => $request->image[$key], 'sort' => $key]
 			);
 			array_push($array, $banner->id);
 		}
