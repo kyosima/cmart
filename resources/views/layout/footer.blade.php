@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div class="ketnoi col-12">
+            {{-- <div class="ketnoi col-12">
                 <div class="box-hotline-f col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
 
                     <div class="social-pc row">
@@ -48,7 +48,7 @@
 
 
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 

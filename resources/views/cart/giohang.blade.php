@@ -82,7 +82,7 @@
                                 class="tamtinh-price cart-subtotal"><span
                                     class="amount">{{ $cart_subtotal }}đ</span></span> </p>
                         <hr>
-                        <p class="total"> <span>Tổng cộng:</span> <span class="total-price cart-total"><span
+                        <p class="total"> <span>Giá trị giao dịch:</span> <span class="total-price cart-total"><span
                                     class="amount">{{ $cart_total }}đ</span></span>
                         </p>
                     </div>

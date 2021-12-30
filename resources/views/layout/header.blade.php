@@ -122,7 +122,7 @@
                   <div class="dropdown-menu text-dark">
                     <a class="dropdown-item text-dark" href="{{url('/xac-thuc-ho-so')}}">Thông tin tài khoản</a>
                     <a class="dropdown-item text-dark" href="{{url('/lichsu')}}">Lịch sử đơn hàng</a>
-                    <a class="dropdown-item text-dark" href="{{url('/cpoint')}}">Lịch sử nhận point</a>
+                    <!--<a class="dropdown-item text-dark" href="{{url('/cpoint')}}">Lịch sử nhận point</a>-->
                     <a class="dropdown-item text-dark" href="#">Ví của bạn</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{route('logoutuser')}}">Đăng xuất</a>
@@ -145,9 +145,9 @@
                 </nav>
                 <div class="item other-top item-follow-order">
                     <div class="follow-order other">
-                        <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}" title="Theo dõi đơn hàng">
+                        <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}" title="Kiểm tra đơn hàng">
                             <i class="icon-all-new icon-follow icon-follow-header"></i>
-                            <span class="text-color-white">Theo dõi<br>đơn hàng</span>
+                            <span class="text-color-white">Kiểm tra<br>đơn hàng</span>
                         </a>
                     </div>
                     <div class="cart other">
@@ -168,7 +168,8 @@
         <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
             Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
         </span>
-        <p>Mọi liên hệ nên thực hiện từ Số điện thoại xác nhận giao dịch và đến kênh giao dịch chính thức của C-Mart.
+        <p>
+            Mọi liên hệ nên thực hiện từ Số điện thoại đăng ký giao dịch và đến các kênh kết nối chính thức của C-Mart
         </p>
     </div>
 

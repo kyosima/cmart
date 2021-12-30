@@ -118,11 +118,12 @@ class CheckoutController extends Controller
                 $shipping_total = $c_ship;
               break;
           }
+  
         if(Cart::instance('shopping')->count() > 0){
             $validation = $request->validate([
                 'fullname' => 'required',
                 'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/'],
-                'email' => 'required|email',
+                // 'email' => 'required|email',
                 'sel_province' => 'required',
                 'sel_district' => 'required',
                 'sel_ward' => 'required',
@@ -134,10 +135,10 @@ class CheckoutController extends Controller
                 if($store_address == 1){
                     $storeAddress = StoreAddress::create([
                         'id_user' => $user_id,
-                        'name' => $request->name_address,
+                        // 'name' => $request->name_address,
                         'fullname' => $request->fullname,
                         'phone'=>$request->phone,
-                        'email' => $request->email,
+                        // 'email' => $request->email,
                         'id_province' => $request->sel_province,
                         'id_district' => $request->sel_district,
                         'id_ward' => $request->sel_ward,
@@ -156,7 +157,9 @@ class CheckoutController extends Controller
                         'tax' => $tax,
                         'process_fee' => $process_fee,
                         'sub_total' => intval(str_replace(",", "", Cart::instance('shopping')->subtotal())),
-                        'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()) + $tax + $process_fee + $shipping_total)
+                        'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()) )
+
+                        // 'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()) + $tax + $process_fee + $shipping_total)
                     ]);
                     
                   

@@ -1,5 +1,4 @@
     .card-left {
-        margin: 50px 0;
     }
     
     .card-information {
@@ -27,12 +26,17 @@
         text-transform: uppercase;
     }
     
-    label {
+    .card-information label {
         transform: translate(0, -3.5px) scale(0.9);
         transform-origin: top left;
         color: #BB0029;
     }
-    
+    .back-cart{
+        font-weight: 600;
+        font-size: 20px;
+        margin: 10px 0px;
+        display: block;
+    }
     .card-information .form-control {
         border-radius: 0;
     margin: -9px 0 20px;
@@ -205,7 +209,37 @@
         font-weight: 700 !important;
         color: #333942;
     }
-    
+    .chinhsach-body .custom-control{
+        padding-left: 0;
+    }
+    .chinhsach{
+        margin-top: 10px;
+        background: #fff;
+        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+    }
+    .chinhsach-body {
+        padding: 10px 10px 0 10px;
+
+    }
+    .chinhsach-header h3{
+        font-size: 16px !important;
+        font-weight: 600;
+        color: #333942;
+        text-transform: uppercase;
+    }
+    .chinhsach-body ul li:last-child{
+        border: unset;
+    }
+    .chinhsach-header{
+        padding: 10px 10px 0 10px;
+
+    }
+    .chinhsach-body .list-group-item{
+        padding: 5px 0px !important;
+    }
+    .chinhsach-body  .custom-control-label{
+        padding-left: 20px;
+    }
     tr .title {
         padding: 10px;
         width: 219px;

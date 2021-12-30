@@ -20,14 +20,14 @@
                         @endif
                         <div class="write-order form-group">
                             <input type="text" name="order_code" value="{{ $order->order_code }}"
-                                class="form-control ipt-order" placeholder="Nhập mã đơn hàng">
+                                class="form-control ipt-order" placeholder="Nhập mã giao dịch">
                             <button type="submit" class="btn-check">Tra cứu</button>
                         </div>
                     </form>
                     @if (isset($order))
                         <div class="box-order">
                             <div class="top-order">
-                                <p><span>Mã đơn hàng:</span> {{ $order->order_code }}</p>
+                                <p><span>Mã giao dịch:</span> {{ $order->order_code }}</p>
                                 <p><span>Thời gian đặt hàng:</span> <span class="action-order">
                                         <b style="color:#15b02a">{{ date('d/m/Y H:i:s', strtotime($order->created_at)) }}</b> </span></p>
                             </div>
@@ -75,7 +75,7 @@
                                 <ul>
                                     <li>Họ và tên: {{ $order_info->fullname }}</li>
                                     <li>Số điện thoại: {{ $order_info->phone }}</li>
-                                    <li>Email: {{ $order_info->email }}</li>
+                                    {{-- <li>Email: {{ $order_info->email }}</li> --}}
                                     <li>Ghi chú: {{ $order_info->note }}</li>
                                 </ul>
                                 <hr>
@@ -85,12 +85,13 @@
                                     <li>Quận/huyện: {{ $order_address->district()->value('tenquanhuyen') }}</li>
                                     <li>Phường xã: {{ $order_address->ward()->value('tenphuongxa') }}</li>
                                     <li>Ghi chú: {{ $order_address->address }}</li>
+                                    {{-- <li>Phương thức vận chuyển: {{ $order->shipping_method }}</li> --}}
                                 </ul>
-                                <hr>
-                                <h3 class="title">Thông tin thanh toán:</h3>
+                                {{-- <hr> --}}
+                                {{-- <h3 class="title">Thông tin thanh toán:</h3>
                                 @if ($order->payment_method == 1)
                                     <p>Thanh toán khi nhận hàng(COD)</p>
-                                @endif
+                                @endif --}}
                             </div>
                             <div class="box-infocart list-order">
                                 <h3 class="title">Thông tin đơn hàng:</h3>
@@ -115,10 +116,10 @@
                                 </table>
                                 <div class="box-allprice box-price-order">
                                     <p>Tạm tính:<span> {{ formatPrice($order->sub_total) }}</span></p>
-                                    <p>Thuế:<span> {{ formatPrice($order->tax) }}</span></p>
+                                    {{-- <p>Thuế:<span> {{ formatPrice($order->tax) }}</span></p>
                                     <p>Phí xử lý:<span> {{ formatPrice($order->process_fee) }}</span></p>
-                                    <p>Điểm M quy đổi:<span> {{ formatPrice($order->m_point * 100) }}</span></p>
-                                    <p>Điểm C tích lũy:<span> {{ $order->c_point }}</span></p>
+                                    <!--<p>Điểm M quy đổi:<span> {{ formatPrice($order->m_point * 100) }}</span></p>-->
+                                    <!--<p>Điểm C tích lũy:<span> {{ $order->c_point }}</span></p>--> --}}
                                     <p>Phí vận chuyển:<span> + {{ formatPrice($order->shipping_total) }}</span></p>
                                     <p class="last-price">Tổng cộng: <span>{{ formatPrice($order->total) }}</span>
                                     </p>

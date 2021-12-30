@@ -52,7 +52,7 @@ img {
                     <div class="col-md-3 text-center mb-5">
                         <div class="avatar avatar-xl">
                             @if($profileUser->avatar != null)
-                                <img src="{{asset('/public/storage/upload/'.$profileUser->avatar)}}" width="150px" height="150px"/>
+                                <img src="{{asset('/public/images/'.$profileUser->avatar)}}" width="150px" height="150px"/>
                                 <input type="file" class="form-control" name="avatar" id="img_avatar" style="display: none">
                                 <label for="img_avatar" class="btn btn-primary profile-button mt-2">Cập nhật avatar</label>
                             @else
@@ -73,6 +73,7 @@ img {
                                 <p class="text-muted" style="margin:0">
                                     <span class="text-black-50">{{$profileUser->email}}</span><span> 
                                 </p>
+                                {{$profileUser->name}}
                                 <p class="text-muted">
                                     @if($profileUser->level==1)
                                         Member Vip
@@ -82,7 +83,7 @@ img {
                                         Member bình thường
                                     @endif
                                 </p>
-                                <div class="">Tích lũy: {{$profileUser->tichluyC}} point</div>
+                                <!--<div class="">Tích lũy: {{$profileUser->tichluyC}} point</div>-->
                             </div>
                             <div class="col">
                                 
@@ -98,7 +99,8 @@ img {
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lastname">Số điện thoại</label>
-                        <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}" readonly>
+                        <!-- <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}" readonly> -->
+                        <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -134,7 +136,7 @@ img {
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND</label>
                         @if($profileUser->cmnd_image != null)
-                        <img id="imgFileUpload" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image)}}" width="100%" height="250px" style="cursor: pointer" />
+                        <img id="imgFileUpload" src="{{asset('/public/images/'.$profileUser->cmnd_image)}}" width="100%" height="250px" style="cursor: pointer" />
                         <br />
                         <span id="spnFilePath"></span>
                         <input type="file" id="FileUpload1" style="display: none" name="image_cmnd" id="img_cmnd" />
@@ -149,7 +151,7 @@ img {
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND mặt sau</label>
                         @if($profileUser->cmnd_image2 != null)
-                        <img id="imgFileUpload" src="{{asset('/public/storage/upload/'.$profileUser->cmnd_image2)}}" width="100%" height="250px" style="cursor: pointer" />
+                        <img id="imgFileUpload" src="{{asset('/public/images/'.$profileUser->cmnd_image2)}}" width="100%" height="250px" style="cursor: pointer" />
                         <br />
                         <span id="spnFilePath"></span>
                         <input type="file" id="FileUpload1" style="display: none" name="image_cmnd2" id="img_cmnd2" />
@@ -178,7 +180,8 @@ img {
                         <select name="sel_province" class="form-control select2"
                             data-placeholder="---Chọn tỉnh thành---" required>
                                 <option value="{{ $profileUser->id_tinhthanh }}">
-                                {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->first()->tentinhthanh}}
+                                {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')
+                                    ->where('province.matinhthanh','=',auth()->user()->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh}}
                                 </option>
                                 @foreach ($province as $value)
                                     <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
@@ -198,7 +201,8 @@ img {
                         <select class="form-control select2" name="sel_district"
                             data-placeholder="---Chọn quận huyên---" required>
                             <option value="{{ $profileUser->id_tinhthanh }}">
-                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->first()->tenquanhuyen}}
+                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')
+                                ->where('district.maquanhuyen','=',auth()->user()->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen}}
                             </option>
                         </select>
                         @endif
@@ -214,7 +218,8 @@ img {
                         <select class="form-control select2" name="sel_ward"
                             data-placeholder="---Chọn phường xã---" required>
                             <option value="{{$profileUser->id_phuongxa}}">
-                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->first()->tenphuongxa}}
+                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')
+                                    ->where('ward.maphuongxa','=',auth()->user()->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa}}
                             </option>
                         </select>
                         @endif
@@ -245,7 +250,9 @@ img {
                         </ul>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
+                </div>
             </form>
         </div>
     </div>

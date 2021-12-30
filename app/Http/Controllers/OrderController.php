@@ -62,9 +62,9 @@ class OrderController extends Controller
     public function show($order_code)
     {
         if(!$order_code){
-            return view('order_tracking.order_tracking', ['error'=>'Mã đơn hàng không tồn tại']);
+            return view('order_tracking.order_tracking', ['error'=>'Đơn hàng không tồn tại']);
         }elseif( !$order = Order::whereOrderCode($order_code)->first()){
-            return view('order_tracking.order_tracking', ['error'=>'Mã đơn hàng không tồn tại']);
+            return view('order_tracking.order_tracking', ['error'=>'Đơn hàng không tồn tại']);
         }else{
             $order_info = $order->order_info()->first();
             $order_address = $order->order_address()->first();
