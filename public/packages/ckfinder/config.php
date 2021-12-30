@@ -159,12 +159,17 @@ $config['debug'] = false;
 /*==================================== Plugins ========================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_plugins
 
-$config['pluginsDirectory'] = __DIR__ . '/plugins';
-$config['plugins'] = array('ImageWatermark');
+$config['pluginsDirectory'] = __DIR__ . '\plugins';
+$config['plugins'] = array('');
 
-$config['ImageWatermark'] = [
-    'imagePath' => url().'/public/image/logo-c-v.png'
-];
+// $config['ImageWatermark'] = array(
+//     'imagePath' => url().'/public/image/logo-c-v.png',
+//     'position' => array(
+//         'right'  => 0,
+//         'bottom' => 0,
+//     )
+// );
+
 /*================================ Cache settings =====================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_cache
 

@@ -21,10 +21,12 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
     public function getDefaultConfig()
     {
         return [
-            'imagePath' => __DIR__ . '/stamp.png',
+            'imagePath' => __DIR__ . '/logo.png',
             'position' => [
-                'right' => 0,
-                'bottom' => 0
+                'right'  => null,
+                'bottom' => null,
+                'left'   => null,
+                'top'    => null
             ]
         ];
     }
@@ -44,6 +46,8 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
         $dstX = $dstY = 0;
 
         $position = $this->app['config']->get('ImageWatermark.position');
+
+        var_dump('aaaa', $position);
 
         if (isset($position['right'])) {
             $positionRight = $position['right'];
@@ -100,10 +104,13 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
             $watermarkImagePath = $this->app['config']->get('ImageWatermark.imagePath');
 
             if (Image::isSupportedExtension(pathinfo($watermarkImagePath, PATHINFO_EXTENSION))) {
+                var_dump(pathinfo($watermarkImagePath, PATHINFO_EXTENSION)); // RUN
+
                 $watermarkImage = Image::create(file_get_contents($watermarkImagePath));
+                var_dump('avcxvc'); // NOT SHOWING
                 $watermarkImageGD = $watermarkImage->getGDImage();
 
-                // Calculate the position.
+                // calculatePosition() does not return anything
                 list($dstX, $dstY) = $this->calculatePosition($uploadedImage->getWidth(), $uploadedImage->getHeight(), $watermarkImage->getWidth(), $watermarkImage->getHeight());
 
                 imagecopy($uploadedImageGD, $watermarkImageGD, $dstX, $dstY, 0, 0, $watermarkImage->getWidth(), $watermarkImage->getHeight());

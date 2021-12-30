@@ -33,9 +33,7 @@ class ProductCategoryController extends Controller
         // MỤC ĐÍCH ĐỂ COUNT TỔNG SP
         // VÀ SHOW CÁC DANH MỤC CON ĐỂ TICK CHỌN
         // https://laracasts.com/discuss/channels/laravel/get-all-products-from-parent-category-and-its-all-sub-categories
-        $proCat = Cache::remember('CURRENT.PROCAT', Carbon::now()->addMinute(30), function() use ($slug) {
-            return ProductCategory::where('slug', $slug)->with(['childrenCategories.products', 'products'])->first();
-        });
+        $proCat = ProductCategory::where('slug', $slug)->with(['childrenCategories.products', 'products'])->first();
         $proCat->products->merge($proCat->subproducts);
 
         // SEO
@@ -57,9 +55,7 @@ class ProductCategoryController extends Controller
 
         // LẤY RA TOÀN BỘ ID DANH MỤC HIỆN TẠI & DANH MỤC CON CỦA NÓ
         // LINK TRO GIUP: https://stackoverflow.com/questions/41414434/laravel-return-all-the-ids-of-descendants
-        $subcategory = Cache::remember('SUBCATEGORY', Carbon::now()->addMinute(30), function() use ($proCat) {
-            return ProductCategory::where('category_parent', $proCat->id)->get();
-        });
+        $subcategory = ProductCategory::where('category_parent', $proCat->id)->get();
         $categoryIds = $proCat->getAllChildren();
         $arrCatIds = $categoryIds->pluck('id')->push($proCat->id)->toArray();
         foreach ($categoryIds as $category) {
@@ -71,12 +67,10 @@ class ProductCategoryController extends Controller
         }
         $categoryIds = $arrCatIds;
         
-        $products = Cache::remember('NORMAL', Carbon::now()->addMinute(30), function() use ($categoryIds) {
-            return Product::whereIn('category_id', $categoryIds)
-            ->where('status', 1)
-            ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
-            ->get();
-        });
+        $products = Product::whereIn('category_id', $categoryIds)
+        ->where('status', 1)
+        ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+        ->get();
 
         $beginMinPrice = 0;
         $endMaxPrice = 0;
@@ -180,27 +174,24 @@ class ProductCategoryController extends Controller
         // VALUE = SỐ LƯỢNG SP THUỘC BRAND
         $countBrand = array_count_values($brandIds);
 
-        return view('proCat.danhmucsanpham', compact('proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory', 'minPrice', 'maxPrice', 'beginMinPrice', 'endMaxPrice'));
+        $isDefault = $request->query();
+
+        return view('proCat.danhmucsanpham', compact('proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory', 'minPrice', 'maxPrice', 'beginMinPrice', 'endMaxPrice', 'isDefault'));
     }
 
     public function showAll()
     {
-        $categories = Cache::remember('ALL.PROCAT', Carbon::now()->addMinute(30), function() {
-            return ProductCategory::where('category_parent', 0)
-            ->where('id', '!=', 1)
-            ->where('status', 1)
-            ->with(['childrenCategories.products', 'products'])
-            ->get();
-        });
+        $categories = ProductCategory::where('category_parent', 0)
+        ->where('id', '!=', 1)
+        ->where('status', 1)
+        ->with(['childrenCategories.products', 'products'])
+        ->get();
 
         $arrProducts = [];
-        $arrProducts = Cache::remember('ALL.PROCAT.PRODUCTS', Carbon::now()->addMinute(30), function() use ($categories, $arrProducts) {
-            foreach($categories as $proCat) {
-                $products = $proCat->products->where('status', 1)->merge($proCat->subproducts)->sortBy(['created_at', 'desc']);
-                array_push($arrProducts, $products);
-            }
-            return $arrProducts;
-        });
+        foreach($categories as $proCat) {
+            $products = $proCat->products->where('status', 1)->merge($proCat->subproducts->where('status', 1))->sortBy(['created_at', 'desc']);
+            array_push($arrProducts, $products);
+        }
 
         return view('proCat.allProCat', compact('categories', 'arrProducts'));
     }

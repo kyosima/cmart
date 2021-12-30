@@ -146,14 +146,14 @@
                                                             <img src="{{asset($item->feature_img)}}" alt="{{$item->name}}">
                                                         </a>
                                                         @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
-                                                        @php
-                                                            $percent = (1 - ($item->productPrice->shock_price/$item->productPrice->regular_price))*100;
-                                                        @endphp
-                                                        <div class="block-sale">
-                                                            <img alt="{{$item->slug}}" src="{{ asset('public/image/bg-sale.png') }}">
-                                                            <span class="sale">-{{round($percent)}}%</span>
-                                                        </div>
-                                                    @endif
+                                                            @php
+                                                                $percent = (1 - ($item->productPrice->shock_price/$item->productPrice->regular_price))*100;
+                                                            @endphp
+                                                            <div class="block-sale">
+                                                                <img alt="{{$item->slug}}" src="{{ asset('public/image/bg-sale.png') }}">
+                                                                <span class="sale">-{{round($percent)}}%</span>
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                     <div class="detail">
                                                         <h3 class="title">

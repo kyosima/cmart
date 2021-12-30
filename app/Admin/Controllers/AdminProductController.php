@@ -129,7 +129,6 @@ class AdminProductController extends Controller
                 $productPrice->shock_price = $request->product_shock_price;
                 $productPrice->cpoint = $request->cpoint;
                 $productPrice->mpoint = $request->mpoint;
-                $productPrice->phi_xuly = $request->phi_xuly;
                 $productPrice->tax = $request->tax;
 
                 $product->productPrice()->save($productPrice);
@@ -253,7 +252,6 @@ class AdminProductController extends Controller
                     'shock_price' => $request->product_shock_price,
                     'cpoint' => $request->cpoint,
                     'mpoint' => $request->mpoint,
-                    'phi_xuly' => $request->phi_xuly,
                     'tax' => $request->tax,
                 ]);
 
