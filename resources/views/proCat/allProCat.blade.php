@@ -140,7 +140,7 @@
                                 <div class="silder-product-1">
                                     <div class="items">
                                         @foreach ($arrProducts[$key] as $item)
-
+                                        
                                         <div class="sp">
                                             <div class="box3item">
                                                 <div class="box-img">
@@ -173,6 +173,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
+                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -222,6 +223,20 @@
                 $('li.menu-item').removeClass('py-1 menu-border');
             }
         }
+        $(document).ready(function() {
+
+            $(document).on("click", "button.toggle", function(){
+                if(!$(this).parent().hasClass('active')) {
+                    $(this).parent().addClass('active');
+                    $(this).find('i').removeClass('fa-angle-down')
+                    $(this).find('i').addClass('fa-angle-up')
+                } else {
+                    $(this).parent().removeClass('active');
+                    $(this).find('i').removeClass('fa-angle-up')
+                    $(this).find('i').addClass('fa-angle-down')
+                }
+            })
+        });
     </script>
 
 
