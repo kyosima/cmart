@@ -89,7 +89,7 @@ tbody tr:nth-child(even) td {
                     <div class="profile-card__cnt js-profile-cnt">
                         <div class="profile-card__name pb-3" style="text-transform: uppercase">
                             @if($user->name != null)
-                                - {{$user->name}} -
+                                - ID: {{$user->code_customer}} -
                             @else
                                 - ID: {{$user->code_customer}} -
                             @endif
@@ -102,10 +102,10 @@ tbody tr:nth-child(even) td {
                                 <button class="alert alert-success m-0 text-center" style="width: 85%;border-radius: 40px; background: orangered; color: white;">Số đơn hàng đã hoàn thành: {{$sodonhang}}</button>
                             </div>
                             <div class="col-4">
-                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số điểm tích luỹ C: {{$user->tichluyC}}</button>
+                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C: {{$user->tichluyC}}</button>
                             </div>
                             <div class="col-4">
-                            <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số điểm tích luỹ M: 0</button>
+                            <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
                             </div>
                         </div>
                         
@@ -128,9 +128,9 @@ tbody tr:nth-child(even) td {
                                     <span class="text-uppercase">Số điện thoại</span>
                                     <input type="phone" class="form-control mb-2" name="phone" placeholder="Nhập số điện thoại"
                                         value="{{$user->phone}}">
-                                        <span class="text-uppercase">Email</span>
+                                        <!-- <span class="text-uppercase">Email</span>
                                     <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
-                                        value="{{$user->email}}" readonly="">
+                                        value="{{$user->email}}" readonly=""> -->
                                 </div>
                                 <div class="col-lg-6 text-start">
                                 <span class="text-uppercase">Cấp độ thành viên</span>
@@ -294,7 +294,7 @@ tbody tr:nth-child(even) td {
                                     
                                     <div class="pt-5">
                                         <div class="col-lg-12">
-                                            <h3 class="text-uppercase text-center">- Lịch sử nhận đơn hàng -</h3>
+                                            <h3 class="text-uppercase text-center">- Lịch sử đơn hàng -</h3>
                                             @if ($sodonhang != null)
                                             <table class="styled-table table-sortable">
                                                 <thead>
@@ -345,7 +345,7 @@ tbody tr:nth-child(even) td {
                                         </div>
                                     <div class="row mb-3 pt-3">
                                         <div class="col-lg-12">
-                                            <h3 class="text-uppercase text-center">- Lịch sử nhận point -</h3>
+                                            <h3 class="text-uppercase text-center">- Tài khoản tiền tích lũy C -</h3>
                                             @if($sodonhang != null)
                                                 <table class="styled-table table-sortable">
                                                     <thead>

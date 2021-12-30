@@ -54,11 +54,11 @@ img {
                             @if($profileUser->avatar != null)
                                 <img src="{{asset('/public/images/'.$profileUser->avatar)}}" width="150px" height="150px"/>
                                 <input type="file" class="form-control" name="avatar" id="img_avatar" style="display: none">
-                                <label for="img_avatar" class="btn btn-primary profile-button mt-2">Cập nhật avatar</label>
+                                <label for="img_avatar" class="btn btn-primary profile-button mt-2">Ảnh chân dung</label>
                             @else
                                 <img class="rounded-circle mt-3" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
                                 <input type="file" class="form-control" name="avatar" id="img_avatar" style="display: none">
-                                <label for="img_avatar" class="btn btn-primary profile-button mt-2">Cập nhật avatar</label>
+                                <label for="img_avatar" class="btn btn-primary profile-button mt-2">Ảnh chân dung</label>
                             @endif
                         </div>
                     </div>
