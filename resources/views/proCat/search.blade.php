@@ -83,8 +83,9 @@
                 <div class="shop-container col-lg-9 col-md-12 col-sm-12">
                     <div class="shop-container-inner">
                         <!-- TITLE -->
-                        <h2 class="title-filter d-none d-lg-block"><span>có ({{ count($products) }} sản
-                                phẩm) với từ khóa <b>{{$keyword}}</b></span></h2>
+                        <h2 class="title-filter d-none d-lg-block"><span>
+                            @if(count($products) > 0)có ({{ count($products) }} sản
+                                phẩm) với từ khóa <b>{{$keyword}}</b>@else Không tìm thấy sản phẩm. Quý Khách Hàng vui lòng liên hệ đến các kênh C-Call, C-A-Z, Facebook của C-Mart để được hỗ trợ ngay và luôn @endif</span></h2>
                         <!-- Bộ lọc -->
                         {{-- <div class="filter-cate">
                             <ul>

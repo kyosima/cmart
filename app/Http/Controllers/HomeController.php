@@ -54,11 +54,11 @@ class HomeController extends Controller
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
         ]);
 
-        if(Auth::attempt(['name'=>$request->name,'password'=>$request->password])){
+        if(Auth::attempt(['phone'=>$request->phone,'password'=>$request->password])){
             return redirect('/');
         }
         else {
-            return redirect('tai-khoan')->with('thongbao','Sai tên đăng nhập hoặc mật khẩu!');
+            return redirect('tai-khoan')->with('thongbao','Hồ sơ Khách Hàng không tồn tại, Quý Khách Hàng vui lòng Tạo mới Hồ Sơ Khách Hàng.');
         }
     }
 

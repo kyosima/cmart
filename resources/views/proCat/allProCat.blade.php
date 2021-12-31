@@ -1,7 +1,6 @@
 @extends('layout.master')
 
 @push('css')
-
 <link rel="stylesheet" href="{{ asset('public/css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/danhmucsanpham.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/pagination.css') }}">
@@ -128,7 +127,7 @@
                                                 </a>
                                             </span>
                                             <b></b>
-                                            <a href="{{route('proCat.index', $proCat->slug)}}" class="view-more  text-right">
+                                            <a href="{{route('proCat.index', $proCat->slug)}}" class="view-more text-dark text-right">
                                                 Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                             </a>
                                         </p>
@@ -140,37 +139,42 @@
                                 <div class="silder-product-1">
                                     <div class="items">
                                         @foreach ($arrProducts[$key] as $item)
-
-                                        <div class="sp">
-                                            <div class="box3item">
-                                                <div class="box-img">
-                                                    <a href="{{route('san-pham.show', $item->slug)}}" title="{{$item->name}}" tabindex="0">
-                                                        <img src="{{asset($item->feature_img)}}" alt="{{$item->name}}">
-                                                    </a>
-                                                    {!!getTagSale($item)!!}
-                                                </div>
-                                                <div class="detail">
-                                                    <h3 class="title">
+                                            <div class="sp">
+                                                <div class="box3item">
+                                                    <div class="box-img">
                                                         <a href="{{route('san-pham.show', $item->slug)}}" title="{{$item->name}}" tabindex="0">
-                                                            {{$item->name}}</a>
-                                                    </h3>
-                                                    <ul class="box-price">
-                                                        <li class="price">
-                                                            <span>{{formatPriceOfLevel($item)}}</span>
-                                                        </li>
-                                                        {{-- @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
-                                                        <li class="price">
-                                                            <span>{{number_format($item->productPrice->shock_price)}}đ</span>
-                                                        </li>
-                                                        <li class="old-price">
-                                                            <span>{{number_format($item->productPrice->regular_price)}} đ</span>
-                                                        </li>
-                                                    @else
-                                                        <li class="price">
-                                                            <span>{{number_format($item->productPrice->shock_price)}}đ</span>
-                                                        </li>
-                                                    @endif --}}
-                                                    </ul>
+                                                            <img src="{{asset($item->feature_img)}}" alt="{{$item->name}}">
+                                                        </a>
+                                                        @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
+                                                            @php
+                                                                $percent = (1 - ($item->productPrice->shock_price/$item->productPrice->regular_price))*100;
+                                                            @endphp
+                                                            <div class="block-sale">
+                                                                <img alt="{{$item->slug}}" src="{{ asset('public/image/bg-sale.png') }}">
+                                                                <span class="sale">-{{round($percent)}}%</span>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                    <div class="detail">
+                                                        <h3 class="title">
+                                                            <a href="{{route('san-pham.show', $item->slug)}}" title="{{$item->name}}" tabindex="0">
+                                                                {{$item->name}}</a>
+                                                        </h3>
+                                                        <ul class="box-price">
+                                                            @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
+                                                            <li class="price">
+                                                                <span>{{number_format($item->productPrice->shock_price)}}đ</span>
+                                                            </li>
+                                                            <li class="old-price">
+                                                                <span>{{number_format($item->productPrice->regular_price)}} đ</span>
+                                                            </li>
+                                                        @else
+                                                            <li class="price">
+                                                                <span>{{number_format($item->productPrice->shock_price)}}đ</span>
+                                                            </li>
+                                                        @endif
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         @endforeach
@@ -224,7 +228,70 @@
         }
     </script>
 
+<script type='text/javascript'>
+    $(document).ready(function() {
 
-    <!-- <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script> -->
+        $(document).on("click", "button.toggle", function(){
+            if(!$(this).parent().hasClass('active')) {
+                $(this).parent().addClass('active');
+                $(this).find('i').removeClass('fa-angle-down')
+                $(this).find('i').addClass('fa-angle-up')
+            } else {
+                $(this).parent().removeClass('active');
+                $(this).find('i').removeClass('fa-angle-up')
+                $(this).find('i').addClass('fa-angle-down')
+            }
+        })
+
+        $('.items').slick({
+            infinite: true,
+            slidesToShow: 5,
+            slidesToScroll: 3,
+            responsive: [
+                {
+                breakpoint: 1024, 
+                    settings: {
+                        slidesToShow: 5,
+                        slidesToScroll: 3,
+                        infinite: true
+                    }
+                },
+                {
+                breakpoint: 600,
+                    settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+        $('.items-brand').slick({
+            infinite: true,
+            slidesToShow: 6,
+            slidesToScroll: 1,
+
+
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    speed: 1000,
+                    autoplay: true,
+                    autoplaySpeed: 2000,
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    infinite: true,
+                    dots: true
+                }
+            }]
+        });
+        $('.items-blog').slick({
+            infinite: true,
+            slidesToShow: 4,
+            slidesToScroll: 1,
+        });
+    });
+    </script>
+
+    {{-- <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script> --}}
 
 @endpush

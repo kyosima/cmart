@@ -59,33 +59,20 @@
                                         <label for="">Tỉnh/ Thành phố<sup class="text-danger">*</sup></label>
                                         <select name="sel_province" class="form-control select2"
                                             data-placeholder="---Chọn tỉnh thành---" required>
-                                            @if ($user_ward)
-                                                <option
-                                                    value="{{ $user_ward->getDistrictFromWard()->first()->getProvinceFromDistrict()->value('matinhthanh') }}">
-                                                    {{ $user_ward->getDistrictFromWard()->first()->getProvinceFromDistrict()->value('tentinhthanh') }}
-                                                    @foreach ($province as $value)
-                                                <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
-                                                </option>
-                                            @endforeach
-                                        @else
+                                      
                                             <option value="">---Chọn tỉnh thành---</option>
                                             @foreach ($province as $value)
                                                 <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
                                                 </option>
                                             @endforeach
-                                            @endif
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Phường/ Xã<sup class="text-danger">*</sup></label>
                                         <select class="form-control select2" name="sel_ward"
                                             data-placeholder="---Chọn phường xã---" required>
-                                            @if ($user_ward)
-                                                <option value="{{ $user_ward->maphuongxa }}">
-                                                    {{ $user_ward->tenphuongxa }}
-                                                @else
+                                         
                                                 <option value="">---Chọn phường xã---</option>
-                                            @endif
                                         </select>
                                     </div>
                                     {{-- <div class="form-group">
@@ -97,26 +84,21 @@
                                 <div class="col-xl-6 ">
                                     <div class="form-group">
                                         <label for="">Số điện thoại<sup class="text-danger">*</sup></label>
-                                        <input type="text" class="form-control" name="phone" placeholder="Mời nhập số điện thoại"
+                                        <input type="text" class="form-control" name="phone" placeholder="Mời nhập số điện thoại nhận hàng"
                                             value="{{ $user->phone }}" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Quận/ Huyện<sup class="text-danger">*</sup></label>
                                         <select class="form-control select2" name="sel_district"
                                             data-placeholder="---Chọn quận huyên---" required>
-                                            @if ($user_ward)
-                                                <option
-                                                    value="{{ $user_ward->getDistrictFromWard()->value('maquanhuyen') }}">
-                                                    {{ $user_ward->getDistrictFromWard()->value('tenquanhuyen') }}
-                                                @else
+                                          
                                                 <option value="">---Chọn quận huyện---</option>
-                                            @endif
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Địa chỉ<sup class="text-danger">*</sup></label>
                                         <input type="text" name="address" class="form-control"
-                                            value="{{ $user->address }}" placeholder="Mời nhập địa chỉ" required>
+                                            value="" placeholder="Mời nhập địa chỉ" required>
                                     </div>
 
 
@@ -142,6 +124,38 @@
 
                             </div>
                             <br />
+                        </div>
+                        <div class="phuongthuc-thanhtoan">
+                            <div class="phuongthuc-thanhtoan-card-header">
+                                <h3>Xuất hóa đơn GTGT</h3>
+                            </div>
+                            <hr>
+                            <div class="phuongthuc-thanhtoan-card-body">
+
+                            <div class="form-group">
+                                <label onclick="showvat()"><input type="checkbox" id="show-vat"
+                                        name="show_vat" value="1"> Xác nhận xuất hóa GTGT</label>
+                            </div>
+                            <div class="form-vat" style="display:none">
+                                <div class="form-group">
+                                    <label for="">Tên công ty<sup class="text-danger">*</sup></label>
+                                    <input type="text" name="vat_name" class="form-control"
+                                        value="" placeholder="Mời nhập tên công ty" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Mã số thuế<sup class="text-danger">*</sup></label>
+                                    <input type="number" name="vat_mst" class="form-control"
+                                        value="" placeholder="Mời nhập mã số thuế công ty" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Địa chỉ<sup class="text-danger">*</sup></label>
+                                    <input type="text" name="vat_address" class="form-control"
+                                        value="" placeholder="Mời nhập địa chỉ" >
+                                </div>
+                                <br/>
+
+                            </div>
+                            </div>
                         </div>
                         <div class="phuongthuc-thanhtoan">
                             <div class="phuongthuc-thanhtoan-card-header">
@@ -309,8 +323,15 @@
                                     <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" name="checkall" id="check6">
-                                          <label class="custom-control-label" for="check6">Chọn tất cả</label>
+                                          <input type="checkbox" class="custom-control-input" name="dieukhoan" id="check6">
+                                          <label class="custom-control-label" for="check6">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, và chúng tôi thực hiện vô cùng nghiêm ngặt. Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết</label>
+                                        </div>
+                                      </li>
+                                    <li class="list-group-item">
+                                        <!-- Default checked -->
+                                        <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" name="checkall" id="check7">
+                                          <label class="custom-control-label" for="check7">Chọn tất cả</label>
                                         </div>
                                       </li>
                                   </ul>
@@ -364,6 +385,13 @@
                 $('#name-address').css("display", "block");
             } else {
                 $('#name-address').css("display", "none");
+            }
+        }
+        function showvat() {
+            if ($('#show-vat').is(':checked')) {
+                $('.form-vat').css("display", "block");
+            } else {
+                $('.form-vat').css("display", "none");
             }
         }
         $('#pickAdress').on('change', function() {

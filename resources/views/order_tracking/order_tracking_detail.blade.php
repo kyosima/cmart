@@ -29,10 +29,12 @@
                             <div class="top-order">
                                 <p><span>Mã giao dịch:</span> {{ $order->order_code }}</p>
                                 <p><span>Thời gian đặt hàng:</span> <span class="action-order">
-                                        <b style="color:#15b02a">{{ date('d/m/Y H:i:s', strtotime($order->created_at)) }}</b> </span></p>
+                                        <b
+                                            style="color:#15b02a">{{ date('d/m/Y H:i:s', strtotime($order->created_at)) }}</b>
+                                    </span></p>
                             </div>
 
-                            <div class="middle-order">
+                            {{-- <div class="middle-order">
                                 <ol class="progress">
                                     <li class=" ">
                                         <p>
@@ -68,6 +70,57 @@
                                         </p>
                                     </li>
                                 </ol>
+                            </div> --}}
+                            <div class="progress-order">
+                                <div style="overflow-x:auto;">
+                                    <table class="table table-striped ">
+                                        <thead class="text-center">
+                                            <th>Chờ xác nhận</th>
+                                            <th>Đã xác nhận</th>
+                                            <th>Đang xử lý</th>
+                                            <th>Đang giao hàng</th>
+                                            <th>Thành công</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <li class="check success">
+
+                                                    </li>
+                                                </td>
+                                                <td>
+                                                    @if ($order->status >= 1)
+                                                        <li class="check success">
+
+                                                        </li>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($order->status >= 2)
+                                                        <li class="check success">
+
+                                                        </li>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($order->status >= 3)
+                                                        <li class="check success">
+
+                                                        </li>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($order->status >= 4)
+                                                        <li class="check success">
+
+                                                        </li>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
                             </div>
                             <div class="box-infocart list-order">
 
@@ -139,7 +192,7 @@
 
         </div>
         <!-- Detail DVVC -->
-     
+
 
     </div>
 @endsection

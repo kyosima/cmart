@@ -12,6 +12,7 @@ use App\Models\OrderInfo;
 use App\Models\OrderAddress;
 use App\Models\OrderProduct;
 use App\Models\StoreAddress;
+use App\Models\OrderVat;
 
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -93,6 +94,8 @@ class CheckoutController extends Controller
             $user_id = $user->id;
         }
         $store_address = $request->input('store_address');
+        $show_vat = $request->input('show_vat');
+
         $tax = 0;
         $c_ship = 0;
         $v_ship = 0;
@@ -147,6 +150,7 @@ class CheckoutController extends Controller
                     $storeAddress->save();
 
                 }
+        
                     $order = Order::create([
                         'note' => $request->note,
                         'user_id'=>$user_id,
@@ -161,7 +165,16 @@ class CheckoutController extends Controller
 
                         // 'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()) + $tax + $process_fee + $shipping_total)
                     ]);
-                    
+                    if($show_vat == 1){
+                        $vat = OrderVat::create([
+                            'id_order' => $order->id,
+                            'vat_name' => $request->vat_name,
+                            'vat_mst'=>$request->vat_mst,
+                            'vat_address' => $request->vat_address
+                        ]);
+                        $vat->save();
+    
+                    }
                   
                     $order->order_code = 'CMART-'.$order->id.time();
                     $order->save();

@@ -89,7 +89,7 @@
     <table class="styled-table table-sortable">
         <thead>
             <tr>
-                <th>Mã đơn hàng</th>
+                <th>Mã giao dịch</th>
                 {{-- <th>Cách thức thanh toán</th>
                 <th>Phương thức vận chuyển</th>
                 <th>Phí vận chuyển</th> --}}
@@ -97,7 +97,7 @@
                 <!--<th>MPoints</th>-->
                 {{-- <th>Thuế</th>
                 <th>Phí xử lý</th> --}}
-                <th>Tổng cộng</th>
+                <th>Giá trị giao dịch</th>
                 <th>Trạng thái</th>
                 <th>Chi tiết đơn hàng</th>
             </tr>

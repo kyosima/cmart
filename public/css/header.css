@@ -16,6 +16,13 @@ header{
     line-height: 1;
 
 }
+.box-contacth{
+    text-align: center;
+    padding: 10px;
+}
+.box-contacth a{
+    color: #000;
+}
 a,
 a:hover {
     text-decoration: none;

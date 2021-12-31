@@ -3,12 +3,11 @@
 
 
 <!-- Pc -->
-<header class="header-site" id="top">
-    <div id="button"> <i class="fas fa-chevron-up"></i></div>
+<header class="header-site sticky-top" id="top">
 
     <!-- Some content to fill up the page -->
 
-    <div class="bottom-header">
+    <nav class="bottom-header navbar ">
       <div class="container">
         <div class="d-flex flex-lg-row flex-md-row flex-column align-items-center ">
           <div class="logo-header ">
@@ -24,7 +23,7 @@
             <div class="box-search">
               <form method="GET" name="frm" id="frm" action="{{route('search')}}" enctype="multipart/form-data">
                 <div class="form-group">
-                  <input data-url="{{route('search.suggest')}}" onkeyup="showSearchSuggest(this)" autocomplete="off" x-webkit-speech_off="" x-webkit-grammar_off="builtin:search" id="search-input" name="keyword" minlength="3"  class="form-control ipt-search" placeholder="Tìm kiếm sản phẩm ..." type="text" value="">
+                  <input data-url="{{route('search.suggest')}}" onkeyup="showSearchSuggest(this)" autocomplete="off" x-webkit-speech_off="" x-webkit-grammar_off="builtin:search" id="search-input" name="keyword" minlength="3"  class="form-control ipt-search" placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." type="text" value="">
                   <button onclick="" type="submit" class="icon-search"><i class="fas fa-search"></i></button>
                   <div id="showsearch">
                     <ul></ul>
@@ -39,35 +38,28 @@
                 </a>
             
               </div>
-                        <!--<div class="tag-top">-->
-                        <!--    <ul class="d-flex dv-ht">-->
-                        <!--        <li class="text-color-white dropdowncmart">-->
-                        <!--            <a class="text-color-white" href="#">-->
-                        <!--                Dịch Vụ của C-Mart-->
+              <div class="tag-top">
+                <ul class="d-flex dv-ht">
+                    <li class="text-color-white dropdowncmart">
+                        <a class="text-color-white" href="#">
+                            Dịch Vụ của C-Mart
 
-                        <!--            </a>-->
-                                    <!--Start of Dropdown-->
-                        <!--            <ul class="dropdown-navcmart dvcmart">-->
-                        <!--                <li><a href="">Hỗ trợ,Tư vấn thông tin</a></li>-->
-                        <!--                <li><a href="">Đi chợ hộ - Mua sắm hộ, Đặt hàng theo mọi yêu cầu</a></li>-->
-                        <!--                <li><a href="">Gói quà</a></li>-->
-                        <!--                <li><a href="">Chăm sóc Nhà cửa</a></li>-->
-                        <!--                <li><a href="">Chăm sóc Cá nhân</a></li>-->
-                        <!--                <li><a href="">Thanh toán hóa đơn</a></li>-->
-                        <!--                <li><a href="">Kinh tế, Tài chính, Bảo hiểm, Pháp chế</a></li>-->
-                        <!--                <li><a href="">Tin học văn phòng, In ấn, Photocopy, Scan, Fax ...</a></li>-->
-                        <!--                <li><a href="">-->
-                        <!--                        Logistics, Giao thông - Vận tải tận nơi, nhanh chóng</a></li>-->
-                        <!--                <li><a href="">Giáo dục - Đào tạo, Văn hóa - Giải trí, Truyền thông - Quảng-->
-                        <!--                        cáo</a></li>-->
-                        <!--                <li><a href="">Hành chính - Nội vụ, Lễ tân</a></li>-->
+                        </a>
+                        <ul class="dropdown-navcmart dvcmart">
+                            @php
+                            $pages = App\Models\InfoCompany::whereType('service')->get();
+                        @endphp
+                        @foreach ( $pages as $page )
+                            <li><a rel="nofollow" href="{{ route('chinh-sach.show', $page->slug) }}"
+                                title="{{$page->name}}">{{$page->name}}</a></li>
+                        @endforeach
+                        
+                        </ul>
+                    </li>
 
-                        <!--            </ul>-->
-                        <!--        </li>-->
+                </ul>
 
-                        <!--    </ul>-->
-
-                        <!--</div>-->
+            </div>
                         <div class="tag-top">
 
                             <ul class="d-flex dv-ht">
@@ -76,7 +68,7 @@
                                     <!--Start of Dropdown-->
                                     <ul class="dropdown-navcmart">
                                         @php
-                                            $pages = App\Models\InfoCompany::get();
+                                            $pages = App\Models\InfoCompany::whereType('policy')->get();
                                         @endphp
                                         @foreach ( $pages as $page )
                                             <li><a rel="nofollow" href="{{ route('chinh-sach.show', $page->slug) }}"
@@ -120,10 +112,10 @@
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu text-dark">
-                    <a class="dropdown-item text-dark" href="{{url('/xac-thuc-ho-so')}}">Thông tin tài khoản</a>
+                    <a class="dropdown-item text-dark" href="{{url('/xac-thuc-ho-so')}}">Thông tin HSKH</a>
                     <a class="dropdown-item text-dark" href="{{url('/lichsu')}}">Lịch sử đơn hàng</a>
                     <!--<a class="dropdown-item text-dark" href="{{url('/cpoint')}}">Lịch sử nhận point</a>-->
-                    <a class="dropdown-item text-dark" href="#">Ví của bạn</a>
+                    {{-- <a class="dropdown-item text-dark" href="#">Ví của bạn</a> --}}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{route('logoutuser')}}">Đăng xuất</a>
                   </div>
@@ -163,7 +155,7 @@
 
         </div>
 
-    </div>
+    </nav>
     <div class=" d-flex flex-column justify-center align-items-center bannercmart" id="gradient">
         <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
             Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
@@ -171,6 +163,32 @@
         <p>
             Mọi liên hệ nên thực hiện từ Số điện thoại đăng ký giao dịch và đến các kênh kết nối chính thức của C-Mart
         </p>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                <div class="box-contacth">
+                    <b>C-call</b>
+                    <p><a href="tel:">00123123</a></p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                <div class="box-contacth">
+                    <b>Facebook</b>
+                    <p><a href="">C-Mart</a></p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                <div class="box-contacth">
+                    <b>Zalo</b>
+                    <p><a href="">C-Mart</a></p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                <div class="box-contacth">
+                    <b>Email</b>
+                    <p><a href="mailto:">cmart@</a></p>
+                </div>
+            </div>
+        </div>
     </div>
 
 </header>
@@ -199,7 +217,7 @@
             <form method="GET" name="frm" id="frm" action="#" enctype="multipart/form-data" class="form-search">
                 <div class="header-search">
                     <i class="fas fa-search"></i>
-                    <input class="form-control ipt-search" type="text" placeholder="Tìm kiếm sản phẩm..." id="search"
+                    <input class="form-control ipt-search" type="text" placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." id="search"
                         name="search">
                 </div>
             </form>
