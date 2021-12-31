@@ -78,12 +78,12 @@
                                 <th class="title-text">
                                     Giá buôn
                                 </th>
-                                <!--<th class="title-text">-->
-                                <!--    C-->
-                                <!--</th>-->
-                                <!--<th class="title-text">-->
-                                <!--    M-->
-                                <!--</th>-->
+                                <th class="title-text">
+                                    C
+                                </th>
+                                <th class="title-text">
+                                    M
+                                </th>
                                 <th class="title-text">
                                     Phí xử lý
                                 </th>
@@ -114,8 +114,8 @@
                                     <td>{{ number_format($item->productPrice->regular_price) }}đ</td>
                                     <td>{{ number_format($item->productPrice->shock_price) }}đ</td>
                                     <td>{{ number_format($item->productPrice->wholesale_price) }}đ</td>
-                                    <!--<td>{{ $item->productPrice->cpoint }}(C)</td>-->
-                                    <!--<td>{{ $item->productPrice->mpoint }}(M)</td>-->
+                                    <td>{{ $item->productPrice->cpoint }}(C)</td>
+                                    <td>{{ $item->productPrice->mpoint }}(M)</td>
                                     <td>{{ number_format($item->productPrice->phi_xuly) }}đ</td>
                                     <td>{{ number_format($item->productPrice->cship) }}đ</td>
                                     {{-- <td>{{dd($item->productPayment())}}</td> --}}
@@ -145,18 +145,15 @@
 @push('scripts')
 
 <script>
-
     function multiDel() {
         confirm('Bạn chắc chắn muốn thực hiện tác vụ này?') == true && $('#myform').submit()
     }
-
     $(document).ready(function () {
         $('.custom-select').change(function (e) { 
             e.preventDefault();
             $('#input-action').val($(this).val())
         });
     });
-
     jQuery.fn.dataTableExt.aTypes.unshift(
         function ( sData )
         {
@@ -168,7 +165,6 @@
                 null;
         }
     );
-
     $('#table-product').DataTable({
         ordering: true,
         lengthMenu: [ [25 ,50, -1], [25, 50, "All"] ],

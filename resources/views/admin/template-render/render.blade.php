@@ -62,10 +62,14 @@
 @if($type == 'banner')
     @foreach($banner as $value)
     <div class="col-xs-12 col-md-12 ui-sortable-handle mt-4">
-        <a href="javascript:void(0);" style="float:none;position: relative;" class="image_link">
+        <div style="float:none;position: relative;" class="image_link">
+            <div class="form-group mb-3">
+                <label for="">Liên kết</label>
+                <input type="text" name="link[]" class="form-control" placeholder="Liên hết" value="{{$value->link}}">
+            </div>
             <img class="img-thumbnail show_img" src="{{asset($value->image)}}" alt="">
             <i class="fas fa-trash-alt"></i>
-        </a>
+        </div>
         <input type="hidden" name="image[]" value="{{ $value->image }}">
         <input type="hidden" name="id[]" value=" {{ $value->id }}">
     </div>
