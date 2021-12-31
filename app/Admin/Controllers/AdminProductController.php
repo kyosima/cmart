@@ -23,7 +23,7 @@ class AdminProductController extends Controller
     {
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
         Log::info($message);
-        $products = Product::all();
+        $products = Product::latest()->all();
         return view('admin.product.san-pham', compact('products'));
     }
 
@@ -129,6 +129,7 @@ class AdminProductController extends Controller
                 $productPrice->shock_price = $request->product_shock_price;
                 $productPrice->cpoint = $request->cpoint;
                 $productPrice->mpoint = $request->mpoint;
+                $productPrice->phi_xuly = $request->phi_xuly;
                 $productPrice->tax = $request->tax;
 
                 $product->productPrice()->save($productPrice);
@@ -252,6 +253,7 @@ class AdminProductController extends Controller
                     'shock_price' => $request->product_shock_price,
                     'cpoint' => $request->cpoint,
                     'mpoint' => $request->mpoint,
+                    'phi_xuly' => $request->phi_xuly,
                     'tax' => $request->tax,
                 ]);
 

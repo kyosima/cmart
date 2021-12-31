@@ -523,13 +523,6 @@
             resultInput: '#viettel_ship',
         })
 
-        // $(document).on('change', '.number-separator', function() {
-        //     let number = $(this).val()
-        //     let vn = new Intl.NumberFormat('vi-VN').format(number);
-        //     $(this).next().val(number)
-        //     $(this).val(vn)
-        // })
-
         $('#meta_description').keyup(function() {
             var characterCount = $(this).val().length,
                 current = $('#current'),
@@ -589,25 +582,23 @@
                         if(type == "multiple") {
                             var files = evt.data.files;
                             var chosenFiles = $(`#${elementId}`).val();
-                            // if(chosenFiles != '') {
-                            //     chosenFiles += ', ';
-                            // }
+                            
                             files.forEach( function(file, idx, array) {
                                 chosenFiles += new URL(file.getUrl()).pathname + ', ';
                                 if(hasid != ''){
                                     $('.fileinput-gallery .row').append(`<div class="col-md-3">
-                                    <span style="cursor: pointer;" data-id='${hasid}' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
-                                        <i class="fas fa-times"></i>
+                                        <span style="cursor: pointer;" data-id='${hasid}' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
+                                            <i class="fas fa-times"></i>
                                         </span>
-                                                <img src="${new URL(file.getUrl()).pathname}">
-                                            </div>`)
+                                        <img src="${new URL(file.getUrl()).pathname}">
+                                    </div>`)
                                 } else {
                                     $('.fileinput-gallery .row').append(`<div class="col-md-3">
                                         <span style="cursor: pointer;" data-id='' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
                                             <i class="fas fa-times"></i>
-                                            </span>
-                                                    <img src="${new URL(file.getUrl()).pathname}">
-                                                </div>`)
+                                        </span>
+                                        <img src="${new URL(file.getUrl()).pathname}">
+                                    </div>`)
                                 }
                             });
                             var output = document.getElementById(elementId);

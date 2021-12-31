@@ -496,13 +496,12 @@
                             var chosenFiles = $(`#${elementId}`).val();
                             files.forEach( function(file, idx, array) {
                                 chosenFiles += new URL(file.getUrl()).pathname + ', ';
-
                                 $('.fileinput-gallery .row').append(`<div class="col-md-3">
                                     <span style="cursor: pointer;" data-id='' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
                                         <i class="fas fa-times"></i>
-                                        </span>
-                                                <img src="${new URL(file.getUrl()).pathname}">
-                                            </div>`)
+                                    </span>
+                                    <img src="${new URL(file.getUrl()).pathname}">
+                                </div>`)
                             });
                             var output = document.getElementById(elementId);
                             output.value = chosenFiles;

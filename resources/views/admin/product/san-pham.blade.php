@@ -219,7 +219,7 @@
                     targets: [3, 4]
                 },
                 {
-                    targets: [5, 6, 7, 8, 9, 10, 11, 12, 13],
+                    targets: [5, 6, 7, 8, 9, 10, 11, 12],
                     searchable: false
                 },
                 {
