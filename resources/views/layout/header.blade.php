@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+    i.icon-all-new.ico-header.fa.fa-shopping-cart {
+        width: 40px !important;
+        height: 40px !important;
+        display: inline-block !important;
+        position: absolute;
+        top: -12px;
+        left: 44px;
+        transform: translate(0, -50%);
+        font-size: 25px;
+        color: white;
+    }
+</style>
 
 <!-- Pc -->
 <header class="header-site" id="top">
@@ -24,7 +36,7 @@
             <div class="box-search">
               <form method="GET" name="frm" id="frm" action="{{route('search')}}" enctype="multipart/form-data">
                 <div class="form-group">
-                  <input data-url="{{route('search.suggest')}}" onkeyup="showSearchSuggest(this)" autocomplete="off" x-webkit-speech_off="" x-webkit-grammar_off="builtin:search" id="search-input" name="keyword" minlength="3"  class="form-control ipt-search" placeholder="Tìm kiếm sản phẩm ..." type="text" value="">
+                  <input data-url="{{route('search.suggest')}}" onkeyup="showSearchSuggest(this)" autocomplete="off" x-webkit-speech_off="" x-webkit-grammar_off="builtin:search" id="search-input" name="keyword" minlength="3"  class="form-control ipt-search" placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." type="text" value="">
                   <button onclick="" type="submit" class="icon-search"><i class="fas fa-search"></i></button>
                   <div id="showsearch">
                     <ul></ul>
@@ -101,8 +113,10 @@
             <p id="working-time-header"> Giờ làm: 8h - 17h00 (T2 - CN) </p>
                </div> -->
 
+
+
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav ml-auto">
+                        <ul class="navbar-nav ml-auto" style="width: 250px; flex-direction: column;">
                             <!-- <li class="nav-item">
                 <a class="nav-link" href="#">
                   www.facebook.com/japana.sieuthinhat <i class="fab fa-facebook-f"></i></span></a>
@@ -113,16 +127,16 @@
               </li> -->
               @if (Auth::check()) 
              
-              <li class="nav-item">
+              <li class="nav-item" style="align-self: center;">
                 <div class="btn-group">
                   <a class="btn btn-light text-dark" href="{{url('/xac-thuc-ho-so')}}"><i class="fas fa-user text-dark"></i> {{ Auth::user()->phone}}</a>
                   <button type="button" class="btn  btn-light text-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu text-dark">
-                    <a class="dropdown-item text-dark" href="{{url('/xac-thuc-ho-so')}}">Thông tin tài khoản</a>
+                    <a class="dropdown-item text-dark" href="{{url('/xac-thuc-ho-so')}}">Thông tin HSKH</a>
                     <a class="dropdown-item text-dark" href="{{url('/lichsu')}}">Lịch sử đơn hàng</a>
-                    <a class="dropdown-item text-dark" href="{{url('/cpoint')}}">Lịch sử nhận point</a>
+                    <!-- <a class="dropdown-item text-dark" href="{{url('/cpoint')}}">Tài khoản tiền tích lũy C</a> -->
                     <a class="dropdown-item text-dark" href="#">Ví của bạn</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{route('logoutuser')}}">Đăng xuất</a>
@@ -132,10 +146,19 @@
                 </li>
               @else
               <li class="nav-item">
-                <a class="nav-link" href="{{url('/tai-khoan')}}"> Đăng nhập</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link gach" href="{{url('/tai-khoan')}}">Đăng ký</a>
+                <a class="nav-link" style="    padding: 5px 34px;" href="{{url('/tai-khoan')}}"> 
+                    <div class="row">
+                        <div class="col-md-3">
+                            <i class="fas fa-user text-light" style="font-size: 30px;"></i>
+                        </div>
+                        <div class="col-md-9">
+                            <span class="pb-1">Đăng nhập / Đăng ký</span>
+                            <br>
+                            <span style="font-size: 16px">Tài khoản <i class="fa fa-chevron-down text-light" style="padding: 0px; font-size:11px"></i></span>
+                        </div>
+                    </div>
+                    
+                </a>
               </li>
               @endif
                
@@ -145,14 +168,14 @@
                 </nav>
                 <div class="item other-top item-follow-order">
                     <div class="follow-order other">
-                        <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}" title="Theo dõi đơn hàng">
+                        <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}" title="Kiểm tra đơn hàng">
                             <i class="icon-all-new icon-follow icon-follow-header"></i>
-                            <span class="text-color-white">Theo dõi<br>đơn hàng</span>
+                            <span class="text-color-white">Kiểm tra<br>đơn hàng</span>
                         </a>
                     </div>
                     <div class="cart other">
                         <a rel="nofollow" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
-                            <i class="icon-all-new icon-cart icon-cart-header"></i>
+                            <i class="icon-all-new ico-header fa fa-shopping-cart"></i>
                             <span class="number-cart"><abbr
                                     class="count-giohang">{{ Cart::instance('shopping')->count() > 0 ? Cart::instance('shopping')->count() : '0' }}</abbr></span>
                         </a>
@@ -168,7 +191,8 @@
         <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
             Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
         </span>
-        <p>Mọi liên hệ nên thực hiện từ Số điện thoại xác nhận giao dịch và đến kênh giao dịch chính thức của C-Mart.
+        <p>
+            Mọi liên hệ nên thực hiện từ Số điện thoại đăng ký giao dịch và đến các kênh kết nối chính thức của C-Mart
         </p>
     </div>
 
@@ -198,7 +222,7 @@
             <form method="GET" name="frm" id="frm" action="#" enctype="multipart/form-data" class="form-search">
                 <div class="header-search">
                     <i class="fas fa-search"></i>
-                    <input class="form-control ipt-search" type="text" placeholder="Tìm kiếm sản phẩm..." id="search"
+                    <input class="form-control ipt-search" type="text" placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." id="search"
                         name="search">
                 </div>
             </form>

@@ -81,7 +81,7 @@
                 <th>Mã khách hàng</th>
                 <th>Họ và tên</th>
                 <th>Số điện thoại</th>
-                <th>Cấp độ</th>
+                <th>Định danh Khách Hàng</th>
                 <th>Điểm tích lũy</th>
                 <th>Thông tin chi tiết</th>
                 <th>Trạng thái KYC</th>

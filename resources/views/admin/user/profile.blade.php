@@ -299,7 +299,7 @@ tbody tr:nth-child(even) td {
                                             <table class="styled-table table-sortable">
                                                 <thead>
                                                     <tr>
-                                                        <th>Mã đơn hàng</th>
+                                                        <th>Mã giao dịch</th>
                                                         <th>Cách thức thanh toán</th>
                                                         <th>Phương thức vận chuyển</th>
                                                         <th>Phí vận chuyển</th>
@@ -350,7 +350,7 @@ tbody tr:nth-child(even) td {
                                                 <table class="styled-table table-sortable">
                                                     <thead>
                                                         <tr>
-                                                            <th>Mã đơn hàng</th>
+                                                            <th>Mã giao dịch</th>
                                                             <th>Số điểm nhận đc</th>
                                                             <th>Ngày nhận</th>
                                                         </tr>

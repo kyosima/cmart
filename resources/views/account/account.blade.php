@@ -57,7 +57,7 @@
 
                                     @if(session('thongbao'))
                                     <div class="alert alert-success">
-                                        {{session('thongbao')}}
+                                        {{session('thongbao')}} <br> Quý Khách Hàng vui lòng <strong><a class="alert-success" href="tai-khoan">Tạo mới Hồ Sơ Khách Hàng</a></strong>
                                     </div>
                                     @endif
                                     <input type="text" name="phone" placeholder="Tài khoản">
