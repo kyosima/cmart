@@ -21,12 +21,10 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
     public function getDefaultConfig()
     {
         return [
-            'imagePath' => __DIR__ . '/logo.png',
+            'imagePath' => __DIR__.'/watermark/logo-c-v.png',
             'position' => [
-                'right'  => null,
-                'bottom' => null,
-                'left'   => null,
-                'top'    => null
+                'right'  => 0,
+                'bottom' => 0,
             ]
         ];
     }
@@ -104,10 +102,7 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
             $watermarkImagePath = $this->app['config']->get('ImageWatermark.imagePath');
 
             if (Image::isSupportedExtension(pathinfo($watermarkImagePath, PATHINFO_EXTENSION))) {
-                var_dump(pathinfo($watermarkImagePath, PATHINFO_EXTENSION)); // RUN
-
                 $watermarkImage = Image::create(file_get_contents($watermarkImagePath));
-                var_dump('avcxvc'); // NOT SHOWING
                 $watermarkImageGD = $watermarkImage->getGDImage();
 
                 // calculatePosition() does not return anything

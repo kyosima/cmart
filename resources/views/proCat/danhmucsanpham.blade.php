@@ -235,10 +235,10 @@
                                         @foreach ($brands as $item)
                                             <div class="check-side">
                                                 <label class="check-custom">
-                                                    {{ $item->name }}
-                                                    <span class="count-item"> ({{ $countBrand[$item->id] }})</span>
+                                                    {{ $item }}
+                                                    <span class="count-item"> ({{ $countBrand[$item] }})</span>
                                                     <input name="id_brand[]" class="submit_click" type="checkbox"
-                                                        value="{{ $item->id }}">
+                                                        value="{{ $item }}">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>

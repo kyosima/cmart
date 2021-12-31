@@ -167,7 +167,6 @@ class ProductCategoryController extends Controller
         // LẤY RA BRAND ĐỂ SHOW KHÔNG BỊ TRÙNG LẶP 
         $brandIds = $products->pluck('brand')->toArray();
         $brands = array_unique($brandIds);
-        $brands = Brand::whereIn('id', $brands)->get();
 
         // ARRAY BRAND 
         // VỚI KEY = BRAND ID

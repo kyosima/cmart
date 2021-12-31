@@ -146,7 +146,9 @@
                                     <label class="col-md-12 control-label text-left">Thương hiệu<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <select name="product_brand" class="selectpicker form-control" required
+                                        <input type="text" name="product_brand" class="form-control"
+                                            required value="{{ old('product_brand') }}">
+                                        {{-- <select name="product_brand" class="selectpicker form-control" required
                                             title="Thương hiệu" data-placeholder="Chọn thương hiệu">
                                             <option></option>
                                             @foreach ($brands as $item)
@@ -156,7 +158,7 @@
                                                     @endif
                                                     >{{ $item->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                                 {{-- <div class="form-group">

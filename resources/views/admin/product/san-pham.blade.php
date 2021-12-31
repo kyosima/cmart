@@ -92,10 +92,7 @@
                                     Phí xử lý
                                 </th>
                                 <th class="title-text">
-                                    Phí giao hàng
-                                </th>
-                                <th class="title-text">
-                                    Hình thức TT
+                                    Trọng lượng vận chuyển
                                 </th>
                                 <th class="title-text">
                                     Trạng thái
@@ -124,15 +121,14 @@
                                     <td>{{ $item->productPrice->cpoint }}(C)</td>
                                     <td>{{ $item->productPrice->mpoint }}(M)</td>
                                     <td>{{ number_format($item->productPrice->phi_xuly) }}đ</td>
-                                    <td>{{ number_format($item->productPrice->cship) }}đ</td>
-                                    {{-- <td>{{dd($item->productPayment())}}</td> --}}
-                                    <td>
+                                    <td>{{$item->weight}}(g)</td>
+                                    {{-- <td>
                                         @foreach ($item->productPayment($item->id) as $payment)
                                             @if ($payment != null)
                                                 <span>{{ $payment->name }},</span>
                                             @endif
                                         @endforeach
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <div class="input-group">
                                             @if ($item->status == 1)
@@ -223,7 +219,7 @@
                     targets: [3, 4]
                 },
                 {
-                    targets: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+                    targets: [5, 6, 7, 8, 9, 10, 11, 12, 13],
                     searchable: false
                 },
                 {
@@ -231,7 +227,7 @@
                     type: "formatted-num"
                 },
                 {
-                    targets: [5, 11, 12, 13],
+                    targets: [5, 11, 12],
                     orderable: false
                 }
             ],
