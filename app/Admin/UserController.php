@@ -90,6 +90,7 @@ class UserController extends Controller
         $user->id_tinhthanh = $request->sel_province;
         $user->id_quanhuyen = $request->sel_district;
         $user->id_phuongxa = $request->sel_ward;
+        $user->duong = $request->duong;
         $user->save();
         return redirect('admin/danh-sach-user');
     }

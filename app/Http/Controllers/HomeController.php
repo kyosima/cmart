@@ -100,6 +100,7 @@ class HomeController extends Controller
         $user->id_quanhuyen = $request->sel_district;
         $user->id_tinhthanh = $request->sel_province;
         $user->type_cmnd = $request->type_cmnd;
+        $user->duong = $request->duong;
 
         $data = $request->all();
         if($user['action']) {
@@ -193,6 +194,8 @@ class HomeController extends Controller
         $user->id_quanhuyen = $request->sel_district;
         $user->id_tinhthanh = $request->sel_province;
         $user->type_cmnd = $request->type_cmnd;
+        $user->duong = $request->duong;
+        
         $data = $request->all();
         if($user['action']) {
             $output = '';

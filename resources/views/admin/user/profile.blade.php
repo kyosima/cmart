@@ -199,9 +199,13 @@ tbody tr:nth-child(even) td {
                                 <div class="col-lg-12 text-start">
                                     <span class="text-uppercase">Địa chỉ</span>
                                     <div class="row">
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-12">
                                             <input type="text" class="form-control mb-2" name="address" placeholder="Nhập địa chỉ"
                                             value="{{$user->address}}">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <input type="text" class="form-control mb-2" name="duong" placeholder="Nhập tên đường"
+                                            value="{{$user->duong}}">
                                         </div>
                                         <div class="col-lg-3">
                                             

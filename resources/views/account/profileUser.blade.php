@@ -131,7 +131,7 @@ img {
                         @else
                         @endif
                     </select>
-                    <!-- <input type="text" class="form-control" name="cmnd" value="{{$profileUser->cmnd}}"> -->
+                    <input type="text" class="form-control" name="cmnd" value="{{$profileUser->cmnd}}" placeholder="Mời nhập số CMND/CCCD/Hộ chiếu">
                 </div>
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND</label>
@@ -160,12 +160,32 @@ img {
                         @endif
                 </div>
 
-                <div class="form-group">
-                    <label for="inputAddress5">Địa chỉ</label>
-                    <input type="text" name="address" class="form-control" value="{{$profileUser->address}}">
+                <div class="form-group ">
+                            <label for="lastname">Số điện thoại</label>
+                    <div class="form-group row">
+                        <div class="form-group col-md-4">
+                            <input type="text" name="phone" class="form-control" placeholder="Mời nhập số điện thoại đăng ký giao dịch" value="{{$profileUser->phone}}" readonly>
+                        </div>
+                        <div class="form-group col-md-4 pl-0">
+                            <label class="btn btn-primary profile-button" style="height: 35px;line-height: 22px;">Lấy mã xác thực tối đa 03lần/ngày</label>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="text" name="address" class="form-control" placeholder="Mời nhập mã OTP gửi đến SĐT">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group col-md-12">
+                        <label for="inputAddress5">Địa chỉ chi tiết</label>
+                        <input type="text" name="address" class="form-control" value="{{$profileUser->address}}" placeholder="Địa chỉ chi tiết">
+                    </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
+                        <label for="inputAddress5">Đường<sup class="text-danger">*</sup></label>
+                        <input type="text" name="address" class="form-control" value="{{$profileUser->duong}}" placeholder="Mời nhập tên đường" style="height: 38px;">
+                    </div>
+                    <div class="form-group col-md-6">
                         <label for="">Tỉnh/ Thành phố<sup class="text-danger">*</sup></label>
                         @if($profileUser->id_tinhthanh == null)
                         <select name="sel_province" class="form-control select2"
@@ -190,7 +210,7 @@ img {
                         </select>
                         @endif
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="">Quận/ Huyện<sup class="text-danger">*</sup></label>
                         @if($profileUser->id_quanhuyen == null)
                         <select class="form-control select2" name="sel_district"
@@ -207,7 +227,7 @@ img {
                         </select>
                         @endif
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="">Phường/ Xã<sup class="text-danger">*</sup></label>
                         @if($profileUser->id_phuongxa == null)
                         <select class="form-control select2" name="sel_ward"
@@ -231,11 +251,11 @@ img {
                     <div class="d-flex justify-content-between align-items-center experience"><span><input type="checkbox" id="changePassword" name="changePassword"> Đổi mật khẩu</span></div>
                         <div class="form-group">
                             <label for="inputPassword5">Mật khẩu mới</label>
-                            <input type="password" class="form-control password" name="password" placeholder="Password" disabled>
+                            <input type="password" class="form-control password" name="password" placeholder="Mời nhập mật khẩu" disabled>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword6">Nhập lại mật khẩu</label>
-                            <input type="password" class="form-control password" name="passwordAgain" placeholder="Re-Password" disabled>
+                            <input type="password" class="form-control password" name="passwordAgain" placeholder="Mời nhập lại mật khẩu" disabled>
                         </div>
                     </div>
                     <!-- <div class="col-md-6">
