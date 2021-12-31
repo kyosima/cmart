@@ -57,7 +57,7 @@
 
                                     @if(session('thongbao'))
                                     <div class="alert alert-success">
-                                        {{session('thongbao')}}
+                                        {{session('thongbao')}} <br> Quý Khách Hàng vui lòng <strong><a class="alert-success" href="tai-khoan">Tạo mới Hồ Sơ Khách Hàng</a></strong>
                                     </div>
                                     @endif
                                     <input type="text" name="phone" placeholder="Tài khoản">
@@ -88,7 +88,7 @@
                                     </select>
 
                                     <p class="m-0">Mời nhập ảnh CMND mặt trước</p>
-                                    <input type="file" accept="image/*" onchange="loadFile(event)" name="image_cmnd">
+                                    <input class="form-control" type="file" accept="image/*" onchange="loadFile(event)" name="image_cmnd">
 
                                     <label class="m-0">Mời nhập ảnh CMND mặt sau</label>
                                     <input class="form-control" type="file" accept="image/*" onchange="loadFile2(event)" name="image_cmnd2">
@@ -97,6 +97,9 @@
                                     <div class="row">
                                         <div class="col-md-12 pb-3">
                                             <input type="text" name="address" placeholder="Mời nhập địa chỉ">
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <input type="text" name="duong" placeholder="Mời nhập tên đường" style="margin: 0px; height: 37px; border-radius: 5px;">   
                                         </div>
                                         <div class="col-md-6 pb-3">
                                             <select name="sel_province" class="form-control select2"

@@ -53,12 +53,12 @@ class HomeController extends Controller
             'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
         ]);
-
+        
         if(Auth::attempt(['phone'=>$request->phone,'password'=>$request->password])){
             return redirect('/');
         }
         else {
-            return redirect('tai-khoan')->with('thongbao','Hồ sơ Khách Hàng không tồn tại, Quý Khách Hàng vui lòng Tạo mới Hồ Sơ Khách Hàng.');
+            return redirect('tai-khoan')->with('thongbao','Hồ sơ Khách Hàng không tồn tại');
         }
     }
 
@@ -100,6 +100,7 @@ class HomeController extends Controller
         $user->id_quanhuyen = $request->sel_district;
         $user->id_tinhthanh = $request->sel_province;
         $user->type_cmnd = $request->type_cmnd;
+        $user->duong = $request->duong;
 
         $data = $request->all();
         if($user['action']) {
@@ -193,6 +194,8 @@ class HomeController extends Controller
         $user->id_quanhuyen = $request->sel_district;
         $user->id_tinhthanh = $request->sel_province;
         $user->type_cmnd = $request->type_cmnd;
+        $user->duong = $request->duong;
+        
         $data = $request->all();
         if($user['action']) {
             $output = '';

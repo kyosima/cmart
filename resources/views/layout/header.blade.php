@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+    i.icon-all-new.ico-header.fa.fa-shopping-cart {
+        width: 40px !important;
+        height: 40px !important;
+        display: inline-block !important;
+        position: absolute;
+        top: -12px;
+        left: 44px;
+        transform: translate(0, -50%);
+        font-size: 25px;
+        color: white;
+    }
+</style>
 
 <!-- Pc -->
 <header class="header-site sticky-top" id="top">
@@ -93,8 +105,10 @@
             <p id="working-time-header"> Giờ làm: 8h - 17h00 (T2 - CN) </p>
                </div> -->
 
+
+
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav ml-auto">
+                        <ul class="navbar-nav ml-auto" style="width: 250px; flex-direction: column;">
                             <!-- <li class="nav-item">
                 <a class="nav-link" href="#">
                   www.facebook.com/japana.sieuthinhat <i class="fab fa-facebook-f"></i></span></a>
@@ -105,7 +119,7 @@
               </li> -->
               @if (Auth::check()) 
              
-              <li class="nav-item">
+              <li class="nav-item" style="align-self: center;">
                 <div class="btn-group">
                   <a class="btn btn-light text-dark" href="{{url('/xac-thuc-ho-so')}}"><i class="fas fa-user text-dark"></i> {{ Auth::user()->phone}}</a>
                   <button type="button" class="btn  btn-light text-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -124,10 +138,19 @@
                 </li>
               @else
               <li class="nav-item">
-                <a class="nav-link" href="{{url('/tai-khoan')}}"> Đăng nhập</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link gach" href="{{url('/tai-khoan')}}">Đăng ký</a>
+                <a class="nav-link" style="    padding: 5px 34px;" href="{{url('/tai-khoan')}}"> 
+                    <div class="row">
+                        <div class="col-md-3">
+                            <i class="fas fa-user text-light" style="font-size: 30px;"></i>
+                        </div>
+                        <div class="col-md-9">
+                            <span class="pb-1">Đăng nhập / Đăng ký</span>
+                            <br>
+                            <span style="font-size: 16px">Tài khoản <i class="fa fa-chevron-down text-light" style="padding: 0px; font-size:11px"></i></span>
+                        </div>
+                    </div>
+                    
+                </a>
               </li>
               @endif
                
@@ -144,7 +167,7 @@
                     </div>
                     <div class="cart other">
                         <a rel="nofollow" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
-                            <i class="icon-all-new icon-cart icon-cart-header"></i>
+                            <i class="icon-all-new ico-header fa fa-shopping-cart"></i>
                             <span class="number-cart"><abbr
                                     class="count-giohang">{{ Cart::instance('shopping')->count() > 0 ? Cart::instance('shopping')->count() : '0' }}</abbr></span>
                         </a>

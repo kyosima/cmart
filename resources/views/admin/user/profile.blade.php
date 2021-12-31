@@ -89,7 +89,7 @@ tbody tr:nth-child(even) td {
                     <div class="profile-card__cnt js-profile-cnt">
                         <div class="profile-card__name pb-3" style="text-transform: uppercase">
                             @if($user->name != null)
-                                - {{$user->name}} -
+                                - ID: {{$user->code_customer}} -
                             @else
                                 - ID: {{$user->code_customer}} -
                             @endif
@@ -102,10 +102,10 @@ tbody tr:nth-child(even) td {
                                 <button class="alert alert-success m-0 text-center" style="width: 85%;border-radius: 40px; background: orangered; color: white;">Số đơn hàng đã hoàn thành: {{$sodonhang}}</button>
                             </div>
                             <div class="col-4">
-                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số điểm tích luỹ C: {{$user->tichluyC}}</button>
+                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C: {{$user->tichluyC}}</button>
                             </div>
                             <div class="col-4">
-                            <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số điểm tích luỹ M: 0</button>
+                            <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
                             </div>
                         </div>
                         
@@ -197,9 +197,13 @@ tbody tr:nth-child(even) td {
                                 <div class="col-lg-12 text-start">
                                     <span class="text-uppercase">Địa chỉ</span>
                                     <div class="row">
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-12">
                                             <input type="text" class="form-control mb-2" name="address" placeholder="Nhập địa chỉ"
                                             value="{{$user->address}}">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <input type="text" class="form-control mb-2" name="duong" placeholder="Nhập tên đường"
+                                            value="{{$user->duong}}">
                                         </div>
                                         <div class="col-lg-3">
                                             
@@ -297,7 +301,7 @@ tbody tr:nth-child(even) td {
                                             <table class="styled-table table-sortable">
                                                 <thead>
                                                     <tr>
-                                                        <th>Mã đơn hàng</th>
+                                                        <th>Mã giao dịch</th>
                                                         <th>Cách thức thanh toán</th>
                                                         <th>Phương thức vận chuyển</th>
                                                         <th>Phí vận chuyển</th>
@@ -343,12 +347,12 @@ tbody tr:nth-child(even) td {
                                         </div>
                                     <div class="row mb-3 pt-3">
                                         <div class="col-lg-12">
-                                            <h3 class="text-uppercase text-center">- Tài khoản Tiền tích lũy C -</h3>
+                                            <h3 class="text-uppercase text-center">- Tài khoản tiền tích lũy C -</h3>
                                             @if($sodonhang != null)
                                                 <table class="styled-table table-sortable">
                                                     <thead>
                                                         <tr>
-                                                            <th>Mã đơn hàng</th>
+                                                            <th>Mã giao dịch</th>
                                                             <th>Số điểm nhận đc</th>
                                                             <th>Ngày nhận</th>
                                                         </tr>
