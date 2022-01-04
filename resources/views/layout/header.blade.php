@@ -189,26 +189,22 @@
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
                 <div class="box-contacth">
-                    <b>C-call</b>
-                    <p><a href="tel:">00123123</a></p>
+                    <b><a href="tel:">C-call</a></b>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
                 <div class="box-contacth">
-                    <b>Facebook</b>
-                    <p><a href="">C-Mart</a></p>
+                    <b><a href="">Facebook</a></b>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
                 <div class="box-contacth">
-                    <b>Zalo</b>
-                    <p><a href="">C-Mart</a></p>
+                    <b><a href="">Zalo</a></b>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
                 <div class="box-contacth">
-                    <b>Email</b>
-                    <p><a href="mailto:">cmart@</a></p>
+                    <b><a href="mailto:">Email</a></b>
                 </div>
             </div>
         </div>

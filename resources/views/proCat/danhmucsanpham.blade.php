@@ -207,7 +207,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group phai">
-                                            <p class="title-range">tối đa</p>
+                                            <p class="title-range">Tối đa</p>
                                             <div class="box-input">
                                                 <input type="text" class="form-control slider_price_textbox" id="amount2"
                                                     disabled="">

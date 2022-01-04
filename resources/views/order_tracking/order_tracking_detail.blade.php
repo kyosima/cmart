@@ -75,7 +75,7 @@
                                 <div style="overflow-x:auto;">
                                     <table class="table table-striped ">
                                         <thead class="text-center">
-                                            <th>Chờ xác nhận</th>
+                                            <th>Đã đặt hàng</th>
                                             <th>Đã xác nhận</th>
                                             <th>Đang xử lý</th>
                                             <th>Đang giao hàng</th>

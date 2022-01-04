@@ -8,15 +8,10 @@
 @endpush
 
 @section('content')
-    <form action="{{ route('checkout.post') }}" method="post" enctype="multipart/form">
+    <form action="{{ route('checkout.post') }}" class="form-checkout" method="post" enctype="multipart/form">
         @csrf
         <div class="container">
-            <div class="row">
-                <div class="col-xl-8 col-sm-12 col-12">
-                    <a href="{{ route('cart.index') }}" class="text-dark back-cart"><i class="fas fa-chevron-left"></i> Quay
-                        lại giỏ hàng</a>
-                </div>
-            </div>
+         
             <div class="row">
                 <div class="col-xl-8 col-sm-12 col-12">
                     <div class="card-left">
@@ -52,14 +47,14 @@
                                 <div class="col-xl-6 ">
                                     <div class="form-group">
                                         <label for="">Họ và tên<sup class="text-danger">*</sup></label>
-                                        <input type="text" class="form-control" name="fullname" placeholder="Mời nhập họ và tên có dấu"
-                                            required value="{{ $user->hoten }}">
+                                        <input type="text" class="form-control" name="fullname"
+                                            placeholder="Mời nhập họ và tên có dấu" required value="{{ $user->hoten }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Tỉnh/ Thành phố<sup class="text-danger">*</sup></label>
                                         <select name="sel_province" class="form-control select2"
                                             data-placeholder="---Chọn tỉnh thành---" required>
-                                      
+
                                             <option value="">---Chọn tỉnh thành---</option>
                                             @foreach ($province as $value)
                                                 <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
@@ -71,8 +66,8 @@
                                         <label for="">Phường/ Xã<sup class="text-danger">*</sup></label>
                                         <select class="form-control select2" name="sel_ward"
                                             data-placeholder="---Chọn phường xã---" required>
-                                         
-                                                <option value="">---Chọn phường xã---</option>
+
+                                            <option value="">---Chọn phường xã---</option>
                                         </select>
                                     </div>
                                     {{-- <div class="form-group">
@@ -84,21 +79,22 @@
                                 <div class="col-xl-6 ">
                                     <div class="form-group">
                                         <label for="">Số điện thoại<sup class="text-danger">*</sup></label>
-                                        <input type="text" class="form-control" name="phone" placeholder="Mời nhập số điện thoại nhận hàng"
-                                            value="{{ $user->phone }}" required>
+                                        <input type="text" class="form-control" name="phone"
+                                            placeholder="Mời nhập số điện thoại nhận hàng" value="{{ $user->phone }}"
+                                            required>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Quận/ Huyện<sup class="text-danger">*</sup></label>
                                         <select class="form-control select2" name="sel_district"
                                             data-placeholder="---Chọn quận huyên---" required>
-                                          
-                                                <option value="">---Chọn quận huyện---</option>
+
+                                            <option value="">---Chọn quận huyện---</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Địa chỉ<sup class="text-danger">*</sup></label>
-                                        <input type="text" name="address" class="form-control"
-                                            value="" placeholder="Mời nhập địa chỉ" required>
+                                        <input type="text" name="address" class="form-control" value=""
+                                            placeholder="Mời nhập địa chỉ" required>
                                     </div>
 
 
@@ -119,7 +115,7 @@
                                             name="store_address" value="1"> Lưu lại thông
                                         tin người nhận</label>
 
-                               
+
                                 </div>
 
                             </div>
@@ -132,29 +128,32 @@
                             <hr>
                             <div class="phuongthuc-thanhtoan-card-body">
 
-                            <div class="form-group">
-                                <label onclick="showvat()"><input type="checkbox" id="show-vat"
-                                        name="show_vat" value="1"> Xác nhận xuất hóa GTGT</label>
-                            </div>
-                            <div class="form-vat" style="display:none">
                                 <div class="form-group">
-                                    <label for="">Tên công ty<sup class="text-danger">*</sup></label>
-                                    <input type="text" name="vat_name" class="form-control"
-                                        value="" placeholder="Mời nhập tên công ty" >
+                                    <label onclick="showvat()"><input type="checkbox" id="show-vat" name="show_vat"
+                                            value="1"> Xác nhận xuất hóa GTGT</label>
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Mã số thuế<sup class="text-danger">*</sup></label>
-                                    <input type="number" name="vat_mst" class="form-control"
-                                        value="" placeholder="Mời nhập mã số thuế công ty" >
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Địa chỉ<sup class="text-danger">*</sup></label>
-                                    <input type="text" name="vat_address" class="form-control"
-                                        value="" placeholder="Mời nhập địa chỉ" >
-                                </div>
-                                <br/>
+                                <div class="form-vat" style="display:none">
+                                    <div class="form-group">
+                                        <label for="">Tên công ty<sup class="text-danger">*</sup></label>
+                                        <input type="text" name="vat_name" class="form-control" value=""
+                                            placeholder="Mời nhập tên công ty">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Mã số thuế<sup class="text-danger">*</sup></label>
+                                        <input type="number" name="vat_mst" class="form-control" value=""
+                                            placeholder="Mời nhập mã số thuế công ty">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Địa chỉ<sup class="text-danger">*</sup></label>
+                                        <input type="text" name="vat_address" class="form-control" value=""
+                                            placeholder="Mời nhập địa chỉ công ty">
+                                    </div>
+                                    <div>
+                                        <p>Xin Quý Khách Hàng lưu ý: C-Mart xin phép từ chối hỗ trợ xử lý các thao tác về hóa đơn sau khi đặt hàng.</p>
+                                    </div>
+                                    <br />
 
-                            </div>
+                                </div>
                             </div>
                         </div>
                         <div class="phuongthuc-thanhtoan">
@@ -263,10 +262,14 @@
                                         <hr>
                                         <p><b>Phí vận chuyển:</b></p>
                                         <div class="form-group">
-                                            <input type="radio" id="vship" name="shipping_method" value="v_ship" checked style="display:none">
-                                            <label for="vship" id="lbvship" style="display:none">Viettel Shipping ({{ formatPrice($v_ship) }})</label>
-                                            <input type="radio" id="cship" name="shipping_method" value="c_ship" style="display:none">
-                                            <label for="cship"  id="lbcship" style="display:none">CMart Shipping ({{ formatPrice($c_ship) }})</label>
+                                            <input type="radio" id="vship" name="shipping_method" value="v_ship" checked
+                                                style="display:none">
+                                            <label for="vship" id="lbvship" style="display:none">Viettel Shipping
+                                                ({{ formatPrice($v_ship) }})</label>
+                                            <input type="radio" id="cship" name="shipping_method" value="c_ship"
+                                                style="display:none">
+                                            <label for="cship" id="lbcship" style="display:none">CMart Shipping
+                                                ({{ formatPrice($c_ship) }})</label>
                                         </div>
                                         <hr>
                                         <p class="total"> <span>Giá trị giao dịch:</span> <span
@@ -276,7 +279,7 @@
                                 </div>
 
                             </div>
-                            
+
                         </div>
                         <div class="chinhsach">
                             <div class="chinhsach-header">
@@ -285,63 +288,74 @@
                             <div class="chinhsach-body">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
-                                      <!-- Default checked -->
-                                      <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="nhanhang" id="check1" >
-                                        <label class="custom-control-label" for="check1">Tôi đã đọc và đồng ý với Quy định Thao tác khi nhận hàng
-                                        </label>
-                                      </div>
+                                        <!-- Default checked -->
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="nhanhang" id="check1">
+                                            <label class="custom-control-label" for="check1">Tôi đã đọc và đồng ý với Quy
+                                                định Thao tác khi nhận hàng
+                                            </label>
+                                        </div>
                                     </li>
                                     <li class="list-group-item">
-                                      <!-- Default checked -->
-                                      <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="giaonhan" id="check2">
-                                        <label class="custom-control-label" for="check2">Tôi đã đọc và đồng ý với Chính sách Giao - Nhận</label>
-                                      </div>
+                                        <!-- Default checked -->
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="giaonhan" id="check2">
+                                            <label class="custom-control-label" for="check2">Tôi đã đọc và đồng ý với Chính
+                                                sách Giao - Nhận</label>
+                                        </div>
                                     </li>
                                     <li class="list-group-item">
-                                      <!-- Default checked -->
-                                      <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="doitra" id="check3" >
-                                        <label class="custom-control-label" for="check3">Tôi đã đọc và đồng ý với Chính sách Đổi - Trả</label>
-                                      </div>
+                                        <!-- Default checked -->
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="doitra" id="check3">
+                                            <label class="custom-control-label" for="check3">Tôi đã đọc và đồng ý với Chính
+                                                sách Đổi - Trả</label>
+                                        </div>
                                     </li>
                                     <li class="list-group-item">
-                                      <!-- Default checked -->
-                                      <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="baohanh" id="check4" >
-                                        <label class="custom-control-label" for="check4">Tôi đã đọc và đồng ý với Chính sách Bảo hành</label>
-                                      </div>
+                                        <!-- Default checked -->
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="baohanh" id="check4">
+                                            <label class="custom-control-label" for="check4">Tôi đã đọc và đồng ý với Chính
+                                                sách Bảo hành</label>
+                                        </div>
                                     </li>
                                     <li class="list-group-item">
-                                      <!-- Default checked -->
-                                      <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="dieukhoan" id="check5">
-                                        <label class="custom-control-label" for="check5">Tôi đã đọc và đồng ý với Quy định Điều khoản & Điều kiện giao dịch</label>
-                                      </div>
+                                        <!-- Default checked -->
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="dieukhoan"
+                                                id="check5">
+                                            <label class="custom-control-label" for="check5">Tôi đã đọc và đồng ý với Quy
+                                                định Điều khoản & Điều kiện giao dịch</label>
+                                        </div>
                                     </li>
-                                    <li class="list-group-item">
+                                    {{-- <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
                                           <input type="checkbox" class="custom-control-input" name="dieukhoan" id="check6">
-                                          <label class="custom-control-label" for="check6">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, và chúng tôi thực hiện vô cùng nghiêm ngặt. Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết</label>
+                                          <label class="custom-control-label" for="check6"></label>
                                         </div>
-                                      </li>
+                                      </li> --}}
                                     <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" name="checkall" id="check7">
-                                          <label class="custom-control-label" for="check7">Chọn tất cả</label>
+                                            <input type="checkbox" class="custom-control-input" name="checkall"
+                                                id="check7">
+                                            <label class="custom-control-label" for="check7">Chọn tất cả</label>
                                         </div>
-                                      </li>
-                                  </ul>
-                                  <p class="text-danger error-chinhsach p-1" style="display: none">Bạn phải đồng ý tất cả chính sách của Cmart</p>
+                                    </li>
+                                </ul>
+                                <p class="text-danger error-chinhsach p-1" style="display: none">Bạn phải đồng ý tất cả
+                                    chính sách của Cmart</p>
+                                <p class="py-1">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, và chúng tôi thực hiện vô cùng nghiêm ngặt. Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết</p>
                             </div>
                         </div>
+                        <a class="btn-back-cart" href="{{ route('cart.index') }}">Quay lại giỏ hàng</a>
+
                         <button class="btn-dathang" type="submit">Tiếp tục thanh toán</button>
                     </div>
                 </div>
-            </div>
+            </div>  
         </div>
     </form>
 @endsection
@@ -350,8 +364,8 @@
     <script src="{{ asset('public/js/shipping.js') }}"></script>
 
     <script>
-        $("select[name='sel_province']").change(function(){
-            if($(this).val() == '70'){
+        $("select[name='sel_province']").change(function() {
+            if ($(this).val() == '70') {
                 $('#cship').prop('checked', true);
                 $('#vship').prop('checked', false);
                 $('#vship').css('display', 'none');
@@ -359,7 +373,7 @@
                 $('#lbcship').css('display', 'inline-block');
                 $('#cship').css('display', 'inline-block');
 
-            }else{
+            } else {
                 $('#vship').prop('checked', true);
                 $('#cship').prop('checked', false);
                 $('#cship').css('display', 'none');
@@ -369,17 +383,18 @@
 
             }
         });
-        $("input[name='checkall']").click(function(){
+        $("input[name='checkall']").click(function() {
             $('.chinhsach-body input:checkbox').not(this).prop('checked', this.checked);
         });
-        $('.btn-dathang').click(function(e){
-            if($('.chinhsach-body input:checkbox').is(':checked')){
+        $('.btn-dathang').click(function(e) {
+            if ($('.chinhsach-body input:checkbox').is(':checked')) {
 
-            }else{
+            } else {
                 e.preventDefault();
                 $('.error-chinhsach').css('display', 'block');
             }
         })
+
         function storeaddress() {
             if ($('#store-address').is(':checked')) {
                 $('#name-address').css("display", "block");
@@ -387,6 +402,7 @@
                 $('#name-address').css("display", "none");
             }
         }
+
         function showvat() {
             if ($('#show-vat').is(':checked')) {
                 $('.form-vat').css("display", "block");

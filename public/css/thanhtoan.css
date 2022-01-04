@@ -5,7 +5,9 @@
         background-color: #fff;
         box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
     }
-    
+    .form-checkout{
+        padding-top: 20px;
+    }
     .card-information-body {
         display: flex;
     }
@@ -25,7 +27,24 @@
         color: #333942;
         text-transform: uppercase;
     }
-    
+    .btn-back-cart{
+        font-size: 13px !important;
+        font-weight: 400 !important;
+        color: #FFFFFF;
+        background-color: #00e6f8;
+        border: 1px solid #00b0be;
+        padding: 9px 0;
+        border-radius: 17px !important;
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+        margin-top: 10px;
+    }
+    .btn-back-cart:hover{
+        background-color: #FFFFFF !important;
+        color: #00b0be !important;
+        border: 1px solid #00b0be !important;
+    }
     .card-information label {
         transform: translate(0, -3.5px) scale(0.9);
         transform-origin: top left;
