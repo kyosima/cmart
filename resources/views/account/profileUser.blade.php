@@ -93,15 +93,15 @@ img {
                 </div>
                 <hr class="my-4" />
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
                         <label for="firstname">Họ và tên</label>
-                        <input type="text" name="hoten" class="form-control" value="{{$profileUser->hoten}}">
+                        <input type="text" name="hoten" class="form-control" value="{{$profileUser->hoten}}" readonly>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="lastname">Số điện thoại</label>
+                    <!--<div class="form-group col-md-6">-->
+                    <!--    <label for="lastname">Số điện thoại</label>-->
                         <!-- <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}" readonly> -->
-                        <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}" readonly>
-                    </div>
+                    <!--    <input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{$profileUser->phone}}" readonly>-->
+                    <!--</div>-->
                 </div>
                 <div class="form-group">
                     <select class="form-select mb-1" name="type_cmnd" aria-label="Default select example">
@@ -161,7 +161,7 @@ img {
                 </div>
 
                 <div class="form-group ">
-                            <label for="lastname">Số điện thoại</label>
+                            <label for="lastname">Số điện thoại đăng ký giao dịch</label>
                     <div class="form-group row">
                         <div class="form-group col-md-4">
                             <input type="text" name="phone" class="form-control" placeholder="Mời nhập số điện thoại đăng ký giao dịch" value="{{$profileUser->phone}}" readonly>
@@ -172,77 +172,6 @@ img {
                         <div class="form-group col-md-4">
                             <input type="text" name="address" class="form-control" placeholder="Mời nhập mã OTP gửi đến SĐT">
                         </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="form-group col-md-12">
-                        <label for="inputAddress5">Địa chỉ chi tiết</label>
-                        <input type="text" name="address" class="form-control" value="{{$profileUser->address}}" placeholder="Địa chỉ chi tiết">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputAddress5">Đường<sup class="text-danger">*</sup></label>
-                        <input type="text" name="address" class="form-control" value="{{$profileUser->duong}}" placeholder="Mời nhập tên đường" style="height: 38px;">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="">Tỉnh/ Thành phố<sup class="text-danger">*</sup></label>
-                        @if($profileUser->id_tinhthanh == null)
-                        <select name="sel_province" class="form-control select2"
-                            data-placeholder="---Chọn tỉnh thành---" required>
-                            <option value="">---Chọn tỉnh thành---</option>
-                                @foreach ($province as $value)
-                                    <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
-                                    </option>
-                                @endforeach
-                        </select>
-                        @else
-                        <select name="sel_province" class="form-control select2"
-                            data-placeholder="---Chọn tỉnh thành---" required>
-                                <option value="{{ $profileUser->id_tinhthanh }}">
-                                {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')
-                                    ->where('province.matinhthanh','=',auth()->user()->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh}}
-                                </option>
-                                @foreach ($province as $value)
-                                    <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
-                                    </option>
-                                @endforeach
-                        </select>
-                        @endif
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="">Quận/ Huyện<sup class="text-danger">*</sup></label>
-                        @if($profileUser->id_quanhuyen == null)
-                        <select class="form-control select2" name="sel_district"
-                            data-placeholder="---Chọn quận huyên---" required>
-                            <option value="">---Chọn quận huyên---</option>
-                        </select>
-                        @else
-                        <select class="form-control select2" name="sel_district"
-                            data-placeholder="---Chọn quận huyên---" required>
-                            <option value="{{ $profileUser->id_quanhuyen }}">
-                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')
-                                ->where('district.maquanhuyen','=',auth()->user()->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen}}
-                            </option>
-                        </select>
-                        @endif
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="">Phường/ Xã<sup class="text-danger">*</sup></label>
-                        @if($profileUser->id_phuongxa == null)
-                        <select class="form-control select2" name="sel_ward"
-                            data-placeholder="---Chọn phường xã---" required>
-                            <option value="">---Chọn phường xã---</option>
-                        </select>
-                        @else
-                        <select class="form-control select2" name="sel_ward"
-                            data-placeholder="---Chọn phường xã---" required>
-                            <option value="{{$profileUser->id_phuongxa}}">
-                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')
-                                    ->where('ward.maphuongxa','=',auth()->user()->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa}}
-                            </option>
-                        </select>
-                        @endif
                     </div>
                 </div>
                 <hr class="my-4" />
@@ -267,6 +196,78 @@ img {
                         </ul>
                     </div> -->
                 </div>
+                <div class="form-group row">
+                    <div class="form-group col-md-12">
+                        <label for="inputAddress5">Địa chỉ chi tiết</label>
+                        <input type="text" name="address" class="form-control" value="{{$profileUser->address}}" placeholder="Địa chỉ chi tiết">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputAddress5">Đường<sup class="text-danger">*</sup></label>
+                        <input type="text" name="address" class="form-control" value="{{$profileUser->duong}}" placeholder="Mời nhập tên đường" style="height: 38px;">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="">Cấp Tỉnh<sup class="text-danger">*</sup></label>
+                        @if($profileUser->id_tinhthanh == null)
+                        <select name="sel_province" class="form-control select2"
+                            data-placeholder="---Cấp tỉnh thành---" required>
+                            <option value="">---Chọn tỉnh thành---</option>
+                                @foreach ($province as $value)
+                                    <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
+                                    </option>
+                                @endforeach
+                        </select>
+                        @else
+                        <select name="sel_province" class="form-control select2"
+                            data-placeholder="---Chọn tỉnh thành---" required>
+                                <option value="{{ $profileUser->id_tinhthanh }}">
+                                {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')
+                                    ->where('province.matinhthanh','=',auth()->user()->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh}}
+                                </option>
+                                @foreach ($province as $value)
+                                    <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
+                                    </option>
+                                @endforeach
+                        </select>
+                        @endif
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="">Cấp Huyện<sup class="text-danger">*</sup></label>
+                        @if($profileUser->id_quanhuyen == null)
+                        <select class="form-control select2" name="sel_district"
+                            data-placeholder="---Chọn quận huyên---" required>
+                            <option value="">---Chọn quận huyên---</option>
+                        </select>
+                        @else
+                        <select class="form-control select2" name="sel_district"
+                            data-placeholder="---Chọn quận huyên---" required>
+                            <option value="{{ $profileUser->id_quanhuyen }}">
+                            {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')
+                                ->where('district.maquanhuyen','=',auth()->user()->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen}}
+                            </option>
+                        </select>
+                        @endif
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="">Cấp Xã<sup class="text-danger">*</sup></label>
+                        @if($profileUser->id_phuongxa == null)
+                        <select class="form-control select2" name="sel_ward"
+                            data-placeholder="---Chọn phường xã---" required>
+                            <option value="">---Chọn phường xã---</option>
+                        </select>
+                        @else
+                        <select class="form-control select2" name="sel_ward"
+                            data-placeholder="---Chọn phường xã---" required>
+                            <option value="{{$profileUser->id_phuongxa}}">
+                                {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')
+                                    ->where('ward.maphuongxa','=',auth()->user()->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa}}
+                            </option>
+                        </select>
+                        @endif
+                    </div>
+                </div>
+
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
                 </div>

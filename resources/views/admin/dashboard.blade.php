@@ -9,7 +9,7 @@
 @endpush
 
     @section('content')
-        <div class="m-3">
+        <!-- <div class="m-3">
             <div class="row">
                 <div class="col-sm-3" id="title_tinhhinh">
                     <h3 class="m-0">Tình trạng website?</h3>
@@ -149,7 +149,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     @endsection
 
 
