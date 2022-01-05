@@ -63,7 +63,7 @@
                                     <input type="hidden" name="endMaxPrice" id="maxprice1" @if ($endMaxPrice == 0) value="{{ $maxPrice }}" @else value="{{ $endMaxPrice }}" @endif>
                                     <div class="widget-price">
                                         <div class="form-group trai">
-                                            <p class="title-range">Min</p>
+                                            <p class="title-range">Tối thiểu</p>
                                             <div class="box-input">
                                                 <input type="text" class="form-control slider_price_textbox" id="amount1"
                                                     disabled="">
@@ -71,7 +71,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group phai">
-                                            <p class="title-range">Max</p>
+                                            <p class="title-range">Tối đa</p>
                                             <div class="box-input">
                                                 <input type="text" class="form-control slider_price_textbox" id="amount2"
                                                     disabled="">
