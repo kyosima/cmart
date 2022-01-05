@@ -55,12 +55,10 @@
                                 <h2>{{ $product->name }}</h2>
                             </div>
                             <div class="code info-detail">
-                                <p><span>Mã sản phẩm:</span>{{ $product->sku }}</p>
-                                {{-- <p class="quycach"><span>Quy
-                                        cách:</span>{{ $product->productCalculationUnit()->value('name') }}</p> --}}
+                                <p><span>SKU:</span>{{ $product->sku }}</p>
                             </div>
                             <div class="trademark info-detail">
-                                <p><span>Thương hiệu:</span>{{ $product->productBrand()->value('name') }}</p>
+                                <p><span>Thương hiệu:</span><a href="{{route('proBrand.index', $product->brand)}}">{{ $product->brand }}</a></p>
                             </div>
 
 
@@ -244,7 +242,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                    {{-- <div class="col-sm-12 col-md-6 col-lg-6">
                                         <div class="bar-list">
                                             <div class="bar-statistic d-flex align-items-center">
                                                 <div class="bar-icon"><i class="fas fa-star"></i>5</div>
@@ -302,7 +300,7 @@
                                                 <div class="bar-counter"><span>{{ $rating_list[4] }}</span></div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> 
                                 </div>
                                 <hr>
                                 <div class="row">

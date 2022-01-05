@@ -23,7 +23,10 @@
 	.logginFormFooter a       {color: #777; font-weight: 600;}
 	.logginFormFooter a:hover {color: #AAA;}
 
-
+  .tabs{
+    margin: 0;
+    padding: 0;
+  }
 
 /* nav {
   z-index: 9;

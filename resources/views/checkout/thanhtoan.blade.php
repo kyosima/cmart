@@ -265,6 +265,9 @@
                                                 class="tamtinh-price">{{ $cart_subtotal }} đ</span> </p>
 
                                         <hr>
+                                        <p class="tamtinh"> <span class="tamtinh-title">Thuế VAT:</span> <span
+                                            class="tamtinh-price">{{ formatPrice($tax) }} </span> </p>
+                                        <hr>
                                         <p><b>Phí vận chuyển:</b></p>
                                         <div class="form-group">
                                             <input type="radio" id="vship" name="shipping_method" value="v_ship" checked
@@ -278,7 +281,7 @@
                                         </div>
                                         <hr>
                                         <p class="total"> <span>Giá trị giao dịch:</span> <span
-                                                class="total-price">{{ formatPrice(str_replace(',', '', $cart_total)) }}
+                                                class="total-price">{{ formatPrice(str_replace(',', '', $cart_total)+$tax) }}
                                             </span> </p>
                                     </div>
                                 </div>

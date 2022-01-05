@@ -18,58 +18,11 @@
                 <nav class="breadcrumbs">
                     <a href="#">Trang chủ</a>
                     <span class="divider">/</span>
-                    @if ($proCat->parents != null)
-                        @if ($proCat->parents->categories != null)
-                            <a
-                                href="{{ route('proCat.index', $proCat->parents->categories->slug) }}">{{ $proCat->parents->categories->name }}</a>
-                            <span class="divider">/</span>
-                        @endif
-                        <a href="{{ route('proCat.index', $proCat->parents->slug) }}">{{ $proCat->parents->name }}</a>
-                        <span class="divider">/</span>
-                        <span class="active">{{ $proCat->name }}</span>
-                    @else
-                        <span class="active">{{ $proCat->name }}</span>
-                    @endif
+                    <span class="active">{{ $slug }}</span>
                 </nav>
             </div>
         </div>
     </section>
-
-    <!-- slider -->
-    @if ($proCat->feature_img != null)
-        <section class="slider">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    @if ($proCat->gallery != null)
-                        @php
-                            $gallery = explode(', ', $proCat->gallery);
-                            $i = 1;
-                        @endphp
-                        @foreach ($gallery as $item)
-                            <li data-target="#myCarousel" data-slide-to="{{ $i++ }}"></li>
-                        @endforeach
-                    @endif
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="{{ $proCat->feature_img }}" class="d-block w-100 banner1" alt="">
-                    </div>
-                    @if ($proCat->gallery != null)
-                        @foreach ($gallery as $item)
-                            <div class="carousel-item">
-                                <img src="{{ $item }}" class="d-block w-100 banner2" alt="">
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
-                <!-- <ul class="text-carousel-indicators">
-                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                <li data-target="#myCarousel" data-slide-to="1"></li>
-                            </ul> -->
-            </div>
-        </section>
-    @endif
 
     <!-- main -->
     <section>
@@ -78,7 +31,7 @@
             <div class="category-page container">
                 <div class="row">
                     <div class="col">
-                        <p class="h4 text-center text-danger">Hiện chưa có sản phẩm nào trong danh mục này, CMart sẽ sớm cập
+                        <p class="h4 text-center text-danger">Hiện chưa có sản phẩm nào thuộc thương hiệu này, CMart sẽ sớm cập
                             nhật để phục vụ quý khách</p>
                     </div>
                 </div>
@@ -90,95 +43,6 @@
                 <div class="row">
                     <!-- bên trái -->
                     <div id="shopsidebar" class="shop-sidebar col-lg-3 col-md-12 col-sm-12">
-                        <!-- danh mục -->
-                        @if (count($subcategory) > 0)
-                            <aside class="widget danhmuc">
-                                <h3 class="widget-title mb-1">Danh mục</h3>
-                                <div class="widget-search">
-                                    <input autocomplete="off" id="input_category_search" type="text"
-                                        class="form-control input_search" placeholder="Tìm kiếm..."
-                                        onkeyup="searchText('category_search')">
-                                    <button type="button">
-                                        <i class="search-icon"></i>
-                                    </button>
-                                </div>
-                                <div id="category_search" class="widget-product-categories">
-                                    <ul class="check-side category-menu">
-                                        @foreach ($subcategory as $item)
-                                            @if (count($item->childrenCategories) > 0)
-                                                <li class="menu-item menu-item-has-children py-1 has-child menu-border">
-                                                    @if ($item->linkToCategory != null)
-                                                        <a
-                                                            href="{{ route('proCat.index', $item->linkToCategory->slug) }}">{{ $item->name }}</a>
-                                                    @else
-                                                        <a
-                                                            href="{{ route('proCat.index', $item->slug) }}">{{ $item->name }}</a>
-                                                    @endif
-                                                    <button class="toggle">
-                                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                                    </button>
-                                                    @include('proCat.danhmuc-sidebar', [
-                                                    'child_categories' => $item->childrenCategories,
-                                                    ])
-                                                </li>
-                                            @else
-                                                <li class="menu-item menu-border py-1">
-                                                    @if ($item->linkToCategory != null)
-                                                        <a
-                                                            href="{{ route('proCat.index', $item->linkToCategory->slug) }}">{{ $item->name }}</a>
-                                                    @else
-                                                        <a
-                                                            href="{{ route('proCat.index', $item->slug) }}">{{ $item->name }}</a>
-                                                    @endif
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                    {{-- @foreach ($categories as $item)
-                                <div class="check-side">
-                                    <label class="py-1">
-                                        <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
-                                    </label>
-                                </div>
-                                @endforeach --}}
-                                </div>
-                            </aside>
-                            {{-- <aside class="widget danhmuc">
-                                <h3 class="widget-title">Danh mục</h3>
-                                <div class="widget-search">
-                                    <input autocomplete="off" id="input_category_search" type="text" class="form-control input_search" placeholder="Tìm kiếm..." onkeyup="searchText('category_search')">
-                                    <button type="button">
-                                        <i class="search-icon"></i>
-                                    </button>
-                                </div>
-                                <div class="scrollbar">
-                                    <div id="category_search" class="widget-product-categories">
-                                        @foreach ($subcategory as $item)
-                                            @if (count($item->products) > 0)
-                                                <div class="check-side">
-                                                    <label class="check-custom">
-                                                        {{$item->name}}
-                                                        <span class="count-item"> ({{count($item->products)+count($item->subproducts)}})</span>
-                                                        <input name="category[]" class="submit_click" type="checkbox" value="{{$item->id}}">
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </div>
-                                            @elseif (count($item->products) < 1 && $item->linkToCategory != null)
-                                                <div class="check-side">
-                                                    <label class="check-custom">
-                                                        {{$item->linkToCategory->name}}
-                                                        <span class="count-item"> ({{count($item->linkToCategory->products)+count($item->linkToCategory->subproducts)}})</span>
-                                                        <input name="category[]" class="submit_click" type="checkbox" value="{{$item->linkToCategory->id}}">
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </aside> --}}
-                        @endif
-
                         <form action="{{ url('/') . '/' . Request::path() }}" method="get" id="filter_form">
                             <!-- lọc giá -->
                             <aside class="widget">
@@ -199,7 +63,7 @@
                                     <input type="hidden" name="endMaxPrice" id="maxprice1" @if ($endMaxPrice == 0) value="{{ $maxPrice }}" @else value="{{ $endMaxPrice }}" @endif>
                                     <div class="widget-price">
                                         <div class="form-group trai">
-                                            <p class="title-range">Tối thiểu</p>
+                                            <p class="title-range">Tối thiểu</p>
                                             <div class="box-input">
                                                 <input type="text" class="form-control slider_price_textbox" id="amount1"
                                                     disabled="">
@@ -207,7 +71,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group phai">
-                                            <p class="title-range">Tối đa</p>
+                                            <p class="title-range">Tối đa</p>
                                             <div class="box-input">
                                                 <input type="text" class="form-control slider_price_textbox" id="amount2"
                                                     disabled="">
@@ -219,37 +83,6 @@
                                 </div>
                             </aside>
 
-                            <!-- thương hiệu -->
-                            <aside class="widget thuonghieu">
-                                <h3 class="widget-title">Thương hiệu</h3>
-                                <div class="widget-search">
-                                    <input autocomplete="off" id="input_brand_search" type="text"
-                                        class="form-control input_search" placeholder="Tìm kiếm..."
-                                        onkeyup="searchBrand('brand_search')">
-                                    <button type="button">
-                                        <i class="search-icon"></i>
-                                    </button>
-                                </div>
-                                <div class="scrollbar">
-                                    <div id="brand_search" class="widget-product-categories">
-                                        @foreach ($brands as $item)
-                                            <div class="check-side">
-                                                <label class="check-custom">
-                                                    {{ $item }}
-                                                    <span class="count-item"> ({{ $countBrand[$item] }})</span>
-                                                    <input name="id_brand[]" class="submit_click" type="checkbox"
-                                                        value="{{ $item }}">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div class="footer-filter d-lg-none">
-                                    <button type="button" class="clear_filter">Xóa lọc</button>
-                                    <button type="button" class="submit_click">Áp dụng</button>
-                                </div>
-                            </aside>
                             <input type="hidden" id="order" name="order" value="">
                             <input type="hidden" id="sale" name="sale" value="">
                         </form>
@@ -259,9 +92,8 @@
                     <div class="shop-container col-lg-9 col-md-12 col-sm-12">
                         <div class="shop-container-inner">
                             <!-- TITLE -->
-                            <h2 class="title-filter d-none d-lg-block">{{ $proCat->name }}
-                                <span>({{ count($products) }} sản
-                                    phẩm)</span></h2>
+                            <h2 class="title-filter d-none d-lg-block">{{ $slug }}
+                                <span>({{ count($products) }} sản phẩm)</span></h2>
                             <!-- Bộ lọc -->
                             <div class="filter-cate">
                                 <ul>
@@ -307,7 +139,7 @@
                                         <div class="product-box row">
                                             <div class="box-image col-lg-12 col-md-4 col-4">
                                                 <div class="image-cover">
-                                                    <a href="{{ route('san-pham.show', $item->slug) }}">
+                                                    <a href="#">
                                                         <img src="{{ asset($item->feature_img) }}" alt="">
                                                     </a>
                                                 </div>
@@ -362,22 +194,11 @@
                 </div>
             </div>
         @endif
-
-        <!-- Mô tả -->
-        @if ($proCat->description != null || $proCat->description != '')
-            <div class="container d-none d-lg-block">
-                <div class="box-detail-cate">
-                    {!! $proCat->description !!}
-                </div>
-            </div>
-        @endif
     </section>
 @endsection
 
 
 @push('scripts')
-<script src="{{ asset('public/js/danhmucsanpham.js') }}"></script>
-
     <script type='text/javascript'>
         function openSidebar() {
             document.getElementById("shopsidebar").style.zIndex = "1000";
@@ -408,57 +229,6 @@
             $("#order").val('');
             $("#sale").val(id);
             $("#filter_form").submit();
-        }
-
-        function searchText(id) {
-            var input, filter, li, a, i, txtValue;
-            input = $('#input_' + id);
-            filter = input.val().toUpperCase();
-            li = $('#' + id + ' .check-side .menu-item');
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByTagName("a")[0];
-                txtValue = a.textContent || a.innerText;
-                if (txtValue.toUpperCase().includes(filter)) {
-                    li[i].getElementsByTagName("a")[0].style.display = "";
-                } else {
-                    li[i].getElementsByTagName("a")[0].style.display = "none";
-                }
-            }
-            if (filter == '') {
-                $('.sub-menu').css({
-                    "display": "none",
-                    "padding-left": "15px",
-                    'border-left': '1px solid #ddd',
-                    'margin': '0 0 10px 3px'
-                });
-                $('.toggle').css('display', 'inline-block');
-                $('li.menu-item').addClass('py-1 menu-border');
-            } else {
-                $('.toggle').css('display', 'none');
-                $('.sub-menu').css({
-                    "display": "block",
-                    "padding-left": "0",
-                    'border': '0',
-                    'margin': '0'
-                });
-                $('li.menu-item').removeClass('py-1 menu-border');
-            }
-        }
-
-        function searchBrand(id) {
-            var input, filter, li, a, i, txtValue;
-            input = $('#input_' + id);
-            filter = input.val().toUpperCase();
-            li = $('#' + id + ' .check-side');
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByTagName("label")[0];
-                txtValue = a.textContent || a.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
-                } else {
-                    li[i].style.display = "none";
-                }
-            }
         }
 
         var initSlidePrice = function() {
@@ -537,31 +307,9 @@
         }
 
         $(document).ready(function() {
-            $(document).on("click", "button.toggle", function() {
-                if (!$(this).parent().hasClass('active')) {
-                    $(this).parent().addClass('active');
-                    $(this).find('i').removeClass('fa-angle-down')
-                    $(this).find('i').addClass('fa-angle-up')
-                } else {
-                    $(this).parent().removeClass('active');
-                    $(this).find('i').removeClass('fa-angle-up')
-                    $(this).find('i').addClass('fa-angle-down')
-                }
-            })
-
-
             $(".submit_click").click(function() {
                 $("#filter_form").submit()
             });
-
-            // category.forEach(element => {
-            //     $('.submit_click[value="' + element + '"]').prop('checked', true)
-            // });
-
-            brand.forEach(element => {
-                $('.submit_click[value="' + element + '"]').prop('checked', true)
-            });
-
             if (orders != '') {
                 $("#order").val(orders);
                 $(`li.li-filter-cate > a[href*="${orders}"]`).addClass('active')
@@ -577,8 +325,6 @@
         });
 
         const urlSearchParams = new URLSearchParams(window.location.search);
-        // var category = urlSearchParams.getAll("category[]");
-        var brand = urlSearchParams.getAll("id_brand[]");
         var orders = urlSearchParams.get("order");
         var sales = urlSearchParams.get("sale");
     </script>

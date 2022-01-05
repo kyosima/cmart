@@ -34,6 +34,7 @@ class OrderVat extends Model
 	protected $fillable = [
 		'id_order',
 		'vat_name',
+		'vat_company',
 		'vat_mst',
 		'vat_address'
 	];

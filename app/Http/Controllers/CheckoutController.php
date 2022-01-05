@@ -161,7 +161,7 @@ class CheckoutController extends Controller
                         'tax' => $tax,
                         'process_fee' => $process_fee,
                         'sub_total' => intval(str_replace(",", "", Cart::instance('shopping')->subtotal())),
-                        'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()) )
+                        'total' => intval(str_replace(",", "", Cart::instance('shopping')->total())+ $tax )
 
                         // 'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()) + $tax + $process_fee + $shipping_total)
                     ]);

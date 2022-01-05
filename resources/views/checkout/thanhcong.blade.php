@@ -68,6 +68,7 @@
                             <!--<li>Điểm M quy đổi: <span> {{ formatPrice($order->m_point *100) }}</span></li>-->
                             <!--<li>Điểm C tích lũy: <span> {{ $order->c_point }}</span></li>-->
                             <li>Phương thức vận chuyển: <span> {{ $order->shipping_method }}</span></li>
+                            <li>Thuế VAT: <span> {{ formatPrice($order->tax) }}</span></li> 
                             <li>Phí vận chuyển: <span> {{ formatPrice($order->shipping_total) }}</span></li> 
                             <li><b>Giá trị giao dịch: </b> <span class="text-danger"> {{ formatPrice($order->total) }}</span></li>
 

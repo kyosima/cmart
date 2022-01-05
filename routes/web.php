@@ -7,7 +7,8 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\ShippingController;
+use App\Http\Controllers\ProductBrandController;
+use App\Http\Controllers\shippingController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InfoCompanyController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\CPointController;
 // Route::get('/san-pham/{slug}', [ProductController::class, 'product'])->name('product.index');
 Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'showAll'])->name('proCat.showAll');
 Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
+Route::get('/thuong-hieu/{slug}', [ProductBrandController::class, 'index'])->name('proBrand.index');
 Route::get('/', [HomeController::class, 'home']);
 
 
