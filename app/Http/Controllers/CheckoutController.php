@@ -168,6 +168,7 @@ class CheckoutController extends Controller
                     if($show_vat == 1){
                         $vat = OrderVat::create([
                             'id_order' => $order->id,
+                            'vat_company' => $request->vat_company,
                             'vat_name' => $request->vat_name,
                             'vat_mst'=>$request->vat_mst,
                             'vat_address' => $request->vat_address

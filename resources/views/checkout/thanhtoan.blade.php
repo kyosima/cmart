@@ -134,8 +134,13 @@
                                 </div>
                                 <div class="form-vat" style="display:none">
                                     <div class="form-group">
-                                        <label for="">Tên công ty<sup class="text-danger">*</sup></label>
+                                        <label for="">Tên người mua<sup class="text-danger">*</sup></label>
                                         <input type="text" name="vat_name" class="form-control" value=""
+                                            placeholder="Mời nhập tên người mua hàng">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Tên công ty<sup class="text-danger">*</sup></label>
+                                        <input type="text" name="vat_company" class="form-control" value=""
                                             placeholder="Mời nhập tên công ty">
                                     </div>
                                     <div class="form-group">
