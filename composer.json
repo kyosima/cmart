@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "arcanedev/log-viewer": "^8.1",
         "artesaos/seotools": "^0.20.2",
+        "ckfinder/ckfinder-plugin-imagewatermark-php": "^3.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "hardevine/shoppingcart": "^3.0",

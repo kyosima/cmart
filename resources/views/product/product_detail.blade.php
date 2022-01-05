@@ -451,7 +451,7 @@
                     <div class="col-sm-12 col-md-2 col-lg-2 category">
                         <div>
                             <div class="title">
-                                <p>Sản phẩm cùng danh mục</p>
+                                <p>Sản phẩm liên quan</p>
                             </div>
                             @foreach ($new_products as $item)
                                 <div class="product">

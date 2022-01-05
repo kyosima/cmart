@@ -272,9 +272,8 @@
     padding: 0 0 13px;
 }
 
-ul,
-ol {
-    list-style-type: none;
+footer ul,
+footer ol {
     margin: 0;
     padding: 0;
 }

@@ -189,7 +189,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
                 <div class="box-contacth">
-                    <b><a href="tel:">C-call</a></b>
+                    <b><a href="tel:0899302323">C-call</a></b>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
@@ -204,7 +204,7 @@
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
                 <div class="box-contacth">
-                    <b><a href="mailto:">Email</a></b>
+                    <b><a href="mailto:hotro@cm.com.vn">Email</a></b>
                 </div>
             </div>
         </div>

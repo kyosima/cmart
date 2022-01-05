@@ -23,7 +23,7 @@ class AdminProductController extends Controller
     {
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
         Log::info($message);
-        $products = Product::all();
+        $products = Product::latest()->get();
         return view('admin.product.san-pham', compact('products'));
     }
 
@@ -114,7 +114,7 @@ class AdminProductController extends Controller
                     'height' => $request->product_height,
                     'width' => $request->product_width,
                     'length' => $request->product_length,
-                    'brand' => $request->product_brand,
+                    'brand' => strtoupper($request->product_brand),
                     'upsell' => isset($request->upsell) != false ? implode(',',$request->upsell) : null,
                     'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,
@@ -238,7 +238,7 @@ class AdminProductController extends Controller
                     'height' => $request->product_height,
                     'width' => $request->product_width,
                     'length' => $request->product_length,
-                    'brand' => $request->product_brand,
+                    'brand' => strtoupper($request->product_brand),
                     'upsell' => isset($request->upsell) != false ? implode(',',$request->upsell) : null,
                     'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,

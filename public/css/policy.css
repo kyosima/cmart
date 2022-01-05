@@ -145,14 +145,14 @@ h1 {
     color: #bb0029;
     background: #fff;
 }
-ul{
-    list-style-type: none;
+.page-sidebar ul{
+    list-style: none;
     margin: 0;
     padding: 0;
 }
 
 ul li{
-    display: block;
+    /* display: block; */
 }
 
 li a:hover {

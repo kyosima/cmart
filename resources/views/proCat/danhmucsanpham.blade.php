@@ -235,10 +235,10 @@
                                         @foreach ($brands as $item)
                                             <div class="check-side">
                                                 <label class="check-custom">
-                                                    {{ $item->name }}
-                                                    <span class="count-item"> ({{ $countBrand[$item->id] }})</span>
+                                                    {{ $item }}
+                                                    <span class="count-item"> ({{ $countBrand[$item] }})</span>
                                                     <input name="id_brand[]" class="submit_click" type="checkbox"
-                                                        value="{{ $item->id }}">
+                                                        value="{{ $item }}">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -267,7 +267,7 @@
                                 <ul>
                                     <li class="d-lg-inline d-none">Sắp xếp theo:</li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order();" class="order-default">Mặc định</a>
+                                        <a href="javascript:order();" class="order-default <?php echo count($isDefault) == 0 ? 'active' : '' ?>">Mặc định</a>
                                     </li>
                                     <li class="li-filter-cate">
                                         <a href="javascript:order('regular_price desc');" class="">Giá cao</a>
@@ -509,7 +509,7 @@
             jQuery(".slider_price_submit").click(function() {
                 var from = formatNumber(jQuery("#amount1").val());
                 var to = formatNumber(jQuery("#amount2").val());
-                var sliderPriceURL = "http://japana.vn";
+                var sliderPriceURL = "https://cm.com.vn/";
                 sliderPriceURL = sliderPriceURL.replace("amshopby_slider_from", from);
                 sliderPriceURL = sliderPriceURL.replace("amshopby_slider_to", to);
                 jQuery(".slider_price_form").attr("action", sliderPriceURL);
@@ -562,23 +562,17 @@
                 $('.submit_click[value="' + element + '"]').prop('checked', true)
             });
 
-            // $('li.li-filter-cate').each(element => {
-            //     $(element).addClass('abc')
-            // });
-
-            $('li.li-filter-cate > a').each(function() {
-                if ($(this).attr('href').includes(orders) && orders != '') {
-                    $("#order").val(orders);
-                    $(this).addClass('active')
-                } else if ($(this).attr('href').includes(sales) && sales != '') {
-                    $("#sale").val(sales);
-                    $(this).addClass('active')
-                } else if (orders == '' && sales == '') {
-                    $('li.li-filter-cate > a.order-default').addClass('active')
-                } else {
-                    $(this).removeClass('active')
-                }
-            });
+            if (orders != '') {
+                $("#order").val(orders);
+                $(`li.li-filter-cate > a[href*="${orders}"]`).addClass('active')
+            } 
+            else if (sales != '') {
+                $("#sale").val(sales);
+                $(`li.li-filter-cate > a[href*="${sales}"]`).addClass('active')
+            } 
+            else {
+                $('li.li-filter-cate > a.order-default').addClass('active')
+            }
 
         });
 

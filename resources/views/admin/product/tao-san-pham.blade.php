@@ -140,7 +140,9 @@
                                     <label class="col-md-12 control-label text-left">Thương hiệu<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <select name="product_brand" class="selectpicker form-control" required
+                                        <input type="text" name="product_brand" class="form-control"
+                                            required value="{{ old('product_brand') }}">
+                                        {{-- <select name="product_brand" class="selectpicker form-control" required
                                             title="Thương hiệu" data-placeholder="Chọn thương hiệu">
                                             <option></option>
                                             @foreach ($brands as $item)
@@ -150,7 +152,7 @@
                                                     @endif
                                                     >{{ $item->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                                 {{-- <div class="form-group">
@@ -488,13 +490,12 @@
                             var chosenFiles = $(`#${elementId}`).val();
                             files.forEach( function(file, idx, array) {
                                 chosenFiles += new URL(file.getUrl()).pathname + ', ';
-
                                 $('.fileinput-gallery .row').append(`<div class="col-md-3">
                                     <span style="cursor: pointer;" data-id='' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
                                         <i class="fas fa-times"></i>
-                                        </span>
-                                                <img src="${new URL(file.getUrl()).pathname}">
-                                            </div>`)
+                                    </span>
+                                    <img src="${new URL(file.getUrl()).pathname}">
+                                </div>`)
                             });
                             var output = document.getElementById(elementId);
                             output.value = chosenFiles;
