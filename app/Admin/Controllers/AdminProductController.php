@@ -23,7 +23,7 @@ class AdminProductController extends Controller
     {
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
         Log::info($message);
-        $products = Product::latest()->all();
+        $products = Product::latest()->get();
         return view('admin.product.san-pham', compact('products'));
     }
 

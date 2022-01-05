@@ -40,10 +40,10 @@
                 @if(auth()->guard('admin')->user()->can('Xem sản phẩm'))
                 <a href="{{route('san-pham.index')}}">Thông tin sản phẩm</a>
                 @endif
-                @if(auth()->guard('admin')->user()->can('Xem thương hiệu'))
+                {{-- @if(auth()->guard('admin')->user()->can('Xem thương hiệu'))
                     <a href="{{route('thuong-hieu.index')}}">Thương hiệu</a>
                 @endif
-                {{-- @if(auth()->guard('admin')->user()->can('Xem đơn vị tính'))
+                 @if(auth()->guard('admin')->user()->can('Xem đơn vị tính'))
                 <a href="{{route('don-vi-tinh.index')}}">Đơn vị tính</a>
                 @endif --}}
                 @if(auth()->guard('admin')->user()->can('Xem HTTT'))
