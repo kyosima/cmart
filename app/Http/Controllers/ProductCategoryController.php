@@ -72,6 +72,15 @@ class ProductCategoryController extends Controller
         ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
         ->get();
 
+        // LẤY RA BRAND ĐỂ SHOW KHÔNG BỊ TRÙNG LẶP 
+        $brandIds = $products->pluck('brand')->toArray();
+        $brands = array_unique($brandIds);
+
+        // ARRAY BRAND 
+        // VỚI KEY = BRAND ID
+        // VALUE = SỐ LƯỢNG SP THUỘC BRAND
+        $countBrand = array_count_values($brandIds);        
+
         $beginMinPrice = 0;
         $endMaxPrice = 0;
         $minPrice = 0;
@@ -164,15 +173,7 @@ class ProductCategoryController extends Controller
             }
         }
 
-        // LẤY RA BRAND ĐỂ SHOW KHÔNG BỊ TRÙNG LẶP 
-        $brandIds = $products->pluck('brand')->toArray();
-        $brands = array_unique($brandIds);
-
-        // ARRAY BRAND 
-        // VỚI KEY = BRAND ID
-        // VALUE = SỐ LƯỢNG SP THUỘC BRAND
-        $countBrand = array_count_values($brandIds);
-
+        // add class active vào nút "mặc định" trên thanh sắp xếp
         $isDefault = $request->query();
 
         return view('proCat.danhmucsanpham', compact('proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory', 'minPrice', 'maxPrice', 'beginMinPrice', 'endMaxPrice', 'isDefault'));
