@@ -23,7 +23,9 @@ h1 {
 .checkorder li {
     list-style: none;
 }
-
+.progress-order .table thead th{
+    vertical-align: middle;
+}
 .check-order ul li {
     border-bottom: 1px solid #fff;
 }

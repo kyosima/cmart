@@ -83,13 +83,14 @@ header li {
     }
     .bannercmart .text {
         color: transparent;
-        font-size: 1.8em;
+        font-size: 20px;
         display: inline-block;
         border-radius: 3px;
         background-color: #1d3557;
         position: relative;
         -webkit-background-clip: text;
         background-clip: text;
+        text-transform: uppercase;
     }
     .text:before {
         content: attr(data-title);
@@ -303,8 +304,18 @@ header li {
         position: absolute;
     }
     .bottom-header .search-menu {
-        min-width: 500px;
+        min-width: 490px;
         position: relative;
+    }
+    .menu-demuc div:last-child a{
+        border: unset;
+    }
+    .tag-top a{
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+    .menu-demuc{
+        font-weight: 600;
     }
     .box-search {
         position: relative;
@@ -353,10 +364,20 @@ header li {
         background-color: #ffba00;
         border-radius: 8px;
     }
+    .ct-header{
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+    .box-contacth img{
+        width: 25px;
+        margin-right: 5px;
+    }
+    .box-contacth a{
+        font-size: 20px;
+    }
     .tag-top {
         position: relative;
         text-transform: capitalize;
-        margin: 0 5px;
     }
     .tag-top ul li a {
         font-size: 1.2em;
@@ -440,11 +461,14 @@ header li {
         line-height: 0px;
         font-size: 10px;
     }
-    .login-logout {
-        padding: 0px 40px;
+    .login-logout, .login-logout.navbar {
+        padding: 0px 30px;
     }
     .login-logout img {
         width: 35px;
+    }
+    .login-logout img, .tracking-cart img{
+        margin-right: 5px;
     }
     /* .bottom-header .cart .number-cart {
         display: -webkit-box;
@@ -494,8 +518,11 @@ header li {
         height: auto;
         width: 100%;
     }
+    .navbar{
+        padding: unset;
+    }
     .logo-header {
-        width: 135px;
+        width: 100px;
         padding-top: 4px;
         padding-left: 0px;
     }

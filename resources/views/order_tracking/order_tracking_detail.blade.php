@@ -75,10 +75,10 @@
                                 <div style="overflow-x:auto;">
                                     <table class="table table-striped ">
                                         <thead class="text-center">
-                                            <th class="text-uppercase">Đã đặt hàng</th>
-                                            <th class="text-uppercase">Đã xác nhận thanh toán</th>
-                                            <th class="text-uppercase">Đang xử lý</th>
-                                            <th class="text-uppercase">Đang vận chuyển</th>
+                                            <th class="text-uppercase">Đã<br/>đặt hàng</th>
+                                            <th class="text-uppercase">Đã xác nhận<br/>thanh toán</th>
+                                            <th class="text-uppercase">Đang<br/>xử lý</th>
+                                            <th class="text-uppercase">Đang<br/>vận chuyển</th>
                                             <th class="text-uppercase">Hoàn thành</th>
                                             <th class="text-uppercases">Đã hủy</th>
                                         </thead>

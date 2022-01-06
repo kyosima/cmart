@@ -10,14 +10,14 @@
 
 <style type="text/css">
 .thongbao_register {
-    border: 2px solid #003c7c;
     border-radius: 5px;
-    padding: 5px;
     font-size: 14px;
     text-align: left;
-    background: #006ee3;margin-bottom:30px
 }
-
+.thongbao_register ul{
+    list-style: none;
+    padding: 0;
+}
 .loaigiayto {
     border: none;
     padding: 12px;
@@ -34,16 +34,7 @@
         <div class="row d-flex justify-content-center">
             <div class="col col-lg-6 col-md-6 col-xs-12 col-sm-12 ">
                 <section class="loginWrapper">
-                    <div class="thongbao_register ">
-                        <ul class="m-0">
-                            <li class="text-light">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, 
-                                và chúng tôi thực hiện vô cùng nghiêm ngặt. 
-                            </li>
-                            <li class="text-light">Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, 
-                                tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết.
-                            </li>
-                        </ul>
-                    </div>
+                    
 
                     <ul class="tabs">
                         <li class="active">Đăng nhập</li>
@@ -72,7 +63,7 @@
                                     @endif
                                     <input type="text" name="phone" placeholder="Tài khoản">
                                     <input type="password" name="password" placeholder="Mật khẩu">
-                                    <input type="submit" value="Login" name="Đăng nhập">
+                                    <input type="submit" value="Đăng nhập" name="Đăng nhập">
                                 </form>
 
                             </div>
@@ -81,8 +72,18 @@
                         <li>
                             <form method="POST" action="{{ route('user.register') }}" role="form" enctype="multipart/form-data">
                             @csrf
+                            
                             <div class="content__wrapper">
-
+                                <div class="thongbao_register ">
+                                    <ul class="m-0">
+                                        <li class="text-light">- Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, 
+                                            và chúng tôi thực hiện vô cùng nghiêm ngặt. 
+                                        </li>
+                                        <li class="text-light">- Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, 
+                                            tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết.
+                                        </li>
+                                    </ul>
+                                </div>
                                     <input type="text" name="hoten" placeholder="Mời nhập họ và tên có dấu">
                                     <input type="text" name="phone" placeholder="Mời nhập số điện thoại đăng ký giao dịch">
                                     
@@ -133,7 +134,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <input type="submit" value="Register" name="Đăng ký">
+                                    <input type="submit" value="Đăng ký" name="Đăng ký">
 
                             </div>
                             </form>

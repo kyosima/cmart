@@ -25,7 +25,7 @@
                 <div class="logo-header">
                     <h1 title="Siêu thị Nhật Bản Japapa.vn" style="margin: 0;">
                         <a href="{{ url('/') }}" title="Siêu thị Nhật Bản Japana.vn">
-                            <img src="{{ asset('public/image/logo-c.png') }}" alt="Siêu Thị C-Mart">
+                            <img src="{{ asset('public/image/logo-cpc.png') }}" alt="Siêu Thị C-Mart">
                         </a>
                     </h1>
 
@@ -58,7 +58,7 @@
 
 
                                 @if (Auth::check())
-                                    <nav class="navbar navbar-expand-lg navbar-light">
+                                    <nav class="login-logout navbar navbar-expand-lg navbar-light">
                                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
                                             <ul class="navbar-nav ml-auto" style="">
                                                 <li class="nav-item" style="align-self: center;">
@@ -101,7 +101,7 @@
                                         </a>
                                         <a rel="nofollow" href="{{ url('/tai-khoan ') }}" title="Tài khoản">
                                             <div class="text-light">
-                                                <span class="text-light">Đang nhập/Đăng ký</span><br />
+                                                <span class="text-light">Đăng nhập/Đăng ký</span><br />
                                                 <b class="text-light">Tài khoản <i class="fa fa-chevron-down text-light"></i></b>
                                             </div>
                                         </a>
@@ -224,30 +224,26 @@
         <p>
             Mọi liên hệ nên thực hiện từ Số điện thoại đăng ký giao dịch và đến các kênh kết nối chính thức của C-Mart
         </p>
-        <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-6 col-6">
-                <div class="box-contacth">
-                    <b><a href="tel:0899302323">0899.302.323</a></b>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-6">
-                <div class="box-contacth">
-                    <b><a href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-6">
-                <div class="box-contacth">
-                    <b><a href="">Zalo</a></b>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-6">
-                <div class="box-contacth">
-                    <b><a href="mailto:hotro@cm.com.vn">hotro@cm.com.vn</a></b>
-                </div>
-            </div>
-        </div>
+        
     </div>
-
+    <div class="container">
+        <div class="d-flex justify-content-around align-items-center ct-header">
+  
+            <div class="box-contacth">
+                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/phone.png') }}" alt=""><a href="tel:0899302323">0899.302.323</a></b>
+            </div>
+            <div class="box-contacth">
+                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/facebook.png') }}" alt=""><a href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
+            </div>
+            <div class="box-contacth">
+                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/zalo.png') }}" alt=""><a href="">Zalo</a></b>
+            </div>
+            <div class="box-contacth">
+                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/email.png') }}" alt=""><a href="mailto:hotro@cm.com.vn">hotro@cm.com.vn</a></b>
+            </div>
+    </div>
+    </div>
+   
 </header>
 <!-- menu-tablet-mobile -->
 <header class="header-tablet-mobile">

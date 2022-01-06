@@ -267,7 +267,7 @@ img {
                 </div>
                 <hr class="my-4" />
                 <div class="row mb-4">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                     <div class="d-flex justify-content-between align-items-center experience"><span><input type="checkbox" id="changePassword" name="changePassword"> Đổi mật khẩu</span></div>
                         <div class="form-group">
                             <label for="inputPassword5">Mật khẩu mới</label>
@@ -278,14 +278,14 @@ img {
                             <input type="password" class="form-control password" name="passwordAgain" placeholder="Mời nhập lại mật khẩu" disabled>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6">
                         <p class="mb-2">Hướng dẫn đổi mật khẩu</p>
                         <ul class="small text-muted pl-4 mb-0">
                             <li>Click vào checkbox đổi mật khẩu</li>
                             <li>Điền mật khẩu mới và ô nhập lại mật khẩu</li>
                             <li>Sau đó chọn lưu thông tin</li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
