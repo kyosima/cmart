@@ -137,7 +137,7 @@ class ProductCategoryController extends Controller
 
         // add class active vào nút "mặc định" trên thanh sắp xếp
         $isDefault = $request->query();
-        $products = $products->paginate(16);
+        $products = $products->paginate(5);
 
         return view('proCat.danhmucsanpham', compact('proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory', 'minPrice', 'maxPrice', 'beginMinPrice', 'endMaxPrice', 'isDefault'));
     }

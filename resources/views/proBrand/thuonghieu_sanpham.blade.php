@@ -100,7 +100,8 @@
                                 <ul>
                                     <li class="d-lg-inline d-none">Sắp xếp theo:</li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order();" class="order-default <?php echo count($isDefault) == 0 ? 'active' : '' ?>">Mặc định</a>
+                                        <a href="javascript:order();" class="order-default <?php echo count($isDefault) == 0 || 
+                                        (count($isDefault) == 1 && array_key_exists('page', $isDefault)) ? 'active' : '' ?>">Mặc định</a>
                                     </li>
                                     <li class="li-filter-cate">
                                         <a href="javascript:order('regular_price desc');" class="">Giá cao</a>
