@@ -2,6 +2,7 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('public/css/danhmucsanpham.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/pagination.css') }}">
 
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
@@ -353,7 +354,7 @@
                             <!-- Pagination -->
                             <div class="text-center">
                                 <div class="nav_pager">
-                                    {{ $products->links('product.include.pagination') }}
+                                    {{ $products->appends(request()->input())->links('product.include.pagination') }}
                                 </div>
                             </div>
 
@@ -560,11 +561,11 @@
                 $('.submit_click[value="' + element + '"]').prop('checked', true)
             });
 
-            if (orders != '') {
+            if (orders != '' && orders != null) {
                 $("#order").val(orders);
                 $(`li.li-filter-cate > a[href*="${orders}"]`).addClass('active')
             } 
-            else if (sales != '') {
+            else if (sales == '2') {
                 $("#sale").val(sales);
                 $(`li.li-filter-cate > a[href*="${sales}"]`).addClass('active')
             } 
@@ -579,6 +580,7 @@
         var brand = urlSearchParams.getAll("id_brand[]");
         var orders = urlSearchParams.get("order");
         var sales = urlSearchParams.get("sale");
+
     </script>
 
 @endpush

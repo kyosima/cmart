@@ -2,6 +2,7 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('public/css/danhmucsanpham.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/pagination.css') }}">
 
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
@@ -182,10 +183,11 @@
                                 @endforeach
                             </div>
 
+
                             <!-- Pagination -->
                             <div class="text-center">
                                 <div class="nav_pager">
-                                    {{ $products->links('product.include.pagination') }}
+                                    {{ $products->appends(request()->input())->links('product.include.pagination') }}
                                 </div>
                             </div>
 
@@ -310,23 +312,22 @@
             $(".submit_click").click(function() {
                 $("#filter_form").submit()
             });
-            if (orders != '') {
-                $("#order").val(orders);
-                $(`li.li-filter-cate > a[href*="${orders}"]`).addClass('active')
-            } 
-            else if (sales != '') {
-                $("#sale").val(sales);
-                $(`li.li-filter-cate > a[href*="${sales}"]`).addClass('active')
-            } 
-            else {
-                $('li.li-filter-cate > a.order-default').addClass('active')
-            }
-
         });
 
         const urlSearchParams = new URLSearchParams(window.location.search);
         var orders = urlSearchParams.get("order");
         var sales = urlSearchParams.get("sale");
+        if (orders != '' && orders != null) {
+            $("#order").val(orders);
+            $(`li.li-filter-cate > a[href*="${orders}"]`).addClass('active')
+        } 
+        else if (sales == '2') {
+            $("#sale").val(sales);
+            $(`li.li-filter-cate > a[href*="${sales}"]`).addClass('active')
+        } 
+        else {
+            $('li.li-filter-cate > a.order-default').addClass('active')
+        }
     </script>
 
 @endpush

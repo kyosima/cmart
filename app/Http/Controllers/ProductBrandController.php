@@ -27,8 +27,8 @@ class ProductBrandController extends Controller
         $products = Product::where('brand', $slug)
         ->where('status', 1)
         ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
-        ->paginate(16);
-        
+        ->get();
+
         $beginMinPrice = 0;
         $endMaxPrice = 0;
         $minPrice = 0;
@@ -39,6 +39,21 @@ class ProductBrandController extends Controller
             $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
         }
 
+        // SORT THEO ORDER
+        if ($request->order != null || $request->order != '') {
+            if ($order[1] == 'asc') {
+                $products = $products->sortBy($order[0]);
+            } else {
+                $products = $products->sortByDesc($order[0]);
+            }
+        }
+        // SORT THEO SALE
+        else if ($request->sale == 2) {
+            $products = $products->where('shock_price', '>', 0)
+            ->where('status', 1)
+            ->where('shock_price', '!=', null);
+        }
+        
         // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
         if (isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
             if (
@@ -47,30 +62,15 @@ class ProductBrandController extends Controller
             ) {
                 $beginMinPrice = $request->beginMinPrice;
                 $endMaxPrice = $request->endMaxPrice;
-                $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice])->paginate(16);
+                $products = $products->whereBetween('regular_price', [$request->beginMinPrice, $request->endMaxPrice]);
             } else {
                 return redirect()->route('proBrand.index', $slug);
             }
         }
 
-        // SORT THEO ORDER
-        if ($request->order != null || $request->order != '') {
-            if ($order[1] == 'asc') {
-                $products = $products->sortBy($order[0])->paginate(16);
-            } else {
-                $products = $products->sortByDesc($order[0])->paginate(16);
-            }
-        }
-        // SORT THEO SALE
-        else if ($request->sale == 2) {
-            $products = $products->where('shock_price', '>', 0)
-            ->where('status', 1)
-            ->where('shock_price', '!=', null)
-            ->paginate(16);
-        }
-
         // add class active vào nút "mặc định" trên thanh sắp xếp
         $isDefault = $request->query();
+        $products = $products->paginate(16);
 
         return view('proBrand.thuonghieu_sanpham', compact('products', 'slug', 'minPrice', 'maxPrice', 'beginMinPrice', 'endMaxPrice', 'isDefault'));
     }
