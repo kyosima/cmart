@@ -98,14 +98,14 @@ tbody tr:nth-child(even) td {
                         <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
                         <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <button class="alert alert-success m-0 text-center" style="width: 85%;border-radius: 40px; background: orangered; color: white;">Số đơn hàng đã hoàn thành: {{$sodonhang}}</button>
                             </div>
-                            <div class="col-4">
-                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C: {{$user->tichluyC}}</button>
-                            </div>
-                            <div class="col-4">
+                            <!-- <div class="col-4">
                             <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
+                            </div> -->
+                            <div class="col-6">
+                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C: {{$user->tichluyC}}</button>
                             </div>
                         </div>
                         

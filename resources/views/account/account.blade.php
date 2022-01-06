@@ -15,7 +15,7 @@
     padding: 5px;
     font-size: 14px;
     text-align: left;
-    background: #006ee3;
+    background: #006ee3;margin-bottom:30px
 }
 
 .loaigiayto {
@@ -34,6 +34,16 @@
         <div class="row d-flex justify-content-center">
             <div class="col col-lg-6 col-md-6 col-xs-12 col-sm-12 ">
                 <section class="loginWrapper">
+                    <div class="thongbao_register ">
+                        <ul class="m-0">
+                            <li class="text-light">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, 
+                                và chúng tôi thực hiện vô cùng nghiêm ngặt. 
+                            </li>
+                            <li class="text-light">Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, 
+                                tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết.
+                            </li>
+                        </ul>
+                    </div>
 
                     <ul class="tabs">
                         <li class="active">Đăng nhập</li>
@@ -72,8 +82,7 @@
                             <form method="POST" action="{{ route('user.register') }}" role="form" enctype="multipart/form-data">
                             @csrf
                             <div class="content__wrapper">
-                                <div class="thongbao_register">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, và chúng tôi thực hiện vô cùng nghiêm ngặt. <br>Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, 
-                                    tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết.</div>
+
                                     <input type="text" name="hoten" placeholder="Mời nhập họ và tên có dấu">
                                     <input type="text" name="phone" placeholder="Mời nhập số điện thoại đăng ký giao dịch">
                                     
@@ -103,8 +112,8 @@
                                         </div>
                                         <div class="col-md-6 pb-3">
                                             <select name="sel_province" class="form-control select2"
-                                                data-placeholder="---Chọn tỉnh thành---" required>
-                                                <option value="">---Chọn tỉnh thành---</option>
+                                                data-placeholder=" Cấp tỉnh " required>
+                                                <option value=""> Cấp tỉnh </option>
                                                     @foreach ($province as $value)
                                                         <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
                                                         </option>
@@ -113,14 +122,14 @@
                                         </div>
                                         <div class="col-md-6 pb-3">
                                             <select class="form-control select2" name="sel_district"
-                                                data-placeholder="---Chọn quận huyên---" required>
-                                                <option value="">---Chọn quận huyên---</option>
+                                                data-placeholder=" Cấp huyện " required>
+                                                <option value=""> Cấp huyện </option>
                                             </select>
                                         </div>
                                         <div class="col-md-6 pb-3">
                                             <select class="form-control select2" name="sel_ward"
-                                                data-placeholder="---Chọn phường xã---" required>
-                                                <option value="">---Chọn phường xã---</option>
+                                                data-placeholder=" Cấp xã " required>
+                                                <option value=""> Cấp xã </option>
                                             </select>
                                         </div>
                                     </div>
@@ -135,7 +144,7 @@
                                 <form method="POST" action="">
                                     @csrf
                                     <input type="text" name="phone" placeholder="Mời nhập số điện thoại để lấy mật khẩu">
-                                    <input type="submit" value="Lấy lại mật khẩu" name="forgetPassword">
+                                    <input type="submit" value="Lấy mật khẩu (Giới hạn 3 lượt/ngày)" name="forgetPassword">
                                 </form>
                             </div>
                         </li>
