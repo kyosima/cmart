@@ -104,28 +104,28 @@
                                         (count($isDefault) == 1 && array_key_exists('page', $isDefault)) ? 'active' : '' ?>">Mặc định</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('regular_price desc');" class="">Giá cao</a>
+                                        <a href="javascript:order('regular_price desc');">Giá cao</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('regular_price asc');" class="">Giá thấp</a>
+                                        <a href="javascript:order('regular_price asc');">Giá thấp</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('cpoint desc');" class="">Điểm C cao</a>
+                                        <a href="javascript:order('cpoint desc');">Điểm C cao</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('cpoint asc');" class="">Điểm C thấp</a>
+                                        <a href="javascript:order('cpoint asc');">Điểm C thấp</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('mpoint desc');" class="">Điểm M cao</a>
+                                        <a href="javascript:order('mpoint desc');">Điểm M cao</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('mpoint asc');" class="">Điểm M thấp</a>
+                                        <a href="javascript:order('mpoint asc');">Điểm M thấp</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('name asc');" class="">A-z</a>
+                                        <a href="javascript:order('name asc');">A-z</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:sale('2');" class="">Sale</a>
+                                        <a href="javascript:sale('2');">Sale</a>
                                     </li>
                                     <li class="
                                     d-lg-none">
@@ -183,7 +183,6 @@
                                     </div>
                                 @endforeach
                             </div>
-
 
                             <!-- Pagination -->
                             <div class="text-center">

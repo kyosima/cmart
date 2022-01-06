@@ -272,28 +272,28 @@
                                         (count($isDefault) == 1 && array_key_exists('page', $isDefault)) ? 'active' : '' ?>">Mặc định</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('regular_price desc');" class="">Giá cao</a>
+                                        <a href="javascript:order('regular_price desc');">Giá cao</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('regular_price asc');" class="">Giá thấp</a>
+                                        <a href="javascript:order('regular_price asc');">Giá thấp</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('cpoint desc');" class="">Điểm C cao</a>
+                                        <a href="javascript:order('cpoint desc');">Điểm C cao</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('cpoint asc');" class="">Điểm C thấp</a>
+                                        <a href="javascript:order('cpoint asc');">Điểm C thấp</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('mpoint desc');" class="">Điểm M cao</a>
+                                        <a href="javascript:order('mpoint desc');">Điểm M cao</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('mpoint asc');" class="">Điểm M thấp</a>
+                                        <a href="javascript:order('mpoint asc');">Điểm M thấp</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:order('name asc');" class="">A-z</a>
+                                        <a href="javascript:order('name asc');">A-z</a>
                                     </li>
                                     <li class="li-filter-cate">
-                                        <a href="javascript:sale('2');" class="">Sale</a>
+                                        <a href="javascript:sale('2');">Sale</a>
                                     </li>
                                     <li class="
                                     d-lg-none">
@@ -549,14 +549,9 @@
                 }
             })
 
-
             $(".submit_click").click(function() {
                 $("#filter_form").submit()
             });
-
-            // category.forEach(element => {
-            //     $('.submit_click[value="' + element + '"]').prop('checked', true)
-            // });
 
             brand.forEach(element => {
                 $('.submit_click[value="' + element + '"]').prop('checked', true)
@@ -573,15 +568,12 @@
             else {
                 $('li.li-filter-cate > a.order-default').addClass('active')
             }
-
         });
 
         const urlSearchParams = new URLSearchParams(window.location.search);
-        // var category = urlSearchParams.getAll("category[]");
         var brand = urlSearchParams.getAll("id_brand[]");
         var orders = urlSearchParams.get("order");
         var sales = urlSearchParams.get("sale");
-
     </script>
 
 @endpush
