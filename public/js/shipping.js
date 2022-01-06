@@ -6,7 +6,7 @@ var token = jQuery('meta[name="csrf-token"]').attr('content');
 
 // function sendAjax(){
 //     $(".content-checkout").prepend('<div class="submit-overlay"><div class="spinner-border text-primary"></div></div>');
-//     $('select[name="sel_ward"]').html('<option value="">---Chọn phường xã---</option>');
+//     $('select[name="sel_ward"]').html('<option value="">--- Cấp phường xã---</option>');
 //     $(".order-total .amount").text(formatNumber(order_total) + 'đ');
 //     $('.checkout-shipping-method').remove();
 //     $('.checkout-shipping-label td').css("opacity", "1");
@@ -27,7 +27,7 @@ $(document).on('change', 'select[name="sel_province"]', function(event) {
     event.preventDefault();
     /* Act on the event */
     flag = false;
-    $('select[name="sel_district"]').html('<option value="">---Chọn quận huyên---</option>');
+    $('select[name="sel_district"]').html('<option value="">Cấp quận</option>');
     // sendAjax();
     // if($(this).val() == ''){
     //     RecieveAjax();
@@ -40,7 +40,7 @@ $(document).on('change', 'select[name="sel_province"]', function(event) {
         data: {id: $(this).val()},
     })
     .done(function(data) {
-        var html = '<option value="">---Chọn quận huyên---</option>';
+        var html = '<option value="">Cấp huyện</option>';
         $.each(data, function( index, value ) {
             html += '<option value="'+value.maquanhuyen+'">'+value.tenquanhuyen+'</option>';
         });
@@ -69,7 +69,7 @@ $(document).on('change', 'select[name="sel_district"]', function(event) {
         data: {id: district},
     })
     .done(function(data) {
-        var html = '<option value="">---Chọn phường xã---</option>';
+        var html = '<option value="">Cấp xã</option>';
         $.each(data, function( index, value ) {
             html += '<option value="'+value.maphuongxa+'">'+value.tenphuongxa+'</option>';
         });
