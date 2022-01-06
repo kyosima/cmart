@@ -89,6 +89,7 @@ class ProductController extends Controller
             ->toArray();
             $categoryIds = array_diff( $categoryIds, [0] );
             $new_products = Product::latest()->paginate(5);
+            $related_product = $product->productUpsell($product->id);
             $lastview_product = Product::latest()->paginate(10);
             $ratings = $product->ratings()->latest()->get();
             $rating_sum = $product->ratings()->sum('value');
@@ -100,8 +101,8 @@ class ProductController extends Controller
                             $product->ratings()->whereValue(3)->count(),
                             $product->ratings()->whereValue(2)->count(),
                             $product->ratings()->whereValue(1)->count()
-                            ];
-            return view('product.product_detail', ['ratings'=>$ratings, 'rating_list'=>$rating_list,'rating_count'=>$rating_count,'rating_average'=>$rating_average, 'product' => $product, 'categoryIds' => $categoryIds, 'new_products'=>$new_products, 'lastview_product'=>$lastview_product]);
+                           ];
+            return view('product.product_detail', ['related_product'=>$related_product,'ratings'=>$ratings, 'rating_list'=>$rating_list,'rating_count'=>$rating_count,'rating_average'=>$rating_average, 'product' => $product, 'categoryIds' => $categoryIds, 'new_products'=>$new_products, 'lastview_product'=>$lastview_product]);
         }
     }
 

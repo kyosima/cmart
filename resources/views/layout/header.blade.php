@@ -12,173 +12,211 @@
         font-size: 25px;
         color: white;
     }
+
 </style>
 
 <!-- Pc -->
 <header class="header-site sticky-top" id="top">
 
     <!-- Some content to fill up the page -->
-
-    <nav class="bottom-header navbar ">
-      <div class="container">
-        <div class="d-flex flex-lg-row flex-md-row flex-column align-items-center ">
-          <div class="logo-header ">
-            <h1 title="Siêu thị Nhật Bản Japapa.vn" style="margin: 0;">
-              <a href="{{url('/')}}" title="Siêu thị Nhật Bản Japana.vn">
-                <img src="{{asset('public/image/logo-c.png')}}" alt="Siêu Thị C-Mart">
-              </a>
-            </h1>
-
-          </div>
-
-          <div class="search-menu">
-            <div class="box-search">
-              <form method="GET" name="frm" id="frm" action="{{route('search')}}" enctype="multipart/form-data">
-                <div class="form-group">
-                  <input data-url="{{route('search.suggest')}}" onkeyup="showSearchSuggest(this)" autocomplete="off" x-webkit-speech_off="" x-webkit-grammar_off="builtin:search" id="search-input" name="keyword" minlength="3"  class="form-control ipt-search" placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." type="text" value="">
-                  <button onclick="" type="submit" class="icon-search"><i class="fas fa-search"></i></button>
-                  <div id="showsearch">
-                    <ul></ul>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="menu-demuc d-flex justify-content-between">
-              <div class="cate-menu" id="main-menu">
-                <a href="{{route('proCat.showAll')}}">
-                  <p class="title-cate"> Danh mục sản phẩm <i class="fas fa-bars"></i></p>
-                </a>
-            
-              </div>
-              <div class="tag-top">
-                <ul class="d-flex dv-ht">
-                    <li class="text-color-white dropdowncmart">
-                        <a class="text-color-white" href="#">
-                            Dịch Vụ của C-Mart
-
+    <div class=" bottom-header">
+        <div class="container">
+            <nav class=" navbar">
+                <div class="logo-header">
+                    <h1 title="Siêu thị Nhật Bản Japapa.vn" style="margin: 0;">
+                        <a href="{{ url('/') }}" title="Siêu thị Nhật Bản Japana.vn">
+                            <img src="{{ asset('public/image/logo-c.png') }}" alt="Siêu Thị C-Mart">
                         </a>
-                        <ul class="dropdown-navcmart dvcmart">
-                            @php
-                            $pages = App\Models\InfoCompany::whereType('service')->get();
-                        @endphp
-                        @foreach ( $pages as $page )
-                            <li><a rel="nofollow" href="{{ route('chinh-sach.show', $page->slug) }}"
-                                title="{{$page->name}}">{{$page->name}}</a></li>
-                        @endforeach
-                        
-                        </ul>
-                    </li>
+                    </h1>
 
-                </ul>
+                </div>
+                <div class="">
+                    <div class="">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="search-menu">
+                                <div class="box-search">
+                                    <form method="GET" name="frm" id="frm" action="{{ route('search') }}"
+                                        enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <input data-url="{{ route('search.suggest') }}"
+                                                onkeyup="showSearchSuggest(this)" autocomplete="off"
+                                                x-webkit-speech_off="" x-webkit-grammar_off="builtin:search"
+                                                id="search-input" name="keyword" minlength="3" required
+                                                class="form-control ipt-search"
+                                                placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." type="text"
+                                                value="">
+                                            <button onclick="" type="submit" class="icon-search"><i
+                                                    class="fas fa-search"></i></button>
+                                            <div id="showsearch">
+                                                <ul></ul>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between ml-auto">
 
-            </div>
-                        <div class="tag-top">
 
-                            <ul class="d-flex dv-ht">
-                                <li class=" text-color-white dropdowncmart">
-                                    <a class="text-color-white" href="#">Điều khoản và Chính sách</a>
-                                    <!--Start of Dropdown-->
-                                    <ul class="dropdown-navcmart">
-                                        @php
-                                            $pages = App\Models\InfoCompany::whereType('policy')->get();
-                                        @endphp
-                                        @foreach ( $pages as $page )
-                                            <li><a rel="nofollow" href="{{ route('chinh-sach.show', $page->slug) }}"
-                                                title="{{$page->name}}">{{$page->name}}</a></li>
-                                        @endforeach
-                                        
-                                       
-                                    </ul>
-                                </li>
-                                <!-- <li><a class="text-color-white" href="#" title="mặt nạ">Dịch Vụ của C-Mart</a></li> -->
-                            </ul>
+                                @if (Auth::check())
+                                    <nav class="navbar navbar-expand-lg navbar-light">
+                                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                            <ul class="navbar-nav ml-auto" style="">
+                                                <li class="nav-item" style="align-self: center;">
+                                                    <div class="btn-group">
+                                                        <a class="btn btn-light text-dark"
+                                                            href="{{ url('/xac-thuc-ho-so') }}"><i
+                                                                class="fas fa-user text-dark"></i>
+                                                            {{ Auth::user()->phone }}</a>
+                                                        <button type="button"
+                                                            class="btn  btn-light text-dark dropdown-toggle dropdown-toggle-split"
+                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            <span class="sr-only">Toggle Dropdown</span>
+                                                        </button>
+                                                        <div class="dropdown-menu text-dark">
+                                                            <a class="dropdown-item text-dark"
+                                                                href="{{ url('/xac-thuc-ho-so') }}">Thông tin
+                                                                HSKH</a>
+                                                            <a class="dropdown-item text-dark"
+                                                                href="{{ url('/lichsu') }}">Lịch sử
+                                                                đơn
+                                                                hàng</a>
+                                                            <!--<a class="dropdown-item text-dark" href="{{ url('/cpoint') }}">Lịch sử nhận point</a>-->
+                                                            <!-- <a class="dropdown-item text-dark" href="#">Tài khoản tiền tích lũy C</a> -->
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item text-danger"
+                                                                href="{{ route('logoutuser') }}">Đăng
+                                                                xuất</a>
+                                                        </div>
+                                                    </div>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </nav>
+                                @else
+                                    <div class="login-logout d-flex align-items-center">
+                                        <a rel="nofollow" href="{{ url('/tai-khaon ') }}" title="Tài khoản">
+                                            <img src="{{ asset('/public/image/iconuser.png') }}" alt="">
+                                        </a>
+                                        <a rel="nofollow" href="{{ url('/tai-khoan ') }}" title="Tài khoản">
+                                            <div class="text-light">
+                                                <span class="text-light">Đang nhập/Đăng ký</span><br />
+                                                <b class="text-light">Tài khoản <i class="fa fa-chevron-down text-light"></i></b>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endif
+                                <div class="tracking-cart d-flex align-items-center">
+                                    <div class="tracking d-flex align-items-center">
+                                        <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}" title="Kiểm tra đơn hàng">
+                                            <img src="{{ asset('/public/image/icontracking.png') }}" alt="">
+                                        </a>
+                                        <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}" title="Kiểm tra đơn hàng">
+
+                                            <div class="text-light">
+                                                <span class="text-light">Kiểm tra</span><br />
+                                                <span class="text-light">đơn hàng</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="cart d-flex align-items-center">
+                                        <a rel="nofollow" class="number-cart" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
+                                            <img src="{{ asset('/public/image/iconcart.png') }}" alt="">
+                                            <sup class="count-giohang">{{ Cart::instance('shopping')->count() > 0 ? Cart::instance('shopping')->count() : '0' }}</sup>
+                                        </a>
+                                            <a rel="nofollow" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
+
+                                            <div >
+                                                <span class="text-light"></span><br />
+                                                <span class="text-light">Giỏ hàng</span>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                </div>
+                                {{-- <div class="item other-top item-follow-order">
+                                        <div class="follow-order other">
+                                            <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}"
+                                                title="Kiểm tra đơn hàng">
+                                                <i class="icon-all-new icon-follow icon-follow-header"></i>
+                                                <span class="text-color-white">Kiểm tra<br>đơn hàng</span>
+                                            </a>
+                                        </div>
+
+                                        <div class="cart other">
+                                            <a rel="nofollow" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
+                                                <i class="icon-all-new ico-header fa fa-shopping-cart"></i>
+
+                                                <span class="number-cart"><abbr
+                                                        class="count-giohang">{{ Cart::instance('shopping')->count() > 0 ? Cart::instance('shopping')->count() : '0' }}</abbr></span>
+
+                                            </a>
+                                        </div>
+                                    </div> --}}
+                            </div>
                         </div>
                     </div>
+                    <div>
+                        <div class="menu-demuc d-flex">
+                            <div class="cate-menu" id="main-menu">
+                                <a href="{{ route('proCat.showAll') }}">
+                                    <p class="title-cate"> Danh mục sản phẩm <i class="fas fa-bars"></i></p>
+                                </a>
 
-                </div>
+                            </div>
+                            <div class="tag-top">
+                                <ul class="d-flex dv-ht">
+                                    <li class="text-color-white dropdowncmart">
+                                        <a class="text-color-white" href="#">
+                                            Dịch Vụ của C-Mart
 
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <!-- <div class="item item-custom d-flex ">
-            <div class="time-top">
-              <i class="fas fa-clock"></i>
-            </div>
-            <p id="working-time-header"> Giờ làm: 8h - 17h00 (T2 - CN) </p>
-               </div> -->
+                                        </a>
+                                        <ul class="dropdown-navcmart dvcmart">
+                                            @php
+                                                $pages = App\Models\InfoCompany::whereType('service')->get();
+                                            @endphp
+                                            @foreach ($pages as $page)
+                                                <li><a rel="nofollow"
+                                                        href="{{ route('chinh-sach.show', $page->slug) }}"
+                                                        title="{{ $page->name }}">{{ $page->name }}</a></li>
+                                            @endforeach
+
+                                        </ul>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                            <div class="tag-top">
+
+                                <ul class="d-flex dv-ht">
+                                    <li class=" text-color-white dropdowncmart">
+                                        <a class="text-color-white" href="#">Điều khoản và Chính sách</a>
+                                        <!--Start of Dropdown-->
+                                        <ul class="dropdown-navcmart">
+                                            @php
+                                                $pages = App\Models\InfoCompany::whereType('policy')->get();
+                                            @endphp
+                                            @foreach ($pages as $page)
+                                                <li><a rel="nofollow"
+                                                        href="{{ route('chinh-sach.show', $page->slug) }}"
+                                                        title="{{ $page->name }}">{{ $page->name }}</a></li>
+                                            @endforeach
 
 
-
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav ml-auto" style="width: 250px; flex-direction: column;">
-                            <!-- <li class="nav-item">
-                <a class="nav-link" href="#">
-                  www.facebook.com/japana.sieuthinhat <i class="fab fa-facebook-f"></i></span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  (028) 7108 8889 <i class="fas fa-phone-alt"></i></a>
-              </li> -->
-              @if (Auth::check()) 
-             
-              <li class="nav-item" style="align-self: center;">
-                <div class="btn-group">
-                  <a class="btn btn-light text-dark" href="{{url('/xac-thuc-ho-so')}}"><i class="fas fa-user text-dark"></i> {{ Auth::user()->phone}}</a>
-                  <button type="button" class="btn  btn-light text-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <div class="dropdown-menu text-dark">
-                    <a class="dropdown-item text-dark" href="{{url('/xac-thuc-ho-so')}}">Thông tin HSKH</a>
-                    <a class="dropdown-item text-dark" href="{{url('/lichsu')}}">Lịch sử đơn hàng</a>
-                    <!--<a class="dropdown-item text-dark" href="{{url('/cpoint')}}">Lịch sử nhận point</a>-->
-                    <!-- <a class="dropdown-item text-dark" href="#">Tài khoản tiền tích lũy C</a> -->
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="{{route('logoutuser')}}">Đăng xuất</a>
-                  </div>
-                </div>
-                
-                </li>
-              @else
-              <li class="nav-item">
-                <a class="nav-link" style="    padding: 5px 34px;" href="{{url('/tai-khoan')}}"> 
-                    <div class="row">
-                        <div class="col-md-3">
-                            <i class="fas fa-user text-light" style="font-size: 30px;"></i>
+                                        </ul>
+                                    </li>
+                                    <!-- <li><a class="text-color-white" href="#" title="mặt nạ">Dịch Vụ của C-Mart</a></li> -->
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <span class="pb-1">Đăng nhập / Đăng ký</span>
-                            <br>
-                            <span style="font-size: 16px">Tài khoản <i class="fa fa-chevron-down text-light" style="padding: 0px; font-size:11px"></i></span>
-                        </div>
-                    </div>
-                    
-                </a>
-              </li>
-              @endif
-               
-
-                        </ul>
-                    </div>
-                </nav>
-                <div class="item other-top item-follow-order">
-                    <div class="follow-order other">
-                        <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}" title="Kiểm tra đơn hàng">
-                            <i class="icon-all-new icon-follow icon-follow-header"></i>
-                            <span class="text-color-white">Kiểm tra<br>đơn hàng</span>
-                        </a>
-                    </div>
-                    <div class="cart other">
-                        <a rel="nofollow" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
-                            <i class="icon-all-new ico-header fa fa-shopping-cart"></i>
-                            <span class="number-cart"><abbr
-                                    class="count-giohang">{{ Cart::instance('shopping')->count() > 0 ? Cart::instance('shopping')->count() : '0' }}</abbr></span>
-                        </a>
                     </div>
                 </div>
-
-            </div>
-
         </div>
-
-    </nav>
+        </nav>
+    </div>
+    </div>
     <div class=" d-flex flex-column justify-center align-items-center bannercmart" id="gradient">
         <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
             Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
@@ -189,12 +227,12 @@
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
                 <div class="box-contacth">
-                    <b><a href="tel:0899302323">C-call</a></b>
+                    <b><a href="tel:0899302323">0899.302.323</a></b>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
                 <div class="box-contacth">
-                    <b><a href="">Facebook</a></b>
+                    <b><a href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
@@ -204,7 +242,7 @@
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">
                 <div class="box-contacth">
-                    <b><a href="mailto:hotro@cm.com.vn">Email</a></b>
+                    <b><a href="mailto:hotro@cm.com.vn">hotro@cm.com.vn</a></b>
                 </div>
             </div>
         </div>
@@ -213,7 +251,7 @@
 </header>
 <!-- menu-tablet-mobile -->
 <header class="header-tablet-mobile">
-   
+
     <div class="top-header">
         <div class="container">
             <div class="d-flex justify-content-between  align-items-center pb-2">
@@ -236,8 +274,8 @@
             <form method="GET" name="frm" id="frm" action="#" enctype="multipart/form-data" class="form-search">
                 <div class="header-search">
                     <i class="fas fa-search"></i>
-                    <input class="form-control ipt-search" type="text" placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." id="search"
-                        name="search">
+                    <input class="form-control ipt-search" type="text"
+                        placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." id="search" name="search">
                 </div>
             </form>
         </div>
@@ -256,61 +294,69 @@
                 <div role="tabpanel" class="tab-pane active" id="list">
                     <div class="box-tab">
                         <div class="menu-mobile">
-                          @php
-                              $categories = App\Models\ProductCategory::where('category_parent', 0)
-                                                                    ->where('id', '!=', 1)
-                                                                    ->where('status', 1)
-                                                                    ->with(['childrenCategories.products', 'products'])
-                                                                    ->get();
-                          @endphp
-                          @foreach ($categories as $item)
-                          @if (count($item->childrenCategories) < 1)
-                            <div class="item">
-                                <h4 class="title">
-                                    <a href="{{ route('proCat.index', $item->slug) }}" title="{{$item->name}}">{{$item->name}}</a>
-                                </h4>
-                            </div>
-                          @else
-                            <div class="item ">
-                              <li>
-                                <button class="title collapsed" type="button" data-toggle="collapse"
-                                    data-target="#collapse-{{$item->id}}" aria-expanded="false" aria-controls="collapse-{{$item->id}}">
-                                    <a href="{{ route('proCat.index', $item->slug) }}" title="{{$item->name}}">{{$item->name}}</a>
-                                    <span class="expand-menu">
-                                        <i class="fas fas-custom fa-angle-right"></i>
-                                    </span>
-                                </button>
+                            @php
+                                $categories = App\Models\ProductCategory::where('category_parent', 0)
+                                    ->where('id', '!=', 1)
+                                    ->where('status', 1)
+                                    ->with(['childrenCategories.products', 'products'])
+                                    ->get();
+                            @endphp
+                            @foreach ($categories as $item)
+                                @if (count($item->childrenCategories) < 1)
+                                    <div class="item">
+                                        <h4 class="title">
+                                            <a href="{{ route('proCat.index', $item->slug) }}"
+                                                title="{{ $item->name }}">{{ $item->name }}</a>
+                                        </h4>
+                                    </div>
+                                @else
+                                    <div class="item ">
+                                        <li>
+                                            <button class="title collapsed" type="button" data-toggle="collapse"
+                                                data-target="#collapse-{{ $item->id }}" aria-expanded="false"
+                                                aria-controls="collapse-{{ $item->id }}">
+                                                <a href="{{ route('proCat.index', $item->slug) }}"
+                                                    title="{{ $item->name }}">{{ $item->name }}</a>
+                                                <span class="expand-menu">
+                                                    <i class="fas fas-custom fa-angle-right"></i>
+                                                </span>
+                                            </button>
 
-                                <ul id="collapse-{{$item->id}}" class="collapse sub-nav">
-                                    @foreach ($item->childrenCategories as $children)
-                                        @include('layout.mobilemenu', ['children' => $children])
-                                    @endforeach
-                                </ul>
-                              </li>
-                            </div>
-                          @endif
-                          @endforeach
+                                            <ul id="collapse-{{ $item->id }}" class="collapse sub-nav">
+                                                @foreach ($item->childrenCategories as $children)
+                                                    @include('layout.mobilemenu', ['children' => $children])
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane " id="acc">
                     <div class="box-item">
                         <ul>
-                          @if (Auth::check()) 
-                          <li><a id="profile-btn" href="{{url('/xac-thuc-ho-so')}}" title="title"><i class="fas fa-user"></i><span>{{ Auth::user()->name}}</span></a></li>
-                          @else
-                          <li><a id="register-btn" href="{{url('/tai-khoan')}}" title="title"><i class="fas fa-user"></i><span>Đăng ký tài khoản</span></a></li>
-                          <li><a id="login-btn" href="{{url('/tai-khoan')}}" title="title"><i class="fas fa-sign-in-alt"></i></i><span>Đăng nhập</span></a></li>
-                          @endif
-                          <li><a href="{{url('/theo-doi-don-hang ')}}" title="title"><i class="far fa-sticky-note"></i><span>Tra cứu đơn hàng</span></a></li>
+                            @if (Auth::check())
+                                <li><a id="profile-btn" href="{{ url('/xac-thuc-ho-so') }}" title="title"><i
+                                            class="fas fa-user"></i><span>{{ Auth::user()->name }}</span></a>
+                                </li>
+                            @else
+                                <li><a id="register-btn" href="{{ url('/tai-khoan') }}" title="title"><i
+                                            class="fas fa-user"></i><span>Đăng ký tài khoản</span></a></li>
+                                <li><a id="login-btn" href="{{ url('/tai-khoan') }}" title="title"><i
+                                            class="fas fa-sign-in-alt"></i></i><span>Đăng nhập</span></a></li>
+                            @endif
+                            <li><a href="{{ url('/theo-doi-don-hang ') }}" title="title"><i
+                                        class="far fa-sticky-note"></i><span>Tra cứu đơn hàng</span></a></li>
                         </ul>
-                      </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <div role="tabpanel" class="tab-pane " id="acc">
-           
+        </div>
+        </div>
+        <div role="tabpanel" class="tab-pane " id="acc">
+
         </div>
     </nav>
     <span class="screen-darken"></span>
@@ -338,15 +384,15 @@
             $('.list-group-menu').collapse('hide');
             // }
         });
-        $(document).on('click', '.expand-menu', function(){
-          console.log($(this).parent().hasClass('collapsed'));
-          if($(this).parent().hasClass('collapsed')) {
-            $(this).find("i").removeClass('fa-angle-right')
-            $(this).find("i").addClass('fa-angle-down')
-          } else {
-            $(this).find("i").addClass('fa-angle-right')
-            $(this).find("i").removeClass('fa-angle-down')
-          }
+        $(document).on('click', '.expand-menu', function() {
+            console.log($(this).parent().hasClass('collapsed'));
+            if ($(this).parent().hasClass('collapsed')) {
+                $(this).find("i").removeClass('fa-angle-right')
+                $(this).find("i").addClass('fa-angle-down')
+            } else {
+                $(this).find("i").addClass('fa-angle-right')
+                $(this).find("i").removeClass('fa-angle-down')
+            }
         })
     });
 

@@ -51,7 +51,7 @@
                                             placeholder="Mời nhập họ và tên có dấu" required value="{{ $user->hoten }}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Tỉnh/ Thành phố<sup class="text-danger">*</sup></label>
+                                        <label for="">Cấp tỉnh<sup class="text-danger">*</sup></label>
                                         <select name="sel_province" class="form-control select2"
                                             data-placeholder="---Chọn tỉnh thành---" required>
 
@@ -63,7 +63,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Phường/ Xã<sup class="text-danger">*</sup></label>
+                                        <label for="">Cấp xã<sup class="text-danger">*</sup></label>
                                         <select class="form-control select2" name="sel_ward"
                                             data-placeholder="---Chọn phường xã---" required>
 
@@ -84,7 +84,7 @@
                                             required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Quận/ Huyện<sup class="text-danger">*</sup></label>
+                                        <label for="">Cấp huyện<sup class="text-danger">*</sup></label>
                                         <select class="form-control select2" name="sel_district"
                                             data-placeholder="---Chọn quận huyên---" required>
 
@@ -92,7 +92,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Địa chỉ<sup class="text-danger">*</sup></label>
+                                        <label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>
                                         <input type="text" name="address" class="form-control" value=""
                                             placeholder="Mời nhập địa chỉ" required>
                                     </div>
@@ -149,7 +149,7 @@
                                             placeholder="Mời nhập mã số thuế công ty">
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Địa chỉ<sup class="text-danger">*</sup></label>
+                                        <label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>
                                         <input type="text" name="vat_address" class="form-control" value=""
                                             placeholder="Mời nhập địa chỉ công ty">
                                     </div>
@@ -358,9 +358,9 @@
                                 <p class="py-1">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, và chúng tôi thực hiện vô cùng nghiêm ngặt. Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết</p>
                             </div>
                         </div>
-                        <a class="btn-back-cart" href="{{ route('cart.index') }}">Quay lại giỏ hàng</a>
+                        <a class="btn-back-cart" href="{{ route('cart.index') }}">Quay lại Giỏ hàng</a>
 
-                        <button class="btn-dathang" type="submit">Tiếp tục thanh toán</button>
+                        <button class="btn-dathang" type="submit">Tiếp tục Thanh toán</button>
                     </div>
                 </div>
             </div>  

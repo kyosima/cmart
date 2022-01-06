@@ -58,7 +58,9 @@
                                 <p><span>SKU:</span>{{ $product->sku }}</p>
                             </div>
                             <div class="trademark info-detail">
-                                <p><span>Thương hiệu:</span><a href="{{route('proBrand.index', $product->brand)}}">{{ $product->brand }}</a></p>
+                                <p><span>Thương hiệu:</span><a
+                                        href="{{ route('proBrand.index', $product->brand) }}">{{ $product->brand }}</a>
+                                </p>
                             </div>
 
 
@@ -70,7 +72,7 @@
                                 <!--</span></span><span>Điểm C nhận-->
                                 <!--        được:</span>{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}-->
                                 <!--    điểm-->
-                                 
+
                                 <!--</p>-->
                                 <!--<p> <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span-->
                                 <!--    class="ttt">M là Điểm Dịch Vụ nhận được khi mua sản phẩm, có chức-->
@@ -79,7 +81,7 @@
                                 <!--</span></span><span>Điểm M nhận-->
                                 <!--        được:</span>{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}-->
                                 <!--    điểm-->
-                                   
+
                                 <!--</p>-->
 
                                 <style>
@@ -451,31 +453,33 @@
                             <div class="title">
                                 <p>Sản phẩm liên quan</p>
                             </div>
-                            @foreach ($new_products as $item)
-                                <div class="product">
-                                    <div class="product_img">
-                                        <a href="{{ route('san-pham.show', $item->slug) }}">
+                            @if ($related_product[0] != null)
+                                @foreach ($related_product as $item)
+                                    <div class="product">
+                                        <div class="product_img">
+                                            <a href="{{ route('san-pham.show', $item->slug) }}">
 
-                                            <img src="{{ asset($item->feature_img) }}" alt="">
-                                        </a>
+                                                <img src="{{ asset($item->feature_img) }}" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product_text">
+                                            <a href="{{ route('san-pham.show', $item->slug) }}">
+
+                                                <p>{{ $item->name }}</p>
+                                            </a>
+                                            @if ($item->productPrice()->value('shock_price') != null || $item->productPrice()->value('shock_price') != 0)
+                                                <h5>{{ formatPrice($item->productPrice()->value('shock_price')) }}</h5>
+                                                <h5 id="h5">
+                                                    {{ formatPrice($item->productPrice()->value('regular_price')) }}
+                                                </h5>
+                                            @else
+                                                <h5>{{ formatPrice($item->productPrice()->value('regular_price')) }}</h5>
+                                            @endif
+                                        </div>
                                     </div>
-                                    <div class="product_text">
-                                        <a href="{{ route('san-pham.show', $item->slug) }}">
+                                @endforeach
 
-                                            <p>{{ $item->name }}</p>
-                                        </a>
-                                        @if ($item->productPrice()->value('shock_price') != null || $item->productPrice()->value('shock_price') != 0)
-                                            <h5>{{ formatPrice($item->productPrice()->value('shock_price')) }}</h5>
-                                            <h5 id="h5">{{ formatPrice($item->productPrice()->value('regular_price')) }}
-                                            </h5>
-                                        @else
-                                            <h5>{{ formatPrice($item->productPrice()->value('regular_price')) }}</h5>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endforeach
-
-
+                            @endif
                         </div>
                     </div>
                 </div>

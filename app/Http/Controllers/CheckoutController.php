@@ -43,7 +43,7 @@ class CheckoutController extends Controller
             $process_fee = 0;
             foreach($carts as $row){
                 $price = $row->model->productPrice()->first();
-                $tax += ($row->price * $price->tax / 100) * $row->qty;
+                $tax += ($row->price * $price->tax) * $row->qty;
                 $c_ship += $price->cship * $row->qty;
                 $v_ship += $price->viettel_ship * $row->qty;
                 $m_point += $price->mpoint * $row->qty;
@@ -104,7 +104,7 @@ class CheckoutController extends Controller
         $process_fee = 0;
         foreach($cart as $row){
             $price = $row->model->productPrice()->first();
-            $tax += ($row->price * $price->tax / 100) * $row->qty;
+            $tax += ($row->price * $price->tax) * $row->qty;
             $c_ship += $price->cship * $row->qty;
             $v_ship += $price->viettel_ship * $row->qty;
             $m_point += $price->mpoint * $row->qty;

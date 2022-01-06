@@ -38,35 +38,35 @@
                                 <ol class="progress">
                                     <li class=" ">
                                         <p>
-                                            Chờ xác nhận
+                                            Đã đặt hàng
                                         </p>
                                     </li>
                                     <li
                                         class="pause-complete @if ($order->status >= 1)success @endif
                                     ">
                                         <p>
-                                            Đã xác nhận <span></span>
+                                            Đã xác nhận thanh toán
                                         </p>
                                     </li>
                                     <li
                                         class="pause-complete @if ($order->status >= 2)success @endif
                                     ">
                                         <p>
-                                            Đang xử lý <span></span>
+                                            Đang xử lý 
                                         </p>
                                     </li>
                                     <li
                                         class="pause-complete @if ($order->status >= 3)success @endif
                                     ">
                                         <p>
-                                            Đang giao hàng <span></span>
+                                            Đang vận chuyển<span></span>
                                         </p>
                                     </li>
                                     <li
                                         class="pause-complete @if ($order->status >= 4)success @endif
                                     ">
                                         <p>
-                                            Giao hàng thành công <span></span>
+                                            Hoàn thành
                                         </p>
                                     </li>
                                 </ol>
@@ -75,11 +75,12 @@
                                 <div style="overflow-x:auto;">
                                     <table class="table table-striped ">
                                         <thead class="text-center">
-                                            <th>Đã đặt hàng</th>
-                                            <th>Đã xác nhận</th>
-                                            <th>Đang xử lý</th>
-                                            <th>Đang giao hàng</th>
-                                            <th>Thành công</th>
+                                            <th class="text-uppercase">Đã đặt hàng</th>
+                                            <th class="text-uppercase">Đã xác nhận thanh toán</th>
+                                            <th class="text-uppercase">Đang xử lý</th>
+                                            <th class="text-uppercase">Đang vận chuyển</th>
+                                            <th class="text-uppercase">Hoàn thành</th>
+                                            <th class="text-uppercases">Đã hủy</th>
                                         </thead>
                                         <tbody>
                                             <tr>
@@ -111,6 +112,13 @@
                                                 </td>
                                                 <td>
                                                     @if ($order->status >= 4)
+                                                        <li class="check success">
+
+                                                        </li>
+                                                    @endif
+                                                </td>
+                                                 <td>
+                                                    @if ($order->status >= 5)
                                                         <li class="check success">
 
                                                         </li>
@@ -169,8 +177,8 @@
                                 </table>
                                 <div class="box-allprice box-price-order">
                                     <p>Tạm tính:<span> {{ formatPrice($order->sub_total) }}</span></p>
-                                    {{-- <p>Thuế:<span> {{ formatPrice($order->tax) }}</span></p>
-                                    <p>Phí xử lý:<span> {{ formatPrice($order->process_fee) }}</span></p>
+                                    <p>Thuế VAT:<span> {{ formatPrice($order->tax) }}</span></p>
+                                    {{--<p>Phí xử lý:<span> {{ formatPrice($order->process_fee) }}</span></p>
                                     <!--<p>Điểm M quy đổi:<span> {{ formatPrice($order->m_point * 100) }}</span></p>-->
                                     <!--<p>Điểm C tích lũy:<span> {{ $order->c_point }}</span></p>--> --}}
                                     <p>Phí vận chuyển:<span> + {{ formatPrice($order->shipping_total) }}</span></p>
