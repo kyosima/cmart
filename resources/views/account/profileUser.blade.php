@@ -12,6 +12,15 @@
 .rounded-circle {
     border-radius: 50% !important;
 }
+
+.thongbao_register {
+    border: 2px solid #003c7c;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    text-align: left;
+    background: #006ee3;margin-bottom:30px
+}
 img {
     vertical-align: middle;
     border-style: none;
@@ -69,7 +78,7 @@ img {
                             </div>
                         </div>
                         <div class="row mb-4">
-                            <div class="col-md-7">
+                            <div class="col-md-12">
                                 <p class="text-muted" style="margin:0">
                                     <span class="text-black-50">{{$profileUser->email}}</span><span> 
                                 </p>
@@ -84,6 +93,16 @@ img {
                                     @endif
                                 </p>
                                 <!--<div class="">Tích lũy: {{$profileUser->tichluyC}} point</div>-->
+                                <div class="thongbao_register ">
+                        <ul class="m-0">
+                            <li class="text-light">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, 
+                                và chúng tôi thực hiện vô cùng nghiêm ngặt. 
+                            </li>
+                            <li class="text-light">Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, 
+                                tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết.
+                            </li>
+                        </ul>
+                    </div>
                             </div>
                             <div class="col">
                                 
@@ -104,7 +123,7 @@ img {
                     <!--</div>-->
                 </div>
                 <div class="form-group">
-                    <select class="form-select mb-1" name="type_cmnd" aria-label="Default select example">
+                    <select class="form-select mb-1" name="type_cmnd" aria-label="Default select example" readonly>
                         @if($profileUser->type_cmnd == 0)
                             <option value="0" selected>Chọn loại giấy tờ tùy thân</option>
                         @elseif($profileUser->type_cmnd == 1)
@@ -131,7 +150,7 @@ img {
                         @else
                         @endif
                     </select>
-                    <input type="text" class="form-control" name="cmnd" value="{{$profileUser->cmnd}}" placeholder="Mời nhập số CMND/CCCD/Hộ chiếu">
+                    <input type="text" class="form-control" name="cmnd" value="{{$profileUser->cmnd}}" placeholder="Mời nhập số CMND/CCCD/Hộ chiếu" readonly>
                 </div>
                 <div class="form-group">
                     <label for="inputAddress5">Ảnh CMND</label>
@@ -174,38 +193,17 @@ img {
                         </div>
                     </div>
                 </div>
-                <hr class="my-4" />
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                    <div class="d-flex justify-content-between align-items-center experience"><span><input type="checkbox" id="changePassword" name="changePassword"> Đổi mật khẩu</span></div>
-                        <div class="form-group">
-                            <label for="inputPassword5">Mật khẩu mới</label>
-                            <input type="password" class="form-control password" name="password" placeholder="Mời nhập mật khẩu" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword6">Nhập lại mật khẩu</label>
-                            <input type="password" class="form-control password" name="passwordAgain" placeholder="Mời nhập lại mật khẩu" disabled>
-                        </div>
-                    </div>
-                    <!-- <div class="col-md-6">
-                        <p class="mb-2">Đổi mật khẩu</p>
-                        <p class="small text-muted mb-2">Để đổi mật khẩu bạn phải đạt đủ yêu cầu như sau</p>
-                        <ul class="small text-muted pl-4 mb-0">
-                            <li>Có ít nhất 8 ký tự</li>
-                            <li>Không có ký tự đặc biệt</li>
-                        </ul>
-                    </div> -->
-                </div>
+
                 <div class="form-group row">
                     <div class="form-group col-md-12">
                         <label for="inputAddress5">Địa chỉ chi tiết</label>
-                        <input type="text" name="address" class="form-control" value="{{$profileUser->address}}" placeholder="Địa chỉ chi tiết">
+                        <input type="text" name="address" class="form-control" value="{{$profileUser->address}}" placeholder="Địa chỉ chi tiết" readonly>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputAddress5">Đường<sup class="text-danger">*</sup></label>
-                        <input type="text" name="address" class="form-control" value="{{$profileUser->duong}}" placeholder="Mời nhập tên đường" style="height: 38px;">
+                        <input type="text" name="address" class="form-control" value="{{$profileUser->duong}}" placeholder="Mời nhập tên đường" style="height: 38px;" readonly>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="">Cấp Tỉnh<sup class="text-danger">*</sup></label>
@@ -220,15 +218,15 @@ img {
                         </select>
                         @else
                         <select name="sel_province" class="form-control select2"
-                            data-placeholder="---Chọn tỉnh thành---" required>
+                            data-placeholder="---Chọn tỉnh thành---" readonly>
                                 <option value="{{ $profileUser->id_tinhthanh }}">
                                 {{DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')
                                     ->where('province.matinhthanh','=',auth()->user()->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh}}
                                 </option>
-                                @foreach ($province as $value)
+                                <!-- @foreach ($province as $value)
                                     <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
                                     </option>
-                                @endforeach
+                                @endforeach -->
                         </select>
                         @endif
                     </div>
@@ -240,8 +238,8 @@ img {
                             <option value="">---Chọn quận huyên---</option>
                         </select>
                         @else
-                        <select class="form-control select2" name="sel_district"
-                            data-placeholder="---Chọn quận huyên---" required>
+                        <select class="form-control" name=""
+                            data-placeholder="---Chọn quận huyên---" readonly>
                             <option value="{{ $profileUser->id_quanhuyen }}">
                             {{DB::table("district")->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')
                                 ->where('district.maquanhuyen','=',auth()->user()->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen}}
@@ -257,8 +255,8 @@ img {
                             <option value="">---Chọn phường xã---</option>
                         </select>
                         @else
-                        <select class="form-control select2" name="sel_ward"
-                            data-placeholder="---Chọn phường xã---" required>
+                        <select class="form-control select2" name=""
+                            data-placeholder="---Chọn phường xã---" readonly>
                             <option value="{{$profileUser->id_phuongxa}}">
                                 {{DB::table("ward")->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')
                                     ->where('ward.maphuongxa','=',auth()->user()->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa}}
@@ -267,7 +265,28 @@ img {
                         @endif
                     </div>
                 </div>
-
+                <hr class="my-4" />
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                    <div class="d-flex justify-content-between align-items-center experience"><span><input type="checkbox" id="changePassword" name="changePassword"> Đổi mật khẩu</span></div>
+                        <div class="form-group">
+                            <label for="inputPassword5">Mật khẩu mới</label>
+                            <input type="password" class="form-control password" name="password" placeholder="Mời nhập mật khẩu" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword6">Nhập lại mật khẩu</label>
+                            <input type="password" class="form-control password" name="passwordAgain" placeholder="Mời nhập lại mật khẩu" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-2">Hướng dẫn đổi mật khẩu</p>
+                        <ul class="small text-muted pl-4 mb-0">
+                            <li>Click vào checkbox đổi mật khẩu</li>
+                            <li>Điền mật khẩu mới và ô nhập lại mật khẩu</li>
+                            <li>Sau đó chọn lưu thông tin</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
                 </div>
