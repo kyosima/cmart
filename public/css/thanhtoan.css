@@ -1,12 +1,13 @@
     .card-left {
-        margin: 50px 0;
     }
     
     .card-information {
         background-color: #fff;
         box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
     }
-    
+    .form-checkout{
+        padding-top: 20px;
+    }
     .card-information-body {
         display: flex;
     }
@@ -15,7 +16,6 @@
     }
     .order-complete-info b{
         margin-bottom: 10px;
-        display: block;
     }
     .card-information-header {
         padding: 10px 10px 0 10px;
@@ -27,13 +27,35 @@
         color: #333942;
         text-transform: uppercase;
     }
-    
-    label {
+    .btn-back-cart{
+        font-size: 13px !important;
+        font-weight: 400 !important;
+        color: #FFFFFF;
+        background-color: #00e6f8;
+        border: 1px solid #00b0be;
+        padding: 9px 0;
+        border-radius: 17px !important;
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+        margin-top: 10px;
+    }
+    .btn-back-cart:hover{
+        background-color: #FFFFFF !important;
+        color: #00b0be !important;
+        border: 1px solid #00b0be !important;
+    }
+    .card-information label {
         transform: translate(0, -3.5px) scale(0.9);
         transform-origin: top left;
         color: #BB0029;
     }
-    
+    .back-cart{
+        font-weight: 600;
+        font-size: 20px;
+        margin: 10px 0px;
+        display: block;
+    }
     .card-information .form-control {
         border-radius: 0;
     margin: -9px 0 20px;
@@ -206,7 +228,37 @@
         font-weight: 700 !important;
         color: #333942;
     }
-    
+    .chinhsach-body .custom-control{
+        padding-left: 0;
+    }
+    .chinhsach{
+        margin-top: 10px;
+        background: #fff;
+        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+    }
+    .chinhsach-body {
+        padding: 10px 10px 0 10px;
+
+    }
+    .chinhsach-header h3{
+        font-size: 16px !important;
+        font-weight: 600;
+        color: #333942;
+        text-transform: uppercase;
+    }
+    .chinhsach-body ul li:last-child{
+        border: unset;
+    }
+    .chinhsach-header{
+        padding: 10px 10px 0 10px;
+
+    }
+    .chinhsach-body .list-group-item{
+        padding: 5px 0px !important;
+    }
+    .chinhsach-body  .custom-control-label{
+        padding-left: 20px;
+    }
     tr .title {
         padding: 10px;
         width: 219px;

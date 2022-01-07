@@ -158,4 +158,23 @@ class ProductCategoryController extends Controller
 
         return view('proCat.allProCat', compact('categories', 'arrProducts'));
     }
+
+    public function getSearch(Request $request){
+        $keyword =  $request->keyword;
+        $categories = ProductCategory::where('category_parent', 0)
+            ->where('id', '!=', 1)
+            ->with(['childrenCategories.products', 'products'])
+            ->get();
+            $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->get();
+
+        return view('proCat.search', compact('categories', 'products', 'keyword'));
+    }
+
+    public function getSearchSuggest(Request $request){
+        $keyword =  $request->keyword;
+        $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->get();
+
+        return view('proCat.search_suggest', [ 'products'=>$products])->render();
+    }
+
 }

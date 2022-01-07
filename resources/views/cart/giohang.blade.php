@@ -80,10 +80,10 @@
                     <div class="cart-body">
                         <p class="tamtinh"> <span class="tamtinh-title">Tạm tính:</span> <span
                                 class="tamtinh-price cart-subtotal"><span
-                                    class="amount">{{ $cart_subtotal }}</span></span> </p>
+                                    class="amount">{{ $cart_subtotal }}đ</span></span> </p>
                         <hr>
-                        <p class="total"> <span>Tổng cộng:</span> <span class="total-price cart-total"><span
-                                    class="amount">{{ $cart_total }}</span></span>
+                        <p class="total"> <span>Giá trị giao dịch:</span> <span class="total-price cart-total"><span
+                                    class="amount">{{ $cart_total }}đ</span></span>
                         </p>
                     </div>
                     <a class="btn-dathang" href="{{route('checkout.index')}}">Đặt hàng</a>
@@ -103,7 +103,7 @@
                                 <button class="btn-primary btn-a">
                                     Xem khuyến mãi
                                 </button>
-                                <a class="btn-primary btn-b" href="{{url('/san-pham')}}">
+                                <a class="btn-primary btn-b" href="{{url('/danh-muc-san-pham')}}">
                                     Tiếp tục mua sắm
                                 </a>
                             </div>

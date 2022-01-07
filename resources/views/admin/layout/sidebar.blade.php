@@ -7,30 +7,30 @@
     <ul class="nav-list p-0">
         <li class="dropdown">
             <a href="{{route('admin.index')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fa fa-tachometer-alt"></i>
              <span class="links_name">Dashboard</span>
             </a>
          </li>
-         {{-- @if(auth()->guard('admin')->user()->can('Xem bài viết', 'Xem danh mục bài viết'))
+         @if(auth()->guard('admin')->user()->can('Xem DS đơn hàng'))
          <li class="dropdown">
-            <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Quản lý bài viết <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            <a href="{{route('order.index')}}" class="dropbtn">
+             <i class="fa fa-shopping-cart"></i>
+             <span class="links_name w-100 align-items-center d-flex">Đơn hàng</span>
             </a>
-            <span class="dropdown-content">
-                @if(auth()->guard('admin')->user()->can('Xem danh mục bài viết'))
-                    <a href="{{route('chuyenmuc-baiviet.index')}}">Chuyên mục bài viết</a>
-                @endif
-                @if(auth()->guard('admin')->user()->can('Xem bài viết'))
-                    <a href="{{route('baiviet.index')}}">Bài viết</a>
-                @endif
-            </span>
          </li>
-         @endif --}}
+         @endif
+         @if (auth()->guard('admin')->user()->can('Xem kho'))
+         <li class="dropdown">
+            <a href="{{route('warehouse.index')}}" class="dropbtn">
+             <i class="fa fa-laptop-house"></i>
+             <span class="links_name w-100 align-items-center d-flex">Tồn kho <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            </a>
+         </li>
+         @endif
          @if(auth()->guard('admin')->user()->can('Xem sản phẩm', 'Xem danh mục sản phẩm', 'Xem thương hiệu', 'Xem đơn vị tính'))
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
+             <i class="fa fa-cube"></i>
              <span class="links_name w-100 align-items-center d-flex">Quản lý sản phẩm <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             <span class="dropdown-content">
@@ -54,70 +54,62 @@
          @endif
          <li class="dropdown">
             <a href="{{route('coupon.index')}}" class="dropbtn">
-                <i class="fa fa-frown-o" aria-hidden="true"></i>
+              <i class="fa fa-tag"></i>
                 <span class="links_name w-100 align-items-center d-flex">Quản lý mã ưu đãi</span>
             </a>
             
          </li>
          <li class="dropdown">
-            <a href="{{route('order.index')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Đơn hàng <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            <a href="#" class="dropbtn">
+             <i class="fa fa-users" aria-hidden="true"></i>
+             <span class="links_name w-100 align-items-center d-flex">Quản lý khách hàng <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
+            @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
+            <span class="dropdown-content">
+                <a href="{{url('admin/danh-sach-user')}}">Danh sách khách hàng</a>
+            </span>
+            @endif
          </li>
-         @if (auth()->guard('admin')->user()->can('Xem kho'))
-         <li class="dropdown">
-            <a href="{{route('warehouse.index')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Tồn kho <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
-            </a>
-         </li>
-         @endif
-         @if (auth()->guard('admin')->user()->can('All Permissions'))
+         @role('Boss', 'admin')
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Manager Admin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+             <i class="fas fa-user-shield"></i>
+             <span class="links_name w-100 align-items-center d-flex">Quản lý Admin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             <span class="dropdown-content">
-                <a href="{{route('roles.index')}}">Roles</a>
-                <a href="{{route('permissions.index')}}">Permission</a>
-                <a href="{{route('manager-admin.index')}}">List Admin</a>
+                <a href="{{route('roles.index')}}">Vai trò</a>
+                <a href="{{route('permissions.index')}}">Quyền</a>
+                <a href="{{route('manager-admin.index')}}">DS Admin</a>
+                <!-- <a href="{{URL::to('/admin/log-viewer/logs')}}">Theo dõi Admin</a> -->
             </span>
          </li>
-         <li class="dropdown">
-            <a href="{{URL::to('/admin/log-viewer/logs')}}" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Follow Action Admin <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
-            </a>
-         </li>
-                <a href="{{URL::to('/admin/log-viewer/logs')}}">Follow Admin</a>
-            </span>
-         </li>
+         @endrole
+         @if (auth()->guard('admin')->user()->can('QL thông tin'))
          <li class="dropdown">
             <a href="#" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name w-100 align-items-center d-flex">Info Company <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+             <i class="fas fa-book"></i>
+             <span class="links_name w-100 align-items-center d-flex">Trang - banner <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
+            
             <span class="dropdown-content">
-                <a href="{{route('info-company.index')}}">Page</a>
+                @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
+                <a href="{{route('info-company.index')}}">Trang</a>
+                @endif
+                @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
+                <a href="{{route('admin.banner.index')}}">Banner</a>
+                @endif
             </span>
+            
          </li>
          @endif
+         @hasanyrole('Manager|Boss', 'admin')
          <li class="dropdown">
-            <a href="admin/user/danhsach" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name">Danh sách user</span>
+            <a href="{{route('setting.index')}}" class="dropbtn">
+             <i class="fas fa-cog"></i>
+             <span class="links_name">Cài đặt</span>
             </a>
          </li>
-
-         <li class="dropdown">
-            <a href="setting.html" class="dropbtn">
-             <i class="fa fa-frown-o" aria-hidden="true"></i>
-             <span class="links_name">Setting</span>
-            </a>
-         </li>
-         
+         @endhasanyrole
         <li class="profile">
             <div class="profile-details">
                 <img src="https://ict-imgs.vgcloud.vn/2020/09/01/19/huong-dan-tao-facebook-avatar.jpg" alt="profileImg">
@@ -134,15 +126,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Logout</h5>
+        <h5 class="modal-title">Đăng xuất</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Do you want to logout account ?</p>
+        <p>Bạn có muốn đăng xuất ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a href="{{route('logout')}}" class="btn btn-danger">Logout</a>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <a href="{{route('logout')}}" class="btn btn-danger">Đăng xuất</a>
       </div>
     </div>
   </div>

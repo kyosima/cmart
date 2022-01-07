@@ -1,9 +1,7 @@
 /* Quy định chung */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 body{
-    line-height: 1;
     font-size: 14px;
-    font-family: "Roboto",sans-serif;
 }
 a{
     text-decoration: none;
@@ -391,7 +389,6 @@ section{
 }
 .shop-container-inner .title-filter {
     font-size: 16px;
-    text-transform: uppercase;
     margin-bottom: 21px;
     margin-top: 0;
     padding: 13px 10px 0;
@@ -477,8 +474,9 @@ section{
     text-decoration: line-through;
     margin-top: 6px;
 }
-.products .box-image img{
+.products .box-image .image-cover img{
     width: 100%;
+    height: 200px;
 }
 .products .box-image .block-sale{
     position: absolute;
@@ -803,6 +801,9 @@ section{
     .products .price-wrapper *{
         font-size: 4.1vw !important;
     }
+    .products .box-image img{
+        height: 75px !important;
+    }
 }
 
 @media only screen and (min-width: 992px) {
@@ -876,6 +877,9 @@ button.toggle {
     min-height: 1em;
     margin: 0 0 0 5px;
 }
+.check-side.category-menu li.menu-item{
+    border-bottom: 1px solid #ddd;
+}
 
 .check-side.category-menu li.menu-item.menu-border{
     border-bottom: 1px solid #ddd;
@@ -887,3 +891,8 @@ button.toggle {
     border-bottom: unset;
 }
 
+ul, ol {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

@@ -28,12 +28,11 @@ function action(element,data, type){
 function startAjax(element){
     element = element.find('button[type="submit"]');
     element.addClass('disabled');
-    element.html('<span class="spinner-grow spinner-grow-sm"></span> Loading..');
+    element.html('<span class="spinner-grow spinner-grow-sm"></span> Đang xử lý..');
 }
 
 function endAjax(element, text){
 
-    element.find('.select2-selection__rendered').empty();
     element = element.find('button[type="submit"]');
     element.removeClass('disabled');
     element.html(text);
@@ -68,6 +67,7 @@ $(document).on('submit', '.ajax-form-post', function(e){
             icon: 'success'
         });
         is.trigger("reset");
+        is.find('.select2-selection__rendered').empty();
       })
       .fail(function(data) {
         //   console.log(data);
@@ -84,7 +84,7 @@ $(document).on('submit', '.ajax-form-post', function(e){
         });
       })
     .always(function() {
-        endAjax(is, 'Create');
+        endAjax(is, 'Tạo');
       });
       
 });
@@ -169,6 +169,7 @@ $(document).on('submit', '.ajax-form-put', function(e){
             icon: 'success'
         });
         is.trigger("reset");
+        is.find('.select2-selection__rendered').empty();
       })
       .fail(function(data) {
         $.map(data.responseJSON, function(value) {
@@ -184,13 +185,13 @@ $(document).on('submit', '.ajax-form-put', function(e){
         });
       })
     .always(function() {
-        endAjax(is, 'Update');
+        endAjax(is, 'Cập nhật');
       });
       
 });
 
 $(document).on('click', '.ajax-delete', function(e){
-    if (!confirm('Are you sure you want to ?')) {
+    if (!confirm('Bạn có muốn thực hiện không ?')) {
         return;
     }
     var is = $(this);

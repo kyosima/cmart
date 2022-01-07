@@ -44,15 +44,26 @@ class Order extends Model
 		'payment_method',
 		'shipping_method',
 		'shipping_total',
+		'c_point',
+		'm_point',
+		'tax',
+		'process_fee',
 		'sub_total',
 		'total',
 		'status',
-		'fullname'
+		'fullname',
+		'user_id',
+		'status_cpoint'
 	];
 
 	public function order_address()
 	{
 		return $this->hasOne(OrderAddress::class, 'id_order');
+	}
+
+	public function user()
+	{
+		return $this->belongsto(User::class, 'user_id');
 	}
 
 	public function order_products(){

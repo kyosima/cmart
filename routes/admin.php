@@ -14,19 +14,27 @@ use App\Admin\Controllers\BrandController;
 use App\Admin\Controllers\CalculationUnitController;
 use App\Admin\Controllers\WarehouseController;
 use App\Admin\Controllers\AdminOrderController;
+use App\Admin\Controllers\AdminInfoCompanyController;
+use App\Admin\Controllers\AdminSettingController;
+use App\Admin\UserController;
 use App\Admin\Controllers\InfoCompanyController;
 use App\Admin\Controllers\PaymentController;
+use App\Admin\Controllers\AdminBannerController;
 
 Route::group(['middleware' => ['admin']], function () {
+    // Route::resource('permissions', AdminPermissionsController::class);
+    Route::get('danh-sach-user',[UserController::class, 'getDanhsach']);
+    Route::get('/nang-cap-user/{id}',[UserController::class, 'postDanhsach']);
+    
+    Route::group(['prefix'=>'danh-sach-user'], function() {
+        Route::get('{id}',[UserController::class, 'getEdit']);
+        Route::post('{id}',[UserController::class, 'postEdit']);
+    });
+
+    // Route::get('',[UserController::class,'postDanhsach']);
 
     Route::get('logout', [AdminHomeController::class, 'logout'])->name('logout');
 
-    Route::group(['middleware' => ['role_or_permission:Boss,admin']], function () {
-        //
-        Route::resource('roles', AdminRolesController::class);
-        Route::resource('permissions', AdminPermissionsController::class);
-        Route::resource('manager-admin', AdminManagerAdminController::class);
-    });
     Route::get('/', [AdminHomeController::class,'dashboard'])->name('admin.index');
     //quản lý admins
 
@@ -34,12 +42,27 @@ Route::group(['middleware' => ['admin']], function () {
     // xem ds đơn Hàng
     Route::get('don-hang', [AdminOrderController::class, 'index'])->name('order.index')->middleware('permission:Xem DS đơn hàng,admin');
 
+    // tạo đơn Hàng
+    Route::get('lay-khach-hang', [AdminOrderController::class, 'getCustomer'])->middleware('permission:Xem DS đơn hàng,admin');
+    // tạo đơn Hàng
+    Route::get('lay-san-pham', [AdminOrderController::class, 'getProduct'])->middleware('permission:Xem DS đơn hàng,admin');
+
+    // tạo đơn Hàng
+    Route::get('tao-don-hang', [AdminOrderController::class, 'create'])->name('order.create')->middleware('permission:Xem DS đơn hàng,admin');
+
+    Route::post('tao-don-hang', [AdminOrderController::class, 'store'])->name('order.store')->middleware('permission:Xem DS đơn hàng,admin');
+
+    // tạo đơn Hàng
+    Route::get('xuat-excel-tat-ca-don-hang', [AdminOrderController::class, 'export'])->name('order.exports')->middleware('permission:Xem DS đơn hàng,admin');
+
     // Xem đơn Hàng
     Route::get('chi-tiet-don-hang/{order:id}', [AdminOrderController::class, 'show'])->name('order.show')->middleware('permission:Xem đơn hàng,admin');
     // sửa đơn Hàng
-    Route::put('sua-don-hang/{order:id}', [AdminOrderController::class, 'update'])->name('order.update')->middleware('permission:Sửa đơn hàng,admin');
+    Route::put('cap-nhat-don-hang/{order:id}', [AdminOrderController::class, 'update'])->name('order.update')->middleware('permission:Cập nhật đơn hàng,admin');
     // xóa đơn Hàng
     Route::match(['delete', 'get'],'xoa-don-hang/{order:id}', [AdminOrderController::class, 'delete'])->name('order.delete')->middleware('permission:Xóa đơn hàng,admin');
+
+    Route::post('xu-ly-nhieu-don-hang', [AdminOrderController::class,'multiple'])->name('order.multiple');
 
     //Load ajax adrress
     Route::get('lay-quan-huyen-theo-tinh-thanh', [AdminOrderController::class, 'districtOfProvince']);
@@ -47,18 +70,56 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('lay-phuong-xa-theo-quan-huyen', [AdminOrderController::class, 'wardOfDistrict']);
 
     // thông tin cty
-    Route::group(['prefix' => 'info-company', 'middleware' => ['permission:Xem sản phẩm,admin']], function () {
+    Route::group(['prefix' => 'info-company'], function () {
 
         //danh sách
-        Route::get('/', [InfoCompanyController::class, 'index'])->name('info-company.index');
+        Route::get('/', [AdminInfoCompanyController::class, 'index'])->name('info-company.index')->middleware('permission:Xem DS trang đơn,admin');
         
         //tạo
-        Route::get('create', [InfoCompanyController::class, 'create'])->name('info-company.create');
-        Route::post('store', [InfoCompanyController::class, 'store'])->name('info-company.store');
+        Route::get('create', [AdminInfoCompanyController::class, 'create'])->name('info-company.create')->middleware('permission:Tạo trang đơn,admin');
+        Route::post('store', [AdminInfoCompanyController::class, 'store'])->name('info-company.store')->middleware('permission:Tạo trang đơn,admin');
 
         //sửa
-        Route::get('edit', [InfoCompanyController::class, 'edit'])->name('info-company.edit');
-        Route::put('update', [InfoCompanyController::class, 'update'])->name('info-company.update');
+        Route::get('edit/{info_company:id}', [AdminInfoCompanyController::class, 'edit'])->name('info-company.edit')->middleware('permission:Xem trang đơn,admin');
+        Route::put('update/{info_company:id}', [AdminInfoCompanyController::class, 'update'])->name('info-company.update')->middleware('permission:Cập nhật trang đơn,admin');
+
+        //xóa
+        Route::match(['delete', 'get'], 'delete/{info_company:id}', [AdminInfoCompanyController::class, 'delete'])->name('info-company.delete')->middleware('permission:Xóa trang đơn,admin');
+        Route::post('xu-ly-nhieu', [AdminInfoCompanyController::class,'multiple'])->name('info-company.multiple');
+    });
+
+    //banner
+    Route::group(['prefix' => 'banner'], function () {
+        //danh sách
+        Route::get('/', [AdminBannerController::class, 'index'])->name('admin.banner.index')->middleware('permission:Xem DS trang đơn,admin');
+        Route::post('store', [AdminBannerController::class, 'store'])->name('admin.banner.store')->middleware('permission:Tạo trang đơn,admin');
+        //sửa
+        Route::get('edit/{type}', [AdminBannerController::class, 'edit'])->name('admin.banner.edit')->middleware('permission:Xem trang đơn,admin');
+        Route::put('update', [AdminBannerController::class, 'update'])->name('admin.banner.update')->middleware('permission:Cập nhật trang đơn,admin');
+        Route::delete('delete/{Banner:id}', [AdminBannerController::class, 'delete'])->name('admin.banner.delete');
+    });
+    
+    Route::group(['middleware' => ['role:Boss,admin']], function () {
+        //
+        Route::resource('roles', AdminRolesController::class);
+        Route::resource('permissions', AdminPermissionsController::class);
+        Route::resource('manager-admin', AdminManagerAdminController::class);
+        Route::post('xu-ly-nhieu-role', [AdminRolesController::class,'multiple'])->name('roles.multiple');
+        Route::post('xu-ly-nhieu-permission', [AdminPermissionsController::class,'multiple'])->name('permissions.multiple');
+        Route::post('xu-ly-nhieu-admin', [AdminManagerAdminController::class,'multiple'])->name('manager-admin.multiple');
+        
+    });
+
+    Route::group(['middleware' => ['role:Boss|Manager,admin']], function () {
+        //setting
+        Route::get('setting', [AdminSettingController::class, 'index'])->name('setting.index');
+
+        //setting
+        Route::post('setting/maintenance-mode', [AdminSettingController::class, 'maintenanceMode'])->name('post.maintenanceMode');
+
+        //setting
+        Route::post('setting', [AdminSettingController::class, 'store'])->name('post.setting');
+
     });
 
     // COUPON
@@ -135,7 +196,7 @@ Route::group(['middleware' => ['admin']], function () {
 
     // được phép thêm danh mục sản phẩm
     Route::group(['middleware' => ['permission:Thêm danh mục sản phẩm,admin']], function () {
-        Route::post('/nganh-nhom-hang', [AdminProductCategoryController::class, 'store'])->name('nganh-nhom-hang.store');\
+        Route::post('/nganh-nhom-hang', [AdminProductCategoryController::class, 'store'])->name('nganh-nhom-hang.store');
         Route::get('/nganh-nhom-hang/get-category', [AdminProductCategoryController::class, 'getCategory'])->name('nganh-nhom-hang.getCategory');
     });
 
@@ -330,9 +391,7 @@ Route::post('/login', [AdminHomeController::class,'postLogin'])->name('admin.log
 // Route::get('/profile', function () {
 //     return view('admin.profile');
 // });
-// Route::get('/setting', function () {
-//     return view('admin.setting');
-// });
+
 // Route::get('/ton-kho', function () {
 //     return view('admin.ton-kho');
 // });

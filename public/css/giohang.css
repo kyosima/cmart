@@ -92,7 +92,6 @@ video {
     font: inherit;
     vertical-align: baseline;
     color: #000;
-    font-family: "Roboto", sans-serif;
     font-size: 14px;
     line-height: 1;
     -webkit-backface-visibility: hidden;
@@ -376,7 +375,7 @@ hr {
 
 .cart-img-text {
     font-size: 16px;
-    font-family: 'Roboto', sans-serif;
+
     color: #333;
 }
 
@@ -748,3 +747,4 @@ hr {
   }
   
   }
+  

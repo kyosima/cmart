@@ -16,9 +16,12 @@
     .detail .title a:hover {
         color: #bb0029;
     }
-
+ 
     .title-client a:hover {
         color: #bb0029;
+    }
+    .slider-pc .carousel-item img{
+        height: 300px;
     }
 
     .count-news span {
@@ -214,7 +217,6 @@
     }
 
     .detail .title a {
-        font-family: Roboto, sans-serif;
         font-weight: 400;
         font-size: 13px;
         color: #333;
@@ -308,6 +310,7 @@
     .view-more{
         font-size: 16px;
         font-weight: bold;
+        color: rgb(141, 141, 141);
     }
 
     .section-title {
@@ -332,12 +335,17 @@
     }
 
     .section-title-normal span {
+        color: black !important;
+        font-size: 17px !important;
         margin-right: 15px;
         padding-bottom: 7.5px;
         /* border-bottom: 2px solid rgba(0,0,0,0.1); */
         margin-bottom: -2px;
     }
+    .section-title-normal span a{
+        color: black !important;
 
+    }
     .section-title-main {
         border-bottom: 3px solid #b41a1f;
         padding: 10px 15px 7px 0px;
@@ -515,6 +523,7 @@
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
+        text-transform: uppercase;
     
     }
 

@@ -11,4 +11,8 @@ class Ward extends Model
     protected $table = 'ward';
 
     protected $guarded = [];
+
+    public function getDistrictFromWard() {
+        return $this->hasOne(District::class, 'maquanhuyen', 'maquanhuyen');
+    }
 }

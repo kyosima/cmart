@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Session;
 
 class AdminPermissionsController extends Controller
 {
@@ -45,6 +46,8 @@ class AdminPermissionsController extends Controller
         //
         $validator = Validator::make($request->all(), [
             'in_name' => 'required|unique:Spatie\Permission\Models\Permission,name'
+        ], [
+            'in_name.unique' => 'Tên này đã tôn tại'
         ]);
     
         if ($validator->fails()) {
@@ -97,6 +100,8 @@ class AdminPermissionsController extends Controller
         $validator = Validator::make($request->all(), [
             'in_name_edit' => ['required', Rule::unique('permissions', 'name')->ignore($request->in_id_edit)],
             'in_id_edit' => 'required'
+        ], [
+            'in_name_edit.unique' => 'Tên này đã tôn tại'
         ]);
     
         if ($validator->fails()) {
@@ -122,5 +127,22 @@ class AdminPermissionsController extends Controller
         //
         Permission::find($id)->delete();
         return response('Thành công', 200);
+    }
+
+    public function multiple(Request $request){
+        $this->validate($request, [
+            'action' => 'required',
+            'id' => 'required'
+        ]);
+        if($request->action == 'delete'){
+            foreach($request->id as $value){
+                Permission::find($value)->delete();
+            }
+            Session::flash('success', 'Thực hiện thành công');
+        }
+        else{
+            Session::flash('warning', 'Thực hiện không thành công');
+        }
+        return back();
     }
 }

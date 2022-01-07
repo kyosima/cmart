@@ -35,16 +35,10 @@
                     <div class="col-sm-3">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail size-img-profile">
-                                <img 
-                                @if (old('feature_img'))
-                                src="{{old('feature_img')}}"
-                                @else
-                                src="http://api.salefie.vn/images/new_product_default.jpg"
-                                @endif
-                                >
+                                <img src="{{asset('public/storage/images/default_product.jpg')}}">
                             </div>
                             <div class="form-group my-2">
-                                <input id="ckfinder-input-1" type="hidden" required name="feature_img" class="form-control" value="{{old('feature_img')}}">
+                                <input id="ckfinder-input-1" type="hidden" required name="feature_img" class="form-control" value="{{asset('public/storage/images/default_product.jpg')}}">
                                 <a style="cursor: pointer;" id="ckfinder-popup-1" class="btn btn-success">Chọn ảnh đại diện</a>
                             </div>
                         </div>
@@ -251,20 +245,20 @@
                                         <input type="hidden" id="product_wholesale_price" required name="product_wholesale_price" value="{{ old('product_wholesale_price') }}">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Tích lũy (C):</label>
-                                    <div class="col-md-12">
-                                        <input type="number" step="1" min="0" name="cpoint"
-                                            class="form-control" value="{{ old('cpoint') }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Tích lũy (M):</label>
-                                    <div class="col-md-12">
-                                        <input type="number" step="1" min="0" name="mpoint"
-                                            class="form-control" value="{{ old('mpoint') }}">
-                                    </div>
-                                </div>
+                                <!--<div class="form-group">-->
+                                <!--    <label class="col-md-12 control-label text-left">Tích lũy (C):</label>-->
+                                <!--    <div class="col-md-12">-->
+                                <!--        <input type="number" step="1" min="0" name="cpoint"-->
+                                <!--            class="form-control" value="{{ old('cpoint') }}">-->
+                                <!--    </div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                <!--    <label class="col-md-12 control-label text-left">Tích lũy (M):</label>-->
+                                <!--    <div class="col-md-12">-->
+                                <!--        <input type="number" step="1" min="0" name="mpoint"-->
+                                <!--            class="form-control" value="{{ old('mpoint') }}">-->
+                                <!--    </div>-->
+                                <!--</div>-->
                                 <div class="form-group">
                                     <label class="col-md-12 control-label text-left">Phí xử lý:</label>
                                     <div class="col-md-12">

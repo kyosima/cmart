@@ -50,7 +50,7 @@ class ShippingController extends Controller
             $calc = $this->calculateProductShipping($products);
         }else{
             $order = Order::find($request->id_order);
-            $order_total = $order->sub_total; 
+            $order_total = $order->sub_total;  
             $products = $order->products()->select('height', 'weight', 'length', 'width')->get();
             $calc = $this->calculateProductShippingAdmin($products);
         }

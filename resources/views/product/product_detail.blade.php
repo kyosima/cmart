@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 @endpush
 
@@ -47,6 +48,7 @@
                             @endforeach
                         </div>
                     </div>
+
                     <div class="col-sm-12 col-md-12 col-lg-6">
                         <div class="short-desc">
                             <div class="title">
@@ -56,23 +58,68 @@
                                 <p><span>SKU:</span>{{ $product->sku }}</p>
                             </div>
                             <div class="trademark info-detail">
-                                <p><span>Thương hiệu:</span><a href="{{route('proBrand.index', $product->brand)}}">{{ $product->brand }}</a></p>
+                                <p><span>Thương hiệu:</span><a
+                                        href="{{ route('proBrand.index', $product->brand) }}">{{ $product->brand }}</a>
+                                </p>
                             </div>
-                            <div class="origin info-detail">
-                                <p><span>Xuất xứ:</span>Nhật Bản</p>
-                            </div>
+
+
                             <div class="manufacture info-detail">
-                                <p><span>Sản xuất tại:</span>Nhật Bản</p>
+                                <!--<p>   <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span-->
+                                <!--    class="ttt">C là Tiền Tích Lũy nhận được khi mua sản phẩm, có giá trị-->
+                                <!--    thanh toán tại C-Mart và các Đối Tác Liên Liên Kết, giá trị đầu tư tốt theo-->
+                                <!--    Chính sách Tiết Kiệm Tích Tài C-Saving, giá trị lưu trữ không giới hạn-->
+                                <!--</span></span><span>Điểm C nhận-->
+                                <!--        được:</span>{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}-->
+                                <!--    điểm-->
+
+                                <!--</p>-->
+                                <!--<p> <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span-->
+                                <!--    class="ttt">M là Điểm Dịch Vụ nhận được khi mua sản phẩm, có chức-->
+                                <!--    năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển,-->
+                                <!--    phí thanh toán...) và chỉ có giá trị trong chính đơn hàng đó.-->
+                                <!--</span></span><span>Điểm M nhận-->
+                                <!--        được:</span>{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}-->
+                                <!--    điểm-->
+
+                                <!--</p>-->
+
+                                <style>
+                                    .tt {
+                                        position: relative;
+                                        display: inline-block;
+                                    }
+
+                                    .tt .ttt {
+                                        visibility: hidden;
+                                        top: -25px;
+                                        width: 400px;
+                                        background-color: #0000008c;
+                                        color: #fff !important;
+                                        text-align: center;
+                                        border-radius: 6px;
+                                        padding: 5px 0;
+                                        position: absolute;
+                                        z-index: 1;
+                                    }
+
+                                    .tt:hover .ttt {
+                                        visibility: visible;
+                                    }
+
+                                </style>
                             </div>
+
                             <div class="all-price">
-                                @if ($product->shock_price != null || $product->shock_price != 0)
+                                <p class="new-price">{{ formatPriceOfLevel($product) }}</p>
+                                {{-- @if ($product->shock_price != null || $product->shock_price != 0)
                                     <p class="new-price">{{ formatPrice($product->shock_price) }}</p>
                                     <p class="old-price">{{ formatPrice($product->regular_price) }}</p>
                                 @else
                                     <p class="new-price">{{ formatPrice($product->regular_price) }}</p>
-                                @endif
+                                @endif --}}
                             </div>
-                            <div class="promo-intro">
+                            {{-- <div class="promo-intro">
                                 <p class="title-promo">Tiết kiệm
                                     {{ formatPrice($product->regular_price - $product->shock_price) }} Ngay Hôm Nay !</p>
                             </div>
@@ -88,17 +135,27 @@
                                 <div class="sold">
                                     <span>Đã bán 1877</span>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="quantity">
                                 <form id="form-add-to-cart" method="POST" action="{{ route('cart.add') }}">
                                     <input type="hidden" class="card-quality-input" name="product_id"
-                                        value="{{ $product->id_ofproduct }}">
-                                    <input type="number" class="card-quality-input" name="qty" value="1">
-                                    <button class="quantity_btn add-cart" type="submit">
-                                        <p>Thêm vào giỏ</p>
-                                    </button>
+                                        value="{{ $product->id }}">
+                                    <div class="qty-block">
+                                        <div class="qty">
+                                            <input type="text" name="qty" maxlength="12" value="1" title=""
+                                                class="input-text" />
+                                            <div class="qty_inc_dec">
+                                                <i class="increment" onclick="incrementQty()">+</i>
+                                                <i class="decrement" onclick="decrementQty()">-</i>
+                                            </div>
+                                        </div>
+                                        <button type="submit" title="Add to Cart" class="btn-cart">Thêm vào
+                                            giỏ hàng</button>
+                                    </div>
                                 </form>
                             </div>
+
+
 
                         </div>
                     </div>
@@ -134,7 +191,7 @@
                                     <li id="li-mobile">Thông tin chi tiết</li>
                                     <li id="li-pc">Mô tả sản phẩm</li>
                                 </ul> --}}
-                                <h5 class="text-center">Thông tin sản phẩm</h5> 
+                                <h5 class="text-center">Thông tin sản phẩm</h5>
                             </div>
                             <div class="text">
                                 <div class="text_d long-desc-product">
@@ -155,79 +212,10 @@
                                         <p><span>Sản xuất tại:</span>Nhật Bản</p>
                                     </div>
                                 </div>
-                                <div class="row row-mobile">
-                                    <div class="col-sm-12 col-md-9 col-lg-9">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                                <div class="item">
-                                                    <img src="{{ asset('public/image/chinhhang.png') }}" alt="">
-                                                    <div class="item__info">
-                                                        <p class="p1">Chính hãng</p>
-                                                        <p class="p2">100%</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                                <div class="item">
-                                                    <img src="{{ asset('public/image/doitra.png') }}" alt="">
-                                                    <div class="item__info">
-                                                        <p class="p1">Miễn phí đổi trả</p>
-                                                        <p class="p2">LÊN ĐẾN 90 NGÀY</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                                <div class="item">
-                                                    <img src="{{ asset('public/image/giaohanh.png') }}" alt="">
-                                                    <div class="item__info">
-                                                        <p class="p1">Giao hàng</p>
-                                                        <p class="p2">NHANH CHÓNG</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                                <div class="note_list">
-                                                    <ul>
-                                                        <li><a href="#">* Bạn có thể mua hàng ngay tại website bằng cách
-                                                                nhấn vào nút Mua Ngay, hoặc liên hệ với chúng tôi qua các
-                                                                thông tin bên dưới.</a></li>
-                                                        <li><a href="#">*cam kết bán hàng chính hãng từ Nhật Bản. Những
-                                                                thông tin bên trên được nhà sản xuất đưa ra, các sản phẩm
-                                                                làm đẹp và sức khỏe tùy vào cơ địa của mỗi khách hàng sẽ có
-                                                                hiệu quả tương thích.</a></li>
-                                                        <li><a href="#">* Mẫu mã của sản phẩm có thể được thay đổi khi bạn
-                                                                mua hàng.</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-3 col-lg-3">
-                                        <div class="product product1">
-                                            <div class="product1_img">
-                                                <img src="{{ asset($product->feature_img) }}" alt="">
-                                            </div>
-                                            <div class="product_text">
-                                                <p>{{ $product->name }}</p>
-                                                <h5 class="text-danger">{{ formatPrice($product->regular_price) }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <div class="contact">
-                                            <div class="contact_item fb">
-                                                <img src="{{ asset('public/image/icon/facebook.jpg') }}" alt="">
-                                            </div>
-                                            <div class="contact_item phone">
-                                                <img src="{{ asset('public/image/icon/telephone.jpg') }}" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
 
                             </div>
-                            <div class="product-comment">
+                            {{-- <div class="product-comment">
                                 <h5>Hỏi đáp & đánh giá sản phẩm</h5>
                                 <hr>
                                 <div class="row">
@@ -263,7 +251,7 @@
                                                 <div class="bar-view">
                                                     <div class="progress">
                                                         <div class="progress-bar" role="progressbar"
-                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[0] / $rating_count) * 100 }}%"
+                                                        style="width: {{  $rating_list[0] == 0 ? 0 : ($rating_list[0] / $rating_count) * 100 }}%"
                                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -274,7 +262,7 @@
                                                 <div class="bar-view">
                                                     <div class="progress">
                                                         <div class="progress-bar" role="progressbar"
-                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[1] / $rating_count) * 100 }}%"
+                                                        style="width: {{  $rating_list[1] == 0 ? 0:($rating_list[1] / $rating_count) * 100 }}%"
                                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -285,7 +273,7 @@
                                                 <div class="bar-view">
                                                     <div class="progress">
                                                         <div class="progress-bar" role="progressbar"
-                                                            style="width: {{  $rating_list[0] >0 ? 0:($rating_list[2] / $rating_count) * 100 }}%"
+                                                            style="width: {{  $rating_list[2] == 0 ? 0:($rating_list[2] / $rating_count) * 100 }}%"
                                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -296,7 +284,7 @@
                                                 <div class="bar-view">
                                                     <div class="progress">
                                                         <div class="progress-bar" role="progressbar"
-                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[3] / $rating_count) * 100 }}%"
+                                                        style="width: {{  $rating_list[3] == 0 ? 0:($rating_list[3] / $rating_count) * 100 }}%"
                                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -307,14 +295,14 @@
                                                 <div class="bar-view">
                                                     <div class="progress">
                                                         <div class="progress-bar" role="progressbar"
-                                                        style="width: {{  $rating_list[0] >0 ? 0:($rating_list[4] / $rating_count) * 100 }}%"
+                                                        style="width: {{  $rating_list[4] ==0 ? 0:($rating_list[4] / $rating_count) * 100 }}%"
                                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                                 <div class="bar-counter"><span>{{ $rating_list[4] }}</span></div>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div> 
                                 </div>
                                 <hr>
                                 <div class="row">
@@ -359,57 +347,7 @@
                                                                         {{$rating->comment}}
                                                                     </div>
 
-                                                                    {{-- <div class="comment-replies bg-light p-3 mt-3 rounded">
-                                                                        <h6
-                                                                            class="comment-replies-title mb-4 text-muted text-uppercase">
-                                                                            2 replies</h6>
-
-                                                                        <div class="reply d-flex mb-4">
-                                                                            <div class="flex-shrink-0">
-                                                                                <div
-                                                                                    class="avatar avatar-sm rounded-circle">
-                                                                                    <img class="avatar-img"
-                                                                                        src="https://images.unsplash.com/photo-1501325087108-ae3ee3fad52f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=f7f448c2a70154ef85786cf3e4581e4b"
-                                                                                        alt="">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="flex-grow-1 ms-2 ms-sm-3">
-                                                                                <div
-                                                                                    class="reply-meta d-flex align-items-baseline">
-                                                                                    <h6 class="mb-0 me-2">Brandon
-                                                                                        Smith</h6>
-                                                                                    <span class="text-muted">2d</span>
-                                                                                </div>
-                                                                                <div class="reply-body">
-                                                                                    Lorem ipsum dolor sit, amet consectetur
-                                                                                    adipisicing elit.
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="reply d-flex">
-                                                                            <div class="flex-shrink-0">
-                                                                                <div
-                                                                                    class="avatar avatar-sm rounded-circle">
-                                                                                    <img class="avatar-img"
-                                                                                        src="https://uifaces.co/our-content/donated/6f6p85he.jpg"
-                                                                                        alt="">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="flex-grow-1 ms-2 ms-sm-3">
-                                                                                <div
-                                                                                    class="reply-meta d-flex align-items-baseline">
-                                                                                    <h6 class="mb-0 me-2">James
-                                                                                        Parsons</h6>
-                                                                                    <span class="text-muted">1d</span>
-                                                                                </div>
-                                                                                <div class="reply-body">
-                                                                                    Lorem ipsum dolor sit amet, consectetur
-                                                                                    adipisicing elit. Distinctio dolore sed
-                                                                                    eos sapiente, praesentium.
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div> --}}
+                                                               
                                                                 </div>
                                                             </div>
                                                             @endforeach
@@ -506,34 +444,42 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
                     </div>
                     <div class="col-sm-12 col-md-2 col-lg-2 category">
                         <div>
                             <div class="title">
-                                <p>Sản phẩm cùng danh mục</p>
+                                <p>Sản phẩm liên quan</p>
                             </div>
-                            @foreach ($new_products as $item)
-                                <div class="product">
-                                    <div class="product_img">
-                                        <img src="{{ asset($item->feature_img) }}" alt="">
-                                    </div>
-                                    <div class="product_text">
-                                        <p>{{ $item->name }}</p>
-                                        @if ($item->productPrice()->value('shock_price') != null || $item->productPrice()->value('shock_price') != 0)
-                                            <h5>{{ formatPrice($item->productPrice()->value('shock_price')) }}</h5>
-                                            <h5 id="h5">{{ formatPrice($item->productPrice()->value('regular_price')) }}
-                                            </h5>
-                                        @else
-                                            <h5>{{ formatPrice($item->productPrice()->value('regular_price')) }}</h5>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endforeach
+                            @if ($related_product[0] != null)
+                                @foreach ($related_product as $item)
+                                    <div class="product">
+                                        <div class="product_img">
+                                            <a href="{{ route('san-pham.show', $item->slug) }}">
 
+                                                <img src="{{ asset($item->feature_img) }}" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product_text">
+                                            <a href="{{ route('san-pham.show', $item->slug) }}">
 
+                                                <p>{{ $item->name }}</p>
+                                            </a>
+                                            @if ($item->productPrice()->value('shock_price') != null || $item->productPrice()->value('shock_price') != 0)
+                                                <h5>{{ formatPrice($item->productPrice()->value('shock_price')) }}</h5>
+                                                <h5 id="h5">
+                                                    {{ formatPrice($item->productPrice()->value('regular_price')) }}
+                                                </h5>
+                                            @else
+                                                <h5>{{ formatPrice($item->productPrice()->value('regular_price')) }}</h5>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -550,7 +496,10 @@
 
                                 <div class="product">
                                     <div class="product-top">
-                                        <img class="product-image" src="{{ asset($item->feature_img) }}" />
+                                        <a href="{{ route('san-pham.show', $item->slug) }}">
+
+                                            <img class="product-image" src="{{ asset($item->feature_img) }}" />
+                                        </a>
                                         <div class="product-name">
                                             <a href="{{ route('san-pham.show', $item->slug) }}">
                                                 <p class="product-title">{{ $item->name }}</p>

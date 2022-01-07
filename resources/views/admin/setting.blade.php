@@ -3,116 +3,140 @@
 @section('title', 'Cài đặt')
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/admin/doitac.css') }}" type="text/css">
+<link rel="stylesheet" href="{{ asset('css/admin/setting.css') }}" type="text/css">
 @endpush
 
 @section('content')
+<x-alert />
     <!-- Team -->
     <div class="team m-3">
-        <div class="team_container py-3 px-4">
-            <!-- table -->
-            <div class="table__container mt-2">
-                <table class="table table-hover" id="tbluser" class="display" style="width:100%">
-                    <thead class="table__daily">
-                        <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Họ tên</th>
-                            <th scope="col">Mức độ hoạt động</th>
-                            <th scope="col">Cấp độ</th>
-                            <th scope="col">Quyền</th>
-                            <th scope="col">Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody class="font-size-1">
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Nguyễn Văn A</td>
-                            <td>300</td>
-                            <td>11</td>
-                            <td>
-                                <ol class="list-group list-group-numbered">
-                                    <li>Xem trang quản lý shop</li>
-                                    <li>Quản lý đội nhóm</li>
-                                </ol>
-                            </td>
-                            <td>
-                                <a href="phan-quyen.html" class=" btn btn-sm btn-outline-success">
-                                    Phân quyền
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Trần Thị B</td>
-                            <td>444</td>
-                            <td>2</td>
-                            <td>
-                                <ol class="list-group list-group-numbered">
-                                    <li>Xem trang quản lý shop</li>
-                                    <li>Quản lý đội nhóm</li>
-                                </ol>
-                            </td>
-                            <td>
-                                <a href="phan-quyen.html" class=" btn btn-sm btn-outline-success">
-                                    Phân quyền
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Nguyễn Mai C</td>
-                            <td>33333</td>
-                            <td>3</td>
-                            <td>
-                                <ol class="list-group list-group-numbered">
-                                    <li>Xem trang quản lý shop</li>
-                                    <li>Quản lý đội nhóm</li>
-                                </ol>
-                            </td>
-                            <td>
-                                <a href="phan-quyen.html" class=" btn btn-sm btn-outline-success">
-                                    Phân quyền
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Trần Kim D</td>
-                            <td>255</td>
-                            <td>4</td>
-                            <td>
-                                <ol class="list-group list-group-numbered">
-                                    <li>Xem trang quản lý shop</li>
-                                    <li>Quản lý đội nhóm</li>
-                                </ol>
-                            </td>
-                            <td>
-                                <a href="phan-quyen.html" class=" btn btn-sm btn-outline-success">
-                                    Phân quyền
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Đỗ Quốc E</td>
-                            <td>23232</td>
-                            <td>5</td>
-                            <td>
-                                <ol class="list-group list-group-numbered">
-                                    <li>Xem trang quản lý shop</li>
-                                    <li>Quản lý đội nhóm</li>
-                                </ol>
-                            </td>
-                            <td>
-                                <a href="phan-quyen.html" class=" btn btn-sm btn-outline-success">
-                                    Phân quyền
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="team_container card py-3 px-4">
+            <div class="row">
+                <div class="col-md-4 col-lg-3">
+                    <ul id="myTab" class="nav flex-column">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" role="tab" aria-controls="home" aria-selected="true">Thông tin chung</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" id="maintenaceMode-tab" data-bs-toggle="tab" data-bs-target="#maintenaceMode" role="tab" aria-controls="maintenaceMode" aria-selected="true">Bảo trì</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" id="mail-tab" data-bs-toggle="tab" data-bs-target="#mail" role="tab" aria-controls="mail" aria-selected="true">Mail</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" id="social-tab" data-bs-toggle="tab" data-bs-target="#social" role="tab" aria-controls="social" aria-selected="true">Mạng xã hội</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div class="col-md-8 col-lg-9">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <h3>Thông tin chung</h3>
+                            <hr>
+                            <form action="{{route('post.setting')}}" class="row g-3 needs-validation" method="post" novalidate>
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="storeName" class="form-label">Tên cửa hàng</label>
+                                    <input type="text" class="form-control" id="storeName" name="store_name" placeholder="Tên cửa hàng" value="{{ $setting['store_name'] }}" required>
+                                    <div class="invalid-feedback">
+                                        Vui lòng nhập trường này.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="storePhone" class="form-label">Số điện thoại</label>
+                                    <input type="text" class="form-control" id="storePhone" name="store_phone" placeholder="Số điện thoại" value="{{ $setting['store_phone'] }}" required>
+                                    <div class="invalid-feedback">
+                                        Vui lòng nhập trường này.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="storeEmail" class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="storeEmail" name="store_email" placeholder="Email cửa hàng" value="{{ $setting['store_email'] }}" required>
+                                    <div class="invalid-feedback">
+                                        Vui lòng nhập trường này.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="storeAddress" class="form-label">Địa chỉ</label>
+                                    <input type="text" class="form-control" id="storeAddress" name="store_address" placeholder="Địa chỉ" value="{{ $setting['store_address'] }}" required>
+                                    <div class="invalid-feedback">
+                                        Vui lòng nhập trường này.
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">Lưu lại</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="maintenaceMode" role="tabpanel" aria-labelledby="profile-tab">
+                            <h3>Bảo trì</h3>
+                            <hr>
+                            <form action="{{route('post.maintenanceMode')}}" class="row g-3" method="post">
+                                @csrf
+                                <div class="form-check form-switch col-auto">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Bảo trì website</label>
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="in_action" {{checked($check_maintenance_mode, 1)}}>
+                                    
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary btn-sm ms-5">Lưu lại</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="mail" role="tabpanel" aria-labelledby="mail-tab">
+                            <h3>Mail</h3>
+                            <hr>
+                            <form action="{{route('post.setting')}}" class="row g-3 needs-validation" method="post" novalidate>
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="MailFromAddress" class="form-label">Mail nhận</label>
+                                    <input type="Email" class="form-control" id="MailFromAddress" name="mail_from_address" placeholder="Mail nhận" value="{{ $setting['mail_from_address'] }}" required>
+                                    <div class="invalid-feedback">
+                                        Vui lòng nhập trường này.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="mailFromName" class="form-label">Tên mail</label>
+                                    <input type="text" class="form-control" id="mailFromName" name="mail_from_name" placeholder="Tên mail" value="{{ $setting['mail_from_name'] }}" required>
+                                    <div class="invalid-feedback">
+                                        Vui lòng nhập trường này.
+                                    </div>
+                                </div>
+                                
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">Lưu lại</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
+                            <h3>Mạng xã hội</h3>
+                            <hr>
+                            <form action="{{route('post.setting')}}" class="row g-3 needs-validation" method="post" novalidate>
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="socialZalo" class="form-label">Zalo</label>
+                                    <input type="text" class="form-control" id="socialZalo" name="social_zalo" placeholder="Số zalo" value="{{ $setting['social_zalo'] }}" required>
+                                    <div class="invalid-feedback">
+                                        Vui lòng nhập trường này.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="socialFacebook" class="form-label">Facebook</label>
+                                    <input type="text" class="form-control" id="socialFacebook" name="social_facebook" placeholder="ID facebook" value="{{ $setting['social_facebook'] }}" required>
+                                    <div class="invalid-feedback">
+                                        Vui lòng nhập trường này.
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">Lưu lại</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- end table -->
+            
         </div>
     </div>
     <!-- Team -->
@@ -131,29 +155,7 @@
 
 @push('scripts')
 
-    <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script>
+<script src={{ asset('js/admin/validate-form.js') }}></script>
     <!-- format language -->
-    <script>
-        $(document).ready(function() {
-            $('#tbluser').DataTable({
-                "language": {
-                    "emptyTable": "Không có dữ liệu nào !",
-                    "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",
-                    "infoEmpty": "Hiển thị 0 đến 0 trong số 0 mục nhập",
-                    "infoFiltered": "(Có _TOTAL_ kết quả được tìm thấy)",
-                    "lengthMenu": "Hiển thị _MENU_ bản ghi",
-                    "search": "Tìm kiếm",
-                    "zeroRecords": "Không có bản ghi nào tìm thấy !",
-                    "paginate": {
-                        "first": "First",
-                        "last": "Last",
-                        "next": ">",
-                        "previous": "<"
-                    }
-                }
-            });
-        });
-    </script>
 
 @endpush

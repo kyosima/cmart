@@ -9,12 +9,12 @@
 @endpush
 
     @section('content')
-        <div class="m-3">
+        <!-- <div class="m-3">
             <div class="row">
-                <div class="col-sm-6" id="title_tinhhinh">
-                    <div class="text">Tình hình đang như thế nào ?</div>
+                <div class="col-sm-3" id="title_tinhhinh">
+                    <h3 class="m-0">Tình trạng website?</h3>
                 </div>
-                <div class="col-sm-2 align-self-center text-end" id="col_find_button">
+                <div class="col-sm-3 align-self-center text-end" id="col_find_button">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Chi nhánh NPP/Đại lý
@@ -27,7 +27,7 @@
                         <li><a class="dropdown-item" href="#">Đại lý</a></li>
                     </ul>
                 </div>
-                <div class="col-sm-2 align-self-center text-end" id="col_find_button">
+                <div class="col-sm-3 align-self-center text-end" id="col_find_button">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Đơn hàng
@@ -40,7 +40,7 @@
                         <li><a class="dropdown-item" href="#">Đại lý</a></li>
                     </ul>
                 </div>
-                <div class="col-sm-2 align-self-center text-end" id="col_find_button">
+                <div class="col-sm-3 align-self-center text-end" id="col_find_button">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Chọn đối tượng báo cáo
@@ -149,7 +149,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     @endsection
 
 

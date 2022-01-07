@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Session;
 
 class AdminRolesController extends Controller
 {
@@ -46,6 +47,8 @@ class AdminRolesController extends Controller
         $validator = Validator::make($request->all(), [
             'in_name' => 'required|unique:Spatie\Permission\Models\Role,name', 
             'sel_permission' => 'required'
+        ],[
+            'in_name.unique' => 'Tên này đã tồn tại'
         ]);
     
         if ($validator->fails()) {
@@ -110,11 +113,12 @@ class AdminRolesController extends Controller
     public function update(Request $request)
     {
         //
-        
         $validator = Validator::make($request->all(), [
             'in_name_edit' => ['required', Rule::unique('roles', 'name')->ignore($request->in_id_edit)],
             'in_id_edit' => 'required', 
             'sel_permission_edit' => 'required'
+        ],[
+            'in_name_edit.unique' => 'Tên này đã tồn tại'
         ]);
     
         if ($validator->fails()) {
@@ -152,5 +156,22 @@ class AdminRolesController extends Controller
         //
         Role::find($id)->delete();
         return response('Thành công', 200);
+    }
+
+    public function multiple(Request $request){
+        $this->validate($request, [
+            'action' => 'required',
+            'id' => 'required'
+        ]);
+        if($request->action == 'delete'){
+            foreach($request->id as $value){
+                Role::find($value)->delete();
+            }
+            Session::flash('success', 'Thực hiện thành công');
+        }
+        else{
+            Session::flash('warning', 'Thực hiện không thành công');
+        }
+        return back();
     }
 }

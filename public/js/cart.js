@@ -21,6 +21,7 @@ $("#form-add-to-cart").submit(function (e) {
             button.html('<i class="fa fa-check"></i> Thêm thành công');
             button.attr('type', 'button');
             button.css('background-color', '#0fd840');
+            button.css('color', '#fff');
             settimeoutAddCart(button);
             $('.cart .number-cart .count-giohang').text(response[1]);
 
@@ -29,7 +30,7 @@ $("#form-add-to-cart").submit(function (e) {
 });
 function settimeoutAddCart(e) {
     setTimeout(function () {
-        e.html('<p>'+content+'</p>');
+        e.html(content);
         e.attr('type', 'submit');
         $(e).removeAttr('style');
         clearTimeout();
