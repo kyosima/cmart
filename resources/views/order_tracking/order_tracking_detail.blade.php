@@ -80,7 +80,7 @@
                                             <th class="text-uppercase">Đang<br/>xử lý</th>
                                             <th class="text-uppercase">Đang<br/>vận chuyển</th>
                                             <th class="text-uppercase">Hoàn thành</th>
-                                            <th class="text-uppercases">Đã hủy</th>
+                                            <th class="text-uppercase">Đã hủy</th>
                                         </thead>
                                         <tbody>
                                             <tr>

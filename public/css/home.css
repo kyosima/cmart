@@ -20,6 +20,9 @@
     .title-client a:hover {
         color: #bb0029;
     }
+    .slider-pc .carousel-item img{
+        height: 300px;
+    }
 
     .count-news span {
 

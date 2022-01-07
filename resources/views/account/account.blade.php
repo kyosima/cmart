@@ -58,7 +58,8 @@
 
                                     @if(session('thongbao'))
                                     <div class="alert alert-success">
-                                        {{session('thongbao')}} <br> Quý Khách Hàng vui lòng <strong><a class="alert-success" href="tai-khoan">Tạo mới Hồ Sơ Khách Hàng</a></strong>
+                                        {{session('thongbao')}} 
+                                        <!--<br> Quý Khách Hàng vui lòng <strong><a class="alert-success" href="tai-khoan">Tạo mới Hồ Sơ Khách Hàng</a></strong>-->
                                     </div>
                                     @endif
                                     <input type="text" name="phone" placeholder="Tài khoản">
@@ -87,8 +88,8 @@
                                     <input type="text" name="hoten" placeholder="Mời nhập họ và tên có dấu">
                                     <input type="text" name="phone" placeholder="Mời nhập số điện thoại đăng ký giao dịch">
                                     
-                                    <input type="password" name="password" placeholder="Mời nhập mật khẩu">
-                                    <input type="password" name="passwordAgain" placeholder="Mời nhập lại mật khẩu">
+                                    <input type="password" name="password" placeholder="Mời quý khách nhập mật khẩu lớn hơn hoặc bằng 8 ký tự">
+                                    <input type="password" name="passwordAgain" placeholder="Mời quý khách nhập lại mật khẩu">
                                     
                                     <select class="loaigiayto" name="type_cmnd" aria-label="Default select example">
                                         <option value="0" selected>Chọn loại giấy tờ tùy thân</option>

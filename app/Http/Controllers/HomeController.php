@@ -45,13 +45,13 @@ class HomeController extends Controller
 
     public function postLogin(Request $request) {
         $this->validate($request, [
-            'phone' => 'required|min:5|numeric',
-            'password' => 'required|min:3|max:30',
+            'phone' => 'required|min:8|numeric',
+            'password' => 'required|min:8|max:30',
         ],[
             'phone.required' => 'Bạn chưa nhập số điện thoại đăng nhập',
             'password.required' => 'Bạn chưa nhập mật khẩu',
-            'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
-            'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
+            'password.min' => 'Mật khẩu bạn nhập không chính xác',
+            'password.max' => 'Mật khẩu bạn nhập không chính xác',
         ]);
         
         if(Auth::attempt(['phone'=>$request->phone,'password'=>$request->password])){
@@ -77,12 +77,12 @@ class HomeController extends Controller
         $this->validate($request, [
             'hoten' => 'required|min:5|max:30',
             'phone' => 'required|min:8|unique:users,name,phone',
-            'password' => 'required|min:3|max:30',
+            'password' => 'required|min:8|max:30',
             'passwordAgain' => 'required|same:password',
         ],[
             'hoten.min' => 'Tên người dùng ít nhất 5 ký tự',
             'hoten.max' => 'Tên người dùng nhìu nhất 30 ký tự',
-            'password.min' => 'Mật khẩu ít nhất có 3 ký tự',
+            'password.min' => 'Mật khẩu ít nhất có 8 ký tự',
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
             'passwordAgain.required' => 'Bạn chưa nhập lại mật khẩu',
             'passwordAgain.same' => 'Mật khẩu nhập lại chưa khớp',
@@ -240,11 +240,11 @@ class HomeController extends Controller
 
         if($request->changePassword == "on"){
             $this->validate($request, [
-                'password' => 'required|min:3|max:30',
+                'password' => 'required|min:8|max:30',
                 'passwordAgain' => 'required|same:password'
             ],[
                 'password.required' => 'Bạn chưa nhập mật khẩu',
-                'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự',
+                'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự',
                 'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
                 'passwordAgain.required' => 'Bạn chưa nhập lại mật khẩu',
                 'passwordAgain.same' => 'Mật khẩu nhập lại chưa khớp'

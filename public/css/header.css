@@ -310,7 +310,7 @@ header li {
     .menu-demuc div:last-child a{
         border: unset;
     }
-    .tag-top a{
+    .tag-top > ul >li > a{
         padding-left: 20px !important;
         padding-right: 20px !important;
     }
@@ -365,8 +365,8 @@ header li {
         border-radius: 8px;
     }
     .ct-header{
-        padding-left: 100px;
-        padding-right: 100px;
+        padding-left: 175px;
+        padding-right: 175px;
     }
     .box-contacth img{
         width: 25px;
@@ -375,14 +375,19 @@ header li {
     .box-contacth a{
         font-size: 20px;
     }
+    .dropdown-navcmart >li:first-child{
+        border: unset;
+    }
     .tag-top {
         position: relative;
         text-transform: capitalize;
     }
     .tag-top ul li a {
         font-size: 1.2em;
-        padding: 0 10px;
     }
+    .tag-top .dropdown-navcmart{
+        padding: 10px;
+        }
     .text-color-white {
         color: #fff !important;
     }

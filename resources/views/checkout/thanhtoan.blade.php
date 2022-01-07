@@ -128,33 +128,35 @@
                             <hr>
                             <div class="phuongthuc-thanhtoan-card-body">
 
-                                <div class="form-group">
-                                    <label onclick="showvat()"><input type="checkbox" id="show-vat" name="show_vat"
-                                            value="1"> Xác nhận xuất hóa GTGT</label>
-                                </div>
-                                <div class="form-vat" style="display:none">
+                                <!--<div class="form-group">-->
+                                <!--    <label onclick="showvat()"><input type="checkbox" id="show-vat" name="show_vat"-->
+                                <!--            value="1"> Xác nhận xuất hóa GTGT</label>-->
+                                <!--</div>-->
+                                <input type="hidden" id="show-vat" name="show_vat" value="1"> 
+                                <div class="form-vat">
                                     <div class="form-group">
-                                        <label for="">Tên người mua<sup class="text-danger">*</sup></label>
+                                        <!--<label for="">Tên người mua<sup class="text-danger">*</sup></label>-->
                                         <input type="text" name="vat_name" class="form-control" value=""
                                             placeholder="Mời nhập tên người mua hàng">
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Tên công ty<sup class="text-danger">*</sup></label>
+                                        <!--<label for="">Tên công ty<sup class="text-danger">*</sup></label>-->
                                         <input type="text" name="vat_company" class="form-control" value=""
                                             placeholder="Mời nhập tên công ty">
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Mã số thuế<sup class="text-danger">*</sup></label>
+                                        <!--<label for="">Mã số thuế<sup class="text-danger">*</sup></label>-->
                                         <input type="number" name="vat_mst" class="form-control" value=""
                                             placeholder="Mời nhập mã số thuế công ty">
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>
+                                        <!--<label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>-->
                                         <input type="text" name="vat_address" class="form-control" value=""
                                             placeholder="Mời nhập địa chỉ công ty">
                                     </div>
                                     <div>
-                                        <p>Xin Quý Khách Hàng lưu ý: C-Mart xin phép từ chối hỗ trợ xử lý các thao tác về hóa đơn sau khi đặt hàng.</p>
+                                        <p>- Nếu Quý Khách Hàng không nhập thông tin thì C-Mart sẽ ghi nhận “Người mua không lấy hóa đơn”, và không gửi hóa đơn GTGT đến Quý Khách Hàng.</p>
+                                        <p>- C-Mart xin phép từ chối hỗ trợ xử lý các thao tác về hóa đơn sau khi đặt hàng.</p>
                                     </div>
                                     <br />
 

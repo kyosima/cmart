@@ -96,7 +96,7 @@
                                     </nav>
                                 @else
                                     <div class="login-logout d-flex align-items-center">
-                                        <a rel="nofollow" href="{{ url('/tai-khaon ') }}" title="Tài khoản">
+                                        <a rel="nofollow" href="{{ url('/tai-khoan ') }}" title="Tài khoản">
                                             <img src="{{ asset('/public/image/iconuser.png') }}" alt="">
                                         </a>
                                         <a rel="nofollow" href="{{ url('/tai-khoan ') }}" title="Tài khoản">
