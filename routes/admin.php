@@ -20,6 +20,7 @@ use App\Admin\UserController;
 use App\Admin\Controllers\InfoCompanyController;
 use App\Admin\Controllers\PaymentController;
 use App\Admin\Controllers\AdminBannerController;
+use App\Admin\Controllers\AdminStoreController;
 
 Route::group(['middleware' => ['admin']], function () {
     // Route::resource('permissions', AdminPermissionsController::class);
@@ -121,6 +122,21 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('setting', [AdminSettingController::class, 'store'])->name('post.setting');
 
     });
+
+    // CỬA HÀNG
+    Route::get('/cua-hang', [AdminStoreController::class, 'index'])->name('store.index');
+    Route::get('/cua-hang/get-location', [AdminStoreController::class, 'getLocation'])->name('store.getLocation');
+    Route::get('/cua-hang/edit/{id}', [AdminStoreController::class, 'edit'])->name('store.edit');
+    Route::get('/cua-hang/searchProduct', [AdminStoreController::class, 'getProduct'])->name('store.getProduct');
+    Route::get('/cua-hang/list-product', [AdminStoreController::class, 'getListProduct'])->name('store.getListProduct');
+
+    Route::post('/cua-hang', [AdminStoreController::class, 'store'])->name('store.store');
+    Route::post('/cua-hang/them-san-pham', [AdminStoreController::class, 'storeProduct'])->name('store.storeProduct');
+    Route::put('/cua-hang/{id}', [AdminStoreController::class, 'update'])->name('store.update');
+
+    Route::delete('/cua-hang/san-pham/{id_store}/{id_product}', [AdminStoreController::class, 'deleteProductStore'])->name('store.deleteProductStore');
+    Route::post('/cua-hang/multiple-change', [AdminStoreController::class, 'multiChange'])->name('store.multiChange');
+    Route::delete('/cua-hang/{id}', [AdminStoreController::class, 'delete'])->name('store.delete');
 
     // COUPON
     // được phép xem mã ưu đãi

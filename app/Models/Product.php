@@ -57,4 +57,8 @@ class Product extends Model
     {
         return $this->hasMany(ProductRating::class, 'product_id', 'id');
     }
+
+    public function stores(){
+    	return $this->belongsToMany(Store::class, 'product_store', 'id_ofproduct', 'id_ofstore')->withPivot(['soluong','for_user']);
+    }
 }

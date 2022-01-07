@@ -27,6 +27,12 @@
             </a>
          </li>
          @endif
+         <li class="dropdown">
+          <a href="{{route('store.index')}}" class="dropbtn">
+           <i class="fa fa-laptop-house"></i>
+           <span class="links_name w-100 align-items-center d-flex">Cửa hàng <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+          </a>
+       </li>
          @if(auth()->guard('admin')->user()->can('Xem sản phẩm', 'Xem danh mục sản phẩm', 'Xem thương hiệu', 'Xem đơn vị tính'))
          <li class="dropdown">
             <a href="#" class="dropbtn">

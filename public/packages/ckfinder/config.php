@@ -20,7 +20,7 @@ function url(){
     else{
         $protocol = 'http';
     }
-    return $protocol . "://" . $_SERVER['HTTP_HOST'];
+    return $protocol . "://" . $_SERVER['HTTP_HOST'].'/cmart';
 }
 
 // Development
