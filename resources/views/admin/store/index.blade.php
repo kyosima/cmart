@@ -166,18 +166,35 @@
                                         </thead>
                                         <tbody style="color: #748092; font-size: 14px;">
                                             @foreach ($stores as $item)
-                                                <tr>
-                                                    <td></td>
-                                                    <td>{{ $item->id }}</td>
-                                                    <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->owner->name }} ({{$item->owner->email}})</td>
-                                                    <td>{{ $item->address .', P.'. $item->ward->tenphuongxa .', Q.'. $item->district->tenquanhuyen. ', '.$item->province->tentinhthanh   }}</td>
-                                                    <td>
-                                                        <a class="btn modal-edit-unit" href="{{route('store.edit', $item->id)}}">
-                                                            <i class="fas fa-pen"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                @if ($admin->name == 'admin')
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>{{ $item->id }}</td>
+                                                        <td>{{ $item->name }}</td>
+                                                        <td>{{ $item->owner->name }} ({{$item->owner->email}})</td>
+                                                        <td>{{ $item->address .', P.'. $item->ward->tenphuongxa .', Q.'. $item->district->tenquanhuyen. ', '.$item->province->tentinhthanh   }}</td>
+                                                        <td>
+                                                            <a class="btn modal-edit-unit" href="{{route('store.edit', $item->id)}}">
+                                                                <i class="fas fa-pen"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @else
+                                                    @if ( $item->owner->id == $admin->id )
+                                                        <tr>
+                                                            <td></td>
+                                                            <td>{{ $item->id }}</td>
+                                                            <td>{{ $item->name }}</td>
+                                                            <td>{{ $item->owner->name }} ({{$item->owner->email}})</td>
+                                                            <td>{{ $item->address .', P.'. $item->ward->tenphuongxa .', Q.'. $item->district->tenquanhuyen. ', '.$item->province->tentinhthanh   }}</td>
+                                                            <td>
+                                                                <a class="btn modal-edit-unit" href="{{route('store.edit', $item->id)}}">
+                                                                    <i class="fas fa-pen"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endif
                                             @endforeach
                                         </tbody>
                                     </table>

@@ -134,19 +134,21 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::group(['middleware' => ['permission:Chỉnh sửa cửa hàng,admin']], function () {
         Route::put('/cua-hang/{id}', [AdminStoreController::class, 'update'])->name('store.update');
-        Route::get('/cua-hang/edit/{id}', [AdminStoreController::class, 'edit'])->name('store.edit');
     });
 
     Route::group(['middleware' => ['permission:Thêm cửa hàng|Chỉnh sửa cửa hàng,admin']], function () {
         Route::get('/cua-hang/get-location', [AdminStoreController::class, 'getLocation'])->name('store.getLocation');
-        Route::get('/cua-hang/searchProduct', [AdminStoreController::class, 'getProduct'])->name('store.getProduct');
-        Route::get('/cua-hang/list-product', [AdminStoreController::class, 'getListProduct'])->name('store.getListProduct');
         Route::get('/cua-hang/list-owners', [AdminStoreController::class, 'getListOwner'])->name('store.getListOwner');
     });
 
     Route::group(['middleware' => ['permission:Chỉnh sửa sản phẩm cửa hàng,admin']], function () {
         Route::post('/cua-hang/them-san-pham', [AdminStoreController::class, 'storeProduct'])->name('store.storeProduct');
         Route::delete('/cua-hang/san-pham/{id_store}/{id_product}', [AdminStoreController::class, 'deleteProductStore'])->name('store.deleteProductStore');
+    });
+    Route::group(['middleware' => ['permission:Chỉnh sửa sản phẩm cửa hàng|Chỉnh sửa cửa hàng,admin']], function () {
+        Route::get('/cua-hang/edit/{id}', [AdminStoreController::class, 'edit'])->name('store.edit');
+        Route::get('/cua-hang/searchProduct', [AdminStoreController::class, 'getProduct'])->name('store.getProduct');
+        Route::get('/cua-hang/list-product', [AdminStoreController::class, 'getListProduct'])->name('store.getListProduct');
     });
 
     Route::group(['middleware' => ['permission:Xóa cửa hàng,admin']], function () {

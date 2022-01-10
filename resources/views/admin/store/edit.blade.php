@@ -50,7 +50,9 @@
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
                                             <input type="text" name="store_name" class="form-control" required
-                                                value="{{ old('store_name', $store->name) }}">
+                                                value="{{ old('store_name', $store->name) }}" 
+                                                {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'readonly' }}
+                                                >
                                         </div>
                                     </div>
 
@@ -58,7 +60,9 @@
                                         <label class="col-md-3 control-label">Chủ cửa hàng<span class="required"
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
-                                            <select class="form-control select-owner" id="select-owner" name="id_owner">
+                                            <select class="form-control select-owner" id="select-owner" name="id_owner"
+                                            {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
+                                            >
                                                 @if (old('id_owner'))
                                                     @php
                                                         $owner = App\Models\Admin::findOrFail(old('id_owner'));
@@ -76,7 +80,9 @@
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
                                             <input type="text" name="store_address" class="form-control" required
-                                                value="{{ old('store_address', $store->address) }}">
+                                                value="{{ old('store_address', $store->address) }}"
+                                                {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'readonly' }}
+                                                >
                                         </div>
                                     </div>
 
@@ -89,7 +95,9 @@
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
                                             <select class="form-control js-location" id="selectCity" name="id_province" data-type="city"
-                                                data-placeholder="Chọn tỉnh/thành">
+                                                data-placeholder="Chọn tỉnh/thành"
+                                                {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
+                                                >
                                                 <option></option>
                                                 @foreach ($cities as $city)
                                                     <option value="{{ $city->matinhthanh }}" {{ $city->matinhthanh == $store->id_province ? 'selected' : '' }} >{{ $city->matinhthanh }} -
@@ -103,7 +111,9 @@
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
                                             <select class="form-control js-location" id="selectDistrict" name="id_district"
-                                                data-type="district" data-placeholder="Chọn quận/huyện">
+                                                data-type="district" data-placeholder="Chọn quận/huyện"
+                                                {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
+                                                >
                                                 @foreach ($districts as $district)
                                                     <option value="{{$district->maquanhuyen}}"
                                                         @if ($district->maquanhuyen == $store->id_district)
@@ -121,7 +131,9 @@
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
                                             <select id="selectWard" name="id_ward" data-type="ward"
-                                                data-placeholder="Chọn phường/xã" class="form-control js-location">
+                                                data-placeholder="Chọn phường/xã" class="form-control js-location"
+                                                {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
+                                                >
                                                 @foreach ($wards as $ward)
                                                     <option value="{{$ward->maphuongxa}}"
                                                         @if ($ward->maphuongxa == $store->id_ward)
@@ -167,12 +179,11 @@
                                 </div>
                             </div>
                         </div>
+                @if (auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
                         <div class="col-sm-12">
                             <button type="submit" class="btn btn-info">Cập nhật cửa hàng</button>
                         </div>
-
                     </div>
-                @if (auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
                 </form>
                 @endif
 
@@ -197,6 +208,7 @@
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             }
         });
+    @if (auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
         $(document).ready(function() {
             $("form").validate({
                 rules: {
@@ -275,9 +287,10 @@
                 });
             });
         });
+    @endif
     </script>
 
-@if (auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm cửa hàng'))
+@if (auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm cửa hàng'))
     <script>
         $('#select-product').select2({
             width: '100%',

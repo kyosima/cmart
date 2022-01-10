@@ -26,7 +26,8 @@ class AdminStoreController extends Controller
     {
         $cities = Province::all();
         $stores = Store::all();
-        return view('admin.store.index', compact('cities', 'stores'));
+        $admin = auth('admin')->user();
+        return view('admin.store.index', compact('cities', 'stores', 'admin'));
     }
 
     public function store(Request $request)
@@ -62,6 +63,9 @@ class AdminStoreController extends Controller
                     'id_district' => $request->id_district,
                     'id_ward' => $request->id_ward,
                 ]);
+
+                $message = 'User: '. auth('admin')->user()->name . ' thực hiện tạo mới cửa hàng ' . $request->name;
+                Log::info($message);
 
                 return redirect()->route('store.index')->with('success', 'Tạo cửa hàng thành công');
             } catch (\Throwable $th) {
@@ -104,6 +108,9 @@ class AdminStoreController extends Controller
                     'id_ward' => $request->id_ward,
                 ]);
 
+                $message = 'User: '. auth('admin')->user()->name . ' thực hiện chỉnh sửa cửa hàng ' . $request->name;
+                Log::info($message);
+
                 return redirect()->route('store.edit', $id)->with('success', 'Cập nhật cửa hàng thành công');
             } catch (\Throwable $th) {
                 return redirect()->back()->withErrors(['error' => 'Đã có lỗi xảy ra vui lòng thử lại']);
@@ -119,7 +126,11 @@ class AdminStoreController extends Controller
         $wards = Ward::where('maquanhuyen', $store->id_district)->get();
         $products = $store->products; // lấy theo relationship
 
-        return view('admin.store.edit', compact('cities', 'store', 'districts', 'wards', 'products'));
+        $admin = auth('admin')->user();
+
+        $message = 'User: '. $admin->name . ' truy cập trang chỉnh sửa cửa hàng ' . $store->name;
+        Log::info($message);
+        return view('admin.store.edit', compact('cities', 'store', 'districts', 'wards', 'products', 'admin'));
     }
 
     public function storeProduct(Request $request)
@@ -131,6 +142,10 @@ class AdminStoreController extends Controller
             ['for_user' => $for_user, 'soluong' => $request->soluong]
         );
         if ($product_store) {
+            $store = Store::findOrFail($request->id_ofstore);
+            $product = Product::findOrFail($request->id_ofproduct);
+            $message = 'User: '. auth('admin')->user()->name . ' thực hiện thêm sản phẩm ' . $product->name . ' vào cửa hàng ' . $store->name;
+            Log::info($message);
             return response('Success', 200);
         }
         return response('Errors', 404);
@@ -139,8 +154,12 @@ class AdminStoreController extends Controller
 
     public function delete($id)
     {
+        $store = Store::findOrFail($id);
         Store::destroy($id);
         DB::table('product_store')->where('id_ofstore', $id)->delete();
+
+        $message = 'User: '. auth('admin')->user()->name . ' thực hiện xóa cửa hàng ' . $store->name;
+        Log::info($message);
         return redirect()->route('store.index');
     }
 
@@ -155,7 +174,7 @@ class AdminStoreController extends Controller
                     Store::destroy($item);
                     DB::table('product_store')->where('id_ofstore', $item)->delete();
     
-                    $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa coupon/voucher ' . $store->name;
+                    $message = 'User: '. auth('admin')->user()->name . ' thực hiện xóa cửa hàng ' . $store->name;
                     Log::info($message);
                 }
                 return redirect(route('store.index'));
@@ -166,8 +185,13 @@ class AdminStoreController extends Controller
 
     public function deleteProductStore($id_store, $id_product)
     {
+        $store = Store::findOrFail($id_store);
+        $product = Product::findOrFail($id_product);
         DB::table('product_store')->where('id_ofproduct', $id_product)
             ->where('id_ofstore', $id_store)->delete();   
+
+        $message = 'User: '. auth('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name . ' khỏi cửa hàng ' . $store->name;
+        Log::info($message);
         return response('', 200);
     }
 
