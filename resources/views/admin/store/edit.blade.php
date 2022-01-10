@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-    <div class="m-3">
+    <div class="m-3" id="store-main" data-storeid="{{$store->id}}">
         <div class="wrapper bg-white p-4">
             @if (session('success'))
                 <div class="portlet-status mb-2">
@@ -36,7 +36,7 @@
             </div>
             <hr>
             <div class="portlet-body">
-                @if (auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
+                @if (auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
                 <form action="{{ route('store.update', $store->id) }}" method="post">
                     @csrf
                     @method('PUT')
@@ -53,6 +53,23 @@
                                                 value="{{ old('store_name', $store->name) }}">
                                         </div>
                                     </div>
+
+                                    <div class="form-group d-flex mb-2">
+                                        <label class="col-md-3 control-label">Chủ cửa hàng<span class="required"
+                                                aria-required="true">(*)</span></label>
+                                        <div class="col-md-9">
+                                            <select class="form-control select-owner" id="select-owner" name="id_owner">
+                                                @if (old('id_owner'))
+                                                    @php
+                                                        $owner = App\Models\Admin::findOrFail(old('id_owner'));
+                                                    @endphp
+                                                    <option value="{{ old('id_owner') }}" selected="selected">{{ $owner->name }} ({{$owner->email}})</option>
+                                                @else
+                                                    <option value="{{ $store->owner->id }}"> {{$store->owner->name}} ({{$store->owner->email}}) </option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
                                     
                                     <div class="form-group d-flex mb-2">
                                         <label class="col-md-3 control-label">Địa chỉ cửa hàng<span class="required"
@@ -63,6 +80,10 @@
                                         </div>
                                     </div>
 
+                                    
+                                </div>
+
+                                <div class="col-md-6">
                                     <div class="form-group d-flex mb-2">
                                         <label class="col-md-3 control-label">Thành phố:<span class="required"
                                                 aria-required="true">(*)</span></label>
@@ -115,14 +136,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="col-md-12 control-label text-left">Sản phẩm:</label>
                                         <div class="col-md-12">
                                             <select class="form-control select-product" id="select-product" name="products[]" multiple data-storeid="{{$store->id}}">
                                                 @if (is_array(old('products')))
                                                     @foreach (old('products') as $product)
-                                                        <option value="{{ $product }}" selected="selected">{{ App\Models\Product::where('id', $product)->value('name') }} (#{{$product}})</option>
+                                                        <option value="{{ $product }}" selected>{{ App\Models\Product::where('id', $product)->value('name') }} (#{{$product}})</option>
                                                     @endforeach
                                                 @else 
                                                     @if (count($products) > 0)
@@ -135,7 +156,7 @@
                                         </div>
                                     </div>
 
-                                    <div id="show_products">
+                                    <div id="show_products" class="row">
                                         @if (count($products) > 0)
                                             @foreach ($products as $product)
                                                 @include('admin.store.product_store', ['product' => $product, 'store' => $store])
@@ -151,9 +172,11 @@
                         </div>
 
                     </div>
+                @if (auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
                 </form>
+                @endif
 
-                @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
+                @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
                     <form action="{{ route('store.delete', $store->id) }}" method="post">
                         @csrf
                         @method('DELETE')
@@ -169,6 +192,11 @@
 
 @push('scripts')
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        });
         $(document).ready(function() {
             $("form").validate({
                 rules: {
@@ -249,6 +277,7 @@
         });
     </script>
 
+@if (auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm cửa hàng'))
     <script>
         $('#select-product').select2({
             width: '100%',
@@ -277,19 +306,43 @@
             templateSelection: formatRepoSelection
         })
 
-        function formatRepoSelection(repo) {
-            if (repo.text) {
-               return repo.text
-            } else {
-                return `${repo.name} (#${repo.id})`;
+        $('#select-product').on('select2:unselecting', function (e) {
+            let id_product = e.params.args.data.id
+            let id_store = $('#store-main').data('storeid')
+            
+            if (confirm('Bạn chắc chắn muốn xóa sản phẩm này ra khỏi cửa hàng?')) {
+                $(`#product-box-${id_product}`).remove();
+                var wanted_option = $(`#select-product option[value="${id_product}"]`);
+                wanted_option.prop('selected', false);
+                
+                $.ajax({
+                    url: '{{ url('admin/cua-hang/san-pham/') }}' + '/' + id_store + '/' + id_product,
+                    type: 'DELETE',
+                    success: function(response) {
+                        $.toast({
+                            heading: 'Thành công',
+                            text: `Xóa thành công`,
+                            position: 'top-right',
+                            icon: 'success'
+                        });
+                    },
+                    error: function(data) {
+                        $.toast({
+                            heading: 'Thất bại',
+                            text: 'Thực hiện không thành công',
+                            position: 'top-right',
+                            icon: 'error'
+                        });
+                    }
+                });
             }
-        }
+            else {
+                e.preventDefault();
+            }
+        });
 
-        $('#select-product').change(function() {
-            // let arr_id = $(this).val()
+        $('#select-product').on('select2:select', function () {
             let arr_id = $('option', this).filter(':selected:last').val()
-            console.log(arr_id);
-            console.log('get last', arr_id);
             $.ajax({
                 type: "GET",
                 url: "{{route('store.getListProduct')}}",
@@ -302,7 +355,51 @@
                 }
             });
         })
-    </script>
-    {{-- ajax show product and product category --}}
 
+        
+        $('#select-owner').select2({
+            width: '100%',
+            allowClear: true,
+            minimumInputLength: 3,
+            dataType: 'json',
+            delay: 250,
+            ajax: {
+                url: `{{ route('store.getListOwner') }}`,
+                dataType: 'json',
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                    }
+                    return query;
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.data
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Chọn chủ cửa hàng...',
+            templateResult: formatRepoSelectionOwner,
+            templateSelection: formatRepoSelectionOwner
+        })
+
+        function formatRepoSelectionOwner(repo) {
+            if (repo.text) {
+            return repo.text
+            } else {
+                return `${repo.name} (#${repo.email})`;
+            }
+        }
+
+        function formatRepoSelection(repo) {
+            if (repo.text) {
+               return repo.text
+            } else {
+                return `${repo.name} (#${repo.id})`;
+            }
+        }
+
+    </script>
+@endif
 @endpush

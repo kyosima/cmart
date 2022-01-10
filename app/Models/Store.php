@@ -26,5 +26,9 @@ class Store extends Model
     public function products(){
         return $this->belongsToMany(Product::class, 'product_store', 'id_ofstore', 'id_ofproduct')->withPivot(['soluong','for_user']);
     }
+    public function owner()
+    {
+        return $this->belongsto(Admin::class, 'id_owner', 'id');
+    }
 
 }

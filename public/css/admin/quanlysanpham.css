@@ -218,10 +218,10 @@
   margin: 10px 0px;
 }
 
-.img-detail {
-  max-width: 100% !important;
-  max-height: 100% !important;
-  width: 100% !important;
+.product-box .form {
+  border: 1px solid #ddd;
+  padding: 5px 0;
+  height: 100%;
 }
 
 .img-thumbnail {
@@ -238,15 +238,16 @@
   transition: all .2s ease-in-out;
 }
 
+.img-detail {
+  max-width: 80px;
+  max-height: 80px;
+  width: 100%;
+}
+
 .remvovecp {
   position: absolute;
   right: 20px;
   top: 5px;
-}
-
-.campaign-info {
-  border: 1px solid #ddd;
-  padding: 15px;
 }
 
 .notice-k {

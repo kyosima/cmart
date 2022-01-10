@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use App\Admin\Traits\ajaxGetLocation;
 use App\Admin\Traits\ajaxProductTrait;
+use App\Models\Admin;
 use App\Models\District;
 use App\Models\Product;
 use App\Models\Province;
@@ -33,6 +34,7 @@ class AdminStoreController extends Controller
         $request->validate([
             'store_name' => 'required|unique:stores,name',
             'store_address' => 'required',
+            'id_owner' => 'required',
             'id_province' => 'required',
             'id_district' => 'required',
             'id_ward' => 'required',
@@ -40,6 +42,7 @@ class AdminStoreController extends Controller
             'store_name.required' => 'Tên cửa hàng không được để trống',
             'store_name.unique' => 'Tên cửa hàng đã bị trùng lặp, vui lòng đặt tên khác',
             'store_address.required' => 'Địa chỉ cửa hàng không được để trống',
+            'id_owner.required' => 'Chủ cửa hàng không được để trống',
             'id_province.required' => 'Địa chỉ cửa hàng không được để trống',
             'id_district.required' => 'Địa chỉ cửa hàng không được để trống',
             'id_ward.required' => 'Địa chỉ cửa hàng không được để trống',
@@ -54,6 +57,7 @@ class AdminStoreController extends Controller
                     'name' => $request->store_name,
                     'slug' => $slug,
                     'address' => $request->store_address,
+                    'id_owner' => $request->id_owner,
                     'id_province' => $request->id_province,
                     'id_district' => $request->id_district,
                     'id_ward' => $request->id_ward,
@@ -71,6 +75,7 @@ class AdminStoreController extends Controller
         $request->validate([
             'store_name' => 'required|unique:stores,name,'.$id,
             'store_address' => 'required',
+            'id_owner' => 'required',
             'id_province' => 'required',
             'id_district' => 'required',
             'id_ward' => 'required',
@@ -78,6 +83,7 @@ class AdminStoreController extends Controller
             'store_name.required' => 'Tên cửa hàng không được để trống',
             'store_name.unique' => 'Tên cửa hàng đã bị trùng lặp, vui lòng đặt tên khác',
             'store_address.required' => 'Địa chỉ cửa hàng không được để trống',
+            'id_owner.required' => 'Chủ cửa hàng không được để trống',
             'id_province.required' => 'Địa chỉ cửa hàng không được để trống',
             'id_district.required' => 'Địa chỉ cửa hàng không được để trống',
             'id_ward.required' => 'Địa chỉ cửa hàng không được để trống',
@@ -92,6 +98,7 @@ class AdminStoreController extends Controller
                     'name' => $request->store_name,
                     'slug' => $slug,
                     'address' => $request->store_address,
+                    'id_owner' => $request->id_owner,
                     'id_province' => $request->id_province,
                     'id_district' => $request->id_district,
                     'id_ward' => $request->id_ward,
@@ -110,12 +117,7 @@ class AdminStoreController extends Controller
         $cities = Province::all();
         $districts = District::where('matinhthanh', $store->id_province)->get();
         $wards = Ward::where('maquanhuyen', $store->id_district)->get();
-
-        $products = $store->products;
-        // $products = [];
-        // foreach ($arr_products as $item) {
-        //     $product = Product::whe
-        // }
+        $products = $store->products; // lấy theo relationship
 
         return view('admin.store.edit', compact('cities', 'store', 'districts', 'wards', 'products'));
     }
@@ -178,6 +180,15 @@ class AdminStoreController extends Controller
         return response()->json([
             'code' => 200,
             'data' => $this->ajaxGetProduct($request->search, $request->id)
+        ]);
+    }
+
+    public function getListOwner(Request $request)
+    {
+        $owners = Admin::where('name', 'LIKE', '%'.$request->search.'%')->limit(25)->get();
+        return response()->json([
+            'code' => 200,
+            'data' => $owners
         ]);
     }
 
