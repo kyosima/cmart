@@ -192,8 +192,6 @@
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa?')">Xóa cửa hàng</button>
-                        {{-- <a class="btn btn-danger" href="{{route('store.deleteProductStore', [$store->id, 2])}}">Xóa cửa hàng</a>
-                        <a class="btn btn-danger" href="{{ url('admin/cua-hang/san-pham/'.$store->id.'/2')}}">Xóa cửa hàng</a> --}}
                     </form>
                 @endif
             </div>
