@@ -118,9 +118,9 @@ class AdminStoreController extends Controller
         });
     }
 
-    public function edit($id)
+    public function edit($slug, $id)
     {
-        $store = Store::findOrFail($id);
+        $store = Store::where('slug', $slug)->where('id', $id)->firstorfail();
         $cities = Province::all();
         $districts = District::where('matinhthanh', $store->id_province)->get();
         $wards = Ward::where('maquanhuyen', $store->id_district)->get();
@@ -203,7 +203,7 @@ class AdminStoreController extends Controller
     {
         return response()->json([
             'code' => 200,
-            'data' => $this->ajaxGetProduct($request->search, $request->id)
+            'data' => $this->ajaxGetProduct($request->search)
         ]);
     }
 

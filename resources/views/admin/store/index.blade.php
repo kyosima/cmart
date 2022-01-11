@@ -174,7 +174,7 @@
                                                         <td>{{ $item->owner->name }} ({{$item->owner->email}})</td>
                                                         <td>{{ $item->address .', P.'. $item->ward->tenphuongxa .', Q.'. $item->district->tenquanhuyen. ', '.$item->province->tentinhthanh   }}</td>
                                                         <td>
-                                                            <a class="btn modal-edit-unit" href="{{route('store.edit', $item->id)}}">
+                                                            <a class="btn modal-edit-unit" href="{{route('store.edit', ['slug' => $item->slug, 'id' => $item->id])}}">
                                                                 <i class="fas fa-pen"></i>
                                                             </a>
                                                         </td>
@@ -188,7 +188,7 @@
                                                             <td>{{ $item->owner->name }} ({{$item->owner->email}})</td>
                                                             <td>{{ $item->address .', P.'. $item->ward->tenphuongxa .', Q.'. $item->district->tenquanhuyen. ', '.$item->province->tentinhthanh   }}</td>
                                                             <td>
-                                                                <a class="btn modal-edit-unit" href="{{route('store.edit', $item->id)}}">
+                                                                <a class="btn modal-edit-unit" href="{{route('store.edit', ['slug' => $item->slug, 'id' => $item->id])}}">
                                                                     <i class="fas fa-pen"></i>
                                                                 </a>
                                                             </td>

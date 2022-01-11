@@ -19,14 +19,14 @@
             </a>
          </li>
          @endif
-         @if (auth()->guard('admin')->user()->can('Xem kho'))
+         {{-- @if (auth()->guard('admin')->user()->can('Xem kho'))
          <li class="dropdown">
             <a href="{{route('warehouse.index')}}" class="dropbtn">
              <i class="fa fa-laptop-house"></i>
              <span class="links_name w-100 align-items-center d-flex">Tồn kho <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
          </li>
-         @endif
+         @endif --}}
          @if (auth()->guard('admin')->user()->can('Xem cửa hàng'))
         <li class="dropdown">
           <a href="{{route('store.index')}}" class="dropbtn">

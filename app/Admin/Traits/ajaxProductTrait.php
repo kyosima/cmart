@@ -3,6 +3,7 @@
 namespace App\Admin\Traits;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use Illuminate\Support\Facades\DB;
 
 trait ajaxProductTrait {
     public function ajaxGetProduct($search, $id = 0) {

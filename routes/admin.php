@@ -146,7 +146,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::delete('/cua-hang/san-pham/{id_store}/{id_product}', [AdminStoreController::class, 'deleteProductStore'])->name('store.deleteProductStore');
     });
     Route::group(['middleware' => ['permission:Chỉnh sửa sản phẩm cửa hàng|Chỉnh sửa cửa hàng,admin']], function () {
-        Route::get('/cua-hang/edit/{id}', [AdminStoreController::class, 'edit'])->name('store.edit');
+        Route::get('/cua-hang/edit/{slug}/{id}', [AdminStoreController::class, 'edit'])->name('store.edit');
         Route::get('/cua-hang/searchProduct', [AdminStoreController::class, 'getProduct'])->name('store.getProduct');
         Route::get('/cua-hang/list-product', [AdminStoreController::class, 'getListProduct'])->name('store.getListProduct');
     });
