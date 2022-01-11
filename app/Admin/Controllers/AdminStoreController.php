@@ -15,6 +15,7 @@ use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
@@ -111,7 +112,7 @@ class AdminStoreController extends Controller
                 $message = 'User: '. auth('admin')->user()->name . ' thực hiện chỉnh sửa cửa hàng ' . $request->name;
                 Log::info($message);
 
-                return redirect()->route('store.edit', $id)->with('success', 'Cập nhật cửa hàng thành công');
+                return redirect()->route('store.edit', ['slug' => $slug, 'id' => $id])->with('success', 'Cập nhật cửa hàng thành công');
             } catch (\Throwable $th) {
                 return redirect()->back()->withErrors(['error' => 'Đã có lỗi xảy ra vui lòng thử lại']);
             }
@@ -135,20 +136,29 @@ class AdminStoreController extends Controller
 
     public function storeProduct(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'quantity' => 'required',
+            'for_user' => 'required',
+        ]);
+        
+        if($validator->fails()){
+            return response()->json([
+                'error' => $validator->errors(),
+            ], 400);
+        }
+
         $for_user = implode(',', $request->for_user);
         $for_user .= ',';
-        $product_store = DB::table('product_store')->updateOrInsert(
+        DB::table('product_store')->updateOrInsert(
             ['id_ofproduct' => $request->id_ofproduct, 'id_ofstore' => $request->id_ofstore],
-            ['for_user' => $for_user, 'soluong' => $request->soluong]
+            ['for_user' => $for_user, 'soluong' => $request->quantity]
         );
-        if ($product_store) {
-            $store = Store::findOrFail($request->id_ofstore);
-            $product = Product::findOrFail($request->id_ofproduct);
-            $message = 'User: '. auth('admin')->user()->name . ' thực hiện thêm sản phẩm ' . $product->name . ' vào cửa hàng ' . $store->name;
-            Log::info($message);
-            return response('Success', 200);
-        }
-        return response('Errors', 404);
+
+        $store = Store::findOrFail($request->id_ofstore);
+        $product = Product::findOrFail($request->id_ofproduct);
+        $message = 'User: '. auth('admin')->user()->name . ' thực hiện thêm sản phẩm ' . $product->name . ' vào cửa hàng ' . $store->name;
+        Log::info($message);
+        return response()->json([$product->name] ,200);
     }
 
 
@@ -192,7 +202,7 @@ class AdminStoreController extends Controller
 
         $message = 'User: '. auth('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name . ' khỏi cửa hàng ' . $store->name;
         Log::info($message);
-        return response('', 200);
+        return response()->json([$product->name] ,200);
     }
 
     public function getLocation(Request $request) {
@@ -218,7 +228,6 @@ class AdminStoreController extends Controller
 
     public function getListProduct(Request $request)
     {
-
         $store = Store::findOrFail($request->store_id);
         $product = Product::findOrFail($request->product_id);
         $returnHTML = view('admin.store.product_store', compact('store', 'product'))->render();

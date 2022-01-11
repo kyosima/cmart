@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\DB;
 
 trait ajaxProductTrait {
     public function ajaxGetProduct($search, $id = 0) {
-        $products = Product::where('name', 'LIKE', '%'.$search.'%')->where('id', '!=', $id)->limit(25)->get();
+        $products = Product::where('id', '!=', $id)
+            ->where(function($query) use ($search) {
+                $query->orWhere('name', 'LIKE', '%'.$search.'%')
+                      ->orWhere('sku', 'LIKE', '%'.$search.'%');
+            })
+            ->limit(25)->get();
         return $products;
     }
 

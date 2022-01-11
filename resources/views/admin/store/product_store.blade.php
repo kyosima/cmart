@@ -43,7 +43,6 @@
                         </div>
                     </div>
                     
-                    
                     <div class="form-group text-center">
                         <div class="notice-k">
                             <p></p>
@@ -80,8 +79,8 @@
                     type: 'DELETE',
                     success: function(response) {
                         $.toast({
-                            heading: 'Thành công',
-                            text: `Xóa thành công`,
+                            heading: 'Xóa thành công',
+                            text: `Đã xóa sản phẩm ${response[0]}`,
                             position: 'top-right',
                             icon: 'success'
                         });
@@ -108,23 +107,25 @@
                 data: {
                     id_ofstore: $(`#product-box-${id} .form input[name=id_ofstore]`).val(),
                     id_ofproduct: $(`#product-box-${id} .form input[name=id_ofproduct]`).val(),
-                    soluong: $(`#product-box-${id} .form input[name=quantity]`).val(),
+                    quantity: $(`#product-box-${id} .form input[name=quantity]`).val(),
                     for_user: $(`#product-box-${id} .form .for_user`).val()
                 },
                 error: function(err) {
-                    $.toast({
-                        heading: 'Thất bại',
-                        text: 'Thực hiện không thành công',
-                        position: 'top-right',
-                        icon: 'error'
+                    $.map(err.responseJSON.error, function (ele, idx) {
+                        ele.forEach(element => {
+                            $.toast({
+                                heading: 'Thất bại',
+                                text: `${element}`,
+                                position: 'top-right',
+                                icon: 'error'
+                            });
+                        });
                     });
-                    console.log(err);
                 },
                 success: function(response) {
-                    console.log(response);
                     $.toast({
                         heading: 'Thành công',
-                        text: `Cập nhật thành công`,
+                        text: `Đã cập nhật/thêm mới ${response[0]}`,
                         position: 'top-right',
                         icon: 'success'
                     });
