@@ -98,11 +98,18 @@
                                                 data-placeholder="Chọn tỉnh/thành"
                                                 {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
                                                 >
-                                                <option></option>
-                                                @foreach ($cities as $city)
-                                                    <option value="{{ $city->matinhthanh }}" {{ $city->matinhthanh == $store->id_province ? 'selected' : '' }} >{{ $city->matinhthanh }} -
-                                                        {{ $city->tentinhthanh }}</option>
-                                                @endforeach
+                                                @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
+                                                    <option value="{{$store->id_province}}" selected>
+                                                        {{$store->id_province}} - {{$store->province->tentinhthanh}}
+                                                    </option>
+                                                @else
+                                                    <option></option>
+                                                    @foreach ($cities as $city)
+                                                        <option value="{{ $city->matinhthanh }}" {{ $city->matinhthanh == $store->id_province ? 'selected' : '' }} >{{ $city->matinhthanh }} -
+                                                            {{ $city->tentinhthanh }}</option>
+                                                    @endforeach
+                                                @endif
+                                                
                                             </select>
                                         </div>
                                     </div>
@@ -114,15 +121,21 @@
                                                 data-type="district" data-placeholder="Chọn quận/huyện"
                                                 {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
                                                 >
-                                                @foreach ($districts as $district)
-                                                    <option value="{{$district->maquanhuyen}}"
-                                                        @if ($district->maquanhuyen == $store->id_district)
-                                                            selected
-                                                        @endif
-                                                    >
-                                                        {{$district->maquanhuyen}} - {{$district->tenquanhuyen}}
+                                                @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
+                                                    <option value="{{$store->id_district}}" selected>
+                                                        {{$store->id_district}} - {{$store->district->tenquanhuyen}}
                                                     </option>
-                                                @endforeach
+                                                @else
+                                                    @foreach ($districts as $district)
+                                                        <option value="{{$district->maquanhuyen}}"
+                                                            @if ($district->maquanhuyen == $store->id_district)
+                                                                selected
+                                                            @endif
+                                                        >
+                                                            {{$district->maquanhuyen}} - {{$district->tenquanhuyen}}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
@@ -134,15 +147,21 @@
                                                 data-placeholder="Chọn phường/xã" class="form-control js-location"
                                                 {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
                                                 >
-                                                @foreach ($wards as $ward)
-                                                    <option value="{{$ward->maphuongxa}}"
-                                                        @if ($ward->maphuongxa == $store->id_ward)
-                                                            selected
-                                                        @endif
-                                                    >
-                                                        {{$ward->maphuongxa}} - {{$ward->tenphuongxa}}
+                                                @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
+                                                    <option value="{{$store->id_ward}}" selected>
+                                                        {{$store->id_ward}} - {{$store->ward->tenphuongxa}}
                                                     </option>
-                                                @endforeach
+                                                @else
+                                                    @foreach ($wards as $ward)
+                                                        <option value="{{$ward->maphuongxa}}"
+                                                            @if ($ward->maphuongxa == $store->id_ward)
+                                                                selected
+                                                            @endif
+                                                        >
+                                                            {{$ward->maphuongxa}} - {{$ward->tenphuongxa}}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
