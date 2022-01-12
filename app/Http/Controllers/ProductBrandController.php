@@ -27,6 +27,7 @@ class ProductBrandController extends Controller
         $products = Product::where('brand', $slug)
         ->where('status', 1)
         ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+        ->orderBy('products.id', 'desc')
         ->get();
 
         $beginMinPrice = 0;
@@ -41,10 +42,20 @@ class ProductBrandController extends Controller
 
         // SORT THEO ORDER
         if ($request->order != null || $request->order != '') {
-            if ($order[1] == 'asc') {
-                $products = $products->sortBy($order[0]);
+            if ($order[0] == 'name') {
+                setlocale(LC_COLLATE, 'vi.utf8');
+                if ($order[1] == 'asc') {
+                    $products = $products->sortBy($order[0], SORT_LOCALE_STRING);
+                } else {
+                    $products = $products->sortByDesc($order[0], SORT_LOCALE_STRING);
+                }
+                setlocale(LC_COLLATE, 0);
             } else {
-                $products = $products->sortByDesc($order[0]);
+                if ($order[1] == 'asc') {
+                    $products = $products->sortBy($order[0]);
+                } else {
+                    $products = $products->sortByDesc($order[0]);
+                }
             }
         }
         // SORT THEO SALE
@@ -74,21 +85,4 @@ class ProductBrandController extends Controller
 
         return view('proBrand.thuonghieu_sanpham', compact('products', 'slug', 'minPrice', 'maxPrice', 'beginMinPrice', 'endMaxPrice', 'isDefault'));
     }
-
-    // public function showAll()
-    // {
-    //     $categories = ProductCategory::where('category_parent', 0)
-    //     ->where('id', '!=', 1)
-    //     ->where('status', 1)
-    //     ->with(['childrenCategories.products', 'products'])
-    //     ->get();
-
-    //     $arrProducts = [];
-    //     foreach($categories as $proCat) {
-    //         $products = $proCat->products->where('status', 1)->merge($proCat->subproducts->where('status', 1))->sortBy(['created_at', 'desc']);
-    //         array_push($arrProducts, $products);
-    //     }
-
-    //     return view('proCat.allProCat', compact('categories', 'arrProducts'));
-    // }
 }

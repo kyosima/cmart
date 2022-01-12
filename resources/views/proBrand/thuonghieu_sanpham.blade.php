@@ -94,44 +94,22 @@
                         <div class="shop-container-inner">
                             <!-- TITLE -->
                             <h2 class="title-filter d-none d-lg-block">{{ $slug }}
-                                <span>({{ count($products) }} sản phẩm)</span></h2>
+                                <span>(tổng cộng {{ $products->total() }} sản phẩm)</span>
+                            </h2>
                             <!-- Bộ lọc -->
                             <div class="filter-cate">
-                                <ul>
-                                    <li class="d-lg-inline d-none">Sắp xếp theo:</li>
-                                    <li class="li-filter-cate">
-                                        <a href="javascript:order();" class="order-default <?php echo count($isDefault) == 0 || 
-                                        (count($isDefault) == 1 && array_key_exists('page', $isDefault)) ? 'active' : '' ?>">Mặc định</a>
-                                    </li>
-                                    <li class="li-filter-cate">
-                                        <a href="javascript:order('regular_price desc');">Giá cao</a>
-                                    </li>
-                                    <li class="li-filter-cate">
-                                        <a href="javascript:order('regular_price asc');">Giá thấp</a>
-                                    </li>
-                                    <li class="li-filter-cate">
-                                        <a href="javascript:order('cpoint desc');">Điểm C cao</a>
-                                    </li>
-                                    <li class="li-filter-cate">
-                                        <a href="javascript:order('cpoint asc');">Điểm C thấp</a>
-                                    </li>
-                                    <li class="li-filter-cate">
-                                        <a href="javascript:order('mpoint desc');">Điểm M cao</a>
-                                    </li>
-                                    <li class="li-filter-cate">
-                                        <a href="javascript:order('mpoint asc');">Điểm M thấp</a>
-                                    </li>
-                                    <li class="li-filter-cate">
-                                        <a href="javascript:order('name asc');">A-z</a>
-                                    </li>
-                                    <li class="li-filter-cate">
-                                        <a href="javascript:sale('2');">Sale</a>
-                                    </li>
-                                    <li class="
-                                    d-lg-none">
-                                        <a href="javascript:void(0)" class="filter-btn" onclick="openSidebar()">Lọc</a>
-                                    </li>
-                                </ul>
+                                <p class="d-lg-inline d-none">Sắp xếp theo:</p>
+                                <select id="filter-products" class="form-control form-control-sm ms-2 d-lg-inline" style="width: 200px">
+                                    <option value="" selected>Mặc định</option>
+                                    <option value="name asc">A-Z</option>
+                                    <option value="name desc">Z-A</option>
+                                    <option value="regular_price asc">Giá tăng dần</option>
+                                    <option value="regular_price desc">Giá giảm dần</option>
+                                    <option value="mpoint asc">M tăng dần</option>
+                                    <option value="mpoint desc">M giảm dần</option>
+                                    <option value="cpoint asc">C tăng dần</option>
+                                    <option value="cpoint desc">C giảm dần</option>
+                                </select>
                             </div>
 
                             <!-- SẢN PHẨM -->
@@ -309,6 +287,10 @@
         }
 
         $(document).ready(function() {
+            $('#filter-products').change(function() {
+                order($(this).val());
+            })
+
             $(".submit_click").click(function() {
                 $("#filter_form").submit()
             });
@@ -319,14 +301,17 @@
         var sales = urlSearchParams.get("sale");
         if (orders != '' && orders != null) {
             $("#order").val(orders);
-            $(`li.li-filter-cate > a[href*="${orders}"]`).addClass('active')
+            // $(`li.li-filter-cate > a[href*="${orders}"]`).addClass('active')
+            $(`#filter-products > option[value*='${orders}']`).attr('selected', 'selected')
         } 
         else if (sales == '2') {
             $("#sale").val(sales);
-            $(`li.li-filter-cate > a[href*="${sales}"]`).addClass('active')
+            // $(`li.li-filter-cate > a[href*="${sales}"]`).addClass('active')
+            $(`#filter-products > option[value*='${sales}']`).attr('selected', 'selected')
         } 
         else {
-            $('li.li-filter-cate > a.order-default').addClass('active')
+            // $('li.li-filter-cate > a.order-default').addClass('active')
+            $(`#filter-products > option[value='']`).attr('selected', 'selected')
         }
     </script>
 

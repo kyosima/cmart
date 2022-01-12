@@ -85,8 +85,6 @@
                                                 >
                                         </div>
                                     </div>
-
-                                    
                                 </div>
 
                                 <div class="col-md-6">
@@ -109,7 +107,6 @@
                                                             {{ $city->tentinhthanh }}</option>
                                                     @endforeach
                                                 @endif
-                                                
                                             </select>
                                         </div>
                                     </div>

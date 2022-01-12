@@ -9,6 +9,7 @@ use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -70,6 +71,7 @@ class ProductCategoryController extends Controller
         $products = Product::whereIn('category_id', $categoryIds)
         ->where('status', 1)
         ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+        ->orderBy('products.id', 'desc')
         ->get();
 
         // LẤY RA BRAND ĐỂ SHOW KHÔNG BỊ TRÙNG LẶP 
@@ -105,13 +107,22 @@ class ProductCategoryController extends Controller
                     ->whereIn('brand', $request->id_brand)
                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct');
         }
-
         // SORT THEO ORDER
         if ($request->order != null || $request->order != '') {
-            if ($order[1] == 'asc') {
-                $products = $products->sortBy($order[0]);
+            if ($order[0] == 'name') {
+                setlocale(LC_COLLATE, 'vi.utf8');
+                if ($order[1] == 'asc') {
+                    $products = $products->sortBy($order[0], SORT_LOCALE_STRING);
+                } else {
+                    $products = $products->sortByDesc($order[0], SORT_LOCALE_STRING);
+                }
+                setlocale(LC_COLLATE, 0);
             } else {
-                $products = $products->sortByDesc($order[0]);
+                if ($order[1] == 'asc') {
+                    $products = $products->sortBy($order[0]);
+                } else {
+                    $products = $products->sortByDesc($order[0]);
+                }
             }
         }
         // SORT THEO SALE
@@ -152,10 +163,9 @@ class ProductCategoryController extends Controller
 
         $arrProducts = [];
         foreach($categories as $proCat) {
-            $products = $proCat->products->where('status', 1)->merge($proCat->subproducts->where('status', 1))->sortBy(['created_at', 'desc']);
+            $products = $proCat->products->where('status', 1)->merge($proCat->subproducts->where('status', 1))->sortByDesc('id');
             array_push($arrProducts, $products);
         }
-
         return view('proCat.allProCat', compact('categories', 'arrProducts'));
     }
 
@@ -173,7 +183,6 @@ class ProductCategoryController extends Controller
     public function getSearchSuggest(Request $request){
         $keyword =  $request->keyword;
         $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->get();
-
         return view('proCat.search_suggest', [ 'products'=>$products])->render();
     }
 
