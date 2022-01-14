@@ -404,8 +404,8 @@
             multiple: true,
             minimumInputLength: 3,
             dataType: 'json',
-            delay: 250,
             ajax: {
+                delay: 350,
                 url: `{{ route('san-pham.getProduct') }}`,
                 dataType: 'json',
                 data: function (params) {

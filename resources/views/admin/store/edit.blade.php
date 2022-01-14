@@ -311,8 +311,8 @@
             multiple: true,
             minimumInputLength: 3,
             dataType: 'json',
-            delay: 250,
             ajax: {
+                delay: 350,
                 url: `{{ route('store.getProduct') }}`,
                 dataType: 'json',
                 data: function (params) {
@@ -389,8 +389,8 @@
             allowClear: true,
             minimumInputLength: 3,
             dataType: 'json',
-            delay: 250,
             ajax: {
+                delay: 350,
                 url: `{{ route('store.getListOwner') }}`,
                 dataType: 'json',
                 data: function (params) {
