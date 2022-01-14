@@ -102,17 +102,20 @@
                                         <a rel="nofollow" href="{{ url('/tai-khoan ') }}" title="Tài khoản">
                                             <div class="text-light">
                                                 <span class="text-light">Đăng nhập/Đăng ký</span><br />
-                                                <b class="text-light">Tài khoản <i class="fa fa-chevron-down text-light"></i></b>
+                                                <b class="text-light">Tài khoản <i
+                                                        class="fa fa-chevron-down text-light"></i></b>
                                             </div>
                                         </a>
                                     </div>
                                 @endif
                                 <div class="tracking-cart d-flex align-items-center">
                                     <div class="tracking d-flex align-items-center">
-                                        <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}" title="Kiểm tra đơn hàng">
+                                        <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}"
+                                            title="Kiểm tra đơn hàng">
                                             <img src="{{ asset('/public/image/icontracking.png') }}" alt="">
                                         </a>
-                                        <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}" title="Kiểm tra đơn hàng">
+                                        <a rel="nofollow" href="{{ url('/theo-doi-don-hang ') }}"
+                                            title="Kiểm tra đơn hàng">
 
                                             <div class="text-light">
                                                 <span class="text-light">Kiểm tra</span><br />
@@ -121,13 +124,22 @@
                                         </a>
                                     </div>
                                     <div class="cart d-flex align-items-center">
-                                        <a rel="nofollow" class="number-cart" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
+                                        @php
+                                            $stores = App\Models\Store::get();
+                                            $count_cart = 0;
+                                            foreach ($stores as $store) {
+                                                $count_cart += Cart::instance($store->id)->count();
+                                            }
+                                        @endphp
+                                        <a rel="nofollow" class="number-cart" href="{{ url('/gio-hang') }}"
+                                            title="Giỏ hàng">
                                             <img src="{{ asset('/public/image/iconcart.png') }}" alt="">
-                                            <sup class="count-giohang">{{ Cart::instance('shopping')->count() > 0 ? Cart::instance('shopping')->count() : '0' }}</sup>
+                                            <sup
+                                                class="count-giohang">{{ $count_cart }}</sup>
                                         </a>
-                                            <a rel="nofollow" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
+                                        <a rel="nofollow" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
 
-                                            <div >
+                                            <div>
                                                 <span class="text-light"></span><br />
                                                 <span class="text-light">Giỏ hàng</span>
                                             </div>
@@ -224,26 +236,30 @@
         <p>
             Mọi liên hệ nên thực hiện từ Số điện thoại đăng ký giao dịch và đến các kênh kết nối chính thức của C-Mart
         </p>
-        
+
     </div>
     <div class="container">
         <div class="d-flex justify-content-around align-items-center ct-header">
-  
+
             <div class="box-contacth">
-                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/phone.png') }}" alt=""><a href="tel:0899302323">0899.302.323</a></b>
+                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/phone.png') }}" alt=""><a
+                        href="tel:0899302323">0899.302.323</a></b>
             </div>
             <div class="box-contacth">
-                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/facebook.png') }}" alt=""><a href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
+                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/facebook.png') }}" alt=""><a
+                        href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
             </div>
             <div class="box-contacth">
-                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/zalo.png') }}" alt=""><a href="">Zalo</a></b>
+                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/zalo.png') }}" alt=""><a
+                        href="">Zalo</a></b>
             </div>
             <div class="box-contacth">
-                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/email.png') }}" alt=""><a href="mailto:hotro@cm.com.vn">hotro@cm.com.vn</a></b>
+                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/email.png') }}" alt=""><a
+                        href="mailto:hotro@cm.com.vn">hotro@cm.com.vn</a></b>
             </div>
+        </div>
     </div>
-    </div>
-   
+
 </header>
 <!-- menu-tablet-mobile -->
 <header class="header-tablet-mobile">
@@ -263,7 +279,7 @@
                     <a class="number-cart" rel="nofollow" href="{{ url('/gio-hang') }}" title="giỏ hàng">
                         <i class="icon-2020 icon-cart-2020"></i>
                         <span
-                            class="count-item count-giohang">{{ Cart::instance('shopping')->count() > 0 ? Cart::instance('shopping')->count() : '0' }}</span>
+                            class="count-item count-giohang">{{ $count_cart }}</span>
                     </a>
                 </div>
             </div>

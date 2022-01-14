@@ -68,6 +68,12 @@ header li {
     z-index: 999999999 !important;
 }
 
+@media only screen and (max-width: 1200px) {
+    .bottom-header .search-menu {
+        min-width: 370px !important;
+    }
+}
+
 @media all and (min-width: 1025px) {
     .menu-demuc {
         padding-top: 7px;
@@ -307,14 +313,14 @@ header li {
         min-width: 490px;
         position: relative;
     }
-    .menu-demuc div:last-child a{
+    .menu-demuc div:last-child a {
         border: unset;
     }
-    .tag-top > ul >li > a{
+    .tag-top>ul>li>a {
         padding-left: 20px !important;
         padding-right: 20px !important;
     }
-    .menu-demuc{
+    .menu-demuc {
         font-weight: 600;
     }
     .box-search {
@@ -364,18 +370,18 @@ header li {
         background-color: #ffba00;
         border-radius: 8px;
     }
-    .ct-header{
+    .ct-header {
         padding-left: 175px;
         padding-right: 175px;
     }
-    .box-contacth img{
+    .box-contacth img {
         width: 25px;
         margin-right: 5px;
     }
-    .box-contacth a{
+    .box-contacth a {
         font-size: 20px;
     }
-    .dropdown-navcmart >li:first-child{
+    .dropdown-navcmart>li:first-child {
         border: unset;
     }
     .tag-top {
@@ -385,9 +391,9 @@ header li {
     .tag-top ul li a {
         font-size: 1.2em;
     }
-    .tag-top .dropdown-navcmart{
+    .tag-top .dropdown-navcmart {
         padding: 10px;
-        }
+    }
     .text-color-white {
         color: #fff !important;
     }
@@ -466,13 +472,15 @@ header li {
         line-height: 0px;
         font-size: 10px;
     }
-    .login-logout, .login-logout.navbar {
+    .login-logout,
+    .login-logout.navbar {
         padding: 0px 30px;
     }
     .login-logout img {
         width: 35px;
     }
-    .login-logout img, .tracking-cart img{
+    .login-logout img,
+    .tracking-cart img {
         margin-right: 5px;
     }
     /* .bottom-header .cart .number-cart {
@@ -523,7 +531,7 @@ header li {
         height: auto;
         width: 100%;
     }
-    .navbar{
+    .navbar {
         padding: unset;
     }
     .logo-header {

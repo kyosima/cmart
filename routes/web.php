@@ -52,6 +52,10 @@ Route::prefix('gio-hang')->group(function () {
     Route::post('add', [CartController::class, 'addCart'])->name('cart.add');
     Route::post('update', [CartController::class, 'updateCart'])->name('cart.update');
     Route::post('delete', [CartController::class, 'deleteCart'])->name('cart.delete');
+    Route::get('update-checkout', [CartController::class, 'updateCheckout'])->name('cart.updateCheckout');
+    Route::post('checkout', [CartController::class, 'toCheckout'])->name('cart.checkout');
+
+
 });
 
 Route::prefix('thanh-toan')->group(function () {

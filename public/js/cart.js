@@ -1,45 +1,94 @@
-$("#form-add-to-cart").submit(function (e) {
+$("#form-add-to-cart").submit(function(e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
     var form = $(this);
     var url = form.attr('action');
     var method = form.attr('method');
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+    var store_id = $('select[name="store_id"]').val();
+    if (store_id == 0) {
+        $('#notice-store').css('display', 'block');
+    } else {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: method,
+            url: url,
+            data: form.serialize(),
+            error: function(data) {
+                console.log(data);
+            },
+            success: function(response) {
+                button = form.find('button');
+                content = button.text();
+                button.html('<i class="fa fa-check"></i> Thêm thành công');
+                button.attr('type', 'button');
+                button.css('background-color', '#0fd840');
+                button.css('color', '#fff');
+                settimeoutAddCart(button);
+                $('.cart .number-cart .count-giohang').text(response[0]);
+                $('#notice-store').css('display', 'none');
+
+            }
+        });
+    }
+
+
+});
+$('.list-stores input:checkbox').change(function() {
+    updateCheckout();
+});
+$("#checkall-store").click(function() {
+    $('.list-stores input:checkbox').not(this).prop('checked', this.checked);
+    updateCheckout();
+
+});
+
+function updateCheckout() {
+    store_ids = [];
+    $(".list-stores input:checkbox:checked").each(function() {
+        store_ids.push($(this).val());
     });
     $.ajax({
-        type: method,
-        url: url,
-        data: form.serialize(),
-        error: function (data) {
+        type: 'GET',
+        url: $("#checkall-store").data('url'),
+        data: { store_ids: store_ids },
+        error: function(data) {
             console.log(data);
         },
-        success: function (response) {
-            button = form.find('button');
-            content = button.text();
-            button.html('<i class="fa fa-check"></i> Thêm thành công');
-            button.attr('type', 'button');
-            button.css('background-color', '#0fd840');
-            button.css('color', '#fff');
-            settimeoutAddCart(button);
-            $('.cart .number-cart .count-giohang').text(response[1]);
+        success: function(response) {
+            console.log(response);
+            if (response[2] > 0) {
+                $('.btn-dathang').prop('disabled', false);
+                $('.btn-dathang').text('Thanh toán ' + response[2] + ' sản phẩm');
+            } else {
+                $('.btn-dathang').prop('disabled', true);
+                $('.btn-dathang').text('Chọn cửa hàng cần thanh toán');
+            }
+            $('.tamtinh span.amount').text(response[0]);
+            $('.total span.amount').text(response[1]);
+            $('input[name="store_ids"]').val(response[3]);
+
 
         }
     });
-});
+}
+
 function settimeoutAddCart(e) {
-    setTimeout(function () {
+    setTimeout(function() {
         e.html(content);
         e.attr('type', 'submit');
         $(e).removeAttr('style');
         clearTimeout();
     }, 2000);
 }
-$('input[name=qty].product-qty').change(function () {
+$('input[name=qty].product-qty').change(function() {
     var qty = $(this).val();
     var rowid = $(this).data('rowid');
     var url = $(this).data('url');
+    var storeid = $(this).data('storeid');
+
     var input = $(this);
 
     $.ajaxSetup({
@@ -50,14 +99,13 @@ $('input[name=qty].product-qty').change(function () {
     $.ajax({
         type: 'POST',
         url: url,
-        data: { qty: qty, rowid: rowid },
-        error: function (data) {
+        data: { qty: qty, rowid: rowid, storeid: storeid },
+        error: function(data) {
             console.log(data);
         },
-        success: function (response) {
+        success: function(response) {
             input.closest('.cart_item').find('.cart_price_col h2').text(response[0]);
-            $('.cart-subtotal .amount').text(response[1]);
-            $('.cart-total .amount').text(response[1]);
+            updateCheckout();
         }
     });
 });
@@ -75,14 +123,13 @@ function removeRowCart(e) {
         type: 'POST',
         url: url,
         data: { rowid: rowid },
-        error: function (data) {
+        error: function(data) {
             console.log(data);
         },
-        success: function (response) {
+        success: function(response) {
             e.closest('.cart_item').remove();
             $('.cart-subtotal .amount').text(response[0]);
             $('.cart-total .amount').text(response[1]);
         }
     });
 }
-

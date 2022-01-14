@@ -205,30 +205,9 @@
                         </div>
                         <div class="donhang">
                             <div class="donhang-header">
-                                <h3>ĐƠN HÀNG</h3> <span>({{ count($carts) }} SẢN PHẨM)</span>
+                                <h3>ĐƠN HÀNG</h3> <span>({{ $count_cart }} SẢN PHẨM)</span>
                             </div>
                             <div class="donhang-body">
-                                <table class="table table-responsive">
-                                    <thead>
-                                        <tr>
-                                            <th>Sản phẩm</th>
-                                            <th>SL</th>
-                                            <th>Thành tiền</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($carts as $row)
-                                            <tr>
-                                                <td class="title">{{ $row->name }}</td>
-                                                <td>{{ $row->qty }}</td>
-                                                <td>{{ formatPrice($row->qty * $row->price) }}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-
-
-                                    </tbody>
-                                </table>
                             </div>
                             <div class="donhang-footer">
                                 <div class="card-right">
@@ -264,26 +243,29 @@
                                     </div> --}}
                                     <div class="card-body">
                                         <p class="tamtinh"> <span class="tamtinh-title">Tạm tính:</span> <span
-                                                class="tamtinh-price">{{ $cart_subtotal }} đ</span> </p>
+                                                class="tamtinh-price">{{ formatPrice($cart_subtotal) }} </span> </p>
 
+                                        <hr>
+                                        <p class="tamtinh"> <span class="tamtinh-title">Phí xử lý:</span> <span
+                                            class="tamtinh-price">{{ formatPrice($process_fee) }} </span> </p>
                                         <hr>
                                         <p class="tamtinh"> <span class="tamtinh-title">Thuế VAT:</span> <span
                                             class="tamtinh-price">{{ formatPrice($tax) }} </span> </p>
                                         <hr>
                                         <p><b>Phí vận chuyển:</b></p>
                                         <div class="form-group">
-                                            <input type="radio" id="vship" name="shipping_method" value="v_ship" checked
+                                            {{-- <input type="radio" id="vship" name="shipping_method" value="v_ship" checked
                                                 style="display:none">
                                             <label for="vship" id="lbvship" style="display:none">Viettel Shipping
                                                 ({{ formatPrice($v_ship) }})</label>
                                             <input type="radio" id="cship" name="shipping_method" value="c_ship"
                                                 style="display:none">
                                             <label for="cship" id="lbcship" style="display:none">CMart Shipping
-                                                ({{ formatPrice($c_ship) }})</label>
+                                                ({{ formatPrice($c_ship) }})</label> --}}
                                         </div>
                                         <hr>
                                         <p class="total"> <span>Giá trị giao dịch:</span> <span
-                                                class="total-price">{{ formatPrice(str_replace(',', '', $cart_total)+$tax) }}
+                                                class="total-price">{{ formatPrice($cart_total) }}
                                             </span> </p>
                                     </div>
                                 </div>

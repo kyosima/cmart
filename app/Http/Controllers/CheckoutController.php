@@ -13,58 +13,58 @@ use App\Models\OrderAddress;
 use App\Models\OrderProduct;
 use App\Models\StoreAddress;
 use App\Models\OrderVat;
-
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
     //
     public function index(){
         if (Auth::check()) {
-        if(Cart::instance('shopping')->count() > 0){
+        if(1 > 0){
             if (Auth::check()) {
                 $user = Auth::user();
             }else{
                 $user = null;
             }
-            $carts = Cart::instance('shopping')->content();
-            $cart_subtotal = Cart::instance('shopping')->subtotal();
-            $cart_total = Cart::instance('shopping')->total();
+            $store_ids = Session::get('store_ids');
             $province = Province::select('matinhthanh', 'tentinhthanh')->get();
-            $user_ward = Ward::where('maphuongxa', $user->id_phuongxa)->first();
             $store_address = $user->getstoreAddress()->get();
             $tax = 0;
-            $c_ship = 0;
-            $v_ship = 0;
             $m_point = 0;
             $c_point = 0;
+            $sub_total = 0;
+            $total = 0;
             $process_fee = 0;
-            foreach($carts as $row){
-                $price = $row->model->productPrice()->first();
-                $tax += ($row->price * $price->tax) * $row->qty;
-                $c_ship += $price->cship * $row->qty;
-                $v_ship += $price->viettel_ship * $row->qty;
-                $m_point += $price->mpoint * $row->qty;
-                $c_point += $price->cpoint * $row->qty;
-                $process_fee += $price->phi_xuly * $row->qty;
+            $count_cart =0;
+            foreach(explode(",", $store_ids) as $store_id){
+                $cart = Cart::instance($store_id);
+                foreach($cart->content() as $row){
+                    $price = $row->model->productPrice()->first();
+                    $tax += ($row->price * $price->tax) * $row->qty;
+                    $m_point += $price->mpoint * $row->qty;
+                    $c_point += $price->cpoint * $row->qty;
+                    $process_fee += $price->phi_xuly * $row->qty;
+                    $sub_total = intval(str_replace(",", "",$cart->subtotal()));
+                    $total = intval(str_replace(",", "",$cart->total()));
+                    $count_cart += $cart->count();
+                }
             }
+                
 
             return view('checkout.thanhtoan', [
-                'carts' => $carts, 
-                'cart_subtotal' => $cart_subtotal, 
-                'cart_total'=>$cart_total,
+                'cart_subtotal' => $sub_total, 
+                'cart_total'=>$total+$process_fee+$tax,
                 'province' => $province,
                 'user' => $user,
-                'user_ward' => $user_ward,
                 'tax' => $tax,
-                'c_ship' => $c_ship,
-                'v_ship' => $v_ship,
                 'm_point' => $m_point,
                 'c_point' => $c_point,
                 'process_fee' => $process_fee,
-                'store_address' => $store_address
+                'store_address' => $store_address,
+                'count_cart' => $count_cart
             ]);
         }else{
             return redirect()->route('cart.index');

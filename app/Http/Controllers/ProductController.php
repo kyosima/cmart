@@ -10,6 +10,7 @@ use App\Models\ProductCategory;
 use App\Models\Brand;
 use App\Models\ProductRating;
 use Illuminate\Support\Facades\URL;
+use App\Models\Store;
 
 class ProductController extends Controller
 {
@@ -102,7 +103,8 @@ class ProductController extends Controller
                             $product->ratings()->whereValue(2)->count(),
                             $product->ratings()->whereValue(1)->count()
                            ];
-            return view('product.product_detail', ['related_product'=>$related_product,'ratings'=>$ratings, 'rating_list'=>$rating_list,'rating_count'=>$rating_count,'rating_average'=>$rating_average, 'product' => $product, 'categoryIds' => $categoryIds, 'new_products'=>$new_products, 'lastview_product'=>$lastview_product]);
+            $stores = $product->stores()->get();
+            return view('product.product_detail', ['stores'=>$stores,'related_product'=>$related_product,'ratings'=>$ratings, 'rating_list'=>$rating_list,'rating_count'=>$rating_count,'rating_average'=>$rating_average, 'product' => $product, 'categoryIds' => $categoryIds, 'new_products'=>$new_products, 'lastview_product'=>$lastview_product]);
         }
     }
 

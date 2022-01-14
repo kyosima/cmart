@@ -140,6 +140,19 @@
                                 <form id="form-add-to-cart" method="POST" action="{{ route('cart.add') }}">
                                     <input type="hidden" class="card-quality-input" name="product_id"
                                         value="{{ $product->id }}">
+                                        <div class="form-group">
+                                            <label for="sl-store">Chọn cửa hàng</label>
+                                            <select name="store_id" id="sl-store" class="form-control">
+                                                <option value="0">---Chọn cửa hàng---</option>
+                                                @foreach ($stores as $store)
+                                                    <option value="{{ $store->id }}" @if ($store->getOriginal('pivot_soluong') == 0) disabled @endif>
+                                                        {{ $store->name }} còn {{ $store->getOriginal('pivot_soluong') }} sản
+                                                        phẩm</option>
+                                                @endforeach
+                                            </select>
+                                            <p class="text-danger" id="notice-store" style="display:none">Chọn cửa hàng trước khi thêm</p>
+                                        </div>
+                                  
                                     <div class="qty-block">
                                         <div class="qty">
                                             <input type="text" name="qty" maxlength="12" value="1" title=""

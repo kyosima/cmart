@@ -30,11 +30,11 @@
         margin-right: 440px;
         margin-left: 0;
     }
-    .cart-right {
+    /* .cart-right {
         margin-left: 10px;
         margin-right: 10px;
         margin-top: 600px;
-    }
+    } */
     .btn-giam {
         width: 23px;
         height: 23px;
@@ -75,11 +75,11 @@
         margin-right: 202px;
         margin-left: 0;
     }
-    .cart-right {
+    /* .cart-right {
         margin-left: 10px;
         margin-right: 10px;
         margin-top: 270px;
-    }
+    } */
     .cart-body {
         width: 100%;
     }
@@ -92,8 +92,7 @@
 /* Mobile */
 
 @media (max-width: 739px) {
-    .container {
-    }
+    .container {}
     .product-title {
         display: block;
         text-align: center;
