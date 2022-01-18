@@ -1,39 +1,4 @@
 $(document).ready(function () {
-    // $(document).on('click', '.click-cell', function () {
-    //     var parent = $(this).parents('tr.has-child');
-    //     var parentId = parent.data('categoryid')
-    //     parent.addClass('selected')
-    //     $(this).removeClass('fa-plus click-cell')
-    //     $(this).addClass('fa-minus close-cell')
-    //     $(`tr.child-category[data-parentcat=${parentId}]`).css('display', 'table-row');
-    //     $(`tr.child-category[data-parentcat=${parentId}]`).addClass('selected')
-    // })
-
-    // $(document).on('click', '.close-cell', function () {
-    //     var parent = $(this).parents('tr.has-child');
-    //     var parentId = parent.data('categoryid')
-
-    //     if($(this).parents('tr.has-child').data('parentcat') == null){
-    //         parent.removeClass('selected')
-    //     }
-    //     $(this).removeClass('fa-minus close-cell')
-    //     $(this).addClass('fa-plus click-cell')
-
-    //     var child1 = $(`tr.child-category[data-parentcat=${parentId}]`)
-    //     $(child1).css('display', '');
-    //     $(child1).removeClass('selected')
-
-    //     $.each(child1, function (key, val) { 
-    //         $(this).find('td>i.fa').removeClass('fa-minus close-cell')
-    //         $(this).find('td>i.fa').addClass('fa-plus click-cell')
-    //         if(this.className.includes('has-child')){
-    //             var child2 = $(`tr.child-category[data-parentcat=${val.dataset['categoryid']}]`)
-    //             $(child2).css('display', '');
-    //             $(child2).removeClass('selected')
-    //         }
-    //     });
-    // })
-
     // SHOW MODAL WHEN CLICK ELEMENT TO UPDATE
     $(document).on('click', '.modal-edit-proCat', function () {
         $.ajax({
@@ -45,23 +10,111 @@ $(document).ready(function () {
             success: function (response) {
                 $('#product_category_create').after(response.html)
                 $('#product_category_update').modal('show')
-                $('#product_category_update select.proCatType').select2({
+                $('#product_category_update #select-cate-parent').select2({
+                    allowClear: true,
                     width: '100%',
+                    minimumInputLength: 3,
                     dropdownParent: $('#product_category_update'),
-                });
+                    dataType: 'json',
+                    delay: 250,
+                    ajax: {
+                        url: ajaxSelectCategory,
+                        dataType: 'json',
+                        data: function (params) {
+                            var query = {
+                                search: params.term,
+                                id: response.curent_id
+                            }
+                            return query;
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: data.data
+                            };
+                        },
+                        cache: true
+                    },
+                    placeholder: 'Tìm kiếm danh mục cha ...',
+                    templateResult: formatRepoSelection,
+                    templateSelection: formatRepoSelection
+                })
+                $('#product_category_update #select-cate-link').select2({
+                    allowClear: true,
+                    width: '100%',
+                    minimumInputLength: 3,
+                    dropdownParent: $('#product_category_update'),
+                    dataType: 'json',
+                    delay: 250,
+                    ajax: {
+                        url: ajaxSelectCategory,
+                        dataType: 'json',
+                        data: function (params) {
+                            var query = {
+                                search: params.term,
+                                id: response.curent_id
+                            }
+                            return query;
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: data.data
+                            };
+                        },
+                        cache: true
+                    },
+                    placeholder: 'Tìm kiếm danh mục liên kết ...',
+                    templateResult: formatRepoSelection,
+                    templateSelection: formatRepoSelection
+                })
+                function formatRepoSelection (repo) {
+                    if (repo.name) {
+                        return `${repo.name}`
+                    }
+                    return `${repo.text}`
+                }
             }
         });
     })
 
-    $('body').click(function (e) {
-        if (!$('#product_category_update').hasClass('show')) {
-            $('#product_category_update').remove();
-        }
-    });
+    $(document).on('submit', '#formUpdateProCat', function(e) {
+        let form = $(this)
 
-
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "PUT",
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function (response) {
+                console.log(response);
+                $.toast({
+                    heading: 'Thành công',
+                    text: 'Thực hiện thành công',
+                    position: 'top-right',
+                    icon: 'success'
+                });
+                setTimeout(function () {
+                    $('#product_category_update').modal('dispose')
+                    $('#product_category_update').remove()
+                    $('.modal-backdrop.fade.show').remove()
+                    $('body').removeClass('modal-open')
+                    $('body').css({'padding-right': 'unset', 'overflow': 'unset'})
+                }, 1000);
+                $(`table tbody tr[data-categoryid="${response.id}"] td span.priority`).text(response.priority)
+            },
+            error: function(response) {
+                $.toast({
+                    heading: 'Thất bại',
+                    text: 'Thực hiện không thành công',
+                    position: 'top-right',
+                    icon: 'error'
+                });
+            }
+        });
+        e.preventDefault()
+    })
 });
 
-function destroyModal() {
-    $('#product_category_update').remove();
-}

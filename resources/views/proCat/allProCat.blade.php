@@ -76,7 +76,7 @@
                                             </button>
                                             @include('proCat.danhmuc-sidebar', [
                                                 'child_categories' => $item->childrenCategories,
-                                                ])
+                                            ])
                                         </li>
                                     @else
                                         <li class="menu-item menu-border py-1">

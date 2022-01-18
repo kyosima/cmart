@@ -71,6 +71,11 @@
         </div>
     </td>
     <td>
+        <span class="priority">
+            {{$child_category->priority}}
+        </span>
+    </td>
+    <td>
         @if ($child_category->slug != 'uncategorized' && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
             <a style="text-decoration: none; cursor: pointer;" class="btn btn-warning modal-edit-proCat"
                 data-route="{{ route('nganh-nhom-hang.modalEdit') }}" data-unitid="{{ $child_category->id }}"><i

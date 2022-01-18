@@ -199,14 +199,12 @@ Route::group(['middleware' => ['admin']], function () {
     Route::group(['middleware' => ['permission:Thêm sản phẩm,admin']], function () {
         Route::get('/tao-san-pham', [AdminProductController::class, 'create'])->name('san-pham.create');
         Route::post('/san-pham', [AdminProductController::class, 'store'])->name('san-pham.store');
-        Route::get('/san-pham/get-category', [AdminProductController::class, 'getCategory'])->name('san-pham.getCategory');
     });
 
     // được phép chỉnh sửa sản phẩm
     Route::group(['middleware' => ['permission:Chỉnh sửa sản phẩm,admin']], function () {
         Route::get('/san-pham/edit/{id}', [AdminProductController::class, 'edit'])->name('san-pham.edit');
         Route::put('/san-pham/update/{id}', [AdminProductController::class, 'update'])->name('san-pham.update');
-        Route::get('/san-pham/get-category', [AdminProductController::class, 'getCategory'])->name('san-pham.getCategory');
     });
 
     // được phép XÓA sản phẩm
@@ -237,11 +235,13 @@ Route::group(['middleware' => ['admin']], function () {
 
     // được phép chỉnh sửa danh mục sản phẩm
     Route::group(['middleware' => ['permission:Chỉnh sửa danh mục sản phẩm,admin']], function () {
-        Route::get('/nganh-nhom-hang/get-category', [AdminProductCategoryController::class, 'getCategory'])->name('nganh-nhom-hang.getCategory');
         Route::get('/nganh-nhom-hang/edit/{id}', [AdminProductCategoryController::class, 'edit'])->name('nganh-nhom-hang.edit');
         Route::get('/nganh-nhom-hang/modal-edit', [AdminProductCategoryController::class, 'modalEdit'])->name('nganh-nhom-hang.modalEdit');
         Route::put('/nganh-nhom-hang/update/{id}', [AdminProductCategoryController::class, 'update'])->name('nganh-nhom-hang.update');
+        Route::put('/nganh-nhom-hang/update-model/{id}', [AdminProductCategoryController::class, 'modelUpdate'])->name('nganh-nhom-hang.modelUpdate');
         Route::put('/nganh-nhom-hang/{id}', [AdminProductCategoryController::class, 'updateStatus'])->name('nganh-nhom-hang.updateStatus');
+        Route::get('/nganh-nhom-hang/select-procat', [AdminProductCategoryController::class, 'getProCat'])->name('nganh-nhom-hang.getProCat');
+        
     });
 
     // được phép XÓA danh mục sản phẩm

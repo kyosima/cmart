@@ -19,7 +19,7 @@ class ProductCategory extends Model
 
     public function childrenCategories()
     {
-        return $this->hasMany(ProductCategory::class, 'category_parent', 'id')->with('categories')->with('products')->with('linkToCategory');
+        return $this->hasMany(ProductCategory::class, 'category_parent', 'id')->orderBy('priority')->with(['categories','products','linkToCategory']);
     }
 
     public function products()

@@ -14,7 +14,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title"><i class="fas fa-map-signs"></i> Thông tin ngành hàng </h4>
+                    <h4 class="modal-title"><i class="fas fa-map-signs"></i> Thông tin danh mục sản phẩm </h4>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -28,21 +28,6 @@
                                 <div class="col-md-9">
                                     <select name="proCatParent" class="form-control proCatType">
                                         <option value="0" selected>None</option>
-                                        @foreach ($categories as $item)
-                                            <option value="{{ $item->id }}"
-                                                @if (old('proCatParent') == $item->id)
-                                                    selected
-                                                @endif
-                                                >{{ $item->name }}</option>
-                                            @if (count($item->childrenCategories) > 0)
-                                                @foreach ($item->childrenCategories as $childCategory)
-                                                    @include('admin.productCategory.selectChildForProCat', [
-                                                    'child_category' => $childCategory,
-                                                    'prefix' => '&nbsp;&nbsp;&nbsp;',
-                                                    ])
-                                                @endforeach
-                                            @endif
-                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -66,18 +51,14 @@
                                 <div class="col-md-9">
                                     <select name="linkProCat" class="form-control proCatType">
                                         <option value="0" selected>None</option>
-                                        @foreach ($categories as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @if (count($item->childrenCategories) > 0)
-                                                @foreach ($item->childrenCategories as $childCategory)
-                                                    @include('admin.productCategory.selectChildLinkProCat', [
-                                                    'child_category' => $childCategory,
-                                                    'prefix' => '&nbsp;&nbsp;&nbsp;',
-                                                    ])
-                                                @endforeach
-                                            @endif
-                                        @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group d-flex mb-2">
+                                <label class="col-md-3 control-label">Thứ tự ưu tiên</label>
+                                <div class="col-md-9">
+                                    <input type="number" min="1" name="proCatPriority" class="form-control"
+                                        value="{{ old('proCatPriority') }}">
                                 </div>
                             </div>
                         </div>
@@ -163,12 +144,14 @@
                                 <th class="title title-text">
                                     Trạng thái</th>
                                 <th class="title title-text">
+                                    Thứ tự</th>
+                                <th class="title title-text">
                                     Thao tác</th>
                             </tr>
                         </thead>
                         <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
                             @foreach ($categories as $category)
-                                <tr>
+                                <tr data-categoryid="{{$category->id}}">
                                     <td style="width: 3%;">
                                         @if ($category->id != 1)
                                         <input type="checkbox" name="id[]" value="{{$category->id}}">
@@ -243,6 +226,11 @@
                                         @endif
                                     </td>
                                     <td>
+                                        <span class="priority priority-cha">
+                                            {{$category->priority}}
+                                        </span>
+                                    </td>
+                                    <td>
                                         @if ($category->slug != 'uncategorized' && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
                                             <a style="text-decoration: none; cursor: pointer;" class="btn btn-warning modal-edit-proCat"
                                             data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
@@ -287,7 +275,7 @@
             });
         });
 
-        var ajaxSelectCategory = {!! json_encode(route('nganh-nhom-hang.getCategory')) !!}
+        var ajaxSelectCategory = {!! json_encode(route('nganh-nhom-hang.getProCat')) !!}
 
         $(document).ready(function() {
             var table = $('#table-product-category').DataTable({
@@ -315,9 +303,38 @@
 
             $(window).on('load', function() {
                 $('#formCreateProductCategory select.proCatType').select2({
+                    allowClear: true,
                     width: '100%',
+                    minimumInputLength: 3,
                     dropdownParent: $('#formCreateProductCategory'),
+                    dataType: 'json',
+                    delay: 250,
+                    ajax: {
+                        url: ajaxSelectCategory,
+                        dataType: 'json',
+                        data: function (params) {
+                            var query = {
+                                search: params.term,
+                            }
+                            return query;
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: data.data
+                            };
+                        },
+                        cache: true
+                    },
+                    placeholder: 'Tìm kiếm danh mục cha ...',
+                    templateResult: formatRepoSelection,
+                    templateSelection: formatRepoSelection
                 });
+                function formatRepoSelection (repo) {
+                    if (repo.name) {
+                        return `${repo.name}`
+                    }
+                    return `${repo.text}`
+                }
             })
 
             $('.changeStatus').click(function(){

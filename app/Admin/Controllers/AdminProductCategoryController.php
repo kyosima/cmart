@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Traits\ajaxProductTrait;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductCategory;
@@ -11,10 +12,13 @@ use Illuminate\Support\Str;
 
 class AdminProductCategoryController extends Controller
 {
+    use ajaxProductTrait;
+
     public function index()
     {
         $categories = ProductCategory::where('category_parent', 0)
             ->with('childrenCategories')
+            ->orderBy('priority')
             ->get();
 
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang Quản lý danh mục sản phẩm';
@@ -61,7 +65,8 @@ class AdminProductCategoryController extends Controller
                 'slug' => $slug,
                 'name' => $request->proCatName,
                 'description' => $request->proCatDescription,
-                'link_to_category' => $request->linkProCat
+                'link_to_category' => $request->linkProCat,
+                'priority' => $request->proCatPriority,
             ]);
             $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới danh mục sản phẩm '. $proCat->name;
             Log::info($message);
@@ -74,7 +79,8 @@ class AdminProductCategoryController extends Controller
                     'slug' => $slug,
                     'name' => $request->proCatName,
                     'description' => $request->proCatDescription,
-                    'link_to_category' => $request->linkProCat
+                    'link_to_category' => $request->linkProCat,
+                    'priority' => $request->proCatPriority,
                 ]);
 
                 $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới danh mục sản phẩm '. $proCat->name;
@@ -101,12 +107,6 @@ class AdminProductCategoryController extends Controller
             'proCatSlug.unique' => 'Tên đường dẫn đã bị trùng lặp, vui lòng đặt tên khác',
         ]);
 
-
-        // if(ProductCategory::whereSlug($slug)->exists()){
-        //     $int = random_int(1, 99999999);
-        //     $slug .= '-'.$int;
-        // }
-
         if ($request->proCatParent == 0) {
             ProductCategory::where('id', $id)->update([
                 'category_parent' => 0,
@@ -118,7 +118,8 @@ class AdminProductCategoryController extends Controller
                 'meta_desc' => $request->meta_description,
                 'meta_keyword' => $request->meta_keyword,
                 'description' => $request->proCatDescription,
-                'link_to_category' => $request->linkProCat
+                'link_to_category' => $request->linkProCat,
+                'priority' => $request->proCatPriority,
             ]);
             $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục sản phẩm '. $request->proCatName;
             Log::info($message);
@@ -136,7 +137,8 @@ class AdminProductCategoryController extends Controller
                     'meta_desc' => $request->meta_description,
                     'meta_keyword' => $request->meta_keyword,
                     'description' => $request->proCatDescription,
-                    'link_to_category' => $request->linkProCat
+                    'link_to_category' => $request->linkProCat,
+                    'priority' => $request->proCatPriority,
                 ]);
                 $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục sản phẩm '. $request->proCatName;
                 Log::info($message);
@@ -144,6 +146,62 @@ class AdminProductCategoryController extends Controller
             }
         }
         return redirect()->route('nganh-nhom-hang.edit', $id)->with('success', 'Cập nhật danh mục thành công');
+    }
+
+    public function modelUpdate(Request $request, $id)
+    {
+        if($request->proCatSlug == '') {
+            $slug = Str::slug($request->proCatName, '-');
+        } else {
+            $slug = Str::slug($request->proCatSlug, '-');
+        }
+
+        $request->validate([
+            'proCatName' => 'required|unique:product_categories,name,'.$id,
+            'proCatSlug' => 'unique:product_categories,slug,'.$id,
+        ], [
+            'proCatName.required' => 'Tên danh mục không được để trống',
+            'proCatName.unique' => 'Tên danh mục đã bị trùng lặp, vui lòng đặt tên khác',
+            'proCatSlug.unique' => 'Tên đường dẫn đã bị trùng lặp, vui lòng đặt tên khác',
+        ]);
+
+        $proCat = '';
+
+        if ($request->proCatParent == 0) {
+            $proCat = ProductCategory::where('id', $id)->update([
+                'category_parent' => 0,
+                'level' => 0,
+                'slug' => $slug,
+                'name' => $request->proCatName,
+                'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat,
+                'priority' => $request->proCatPriority,
+            ]);
+            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục sản phẩm '. $request->proCatName;
+            Log::info($message);
+            $this->recursive($id, 0, 1);
+        } else {
+            $catPar = ProductCategory::where('id', $request->proCatParent)->first();
+            if ($catPar) {
+                $proCat = ProductCategory::where('id', $id)->update([
+                    'category_parent' => $request->proCatParent,
+                    'level' => $catPar->level + 1,
+                    'slug' => $slug,
+                    'name' => $request->proCatName,
+                    'link_to_category' => $request->linkProCat == 0 ? null : $request->linkProCat,
+                    'priority' => $request->proCatPriority,
+                ]);
+                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục sản phẩm '. $request->proCatName;
+                Log::info($message);
+                $this->recursive($id, 1, 0);
+            }
+        }
+        if ($proCat == 1) {
+            return response([
+                'priority' => $request->proCatPriority,
+                'id' => $id
+            ], 200);
+        }
+        // return redirect()->route('nganh-nhom-hang.edit', $id)->with('success', 'Cập nhật danh mục thành công');
     }
 
     public function recursive($id, $status, $levelChange)
@@ -212,7 +270,8 @@ class AdminProductCategoryController extends Controller
         $returnHTML = view('admin.productCategory.update', compact('proCat', 'id', 'categories'))->render();
 
         return response()->json([
-            'html' => $returnHTML
+            'html' => $returnHTML,
+            'curent_id' => $id
         ], 200);
     }
 
@@ -266,4 +325,13 @@ class AdminProductCategoryController extends Controller
             'status' => $request->unitStatus
         ]);
     }
+
+    public function getProCat(Request $request)
+    {
+        return response()->json([
+            'code' => 200,
+            'data' => $this->ajaxGetProCat($request->search, $request->id)
+        ]);
+    }
+
 }

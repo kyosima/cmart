@@ -310,20 +310,20 @@
 
                                     </div>
                                 </div>
-                                <!--<div class="form-group">-->
-                                <!--    <label class="col-md-12 control-label text-left">Tích lũy (C):</label>-->
-                                <!--    <div class="col-md-12">-->
-                                <!--        <input type="number" step="1" min="0" name="cpoint"-->
-                                <!--            class="form-control" value="{{ old('cpoint', $product->productPrice->cpoint) }}">-->
-                                <!--    </div>-->
-                                <!--</div>-->
-                                <!--<div class="form-group">-->
-                                <!--    <label class="col-md-12 control-label text-left">Tích lũy (M):</label>-->
-                                <!--    <div class="col-md-12">-->
-                                <!--        <input type="number" step="1" min="0" name="mpoint"-->
-                                <!--            class="form-control" value="{{ old('mpoint', $product->productPrice->mpoint) }}">-->
-                                <!--    </div>-->
-                                <!--</div>-->
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Tích lũy (C):</label>
+                                    <div class="col-md-12">
+                                        <input type="number" step="1" min="0" name="cpoint"
+                                            class="form-control" value="{{ old('cpoint', $product->productPrice->cpoint) }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Tích lũy (M):</label>
+                                    <div class="col-md-12">
+                                        <input type="number" step="1" min="0" name="mpoint"
+                                            class="form-control" value="{{ old('mpoint', $product->productPrice->mpoint) }}">
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-md-12 control-label text-left">Phí xử lý:</label>
                                     <div class="col-md-12">
