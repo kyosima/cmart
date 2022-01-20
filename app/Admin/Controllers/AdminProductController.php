@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use DataTables;
 
 class AdminProductController extends Controller
 {
@@ -326,5 +327,23 @@ class AdminProductController extends Controller
             'code' => 200,
             'data' => $this->ajaxGetProduct($request->search, $request->id)
         ]);
+    }
+
+    public function indexDatatable()
+    {
+        $products = Product::latest()->with('productPrice')->get();
+        return datatables()->of($products)->toJson();
+        // if($products) {
+        //     return response()->json([
+        //         'message' => "Success!",
+        //         'code' => 200,
+        //         'data' => $products
+        //     ]);
+        // } else {
+        //     return response()->json([
+        //         'message' => "Error!",
+        //         'code' => 500,
+        //     ]);
+        // }
     }
 }

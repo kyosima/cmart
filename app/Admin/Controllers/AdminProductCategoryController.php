@@ -14,11 +14,24 @@ class AdminProductCategoryController extends Controller
 {
     use ajaxProductTrait;
 
+    public function showChild($parentId, $level)
+    {
+        $categories = ProductCategory::where('category_parent', $parentId)
+            ->with('childrenCategoriesOnly')
+            ->orderBy('priority')
+            ->select(['id', 'name', 'slug', 'status', 'priority', 'category_parent', 'level'])
+            ->get();
+        
+        $parentOfCurrentParent = ProductCategory::where('id', $parentId)->first();
+        return view('admin.productCategory.page_child', compact('categories', 'level', 'parentOfCurrentParent'));
+    }
+
     public function index()
     {
         $categories = ProductCategory::where('category_parent', 0)
-            ->with('childrenCategories')
+            ->with('childrenCategoriesOnly')
             ->orderBy('priority')
+            ->select(['id', 'name', 'slug', 'status', 'priority', 'category_parent', 'level'])
             ->get();
 
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang Quản lý danh mục sản phẩm';
@@ -87,7 +100,7 @@ class AdminProductCategoryController extends Controller
                 Log::info($message);
             }
         }
-        return redirect()->route('nganh-nhom-hang.index');
+        return back()->with('success','Tạo mới thành công danh mục sản phẩm');;
     }
 
     public function update(Request $request, $id)
@@ -201,8 +214,7 @@ class AdminProductCategoryController extends Controller
                 'id' => $id
             ], 200);
         }
-        // return redirect()->route('nganh-nhom-hang.edit', $id)->with('success', 'Cập nhật danh mục thành công');
-    }
+        }
 
     public function recursive($id, $status, $levelChange)
     {
@@ -266,6 +278,7 @@ class AdminProductCategoryController extends Controller
         $proCat = ProductCategory::where('id', $id)->first();
         $categories = ProductCategory::where('category_parent', 0)
             ->with('childrenCategories')
+            ->select(['id', 'name', 'category_parent', 'slug', 'link_to_category', 'priority'])
             ->get();
         $returnHTML = view('admin.productCategory.update', compact('proCat', 'id', 'categories'))->render();
 

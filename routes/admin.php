@@ -193,6 +193,7 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép xem sản phẩm
     Route::group(['middleware' => ['permission:Xem sản phẩm,admin']], function () {
         Route::get('/san-pham', [AdminProductController::class, 'index'])->name('san-pham.index');
+        Route::get('/san-pham/getDatatable', [AdminProductController::class, 'indexDatatable'])->name('san-pham.indexDatatable');
     });
 
     // được phép thêm sản phẩm
@@ -225,6 +226,7 @@ Route::group(['middleware' => ['admin']], function () {
     // được phép xem danh mục sản phẩm
     Route::group(['middleware' => ['permission:Xem danh mục sản phẩm,admin']], function () {
         Route::get('/nganh-nhom-hang', [AdminProductCategoryController::class, 'index'])->name('nganh-nhom-hang.index');
+        Route::get('/nganh-nhom-hang/show-child/{parentId}/level/{level}', [AdminProductCategoryController::class, 'showChild'])->name('nganh-nhom-hang.showChild');
     });
 
     // được phép thêm danh mục sản phẩm

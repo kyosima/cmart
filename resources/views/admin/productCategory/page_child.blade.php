@@ -132,6 +132,13 @@
 
             </div>
             <hr>
+
+            @if ($level + 1 == 1)
+                <a href="{{route('nganh-nhom-hang.index')}}">Quay lại trang trước</a>
+            @else
+                <a href="{{route('nganh-nhom-hang.showChild', ['parentId' => $parentOfCurrentParent->category_parent, 'level' => ($parentOfCurrentParent->level - 1)])}}">Quay lại trang trước</a>
+            @endif
+
             <div class="portlet-body">
                 <div class="pt-3" style="overflow-x: auto;">
                     @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm') && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
