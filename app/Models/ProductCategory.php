@@ -17,9 +17,14 @@ class ProductCategory extends Model
         return $this->belongsTo(ProductCategory::class, 'category_parent', 'id');
     }
 
+    public function childrenCategoriesOnly()
+    {
+        return $this->hasMany(ProductCategory::class, 'category_parent', 'id')->orderBy('priority');
+    }
+
     public function childrenCategories()
     {
-        return $this->hasMany(ProductCategory::class, 'category_parent', 'id')->with('categories')->with('products')->with('linkToCategory');
+        return $this->hasMany(ProductCategory::class, 'category_parent', 'id')->orderBy('priority')->with(['products','linkToCategory']);
     }
 
     public function products()
@@ -39,15 +44,15 @@ class ProductCategory extends Model
     // RECURSIVE PARENT (ĐỂ LÀM BREADCUMBS)
     public function parents()
     {
-        return $this->belongsTo(ProductCategory::class, 'category_parent')->with('categories')->with('linkToCategory');
+        return $this->belongsTo(ProductCategory::class, 'category_parent')->with(['categories','linkToCategory']);
     }
 
     public function linkToCategory()
     {
-        return $this->belongsTo(ProductCategory::class, 'link_to_category', 'id')->with('products')->with('subproducts');
+        return $this->belongsTo(ProductCategory::class, 'link_to_category', 'id')->with(['products','subproducts']);
     }
 
-    public function getAllChildren ()
+    public function getAllChildren()
     {
         $sections = new Collection();
         foreach ($this->childrenCategories as $section) {

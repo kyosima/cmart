@@ -59,8 +59,6 @@
                         <thead class="thead1" style="vertical-align: middle;">
                             <tr>
                                 <th></th>
-                                <th class="title-text" style="width: 2%">
-                                    STT </th>
                                 <th class="title-text">
                                     Hình ảnh
                                 </th>
@@ -74,13 +72,16 @@
                                     Thuế suất
                                 </th>
                                 <th class="title-text">
-                                    Giá bán lẻ
+                                    Giá Nhập
+                                </th>
+                                <th class="title-text">
+                                    Giá Bán Lẻ
                                 </th>
                                 <th class="title-text">
                                     GIÁ SHOCK
                                 </th>
                                 <th class="title-text">
-                                    Giá buôn
+                                    Giá Buôn
                                 </th>
                                 <th class="title-text">
                                     C
@@ -100,7 +101,7 @@
                             </tr>
                         </thead>
                         <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
-                            @foreach ($products as $item)
+                            {{-- @foreach ($products as $item)
                                 <tr>
                                     <td></td>
                                     <td>{{ $item->id }}</td>
@@ -122,13 +123,6 @@
                                     <td>{{ $item->productPrice->mpoint }}(M)</td>
                                     <td>{{ number_format($item->productPrice->phi_xuly) }}đ</td>
                                     <td>{{$item->weight}}(g)</td>
-                                    {{-- <td>
-                                        @foreach ($item->productPayment($item->id) as $payment)
-                                            @if ($payment != null)
-                                                <span>{{ $payment->name }},</span>
-                                            @endif
-                                        @endforeach
-                                    </td> --}}
                                     <td>
                                         <div class="input-group">
                                             @if ($item->status == 1)
@@ -143,7 +137,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                     @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') &&
@@ -185,12 +179,16 @@
         );
 
         $('#table-product').DataTable({
+            serverSide: true,
+            responsive: true,
             ordering: true,
             lengthMenu: [
                 [25, 50, -1],
                 [25, 50, "All"]
             ],
-            columnDefs: [{
+            ajax: "{{ route('san-pham.indexDatatable') }}",
+            columnDefs: [
+                {
                     targets: 0,
                     orderable: false,
                     searchable: false,
@@ -198,38 +196,129 @@
                     'render': function(data, type, row, meta) {
                         if (type === 'display') {
                             data =
-                                `<input type="checkbox" class="dt-checkboxes" name="id[]" value="${row[1]}">`;
+                                `<input type="checkbox" class="dt-checkboxes" name="id[]" value="${row.id}">`;
                         }
                         return data;
                     },
                     'checkboxes': true
                 },
                 {
-                    "targets": [1],
-                    "visible": false,
-                    "searchable": false
-                },
-                {
-                    targets: [2],
+                    targets: 1,
+                    visible: false,
+                    searchable: false,
                     orderable: false,
-                    searchable: false
+                    render: function(data, type, row) {
+                        return `<img src="${row.feature_img}" width="70" height="60" alt="">`
+                    }
                 },
                 {
+                    targets: 2,
+                    render: function(data, type, row) {
+                        return `${row.sku}`
+                    }
+                },
+                {
+                    targets: 3,
                     type: "html",
-                    targets: [3, 4]
+                    @if (auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+                        render: function(data, type, row) {
+                            return `<a style="text-decoration: none;"
+                                href="${window.location.href}/edit/${row.id}">${row.name}</a>`
+                        }
+                    @else
+                        render: function(data, type, row) {
+                            return `${row.name}`
+                        }
+                    @endif
                 },
                 {
-                    targets: [5, 6, 7, 8, 9, 10, 11, 12],
-                    searchable: false
+                    targets: 4,
+                    render: function(data, type, row) {
+                        return `${row.product_price.tax*100}%`
+                    }
                 },
                 {
-                    targets: [6, 7, 8, 9, 10],
+                    targets: 5,
+                    render: function(data, type, row) {
+                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.price)
+                    }
+                },
+                {
+                    targets: 6,
+                    render: function(data, type, row) {
+                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.regular_price)
+                    }
+                },
+                {
+                    targets: 7,
+                    render: function(data, type, row) {
+                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.shock_price)
+                    }
+                },
+                {
+                    targets: 8,
+                    render: function(data, type, row) {
+                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.wholesale_price)
+                    }
+                },
+                {
+                    targets: 9,
+                    render: function(data, type, row) {
+                        if (row.product_price.cpoint == null) {
+                            return `0`
+                        }
+                        return `${row.product_price.cpoint}`
+                    }
+                },
+                {
+                    targets: 10,
+                    render: function(data, type, row) {
+                        if (row.product_price.mpoint == null) {
+                            return `0`
+                        }
+                        return `${row.product_price.mpoint}`
+                    }
+                },
+                {
+                    targets: 11,
+                    render: function(data, type, row) {
+                        if (row.product_price.phi_xuly == null) {
+                            return `0`
+                        }
+                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.phi_xuly)
+                    }
+                },
+                {
+                    targets: 12,
+                    render: function(data, type, row) {
+                        return `${row.weight}`
+                    }
+                },
+                {
+                    targets: 13,
+                    render: function(data, type, row) {
+                        if (row.status == 1) {
+                            return `<div class="input-group">
+                                <span style=" max-width: 82px;min-width: 82px;" type="text"
+                                    class="form-control form-control-sm font-size-s text-white active text-center"
+                                    aria-label="Text input with dropdown button">Hoạt động</span>
+                            </div>`
+                        } else {
+                            return `<div class="input-group">
+                                <span style=" max-width: 82px;min-width: 82px;" type="text"
+                                    class="form-control form-control-sm font-size-s text-white stop text-center"
+                                    aria-label="Text input with dropdown button">Ngừng</span>
+                            </div>`
+                        }
+                    }
+                },
+
+                {
+                    targets: [3, 4, 5, 6, 7, 8, 9, 10, 11],
+                    searchable: false,
+                    orderable: false,
                     type: "formatted-num"
                 },
-                {
-                    targets: [5, 11, 12],
-                    orderable: false
-                }
             ],
             searchBuilder: {
                 conditions: {

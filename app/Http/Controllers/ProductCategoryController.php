@@ -159,6 +159,7 @@ class ProductCategoryController extends Controller
         ->where('id', '!=', 1)
         ->where('status', 1)
         ->with(['childrenCategories.products', 'products'])
+        ->orderBy('priority')
         ->get();
 
         $arrProducts = [];

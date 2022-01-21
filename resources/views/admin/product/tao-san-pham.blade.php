@@ -101,23 +101,7 @@
                                     <label class="col-md-12 control-label text-left">Danh mục sản phẩm<span
                                             class="required" aria-required="true">(*)</span>:</label>
                                     <div class="col-md-12">
-                                        <select class="selectpicker form-control selectCategory nhomhang" name="category_parent"
-                                            required data-placeholder="Chọn danh mục sản phẩm" data-type="megaParent">
-                                            @foreach ($nganhHang as $item)
-                                                <option value="{{ $item->id }}"
-                                                    @if (old('category_parent') == $item->id)
-                                                        selected
-                                                    @endif
-                                                    >{{ $item->name }}</option>
-                                                @if (count($item->childrenCategories) > 0)
-                                                    @foreach ($item->childrenCategories as $childCategory)
-                                                        @include('admin.productCategory.selectChild', [
-                                                            'child_category' => $childCategory,
-                                                            'prefix' => '&nbsp;&nbsp;&nbsp;',
-                                                            ])
-                                                    @endforeach
-                                                @endif
-                                            @endforeach
+                                        <select class="selectpicker form-control" id="selectCategory" name="category_parent" required>
                                         </select>
                                     </div>
                                 </div>
@@ -142,142 +126,124 @@
                                     <div class="col-md-12">
                                         <input type="text" name="product_brand" class="form-control"
                                             required value="{{ old('product_brand') }}">
-                                        {{-- <select name="product_brand" class="selectpicker form-control" required
-                                            title="Thương hiệu" data-placeholder="Chọn thương hiệu">
-                                            <option></option>
-                                            @foreach ($brands as $item)
-                                                <option value="{{ $item->id }}"
-                                                    @if (old('product_brand') == $item->id)
-                                                        selected
-                                                    @endif
-                                                    >{{ $item->name }}</option>
-                                            @endforeach
-                                        </select> --}}
                                     </div>
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Đơn vị tính<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <select class="selectpicker form-control" name="product_calculation_unit"
-                                            required data-placeholder="Đơn vị tính">
-                                            <option value="-1">Chọn đơn vị tính</option>
-                                            @foreach ($calculationUnits as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Tồn kho<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="number" step="1" name="product_quantity" class="form-control"
-                                            min="1" value="{{ old('product_quantity') }}">
-                                    </div>
-                                </div> --}}
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Khối lượng (g) <span
-                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <label class="col-md-12 control-label text-left">Khối lượng (g):</label>
                                     <div class="col-md-12">
-                                        <input type="number" step="0.1" max="1000000" min="0.1" name="product_weight" required class="form-control"
-                                            value="{{ old('product_weight', 1.1) }}">
+                                        <input type="number" step="0.1" min="0" name="product_weight" class="form-control"
+                                            value="{{ old('product_weight', 0) }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-4">
-                                            <label class="col-md-12 control-label text-left">Chiều dài (cm)<span
-                                                    class="required" aria-required="true">(*)</span>:</label>
+                                            <label class="col-md-12 control-label text-left">Chiều dài (cm):</label>
                                             <div class="col-md-12">
-                                                <input type="number" step="0.1" max="10000" min="1" required name="product_length"
+                                                <input type="number" step="0.1" min="0" name="product_length"
                                                     class="form-control"
-                                                    value="{{ old('product_length', 1.1) }}">
+                                                    value="{{ old('product_length', 0) }}">
                                             </div>
                                         </div>
                                         <div class="col-4">
-                                            <label class="col-md-12 control-label text-left">Chiều cao (cm)<span
-                                                    class="required" aria-required="true">(*)</span>:</label>
+                                            <label class="col-md-12 control-label text-left">Chiều cao (cm):</label>
                                             <div class="col-md-12">
-                                                <input type="number" step="0.1" max="10000" min="1" required name="product_height"
+                                                <input type="number" step="0.1" min="0" name="product_height"
                                                     class="form-control"
-                                                    value="{{ old('product_height', 1.1) }}">
+                                                    value="{{ old('product_height', 0) }}">
                                             </div>
                                         </div>
                                         <div class="col-4">
-                                            <label class="col-md-12 control-label text-left">Chiều rộng (cm)<span
-                                                    class="required" aria-required="true">(*)</span>:</label>
+                                            <label class="col-md-12 control-label text-left">Chiều rộng (cm):</label>
                                             <div class="col-md-12">
-                                                <input type="number" step="0.1" max="10000" min="1" required name="product_width"
+                                                <input type="number" step="0.1" min="0" name="product_width"
                                                     class="form-control"
-                                                    value="{{ old('product_width', 1.1) }}">
+                                                    value="{{ old('product_width', 0) }}">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+
+                            <hr style="margin: 10px;">
+
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Đơn giá Bán lẻ<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator" required
-                                            value="{{ old('product_regular_price') }}">
-                                        <input type="hidden" id="product_regular_price" required name="product_regular_price" value="{{ old('product_regular_price') }}">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Giá Nhập<span
+                                                    class="required" aria-required="true">(*)</span>:</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control number-separator-4" required
+                                                    value="{{ old('product_price') }}">
+                                                <input type="hidden" id="product_price" required name="product_price" value="{{ old('product_price') }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Giá Bán Lẻ<span
+                                                    class="required" aria-required="true">(*)</span>:</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control number-separator" required
+                                                    value="{{ old('product_regular_price') }}">
+                                                <input type="hidden" id="product_regular_price" required name="product_regular_price" value="{{ old('product_regular_price') }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Giá Shock<span
+                                                class="required" aria-required="true">(*)</span>:</label>
+                                            <div class="col-md-12">
+                                                <input type="text" required class="form-control number-separator-1" 
+                                                    value="{{ old('product_shock_price') }}">
+                                                <input type="hidden" id="product_shock_price" required name="product_shock_price" value="{{ old('product_shock_price') }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Giá Buôn<span
+                                                    class="required" aria-required="true">(*)</span>:</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control number-separator-2"
+                                                required value="{{ old('product_wholesale_price') }}">
+                                                <input type="hidden" id="product_wholesale_price" required name="product_wholesale_price" value="{{ old('product_wholesale_price') }}">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Đơn giá Shock<span
-                                        class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="text" required class="form-control number-separator-1" 
-                                            value="{{ old('product_shock_price') }}">
-                                        <input type="hidden" id="product_shock_price" required name="product_shock_price" value="{{ old('product_shock_price') }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Đơn giá Buôn<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator-2"
-                                        required value="{{ old('product_wholesale_price') }}">
-                                        <input type="hidden" id="product_wholesale_price" required name="product_wholesale_price" value="{{ old('product_wholesale_price') }}">
-                                    </div>
-                                </div>
-                                <!--<div class="form-group">-->
-                                <!--    <label class="col-md-12 control-label text-left">Tích lũy (C):</label>-->
-                                <!--    <div class="col-md-12">-->
-                                <!--        <input type="number" step="1" min="0" name="cpoint"-->
-                                <!--            class="form-control" value="{{ old('cpoint') }}">-->
-                                <!--    </div>-->
-                                <!--</div>-->
-                                <!--<div class="form-group">-->
-                                <!--    <label class="col-md-12 control-label text-left">Tích lũy (M):</label>-->
-                                <!--    <div class="col-md-12">-->
-                                <!--        <input type="number" step="1" min="0" name="mpoint"-->
-                                <!--            class="form-control" value="{{ old('mpoint') }}">-->
-                                <!--    </div>-->
-                                <!--</div>-->
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Phí xử lý:</label>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control number-separator-3"
-                                            value="{{ old('phi_xuly') }}">
-                                        <input type="hidden" id="phi_xuly" name="phi_xuly" value="{{ old('phi_xuly') }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-left">Thuế suất<span
-                                            class="required" aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12">
-                                        <select class="form-control selectpicker" name="tax"
-                                            required data-placeholder="Chọn thuế suất">
-                                            <option></option>
-                                            <option value="0" {{ old("tax") == 0 && old("tax") != null ? "selected":"" }}>0%</option>
-                                            <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
-                                            <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
-                                        </select>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Tích lũy (C):</label>
+                                            <div class="col-md-12">
+                                                <input type="number" step="1" min="0" name="cpoint"
+                                                    class="form-control" value="{{ old('cpoint') }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Tích lũy (M):</label>
+                                            <div class="col-md-12">
+                                                <input type="number" step="1" min="0" name="mpoint"
+                                                    class="form-control" value="{{ old('mpoint') }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Phí xử lý:</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control number-separator-3"
+                                                    value="{{ old('phi_xuly') }}">
+                                                <input type="hidden" id="phi_xuly" name="phi_xuly" value="{{ old('phi_xuly') }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Thuế suất<span
+                                                    class="required" aria-required="true">(*)</span>:</label>
+                                            <div class="col-md-12">
+                                                <select class="form-control selectpicker" name="tax"
+                                                    required data-placeholder="Chọn thuế suất">
+                                                    <option></option>
+                                                    <option value="0" {{ old("tax") == 0 && old("tax") != null ? "selected":"" }}>0%</option>
+                                                    <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
+                                                    <option value="0.08" {{ old("tax") == 0.08 ? "selected":"" }}>8%</option>
+                                                    <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -300,7 +266,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -361,11 +326,14 @@
 
 <script>
     $(document).ready(function() {
-        $('select.selectpicker').select2();
+        $('select.selectpicker').select2({
+            width: '100%',
+        });
 
         $('select.multiple-payments').select2({
             placeholder: "Chọn hình thức thanh toán",
-            multiple: true
+            multiple: true,
+            width: '100%',
         });
 
         easyNumberSeparator({
@@ -391,21 +359,51 @@
         easyNumberSeparator({
             selector: '.number-separator-4',
             separator: '.',
-            resultInput: '#cship',
+            resultInput: '#product_price',
         })
-        easyNumberSeparator({
-            selector: '.number-separator-5',
-            separator: '.',
-            resultInput: '#viettel_ship',
+
+        $('#selectCategory').select2({
+            width: '100%',
+            allowClear: true,
+            minimumInputLength: 3,
+            dataType: 'json',
+            ajax: {
+                delay: 350,
+                url: `{{ route('san-pham.getProCat') }}`,
+                dataType: 'json',
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                    }
+                    return query;
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.data
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Chọn danh mục sản phẩm...',
+            templateResult: formatRepoSelectionProCat,
+            templateSelection: formatRepoSelectionProCat
         })
+
+        function formatRepoSelectionProCat(repo) {
+            if (repo.text) {
+               return repo.text
+            } else {
+                return `${repo.name}`;
+            }
+        }
 
         $('#select-upsell').select2({
             width: '100%',
             multiple: true,
             minimumInputLength: 3,
             dataType: 'json',
-            delay: 250,
             ajax: {
+                delay: 350,
                 url: `{{ route('san-pham.getProduct') }}`,
                 dataType: 'json',
                 data: function (params) {
@@ -506,11 +504,6 @@
                             $('.fileinput-new.thumbnail img').attr('src', file.getUrl())
                         }
                     });
-                    // finder.on('file:choose:resizedImage', function(evt) {
-                    //     var output = document.getElementById(elementId);
-                    //     output.value = evt.data.resizedUrl;
-                    //     $('.fileinput-new img').attr('src', evt.data.resizedUrl)
-                    // });
                 }
             });
         }

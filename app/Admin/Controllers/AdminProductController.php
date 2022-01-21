@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use DataTables;
 
 class AdminProductController extends Controller
 {
@@ -23,7 +24,9 @@ class AdminProductController extends Controller
     {
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
         Log::info($message);
-        $products = Product::latest()->get();
+        $products = Product::latest()
+                    ->select(['id', 'slug', 'name', 'sku', 'feature_img', 'weight', 'status'])
+                    ->get();
         return view('admin.product.san-pham', compact('products'));
     }
 
@@ -51,13 +54,10 @@ class AdminProductController extends Controller
             'slug' => 'unique:products,slug',
             'feature_img' => 'required',
             'category_parent' => 'required',
-            'product_weight' => 'required',
-            'product_height' => 'required',
-            'product_width' => 'required',
-            'product_length' => 'required',
             'product_brand' => 'required',
             'payments' => 'required',
             'product_status' => 'required',
+            'product_price' => 'required|numeric',
             'product_regular_price' => 'required|numeric',
             'product_wholesale_price' => 'required|numeric',
             'product_shock_price' => 'required|numeric',
@@ -73,18 +73,16 @@ class AdminProductController extends Controller
             'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
             'feature_img' => 'Ảnh đại diện không được để trống',
             'category_parent' => 'Danh mục sản phẩm không được để trống',
-            'product_weight' => 'Cân nặng không được để trống',
-            'product_height' => 'Chiều cao không được để trống',
-            'product_width' => 'Chiều rộng không được để trống',
-            'product_length' => 'Chiều dài không được để trống',
             'product_brand' => 'Thương hiệu không được để trống',
             'payments' => 'Hình thức thanh toán không được để trống',
             'product_status' => 'Trạng thái không được để trống',
             'cpoint' => 'CPoint phải là số',
             'mpoint' => 'MPoint phải là số',
+            'product_price.required' => 'Giá nhập không được để trống',
             'product_regular_price.required' => 'Giá bán lẻ không được để trống',
             'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
             'product_shock_price.required' => 'Giá shock không được để trống',
+            'product_price.numeric' => 'Giá nhập phải là số',
             'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
             'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
             'product_shock_price.numeric' => 'Giá shock phải là số',
@@ -96,11 +94,6 @@ class AdminProductController extends Controller
             try {
                 $slug = Str::slug($request->product_name, '-');
 
-                // if(Product::whereSlug($slug)->exists()){
-                //     $int = random_int(1, 99999999);
-                //     $slug .= '-'.$int;
-                // }
-
                 $product = Product::create([
                     'sku' => $request->product_sku,
                     'name' => $request->product_name,
@@ -108,8 +101,6 @@ class AdminProductController extends Controller
                     'feature_img' => $request->feature_img,
                     'gallery' => rtrim($request->gallery_img, ", "),
                     'category_id' => $request->category_parent,
-                    // 'calculation_unit' => $request->product_calculation_unit,
-                    // 'quantity' => $request->product_quantity,
                     'weight' => $request->product_weight,
                     'height' => $request->product_height,
                     'width' => $request->product_width,
@@ -124,6 +115,7 @@ class AdminProductController extends Controller
                 ]);
 
                 $productPrice = new ProductPrice();
+                $productPrice->price = $request->product_price;
                 $productPrice->regular_price = $request->product_regular_price;
                 $productPrice->wholesale_price = $request->product_wholesale_price;
                 $productPrice->shock_price = $request->product_shock_price;
@@ -175,13 +167,10 @@ class AdminProductController extends Controller
             'slug' => 'unique:products,slug',
             'feature_img' => 'required',
             'category_parent' => 'required',
-            'product_weight' => 'required',
-            'product_height' => 'required',
-            'product_width' => 'required',
-            'product_length' => 'required',
             'product_brand' => 'required',
             'payments' => 'required',
             'product_status' => 'required',
+            'product_price' => 'required|numeric',
             'product_regular_price' => 'required|numeric',
             'product_wholesale_price' => 'required|numeric',
             'product_shock_price' => 'required|numeric',
@@ -197,25 +186,22 @@ class AdminProductController extends Controller
             'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
             'feature_img' => 'Ảnh đại diện không được để trống',
             'category_parent' => 'Danh mục sản phẩm không được để trống',
-            'product_weight' => 'Cân nặng không được để trống',
-            'product_height' => 'Chiều cao không được để trống',
-            'product_width' => 'Chiều rộng không được để trống',
-            'product_length' => 'Chiều dài không được để trống',
             'product_brand' => 'Thương hiệu không được để trống',
             'payments' => 'Hình thức thanh toán không được để trống',
             'product_status' => 'Trạng thái không được để trống',
             'cpoint' => 'CPoint phải là số',
             'mpoint' => 'MPoint phải là số',
+            'product_price.required' => 'Giá nhập không được để trống',
             'product_regular_price.required' => 'Giá bán lẻ không được để trống',
             'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
             'product_shock_price.required' => 'Giá shock không được để trống',
+            'product_price.numeric' => 'Giá nhập phải là số',
             'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
             'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
             'product_shock_price.numeric' => 'Giá shock phải là số',
             'phi_xuly.numeric' => 'Phí xử lý phải là số',
             'tax' => 'Thuế không được để trống',
         ]);
-
 
         return DB::transaction(function () use ($request, $id) {
             try {
@@ -232,8 +218,6 @@ class AdminProductController extends Controller
                     'feature_img' => $request->feature_img,
                     'gallery' => rtrim($request->gallery_img, ", "),
                     'category_id' => $request->category_parent,
-                    // 'calculation_unit' => $request->product_calculation_unit,
-                    // 'quantity' => $request->product_quantity,
                     'weight' => $request->product_weight,
                     'height' => $request->product_height,
                     'width' => $request->product_width,
@@ -248,6 +232,7 @@ class AdminProductController extends Controller
                 ]);
 
                 ProductPrice::where('id_ofproduct', $id)->update([
+                    'price' => $request->product_price,
                     'regular_price' => $request->product_regular_price,
                     'wholesale_price' => $request->product_wholesale_price,
                     'shock_price' => $request->product_shock_price,
@@ -326,5 +311,19 @@ class AdminProductController extends Controller
             'code' => 200,
             'data' => $this->ajaxGetProduct($request->search, $request->id)
         ]);
+    }
+
+    public function getProCat(Request $request)
+    {
+        return response()->json([
+            'code' => 200,
+            'data' => $this->ajaxGetProCat($request->search, 0)
+        ]);
+    }
+
+    public function indexDatatable()
+    {
+        $products = Product::latest()->with('productPrice')->get();
+        return datatables()->of($products)->toJson();
     }
 }

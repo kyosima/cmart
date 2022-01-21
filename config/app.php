@@ -163,7 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -238,15 +238,14 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-
         'SEOMeta'       => Artesaos\SEOTools\src\SEOTools\Facades\SEOMeta::class,
         'OpenGraph'     => Artesaos\SEOTools\src\SEOTools\Facades\OpenGraph::class,
         'Twitter'       => Artesaos\SEOTools\src\SEOTools\Facades\TwitterCard::class,
         'JsonLd'        => Artesaos\SEOTools\src\SEOTools\Facades\JsonLd::class,
         'JsonLdMulti'   => Artesaos\SEOTools\src\SEOTools\Facades\JsonLdMulti::class,
         'SEO' => Artesaos\SEOTools\src\SEOTools\Facades\SEOTools::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ],
 
 ];

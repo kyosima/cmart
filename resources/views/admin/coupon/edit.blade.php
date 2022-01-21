@@ -233,8 +233,8 @@
             multiple: true,
             minimumInputLength: 3,
             dataType: 'json',
-            delay: 250,
             ajax: {
+                delay: 350,
                 url: `{{ route('coupon.getProduct') }}`,
                 dataType: 'json',
                 data: function(params) {
@@ -260,8 +260,8 @@
             multiple: true,
             minimumInputLength: 3,
             dataType: 'json',
-            delay: 250,
             ajax: {
+                delay: 350,
                 url: `{{ route('coupon.getProCat') }}`,
                 dataType: 'json',
                 data: function(params) {
@@ -319,8 +319,8 @@
                             multiple: true,
                             minimumInputLength: 3,
                             dataType: 'json',
-                            delay: 250,
                             ajax: {
+                                delay: 350,
                                 url: `{{ route('coupon.getProduct') }}`,
                                 dataType: 'json',
                                 data: function(params) {
@@ -367,8 +367,8 @@
                             multiple: true,
                             minimumInputLength: 3,
                             dataType: 'json',
-                            delay: 250,
                             ajax: {
+                                delay: 350,
                                 url: `{{ route('coupon.getProCat') }}`,
                                 dataType: 'json',
                                 data: function(params) {

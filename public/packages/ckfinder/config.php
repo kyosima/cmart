@@ -163,10 +163,10 @@ $config['pluginsDirectory'] = __DIR__ . '/plugins';
 $config['plugins'] = array('ImageWatermark');
 
 $config['ImageWatermark'] = array(
-    'imagePath' => __DIR__.'/watermark/logo-c-v.png',
+    'imagePath' => __DIR__.'/watermark/logo-cpc.png',
     'position' => array(
-        'right'  => 0,
-        'bottom' => 0,
+        'right'  => 80,
+        'bottom' => 80,
     )
 );
 
