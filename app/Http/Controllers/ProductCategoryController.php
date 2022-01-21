@@ -35,7 +35,13 @@ class ProductCategoryController extends Controller
         // VÀ SHOW CÁC DANH MỤC CON ĐỂ TICK CHỌN
         // https://laracasts.com/discuss/channels/laravel/get-all-products-from-parent-category-and-its-all-sub-categories
         $proCat = ProductCategory::where('slug', $slug)->with(['childrenCategories.products', 'products'])->first();
-        $proCat->products->merge($proCat->subproducts);
+        // lấy slug để làm tên cho cache
+        $getProCatNameForCache = $proCat->slug;
+
+        // chuyển link nếu ng dùng truy cập vào 1 danh mục có liên kết với danh mục khác
+        if ($proCat->linkToCategory != null) {
+            return redirect()->route('proCat.index', $proCat->linkToCategory->slug);
+        }
 
         // SEO
         SEOMeta::setTitle($proCat->name);
@@ -56,23 +62,36 @@ class ProductCategoryController extends Controller
 
         // LẤY RA TOÀN BỘ ID DANH MỤC HIỆN TẠI & DANH MỤC CON CỦA NÓ
         // LINK TRO GIUP: https://stackoverflow.com/questions/41414434/laravel-return-all-the-ids-of-descendants
+        // subcategory = chỉ lấy danh mục con
         $subcategory = ProductCategory::where('category_parent', $proCat->id)->get();
+        // categoryIds = toàn bộ các danh mục con, cháu, bla bla...
         $categoryIds = $proCat->getAllChildren();
-        $arrCatIds = $categoryIds->pluck('id')->push($proCat->id)->toArray();
-        foreach ($categoryIds as $category) {
-            if ($category->linkToCategory != null) {
-                $cat = ProductCategory::where('id', $category->linkToCategory->id)->first();
-                array_push($arrCatIds, $cat->id);
-                $arrCatIds = array_merge($arrCatIds, $cat->getAllChildren()->pluck('id')->toArray());
+        $arrCatIds = $categoryIds->pluck('id')->toArray();
+
+        // nếu mà chưa có cache thì vào đây
+        if(Cache::get($getProCatNameForCache) == null) {
+            foreach ($categoryIds as $key => $category) {
+                if ($category->linkToCategory != null) {
+                    $cat = ProductCategory::where('id', $category->linkToCategory->id)->first();
+                    // ví dụ: category id = 10 liên kết với thằng id 20
+                    // thì thêm thằng 20 vào arr
+                    // xóa thằng 10 ra khỏi arr
+                    array_push($arrCatIds, $cat->id);
+                    array_splice($arrCatIds, $key, 1);
+                    $arrCatIds = array_merge($arrCatIds, $cat->getAllChildren()->pluck('id')->toArray());
+                }
             }
+            Cache::put($getProCatNameForCache, $arrCatIds, 3000);
+            $categoryIds = $arrCatIds;
+        } else {
+            $categoryIds = Cache::get($getProCatNameForCache);
         }
-        $categoryIds = $arrCatIds;
-        
+
         $products = Product::whereIn('category_id', $categoryIds)
-        ->where('status', 1)
-        ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
-        ->orderBy('products.id', 'desc')
-        ->get();
+                        ->where('status', 1)
+                        ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                        ->orderBy('products.id', 'desc')
+                        ->get();
 
         // LẤY RA BRAND ĐỂ SHOW KHÔNG BỊ TRÙNG LẶP 
         $brandIds = $products->pluck('brand')->toArray();
@@ -164,9 +183,15 @@ class ProductCategoryController extends Controller
 
         $arrProducts = [];
         foreach($categories as $proCat) {
-            $products = $proCat->products->where('status', 1)->merge($proCat->subproducts->where('status', 1))->sortByDesc('id');
+            // Vì sản phẩm thường nằm ở danh mục con
+            // nên ở đây $proCat đang là danh mục cha lớn nhất
+            // nên sẽ kh có sp nào cả
+            // do đó phải lấy sp ở các danh mục con (chỉ lấy 15)
+            // vì 15 * 23 danh mục = hơn 300sp
+            $products = $proCat->subproducts->where('status', 1)->skip(0)->take(15)->sortByDesc('id');
             array_push($arrProducts, $products);
         }
+
         return view('proCat.allProCat', compact('categories', 'arrProducts'));
     }
 

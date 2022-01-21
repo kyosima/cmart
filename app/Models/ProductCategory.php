@@ -17,6 +17,8 @@ class ProductCategory extends Model
         return $this->belongsTo(ProductCategory::class, 'category_parent', 'id');
     }
 
+    // thằng này dùng để query only childrenCategory trong admin, kh có lấy thêm products hay linkToCategory như th dưới
+    // để tối ưu tốc độ
     public function childrenCategoriesOnly()
     {
         return $this->hasMany(ProductCategory::class, 'category_parent', 'id')->orderBy('priority');
@@ -31,10 +33,6 @@ class ProductCategory extends Model
     {
         return $this->hasMany(Product::class, 'category_id', 'id');
     }
-
-    // public function products() {
-    //     return $this->hasManyThrough(Product::class, ProductCategory::class, 'category_parent', 'category_id', 'id');
-    // }
 
     public function subproducts()
     {

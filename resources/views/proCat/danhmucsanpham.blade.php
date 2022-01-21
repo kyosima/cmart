@@ -106,78 +106,19 @@
                                 <div id="category_search" class="widget-product-categories">
                                     <ul class="check-side category-menu">
                                         @foreach ($subcategory as $item)
-                                            @if (count($item->childrenCategories) > 0)
-                                                <li class="menu-item menu-item-has-children py-1 has-child menu-border">
-                                                    @if ($item->linkToCategory != null)
-                                                        <a
-                                                            href="{{ route('proCat.index', $item->linkToCategory->slug) }}">{{ $item->name }}</a>
-                                                    @else
-                                                        <a
-                                                            href="{{ route('proCat.index', $item->slug) }}">{{ $item->name }}</a>
-                                                    @endif
-                                                    <button class="toggle">
-                                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                                    </button>
-                                                    @include('proCat.danhmuc-sidebar', [
-                                                    'child_categories' => $item->childrenCategories,
-                                                    ])
-                                                </li>
-                                            @else
-                                                <li class="menu-item menu-border py-1">
-                                                    @if ($item->linkToCategory != null)
-                                                        <a
-                                                            href="{{ route('proCat.index', $item->linkToCategory->slug) }}">{{ $item->name }}</a>
-                                                    @else
-                                                        <a
-                                                            href="{{ route('proCat.index', $item->slug) }}">{{ $item->name }}</a>
-                                                    @endif
-                                                </li>
-                                            @endif
+                                            <li class="menu-item menu-border py-1">
+                                                @if ($item->linkToCategory != null)
+                                                    <a
+                                                        href="{{ route('proCat.index', $item->linkToCategory->slug) }}">{{ $item->name }}</a>
+                                                @else
+                                                    <a
+                                                        href="{{ route('proCat.index', $item->slug) }}">{{ $item->name }}</a>
+                                                @endif
+                                            </li>
                                         @endforeach
                                     </ul>
-                                    {{-- @foreach ($categories as $item)
-                                <div class="check-side">
-                                    <label class="py-1">
-                                        <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
-                                    </label>
-                                </div>
-                                @endforeach --}}
                                 </div>
                             </aside>
-                            {{-- <aside class="widget danhmuc">
-                                <h3 class="widget-title">Danh mục</h3>
-                                <div class="widget-search">
-                                    <input autocomplete="off" id="input_category_search" type="text" class="form-control input_search" placeholder="Tìm kiếm..." onkeyup="searchText('category_search')">
-                                    <button type="button">
-                                        <i class="search-icon"></i>
-                                    </button>
-                                </div>
-                                <div class="scrollbar">
-                                    <div id="category_search" class="widget-product-categories">
-                                        @foreach ($subcategory as $item)
-                                            @if (count($item->products) > 0)
-                                                <div class="check-side">
-                                                    <label class="check-custom">
-                                                        {{$item->name}}
-                                                        <span class="count-item"> ({{count($item->products)+count($item->subproducts)}})</span>
-                                                        <input name="category[]" class="submit_click" type="checkbox" value="{{$item->id}}">
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </div>
-                                            @elseif (count($item->products) < 1 && $item->linkToCategory != null)
-                                                <div class="check-side">
-                                                    <label class="check-custom">
-                                                        {{$item->linkToCategory->name}}
-                                                        <span class="count-item"> ({{count($item->linkToCategory->products)+count($item->linkToCategory->subproducts)}})</span>
-                                                        <input name="category[]" class="submit_click" type="checkbox" value="{{$item->linkToCategory->id}}">
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </aside> --}}
                         @endif
 
                         <form action="{{ url('/') . '/' . Request::path() }}" method="get" id="filter_form">
@@ -515,17 +456,17 @@
         }
 
         $(document).ready(function() {
-            $(document).on("click", "button.toggle", function() {
-                if (!$(this).parent().hasClass('active')) {
-                    $(this).parent().addClass('active');
-                    $(this).find('i').removeClass('fa-angle-down')
-                    $(this).find('i').addClass('fa-angle-up')
-                } else {
-                    $(this).parent().removeClass('active');
-                    $(this).find('i').removeClass('fa-angle-up')
-                    $(this).find('i').addClass('fa-angle-down')
-                }
-            })
+            // $(document).on("click", "button.toggle", function() {
+            //     if (!$(this).parent().hasClass('active')) {
+            //         $(this).parent().addClass('active');
+            //         $(this).find('i').removeClass('fa-angle-down')
+            //         $(this).find('i').addClass('fa-angle-up')
+            //     } else {
+            //         $(this).parent().removeClass('active');
+            //         $(this).find('i').removeClass('fa-angle-up')
+            //         $(this).find('i').addClass('fa-angle-down')
+            //     }
+            // })
 
             $('#filter-products').change(function() {
                 order($(this).val());
@@ -541,16 +482,13 @@
 
             if (orders != '' && orders != null) {
                 $("#order").val(orders);
-                // $(`li.li-filter-cate > a[href*="${orders}"]`).addClass('active')
                 $(`#filter-products > option[value*='${orders}']`).attr('selected', 'selected')
             } 
             else if (sales == '2') {
                 $("#sale").val(sales);
-                // $(`li.li-filter-cate > a[href*="${sales}"]`).addClass('active')
                 $(`#filter-products > option[value*='${sales}']`).attr('selected', 'selected')
             } 
             else {
-                // $('li.li-filter-cate > a.order-default').addClass('active')
                 $(`#filter-products > option[value='']`).attr('selected', 'selected')
             }
         });
