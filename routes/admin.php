@@ -215,6 +215,7 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::group(['middleware' => ['permission:Thêm sản phẩm|Chỉnh sửa sản phẩm,admin']], function () {
         Route::get('/san-pham/searchProduct', [AdminProductController::class, 'getProduct'])->name('san-pham.getProduct');
+        Route::get('/san-pham/searchProductCategory', [AdminProductController::class, 'getProCat'])->name('san-pham.getProCat');
     });
 
     Route::group(['middleware' => ['permission:Xóa sản phẩm|Chỉnh sửa sản phẩm,admin']], function () {

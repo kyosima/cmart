@@ -59,8 +59,6 @@
                         <thead class="thead1" style="vertical-align: middle;">
                             <tr>
                                 <th></th>
-                                {{-- <th class="title-text" style="width: 2%">
-                                    STT </th> --}}
                                 <th class="title-text">
                                     Hình ảnh
                                 </th>
@@ -74,13 +72,16 @@
                                     Thuế suất
                                 </th>
                                 <th class="title-text">
-                                    Giá bán lẻ
+                                    Giá Nhập
+                                </th>
+                                <th class="title-text">
+                                    Giá Bán Lẻ
                                 </th>
                                 <th class="title-text">
                                     GIÁ SHOCK
                                 </th>
                                 <th class="title-text">
-                                    Giá buôn
+                                    Giá Buôn
                                 </th>
                                 <th class="title-text">
                                     C
@@ -203,16 +204,15 @@
                 },
                 {
                     targets: 1,
-                    "visible": false,
-                    "searchable": false,
+                    visible: false,
+                    searchable: false,
+                    orderable: false,
                     render: function(data, type, row) {
                         return `<img src="${row.feature_img}" width="70" height="60" alt="">`
                     }
                 },
                 {
                     targets: 2,
-                    orderable: false,
-                    searchable: false,
                     render: function(data, type, row) {
                         return `${row.sku}`
                     }
@@ -223,7 +223,7 @@
                     @if (auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
                         render: function(data, type, row) {
                             return `<a style="text-decoration: none;"
-                                href="/cmart/admin/san-pham/edit/${row.id}">${row.name}</a>`
+                                href="${window.location.href}/edit/${row.id}">${row.name}</a>`
                         }
                     @else
                         render: function(data, type, row) {
@@ -233,7 +233,6 @@
                 },
                 {
                     targets: 4,
-                    type: "html",
                     render: function(data, type, row) {
                         return `${row.product_price.tax*100}%`
                     }
@@ -241,41 +240,47 @@
                 {
                     targets: 5,
                     render: function(data, type, row) {
-                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.regular_price)
+                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.price)
                     }
                 },
                 {
                     targets: 6,
                     render: function(data, type, row) {
-                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.shock_price)
+                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.regular_price)
                     }
                 },
                 {
                     targets: 7,
                     render: function(data, type, row) {
-                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.wholesale_price)
+                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.shock_price)
                     }
                 },
                 {
                     targets: 8,
                     render: function(data, type, row) {
-                        if (row.product_price.cpoint == null) {
-                            return `0(C)`
-                        }
-                        return `${row.product_price.cpoint}(C)`
+                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.wholesale_price)
                     }
                 },
                 {
                     targets: 9,
                     render: function(data, type, row) {
-                        if (row.product_price.mpoint == null) {
-                            return `0(M)`
+                        if (row.product_price.cpoint == null) {
+                            return `0`
                         }
-                        return `${row.product_price.mpoint}(M)`
+                        return `${row.product_price.cpoint}`
                     }
                 },
                 {
                     targets: 10,
+                    render: function(data, type, row) {
+                        if (row.product_price.mpoint == null) {
+                            return `0`
+                        }
+                        return `${row.product_price.mpoint}`
+                    }
+                },
+                {
+                    targets: 11,
                     render: function(data, type, row) {
                         if (row.product_price.phi_xuly == null) {
                             return `0`
@@ -284,13 +289,13 @@
                     }
                 },
                 {
-                    targets: 11,
+                    targets: 12,
                     render: function(data, type, row) {
                         return `${row.weight}`
                     }
                 },
                 {
-                    targets: 12,
+                    targets: 13,
                     render: function(data, type, row) {
                         if (row.status == 1) {
                             return `<div class="input-group">
@@ -309,17 +314,11 @@
                 },
 
                 {
-                    targets: [5, 6, 7, 8, 9, 10, 11],
-                    searchable: false
-                },
-                {
-                    targets: [6, 7, 8, 9, 10],
+                    targets: [3, 4, 5, 6, 7, 8, 9, 10, 11],
+                    searchable: false,
+                    orderable: false,
                     type: "formatted-num"
                 },
-                {
-                    targets: [11],
-                    orderable: false
-                }
             ],
             searchBuilder: {
                 conditions: {
