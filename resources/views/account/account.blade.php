@@ -63,8 +63,8 @@
                                     </div>
                                     @endif
                                     <input type="text" name="phone" placeholder="Tài khoản">
-                                    <input type="password" name="password" placeholder="Mật khẩu">
-                                    <input type="submit" value="Đăng nhập" name="Đăng nhập">
+                                    <input type="password" name="password" placeholder="Mời nhập mật khẩu">
+                                    <input type="submit" value="Truy cập" name="Truy cập">
                                 </form>
 
                             </div>
@@ -77,19 +77,19 @@
                             <div class="content__wrapper">
                                 <div class="thongbao_register ">
                                     <ul class="m-0">
-                                        <li class="text-light">- Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, 
+                                        <li class="text-light text-justify">- Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, 
                                             và chúng tôi thực hiện vô cùng nghiêm ngặt. 
                                         </li>
-                                        <li class="text-light">- Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, 
+                                        <li class="text-light text-justify">- Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, 
                                             tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết.
                                         </li>
                                     </ul>
                                 </div>
                                     <input type="text" name="hoten" placeholder="Mời nhập họ và tên có dấu">
-                                    <input type="text" name="phone" placeholder="Mời nhập số điện thoại đăng ký giao dịch">
+                                    <input type="number" name="phone" placeholder="Mời nhập Số điện thoại đăng ký giao dịch">
                                     
-                                    <input type="password" name="password" placeholder="Mời quý khách nhập mật khẩu lớn hơn hoặc bằng 8 ký tự">
-                                    <input type="password" name="passwordAgain" placeholder="Mời quý khách nhập lại mật khẩu">
+                                    <input type="password" name="password" placeholder="Mời nhập mật khẩu">
+                                    <input type="password" name="passwordAgain" placeholder="Mời nhập lại mật khẩu">
                                     
                                     <select class="loaigiayto" name="type_cmnd" aria-label="Default select example">
                                         <option value="0" selected>Chọn loại giấy tờ tùy thân</option>
@@ -107,12 +107,12 @@
 
                                     <div class="row">
                                         <div class="col-md-12 pb-3">
-                                            <input type="text" name="address" placeholder="Mời nhập địa chỉ">
+                                            <input type="text" name="address" placeholder="Mời nhập địa chỉ chi tiết">
                                         </div>
-                                        <div class="col-md-6 pb-3">
+                                        {{-- <div class="col-md-6 pb-3">
                                             <input type="text" name="duong" placeholder="Mời nhập tên đường" style="margin: 0px; height: 37px; border-radius: 5px;">   
-                                        </div>
-                                        <div class="col-md-6 pb-3">
+                                        </div> --}}
+                                        <div class="col-md-12 pb-3">
                                             <select name="sel_province" class="form-control select2"
                                                 data-placeholder=" Cấp tỉnh " required>
                                                 <option value=""> Cấp tỉnh </option>

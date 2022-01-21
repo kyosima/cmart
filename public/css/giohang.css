@@ -5,7 +5,8 @@
     font-size: 100%;
 }
 
-html,
+
+/* html,
 body,
 div,
 span,
@@ -93,10 +94,10 @@ video {
     vertical-align: baseline;
     color: #000;
     font-size: 14px;
-    line-height: 1;
     -webkit-backface-visibility: hidden;
     -webkit-overflow-scrolling: touch;
 }
+ */
 
 
 /* HTML5 display-role reset for older browsers */
@@ -484,6 +485,7 @@ hr {
 }
 
 .cart_head {
+    margin-bottom: unset;
     float: left;
     width: 100%;
     display: table;

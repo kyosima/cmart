@@ -1,18 +1,20 @@
-
 <footer class="site-footer">
     <div class="container">
-  
+
         <div class="top-footer  ">
             <div class="info-company col-lg-12  col-md-12 col-sm-12 col-xs-12 col-12 ">
-                <p class="title-info titlecmart text-center ">CÔNG TY TNHH THƯƠNG MẠI-DỊCH VỤ C-MART</p>
-                <a href="https://goo.gl/maps/5P7Kwf6A4KK9rstD9">
-                    <p class="des  text-dark" style="font-size: 16px"><span class=" text-dark"><i class="fas fa-map-marker-alt"></i> Địa chỉ công ty: </span>730/32/6 đường Lạc Long Quân, Phường 9, Quận Tân Bình, TP.HCM</p>
-                </a>
-                <p class="des text-dark" style="font-size: 16px"><span class=" text-dark"><i class="fas fa-id-card"></i>
-                        Mã số doanh nghiệp: </span> 0316959402 do Sở Kế hoạch và Đầu tư Thành phố Hồ Chí Minh cấp ngày 20/09/2021</p>
+                <p class="title-info titlecmart text-center ">CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ C-MART</p>
+                {{-- <a href="https://goo.gl/maps/5P7Kwf6A4KK9rstD9"> --}}
+                    <p class="des  text-dark" style="font-size: 16px"><span class=" text-dark"><i
+                                class="fas fa-map-marker-alt"></i> Địa chỉ công ty: </span>Số 730/32/6 đường Lạc Long Quân, Phường 9, Quận Tân Bình, Thành phố Hồ Chí Minh</p>
+                {{-- </a> --}}
+                <p class="des text-dark" style="font-size: 16px"><span class=" text-dark"><i
+                            class="fas fa-id-card"></i>
+                        Mã số doanh nghiệp: </span> 0316959402 do Sở Kế hoạch và Đầu tư Thành phố Hồ Chí Minh cấp ngày
+                    20/09/2021</p>
 
             </div>
-             <div class="info-company col-lg-12  col-md-12 col-sm-12 col-xs-12 col-12 ">
+            <div class="info-company col-lg-12  col-md-12 col-sm-12 col-xs-12 col-12 ">
                 <div class="row">
                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <p>© 2021 - Bản quyền thuộc về Công ty TNHH TM-DV C-Mart</p>
@@ -69,7 +71,25 @@
     <!--    </div>-->
     <!--</div>-->
 
+    <a id="button"></a>
+    <script>
+        var btn = $('#button');
 
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 300) {
+                btn.addClass('show');
+            } else {
+                btn.removeClass('show');
+            }
+        });
+
+        btn.on('click', function(e) {
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: 0
+            }, '300');
+        });
+    </script>
 </footer>
 
 

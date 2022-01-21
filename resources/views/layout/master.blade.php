@@ -16,7 +16,7 @@
     <link href="{{ asset('public/css/header.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/footer.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/search.css') }}" rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">

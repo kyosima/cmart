@@ -11,17 +11,17 @@
     <form action="{{ route('checkout.post') }}" class="form-checkout" method="post" enctype="multipart/form">
         @csrf
         <div class="container">
-         
+
             <div class="row">
                 <div class="col-xl-8 col-sm-12 col-12">
                     <div class="card-left">
                         <div class="card-information">
                             <div class="card-information-header pt-4">
-                                <div class="row">
-                                    <div class="col-xl-6 col-md-6 col-xs-12 col-sm-12">
+                                {{-- <div class="row">
+                                    <div class="col-xl-6 col-md-6 col-xs-12 col-sm-12"> --}}
                                         <h3>THÔNG TIN GIAO HÀNG</h3>
-                                    </div>
-                                    <div class="col-xl-6 col-md-6 col-xs-12 col-sm-12">
+                                    {{-- </div> --}}
+                                    {{-- <div class="col-xl-6 col-md-6 col-xs-12 col-sm-12">
                                         <select id="pickAdress" class="form-control"
                                             data-url="{{ route('checkout.getAddress') }}">
                                             <option value="">Chọn địa chỉ đã lưu</option>
@@ -29,8 +29,8 @@
                                                 <option value="{{ $adr->id }}">{{ $adr->fullname }}</option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                </div>
+                                    </div> --}}
+                                {{-- </div> --}}
 
                             </div>
                             <hr>
@@ -108,7 +108,7 @@
                                         placeholder="Mời nhập ghi chú đơn hàng">
                                 </div>
                             </div>
-                            <div class="col-xl-12">
+                            {{-- <div class="col-xl-12">
                                 <div class="form-group">
 
                                     <label onclick="storeaddress()"><input type="checkbox" id="store-address"
@@ -118,7 +118,7 @@
 
                                 </div>
 
-                            </div>
+                            </div> --}}
                             <br />
                         </div>
                         <div class="phuongthuc-thanhtoan">
@@ -132,12 +132,12 @@
                                 <!--    <label onclick="showvat()"><input type="checkbox" id="show-vat" name="show_vat"-->
                                 <!--            value="1"> Xác nhận xuất hóa GTGT</label>-->
                                 <!--</div>-->
-                                <input type="hidden" id="show-vat" name="show_vat" value="1"> 
+                                <input type="hidden" id="show-vat" name="show_vat" value="1">
                                 <div class="form-vat">
                                     <div class="form-group">
                                         <!--<label for="">Tên người mua<sup class="text-danger">*</sup></label>-->
                                         <input type="text" name="vat_name" class="form-control" value=""
-                                            placeholder="Mời nhập tên người mua hàng">
+                                            placeholder="Mời nhập email nhận hóa đơn">
                                     </div>
                                     <div class="form-group">
                                         <!--<label for="">Tên công ty<sup class="text-danger">*</sup></label>-->
@@ -155,39 +155,66 @@
                                             placeholder="Mời nhập địa chỉ công ty">
                                     </div>
                                     <div>
-                                        <p>- Nếu Quý Khách Hàng không nhập thông tin thì C-Mart sẽ ghi nhận “Người mua không lấy hóa đơn”, và không gửi hóa đơn GTGT đến Quý Khách Hàng.</p>
-                                        <p>- C-Mart xin phép từ chối hỗ trợ xử lý các thao tác về hóa đơn sau khi đặt hàng.</p>
+
+                                        <p class="mb-0">- Nếu Quý Khách Hàng không nhập thông tin thì C-Mart sẽ ghi nhận <b>“Người mua không
+                                            lấy hóa đơn”</b>, và không gửi hóa đơn GTGT đến Quý Khách Hàng.</p>
+                                        <p class="mb-0">- C-Mart xin phép từ chối hỗ trợ xử lý các thao tác về hóa đơn sau khi đặt hàng.
+                                        </p>                                        
                                     </div>
                                     <br />
 
                                 </div>
                             </div>
                         </div>
-                        <div class="phuongthuc-thanhtoan">
-                            <div class="phuongthuc-thanhtoan-card-header">
-                                <h3>THANH TOÁN</h3>
+                        <div class="list-stores-checkout">
+                            <div class="list-stores-title">
+                                <h3>Danh sách sản phẩm</h3>
                             </div>
                             <hr>
-                            <div class="phuongthuc-thanhtoan-card-body">
-                                <div class="thanhtoankhigiaohang">
-                                    <input type="radio" name="payment_method" checked="checked" value="1"> <span>COD(Thanh
-                                        toán nhận hàng)</span>
-                                    <i class="fa fa-money"></i>
-                                </div>
-                                <div class="thanhtoantructuyen">
-                                    <input type="radio" name="payment_method" value="2" readonly="readonly" disabled>
-                                    <span>Chuyển khoản qua ngân hàng</span>
-                                    <img src="{{ asset('assets/image/vnpay.png') }}">
-                                </div>
-                                <div class="chuyenkhoan">
-                                    <input type="radio" name="payment_method" value="3" readonly="readonly" disabled>
-                                    <span>Chuyển khoản qua ngân hàng</span>
-                                    <div class="tk-nganhang">
-                                        <p>Doanh nghiệp: Công ty cổ phần</p>
-                                        <p>TK ngân hàng: Công ty cổ phần</p>
-                                        <p>Chi nhánh: Công ty cổ phần</p>
+                            <div class="list-stores-body">
+                                @foreach (explode(',', $store_ids) as $store_id)
+                                    @php
+                                        $cart = Cart::instance($store_id);
+                                        $store = App\Models\Store::whereId($store_id)->first();
+                                    @endphp
+                                    <div class="store-block" id="store{{ $store_id }}">
+                                        <div class="store-title d-flex justify-content-between">
+                                            <h4>{{ $store->name }}</h4>
+
+                                            <label for="receiverstore{{ $store_id }}"><input class="receiverstore"
+                                                    type="checkbox" id="receiverstore{{ $store_id }}"
+                                                    name="receiverstore{{ $store_id }}" value="1"
+                                                    data-storeid="{{ $store_id }}"
+                                                    onclick="receiverStore(this)"> Nhận tại cửa
+                                                hàng</label>
+                                        </div>
+                                        <div class="store-body">
+                                            @foreach ($cart->content() as $row)
+                                                <div id="{{ $row->rowId }}" class="store-product row">
+                                                    <div class="product-image col-1 p-2">
+                                                        <img src="{{ asset($row->model->feature_img) }}">
+                                                    </div>
+                                                    <div class="product-info col-11 pt-2 pb-2">
+                                                        <div class="product-name">
+                                                            <p>{{ $row->name }}</p>
+                                                        </div>
+                                                        <div class="product-cart d-flex justify-content-between">
+                                                            <div class="quantity">SL: {{ $row->qty }}</div>
+                                                            <div class="price">Tổng tiền:
+                                                                {{ formatPrice($row->price * $row->qty) }}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="store-footer d-none justify-content-between ">
+                                            <div>Phương thức: <span class="name-method"></span></div>
+                                            <div><span class="ship-normal"> </span><span
+                                                    class="ship-fast"></span></div>
+                                            <div>Tổng tiền: <span class="total-cost"></span></div>
+                                        </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -208,7 +235,7 @@
                                 <h3>ĐƠN HÀNG</h3> <span>({{ $count_cart }} SẢN PHẨM)</span>
                             </div>
                             <div class="donhang-body">
-                                
+
                             </div>
                             <div class="donhang-footer">
                                 <div class="card-right">
@@ -247,14 +274,15 @@
                                                 class="tamtinh-price">{{ formatPrice($cart_subtotal) }} </span> </p>
 
                                         <hr>
-                                        <p class="tamtinh"> <span class="tamtinh-title">Phí xử lý:</span> <span
-                                            class="tamtinh-price">{{ formatPrice($process_fee) }} </span> </p>
-                                        <hr>
+                                        {{-- <p class="tamtinh"> <span class="tamtinh-title">Phí xử lý:</span> <span
+                                                class="tamtinh-price">{{ formatPrice($process_fee) }} </span> </p>
+                                        <hr> --}}
                                         <p class="tamtinh"> <span class="tamtinh-title">Thuế VAT:</span> <span
-                                            class="tamtinh-price">{{ formatPrice($tax) }} </span> </p>
+                                                class="tamtinh-price">{{ formatPrice($tax) }} </span> </p>
                                         <hr>
                                         <p><b>Phí vận chuyển:</b></p>
-                                        <div class="form-group">
+                                        <div class="form-group" id="method-ship"
+                                            data-url="{{ route('checkout.calship') }}" data-urlcmartship="{{route('checkout.calCmartShip')}}">
                                             {{-- <input type="radio" id="vship" name="shipping_method" value="v_ship" checked
                                                 style="display:none">
                                             <label for="vship" id="lbvship" style="display:none">Viettel Shipping
@@ -283,7 +311,8 @@
                                     <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="nhanhang" id="check1">
+                                            <input type="checkbox" class="custom-control-input" name="nhanhang"
+                                                id="check1">
                                             <label class="custom-control-label" for="check1">Tôi đã đọc và đồng ý với Quy
                                                 định Thao tác khi nhận hàng
                                             </label>
@@ -292,7 +321,8 @@
                                     <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="giaonhan" id="check2">
+                                            <input type="checkbox" class="custom-control-input" name="giaonhan"
+                                                id="check2">
                                             <label class="custom-control-label" for="check2">Tôi đã đọc và đồng ý với Chính
                                                 sách Giao - Nhận</label>
                                         </div>
@@ -340,7 +370,37 @@
                                 </ul>
                                 <p class="text-danger error-chinhsach p-1" style="display: none">Bạn phải đồng ý tất cả
                                     chính sách của Cmart</p>
-                                <p class="py-1">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm túc, và chúng tôi thực hiện vô cùng nghiêm ngặt. Các thông tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết</p>
+                                <p class="py-1">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông
+                                    tin là điều vô cùng nghiêm túc, và chúng tôi thực hiện vô cùng nghiêm ngặt. Các thông
+                                    tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, tạo
+                                    sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết</p>
+                            </div>
+                        </div>
+                        <div class="phuongthuc-thanhtoan">
+                            <div class="phuongthuc-thanhtoan-card-header">
+                                <h3>THANH TOÁN</h3>
+                            </div>
+                            <hr>
+                            <div class="phuongthuc-thanhtoan-card-body">
+                                <div class="thanhtoankhigiaohang">
+                                    <input type="radio" name="payment_method" checked="checked" value="1"> <span>COD(Thanh
+                                        toán nhận hàng)</span>
+                                    <i class="fa fa-money"></i>
+                                </div>
+                                <div class="thanhtoantructuyen">
+                                    <input type="radio" name="payment_method" value="2" readonly="readonly" disabled>
+                                    <span>Chuyển khoản qua ngân hàng</span>
+                                    <img src="{{ asset('assets/image/vnpay.png') }}">
+                                </div>
+                                <div class="chuyenkhoan">
+                                    <input type="radio" name="payment_method" value="3" readonly="readonly" disabled>
+                                    <span>Chuyển khoản qua ngân hàng</span>
+                                    <div class="tk-nganhang">
+                                        <p>Doanh nghiệp: Công ty cổ phần</p>
+                                        <p>TK ngân hàng: Công ty cổ phần</p>
+                                        <p>Chi nhánh: Công ty cổ phần</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <a class="btn-back-cart" href="{{ route('cart.index') }}">Quay lại Giỏ hàng</a>
@@ -348,13 +408,14 @@
                         <button class="btn-dathang" type="submit">Tiếp tục Thanh toán</button>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     </form>
 @endsection
 
 @push('scripts')
     <script src="{{ asset('public/js/shipping.js') }}"></script>
+    <script src="{{ asset('public/js/checkout.js') }}"></script>
 
     <script>
         $("select[name='sel_province']").change(function() {

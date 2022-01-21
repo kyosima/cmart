@@ -1,22 +1,96 @@
-    .card-left {
+    .list-stores-checkout {
+        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+        margin-top: 20px;
+        background: #fff;
     }
+    
+    .list-stores-title {
+        padding: 10px 10px 0 10px;
+    }
+    
+    .list-stores-title h3 {
+        font-size: 16px !important;
+        font-weight: 600;
+        color: #333942;
+        text-transform: uppercase;
+    }
+    
+    .list-stores-body {
+        padding: 10px 20px;
+    }
+    
+    .store-body {
+        padding: 5px 10px;
+    }
+    
+    .store-product {
+        border-bottom: 1px solid #ddd;
+        padding: 5px 10px;
+    }
+    
+    .store-body .store-product:last-child {
+        border-bottom: none;
+        ;
+    }
+    
+    .product-name {
+        height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        text-transform: uppercase;
+    }
+    
+    .store-title h4 {
+        font-size: 16px;
+        text-transform: uppercase;
+        text-decoration: underline;
+        margin-bottom: 0;
+        color: #BB0029;
+    }
+    
+    .store-footer {
+        padding: 15px 20px 5px 20px;
+        border-top: 1px solid #ddd;
+    }
+    
+    .product-image img {
+        width: 100%;
+    }
+    
+    .store-block {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        ;
+    }
+    
+    .card-left {}
     
     .card-information {
         background-color: #fff;
         box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
     }
-    .form-checkout{
+    
+    .form-checkout {
         padding-top: 20px;
     }
+    
     .card-information-body {
         display: flex;
     }
-    .order-complete-info ul li{
+    
+    .order-complete-info ul li {
         margin-bottom: 5px;
     }
-    .order-complete-info b{
+    
+    .order-complete-info b {
         margin-bottom: 10px;
     }
+    
     .card-information-header {
         padding: 10px 10px 0 10px;
     }
@@ -27,7 +101,8 @@
         color: #333942;
         text-transform: uppercase;
     }
-    .btn-back-cart{
+    
+    .btn-back-cart {
         font-size: 13px !important;
         font-weight: 400 !important;
         color: #FFFFFF;
@@ -40,41 +115,46 @@
         text-align: center;
         margin-top: 10px;
     }
-    .btn-back-cart:hover{
+    
+    .btn-back-cart:hover {
         background-color: #FFFFFF !important;
         color: #00b0be !important;
         border: 1px solid #00b0be !important;
     }
+    
     .card-information label {
         transform: translate(0, -3.5px) scale(0.9);
         transform-origin: top left;
         color: #BB0029;
     }
-    .back-cart{
+    
+    .back-cart {
         font-weight: 600;
         font-size: 20px;
         margin: 10px 0px;
         display: block;
     }
+    
     .card-information .form-control {
         border-radius: 0;
-    margin: -9px 0 20px;
-    /* box-shadow: -1px 1px 1px 0 rgb(137 152 172 / 50%); */
-    padding: 8px 0;
-    border: 0;
-    /* border-bottom: 1px solid #DEE5EE; */
-    /* box-shadow: none; */
-    padding: 10px;
-    border-radius: 10px;
-    height: 38px;
-    border: 1px solid #ddd;
-    font-size: 13px !important;
-    /* font-weight: 500 !important; */
-    color: #333;
-    width: 100%;
-        
+        margin: -9px 0 20px;
+        /* box-shadow: -1px 1px 1px 0 rgb(137 152 172 / 50%); */
+        padding: 8px 0;
+        border: 0;
+        /* border-bottom: 1px solid #DEE5EE; */
+        /* box-shadow: none; */
+        padding: 10px;
+        border-radius: 10px;
+        height: 38px;
+        border: 1px solid #ddd;
+        font-size: 13px !important;
+        /* font-weight: 500 !important; */
+        color: #333;
+        width: 100%;
     }
-    .card-information .form-control:focus, .card-information .form-control:hover{
+    
+    .card-information .form-control:focus,
+    .card-information .form-control:hover {
         border-color: orange;
     }
     /* ------------------ */
@@ -169,7 +249,7 @@
         font-size: 13px !important;
         /* font-weight: 500 !important; */
         color: #333942;
-        width: 238px;
+        width: 80%;
         padding-left: 10px;
     }
     
@@ -177,11 +257,11 @@
         outline: none
     }
     
-    .btn.btn-primary {
+    .makhuyenmai-body .btn.btn-primary {
         border-radius: 0 17px 17px 0;
         border: 1px solid #BB0029;
         background-color: #BB0029;
-        min-width: 84px;
+        width: 20%;
         height: 34px;
         font-size: 13px !important;
         font-weight: 400 !important;
@@ -228,37 +308,44 @@
         font-weight: 700 !important;
         color: #333942;
     }
-    .chinhsach-body .custom-control{
+    
+    .chinhsach-body .custom-control {
         padding-left: 0;
     }
-    .chinhsach{
+    
+    .chinhsach {
         margin-top: 10px;
         background: #fff;
         box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
     }
+    
     .chinhsach-body {
         padding: 10px 10px 0 10px;
-
     }
-    .chinhsach-header h3{
+    
+    .chinhsach-header h3 {
         font-size: 16px !important;
         font-weight: 600;
         color: #333942;
         text-transform: uppercase;
     }
-    .chinhsach-body ul li:last-child{
+    
+    .chinhsach-body ul li:last-child {
         border: unset;
     }
-    .chinhsach-header{
+    
+    .chinhsach-header {
         padding: 10px 10px 0 10px;
-
     }
-    .chinhsach-body .list-group-item{
+    
+    .chinhsach-body .list-group-item {
         padding: 5px 0px !important;
     }
-    .chinhsach-body  .custom-control-label{
+    
+    .chinhsach-body .custom-control-label {
         padding-left: 20px;
     }
+    
     tr .title {
         padding: 10px;
         width: 219px;

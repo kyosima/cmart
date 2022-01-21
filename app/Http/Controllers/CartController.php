@@ -14,6 +14,7 @@ class CartController extends Controller
     //
     public function index(){
         $stores = Store::get();
+        Session::forget('store_ids');
         $count_cart = 0;
         foreach ($stores as $store){
             $count_cart += Cart::instance($store->id)->count();

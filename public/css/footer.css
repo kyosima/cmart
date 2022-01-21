@@ -1,6 +1,5 @@
 .title-footer {
     font-size: 1.4rem;
-
     margin-bottom: 30px;
 }
 
@@ -8,12 +7,55 @@
     padding: 0;
     margin-top: 25px;
 }
+
 .ship-f,
 .socials-footer,
 .bct-f {
     display: none;
 }
+
 #button {
+    display: inline-block;
+    background-color: #FF9800;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s, opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+#button::after {
+    content: "\f077";
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    line-height: 50px;
+    color: #fff;
+}
+
+#button:hover {
+    cursor: pointer;
+    background-color: #333;
+}
+
+#button:active {
+    background-color: #555;
+}
+
+#button.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* #button {
     display: inline-block;
     background-color: #ff9800;
     width: 50px;
@@ -43,7 +85,8 @@
 #button.show {
     opacity: 1;
     visibility: visible;
-}
+} */
+
 
 /* Styles for the content section */
 
@@ -55,15 +98,18 @@
         margin: 30px;
     }
 }
+
 .content h1 {
     margin-bottom: -10px;
     color: #03a9f4;
     line-height: 1.5;
 }
+
 .content h3 {
     font-style: italic;
     color: #96a2a7;
 }
+
 @media (max-width: 991px) {
     .middle-footer,
     .social-pc,
@@ -72,7 +118,6 @@
     iframe {
         display: none;
     }
-
     .ship-f,
     .socials-footer,
     .bct-f {
@@ -87,11 +132,9 @@
         font-weight: 500;
         margin-bottom: 5px;
     }
-
     .title-client {
         text-transform: none !important;
     }
-
     .info-company .des,
     .info-company .des span,
     .list-support ul li a,
@@ -99,86 +142,69 @@
     .box-hotline-f .title-time {
         color: #222 !important;
     }
-
     .info-company .des {
         padding-bottom: 0px !important;
     }
-
     .title-custom {
         color: #333;
         font-size: 16px;
         margin-bottom: 0;
         text-transform: uppercase !important;
     }
-
     .bct-f .title-custom {
         margin: 15px 0;
     }
-
     .icon-bct-m {
         background-position: -768px -100px !important;
         width: 200px;
         height: 75px;
         margin-top: -9px;
     }
-
     .icon-ship1 {
         background-position: -550px -103px !important;
         width: 100px;
     }
-
     .icon-ship2 {
         background-position: -445px -103px !important;
         width: 60px;
     }
-
     .icon-ship3 {
         background-position: -672px -108px !important;
         width: 83px;
     }
-
     .icon-ship1,
     .icon-ship2,
     .icon-ship3 {
         height: 55px;
     }
-
     .icon-ship1,
     .icon-ship2,
     .icon-ship3,
     .icon-bct-m {
         background-size: 1000px !important;
     }
-
     .socials-footer ul li {
         margin: 0 10px;
     }
-
     .socials-footer {
         border-top: 1px solid #e3e3e3;
     }
-
-    .socials-footer > .col-box > ul {
+    .socials-footer>.col-box>ul {
         padding: 10px 10px 5px;
         width: 100%;
     }
-
     .icon-s1 {
         background-position: -488px -22px !important;
     }
-
     .icon-s2 {
         background-position: -539px -22px !important;
     }
-
     .icon-s3 {
         background-position: -589px -22px !important;
     }
-
     .icon-s4 {
         background-position: -640px -22px !important;
     }
-
     .icon-s1,
     .icon-s2,
     .icon-s3,
@@ -187,10 +213,8 @@
         height: 40px;
         background-size: 700px !important;
     }
-
     .icon-m {
-        background: url(https://japana.vn/assets/mobile/assets/images/icon-m3.png)
-            no-repeat;
+        background: url(https://japana.vn/assets/mobile/assets/images/icon-m3.png) no-repeat;
         display: inline-block;
     }
 }
@@ -202,7 +226,6 @@
         width: 32px;
         height: 32px;
     }
-
     .icon {
         display: inline-block;
         vertical-align: middle;
@@ -216,7 +239,6 @@
         margin-right: 0.8rem;
         object-fit: contain;
     }
-
     .socials-footer {
         display: none;
     }
@@ -228,14 +250,13 @@
     color: #333;
     font-size: 16px;
     text-transform: uppercase;
-  
-}
-.titlecmart{
-    font-size:1.5em !important;
 }
 
-.info-company .des {
+.titlecmart {
+    font-size: 1.5em !important;
 }
+
+.info-company .des {}
 
 .des {
     line-height: 1.5;
@@ -251,7 +272,6 @@
 
 .info-company p span {
     color: #333;
-
     font-weight: 500;
 }
 
@@ -330,8 +350,7 @@ footer ol {
 
 .icon-all-new,
 .icon-desktop {
-    background: url(https://japana.vn/assets/frontend/assets/images/icons_new.png)
-        no-repeat;
+    background: url(https://japana.vn/assets/frontend/assets/images/icons_new.png) no-repeat;
 }
 
 .icon-ship2-new {
@@ -375,8 +394,7 @@ footer ol {
 
 .icon-all-new,
 .icon-desktop {
-    background: url(https://japana.vn/assets/frontend/assets/images/icons_new.png)
-        no-repeat;
+    background: url(https://japana.vn/assets/frontend/assets/images/icons_new.png) no-repeat;
 }
 
 .icon-payment-02 {

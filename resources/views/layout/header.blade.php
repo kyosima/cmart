@@ -173,7 +173,7 @@
                         <div class="menu-demuc d-flex">
                             <div class="cate-menu" id="main-menu">
                                 <a href="{{ route('proCat.showAll') }}">
-                                    <p class="title-cate"> Danh mục sản phẩm <i class="fas fa-bars"></i></p>
+                                    <p class="title-cate"> Danh mục Sản phẩm <i class="fas fa-bars"></i></p>
                                 </a>
 
                             </div>
@@ -181,7 +181,7 @@
                                 <ul class="d-flex dv-ht">
                                     <li class="text-color-white dropdowncmart">
                                         <a class="text-color-white" href="#">
-                                            Dịch Vụ của C-Mart
+                                            Dịch vụ của C-Mart
 
                                         </a>
                                         <ul class="dropdown-navcmart dvcmart">
@@ -205,7 +205,6 @@
                                 <ul class="d-flex dv-ht">
                                     <li class=" text-color-white dropdowncmart">
                                         <a class="text-color-white" href="#">Điều khoản và Chính sách</a>
-                                        <!--Start of Dropdown-->
                                         <ul class="dropdown-navcmart">
                                             @php
                                                 $pages = App\Models\InfoCompany::whereType('policy')->get();
@@ -229,10 +228,11 @@
         </nav>
     </div>
     </div>
-    <div class=" d-flex flex-column justify-center align-items-center bannercmart" id="gradient">
-        <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
+    <div class=" d-flex flex-column justify-center align-items-center bannercmart pt-2" id="gradient">
+        {{-- <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
             Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
-        </span>
+        </span> --}}
+      
         <p>
             Mọi liên hệ nên thực hiện từ Số điện thoại đăng ký giao dịch và đến các kênh kết nối chính thức của C-Mart
         </p>
@@ -242,21 +242,32 @@
         <div class="d-flex justify-content-around align-items-center ct-header">
 
             <div class="box-contacth">
-                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/phone.png') }}" alt=""><a
+                <b class="d-flex align-items-center justify-content-center"><img src="{{ asset('/public/image/phone.png') }}" alt=""><a
                         href="tel:0899302323">0899.302.323</a></b>
+                <small>Kênh Hỗ trợ - Đặt hàng</small>
             </div>
             <div class="box-contacth">
-                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/facebook.png') }}" alt=""><a
+                <b class="d-flex align-items-center justify-content-center"><img src="{{ asset('/public/image/facebook.png') }}" alt=""><a
                         href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
+                        <small>Kênh Hỗ trợ - Đặt hàng</small>
+
             </div>
             <div class="box-contacth">
-                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/zalo.png') }}" alt=""><a
+                <b class="d-flex align-items-center justify-content-center"><img src="{{ asset('/public/image/zalo.png') }}" alt=""><a
                         href="">Zalo</a></b>
+                        <small>Kênh Hỗ trợ - Đặt hàng</small>
+
             </div>
             <div class="box-contacth">
-                <b class="d-flex align-items-center"><img src="{{ asset('/public/image/email.png') }}" alt=""><a
+                <b class="d-flex align-items-center justify-content-center"><img src="{{ asset('/public/image/email.png') }}" alt=""><a
                         href="mailto:hotro@cm.com.vn">hotro@cm.com.vn</a></b>
+                        <small>Kênh danh cho Đối tác</small>
+
             </div>
+        </div>
+        <div class="text-center">
+            <h5 class="store-system-hello"><b> Hệ thống các kênh Cửa hàng C-Store </b></h5>
+                <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách hàng</p>
         </div>
     </div>
 

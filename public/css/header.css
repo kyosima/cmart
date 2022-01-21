@@ -272,7 +272,6 @@ header li {
         align-items: center;
     }
     .cate-menu {
-        width: 210px !important;
         margin-right: 0px;
         position: relative;
     }
@@ -386,7 +385,13 @@ header li {
     }
     .tag-top {
         position: relative;
-        text-transform: capitalize;
+    }
+    .bannercmart>p {
+        font-size: 1.2em;
+        font-weight: 600;
+    }
+    .store-system-hello {
+        font-size: 16px;
     }
     .tag-top ul li a {
         font-size: 1.2em;

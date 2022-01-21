@@ -63,6 +63,8 @@ Route::prefix('thanh-toan')->group(function () {
     Route::post('post', [CheckoutController::class, 'postOrder'])->name('checkout.post');
     Route::get('get-address', [CheckoutController::class, 'getAddress'])->name('checkout.getAddress');
     Route::get('thanh-cong', [CheckoutController::class, 'orderSuccess'])->name('checkout.orderSuccess');
+    Route::get('cal-ship', [CheckoutController::class, 'calShip'])->name('checkout.calship');
+    Route::get('cal-ship-cmart', [CheckoutController::class, 'calCmartShip'])->name('checkout.calCmartShip');
 
 });
 
@@ -124,3 +126,5 @@ Route::get('/lichsu', [HomeController::class, 'getLichsu']);
 Route::prefix('/cpoint')->group(function () {
     Route::get('/', [CPointController::class, 'index'])->name('account.cpoint_history');
 });
+
+Route::get('/test-api', [CheckoutController::class, 'getDistance']);
