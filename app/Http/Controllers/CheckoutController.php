@@ -14,6 +14,8 @@ use App\Models\OrderProduct;
 use App\Models\StoreAddress;
 use App\Models\Store;
 use App\Models\OrderVat;
+use App\Models\OrderStore;
+
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
@@ -99,7 +101,17 @@ class CheckoutController extends Controller
 
     public function postOrder(Request $request)
     {
-        $cart = Cart::instance('shopping')->content();
+        $validation = $request->validate([
+            'fullname' => 'required',
+            'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/'],
+            // 'email' => 'required|email',
+            'sel_province' => 'required',
+            'sel_district' => 'required',
+            'sel_ward' => 'required',
+            'address' => 'required',
+            // 'shipping_method' => 'required',
+        ]);
+       
         $user_id = null;
         if (Auth::check()) {
             $user = Auth::user();
@@ -107,120 +119,112 @@ class CheckoutController extends Controller
         }
         $store_address = $request->input('store_address');
         $show_vat = $request->input('show_vat');
-
-        $tax = 0;
-        $c_ship = 0;
-        $v_ship = 0;
-        $m_point = 0;
-        $c_point = 0;
-        $process_fee = 0;
-        foreach ($cart as $row) {
-            $price = $row->model->productPrice()->first();
-            $tax += ($row->price * $price->tax) * $row->qty;
-            $c_ship += $price->cship * $row->qty;
-            $v_ship += $price->viettel_ship * $row->qty;
-            $m_point += $price->mpoint * $row->qty;
-            $c_point += $price->cpoint * $row->qty;
-            $process_fee += $price->phi_xuly * $row->qty;
-        }
-        switch ($request->shipping_method) {
-            case 'v_ship':
-                $name_method = 'Viettel Shipping';
-                $shipping_total = $v_ship;
-                break;
-            case 'c_ship':
-                $name_method = 'Cmart Shipping';
-                $shipping_total = $c_ship;
-                break;
-        }
-
-        if (Cart::instance('shopping')->count() > 0) {
-            $validation = $request->validate([
-                'fullname' => 'required',
-                'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/'],
-                // 'email' => 'required|email',
-                'sel_province' => 'required',
-                'sel_district' => 'required',
-                'sel_ward' => 'required',
-                'address' => 'required',
-                // 'shipping_method' => 'required',
+        $store_ids = Session::get('store_ids');
+        $order = Order::create([
+            'user_id' => $user_id
+        ]);
+        $total_tax = 0;
+        $total_shipping = 0;
+        $total_c = 0;
+        $total_m = 0;
+        $sub_total = 0;
+        $total = 0;
+        foreach(explode(",",$store_ids) as $store_id){
+            $cart = Cart::instance($store_id);
+            $order_store = OrderStore::create([
+                'id_order' => $order->id,
+                'id_store' => $store_id
             ]);
-            // return DB::transaction(function () use ($request, $cart) {
-            //     try {
-            if ($store_address == 1) {
-                $storeAddress = StoreAddress::create([
-                    'id_user' => $user_id,
-                    // 'name' => $request->name_address,
-                    'fullname' => $request->fullname,
-                    'phone' => $request->phone,
-                    // 'email' => $request->email,
-                    'id_province' => $request->sel_province,
-                    'id_district' => $request->sel_district,
-                    'id_ward' => $request->sel_ward,
-                    'address' => $request->address
-                ]);
-                $storeAddress->save();
-            }
-
-            $order = Order::create([
-                'note' => $request->note,
-                'user_id' => $user_id,
-                'shipping_method' => $name_method,
-                'shipping_total' => $shipping_total,
-                'c_point' => $c_point,
-                'm_point' => $m_point,
-                'tax' => $tax,
-                'process_fee' => $process_fee,
-                'sub_total' => intval(str_replace(",", "", Cart::instance('shopping')->subtotal())),
-                'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()) + $tax)
-
-                // 'total' => intval(str_replace(",", "", Cart::instance('shopping')->total()) + $tax + $process_fee + $shipping_total)
-            ]);
-            if ($show_vat == 1) {
-                $vat = OrderVat::create([
-                    'id_order' => $order->id,
-                    'vat_company' => $request->vat_company,
-                    'vat_name' => $request->vat_name,
-                    'vat_mst' => $request->vat_mst,
-                    'vat_address' => $request->vat_address
-                ]);
-                $vat->save();
-            }
-
-            $order->order_code = 'CMART-' . $order->id . time();
-            $order->save();
-            $order_address = new OrderAddress();
-            $order_address->id_province = $request->sel_province;
-            $order_address->id_district = $request->sel_district;
-            $order_address->id_ward = $request->sel_ward;
-            $order_address->address = $request->address;
-            $order->order_address()->save($order_address);
-
-            $order_info = new OrderInfo();
-            $order_info->fullname = $request->fullname;
-            $order_info->phone = $request->phone;
-            $order_info->email = $request->email;
-            $order_info->note = $request->note;
-            $order->order_info()->save($order_info);
-
-            foreach ($cart as $item) {
+            $store_tax = 0;
+            $store_shipping_total =0;
+            $store_shipping_method = 0;
+            $store_shipping_type = 0;
+            $store_c = 0;
+            $store_m = 0;
+            foreach ($cart->content() as $row) {
+                $price = $row->model->productPrice()->first();
+                $store_tax += ($row->price * $price->tax) * $row->qty;
+                $store_c += $price->cpoint * $row->qty;
+                $store_m += $price->mpoint * $row->qty;
+                $store_shipping_method = $row->options->method_ship;
+                $store_shipping_type = $row->options->type_ship;
+                if(in_array($store_shipping_type, [0,1])){
+                    $store_shipping_total += $row->options->price_normal;
+                }else{
+                    $store_shipping_total += $row->options->price_fast;
+                }
                 OrderProduct::create([
                     'id_order' => $order->id,
-                    'id_product' => $item->model->id,
-                    'quantity' => $item->qty,
-                    'price' => $item->price
+                    'id_order_store' => $order_store->id,
+                    'id_product' => $row->model->id,
+                    'name' => $row->name,
+                    'slug' => $row->model->slug,
+                    'feature_img' => $row->model->feature_img,
+                    'quantity' => $row->qty,
+                    'price' => $row->price,
+                    'c_point' => $price->cpoint,
+                    'm_point' => $price->mpoint
                 ]);
             }
-            Cart::instance('shopping')->destroy();
-            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-            //     } catch (\Throwable $th) {
-            //         throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
-            //         return redirect()->back()->withErrors(['error' => $th->getMessage()]);
-            //     }
-            // });
-        } else {
-            return redirect()->route('cart.index');
+            $order_store->tax = $store_tax;
+            $order_store->shipping_method = $store_shipping_method;
+            $order_store->shipping_type = $store_shipping_type;
+            $order_store->shipping_total = $store_shipping_total;
+            $order_store->c_point = $store_c;
+            $order_store->m_point = $store_m;
+            $order_store->sub_total = intval(str_replace(",", "", $cart->subtotal()));
+            $order_store->total = $order_store->sub_total + $store_tax + $store_shipping_total;
+            $order_store->save();
+            $total_tax += $store_tax;
+            $total_shipping += $store_shipping_total;
+            $total_c += $store_c;
+            $total_m += $store_m;
+            $sub_total =+ $order_store->sub_total;
+            $total += $order_store->total ;
         }
+
+        if ($show_vat == 1) {
+            $vat = OrderVat::create([
+                'id_order' => $order->id,
+                'vat_company' => $request->vat_company,
+                'vat_email' => $request->vat_email,
+                'vat_mst' => $request->vat_mst,
+                'vat_address' => $request->vat_address
+            ]);
+            $vat->save();
+        }
+        $order->order_code = 'CMART-' . $order->id . time();
+        $order->payment_method = 0;
+        $order->tax = $total_tax;
+        $order->shipping_total = $total_shipping;
+        $order->c_point = $total_c;
+        $order->m_point = $total_m;
+        $order->sub_total = $sub_total; 
+        $order->total = $total;
+        $order->save();
+
+        $order_address = new OrderAddress();
+        $order_address->id_province = $request->sel_province;
+        $order_address->id_district = $request->sel_district;
+        $order_address->id_ward = $request->sel_ward;
+        $order_address->address = $request->address;
+        $order->order_address()->save($order_address);
+
+        $order_info = new OrderInfo();
+        $order_info->fullname = $request->fullname;
+        $order_info->phone = $request->phone;
+        $order_info->note = $request->note;
+        $order->order_info()->save($order_info);
+
+
+    
+            // Cart::instance('shopping')->destroy();
+            return 'success';
+            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
+          
+        // } else {
+        //     return redirect()->route('cart.index');
+        // }
     }
 
 
@@ -238,14 +242,27 @@ class CheckoutController extends Controller
         return view('checkout.thanhcong');
     }
 
+    public function updateTypeShip(Request $request){
+        $cart = Cart::instance($request->storeid);
+        foreach($cart->content() as $row){
+            $cart->update($row->rowId, ['options'=>['type_ship'=>$request->type]]);
+        }
+        return json_encode($cart->content());
+    }
+
     public function calShip(Request $request)
     {
         $data = $request->all();
         $store_ids = Session::get('store_ids');
         $store_ships = array();
-        $total_ship = 0;
-        $total_shipfast = 0;
-        foreach (explode(",", $store_ids) as $store_id) {
+        $store_ids = explode(",", $store_ids);
+        if(isset($data['shipcmart'])){
+            $arr2 = $data['shipcmart'];
+            $store_ids = array_diff($store_ids, $arr2);
+        }
+ 
+ 
+        foreach ($store_ids as $store_id) {
             $store = Store::whereId($store_id)->first();
             $cart = Cart::instance($store_id);
             $store_ships['store' . $store_id]['products'] = $cart->content();
@@ -260,6 +277,7 @@ class CheckoutController extends Controller
                     $ship_temp = $this->getCShip($process_fee, $this->getWeight($row->model, $row->qty), $distance);
                     $ship_arr[0] += $ship_temp[0];
                     $ship_arr[1] += $ship_temp[1];
+                    $cart->update($row->rowId, ['options'=>['method_ship' => 1, 'type_ship' =>1, 'price_normal'=>$ship_temp[0], 'price_fast'=>$ship_temp[1]]]);
                 }
                 $store_ships['store' . $store_id]['name'] = 'store' . $store_id;
                 $store_ships['store' . $store_id]['ship_total']['ship'] = array('value' => $ship_arr[0], 'text' => formatPrice($ship_arr[0]));
@@ -267,6 +285,7 @@ class CheckoutController extends Controller
                 $store_ships['store' . $store_id]['method'] = 1;
                 $store_ships['store' . $store_id]['total_cost']['text'] = formatPrice(intval(str_replace(",", "", $cart->total()))+$ship_arr[0]);
                 $store_ships['store' . $store_id]['total_cost']['value'] = intval(str_replace(",", "", $cart->total()));
+                
             }else{
                 $ship_arr = array(0, 0);
                 foreach ($cart->content() as $row) {
@@ -275,8 +294,10 @@ class CheckoutController extends Controller
                     $ship_temp = $this->getVShip($process_fee, $this->getWeight($row->model, $row->qty));
                     $ship_arr[0] += $ship_temp[0];
                     $ship_arr[1] += $ship_temp[1];
+                    $cart->update($row->rowId, ['options'=>['method_ship' => 2, 'type_ship' =>1, 'price_normal'=>$ship_temp[0], 'price_fast'=>$ship_temp[1]]]);
                 }
                 $store_ships['store' . $store_id]['name'] = 'store' . $store_id;
+                $store_ships['store' . $store_id]['id'] = $store_id;
                 $store_ships['store' . $store_id]['ship_total']['ship'] = array('value' => $ship_arr[0], 'text' => formatPrice($ship_arr[0]));
                 $store_ships['store' . $store_id]['ship_total']['ship_fast'] = array('value' => $ship_arr[1], 'text' => formatPrice($ship_arr[1]));
                 $store_ships['store' . $store_id]['method'] = 2;
@@ -294,8 +315,10 @@ class CheckoutController extends Controller
         foreach ($cart->content() as $row) {
             $price = $row->model->productPrice()->first();
             $process_fee = $row->qty * $price->phi_xuly;
-            $ship_cost += $this->getCmartShip($process_fee, $this->getWeight($row->model, $row->qty));
-         
+            $ship_price = $this->getCmartShip($process_fee, $this->getWeight($row->model, $row->qty));
+            $ship_cost += $ship_price;
+            $cart->update($row->rowId, ['options'=>['method_ship' => 0, 'type_ship' =>0, 'price_normal'=>$ship_price, 'price_fast'=>0]]);
+
         }
         $store_ships['store' . $store_id]['name'] = 'store' . $store_id;
         $store_ships['store' . $store_id]['ship_total']= array('value' => $ship_cost, 'text' => formatPrice($ship_cost));

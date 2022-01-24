@@ -136,7 +136,7 @@
                                 <div class="form-vat">
                                     <div class="form-group">
                                         <!--<label for="">Tên người mua<sup class="text-danger">*</sup></label>-->
-                                        <input type="text" name="vat_name" class="form-control" value=""
+                                        <input type="text" name="vat_email" class="form-control" value=""
                                             placeholder="Mời nhập email nhận hóa đơn">
                                     </div>
                                     <div class="form-group">
@@ -167,7 +167,7 @@
                             </div>
                         </div>
                         <div class="list-stores-checkout">
-                            <div class="list-stores-title">
+                            <div class="list-stores-title" id="url-update-type" data-url="{{route('checkout.updateTypeShip')}}">
                                 <h3>Danh sách sản phẩm</h3>
                             </div>
                             <hr>
@@ -183,7 +183,7 @@
 
                                             <label for="receiverstore{{ $store_id }}"><input class="receiverstore"
                                                     type="checkbox" id="receiverstore{{ $store_id }}"
-                                                    name="receiverstore{{ $store_id }}" value="1"
+                                                    name="receiverstore{{ $store_id }}" value="{{$store_id}}"
                                                     data-storeid="{{ $store_id }}"
                                                     onclick="receiverStore(this)"> Nhận tại cửa
                                                 hàng</label>

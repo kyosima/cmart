@@ -37,7 +37,6 @@ class OrderInfo extends Model
 		'id_order',
 		'fullname',
 		'phone',
-		'email',
 		'note'
 	];
 

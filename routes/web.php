@@ -65,6 +65,7 @@ Route::prefix('thanh-toan')->group(function () {
     Route::get('thanh-cong', [CheckoutController::class, 'orderSuccess'])->name('checkout.orderSuccess');
     Route::get('cal-ship', [CheckoutController::class, 'calShip'])->name('checkout.calship');
     Route::get('cal-ship-cmart', [CheckoutController::class, 'calCmartShip'])->name('checkout.calCmartShip');
+    Route::get('update-type-ship', [CheckoutController::class, 'updateTypeShip'])->name('checkout.updateTypeShip');
 
 });
 

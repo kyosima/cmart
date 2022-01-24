@@ -29,7 +29,7 @@ class OrderProduct extends Model
 	protected $table = 'order_products';
 
 	protected $casts = [
-		'id_order' => 'int',
+		'id_order_store' => 'int',
 		'id_product' => 'int',
 		'quantity' => 'int',
 		'price' => 'float',
@@ -37,7 +37,13 @@ class OrderProduct extends Model
 
 	protected $fillable = [
 		'id_order',
+		'id_order_store',
 		'id_product',
+		'name',
+		'feature_img',
+		'slug',
+		'c_point',
+		'm_point',
 		'quantity',
 		'price',
 	];

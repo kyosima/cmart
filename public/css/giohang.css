@@ -533,6 +533,7 @@ hr {
 .cart_item {
     width: 100%;
     display: table;
+    margin-bottom: 0;
     background: #fff;
     border: 1px solid #555;
     border-top: none;

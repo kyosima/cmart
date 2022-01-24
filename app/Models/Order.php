@@ -41,19 +41,16 @@ class Order extends Model
 	];
 
 	protected $fillable = [
+		'order_code',
 		'payment_method',
-		'shipping_method',
 		'shipping_total',
 		'c_point',
 		'm_point',
 		'tax',
-		'process_fee',
 		'sub_total',
 		'total',
 		'status',
-		'fullname',
-		'user_id',
-		'status_cpoint'
+		'user_id'
 	];
 
 	public function order_address()
