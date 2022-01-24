@@ -62,8 +62,8 @@
                                         <!--<br> Quý Khách Hàng vui lòng <strong><a class="alert-success" href="tai-khoan">Tạo mới Hồ Sơ Khách Hàng</a></strong>-->
                                     </div>
                                     @endif
-                                    <input type="text" name="phone" placeholder="Tài khoản">
-                                    <input type="password" name="password" placeholder="Mời nhập mật khẩu">
+                                    <input type="text" name="phone" placeholder="Mời nhập Số điện thoại đăng ký giao dịch">
+                                    <input type="password" name="password" placeholder="Mời nhập Mật khẩu">
                                     <input type="submit" value="Truy cập" name="Truy cập">
                                 </form>
 
@@ -122,13 +122,13 @@
                                                     @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-md-6 pb-3">
+                                        <div class="col-md-12 pb-3">
                                             <select class="form-control select2" name="sel_district"
                                                 data-placeholder=" Cấp huyện " required>
                                                 <option value=""> Cấp huyện </option>
                                             </select>
                                         </div>
-                                        <div class="col-md-6 pb-3">
+                                        <div class="col-md-12 pb-3">
                                             <select class="form-control select2" name="sel_ward"
                                                 data-placeholder=" Cấp xã " required>
                                                 <option value=""> Cấp xã </option>

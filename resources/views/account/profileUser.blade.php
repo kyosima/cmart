@@ -59,7 +59,8 @@
             <div class="col-12 col-lg-10 col-xl-8 mx-auto">
                 <h2 class="h3 mb-4 page-title"></h2>
                 <div class="my-4">
-                    <form action="{{ url('thong-tin-tai-khoan') }}" method="POST" role="form" enctype="multipart/form-data">
+                    <form action="{{ url('thong-tin-tai-khoan') }}" method="POST" role="form"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="row mt-5 align-items-center">
                             <div class="col-md-3 text-center mb-5">
@@ -83,17 +84,16 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-7">
                                         <h4 class="mb-1">Mã Khách Hàng:
-                                            <strong>{{ $profileUser->code_customer }}</strong></h4>
+                                            <strong>{{ $profileUser->code_customer }}</strong>
+                                        </h4>
                                     </div>
                                 </div>
                                 <div class="row mb-4">
                                     <div class="col-md-12">
-                                        <p class="text-muted" style="margin:0">
-                                            <span class="text-black-50">{{ $profileUser->email }}</span><span>
-                                        </p>
+                                   
                                         {{ $profileUser->name }}
                                         <p class="text-muted">
-                                            Định danh Khách hàng: 
+                                            Định danh Khách hàng:
                                             @if ($profileUser->level == 1)
                                                 Member Vip
                                             @elseif($profileUser->level == 2)
@@ -185,8 +185,9 @@
                         <div class="form-group">
                             <label for="inputAddress5">Ảnh CMND mặt sau</label>
                             @if ($profileUser->cmnd_image2 != null)
-                                <img id="imgFileUpload2" src="{{ asset('/public/images2/' . $profileUser->cmnd_image2) }}"
-                                    width="100%" height="250px" style="cursor: pointer" />
+                                <img id="imgFileUpload2"
+                                    src="{{ asset('/public/images2/' . $profileUser->cmnd_image2) }}" width="100%"
+                                    height="250px" style="cursor: pointer" />
                                 <br />
                                 <span id="spnFilePath2"></span>
                                 <input type="file" id="FileUpload2" style="display: none" name="image_cmnd2"
@@ -198,15 +199,14 @@
                             @endif
                         </div>
 
-                        <div class="form-group ">
-                            <label for="lastname">Số điện thoại đăng ký giao dịch</label>
-                            <div class="form-group row">
-                                <div class="form-group col-12">
-                                    <input type="text" name="phone" class="form-control"
-                                        placeholder="Mời nhập số điện thoại đăng ký giao dịch"
-                                        value="{{ $profileUser->phone }}" readonly>
-                                </div>
-                                {{-- <div class="form-group col-md-4 pl-0">
+                        <div class="form-group row">
+                            <label for="lastname" class="col-sm-4 col-form-label">Số điện thoại đăng ký giao dịch</label>
+                            <div class=" col-sm-8">
+                                <input type="text" name="phone" class="form-control"
+                                    placeholder="Mời nhập số điện thoại đăng ký giao dịch"
+                                    value="{{ $profileUser->phone }}" readonly>
+                            </div>
+                            {{-- <div class="form-group col-md-4 pl-0">
                                     <label class="btn btn-primary profile-button"
                                         style="height: 35px;line-height: 22px;">Lấy mã xác thực tối đa 03lần/ngày</label>
                                 </div>
@@ -214,77 +214,45 @@
                                     <input type="text" name="address" class="form-control"
                                         placeholder="Mời nhập mã OTP gửi đến SĐT">
                                 </div> --}}
-                            </div>
                         </div>
 
                         <div class="form-group row">
-                            <div class="form-group col-md-12">
-                                <label for="inputAddress5">Địa chỉ chi tiết</label>
+                            <label for="inputAddress5" class="col-sm-2 col-form-label">Địa chỉ chi tiết</label>
+
+                            <div class=" col-sm-10">
                                 <input type="text" name="address" class="form-control"
                                     value="{{ $profileUser->address }}" placeholder="Địa chỉ chi tiết" readonly>
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-group row">
                             {{-- <div class="form-group col-md-6">
                                 <label for="inputAddress5">Đường<sup class="text-danger">*</sup></label>
                                 <input type="text" name="address" class="form-control" value="{{ $profileUser->duong }}"
                                     placeholder="Mời nhập tên đường" style="height: 38px;" readonly>
                             </div> --}}
-                            <div class="form-group col-md-12">
-                                <label for="">Cấp Tỉnh<sup class="text-danger">*</sup></label>
-                                @if ($profileUser->id_tinhthanh == null)
-                                    <select name="sel_province" class="form-control select2"
-                                        data-placeholder="---Cấp tỉnh thành---" required>
-                                        <option value="">---Chọn tỉnh thành---</option>
-                                        @foreach ($province as $value)
-                                            <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                @else
-                                    <select name="sel_province" class="form-control select2"
-                                        data-placeholder="---Chọn tỉnh thành---" readonly>
-                                        <option value="{{ $profileUser->id_tinhthanh }}">
-                                            {{                                             DB::table('province')->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->where('province.matinhthanh', '=', auth()->user()->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh }}
-                                        </option>
-                                        <!-- @foreach ($province as $value)
-                                        <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
-                                        </option>
-                                    @endforeach -->
-                                    </select>
-                                @endif
+                            <label for="" class="col-sm-2 col-form-label">Cấp Tỉnh</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" name="address" class="form-control" value="{{ DB::table('province')->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->where('province.matinhthanh', '=', auth()->user()->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh }}
+        " placeholder="Địa chỉ chi tiết" readonly>
+
                             </div>
-                            <div class="form-group col-md-12">
-                                <label for="">Cấp Huyện<sup class="text-danger">*</sup></label>
-                                @if ($profileUser->id_quanhuyen == null)
-                                    <select class="form-control select2" name="sel_district"
-                                        data-placeholder="---Chọn quận huyên---" required>
-                                        <option value="">---Chọn quận huyên---</option>
-                                    </select>
-                                @else
-                                    <select class="form-control" name="" data-placeholder="---Chọn quận huyên---"
-                                        readonly>
-                                        <option value="{{ $profileUser->id_quanhuyen }}">
-                                            {{                                             DB::table('district')->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->where('district.maquanhuyen', '=', auth()->user()->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen }}
-                                        </option>
-                                    </select>
-                                @endif
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Cấp Huyện</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" name="address" class="form-control" value="{{ DB::table('district')->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->where('district.maquanhuyen', '=', auth()->user()->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen }}
+                                    " placeholder="Địa chỉ chi tiết" readonly>
                             </div>
-                            <div class="form-group col-md-12">
-                                <label for="">Cấp Xã<sup class="text-danger">*</sup></label>
-                                @if ($profileUser->id_phuongxa == null)
-                                    <select class="form-control select2" name="sel_ward"
-                                        data-placeholder="---Chọn phường xã---" required>
-                                        <option value="">---Chọn phường xã---</option>
-                                    </select>
-                                @else
-                                    <select class="form-control select2" name="" data-placeholder="---Chọn phường xã---"
-                                        readonly>
-                                        <option value="{{ $profileUser->id_phuongxa }}">
-                                            {{                                             DB::table('ward')->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->where('ward.maphuongxa', '=', auth()->user()->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa }}
-                                        </option>
-                                    </select>
-                                @endif
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Cấp Xã</label>
+
+                            <div class=" col-sm-10">
+                                <input type="text" name="address" class="form-control" value="{{ DB::table('ward')->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->where('ward.maphuongxa', '=', auth()->user()->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa }}
+                                    " placeholder="Địa chỉ chi tiết" readonly>
+
                             </div>
                         </div>
                         <hr class="my-4" />

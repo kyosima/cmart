@@ -7,12 +7,12 @@
     </div>
 
     <ul class="nav-list p-0">
-        <li class="dropdown">
+        {{-- <li class="dropdown">
             <a href="{{ route('admin.index') }}" class="dropbtn">
                 <i class="fa fa-tachometer-alt"></i>
                 <span class="links_name">Dashboard</span>
             </a>
-        </li>
+        </li> --}}
         @if (auth()->guard('admin')->user()->can('Xem DS đơn hàng'))
             <li class="dropdown">
                 <a href="{{ route('order.index') }}" class="dropbtn">

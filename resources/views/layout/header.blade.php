@@ -134,8 +134,7 @@
                                         <a rel="nofollow" class="number-cart" href="{{ url('/gio-hang') }}"
                                             title="Giỏ hàng">
                                             <img src="{{ asset('/public/image/iconcart.png') }}" alt="">
-                                            <sup
-                                                class="count-giohang">{{ $count_cart }}</sup>
+                                            <sup class="count-giohang">{{ $count_cart }}</sup>
                                         </a>
                                         <a rel="nofollow" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
 
@@ -186,7 +185,7 @@
                                         </a>
                                         <ul class="dropdown-navcmart dvcmart">
                                             @php
-                                                $pages = App\Models\InfoCompany::whereType('service')->get();
+                                                $pages = App\Models\InfoCompany::whereType('service')->orderBy('sort','asc')->get();
                                             @endphp
                                             @foreach ($pages as $page)
                                                 <li><a rel="nofollow"
@@ -207,7 +206,7 @@
                                         <a class="text-color-white" href="#">Điều khoản và Chính sách</a>
                                         <ul class="dropdown-navcmart">
                                             @php
-                                                $pages = App\Models\InfoCompany::whereType('policy')->get();
+                                                $pages = App\Models\InfoCompany::whereType('policy')->orderBy('sort','asc')->get();
                                             @endphp
                                             @foreach ($pages as $page)
                                                 <li><a rel="nofollow"
@@ -232,7 +231,7 @@
         {{-- <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
             Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
         </span> --}}
-      
+
         <p>
             Mọi liên hệ nên thực hiện từ Số điện thoại đăng ký giao dịch và đến các kênh kết nối chính thức của C-Mart
         </p>
@@ -242,32 +241,35 @@
         <div class="d-flex justify-content-around align-items-center ct-header">
 
             <div class="box-contacth">
-                <b class="d-flex align-items-center justify-content-center"><img src="{{ asset('/public/image/phone.png') }}" alt=""><a
+                <b class="d-flex align-items-center justify-content-center"><img
+                        src="{{ asset('/public/image/phone.png') }}" alt=""><a
                         href="tel:0899302323">0899.302.323</a></b>
                 <small>Kênh Hỗ trợ - Đặt hàng</small>
             </div>
             <div class="box-contacth">
-                <b class="d-flex align-items-center justify-content-center"><img src="{{ asset('/public/image/facebook.png') }}" alt=""><a
+                <b class="d-flex align-items-center justify-content-center"><img
+                        src="{{ asset('/public/image/facebook.png') }}" alt=""><a
                         href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
-                        <small>Kênh Hỗ trợ - Đặt hàng</small>
+                <small>Kênh Hỗ trợ - Đặt hàng</small>
 
             </div>
             <div class="box-contacth">
-                <b class="d-flex align-items-center justify-content-center"><img src="{{ asset('/public/image/zalo.png') }}" alt=""><a
-                        href="">Zalo</a></b>
-                        <small>Kênh Hỗ trợ - Đặt hàng</small>
+                <b class="d-flex align-items-center justify-content-center"><img
+                        src="{{ asset('/public/image/zalo.png') }}" alt=""><a href="https://zalo.me/3597490523695148504">Zalo</a></b>
+                <small>Kênh Hỗ trợ - Đặt hàng</small>
 
             </div>
             <div class="box-contacth">
-                <b class="d-flex align-items-center justify-content-center"><img src="{{ asset('/public/image/email.png') }}" alt=""><a
+                <b class="d-flex align-items-center justify-content-center"><img
+                        src="{{ asset('/public/image/email.png') }}" alt=""><a
                         href="mailto:hotro@cm.com.vn">hotro@cm.com.vn</a></b>
-                        <small>Kênh danh cho Đối tác</small>
+                <small>Kênh dành cho Đối tác</small>
 
             </div>
         </div>
         <div class="text-center">
             <h5 class="store-system-hello"><b> Hệ thống các kênh Cửa hàng C-Store </b></h5>
-                <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách hàng</p>
+            <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách hàng</p>
         </div>
     </div>
 
@@ -289,8 +291,7 @@
                 <div class="cart-nav">
                     <a class="number-cart" rel="nofollow" href="{{ url('/gio-hang') }}" title="giỏ hàng">
                         <i class="icon-2020 icon-cart-2020"></i>
-                        <span
-                            class="count-item count-giohang">{{ $count_cart }}</span>
+                        <span class="count-item count-giohang">{{ $count_cart }}</span>
                     </a>
                 </div>
             </div>

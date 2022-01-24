@@ -55,7 +55,7 @@
                                 <h2>{{ $product->name }}</h2>
                             </div>
                             <div class="code info-detail">
-                                <p><span>SKU:</span>{{ $product->sku }}</p>
+                                <p><span>Mã sản phẩm:</span>{{ $product->sku }}</p>
                             </div>
                             <div class="trademark info-detail">
                                 <p><span>Thương hiệu:</span><a
@@ -65,24 +65,26 @@
 
 
                             <div class="manufacture info-detail">
-                                <!--<p>   <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span-->
-                                <!--    class="ttt">C là Tiền Tích Lũy nhận được khi mua sản phẩm, có giá trị-->
-                                <!--    thanh toán tại C-Mart và các Đối Tác Liên Liên Kết, giá trị đầu tư tốt theo-->
-                                <!--    Chính sách Tiết Kiệm Tích Tài C-Saving, giá trị lưu trữ không giới hạn-->
-                                <!--</span></span><span>Điểm C nhận-->
-                                <!--        được:</span>{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}-->
-                                <!--    điểm-->
+                                <p>   
+                                    {{-- <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
+                                    class="ttt">C là Tiền Tích Lũy nhận được khi mua sản phẩm, có giá trị
+                                    thanh toán tại C-Mart và các Đối Tác Liên Liên Kết, giá trị đầu tư tốt theo
+                                    Chính sách Tiết Kiệm Tích Tài C-Saving, giá trị lưu trữ không giới hạn
+                                </span></span> --}}
+                                <span  class="text-dark">Tiền tích lũy (C):</span><span class="text-dark" style="font-weight: 300">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
+                                    điểm</span>
 
-                                <!--</p>-->
-                                <!--<p> <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span-->
-                                <!--    class="ttt">M là Điểm Dịch Vụ nhận được khi mua sản phẩm, có chức-->
-                                <!--    năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển,-->
-                                <!--    phí thanh toán...) và chỉ có giá trị trong chính đơn hàng đó.-->
-                                <!--</span></span><span>Điểm M nhận-->
-                                <!--        được:</span>{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}-->
-                                <!--    điểm-->
+                                </p>
+                                <p> 
+                                    {{-- <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
+                                    class="ttt">M là Điểm Dịch Vụ nhận được khi mua sản phẩm, có chức
+                                    năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển,
+                                    phí thanh toán...) và chỉ có giá trị trong chính đơn hàng đó.
+                                </span></span> --}}
+                                <span class="text-dark">Điểm dịch vụ (M):</span><span class="text-dark" style="font-weight: 300">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
+                                    điểm</span>
 
-                                <!--</p>-->
+                                </p>
 
                                 <style>
                                     .tt {

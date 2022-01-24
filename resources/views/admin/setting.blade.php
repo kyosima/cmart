@@ -14,24 +14,24 @@
             <div class="row">
                 <div class="col-md-4 col-lg-3">
                     <ul id="myTab" class="nav flex-column">
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="#" class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" role="tab" aria-controls="home" aria-selected="true">Thông tin chung</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="#" class="nav-link" id="maintenaceMode-tab" data-bs-toggle="tab" data-bs-target="#maintenaceMode" role="tab" aria-controls="maintenaceMode" aria-selected="true">Bảo trì</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="#" class="nav-link" id="mail-tab" data-bs-toggle="tab" data-bs-target="#mail" role="tab" aria-controls="mail" aria-selected="true">Mail</a>
-                        </li>
-                        <li class="nav-item">
+                        </li> --}}
+                        {{-- <li class="nav-item">
                             <a href="#" class="nav-link" id="social-tab" data-bs-toggle="tab" data-bs-target="#social" role="tab" aria-controls="social" aria-selected="true">Mạng xã hội</a>
-                        </li>
+                        </li> --}}
                         
                     </ul>
                 </div>
                 <div class="col-md-8 col-lg-9">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        {{-- <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <h3>Thông tin chung</h3>
                             <hr>
                             <form action="{{route('post.setting')}}" class="row g-3 needs-validation" method="post" novalidate>
@@ -68,8 +68,8 @@
                                     <button type="submit" class="btn btn-primary">Lưu lại</button>
                                 </div>
                             </form>
-                        </div>
-                        <div class="tab-pane fade" id="maintenaceMode" role="tabpanel" aria-labelledby="profile-tab">
+                        </div> --}}
+                        <div class="tab-pane fade show active" id="maintenaceMode" role="tabpanel" aria-labelledby="profile-tab">
                             <h3>Bảo trì</h3>
                             <hr>
                             <form action="{{route('post.maintenanceMode')}}" class="row g-3" method="post">
@@ -84,7 +84,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="mail" role="tabpanel" aria-labelledby="mail-tab">
+                        {{-- <div class="tab-pane fade" id="mail" role="tabpanel" aria-labelledby="mail-tab">
                             <h3>Mail</h3>
                             <hr>
                             <form action="{{route('post.setting')}}" class="row g-3 needs-validation" method="post" novalidate>
@@ -108,8 +108,8 @@
                                     <button type="submit" class="btn btn-primary">Lưu lại</button>
                                 </div>
                             </form>
-                        </div>
-                        <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
+                        </div> --}}
+                        {{-- <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
                             <h3>Mạng xã hội</h3>
                             <hr>
                             <form action="{{route('post.setting')}}" class="row g-3 needs-validation" method="post" novalidate>
@@ -132,7 +132,7 @@
                                     <button type="submit" class="btn btn-primary">Lưu lại</button>
                                 </div>
                             </form>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@
     <!-- Team -->
     <!-- footer -->
     <div class="d-flex justify-content-center pb-1 mt-4">
-        <span class="footer__copyright">Copyright©2005-2021 . All rights reserved</span>
+        <span class="footer__copyright">Copyright©2021 . All rights reserved</span>
     </div>
     <!-- end footer -->
 
