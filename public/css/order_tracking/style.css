@@ -11,6 +11,14 @@ h1 {
 
 /* Thanh sidebar */
 
+.list-store p {
+    margin-bottom: 0;
+}
+
+.list-store .row>div {
+    padding: 10px 0px;
+}
+
 .check-order {
     background: #f1f1f1;
     /* width: 270px; */
@@ -23,9 +31,11 @@ h1 {
 .checkorder li {
     list-style: none;
 }
-.progress-order .table thead th{
+
+.progress-order .table thead th {
     vertical-align: middle;
 }
+
 .check-order ul li {
     border-bottom: 1px solid #fff;
 }

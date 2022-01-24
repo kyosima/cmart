@@ -13,7 +13,32 @@ if (!function_exists('formatPriceAdmin')) {
         return number_format($price, 0, ',', '.');
     }
 }
-
+if (!function_exists('formatMethod')) {
+    function formatMethod($method)
+    {
+        switch ($method) {
+            case 0: 
+                return 'C-Mart';
+            case 1:
+                return 'C-Ship';
+            case 2:
+                return 'Viettel Post';
+        }
+    }
+}
+if (!function_exists('formatType')) {
+    function formatType($type)
+    {
+        switch ($type) {
+            case 0: 
+                return 'Nhận tại cửa hàng';
+            case 1:
+                return 'Tiêu chuẩn';
+            case 2:
+                return 'Hỏa tốc';
+        }
+    }
+}
 if (!function_exists('formatPriceOfLevel')) {
 
 if (!function_exists('formatPriceOfLevel')) {

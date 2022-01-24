@@ -220,7 +220,6 @@ class CheckoutController extends Controller
         Session::forget('store_ids');
 
     
-            // Cart::instance('shopping')->destroy();
             return 'success';
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
           
@@ -238,10 +237,8 @@ class CheckoutController extends Controller
 
         $order_info = $order->order_info()->first();
         $order_address = $order->order_address()->first();
-        $products = $order->order_products()->get();
-
-        return view('checkout.thanhcong', ['order' => $order, 'address' => $order_address, 'order_info' => $order_info, 'products' => $products]);
-        return view('checkout.thanhcong');
+        $order_stores = $order->order_stores()->get();
+        return view('checkout.thanhcong', ['order' => $order, 'address' => $order_address, 'order_info' => $order_info, 'order_stores' => $order_stores]);
     }
 
     public function updateTypeShip(Request $request){

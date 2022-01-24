@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', 'Trang chủ')
+@section('title', 'Lịch sử đặt hàng')
 
 @push('css')
     <link href="{{ asset('css/home.css') }}" rel="stylesheet" type="text/css">
