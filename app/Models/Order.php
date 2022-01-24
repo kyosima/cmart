@@ -70,9 +70,16 @@ class Order extends Model
 	public function order_info(){
 		return $this->hasOne(OrderInfo::class, 'id_order');
 	}
+	public function order_vat(){
+		return $this->hasOne(OrderVat::class, 'id_order');
+	}
 
 	public function order_shipping(){
         return $this->hasMany(ShippingBill::class, 'order_id', 'id');
+    }
+
+	public function order_stores(){
+        return $this->hasMany(OrderStore::class, 'id_order', 'id');
     }
 
 	public function products()

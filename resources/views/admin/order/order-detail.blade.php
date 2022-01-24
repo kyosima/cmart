@@ -40,9 +40,8 @@
                                                 <input type="text" class="form-control" id="phone" name="phone" value="{{$order->order_info->phone}}" required>
                                             </div>
                                             <div class="form-group mb-3 w-100">
-                                                <label for="fullname">Email <abbr class="required"
-                                                        title="bắt buộc">*</abbr></label>
-                                                <input type="text" class="form-control" id="email" name="email" value="{{$order->order_info->email}}" required>
+                                                <label for="fullname">Email</label>
+                                                <input type="text" class="form-control" id="email" name="email" value="{{$order->order_info->email}}">
                                             </div>
                                             <div class="form-group mb-3 w-100">
                                                 <label for="fullname">Trạng thái <abbr class="required"
@@ -108,6 +107,52 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if($order->order_vat)
+                                    <hr>
+                                    <p>Thông tin thuế</p>
+                                    <table class="table table-hover align-middle">
+                                        <thead>
+                                            <th class="title">Tên công ty</th>
+                                            <th class="title">Email</th>
+                                            <th class="title">MST</th>
+                                            <th class="title">Địa chỉ</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{ $order->order_vat->vat_company }}</td>
+                                                <td>{{ $order->order_vat->vat_email }}</td>
+                                                <td>{{ $order->order_vat->vat_mst }}</td>
+                                                <td>{{ $order->order_vat->vat_address }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    @endif
+                                    <hr>
+                                    <p>Đơn hàng con</p>
+                                    <table class="table table-hover align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th class="title">Mã giao dịch con</th>
+                                                <th class="title">GTTT sản phẩm</th>
+                                                <th class="title">ĐVVC</th>
+                                                <th class="title">Phí DVVC</th>
+                                                <th class="title">Tổng GTGD</th>
+                                                <!-- <th class="title" style="width:75px;">Thao tác</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody style="color: #748092; font-size: 14px;">
+                                            @foreach ( $order->order_stores as $value)
+                                            <tr>
+                                                <td>{{$value->id}}</td>
+                                                <td>{{number_format($value->sub_total)}} đ</td>
+                                                <td>{{ shippingMethodName($value->shipping_method) }}</td>
+                                                <td>{{ number_format($value->shipping_total) }} đ</td>
+                                                <td>{{number_format($value->total)}} đ</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <hr>
                                     <p>Thông tin sản phẩm</p>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -122,7 +167,7 @@
                                                     <tbody>
                                                         @foreach ( $order->products as $item)      
                                                             <tr class="cart_item">
-                                                                <td class="product-name" data-title="Sản phẩm">
+                                                                <td class="product-name" data-title="Sản phẩm" style="width:70%">
                                                                     <a href="{{url('san-pham/'.$item->slug)}}">{{$item->name}}</a>
                                                                     <strong class="product-quantity">× {{$item->pivot->quantity}}</strong>
                                                                 </td>
@@ -138,6 +183,14 @@
                                                             <th>Tạm tính</th>
                                                             <td><span class="amount">{{number_format($order->sub_total)}} đ</span></td>
                                                         </tr>
+                                                        <tr class="cart-subtotal">
+                                                            <th>Thuế VAT</th>
+                                                            <td><span class="amount">{{number_format($order->tax)}} đ</span></td>
+                                                        </tr>
+                                                        <tr class="cart-subtotal">
+                                                            <th>Phí DVVC</th>
+                                                            <td><span class="amount">{{number_format($order->shipping_total)}} đ</span></td>
+                                                        </tr>
                                                         <!-- <tr class="checkout-shipping-label-curent">
                                                             <th>Phí ship hiện tại</th>
                                                             <td>Giao hàng miễn phí</td>
@@ -147,7 +200,7 @@
                                                             <td>COD</td>
                                                         </tr> -->
                                                         <tr class="order-total">
-                                                            <th>Giá trị giao dịch</th>
+                                                            <th>Tổng GTGD</th>
                                                             <td><strong><span class="amount" data-total={{number_format($order->total)}}>{{number_format($order->total + $order->shipping_total)}} ₫</span></strong> </td>
                                                         </tr>
                                                     </tfoot>
