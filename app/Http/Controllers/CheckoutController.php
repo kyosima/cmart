@@ -181,6 +181,7 @@ class CheckoutController extends Controller
             $total_m += $store_m;
             $sub_total =+ $order_store->sub_total;
             $total += $order_store->total ;
+            Cart::instance($store_id)->destroy();
         }
 
         if ($show_vat == 1) {
@@ -216,6 +217,7 @@ class CheckoutController extends Controller
         $order_info->note = $request->note;
         $order->order_info()->save($order_info);
 
+        Session::forget('store_ids');
 
     
             // Cart::instance('shopping')->destroy();
