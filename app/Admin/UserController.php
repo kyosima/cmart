@@ -12,14 +12,16 @@ use App\Models\Province;
 use App\Models\District;
 use App\Models\Ward;
 use App\Models\Order;
+use App\Models\PointC;
+use App\Models\PointCHistory;
 use Carbon\Carbon;
 
 class UserController extends Controller
 {
-
-
     public function getDanhSach() {
         $user = User::all();
+        // dd($pointC = PointC::where('user_id','=',User::select('id')->get('id'))->select('point_c')->get());
+        // dd($pointC = User::select('id')->get('id'));
         return view('admin.user.listuser',['user'=>$user]);
     }
 
@@ -40,8 +42,6 @@ class UserController extends Controller
         }
         else 
             return back();
-
-
     }
 
     public function getEdit($id) {
@@ -74,9 +74,17 @@ class UserController extends Controller
         
         // dd($orders); die;
 
+        $pointC = PointC::where('user_id','=',$user->id)->value('point_c');
+        $code_customer = $user->code_customer;
+        $id_vitien = PointC::where('user_id','=',$user->id)->value('id');
+        $lichsuchuyen = PointCHistory::where('point_c_idchuyen','=',$id_vitien)->where('type','=',1)->get();
+        $lichsunhan = PointCHistory::where('point_c_idnhan','=',$id_vitien)->where('type','=',1)->get();
+        
+
 
         return view('admin.user.profile',['user'=>$user,'province'=>$province,
-         'district'=>$district, 'ward'=>$ward],compact('orders','sodonhang','tinh','quan','phuongxa'));
+         'district'=>$district, 'ward'=>$ward,'pointC'=>$pointC, 'lichsunhan'=>$lichsunhan, 'lichsuchuyen'=>$lichsuchuyen]
+         ,compact('orders','sodonhang','tinh','quan','phuongxa'));
     }
 
     public function postEdit(Request $request, $id) {

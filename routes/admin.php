@@ -17,6 +17,7 @@ use App\Admin\Controllers\AdminOrderController;
 use App\Admin\Controllers\AdminInfoCompanyController;
 use App\Admin\Controllers\AdminSettingController;
 use App\Admin\UserController;
+use App\Admin\PointHistoryController;
 use App\Admin\Controllers\InfoCompanyController;
 use App\Admin\Controllers\PaymentController;
 use App\Admin\Controllers\AdminBannerController;
@@ -31,6 +32,18 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('{id}',[UserController::class, 'postEdit']);
     });
 
+
+    Route::get('lichsuchuyenkhoan',[PointHistoryController::class, 'chuyenkhoan'])->name('lichsuchuyenkhoan');
+    Route::get('lichsutietkiem',[PointHistoryController::class, 'tietkiem'])->name('lichsutietkiem');
+    Route::get('lichsutichluy',[PointHistoryController::class, 'tichluy'])->name('lichsutichluy');
+    Route::get('lichsudonhanghuy',[PointHistoryController::class, 'huydonhang'])->name('lichsudonhanghuy');
+    Route::get('lichsudiemm',[PointHistoryController::class, 'lichsudiemM'])->name('lichsudiemm');
+
+    //Danh sach vi diem
+    Route::get('tongdiemuser',[PointHistoryController::class, 'tongdiem'])->name('tongdiemuser');
+    Route::get('chuyendiem',[PointHistoryController::class, 'chuyendiem'])->name('chuyendiem');
+    Route::post('chuyendiem',[PointHistoryController::class, 'postChuyendiem'])->name('postChuyendiem');
+    Route::get('test',[PointHistoryController::class, 'test'])->name('test');
     // Route::get('',[UserController::class,'postDanhsach']);
 
     Route::get('logout', [AdminHomeController::class, 'logout'])->name('logout');

@@ -81,8 +81,8 @@
                                                                 href="{{ url('/lichsu') }}">Lịch sử
                                                                 đơn
                                                                 hàng</a>
-                                                            <!--<a class="dropdown-item text-dark" href="{{ url('/cpoint') }}">Lịch sử nhận point</a>-->
-                                                            <!-- <a class="dropdown-item text-dark" href="#">Tài khoản tiền tích lũy C</a> -->
+                                                            <a class="dropdown-item text-dark" href="{{ url('/lichsu_cpoint') }}">Lịch sử C Point</a>
+                                                            <a class="dropdown-item text-dark" href="{{ route('chuyenkhoanC') }}">Chuyển C Point</a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item text-danger"
                                                                 href="{{ route('logoutuser') }}">Đăng

@@ -117,6 +117,10 @@ Route::get('/xac-thuc-ho-so', [HomeController::class, 'getXacthuc']);
 
 Route::get('/lichsu', [HomeController::class, 'getLichsu']);
 
-Route::prefix('/cpoint')->group(function () {
+Route::prefix('/lichsu_cpoint')->group(function () {
     Route::get('/', [CPointController::class, 'index'])->name('account.cpoint_history');
 });
+
+
+Route::get('/chuyenkhoanC', [CPointController::class, 'chuyenkhoanC'])->name('chuyenkhoanC');
+Route::post('/chuyenkhoanC', [CPointController::class, 'postChuyenkhoanC'])->name('chuyenkhoanC');

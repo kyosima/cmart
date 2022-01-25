@@ -105,7 +105,7 @@ tbody tr:nth-child(even) td {
                             <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
                             </div> -->
                             <div class="col-6">
-                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C: {{$user->tichluyC}}</button>
+                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C: {{$pointC}}</button>
                             </div>
                         </div>
                         
@@ -129,7 +129,7 @@ tbody tr:nth-child(even) td {
                                     <input type="phone" class="form-control mb-2" name="phone" placeholder="Nhập số điện thoại"
                                         value="{{$user->phone}}">
                                         <!-- <span class="text-uppercase">Email</span>
-                                    <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
+                                        <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
                                         value="{{$user->email}}" readonly=""> -->
                                 </div>
                                 
@@ -348,29 +348,42 @@ tbody tr:nth-child(even) td {
                                     <div class="row mb-3 pt-3">
                                         <div class="col-lg-12">
                                             <h3 class="text-uppercase text-center">- Tài khoản tiền tích lũy C -</h3>
-                                            @if($sodonhang != null)
                                                 <table class="styled-table table-sortable">
-                                                    <thead>
+                                                    <thead> 
                                                         <tr>
+                                                            <th>Thời gian giao dịch</th>
                                                             <th>Mã giao dịch</th>
-                                                            <th>Số điểm nhận đc</th>
-                                                            <th>Ngày nhận</th>
+                                                            <th>Số dư ban đầu</th>
+                                                            <th>Giá trị giao dịch</th>
+                                                            <th>Số dư cuối</th>
+                                                            <th>Nội dung</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($orders as $k)
+                                                        @foreach ($lichsunhan as $k)
                                                         <tr>
-                                                            <td>{{$k->order_code}}</td>
-                                                            <td>{{$k->c_point}}</td>
                                                             <td>{{$k->created_at}}</td>
+                                                            <td>{{$k->magiaodich}}</td>
+                                                            <td>{{$k->point_past_nhan}}</td>
+                                                            <td>{{$k->amount}}</td>
+                                                            <td>{{$k->point_present_nhan}}</td>
+                                                            <td>{{$k->note}}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                        
+                                                        @foreach ($lichsuchuyen as $k)
+                                                        <tr>
+                                                            <td>{{$k->created_at}}</td>
+                                                            <td>{{$k->magiaodich}}</td>
+                                                            <td>{{$k->point_past_chuyen}}</td>
+                                                            <td>{{$k->amount}}</td>
+                                                            <td>{{$k->point_present_chuyen}}</td>
+                                                            <td>{{$k->note}}</td>
                                                         </tr>
                                                         @endforeach
                                                         <!-- and so on... -->
                                                     </tbody>
                                                 </table>
-                                            @else
-                                                <p class="text-center text-danger">Hiện tại khách hàng này chưa thực hiện đơn hàng nào</p>
-                                            @endif   
                                         </div>
                                     </div>
                                     
