@@ -14,6 +14,9 @@ use App\Models\Province;
 use App\Models\District;
 use App\Models\Ward;
 use Carbon\Carbon;
+use App\Models\PointC;
+use App\Models\PointM;
+
 class HomeController extends Controller
 {
     public function home() {
@@ -53,7 +56,7 @@ class HomeController extends Controller
             'password.min' => 'Mật khẩu bạn nhập không chính xác',
             'password.max' => 'Mật khẩu bạn nhập không chính xác',
         ]);
-        
+
         if(Auth::attempt(['phone'=>$request->phone,'password'=>$request->password])){
             return redirect('/');
         }
@@ -144,6 +147,16 @@ class HomeController extends Controller
         $userID = $getday + $userOrder;
         $user->code_customer = $userID;
 
+        // tao vi C cho user
+        $wallet_c = new PointC();
+        $count_id = DB::table('users')->select('id')->count() + 1;
+        $wallet_c->user_id = $count_id;
+        $wallet_c->save();
+
+        // tao vi M cho user
+        $wallet_m = new PointM();
+        $wallet_m->user_id = $count_id;
+        $wallet_m->save();
 
         $user->save();
 
@@ -252,12 +265,14 @@ class HomeController extends Controller
             $user->password = bcrypt($request->password);
         }
 
-        $user->save();
+
+        $user -> save();
         return back()->with('thongbao','Sửa thành công');
     }
 
     public function pointC() {
         $user = Auth::user();
+        $pointC = PointC::where('user_id','=','id')->select('point_c')->get();
         $order = new Order();
         if ($order->status=0) {
             $order->status += 1;

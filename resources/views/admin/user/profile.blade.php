@@ -109,9 +109,7 @@
                                 <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
                                 </div> -->
                             <div class="col-6">
-                                <button class="alert alert-warning m-0"
-                                    style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C:
-                                    {{ $user->tichluyC }}</button>
+                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C: {{$pointC}}</button>
                             </div>
                         </div>
 

@@ -88,7 +88,6 @@
             </tr>
         </thead>
         <tbody>
-
             @foreach($user as $k)
                 <tr style="text-align:center">
                     <td>{{$k->code_customer}}</td>
@@ -103,7 +102,7 @@
                         @endif
                     </td>
                     <td>
-                        {{$k->tichluyC}}
+                        {{DB::table('point_c')->where('user_id','=',$k->id)->value('point_c')}}
                     </td>
                     <td><a class="alert alert-primary" style="text-decoration: none" href="{{url('admin/danh-sach-user')}}/{{$k->id}}"> Kiểm tra</a></td>
                     <td>

@@ -64,9 +64,26 @@
                         class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
-                <span class="dropdown-content">
-                    <a href="{{ url('admin/danh-sach-user') }}">Danh sách khách hàng</a>
-                </span>
+            <span class="dropdown-content">
+                <a href="{{url('admin/danh-sach-user')}}">Danh sách khách hàng</a>
+                <a href="{{route('tongdiemuser')}}">Danh sách điểm khách hàng</a>
+                <a href="{{route('chuyendiem')}}">Chuyển điểm user</a>
+            </span>
+            @endif
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropbtn">
+            <i class="fas fa-history"></i>
+             <span class="links_name w-100 align-items-center d-flex">Lịch sử CPoint <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            </a>
+            @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
+            <span class="dropdown-content">
+                <a href="{{route('lichsuchuyenkhoan')}}">Lịch sử chuyển khoản</a>
+                <a href="{{route('lichsutichluy')}}">Lịch sử tích luỹ</a>
+                <a href="{{route('lichsutietkiem')}}">Lịch sử tiết kiệm</a>
+                <a href="{{route('lichsudonhanghuy')}}">Lịch sử hoàn đơn hàng huỷ</a>
+                <a href="{{route('lichsudiemm')}}">Lịch sử điểm tích luỹ M</a>
+            </span>
             @endif
         </li>
         @role('Boss', 'admin')

@@ -12,7 +12,6 @@ use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InfoCompanyController;
-
 use App\Http\Controllers\CPointController;
 /*
 |--------------------------------------------------------------------------
@@ -124,8 +123,11 @@ Route::get('/xac-thuc-ho-so', [HomeController::class, 'getXacthuc']);
 
 Route::get('/lichsu', [HomeController::class, 'getLichsu']);
 
-Route::prefix('/cpoint')->group(function () {
+Route::prefix('/lichsu_cpoint')->group(function () {
     Route::get('/', [CPointController::class, 'index'])->name('account.cpoint_history');
 });
 
 Route::get('/test-api', [CheckoutController::class, 'getDistance']);
+
+Route::get('/chuyenkhoanC', [CPointController::class, 'chuyenkhoanC'])->name('chuyenkhoanC');
+Route::post('/chuyenkhoanC', [CPointController::class, 'postChuyenkhoanC'])->name('chuyenkhoanC');
