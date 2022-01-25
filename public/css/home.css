@@ -475,7 +475,7 @@ h6 {
 }
 
 .detail .title a {
-    height: 20px;
+    height: 40px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

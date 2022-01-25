@@ -59,16 +59,18 @@ function updateCheckout() {
         },
         success: function(response) {
             console.log(response);
-            if (response[2] > 0) {
-                $('.btn-dathang').prop('disabled', false);
-                $('.btn-dathang').text('Thanh toán ' + response[2] + ' sản phẩm');
+            if (response[1] > 0) {
+                $('#btn-to-checkout').prop('disabled', false);
+                $('#btn-to-checkout').text('Thanh toán ' + response[1] + ' sản phẩm');
             } else {
-                $('.btn-dathang').prop('disabled', true);
-                $('.btn-dathang').text('Chọn cửa hàng cần thanh toán');
+                $('#btn-to-checkout').prop('disabled', true);
+                $('#btn-to-checkout').text('Chọn cửa hàng cần thanh toán ');
             }
-            $('.tamtinh span.amount').text(response[0]);
-            $('.total span.amount').text(response[1]);
-            $('input[name="store_ids"]').val(response[3]);
+            $('#total').text(response[0]);
+
+            $('input[name="store_ids"]').val(response[2]);
+            $('#cpoint').text(response[3]);
+            $('#mpoint').text(response[4]);
 
 
         }
@@ -104,7 +106,7 @@ $('input[name=qty].product-qty').change(function() {
             console.log(data);
         },
         success: function(response) {
-            input.closest('.cart_item').find('.cart_price_col h2').text(response[0]);
+            input.closest('.cart_item').find('.cart_price_col span').text(response[0]);
             updateCheckout();
         }
     });
@@ -112,6 +114,7 @@ $('input[name=qty].product-qty').change(function() {
 
 function removeRowCart(e) {
     var rowid = $(e).data('rowid');
+    var storeid = $(e).data('storeid');
     var url = $(e).data('url');
 
     $.ajaxSetup({
@@ -122,14 +125,14 @@ function removeRowCart(e) {
     $.ajax({
         type: 'POST',
         url: url,
-        data: { rowid: rowid },
+        data: { rowid: rowid, storeid: storeid },
         error: function(data) {
             console.log(data);
         },
         success: function(response) {
             e.closest('.cart_item').remove();
-            $('.cart-subtotal .amount').text(response[0]);
-            $('.cart-total .amount').text(response[1]);
+            updateCheckout();
+
         }
     });
 }

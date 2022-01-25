@@ -50,111 +50,128 @@
                     </div>
 
                     <div class="col-sm-12 col-md-12 col-lg-6">
-                        <div class="short-desc">
-                            <div class="title">
-                                <h2>{{ $product->name }}</h2>
-                            </div>
-                            <div class="code info-detail">
-                                <p><span>Mã sản phẩm:</span>{{ $product->sku }}</p>
-                            </div>
-                            <div class="trademark info-detail">
-                                <p><span>Thương hiệu:</span><a
-                                        href="{{ route('proBrand.index', $product->brand) }}">{{ $product->brand }}</a>
-                                </p>
-                            </div>
+                        <form id="form-add-to-cart" method="POST" action="{{ route('cart.add') }}">
 
-
-                            <div class="manufacture info-detail">
-                                <p>   
-                                    {{-- <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
-                                    class="ttt">C là Tiền Tích Lũy nhận được khi mua sản phẩm, có giá trị
-                                    thanh toán tại C-Mart và các Đối Tác Liên Liên Kết, giá trị đầu tư tốt theo
-                                    Chính sách Tiết Kiệm Tích Tài C-Saving, giá trị lưu trữ không giới hạn
-                                </span></span> --}}
-                                <span  class="text-dark">Tiền tích lũy (C):</span><span class="text-dark" style="font-weight: 300">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
-                                    điểm</span>
-
-                                </p>
-                                <p> 
-                                    {{-- <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
-                                    class="ttt">M là Điểm Dịch Vụ nhận được khi mua sản phẩm, có chức
-                                    năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển,
-                                    phí thanh toán...) và chỉ có giá trị trong chính đơn hàng đó.
-                                </span></span> --}}
-                                <span class="text-dark">Điểm dịch vụ (M):</span><span class="text-dark" style="font-weight: 300">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
-                                    điểm</span>
-
-                                </p>
-
-                                <style>
-                                    .tt {
-                                        position: relative;
-                                        display: inline-block;
-                                    }
-
-                                    .tt .ttt {
-                                        visibility: hidden;
-                                        top: -25px;
-                                        width: 400px;
-                                        background-color: #0000008c;
-                                        color: #fff !important;
-                                        text-align: center;
-                                        border-radius: 6px;
-                                        padding: 5px 0;
-                                        position: absolute;
-                                        z-index: 1;
-                                    }
-
-                                    .tt:hover .ttt {
-                                        visibility: visible;
-                                    }
-
-                                </style>
-                            </div>
-
-                            <div class="all-price">
-                                <p class="new-price">{{ formatPriceOfLevel($product) }}</p>
-                                {{-- @if ($product->shock_price != null || $product->shock_price != 0)
-                                    <p class="new-price">{{ formatPrice($product->shock_price) }}</p>
-                                    <p class="old-price">{{ formatPrice($product->regular_price) }}</p>
-                                @else
-                                    <p class="new-price">{{ formatPrice($product->regular_price) }}</p>
-                                @endif --}}
-                            </div>
-                            {{-- <div class="promo-intro">
-                                <p class="title-promo">Tiết kiệm
-                                    {{ formatPrice($product->regular_price - $product->shock_price) }} Ngay Hôm Nay !</p>
-                            </div>
-                            <div class="star-mobile">
-                                <div class="star">
-                                    <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                    <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
-                                    <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
-                                    <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
-                                    <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
-                                    <span>5</span>
+                            <div class="short-desc">
+                                <div class="title">
+                                    <h2>{{ $product->name }}</h2>
                                 </div>
-                                <div class="sold">
-                                    <span>Đã bán 1877</span>
-                                </div>
-                            </div> --}}
-                            <div class="quantity">
-                                <form id="form-add-to-cart" method="POST" action="{{ route('cart.add') }}">
-                                    <input type="hidden" class="card-quality-input" name="product_id"
-                                        value="{{ $product->id }}">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-5">
+                                        <div class="code info-detail">
+                                            <p><span>Mã sản phẩm:</span>{{ $product->sku }}</p>
+                                        </div>
+                                        <div class="trademark info-detail">
+                                            <p><span>Thương hiệu:</span><a
+                                                    href="{{ route('proBrand.index', $product->brand) }}">{{ $product->brand }}</a>
+                                            </p>
+                                        </div>
+                                        <div class="manufacture info-detail">
+                                            <p>
+                                                {{-- <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
+                                            class="ttt">C là Tiền Tích Lũy nhận được khi mua sản phẩm, có giá trị
+                                            thanh toán tại C-Mart và các Đối Tác Liên Liên Kết, giá trị đầu tư tốt theo
+                                            Chính sách Tiết Kiệm Tích Tài C-Saving, giá trị lưu trữ không giới hạn
+                                        </span></span> --}}
+                                                <span class="text-dark">Tiền tích lũy (C):</span><span
+                                                    class="text-dark"
+                                                    style="font-weight: 300">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
+                                                    điểm</span>
+
+                                            </p>
+                                            <p>
+                                                {{-- <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
+                                            class="ttt">M là Điểm Dịch Vụ nhận được khi mua sản phẩm, có chức
+                                            năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển,
+                                            phí thanh toán...) và chỉ có giá trị trong chính đơn hàng đó.
+                                        </span></span> --}}
+                                                <span class="text-dark">Điểm dịch vụ (M):</span><span
+                                                    class="text-dark"
+                                                    style="font-weight: 300">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
+                                                    điểm</span>
+
+                                            </p>
+
+                                            <style>
+                                                .tt {
+                                                    position: relative;
+                                                    display: inline-block;
+                                                }
+
+                                                .tt .ttt {
+                                                    visibility: hidden;
+                                                    top: -25px;
+                                                    width: 400px;
+                                                    background-color: #0000008c;
+                                                    color: #fff !important;
+                                                    text-align: center;
+                                                    border-radius: 6px;
+                                                    padding: 5px 0;
+                                                    position: absolute;
+                                                    z-index: 1;
+                                                }
+
+                                                .tt:hover .ttt {
+                                                    visibility: visible;
+                                                }
+
+                                            </style>
+                                        </div>
+
+                                        <div class="all-price">
+                                            <p class="new-price">{{ formatPriceOfLevel($product) }}</p>
+                                            {{-- @if ($product->shock_price != null || $product->shock_price != 0)
+                                            <p class="new-price">{{ formatPrice($product->shock_price) }}</p>
+                                            <p class="old-price">{{ formatPrice($product->regular_price) }}</p>
+                                        @else
+                                            <p class="new-price">{{ formatPrice($product->regular_price) }}</p>
+                                        @endif --}}
+                                        </div>
+                                        {{-- <div class="promo-intro">
+                                        <p class="title-promo">Tiết kiệm
+                                            {{ formatPrice($product->regular_price - $product->shock_price) }} Ngay Hôm Nay !</p>
+                                    </div>
+                                    <div class="star-mobile">
+                                        <div class="star">
+                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
+                                            <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
+                                            <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
+                                            <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
+                                            <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
+                                            <span>5</span>
+                                        </div>
+                                        <div class="sold">
+                                            <span>Đã bán 1877</span>
+                                        </div>
+                                    </div> --}}
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-7 d-flex align-items-end">
+                                        <input type="hidden" class="card-quality-input" name="product_id"
+                                            value="{{ $product->id }}">
                                         <div class="form-group">
                                             <label for="sl-store">Chọn cửa hàng</label>
                                             <select name="store_id" id="sl-store" class="form-control">
                                                 <option value="0">---Chọn cửa hàng---</option>
                                                 @foreach ($stores as $store)
                                                     <option value="{{ $store->id }}" @if ($store->getOriginal('pivot_soluong') == 0) disabled @endif>
-                                                        {{ $store->name }} còn {{ $store->getOriginal('pivot_soluong') }} sản
+                                                        {{ $store->name }} còn
+                                                        {{ $store->getOriginal('pivot_soluong') }} sản
                                                         phẩm</option>
                                                 @endforeach
                                             </select>
-                                            <p class="text-danger" id="notice-store" style="display:none">Chọn cửa hàng trước khi thêm</p>
+                                            <p class="text-danger" id="notice-store" style="display:none">Chọn cửa hàng
+                                                trước khi thêm</p>
                                         </div>
-                                  
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="quantity">
+
+
                                     <div class="qty-block">
                                         <div class="qty">
                                             <input type="text" name="qty" maxlength="12" value="1" title=""
@@ -167,12 +184,13 @@
                                         <button type="submit" title="Add to Cart" class="btn-cart">Thêm vào
                                             giỏ hàng</button>
                                     </div>
-                                </form>
+                                </div>
+
+
+
                             </div>
+                        </form>
 
-
-
-                        </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 freeship">
                         <div class="freeship_d">

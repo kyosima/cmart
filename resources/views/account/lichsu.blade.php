@@ -97,7 +97,6 @@
                 <!--<th>MPoints</th>-->
                 {{-- <th>Thuế</th>
                 <th>Phí xử lý</th> --}}
-                <th>Giá trị giao dịch</th>
                 <th>Trạng thái</th>
                 <th>Chi tiết đơn hàng</th>
             </tr>
@@ -119,7 +118,6 @@
                 <!--<td>{{$k->m_point}}</td>-->
                 {{-- <td>{{formatPrice($k->tax)}}</td>
                 <td>{{formatPrice($k->process_fee)}}</td> --}}
-                <td>{{formatPrice($k->total)}}</td>
                 <td>
                     @if($k->payment_method == 1)
                         Đang vận chuyển

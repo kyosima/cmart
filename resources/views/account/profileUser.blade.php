@@ -90,8 +90,6 @@
                                 </div>
                                 <div class="row mb-4">
                                     <div class="col-md-12">
-                                   
-                                        {{ $profileUser->name }}
                                         <p class="text-muted">
                                             Định danh Khách hàng:
                                             @if ($profileUser->level == 1)

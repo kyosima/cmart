@@ -8,7 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductBrandController;
-use App\Http\Controllers\shippingController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InfoCompanyController;

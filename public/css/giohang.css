@@ -183,10 +183,7 @@ hr {
     margin-bottom: 0;
 }
 
-.list-stores {
-    padding: 10px;
-    background: #fff;
-}
+.list-stores {}
 
 .product-main {
     padding: 15px;
@@ -268,7 +265,6 @@ hr {
     width: 59px;
     height: 26px;
     border-radius: 20px;
-    margin: 0 10px;
     height: 26px;
     width: 59px;
     border-radius: 18px;
@@ -277,7 +273,6 @@ hr {
     font-size: 14px !important;
     font-weight: 400 !important;
     color: #333942;
-    margin: 0 10px;
 }
 
 .btn-giam {
@@ -321,16 +316,9 @@ hr {
     border-radius: 5px;
 }
 
-.tamtinh {
-    justify-content: space-between;
-    display: flex;
-}
+.tamtinh {}
 
-.total {
-    margin-top: 10px;
-    justify-content: space-between;
-    display: flex;
-}
+.total {}
 
 .total-price,
 .tamtinh-price {
@@ -448,11 +436,36 @@ hr {
 
 .cart-block {
     margin-bottom: 20px;
+    background: #fff;
+}
+
+.btn-ttms {
+    background-color: #FFFFFF !important;
+    color: #BB0029 !important;
+    border: 1px solid #BB0029 !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    padding: 9px 0;
+    border-radius: 17px !important;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.cart-item-name {
+    height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-transform: uppercase;
 }
 
 .check-all-store,
 .form-checkout {
-    padding: 10px;
+    padding: 20px 10px;
     background: #fff;
     margin-bottom: 20px;
 }
@@ -530,13 +543,49 @@ hr {
 
 /* cart item */
 
+#store-cart .cart_item {
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-block .store-title {
+    padding: 10px 10px 0px 10px;
+}
+
+#store-cart .cart_item:last-child {
+    border-bottom: none;
+}
+
+#store-cart {
+    border: 1px solid #ddd
+}
+
+#store-cart .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#store-cart .row>div {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#store-cart .row>div {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#store-cart>.row-head {
+    background: #ddd;
+    color: rgb(143, 0, 0);
+}
+
 .cart_item {
-    width: 100%;
+    /* width: 100%;
     display: table;
     margin-bottom: 0;
     background: #fff;
     border: 1px solid #555;
-    border-top: none;
+    border-top: none; */
 }
 
 .cart_item li {

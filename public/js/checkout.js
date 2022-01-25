@@ -54,6 +54,8 @@ function cal_ship(province, district, ward, address) {
                             console.log(val);
                             $('#' + store_name + ' .ship-normal').empty().append(' <input checked type="radio" onclick="calTotal(this)" data-id="' + store_id + '" data-type="1" data-store="' + store_name + '" id="ship_normal' + store_name + '" name="shipping_value' + store_name + '" value="' + val.value + '">' +
                                 ' <label for="ship_normal' + store_name + '"  >Thường: ' + val.text + '</label>');
+                            $('#' + store_name + ' input.ship-fee').val(val.value);
+
                         } else {
                             $('#' + store_name + ' .ship-fast').empty().append(' <input type="radio" onclick="calTotal(this)" data-id="' + store_id + '" data-type="2" data-store="' + store_name + '" id="ship_fast' + store_name + '" name="shipping_value' + store_name + '" value="' + val.value + '">' +
                                 ' <label for="ship_fast' + store_name + '"  >Hỏa tốc: ' + val.text + '</label>');
@@ -66,16 +68,28 @@ function cal_ship(province, district, ward, address) {
                 }
 
             });
+            showShipTotal();
 
 
         }
     });
 }
 
+function showShipTotal() {
+    total_ship = 0;
+    $('input.ship-fee').each(function() {
+        total_ship += +$(this).val();
+    });
+    $('#amount-shipping').text(parseInt(total_ship).toLocaleString() + ' ₫');
+    total_checkout = $('#total-price-checkout').data('value');
+    $('#total-price-checkout').text(parseInt(+total_ship + +total_checkout).toLocaleString() + ' ₫');
+}
+
 function calTotal(e) {
     ship = $(e).val();
     store_name = $(e).data('store');
     total = $('#' + store_name + ' .total-cost');
+    $('#' + store_name + ' input.ship-fee').val(ship);
     var text_cost = parseInt(+total.data('total') + +ship).toLocaleString() + ' ₫';
     total.text(text_cost);
     $.ajax({
@@ -90,6 +104,8 @@ function calTotal(e) {
         },
         success: function(response) {
             console.log(response);
+            showShipTotal();
+
         }
     });
 }
@@ -118,8 +134,12 @@ function receiverStore(e) {
                 $('#' + store_name + ' .name-method').text('Nhận tại cửa hàng');
                 $('#' + store_name + ' .total-cost').text(store.total_cost.text);
                 $('#' + store_name + ' .total-cost').attr('data-total', store.total_cost.value);
+                $('#' + store_name + ' input.ship-fee').val(store.ship_total.value);
+
                 $('#' + store_name + ' .store-footer').removeClass('d-none');
                 $('#' + store_name + ' .store-footer').addClass('d-flex');
+                showShipTotal();
+
             }
         });
     } else {
