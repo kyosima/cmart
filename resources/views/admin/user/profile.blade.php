@@ -270,7 +270,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        {{-- <div class="row mb-3">
+                                        <div class="row mb-3">
                                             <div class="col-lg-6">
                                                 <span class="text-uppercase">Trạng thái KYC</span>
                                                 <select class="form-select" name="check_kyc"
@@ -291,7 +291,7 @@
 
                                                 </select>
                                             </div>
-                                        </div> --}}
+                                        </div>
                                         <div class="row mb-3">
                                             <div class="col-lg-6">
                                                 <p class="text-uppercase text-center">Mặt trước CMND</p>
