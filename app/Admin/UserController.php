@@ -22,6 +22,31 @@ class UserController extends Controller
         $user = User::all();
         // dd($pointC = PointC::where('user_id','=',User::select('id')->get('id'))->select('point_c')->get());
         // dd($pointC = User::select('id')->get('id'));
+        // dd(User::pluck('updated_at'));
+        foreach ($user as $us) {
+            $datePoint = $us->created_at->addMonth('1');
+            if (Carbon::now() >= $datePoint) {
+                $us->created_at = $us->created_at->addMonth('1');
+                $pointC = PointC::where('user_id','=',$us->id)->first();
+                $pointTietKiem = $pointC->point_c + ($pointC->point_c * 0.01);
+
+                // luu lich su 
+                $lichsu_chuyen = new PointCHistory;
+                $lichsu_chuyen->point_c_idnhan = $us->id;
+                $lichsu_chuyen->point_past_nhan = $pointC->point_c;
+                $lichsu_chuyen->point_present_nhan = $pointTietKiem;
+                $lichsu_chuyen->makhachhang = $us->code_customer;
+                $lichsu_chuyen->note = 'Tich luy tiet kiem';
+                $lichsu_chuyen->amount = $pointC->point_c * 0.01;
+                $lichsu_chuyen->type = 3;
+                $lichsu_chuyen->save();
+
+                $pointC->point_c = $pointTietKiem;
+                $pointC->save();
+
+                $us->save();
+            }
+        }
         return view('admin.user.listuser',['user'=>$user]);
     }
 
@@ -80,11 +105,20 @@ class UserController extends Controller
         $lichsuchuyen = PointCHistory::where('point_c_idchuyen','=',$id_vitien)->where('type','=',1)->get();
         $lichsunhan = PointCHistory::where('point_c_idnhan','=',$id_vitien)->where('type','=',1)->get();
         
-
+        $date = $user->updated_at->addMonth('1');
+        $addDate = Carbon::now();
+        // if(Carbon::now() >= $date) {
+        //     return 1;
+        // }
+        // else {
+        //     return 2;
+        // }
+        // $user->updated_at = Carbon::now();
+        // $user->save();
 
         return view('admin.user.profile',['user'=>$user,'province'=>$province,
          'district'=>$district, 'ward'=>$ward,'pointC'=>$pointC, 'lichsunhan'=>$lichsunhan, 'lichsuchuyen'=>$lichsuchuyen]
-         ,compact('orders','sodonhang','tinh','quan','phuongxa'));
+         ,compact('orders','sodonhang','tinh','quan','phuongxa','date','addDate'));
     }
 
     public function postEdit(Request $request, $id) {

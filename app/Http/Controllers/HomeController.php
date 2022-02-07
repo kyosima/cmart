@@ -16,6 +16,7 @@ use App\Models\Ward;
 use Carbon\Carbon;
 use App\Models\PointC;
 use App\Models\PointM;
+use App\Models\PointCHistory;
 
 class HomeController extends Controller
 {
@@ -58,6 +59,29 @@ class HomeController extends Controller
         ]);
 
         if(Auth::attempt(['phone'=>$request->phone,'password'=>$request->password])){
+            $us = User::where('phone','=',$request->phone)->first();
+            $datePoint = $us->created_at->addMonth('1');
+            if (Carbon::now() >= $datePoint) {
+                $us->created_at = $us->created_at->addMonth('1');
+                $pointC = PointC::where('user_id','=',$us->id)->first();
+                $pointTietKiem = $pointC->point_c + ($pointC->point_c * 0.01);
+                
+                // luu lich su 
+                $lichsu_chuyen = new PointCHistory;
+                $lichsu_chuyen->point_c_idnhan = $us->id;
+                $lichsu_chuyen->point_past_nhan = $pointC->point_c;
+                $lichsu_chuyen->point_present_nhan = $pointTietKiem;
+                $lichsu_chuyen->makhachhang = $us->code_customer;
+                $lichsu_chuyen->note = 'Tich luy tiet kiem';
+                $lichsu_chuyen->amount = $pointC->point_c * 0.01;
+                $lichsu_chuyen->type = 3;
+                $lichsu_chuyen->save();
+    
+                $pointC->point_c = $pointTietKiem;
+                $pointC->save();
+    
+                $us->save();
+            }
             return redirect('/');
         }
         else {
@@ -67,7 +91,7 @@ class HomeController extends Controller
 
     public function getRegister ()
     {
-        if (Auth::check()) {;
+        if (Auth::check()) {
             return view('home');
         }
         else {

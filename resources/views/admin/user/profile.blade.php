@@ -113,7 +113,8 @@
                             </div>
                         </div>
 
-
+                    {{$date}}
+                    {{$addDate}}
 
                         <div class="info pt-5">
                             <form action="{{ $user->id }}" method="POST">

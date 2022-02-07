@@ -28,6 +28,31 @@ class PointHistoryController extends Controller
 
     public function tietkiem() {
         $listHistory = PointCHistory::where('type','=',3)->get();
+        $user = User::all();
+        foreach ($user as $us) {
+            $datePoint = $us->created_at->addMonth('1');
+            if (Carbon::now() >= $datePoint) {
+                $us->created_at = $us->created_at->addMonth('1');
+                $pointC = PointC::where('user_id','=',$us->id)->first();
+                $pointTietKiem = $pointC->point_c + ($pointC->point_c * 0.01);
+
+                // luu lich su 
+                $lichsu_chuyen = new PointCHistory;
+                $lichsu_chuyen->point_c_idnhan = $us->id;
+                $lichsu_chuyen->point_past_nhan = $pointC->point_c;
+                $lichsu_chuyen->point_present_nhan = $pointTietKiem;
+                $lichsu_chuyen->makhachhang = $us->code_customer;
+                $lichsu_chuyen->note = 'Tich luy tiet kiem';
+                $lichsu_chuyen->amount = $pointC->point_c * 0.01;
+                $lichsu_chuyen->type = 3;
+                $lichsu_chuyen->save();
+
+                $pointC->point_c = $pointTietKiem;
+                $pointC->save();
+
+                $us->save();
+            }
+        }
         return view('admin.history.tietkiem',['listHistory'=>$listHistory]);
     }
 
