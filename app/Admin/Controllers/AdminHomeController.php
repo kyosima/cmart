@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 
+
+
 class AdminHomeController extends Controller
 {
     public function test(){
@@ -34,6 +36,7 @@ class AdminHomeController extends Controller
     }
     public function postLogin(Request $request){
         if(Auth::guard('admin')->attempt(['name' => $request->in_name, 'password' => $request->in_password])){
+            
             return redirect('/admin');
         }
         Session::flash('error', 'Tài khoản hoặc mật khẩu không đúng');

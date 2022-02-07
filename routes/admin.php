@@ -33,11 +33,20 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('{id}',[UserController::class, 'postEdit']);
     });
 
+    Route::get('/export',[UserController::class, 'export']);
 
     Route::get('lichsuchuyenkhoan',[PointHistoryController::class, 'chuyenkhoan'])->name('lichsuchuyenkhoan');
+    Route::get('lichsuchuyenkhoan/download', [PointHistoryController::class, 'dowChuyenKhoan']);
+
     Route::get('lichsutietkiem',[PointHistoryController::class, 'tietkiem'])->name('lichsutietkiem');
+    Route::get('lichsutietkiem/download', [PointHistoryController::class, 'dowTietKiem']);
+
     Route::get('lichsutichluy',[PointHistoryController::class, 'tichluy'])->name('lichsutichluy');
+    Route::get('lichsutichluy/download', [PointHistoryController::class, 'dowTichLuy']);
+    
     Route::get('lichsudonhanghuy',[PointHistoryController::class, 'huydonhang'])->name('lichsudonhanghuy');
+    Route::get('lichsudonhanghuy/download', [PointHistoryController::class, 'dowDonHangHuy']);
+    
     Route::get('lichsudiemm',[PointHistoryController::class, 'lichsudiemM'])->name('lichsudiemm');
 
     //Danh sach vi diem
@@ -416,7 +425,6 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/ton-kho-dai-ly/modal-edit', [WarehouseController::class, 'modalEdit'])->name('warehouse.modalEdit');
     
 });
-
 
 
 

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Lịch sử tiết kiệm</title>
+    <meta name="csrf-token" content="RYnP3QdyIkOGE08lJYek8xt444UeApBtUdjPPCUj">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="RYnP3QdyIkOGE08lJYek8xt444UeApBtUdjPPCUj" />
+    <meta name="url-home" content="http://localhost/cmart/admin" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js" integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css" integrity="sha512-8D+M+7Y6jVsEa7RD6Kv/Z7EImSpNpQllgaEIQAtqHcI0H6F4iZknRj0Nx1DCdB+TwBaS+702BGWYC0Ze2hpExQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="http://localhost/cmart/css/admin/header.css">
+    <link rel="stylesheet" href="http://localhost/cmart/css/admin/responsive.css" type="text/css">
+    
+        <link rel="stylesheet" href="http://localhost/cmart/css/admin/amcharts.css" type="text/css">
+    <link rel="stylesheet" href="http://localhost/cmart/public/css/table/table.css" type="text/css">
+    
+
+</head>
+
+<body>
+    <div class="sidebar open">
+    <div class="logo-details">
+        <div class="logo_name">
+            <h3>C-Mart</h3>
+        </div>
+        <i class='fa fa-bars' id="btn"></i>
+    </div>
+
+    <ul class="nav-list p-0">
+        
+                    <li class="dropdown">
+                <a href="http://localhost/cmart/admin/don-hang" class="dropbtn">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span class="links_name w-100 align-items-center d-flex">Đơn hàng</span>
+                </a>
+            </li>
+                            <li class="dropdown">
+                <a href="http://localhost/cmart/admin/cua-hang" class="dropbtn">
+                    <i class="fa fa-laptop-house"></i>
+                    <span class="links_name w-100 align-items-center d-flex">Kho hàng/Cửa hàng <i
+                            class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+                </a>
+            </li>
+                            <li class="dropdown">
+                <a href="#" class="dropbtn">
+                    <i class="fa fa-cube"></i>
+                    <span class="links_name w-100 align-items-center d-flex">Quản lý sản phẩm <i
+                            class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+                </a>
+                <span class="dropdown-content">
+                                            <a href="http://localhost/cmart/admin/nganh-nhom-hang">Ngành/Nhóm hàng</a>
+                                                                <a href="http://localhost/cmart/admin/san-pham">Thông tin sản phẩm</a>
+                                                                <a href="http://localhost/cmart/admin/payment">Hình thức thanh toán</a>
+                                    </span>
+            </li>
+                <li class="dropdown">
+            <a href="http://localhost/cmart/admin/coupon" class="dropbtn">
+                <i class="fa fa-tag"></i>
+                <span class="links_name w-100 align-items-center d-flex">Quản lý mã ưu đãi</span>
+            </a>
+
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropbtn">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                <span class="links_name w-100 align-items-center d-flex">Quản lý khách hàng <i
+                        class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            </a>
+                        <span class="dropdown-content">
+                <a href="http://localhost/cmart/admin/danh-sach-user">Danh sách khách hàng</a>
+                <a href="http://localhost/cmart/admin/tongdiemuser">Danh sách điểm khách hàng</a>
+                <a href="http://localhost/cmart/admin/chuyendiem">Chuyển điểm user</a>
+            </span>
+                     </li>
+         <li class="dropdown">
+            <a href="#" class="dropbtn">
+            <i class="fas fa-history"></i>
+             <span class="links_name w-100 align-items-center d-flex">Lịch sử CPoint <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+            </a>
+                        <span class="dropdown-content">
+                <a href="http://localhost/cmart/admin/lichsuchuyenkhoan">Lịch sử chuyển khoản</a>
+                <a href="http://localhost/cmart/admin/lichsutichluy">Lịch sử tích luỹ</a>
+                <a href="http://localhost/cmart/admin/lichsutietkiem">Lịch sử tiết kiệm</a>
+                <a href="http://localhost/cmart/admin/lichsudonhanghuy">Lịch sử hoàn đơn hàng huỷ</a>
+                <a href="http://localhost/cmart/admin/lichsudiemm">Lịch sử điểm tích luỹ M</a>
+            </span>
+                    </li>
+                    <li class="dropdown">
+                <a href="#" class="dropbtn">
+                    <i class="fas fa-user-shield"></i>
+                    <span class="links_name w-100 align-items-center d-flex">Quản lý Admin <i
+                            class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+                </a>
+                <span class="dropdown-content">
+                    <a href="http://localhost/cmart/admin/roles">Vai trò</a>
+                    <a href="http://localhost/cmart/admin/permissions">Quyền</a>
+                    <a href="http://localhost/cmart/admin/manager-admin">DS Admin</a>
+                    <!-- <a href="http://localhost/cmart/admin/log-viewer/logs">Theo dõi Admin</a> -->
+                </span>
+            </li>
+                            <li class="dropdown">
+                <a href="#" class="dropbtn">
+                    <i class="fas fa-book"></i>
+                    <span class="links_name w-100 align-items-center d-flex">Trang - banner <i
+                            class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+                </a>
+                <span class="dropdown-content">
+                                            <a href="http://localhost/cmart/admin/info-company">Trang</a>
+                                                                <a href="http://localhost/cmart/admin/banner">Banner</a>
+                                    </span>
+            </li>
+                            <li class="dropdown">
+                <a href="http://localhost/cmart/admin/setting" class="dropbtn">
+                    <i class="fas fa-cog"></i>
+                    <span class="links_name">Cài đặt</span>
+                </a>
+            </li>
+                <li class="profile">
+            <div class="profile-details">
+                <img src="https://ict-imgs.vgcloud.vn/2020/09/01/19/huong-dan-tao-facebook-avatar.jpg" alt="profileImg">
+                <div class="name_job">
+                    <div class="name">admin</div>
+                    <div class="job">Boss</div>
+                </div>
+            </div>
+            <i class='bx bx-log-out' id="log_out" data-bs-toggle="modal" data-bs-target="#modalLogout"></i>
+        </li>
+    </ul>
+</div>
+<div id="modalLogout" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Đăng xuất</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có muốn đăng xuất ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <a href="http://localhost/cmart/admin/logout" class="btn btn-danger">Đăng xuất</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <section class="home-section">
+        <!-- menu mobile -->
+        <div class="header bg-white shadow-sm header_mobile">
+    <div class="text">Lịch sử tiết kiệm</div>
+    <div class="icon_menu-mobile">
+        <i class="fa fa-bars" data-bs-toggle="collapse" href="#menu-main" role="button" aria-expanded="false" aria-controls="menu-main"></i>
+    </div>
+</div>
+  <ul class="sub-menu collapse sidebar-mobile list-group list-group-flush" id="menu-main">
+      <li class="list-group-item p-0 list-group-item-action">
+          <a href="#" class="list-group-item-link p-3"><i class="fa fa-bar-chart-o"></i> Dashboard</a>
+      </li>
+      <li class="list-group-item p-0 list-group-item-action">
+          <a href="#" class="list-group-item-link p-3"><i class="fa fa-bar-chart-o"></i> Quản lý sản phẩm</a>
+      </li>
+      <li class="list-group-item p-0 list-group-item-action">
+          <a href="#" class="list-group-item-link p-3"><i class="fa fa-bar-chart-o"></i> Đon hàng</a>
+      </li>
+      <li class="list-group-item p-0 list-group-item-action">
+          <a href="#" class="list-group-item-link p-3"><i class="fa fa-bar-chart-o"></i> Tồn kho</a>
+      </li>
+      <li class="list-group-item p-0 list-group-item-action">
+          <a href="#" class="list-group-item-link p-3"><i class="fa fa-bar-chart-o"></i> Dữ liệu Master</a>
+      </li>
+      <li class="list-group-item p-0 list-group-item-action">
+          <a href="setting.html" class="list-group-item-link p-3"><i class="fa fa-bar-chart-o"></i> Setting</a>
+      </li>
+  </ul>
+</div>        <!-- END menu mobile -->
+         
+<body>
+    <div class="container pt-4 pb-4">
+        <div class="row">
+            <div class="col-4">
+                <input type="text" class="form-control" id="search_time" onkeyup="search_time()" placeholder="Nhập thời gian tìm kiếm">
+            </div>
+            <div class="col-4">
+                <input type="text" class="form-control" id="search_makhachhang" onkeyup="search_makhachhang()" placeholder="Nhập mã khách hàng tìm kiêm">
+            </div>
+            <div class="col-4">
+                <input type="text" class="form-control" id="search_magiaodich" onkeyup="search_magiaodich()" placeholder="Nhập mã giao dịch tìm kiếm">
+            </div>
+        </div>
+    </div>
+    <table class="styled-table table-sortable" id="myTable">
+        <thead>
+            <tr style="text-align:center">
+                <th>Thời gian giao dịch</th>
+                <th>Mã khách hàng chuyển</th>
+                <th>Số dư ban đầu khách hàng</th>
+                <th>Số dư cuối khách hàng</th>
+                <th>Giá trị giao dịch</th>
+                <th>Nội dung</th>
+            </tr>
+        </thead>
+        <tbody>
+                            <tr style="text-align:center">
+                    <td>2022-02-07 10:53:58</td>
+                    <td>202201250001</td>
+                    <td>10</td>
+                    <td>10.1</td>
+                    <td>0.1</td>
+                    <td>Tich luy tiet kiem</td>
+                </tr>
+                            <tr style="text-align:center">
+                    <td>2022-02-07 11:17:38</td>
+                    <td>202201170001</td>
+                    <td>550</td>
+                    <td>555.5</td>
+                    <td>5.5</td>
+                    <td>Tich luy tiet kiem</td>
+                </tr>
+                    </tbody>
+    </table>
+</body>
+
+
+    </section>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.3/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/sb-1.2.2/datatables.min.css"/>
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.11.3/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/sb-1.2.2/datatables.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.css">
+    <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"
+        integrity="sha512-37T7leoNS06R80c8Ulq7cdCDU5MNQBwlYoy1TX/WUsLFC2eYNqtKlV0QjH7r8JpG/S0GUMZwebnVFLPd6SU5yg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"
+        integrity="sha512-XZEy8UQ9rngkxQVugAdOuBRDmJ5N4vCuNXCh8KlniZgDKTvf7zl75QBtaVG1lEhMFe2a2DuA22nZYY+qsI2/xA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script type="text/javascript" src="http://localhost/cmart/public/css/table/table.js"></script>
+
+    <script type="text/javascript" src="http://localhost/cmart/public/js/admin/header.js"></script>
+    <script type="text/javascript" src="http://localhost/cmart/public/js/admin/validate-form.js"></script>
+
+</body>
+
+</html>

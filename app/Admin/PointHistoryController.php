@@ -13,6 +13,11 @@ use App\Models\PointMHistory;
 use App\Models\PointC;
 use App\Models\PointM;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Excel;
+use App\Exports\TietKiem;
+use App\Exports\ChuyenKhoan;
+use App\Exports\TichLuy;
+use App\Exports\DonHangHuy;
 
 class PointHistoryController extends Controller
 {
@@ -21,9 +26,17 @@ class PointHistoryController extends Controller
         return view('admin.history.chuyenkhoan',['listHistory' => $listHistory]);
     }
 
+    public function dowChuyenKhoan(Excel $excel) {
+        return $excel->download(new ChuyenKhoan, 'lichsuchuyenkhoan.xlsx');
+    }
+
     public function tichluy() {
         $listHistory = PointCHistory::where('type','=',2)->get();
         return view('admin.history.tichluy',['listHistory'=>$listHistory]);
+    }
+
+    public function dowTichLuy(Excel $excel) {
+        return $excel->download(new TichLuy, 'lichsutichluy.xlsx');
     }
 
     public function tietkiem() {
@@ -56,9 +69,18 @@ class PointHistoryController extends Controller
         return view('admin.history.tietkiem',['listHistory'=>$listHistory]);
     }
 
+
+    public function dowTietKiem(Excel $excel) {
+        return $excel->download(new TietKiem, 'lichsutietkiem.xlsx');
+    }
+
     public function huydonhang() {
         $listHistory = PointCHistory::where('type','=',4)->get();
         return view('admin.history.huydonhang',['listHistory'=>$listHistory]);
+    }
+
+    public function dowDonHangHuy(Excel $excel) {
+        return $excel->download(new DonHangHuy, 'lichsuhoandiemdh.xlsx');
     }
 
     public function lichsudiemM() {

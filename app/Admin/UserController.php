@@ -15,6 +15,8 @@ use App\Models\Order;
 use App\Models\PointC;
 use App\Models\PointCHistory;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Excel;
+use App\Exports\UsersExport;
 
 class UserController extends Controller
 {
@@ -142,4 +144,8 @@ class UserController extends Controller
         return redirect('admin/danh-sach-user');
     }
 
+
+    public function export(Excel $excel) {
+        return $excel->download(new UsersExport, 'users.xlsx');
+    }
 }

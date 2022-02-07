@@ -288,8 +288,7 @@ class HomeController extends Controller
             ]);
             $user->password = bcrypt($request->password);
         }
-
-
+        
         $user -> save();
         return back()->with('thongbao','Sửa thành công');
     }
