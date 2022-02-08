@@ -220,9 +220,7 @@ class CheckoutController extends Controller
         Session::forget('store_ids');
 
     
-            // Cart::instance('shopping')->destroy();
-            return 'success';
-            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
+        return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
           
         // } else {
         //     return redirect()->route('cart.index');
@@ -238,10 +236,8 @@ class CheckoutController extends Controller
 
         $order_info = $order->order_info()->first();
         $order_address = $order->order_address()->first();
-        $products = $order->order_products()->get();
-
-        return view('checkout.thanhcong', ['order' => $order, 'address' => $order_address, 'order_info' => $order_info, 'products' => $products]);
-        return view('checkout.thanhcong');
+        $order_stores = $order->order_stores()->get();
+        return view('checkout.thanhcong', ['order' => $order, 'address' => $order_address, 'order_info' => $order_info, 'order_stores' => $order_stores]);
     }
 
     public function updateTypeShip(Request $request){
@@ -399,24 +395,31 @@ class CheckoutController extends Controller
     {
         // $address1 ="730/32/5 Lac Long Quan So 9 Tan Binh Ho Chi Minh";
         // $address2 ="28 Phạm Văn Chiều số 8 Gò Vấp Hồ Chí Minh";
-        $coordinates1 = $this->getCoordinates($address1);
-        $coordinates2 = $this->getCoordinates($address2);
-        $url = 'https://rsapi.goong.io/Direction?origin=' . $coordinates1['lat'] . ',' . $coordinates1['lng'] . '&destination=' . $coordinates2['lat'] . ',' . $coordinates2['lng'] . '&vehicle=car&api_key=' . $this->api_key . '';
+        $checkoutControles = new CheckoutController;
+        $coordinates1 = $checkoutControles->getCoordinates($address1);
+        $coordinates2 = $checkoutControles->getCoordinates($address2);
+        if($coordinates1 == null || $coordinates2 == null){
+            return 0;
+        }
+        $url = 'https://rsapi.goong.io/Direction?origin=' . $coordinates1['lat'] . ',' . $coordinates1['lng'] . '&destination=' . $coordinates2['lat'] . ',' . $coordinates2['lng'] . '&vehicle=car&api_key=' . $checkoutControles->api_key . '';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_URL, $url);
         $result = curl_exec($ch);
         curl_close($ch);
         $output = json_decode($result, true);
+      
         return round(($output['routes'][0]['legs'][0]['distance']['value'] / 1000), 1);
     }
 
     public function getCoordinates($address)
     {
         // $address = '28 Pham Van Chieu So 8 Go Vap Ho Chi Minh';
-        $address = $this->vn_to_str($address);
+        $checkoutControles = new CheckoutController;
 
-        $url = 'https://rsapi.goong.io/geocode?address=' . $address . '&api_key=' . $this->api_key . '';
+        $address = $checkoutControles->vn_to_str($address);
+
+        $url = 'https://rsapi.goong.io/geocode?address=' . $address . '&api_key=' . $checkoutControles->api_key . '';
         $url = str_replace(" ", '%20', $url);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -424,6 +427,9 @@ class CheckoutController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
         $output = json_decode($result, true);
+        if($output == null){
+            return null;
+        }
         return $output['results'][0]['geometry']['location'];
     }
     function vn_to_str($str)

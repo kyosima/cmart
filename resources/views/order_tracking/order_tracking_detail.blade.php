@@ -75,10 +75,10 @@
                                 <div style="overflow-x:auto;">
                                     <table class="table table-striped ">
                                         <thead class="text-center">
-                                            <th class="text-uppercase">Đã<br/>đặt hàng</th>
-                                            <th class="text-uppercase">Đã xác nhận<br/>thanh toán</th>
-                                            <th class="text-uppercase">Đang<br/>xử lý</th>
-                                            <th class="text-uppercase">Đang<br/>vận chuyển</th>
+                                            <th class="text-uppercase">Đã<br />đặt hàng</th>
+                                            <th class="text-uppercase">Đã xác nhận<br />thanh toán</th>
+                                            <th class="text-uppercase">Đang<br />xử lý</th>
+                                            <th class="text-uppercase">Đang<br />vận chuyển</th>
                                             <th class="text-uppercase">Hoàn thành</th>
                                             <th class="text-uppercase">Đã hủy</th>
                                         </thead>
@@ -117,7 +117,7 @@
                                                         </li>
                                                     @endif
                                                 </td>
-                                                 <td>
+                                                <td>
                                                     @if ($order->status >= 5)
                                                         <li class="check success">
 
@@ -154,34 +154,92 @@
                                     <p>Thanh toán khi nhận hàng(COD)</p>
                                 @endif --}}
                             </div>
-                            <div class="box-infocart list-order">
-                                <h3 class="title">Thông tin đơn hàng:</h3>
-                                <table class="table table-bordered table-striped">
-                                    <tbody>
-                                        <tr>
-                                            <th style="width: 373px; border">Tên sản phẩm</th>
-                                            <th style="width: 84px;">Số lượng</th>
-                                            <th style="width: 143px;">Thành tiền</th>
-                                        </tr>
-                                        @foreach ($products as $product)
+                            <div class="box-infocart list-order list-store">
+                                @foreach ($order_stores as $order_store)
+                                    <h3 class="title">Thông tin đơn hàng -
+                                        {{ $order_store->store()->value('name') }}:
+                                    </h3>
+                                    <table class="table table-bordered table-striped">
+                                        <tbody>
                                             <tr>
-                                                <td><a
-                                                        href="{{ route('san-pham.show', $product->product()->value('slug')) }}">{{ $product->product()->value('slug') }}</a>
-                                                </td>
-                                                <td>{{ $product->quantity }}</td>
-                                                <td>{{ formatPrice($product->price * $product->quantity) }}</td>
+                                                <th style=" border">Tên sản phẩm</th>
+                                                <th style="">Số lượng</th>
+                                                <th style="">Trọng lượng</th>
+                                                <th style="">Thành tiền</th>
                                             </tr>
-                                        @endforeach
+                                            @foreach ($order_store->order_products()->get() as $row)
+                                                <tr>
+                                                    <td><a
+                                                            href="{{ route('san-pham.show', $row->slug) }}">{{ $row->name }}</a>
+                                                    </td>
+                                                    <td>{{ $row->quantity }}</td>
+                                                    <td>{{ App\Http\Controllers\CheckoutController::getWeight($row->product()->first(), $row->qty) }}
+                                                        g</td>
+                                                    <td>{{ formatPrice($row->price * $row->quantity) }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="row text-center">
+                                        <div class="col-3">
+                                            @php
+                                                $store = $order_store->store()->first();
+                                                $address1 = $store->address . ' ' . $store->ward()->value('tenphuongxa') . ' ' . $store->district()->value('tenquanhuyen') . ' ' . $store->province()->value('tentinhthanh');
+                                                $address2 = $order_address->address . ' ' . $order_address->ward()->value('tenphuongxa') . ' ' . $order_address->district()->value('tenquanhuyen') . ' ' . $order_address->province()->value('tentinhthanh');
+                                            @endphp
+                                            <p>Khoảng cách</p>
+                                            <span class="text-danger">{{ App\Http\Controllers\CheckoutController::getDistance($address1, $address2) }} km</span>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>Hình thức vận chuyển</p>
+                                            <span
+                                                class="text-danger">{{ formatMethod($order_store->shipping_method) }}</span>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>Phương thức vận chuyển</p>
+                                            <span
+                                                class="text-danger">{{ formatType($order_store->shipping_type) }}</span>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>Phí vận chuyển</p>
+                                            <span
+                                                class="text-danger">{{ formatPrice($order_store->shipping_total) }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center">
+                                        <div class="col-3">
+                                            <p>Điểm dịch vụ (M)</p>
+                                            <span
+                                                class="text-danger">{{ number_format($order_store->m_point, 0, '.', ',') }}
+                                                điểm</span>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>Tiền tích lũy (C)</p>
+                                            <span
+                                                class="text-danger">{{ number_format($order_store->c_point, 0, '.', ',') }}
+                                                điểm</span>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>Thuế GTGT</p>
+                                            <span class="text-danger">{{ formatPrice($order_store->tax) }}</span>
+                                        </div>
+                                        <div class="col-3">
+                                            <p>Giá trị giao dịch</p>
+                                            <span class="text-danger">{{ formatPrice($order_store->total) }}</span>
+                                            </li></span>
+                                        </div>
+                                    </div>
 
-                                    </tbody>
-                                </table>
+                                @endforeach
+                                <hr>
                                 <div class="box-allprice box-price-order">
                                     <p>Tạm tính:<span> {{ formatPrice($order->sub_total) }}</span></p>
-                                    <p>Thuế VAT:<span> {{ formatPrice($order->tax) }}</span></p>
-                                    {{--<p>Phí xử lý:<span> {{ formatPrice($order->process_fee) }}</span></p>
-                                    <!--<p>Điểm M quy đổi:<span> {{ formatPrice($order->m_point * 100) }}</span></p>-->
-                                    <!--<p>Điểm C tích lũy:<span> {{ $order->c_point }}</span></p>--> --}}
-                                    <p>Phí vận chuyển:<span> + {{ formatPrice($order->shipping_total) }}</span></p>
+                                    <p>Thuế GTGT:<span> {{ formatPrice($order->tax) }}</span></p>
+                                    <p>Điểm dịch vụ (M):<span> {{ number_format($order->m_point, 0, '.', ',') }}
+                                            điểm</span></p>
+                                    <p>Tiền tích lũy (C):<span> {{ number_format($order->c_point, 0, '.', ',') }}
+                                            điểm</span></p>
+                                    <p>Phí vận chuyển:<span> {{ formatPrice($order->shipping_total) }}</span></p>
                                     <p class="last-price">Tổng cộng: <span>{{ formatPrice($order->total) }}</span>
                                     </p>
                                 </div>

@@ -201,7 +201,8 @@
                                                         <div class="product-cart d-flex justify-content-between">
                                                             <div class="quantity">SL: {{ $row->qty }}</div>
                                                             <div class="price">Tổng tiền:
-                                                                {{ formatPrice($row->price * $row->qty) }}</div>
+                                                                {{ formatPrice($row->price * $row->qty) }}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -212,6 +213,8 @@
                                             <div><span class="ship-normal"> </span><span
                                                     class="ship-fast"></span></div>
                                             <div>Tổng tiền: <span class="total-cost"></span></div>
+                                            <input type="hidden" class="ship-fee">
+
                                         </div>
                                     </div>
                                 @endforeach
@@ -280,7 +283,7 @@
                                         <p class="tamtinh"> <span class="tamtinh-title">Thuế VAT:</span> <span
                                                 class="tamtinh-price">{{ formatPrice($tax) }} </span> </p>
                                         <hr>
-                                        <p><b>Phí vận chuyển:</b></p>
+                                        <p class="tamtinh"><span>Phí vận chuyển:</span> <span id="amount-shipping" class="tamtinh-price">0 đ</span></p>
                                         <div class="form-group" id="method-ship"
                                             data-url="{{ route('checkout.calship') }}" data-urlcmartship="{{route('checkout.calCmartShip')}}">
                                             {{-- <input type="radio" id="vship" name="shipping_method" value="v_ship" checked
@@ -294,7 +297,7 @@
                                         </div>
                                         <hr>
                                         <p class="total"> <span>Giá trị giao dịch:</span> <span
-                                                class="total-price">{{ formatPrice($cart_total) }}
+                                                class="total-price" id="total-price-checkout" data-value="{{$cart_total}}">{{ formatPrice($cart_total) }}
                                             </span> </p>
                                     </div>
                                 </div>

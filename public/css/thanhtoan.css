@@ -15,6 +15,14 @@
         text-transform: uppercase;
     }
     
+    .info_order_success p {
+        margin-bottom: 0;
+    }
+    
+    .info_order_success .row>div {
+        padding-bottom: 10px;
+    }
+    
     .list-stores-body {
         padding: 10px 20px;
     }

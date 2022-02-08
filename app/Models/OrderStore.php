@@ -35,12 +35,12 @@ class OrderStore extends Model
 		'total'
 	];
 
-	public function order()
-	{
-		return $this->belongsTo(Order::class, 'id_order');
-	}
 
 	public function order_products(){
-		return $this->hasOne(OrderProduct::class, 'id_order_store');
+		return $this->hasMany(OrderProduct::class, 'id_order_store');
+	}
+
+	public function store(){
+		return $this->belongsTo(Store::class,  'id_store', 'id');
 	}
 }

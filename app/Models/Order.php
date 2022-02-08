@@ -66,6 +66,10 @@ class Order extends Model
 	public function order_products(){
 		return $this->hasOne(OrderProduct::class, 'id_order');
 	}
+	public function order_stores(){
+		return $this->hasMany(OrderStore::class, 'id_order','id');
+	}
+
 
 	public function order_info(){
 		return $this->hasOne(OrderInfo::class, 'id_order');

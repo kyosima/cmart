@@ -8,11 +8,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductBrandController;
-use App\Http\Controllers\shippingController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InfoCompanyController;
-
 use App\Http\Controllers\CPointController;
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +61,7 @@ Route::prefix('thanh-toan')->group(function () {
     Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('post', [CheckoutController::class, 'postOrder'])->name('checkout.post');
     Route::get('get-address', [CheckoutController::class, 'getAddress'])->name('checkout.getAddress');
-    Route::get('thanh-cong', [CheckoutController::class, 'orderSuccess'])->name('checkout.orderSuccess');
+    Route::get('thanh-cong/{order_code}', [CheckoutController::class, 'orderSuccess'])->name('checkout.orderSuccess');
     Route::get('cal-ship', [CheckoutController::class, 'calShip'])->name('checkout.calship');
     Route::get('cal-ship-cmart', [CheckoutController::class, 'calCmartShip'])->name('checkout.calCmartShip');
     Route::get('update-type-ship', [CheckoutController::class, 'updateTypeShip'])->name('checkout.updateTypeShip');
@@ -124,8 +123,11 @@ Route::get('/xac-thuc-ho-so', [HomeController::class, 'getXacthuc']);
 
 Route::get('/lichsu', [HomeController::class, 'getLichsu']);
 
-Route::prefix('/cpoint')->group(function () {
+Route::prefix('/lichsu_cpoint')->group(function () {
     Route::get('/', [CPointController::class, 'index'])->name('account.cpoint_history');
 });
 
 Route::get('/test-api', [CheckoutController::class, 'getDistance']);
+
+Route::get('/chuyenkhoanC', [CPointController::class, 'chuyenkhoanC'])->name('chuyenkhoanC');
+Route::post('/chuyenkhoanC', [CPointController::class, 'postChuyenkhoanC'])->name('chuyenkhoanC');

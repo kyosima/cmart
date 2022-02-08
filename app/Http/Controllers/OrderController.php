@@ -68,9 +68,8 @@ class OrderController extends Controller
         }else{
             $order_info = $order->order_info()->first();
             $order_address = $order->order_address()->first();
-            $products = $order->order_products()->get();
-            
-            return view('order_tracking.order_tracking_detail',compact('order', 'order_info', 'order_address', 'products'));
+            $order_stores = $order->order_stores()->get();
+            return view('order_tracking.order_tracking_detail',compact('order', 'order_info', 'order_address', 'order_stores'));
         }
     }
 

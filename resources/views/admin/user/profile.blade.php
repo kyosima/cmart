@@ -109,9 +109,7 @@
                                 <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
                                 </div> -->
                             <div class="col-6">
-                                <button class="alert alert-warning m-0"
-                                    style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C:
-                                    {{ $user->tichluyC }}</button>
+                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C: {{$pointC}}</button>
                             </div>
                         </div>
 
@@ -272,7 +270,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        {{-- <div class="row mb-3">
+                                        <div class="row mb-3">
                                             <div class="col-lg-6">
                                                 <span class="text-uppercase">Trạng thái KYC</span>
                                                 <select class="form-select" name="check_kyc"
@@ -293,7 +291,7 @@
 
                                                 </select>
                                             </div>
-                                        </div> --}}
+                                        </div>
                                         <div class="row mb-3">
                                             <div class="col-lg-6">
                                                 <p class="text-uppercase text-center">Mặt trước CMND</p>

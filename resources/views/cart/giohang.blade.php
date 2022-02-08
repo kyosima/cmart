@@ -11,9 +11,9 @@
     @if ($count_cart > 0)
         <div class="container p-3">
             <div class="row">
-                <div class="col-xl-9 col-md-9 col-sm-12 col-12 ">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 ">
                     <div class="check-all-store store-title">
-                        <input type="checkbox" id="checkall-store" data-url="{{route('cart.updateCheckout')}}">
+                        <input type="checkbox" id="checkall-store" data-url="{{ route('cart.updateCheckout') }}">
                         <label for="checkall-store">
                             <span>Chọn tất cả</span>
                         </label>
@@ -26,14 +26,93 @@
                             @if ($cart->count() > 0)
                                 <div class="cart-block">
                                     <div class="store-title">
-                                        <input type="checkbox" id="store-{{$store->id}}" value="{{$store->id}}">
-                                        <label for="store-{{$store->id}}">
-                                            <span>{{$store->name}}</span> <span>- {{ $cart->count() }}</span> sản phẩm</span>
+                                        <input type="checkbox" id="store-{{ $store->id }}" value="{{ $store->id }}">
+                                        <label for="store-{{ $store->id }}">
+                                            <span>{{ $store->name }}</span> <span>- {{ $cart->count() }}</span> sản
+                                            phẩm</span>
                                         </label>
 
                                     </div>
                                     <hr>
-                                    <div id="store_cart">
+                                    <div id="store-cart">
+                                        <div class="row row-head d-md-flex d-none">
+                                            <div class="col-lg-1 col-md-2 col-xs-12 text-center">
+                                                <b>Ảnh</b>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-xs-12 text-center">
+                                                <b>Tên sản phẩm</b>
+                                            </div>
+                                            <div class="col-lg-1 col-md-2 col-xs-3 text-center">
+                                                <b> Đơn giá</b>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-xs-3 text-center">
+                                                <b> Số lượng</b>
+                                            </div>
+                                            <div class="col-lg-1 col-md-2 col-xs-3 text-center">
+                                                <b> Điểm dịch vụ</b>
+                                            </div>
+                                            <div class="col-lg-1 col-md-2 col-xs-3 text-center">
+                                                <b> Tiền tích lũy</b>
+                                            </div>
+                                            <div class="col-lg-1 col-md-2 col-xs-3 text-center">
+                                                <b> Tổng phụ</b>
+                                            </div>
+                                            <div class="col-lg-1 col-md-2 col-xs-3">
+
+                                            </div>
+                                        </div>
+                                        @foreach ($cart->content() as $row)
+                                            <div class="row cart_item">
+                                                <div
+                                                    class="col-lg-1 col-md-2 col-xs-12 d-flex align-items-center justify-content-center text-center">
+                                                    <a href="{{ route('san-pham.show', $row->model->slug) }}">
+                                                        <img src="{{ asset($row->model->feature_img) }}"
+                                                            class="w-50">
+                                                    </a>
+                                                </div>
+                                                <div
+                                                    class="col-lg-4 col-md-4 col-12 d-flex align-items-center justify-content-center">
+                                                    <a
+                                                        href="{{ route('san-pham.show', $row->model->slug) }}" class="cart-item-name">{{ $row->name }}</a>
+                                                </div>
+                                                <div
+                                                    class="col-lg-1 col-md-1 col-6 d-flex align-items-center justify-content-center">
+                                                    <b> {{ formatPrice($row->price) }}</b>
+                                                </div>
+                                                <div
+                                                    class="col-lg-2 col-md-2 col-6 d-flex align-items-center justify-content-center">
+                                                    <input type="number"
+                                                        class="product-qty soluong form-control form-control-sm text-center"
+                                                        value="{{ $row->qty }}" step="1" min="1" max="" name="qty"
+                                                        value="{{ $row->qty }}" data-rowid="{{ $row->rowId }}"
+                                                        data-url="{{ route('cart.update') }}"
+                                                        data-storeid="{{ $store->id }}" title="SL" size="3"
+                                                        pattern="[0-9]*" inputmode="numeric">
+                                                </div>
+                                                <div
+                                                    class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
+                                                    <span> {{ $row->model->productPrice()->value('cpoint') }}</span>
+                                                </div>
+                                                <div
+                                                    class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
+                                                    <span> {{ $row->model->productPrice()->value('mpoint') }}</span>
+                                                </div>
+                                                <div
+                                                    class="col-lg-1 col-md-1 col-4 cart_price_col d-flex align-items-center justify-content-center">
+                                                    <span>{{ formatPrice($row->price * $row->qty) }}</span>
+                                                </div>
+                                                <div
+                                                    class="col-lg-1 col-md-1 col-12 text-center d-flex align-items-center justify-content-center">
+                                                    <img src="https://i.imgur.com/bI4oD5C.png" width="15px"
+                                                        class="remove" onclick="removeRowCart(this)"
+                                                        data-url="{{ route('cart.delete') }}"
+                                                        data-rowid="{{ $row->rowId }}"
+                                                        data-storeid="{{ $store->id }}" aria-label="Xóa sản phẩm">
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    {{-- <div id="store_cart">
                                         <ul class="cart_head">
                                             <li class="cart_head_title">
                                                 Ảnh
@@ -68,7 +147,8 @@
                                                         class="product-qty soluong form-control form-control-sm text-center"
                                                         value="{{ $row->qty }}" step="1" min="1" max="" name="qty"
                                                         value="{{ $row->qty }}" data-rowid="{{ $row->rowId }}"
-                                                        data-url="{{ route('cart.update') }}" data-storeid="{{$store->id}}" title="SL" size="3"
+                                                        data-url="{{ route('cart.update') }}"
+                                                        data-storeid="{{ $store->id }}" title="SL" size="3"
                                                         pattern="[0-9]*" inputmode="numeric">
                                                 </li>
 
@@ -79,11 +159,12 @@
                                                     <img src="https://i.imgur.com/bI4oD5C.png" class="remove"
                                                         onclick="removeRowCart(this)"
                                                         data-url="{{ route('cart.delete') }}"
-                                                        data-rowid="{{ $row->rowId }}" data-storeid="{{$store->id}}" aria-label="Xóa sản phẩm">
+                                                        data-rowid="{{ $row->rowId }}"
+                                                        data-storeid="{{ $store->id }}" aria-label="Xóa sản phẩm">
                                                 </li>
                                             </ul>
                                         @endforeach
-                                    </div>
+                                    </div> --}}
                                 </div>
                             @endif
                         @endforeach
@@ -91,28 +172,36 @@
 
 
                 </div>
-                <div class="col-xl-3 col-md-3 col-sm-12 col-12 ">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 ">
                     <div class="form-checkout">
-                        <div class="form-cart-title">
-                            <h3>Thanh toán </h3>
-                        </div>
-                        <div class="cart-right">
-                            <form action="{{route('cart.checkout')}}" method="post">
-                                @csrf
-                                <input type="hidden" name="store_ids" value="">
-                                <div class="cart-body">
-                                    <p class="tamtinh"> <span class="tamtinh-title">Tạm tính:</span> <span
-                                            class="tamtinh-price cart-subtotal"><span class="amount">0 đ</span></span> </p>
-                                    <hr>
-                                    <p class="total"> <span>Giá trị giao dịch:</span> <span
-                                            class="total-price cart-total"><span class="amount">0 đ</span></span>
-                                    </p>
+                        <form action="{{ route('cart.checkout') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="store_ids" value="">
+                            <div class="d-flex justify-content-between row">
+                                <div class="col-md-3">
+                                    <b>Tổng giá trị: </b><span class="text-danger" id="total">0 đ</span>
                                 </div>
-                                <button class="btn-dathang" type="submit" disabled>Chọn cửa hàng cần thanh toán</button>
-                            </form>
-                        </div>
+                                <div class="col-md-3">
+                                    <b>Tiền tích lũy (C): </b><span class="text-danger" id="cpoint">0</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <b>Điểm dịch vụ (M): </b><span class="text-danger" id="mpoint">0</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-around row">
+                                <div class="col-md-3">
+                                    <a class="btn-ttms" href="{{ url('/danh-muc-san-pham') }}"> Tiếp tục mua
+                                        sắm</a>
+                                </div>
+                                <div class="col-md-3">
+                                    <button id="btn-to-checkout" class="btn-dathang" type="submit" disabled>Chọn cửa hàng cần thanh
+                                        toán</button>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
-                    
+
                 </div>
 
             </div>
@@ -125,9 +214,9 @@
                 <p class="cart-img-text">Bạn chưa có sản phẩm nào trong giỏ hàng. Vui lòng quay lại chọn thêm sản phẩm.</p>
             </div>
             <div class="btn">
-                <button class="btn-primary btn-a">
+                {{-- <button class="btn-primary btn-a">
                     Xem khuyến mãi
-                </button>
+                </button> --}}
                 <a class="btn-primary btn-b" href="{{ url('/danh-muc-san-pham') }}">
                     Tiếp tục mua sắm
                 </a>

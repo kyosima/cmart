@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Store;
+use App\Models\Ward;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 class CartController extends Controller
 {
     //
+
     public function index()
     {
         $stores = Store::get();
@@ -60,10 +62,10 @@ class CartController extends Controller
     public function deleteCart(Request $request)
     {
         $rowId = $_POST['rowid'];
-        Cart::instance('shopping')->remove($rowId);
+        $storeid = $_POST['storeid'];
+        Cart::instance($storeid)->remove($rowId);
         return response()->json([
-            Cart::instance('shopping')->subtotal() . '₫',
-            Cart::instance('shopping')->total() . '₫'
+            true
         ], 200);
     }
 
@@ -71,14 +73,16 @@ class CartController extends Controller
     {
         $store_ids = $request->store_ids;
         $subtotal = 0;
-        $total = 0;
         $count_cart = 0;
+        $c_point = 0;
+        $m_point = 0;
         if ($store_ids == null) {
             return response()->json([
                 formatPrice(0),
-                formatPrice(0),
                 0,
-                ''
+                '',
+                0,
+                0
             ], 200);
         }
         foreach ($store_ids as $store_id) {
@@ -86,16 +90,20 @@ class CartController extends Controller
             if (Cart::instance($store->id)->count() > 0) {
                 $cart = Cart::instance($store->id);
                 $subtotal += intval(str_replace(",", "", $cart->subtotal()));
-                $total += intval(str_replace(",", "", $cart->total()));
                 $count_cart += $cart->count();
+                foreach ($cart->content() as $row){
+                    $c_point += $row->model->productPrice()->value('cpoint');
+                    $m_point += $row->model->productPrice()->value('mpoint');
+                }
             }
         }
         $list_ids = implode(',', $store_ids);
         return response()->json([
             formatPrice($subtotal),
-            formatPrice($total),
             $count_cart,
-            $list_ids
+            $list_ids,
+            $c_point,
+            $m_point
         ], 200);
     }
 }
