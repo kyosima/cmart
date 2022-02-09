@@ -13,6 +13,8 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InfoCompanyController;
 use App\Http\Controllers\CPointController;
+use App\Http\Controllers\EkycController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,7 +47,7 @@ Route::get('/', [HomeController::class, 'home']);
 Route::get('/khuyen-mai', function () {
     return view('cart.khuyenmai');
 });
-
+Route::get('/test-ekyc', [EkycController::class, 'postcUrl']);
 Route::prefix('gio-hang')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('cart.index');
     Route::post('add', [CartController::class, 'addCart'])->name('cart.add');
