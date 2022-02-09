@@ -82,10 +82,6 @@ class Order extends Model
         return $this->hasMany(ShippingBill::class, 'order_id', 'id');
     }
 
-	public function order_stores(){
-        return $this->hasMany(OrderStore::class, 'id_order', 'id');
-    }
-
 	public function products()
 	{
 		return $this->belongsToMany(Product::class, 'order_products', 'id_order', 'id_product')
