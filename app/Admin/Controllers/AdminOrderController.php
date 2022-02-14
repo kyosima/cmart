@@ -12,6 +12,7 @@ use App\Models\District;
 use App\Models\User;
 use App\Models\Ward;
 use App\Models\Product;
+use App\Models\OrderStore;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -25,13 +26,20 @@ class AdminOrderController extends Controller
     //
 
     public function index(Request $request){
-        $orders = Order::orderBy('id', 'DESC')->with('order_info')->get();
+        $orders = Order::orderBy('id', 'DESC')->with('order_info:id_order,note')->get();
+        $orders_count = $orders->groupBy('status')->map(function ($row) {
+            return $row->count();
+        });
+
+        $shipping_method_count = OrderStore::select('shipping_method')->get()->groupBy('shipping_method')->map(function ($row) {
+            return $row->count();
+        });
         $doanh_thu = Order::where('status', 4)->sum('total');
-        return view('admin.order.order', compact('orders', 'doanh_thu'));
+        return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count'));
     }
  
     public function show(Request $request,Order $order){
-        $order = $order->load(['order_info', 'products','order_address' => function ($query){
+        $order = $order->load(['order_info', 'products', 'order_stores', 'order_vat', 'order_address' => function ($query){
             $query->with('province', 'district', 'ward');
         }]);
 
@@ -121,7 +129,6 @@ class AdminOrderController extends Controller
         $order->order_info()->update([
             'fullname' => $request->fullname,
             'phone' => $request->phone,
-            'email' => $request->email,
             'note' => $request->note,
             'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
         ]);

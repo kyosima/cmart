@@ -34,4 +34,10 @@ return [
     'banner' => [
         'home' => 'Banner Home'
     ],
+    'shipping_method_name' => [
+        'Cmart(Nhận tại cửa hàng)', 'Cship(Trong HCM)', 'Viettel Post'
+    ],
+    'shipping_type_name' => [
+        'Cmart', 'Tiêu chuẩn', 'Hỏa tốc'
+    ]
 ];

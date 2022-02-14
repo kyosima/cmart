@@ -91,7 +91,7 @@
                                     <input type="password" name="password" placeholder="Mời nhập mật khẩu">
                                     <input type="password" name="passwordAgain" placeholder="Mời nhập lại mật khẩu">
                                     
-                                    <select class="loaigiayto" name="type_cmnd" aria-label="Default select example">
+                                    {{-- <select class="loaigiayto" name="type_cmnd" aria-label="Default select example">
                                         <option value="0" selected>Chọn loại giấy tờ tùy thân</option>
                                         <option value="1">Chứng minh nhân dân</option>
                                         <option value="2">Căn cước công dân</option>
@@ -102,7 +102,7 @@
                                     <input class="form-control" type="file" accept="image/*" onchange="loadFile(event)" name="image_cmnd">
 
                                     <label class="m-0">Mời nhập ảnh CMND mặt sau</label>
-                                    <input class="form-control" type="file" accept="image/*" onchange="loadFile2(event)" name="image_cmnd2">
+                                    <input class="form-control" type="file" accept="image/*" onchange="loadFile2(event)" name="image_cmnd2"> --}}
 
 
                                     <div class="row">

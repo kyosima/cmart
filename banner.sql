@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 01, 2021 lúc 11:39 AM
+-- Thời gian đã tạo: Th2 08, 2022 lúc 05:56 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.4.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `cmart`
+-- Cơ sở dữ liệu: `cmart1`
 --
 
 -- --------------------------------------------------------
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `banner` (
   `id` int(11) NOT NULL,
   `type` varchar(255) NOT NULL DEFAULT 'home',
+  `link` text DEFAULT NULL,
   `image` text NOT NULL,
   `sort` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -40,8 +41,8 @@ CREATE TABLE `banner` (
 -- Đang đổ dữ liệu cho bảng `banner`
 --
 
-INSERT INTO `banner` (`id`, `type`, `image`, `sort`, `created_at`, `updated_at`) VALUES
-(14, 'home', '/public/storage/images/5-b%C6%B0%E1%BB%9Bc-gi%C3%BAp-x%C3%A2y-d%E1%BB%B1ng-th%C6%B0%C6%A1ng-hi%E1%BB%87u-th%C3%A0nh-c%C3%B4ng-2.jpg', 0, '2021-12-01 10:38:34', '2021-12-01 10:38:34');
+INSERT INTO `banner` (`id`, `type`, `link`, `image`, `sort`, `created_at`, `updated_at`) VALUES
+(15, 'home', '#', 'http://localhost/public/storage/files/297cf5ae4a3c8362da2d.jpg', 0, '2021-12-30 10:36:34', '2021-12-30 10:36:34');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -62,7 +63,7 @@ ALTER TABLE `banner`
 -- AUTO_INCREMENT cho bảng `banner`
 --
 ALTER TABLE `banner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

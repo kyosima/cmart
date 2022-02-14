@@ -321,7 +321,7 @@
 @push('scripts')
 
 <script src={{ asset('/public/packages/ckeditor/ckeditor.js') }}></script>
-<script src={{ asset('/public/packages/ckfinder/ckfinder.js') }}></script>
+<script src={{ asset('/public/packages/ckfinder-watermark/ckfinder.js') }}></script>
 <script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
 
 <script>

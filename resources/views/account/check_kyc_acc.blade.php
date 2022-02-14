@@ -18,11 +18,11 @@
 </style>
 <div class="container">
 <div class="row" style="padding: 100px 0px; width: 100%">
-<div class="col-md-12"><div class="alert alert-danger text-center">Hiện bạn chưa được duyệt KYC thành công, mời bạn nhập đầy đủ thông tin để admin xét duyệt để nhận nhiều yêu đãi từ chúng tôi!</div></div>
+<div class="col-md-12"><div class="alert alert-danger text-center">Hiện bạn chưa được EKYC thành công, mời bạn nhập đầy đủ thông tin để admin xét duyệt để nhận nhiều yêu đãi từ chúng tôi!</div></div>
     <div class="col-md-12">
         <p style="width: 100%">
             <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase"> 
-                <a href="{{ asset('/thong-tin-tai-khoan')}}" class="text-white">Tôi muốn tạo Hồ Sơ Khách Hàng để xác định quyền lợi !!</a>
+                <a href="{{ route('ekyc.getVerify')}}" class="text-white">Tôi muốn EKYC để xác định quyền lợi !!</a>
             </button>
         </p>
     </div>

@@ -190,5 +190,12 @@ if (!function_exists('helper')) {
         $type = config('custom-config.banner');
         return $type[$value];
     }
+    function shippingMethodName($method){
+        return config('custom-config.shipping_method_name')[$method];
+    }
+
+    function shippingTypeName($type){
+        return config('custom-config.shipping_type_name')[$type];
+    }
 
 }

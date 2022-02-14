@@ -195,7 +195,7 @@ class HomeController extends Controller
     public function getXacthuc() {
         if (Auth::check()) {
             $user = Auth::user();
-            if ($user->check_kyc == 0){
+            if ($user->is_ekyc == 0){
                 return view('account.check_kyc_acc');
             }
             else {

@@ -34,13 +34,13 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="verify_image_front">
-                        <label for="">Mời bạn chụp ảnh mặt trước hồ sơ</label>
+                        <label for="">Mời bạn chụp ảnh mặt trước giấy tờ</label>
                         <input id="image-front" type="hidden" name="image_front">
                         <input id="status-front" type="hidden" name="status_front" value="0">
                         <canvas id="preview-front" width="800px" height="600px" max-width="100%"></canvas>
                     </div>
                     <div class="verify_image_back">
-                        <label for="">Mời bạn chụp ảnh mặt sau hồ sơ</label>
+                        <label for="">Mời bạn chụp ảnh mặt sau giấy tờ</label>
                         <input id="image-back" type="hidden" name="image_back">
                         <input id="status-back" type="hidden" name="status_back" value="0">
                         <canvas id="preview-back" width="800px" height="600px" max-width="100%"></canvas>
@@ -61,6 +61,7 @@
                     </div>
                     <div class="live_cam">
                         <hr>
+                        <label for="">Camera</label>
                         <video id="video" max-width="100%" autoplay></video>
                     </div>
                     <button id="start-camera" class="btn btn-primary w-100" type="button">Bắt đầu EKYC</button>
