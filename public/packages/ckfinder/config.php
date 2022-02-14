@@ -20,9 +20,12 @@ function url(){
     else{
         $protocol = 'http';
     }
-    return $protocol . "://" . $_SERVER['HTTP_HOST'].'/cmart';
+    return $protocol . "://" . $_SERVER['HTTP_HOST'].'/cmart1';
 }
-
+function url_current(){
+    $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    return $actual_link;
+}
 // Development
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
@@ -160,15 +163,18 @@ $config['debug'] = false;
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_plugins
 
 $config['pluginsDirectory'] = __DIR__ . '/plugins';
-$config['plugins'] = array('ImageWatermark');
 
-$config['ImageWatermark'] = array(
-    'imagePath' => __DIR__.'/watermark/logo-cpc.png',
-    'position' => array(
-        'right'  => 80,
-        'bottom' => 80,
-    )
-);
+// if(url().'/admin/san-pham' == url_current()){
+// $config['plugins'] = array('ImageWatermark');
+// $config['ImageWatermark'] = array(
+//     'imagePath' => __DIR__.'/watermark/logo-cpc.png',
+//     'position' => array(
+//         'right'  => 80,
+//         'bottom' => 80,
+//     )
+// );
+// }
+
 
 /*================================ Cache settings =====================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_cache
