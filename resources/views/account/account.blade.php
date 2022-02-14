@@ -85,7 +85,6 @@
                                         </li>
                                     </ul>
                                 </div>
-                                    <input type="text" name="hoten" placeholder="Mời nhập họ và tên có dấu">
                                     <input type="number" name="phone" placeholder="Mời nhập Số điện thoại đăng ký giao dịch">
                                     
                                     <input type="password" name="password" placeholder="Mời nhập mật khẩu">

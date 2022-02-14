@@ -113,9 +113,6 @@
                             </div>
                         </div>
 
-                    {{$date}}
-                    {{$addDate}}
-
                         <div class="info pt-5">
                             <form action="{{ $user->id }}" method="POST">
                                 @csrf
@@ -308,84 +305,64 @@
 
                                         <div class="pt-5">
                                             <div class="col-lg-12">
-                                                <h3 class="text-uppercase text-center">- Lịch sử đơn hàng -</h3>
-                                                @if ($sodonhang != null)
+                                                <h3 class="text-uppercase text-center">- Lịch sử chuyển khoản C -</h3>
                                                     <table class="styled-table table-sortable">
                                                         <thead>
                                                             <tr>
-                                                                <th>Mã giao dịch</th>
-                                                                <th>Cách thức thanh toán</th>
-                                                                <th>Phương thức vận chuyển</th>
-                                                                <th>Phí vận chuyển</th>
-                                                                <th>Giá trị đơn hàng</th>
-                                                                <th>Points</th>
-                                                                <th>Trạng thái</th>
+                                                                <th>Thời gian</th>
+                                                                <th>Mã khách hàng chuyển</th>
+                                                                <th>Số dư đầu</th>
+                                                                <th>Số dư cuối</th>
+                                                                <th>Giá trị chuyển khoản</th>
+                                                                <th>Nội dung</th>
                                                                 <!-- <th>Chi tiết đơn hàng</th> -->
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($orders as $k)
-                                                                <tr>
-                                                                    <td>{{ $k->order_code }}</td>
-                                                                    <td>
-                                                                        @if ($k->payment_method == 1)
-                                                                            Thanh toán khi nhận hàng
-                                                                        @else
-                                                                            Thanh toán bằng chuyển khoản
-                                                                        @endif
-                                                                    </td>
-                                                                    <td>{{ $k->shipping_method }}</td>
-                                                                    <td>{{ $k->shipping_total }}</td>
-                                                                    <td>{{ $k->sub_total }}</td>
-                                                                    <td>0</td>
-                                                                    <td>
-                                                                        @if ($k->payment_method == 1)
-                                                                            Đang vận chuyển
-                                                                        @elseif($k->payment_method != 1)
-                                                                            Đang chờ thanh toán
-                                                                        @else
-                                                                            Đang vận chuyển
-                                                                        @endif
-                                                                    </td>
-                                                                    <!-- <td style="text-align: center"><a href="#">Xem</a></td> -->
-                                                                </tr>
+                                                            @foreach ($lichsuchuyen as $value)
+                                                            <tr style="text-align:center">
+                                                                <td>{{$value->created_at}}</td>
+                                                                <td>{{$value->makhachhang}}</td>
+                                                                <td>{{$value->point_past_chuyen}}</td>
+                                                                <td>{{$value->point_present_chuyen}}</td>
+                                                                <td>{{$value->amount}}</td>
+                                                                <td>{{$value->note}}</td>
+                                                            </tr>
                                                             @endforeach
                                                             <!-- and so on... -->
-                                                        </tbody>
+                                                        </tbody> 
                                                     </table>
-                                                @else
-                                                    <p class="text-center text-danger">Hiện tại khách hàng này chưa thực
-                                                        hiện đơn hàng nào</p>
-                                                @endif
                                             </div>
                                             <div class="row mb-3 pt-3">
                                                 <div class="col-lg-12">
-                                                    <h3 class="text-uppercase text-center">- Tài khoản tiền tích lũy C -
+                                                    <h3 class="text-uppercase text-center">- Lịch sử nhận C -
                                                     </h3>
-                                                    @if ($sodonhang != null)
-                                                        <table class="styled-table table-sortable">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Mã giao dịch</th>
-                                                                    <th>Số điểm nhận đc</th>
-                                                                    <th>Ngày nhận</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($orders as $k)
-                                                                    <tr>
-                                                                        <td>{{ $k->order_code }}</td>
-                                                                        <td>{{ $k->c_point }}</td>
-                                                                        <td>{{ $k->created_at }}</td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                <!-- and so on... -->
-                                                            </tbody>
-                                                        </table>
-                                                    @else
-                                                        <p class="text-center text-danger">Hiện tại khách hàng này chưa thực
-                                                            hiện đơn hàng nào</p>
-                                                    @endif
+                                                    <table class="styled-table table-sortable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Thời gian</th>
+                                                                <th>Mã khách hàng chuyển</th>
+                                                                <th>Số dư đầu</th>
+                                                                <th>Số dư cuối</th>
+                                                                <th>Giá trị chuyển khoản</th>
+                                                                <th>Nội dung</th>
+                                                                <!-- <th>Chi tiết đơn hàng</th> -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($lichsunhan as $value)
+                                                            <tr style="text-align:center">
+                                                                <td>{{$value->created_at}}</td>
+                                                                <td>{{$value->makhachhang_chuyen}}</td>
+                                                                <td>{{$value->point_past_chuyen}}</td>
+                                                                <td>{{$value->point_present_chuyen}}</td>
+                                                                <td>{{$value->amount}}</td>
+                                                                <td>{{$value->note}}</td>
+                                                            </tr>
+                                                            @endforeach
+                                                            <!-- and so on... -->
+                                                        </tbody> 
+                                                    </table>
                                                 </div>
                                             </div>
 

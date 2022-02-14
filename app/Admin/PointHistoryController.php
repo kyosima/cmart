@@ -42,13 +42,16 @@ class PointHistoryController extends Controller
     public function tietkiem() {
         $listHistory = PointCHistory::where('type','=',3)->get();
         $user = User::all();
-        foreach ($user as $us) {
+        foreach ($user->where('id','!=',1) as $us) {
             $datePoint = $us->created_at->addMonth('1');
             if (Carbon::now() >= $datePoint) {
                 $us->created_at = $us->created_at->addMonth('1');
                 $pointC = PointC::where('user_id','=',$us->id)->first();
-                $pointTietKiem = $pointC->point_c + ($pointC->point_c * 0.01);
+                $amount = round($pointC->point_c * 0.01, 0);
+                $pointTietKiem = $pointC->point_c + $amount;
 
+                $id_user_chuyen = User::where('id','=',1)->first()->id;
+                $vi_user_chuyen = PointC::where('user_id','=',$id_user_chuyen)->first();
                 // luu lich su 
                 $lichsu_chuyen = new PointCHistory;
                 $lichsu_chuyen->point_c_idnhan = $us->id;
@@ -56,11 +59,18 @@ class PointHistoryController extends Controller
                 $lichsu_chuyen->point_present_nhan = $pointTietKiem;
                 $lichsu_chuyen->makhachhang = $us->code_customer;
                 $lichsu_chuyen->note = 'Tich luy tiet kiem';
-                $lichsu_chuyen->amount = $pointC->point_c * 0.01;
+                $lichsu_chuyen->amount = $amount;
                 $lichsu_chuyen->type = 3;
                 $lichsu_chuyen->save();
 
+                $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
+                $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
+                $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $amount;
+                $lichsu_chuyen->makhachhang_chuyen = 202201170001;
+                
                 $pointC->point_c = $pointTietKiem;
+                $vi_user_chuyen->point_c -= $amount;
+                $vi_user_chuyen->save();
                 $pointC->save();
 
                 $us->save();
@@ -126,8 +136,18 @@ class PointHistoryController extends Controller
         } else {
             $id = $id_user->id;
             $pointC = PointC::where('user_id','=',$id)->first()->point_c;
+            $point_past = $pointC + $request->point_past;
         }
-        
+        return response()->json([
+            'pointC' => $pointC,
+            'point_past' => $point_past,
+        ]);
+    }
+
+    public function tinhDiemNap(Request $request) {
+        $id_user = User::where('code_customer','=',202201170001)->first();
+        $id = $id_user->id;
+        $pointC = PointC::where('user_id','=',$id)->first()->point_c - $request->point;
         return response()->json([
             'pointC' => $pointC,
         ]);
@@ -138,6 +158,9 @@ class PointHistoryController extends Controller
         $id_user_nhan = User::where('code_customer','=',$makhachhang)->first()->id;
         $vi_user_nhan = PointC::where('user_id','=',$id_user_nhan)->first();
 
+        $id_user_chuyen = User::where('id','=',1)->first()->id;
+        $vi_user_chuyen = PointC::where('user_id','=',$id_user_chuyen)->first();
+        
         //luu vao bang lich su
         $lichsu_chuyen = new PointCHistory;
         
@@ -145,14 +168,53 @@ class PointHistoryController extends Controller
         $lichsu_chuyen->point_past_nhan = $vi_user_nhan->point_c;
         $lichsu_chuyen->point_present_nhan = $vi_user_nhan->point_c + $request->sodiemchuyen;
         $lichsu_chuyen->makhachhang = $request->id_user_nhan;
-        $lichsu_chuyen->note =$request->note;
+        $lichsu_chuyen->note = $request->note;
         $lichsu_chuyen->magiaodich = $request->code_chuyenkhoan;
         $lichsu_chuyen->amount = $request->sodiemchuyen;
         $lichsu_chuyen->type = 1;
+        
+        $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
+        $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
+        $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $request->sodiemchuyen;
+        $lichsu_chuyen->makhachhang_chuyen = 202201170001;
         $lichsu_chuyen->save();
 
         $vi_user_nhan->point_c += $request->sodiemchuyen;
         $vi_user_nhan->save();
+        $vi_user_chuyen->point_c -= $request->sodiemchuyen;
+        $vi_user_chuyen->save();
         return redirect()->back()->with('thongbao','Chuyển điểm thành công!');
     }
+
+    public function napC() {
+        $pointC = PointC::where('user_id','=',1)->first();
+        $magiaodich = random_int(1000000000, 9999999999); 
+        $isUsed =  PointCHistory::where('magiaodich', $magiaodich)->first();
+        if ($isUsed) {
+            return $this->newRandomInt();
+        }
+        return view('admin.user.napPoint',['pointC'=>$pointC,'magiaodich'=>$magiaodich]);
+    }
+
+    public function postNapC(Request $request) {
+        $makhachhang = $request->id_user_nhan;
+        $id_user_nhan = User::where('code_customer','=',$makhachhang)->first()->id;
+        $vi_user_nhan = PointC::where('user_id','=',$id_user_nhan)->first();
+        //luu vao bang lich su
+        // $lichsu_chuyen = new PointCHistory;
+        
+        // $lichsu_chuyen->point_c_idnhan = $vi_user_nhan->id;
+        // $lichsu_chuyen->point_past_nhan = $vi_user_nhan->point_c;
+        // $lichsu_chuyen->point_present_nhan = $vi_user_nhan->point_c + $request->sodiemchuyen;
+        // $lichsu_chuyen->makhachhang = $request->id_user_nhan;
+        // $lichsu_chuyen->note =$request->note;
+        // $lichsu_chuyen->magiaodich = $request->code_chuyenkhoan;
+        // $lichsu_chuyen->amount = $request->sodiemchuyen;
+        // $lichsu_chuyen->type = 1;
+
+        $vi_user_nhan->point_c += $request->sodiemchuyen;
+        $vi_user_nhan->save();
+        return redirect()->back()->with('thongbao','Nạp C thành công!');
+    }
+
 } 
