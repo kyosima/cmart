@@ -66,7 +66,7 @@
                             <div class="col-md-3 text-center mb-5">
                                 <div class="avatar avatar-xl">
                                     @if ($profileUser->avatar != null)
-                                        <img for="img_avatar" src="{{ asset('/public/images/' . $profileUser->avatar) }}"
+                                        <img for="img_avatar" src="{{ $profileUser->avatar }}"
                                             width="150px" height="150px" />
                                         <input type="file" class="form-control" name="avatar" id="img_avatar"
                                             style="display: none">
@@ -166,35 +166,35 @@
                         </div>
                         <div class="form-group">
                             <label for="inputAddress5">Ảnh CMND</label>
-                            @if ($profileUser->cmnd_image != null)
-                                <img id="imgFileUpload" src="{{ asset('/public/images/' . $profileUser->cmnd_image) }}"
-                                    width="100%" height="250px" style="cursor: pointer" />
-                                <br />
+                            {{-- @if ($profileUser->cmnd_image != null) --}}
+                                <img id="imgFileUpload" src="{{ $profileUser->cmnd_image }}"
+                                    width="100%"  style="cursor: pointer" />
+                                {{-- <br />
                                 <span id="spnFilePath"></span>
-                                <input type="file" id="FileUpload1" style="display: none" name="image_cmnd" id="img_cmnd" />
-                            @else
+                                <input type="file" id="FileUpload1" style="display: none" name="image_cmnd" id="img_cmnd" /> --}}
+                            {{-- @else
                                 <p>
                                     <input class="form-control" type="file" accept="image/*" onchange="loadFile(event)"
                                         name="image_cmnd">
                                     <img id="output" />
                                 </p>
-                            @endif
+                            @endif --}}
                         </div>
                         <div class="form-group">
                             <label for="inputAddress5">Ảnh CMND mặt sau</label>
-                            @if ($profileUser->cmnd_image2 != null)
+                            {{-- @if ($profileUser->cmnd_image2 != null) --}}
                                 <img id="imgFileUpload2"
-                                    src="{{ asset('/public/images2/' . $profileUser->cmnd_image2) }}" width="100%"
-                                    height="250px" style="cursor: pointer" />
-                                <br />
+                                    src="{{ $profileUser->cmnd_image2 }}" width="100%"
+                                    style="cursor: pointer" />
+                                {{-- <br />
                                 <span id="spnFilePath2"></span>
                                 <input type="file" id="FileUpload2" style="display: none" name="image_cmnd2"
-                                    id="img_cmnd2" />
-                            @else
+                                    id="img_cmnd2" /> --}}
+                            {{-- @else
                                 <input class="form-control" type="file" accept="image/*" onchange="loadFile2(event)"
                                     name="image_cmnd2">
                                 <img id="output2" />
-                            @endif
+                            @endif --}}
                         </div>
 
                         <div class="form-group row">

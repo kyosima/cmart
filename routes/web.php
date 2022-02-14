@@ -73,6 +73,9 @@ Route::prefix('thanh-toan')->group(function () {
 Route::get('tim-kiem', [ProductCategoryController::class, 'getSearch'])->name('search');
 Route::get('tim-kiem/goi-y', [ProductCategoryController::class, 'getSearchSuggest'])->name('search.suggest');
 
+Route::get('tai-khoan/xac-thuc', [EkycController::class, 'getVerifyAccount'])->name('ekyc.getVerify');
+Route::post('tai-khoan/xac-thuc', [EkycController::class, 'postVerifyAccount'])->name('ekyc.postVerify');
+
 //Route - Liên hệ
 Route::get('/lien-he', function () {
     return view('contact.lien-he');
