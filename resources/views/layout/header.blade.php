@@ -315,7 +315,7 @@
                 </li>
             </ul>
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="list">
+                {{-- <div role="tabpanel" class="tab-pane active" id="list">
                     <div class="box-tab">
                         <div class="menu-mobile">
                             @php
@@ -357,7 +357,7 @@
                             @endforeach
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div role="tabpanel" class="tab-pane " id="acc">
                     <div class="box-item">
                         <ul>
