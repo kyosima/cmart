@@ -67,7 +67,8 @@
             <span class="dropdown-content">
                 <a href="{{url('admin/danh-sach-user')}}">Danh sách khách hàng</a>
                 <a href="{{route('tongdiemuser')}}">Danh sách điểm khách hàng</a>
-                <a href="{{route('chuyendiem')}}">Chuyển điểm user</a>
+                <a href="{{route('chuyendiem')}}">Chuyển điểm</a>
+                <a href="{{route('napC')}}">Nạp điểm</a>
             </span>
             @endif
          </li>
@@ -80,7 +81,7 @@
             <span class="dropdown-content">
                 <a href="{{route('lichsuchuyenkhoan')}}">Lịch sử chuyển khoản</a>
                 <a href="{{route('lichsutichluy')}}">Lịch sử tích luỹ</a>
-                <a href="{{route('lichsutietkiem')}}">Lịch sử tiết kiệm</a>
+                <a href="{{route('lichsutietkiem')}}">Lịch sử thanh toán tiết kiệm C</a>
                 <a href="{{route('lichsudonhanghuy')}}">Lịch sử hoàn đơn hàng huỷ</a>
                 <a href="{{route('lichsudiemm')}}">Lịch sử điểm tích luỹ M</a>
             </span>

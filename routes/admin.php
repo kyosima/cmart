@@ -53,6 +53,12 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('tongdiemuser',[PointHistoryController::class, 'tongdiem'])->name('tongdiemuser');
     Route::get('chuyendiem',[PointHistoryController::class, 'chuyendiem'])->name('chuyendiem');
     Route::post('chuyendiem',[PointHistoryController::class, 'postChuyendiem'])->name('postChuyendiem');
+
+    Route::get('napdiem',[PointHistoryController::class, 'napC'])->name('napC');
+    Route::post('napdiem',[PointHistoryController::class, 'postNapC'])->name('postNapC');
+    Route::get('tinhDiemNap',[PointHistoryController::class, 'tinhDiemNap'])->name('tinhDiemNap');
+    
+    
     Route::get('test',[PointHistoryController::class, 'test'])->name('test');
     // Route::get('',[UserController::class,'postDanhsach']);
 

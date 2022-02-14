@@ -78,7 +78,6 @@ class UserController extends Controller
         $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
         $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
         ->where('orders.user_id','=',$user->id)->select('orders.*')->get();
-
         if(($user->id_tinhthanh != null) || ($user->id_quanhuyen != null) || ($user->id_phuongxa != null)) {
             $tinh = DB::table('users')->join('province', 'province.matinhthanh', '=', 'users.id_tinhthanh')
             ->where('province.matinhthanh','=',$user->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh;
@@ -104,19 +103,13 @@ class UserController extends Controller
         $pointC = PointC::where('user_id','=',$user->id)->value('point_c');
         $code_customer = $user->code_customer;
         $id_vitien = PointC::where('user_id','=',$user->id)->value('id');
-        $lichsuchuyen = PointCHistory::where('point_c_idchuyen','=',$id_vitien)->where('type','=',1)->get();
-        $lichsunhan = PointCHistory::where('point_c_idnhan','=',$id_vitien)->where('type','=',1)->get();
+        $lichsuchuyen = PointCHistory::where('point_c_idchuyen','=',$id_vitien)->get();
+        $lichsunhan = PointCHistory::where('point_c_idnhan','=',$id_vitien)->get();
         
         $date = $user->updated_at->addMonth('1');
         $addDate = Carbon::now();
-        // if(Carbon::now() >= $date) {
-        //     return 1;
-        // }
-        // else {
-        //     return 2;
-        // }
-        // $user->updated_at = Carbon::now();
-        // $user->save();
+
+        $history_chuyen = PointCHistory::where('point_c_idchuyen','=',$user->id)->where('type','=',1)->get();
 
         return view('admin.user.profile',['user'=>$user,'province'=>$province,
          'district'=>$district, 'ward'=>$ward,'pointC'=>$pointC, 'lichsunhan'=>$lichsunhan, 'lichsuchuyen'=>$lichsuchuyen]
