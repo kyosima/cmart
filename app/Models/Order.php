@@ -82,6 +82,11 @@ class Order extends Model
         return $this->hasMany(ShippingBill::class, 'order_id', 'id');
     }
 
+	public function order_payme()
+	{
+		return $this->hasOne(OrderPayme::class, 'order_id');
+	}
+
 	public function products()
 	{
 		return $this->belongsToMany(Product::class, 'order_products', 'id_order', 'id_product')

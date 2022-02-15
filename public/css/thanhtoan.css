@@ -204,7 +204,7 @@
     }
     
     .thanhtoantructuyen img {
-        width: 100px;
+        width: 50px;
         right: 35px;
         position: absolute;
     }
@@ -419,3 +419,8 @@
     .btn-dathang:focus {
         outline: none;
     }
+    /* .phuongthuc-thanhtoan-card-body>div>div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    } */

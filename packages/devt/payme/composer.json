@@ -1,0 +1,12 @@
+{
+    "name": "devt/payme",
+    "description": "Thanh toán online qua payme",
+    "authors": [
+        {
+            "name": "trantruong321",
+            "email": "tranvantruongtvtpro123@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
