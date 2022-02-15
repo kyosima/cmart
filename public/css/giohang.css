@@ -372,8 +372,6 @@ hr {
 }
 
 .btn {
-    display: flex;
-    justify-content: center;
 }
 
 .btn-a {
