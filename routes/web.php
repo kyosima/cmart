@@ -15,6 +15,7 @@ use App\Http\Controllers\InfoCompanyController;
 use App\Http\Controllers\CPointController;
 use App\Http\Controllers\EkycController;
 
+use App\Http\Controllers\PaymentPaymeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -136,3 +137,13 @@ Route::get('/test-api', [CheckoutController::class, 'getDistance']);
 
 Route::get('/chuyenkhoanC', [CPointController::class, 'chuyenkhoanC'])->name('chuyenkhoanC');
 Route::post('/chuyenkhoanC', [CPointController::class, 'postChuyenkhoanC'])->name('chuyenkhoanC');
+
+
+//thanh toán payme
+Route::get('/ipnUrl', [PaymentPaymeController::class, 'ipnUrl'])->name('ipnUrl');
+
+Route::get('/redirectUrl', [PaymentPaymeController::class, 'redirectUrl'])->name('redirectUrl');
+
+Route::get('/failedUrl', [PaymentPaymeController::class, 'failedUrl'])->name('failedUrl');
+
+Route::get('thanh-toan-that-bai', [PaymentPaymeController::class, 'paymentFail'])->name('paymentFail');

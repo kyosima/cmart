@@ -14,12 +14,15 @@ use App\Models\OrderProduct;
 use App\Models\StoreAddress;
 use App\Models\Store;
 use App\Models\OrderVat;
+use App\Models\OrderPayme;
 use App\Models\OrderStore;
 
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\PaymentPaymeController;
+
 
 class CheckoutController extends Controller
 {
@@ -119,6 +122,7 @@ class CheckoutController extends Controller
         }
         $store_address = $request->input('store_address');
         $show_vat = $request->input('show_vat');
+        $payment_method = $request->input('payment_method');
         $store_ids = Session::get('store_ids');
         $order = Order::create([
             'user_id' => $user_id
@@ -195,7 +199,7 @@ class CheckoutController extends Controller
             $vat->save();
         }
         $order->order_code = 'CMART-' . $order->id . time();
-        $order->payment_method = 0;
+        $order->payment_method = $payment_method;
         $order->tax = $total_tax;
         $order->shipping_total = $total_shipping;
         $order->c_point = $total_c;
@@ -219,8 +223,21 @@ class CheckoutController extends Controller
 
         Session::forget('store_ids');
 
-    
-        return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
+        if($payment_method == 2){
+            $paymentPaymeController = new PaymentPaymeController();
+            $result = $paymentPaymeController->PaymentPayme($order);
+            $result = json_decode($result);
+            if( $result->code == '105000'){
+                $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
+                return redirect($result->data->url);
+            }else{
+                return redirect()->route('paymentFail');
+                
+            }
+            
+        }else{
+            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
+        }
           
         // } else {
         //     return redirect()->route('cart.index');
@@ -456,5 +473,15 @@ class CheckoutController extends Controller
         }
 
         return $str;
+    }
+
+    public function createOrderPayme($order_id, $transaction_partner_id, $link_payment, $transaction_payme_id){
+        $order_payme = new OrderPayme;
+        $order_payme->order_id = $order_id;
+        $order_payme->transaction_partner_id = $transaction_partner_id;
+        $order_payme->link_payment = $link_payment;
+        $order_payme->transaction_payme_id = $transaction_payme_id;
+        $order_payme->save();
+        return $order_payme;
     }
 }

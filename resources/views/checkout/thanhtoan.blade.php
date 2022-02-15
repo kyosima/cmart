@@ -391,11 +391,16 @@
                                     <i class="fa fa-money"></i>
                                 </div>
                                 <div class="thanhtoantructuyen">
+                                    <input type="radio" name="payment_method" value="2">
+                                    <span>Thanh toán online</span>
+                                    <img src="{{ asset('assets/image/payme.png') }}">
+                                </div>
+                                <!-- <div class="thanhtoantructuyen">
                                     <input type="radio" name="payment_method" value="2" readonly="readonly" disabled>
                                     <span>Chuyển khoản qua ngân hàng</span>
                                     <img src="{{ asset('assets/image/vnpay.png') }}">
-                                </div>
-                                <div class="chuyenkhoan">
+                                </div> -->
+                                <!-- <div class="chuyenkhoan">
                                     <input type="radio" name="payment_method" value="3" readonly="readonly" disabled>
                                     <span>Chuyển khoản qua ngân hàng</span>
                                     <div class="tk-nganhang">
@@ -403,7 +408,7 @@
                                         <p>TK ngân hàng: Công ty cổ phần</p>
                                         <p>Chi nhánh: Công ty cổ phần</p>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <a class="btn-back-cart" href="{{ route('cart.index') }}">Quay lại Giỏ hàng</a>
