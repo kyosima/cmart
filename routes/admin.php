@@ -73,6 +73,9 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('chi-tiet-don-hang/{order:id}', [AdminOrderController::class, 'show'])->name('order.show')->middleware('permission:Xem đơn hàng,admin');
     // sửa đơn Hàng
     Route::put('cap-nhat-don-hang/{order:id}', [AdminOrderController::class, 'update'])->name('order.update')->middleware('permission:Cập nhật đơn hàng,admin');
+
+    Route::post('hoan-tien-don-hang', [AdminOrderController::class, 'orderRefund'])->name('admin.order.refund')->middleware('permission:Xem DS đơn hàng,admin');
+
     // xóa đơn Hàng
     Route::match(['delete', 'get'],'xoa-don-hang/{order:id}', [AdminOrderController::class, 'delete'])->name('order.delete')->middleware('permission:Xóa đơn hàng,admin');
 

@@ -29,11 +29,19 @@
                         <li>Phường xã: {{ $address->ward()->value('tenphuongxa') }}</li>
                         <li>Địa chỉ: {{ $address->address }}</li>
                     </ul>
-                    {{-- <hr>
-                    <b>Thông tin thanh toán</b>
+                    <hr>
+                    <p><b>Thông tin thanh toán</b></p>
                     @if ($order->payment_method == 1)
-                        <p>Thanh toán khi nhận hàng(COD)</p>
-                    @endif --}}
+                        <p>Phương thức TT: Thanh toán khi nhận hàng(COD)</p>
+                    @elseif ($order->payment_method == 2)
+                        <p>Phương thức TT: Thanh toán online</p>
+                        @if($order->status == 0)
+                            <p>Trạng thái thanh toán: Chưa thanh toán</p>
+                            <a href="{{URL::to(optional($order->order_payme)->link_payment)}}" class="btn btn-primary">Thanh toán ngay</a>
+                        @else
+                            <p>Trạng thái thanh toán: Đã thanh thoán</p>
+                        @endif
+                    @endif
                     <hr>
                     <b>Thông tin đơn hàng tổng</b>
                     <ul>

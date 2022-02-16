@@ -93,6 +93,13 @@ class ApiService
 
       $body = substr($response, $header_size);
       // dd($body);
+      if(count(json_decode($body, true)) > 1){
+        $array = array(
+          'code' => 1071997,
+          'message' => 'Thực hiện không thành công' 
+        );
+        return json_encode($array);
+      }
       $headers = [];
       $data = explode("\n", $response);
 

@@ -141,6 +141,14 @@ $(document).on('click', '#choosProduct', function(event) {
     });
     
 });
+
+$(document).on('click', '.btn-submit-refund', function(event) {
+    if(!confirm('Ban có muốn thực hiện không?')){
+        return;
+    }
+    $("#formRefund").submit();
+});
+
 $(document).on('change', 'input[name="in_qt[]"]', function(event) {
     var that = $(this);
     var price =  that.val()*that.data('price');

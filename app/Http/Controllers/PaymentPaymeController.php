@@ -31,9 +31,9 @@ class PaymentPaymeController extends Controller
 			'ipnUrl' => route('ipnUrl'),
 			'redirectUrl' => route('redirectUrl'),
 			'failedUrl' => route('failedUrl'),
-			'extraData' => json_encode($order)
+			'extraData' => json_encode($order),
+			'redirectTime' => 3,
 		);
-
 		$result = $apiService->PayMEApi($api_path, 'POST', $payload);
 		return $result;
     }
@@ -52,6 +52,24 @@ class PaymentPaymeController extends Controller
 		}
 		return redirect()->route('paymentFail');
     }
+
+	public function refund($order){
+		//lấy cấu hình
+    	$setting_payment_payme = SettingPaymentPayme::first();
+        // đưa dữ liệu bảo mật.
+        $apiService = new ApiService(true,  $setting_payment_payme->domain, $setting_payment_payme->app_id, $setting_payment_payme->private_key, $setting_payment_payme->public_key, $setting_payment_payme->accessToken);
+        // dd($apiService);
+        $api_path = '/payment/refund'; 
+        $payload = array(
+              "partnerTransaction" => 'CMART-'.time(),
+              "transaction" => $order->order_payme->transaction_payme_id,
+              "amount" => $order->total,
+              "reason" => "Hoàn tiền đơn hàng ".$order->order_code
+        );
+        // dd($payload);
+        $result = $apiService->PayMEApi($api_path, 'POST', $payload);
+		return $result;
+	}
 
     public function failedUrl(Request $request){
 		return redirect()->route('paymentFail');

@@ -30,7 +30,7 @@ use App\Http\Controllers\PaymentPaymeController;
 Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'showAll'])->name('proCat.showAll');
 Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
 Route::get('/thuong-hieu/{slug}', [ProductBrandController::class, 'index'])->name('proBrand.index');
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
 
 // Route::get('/huong-dan-dat-hang', [PolicyController::class,'hddh'])->name('policy.hddh');
