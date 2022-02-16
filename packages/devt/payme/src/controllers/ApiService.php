@@ -20,108 +20,66 @@ class ApiService
 
     public function PayMEApi($url, $method = 'POST', $payload = [])
     {
-      if ($this->isSecurity === true) {
-        return $this->RequestSecurity($url, $method, $payload);
-      }
-      return $this->Request($url, $method, $payload);
+      return $this->RequestSecurity($url, $method, $payload);
     }
 
-	private function RequestSecurity($url, $method = 'POST', $payload = [])
-    {
+    private function call($url, $method = 'POST', $payload = []){
+
       $encryptKey = rand(10000000, 99999999);
       $rsa = new Crypt_RSA();
       $rsa->loadKey($this->publicKey);
       $xAPIKey = base64_encode($rsa->encrypt($encryptKey));
-      $config = [
-        'url' => $url,
-        'publicKey' => $this->publicKey,
-        'privateKey' => $this->privateKey,
-        'isSecurity' => true,
-        'x-api-client' => $this->appId // config of partner 
-      ];
-
-      $xApiAction = CryptoJSAES::encrypt($config['url'], $encryptKey);
-      // dd($payload);
+  
+      $xApiAction = CryptoJSAES::encrypt($url, $encryptKey);
       $payloadString = json_encode($payload, JSON_FORCE_OBJECT);
-      
-
+  
       if ($payloadString) {
         $xApiMessage =  CryptoJSAES::encrypt($payloadString, $encryptKey);
       }
-
       $objValidate = [
         'xApiAction' => $xApiAction,
         'method' => strtoupper($method),
         'accessToken' => $this->accessToken
       ];
-
+  
       if($payload){
         $objValidate['x-api-message'] = $xApiMessage;
       }
       $xAPIValidate = md5(implode('', $objValidate) . $encryptKey);
-
-      $curl = curl_init();
-
-      $curlInfo = array(
-        CURLOPT_URL => $this->domain,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_HEADER => 1,
-        CURLOPT_CUSTOMREQUEST => strtoupper($method),
-        CURLOPT_HTTPHEADER => array(
-          "Authorization:" . $objValidate['accessToken'],
-          "x-api-client:". $this->appId,
-          "x-api-key:" . $xAPIKey,
-          "x-api-validate:" . $xAPIValidate,
-          "x-api-action:" . $xApiAction,
-          "Content-Type:application/json"
-        )
-        );
-      if($payload){
-        $curlInfo[CURLOPT_POSTFIELDS] = "{\"x-api-message\": \"" . $xApiMessage . "\" }";
-      }
-      curl_setopt_array($curl, $curlInfo );
-
-      $response = curl_exec($curl);
-      // dd($response);
-
-      $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
-
-      $body = substr($response, $header_size);
-      // dd($body);
-      if(count(json_decode($body, true)) > 1){
-        $array = array(
-          'code' => 1071997,
-          'message' => 'Thực hiện không thành công' 
-        );
-        return json_encode($array);
-      }
-      $headers = [];
-      $data = explode("\n", $response);
-
-      $headers['status'] = $data[0];
-      array_shift($data);
-
-      foreach ($data as $part) {
-        $middle = explode(":", $part, 2);
-        if (!isset($middle[1])) {
-          $middle[1] = null;
+  
+      $response = Http::withHeaders([
+        "Authorization" => $objValidate['accessToken'],
+        "x-api-client" => $this->appId,
+        "x-api-key" => $xAPIKey,
+        "x-api-validate" => $xAPIValidate,
+        "x-api-action" => $xApiAction,
+        "Content-Type" => "application/json"
+  
+      ])->post($this->domain, [
+        'x-api-message' => $xApiMessage
+      ]);
+  
+      $result = json_decode($response, true);
+  
+      if(count($result) > 1){
+          $array = array(
+            'code' => 1071997,
+            'message' => 'Thực hiện không thành công' 
+          );
+          return json_encode($array);
         }
-        $headers[trim($middle[0])] = trim($middle[1]);
-      }
-
-      $xAPIKey = !empty($headers['x-api-key']) ? $headers['x-api-key'] : '';
-      // dd($xAPIKey);
-      $xAPIValidate = !empty($headers['x-api-validate']) ? $headers['x-api-validate'] : '';
-      $xApiAction = !empty($headers['x-api-action']) ? $headers['x-api-action'] : '';
-      $xAPIMessage = json_decode($body, true)['x-api-message'];
-
+      $headers = $response->headers();
+  
+      $xAPIKey = !empty($headers['x-api-key']) ? $headers['x-api-key'][0] : '';
+      $xAPIValidate = !empty($headers['x-api-validate']) ? $headers['x-api-validate'][0] : '';
+      $xApiAction = !empty($headers['x-api-action']) ? $headers['x-api-action'][0] : '';
+      $xAPIMessage = $result['x-api-message'];
+  
       return $this->decryptResponse(strtoupper($method), $xAPIKey, $xAPIMessage, $xAPIValidate, $objValidate['accessToken'], $this->privateKey, $xApiAction);
+  
     }
+
+    
     private function decryptResponse($method, $xAPIKey, $xAPIMessage, $xAPIValidate, $accessToken, $privateKey, $xAPIAction)
     {
       try {

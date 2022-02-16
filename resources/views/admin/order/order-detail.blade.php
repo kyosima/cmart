@@ -196,7 +196,7 @@
                                                             <td>Giao hàng miễn phí</td>
                                                         </tr> -->
                                                         <tr class="checkout-shipping-label-curent">
-                                                            <th>Phương thức hiện tại</th>
+                                                            <th>Phương thức TT</th>
                                                             <td>
                                                                 @if($order->payment_method == 1)
                                                                     COD
