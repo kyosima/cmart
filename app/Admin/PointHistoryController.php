@@ -21,8 +21,15 @@ use App\Exports\DonHangHuy;
 
 class PointHistoryController extends Controller
 {
+    public function lichsunhanC() {
+        $listHistory = PointCHistory::where('type','=',1)->orWhere('type','=',3)->get();
+        $this->tinhdiemtietkiem();
+        return view('admin.history.lichsunhanC',['listHistory' => $listHistory]);
+    }
+
     public function chuyenkhoan() {
         $listHistory = PointCHistory::where('type','=',1)->get();
+        $this->tinhdiemtietkiem();
         return view('admin.history.chuyenkhoan',['listHistory' => $listHistory]);
     }
 
@@ -32,6 +39,7 @@ class PointHistoryController extends Controller
 
     public function tichluy() {
         $listHistory = PointCHistory::where('type','=',2)->get();
+        $this->tinhdiemtietkiem();
         return view('admin.history.tichluy',['listHistory'=>$listHistory]);
     }
 
@@ -39,8 +47,7 @@ class PointHistoryController extends Controller
         return $excel->download(new TichLuy, 'lichsutichluy.xlsx');
     }
 
-    public function tietkiem() {
-        $listHistory = PointCHistory::where('type','=',3)->get();
+    public function tinhdiemtietkiem() {
         $user = User::all();
         foreach ($user->where('id','!=',1) as $us) {
             $datePoint = $us->created_at->addMonth('1');
@@ -53,6 +60,7 @@ class PointHistoryController extends Controller
                 $id_user_chuyen = User::where('id','=',1)->first()->id;
                 $vi_user_chuyen = PointC::where('user_id','=',$id_user_chuyen)->first();
                 // luu lich su 
+
                 $lichsu_chuyen = new PointCHistory;
                 $lichsu_chuyen->point_c_idnhan = $us->id;
                 $lichsu_chuyen->point_past_nhan = $pointC->point_c;
@@ -61,13 +69,13 @@ class PointHistoryController extends Controller
                 $lichsu_chuyen->note = 'Tich luy tiet kiem';
                 $lichsu_chuyen->amount = $amount;
                 $lichsu_chuyen->type = 3;
-                $lichsu_chuyen->save();
-
+                
                 $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
                 $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
                 $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $amount;
                 $lichsu_chuyen->makhachhang_chuyen = 202201170001;
-                
+                $lichsu_chuyen->save();
+
                 $pointC->point_c = $pointTietKiem;
                 $vi_user_chuyen->point_c -= $amount;
                 $vi_user_chuyen->save();
@@ -76,6 +84,11 @@ class PointHistoryController extends Controller
                 $us->save();
             }
         }
+    }
+
+    public function tietkiem() {
+        $listHistory = PointCHistory::where('type','=',3)->get();
+        $this->tinhdiemtietkiem();
         return view('admin.history.tietkiem',['listHistory'=>$listHistory]);
     }
 
@@ -86,6 +99,7 @@ class PointHistoryController extends Controller
 
     public function huydonhang() {
         $listHistory = PointCHistory::where('type','=',4)->get();
+        $this->tinhdiemtietkiem();
         return view('admin.history.huydonhang',['listHistory'=>$listHistory]);
     }
 
@@ -120,7 +134,7 @@ class PointHistoryController extends Controller
     }
 
     public function chuyendiem() {
-        $pointC = PointC::where('user_id','=',0);
+        $pointC = PointC::where('user_id','=',1)->first();
         $magiaodich = random_int(1000000000, 9999999999); 
         $isUsed =  PointCHistory::where('magiaodich', $magiaodich)->first();
         if ($isUsed) {

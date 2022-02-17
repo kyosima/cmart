@@ -123,11 +123,11 @@ Route::get('/xac-thuc-ho-so', [HomeController::class, 'getXacthuc']);
 
 Route::get('/lichsu', [HomeController::class, 'getLichsu']);
 
-Route::prefix('/lichsu_cpoint')->group(function () {
+Route::prefix('/lich-su-tien-tich-luy')->group(function () {
     Route::get('/', [CPointController::class, 'index'])->name('account.cpoint_history');
 });
 
 Route::get('/test-api', [CheckoutController::class, 'getDistance']);
 
-Route::get('/chuyenkhoanC', [CPointController::class, 'chuyenkhoanC'])->name('chuyenkhoanC');
+Route::get('/chuyenkhoanC', [CPointController::class, 'chuyenkhoanC'])->name('chuyen-tien-tich-luy');
 Route::post('/chuyenkhoanC', [CPointController::class, 'postChuyenkhoanC'])->name('chuyenkhoanC');

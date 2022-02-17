@@ -75,18 +75,32 @@
 </style>
 <body>
     <div style="text-align: -webkit-center;">
-    <div class="container pt-4">
-        <div class="row">
+    <div class="container pt-2">
+        <div class="row pb-4">
+            <div class="col-6">
+                <a class="btn text-white" style="width: 100%;background-color: #00e6f8;">
+                    Tổng C: {{$pointC->point_c}}
+                </a>
+            </div>
+
+            <div class="col-6">
+                <a class="btn text-white" style="width: 100%;background-color: #00e6f8;">
+                    Số C khả dụng: {{$pointC->point_c}}
+                </a>
+            </div>
+        </div>
+
+        <!-- <div class="row">
             <div class="col-4">
                 <input type="text" class="form-control" id="search_time" onkeyup="search_time()" placeholder="Nhập thời gian tìm kiếm">
             </div>
             <div class="col-4">
-                <input type="text" class="form-control" id="search_makhachhang" onkeyup="search_makhachhang()" placeholder="Nhập mã khách hàng tìm kiêm">
+                <input type="text" class="form-control" id="search_makhachhang" onkeyup="search_makhachhang()" placeholder="Nhập giao dịch tìm kiêm">
             </div>
             <div class="col-4">
-                <input type="text" class="form-control" id="search_magiaodich" onkeyup="search_magiaodich()" placeholder="Nhập mã giao dịch tìm kiếm">
+                <input type="text" class="form-control" id="search_magiaodich" onkeyup="search_magiaodich()" placeholder="Nhập nội dung tìm kiếm">
             </div>
-        </div>
+        </div> -->
     </div>
     
     <div class="container">
@@ -94,50 +108,37 @@
             <thead>
                 <tr>
                     <th>Thời gian giao dịch</th>
-                    <th>Mã khách hàng</th>
                     <th>Mã giao dịch</th>
                     <th>Nội dung</th>
                     <th>Số dư ban đầu</th>
-                    <th>Giá trị giao dịch</th>
+                    <th>Tăng</th>
+                    <th>Giảm</th>
                     <th>Số dư cuối</th>
+                    <th>Trạng thái</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($history as $k)
                 <tr>
-                    <td>{{$k->created_at}}</td>
-                    <td>{{$k->makhachhang}}
+                <td>{{$k->created_at}}</td>
                     <td>{{$k->magiaodich}}
                     <td>{{$k->note}}</td>
+                    @if ($user->code_customer == $k->makhachhang && $user->code_customer != $k->makhachhang_chuyen)
+                    <td>{{$k->point_past_nhan}}</td>
+                    <td>{{$k->amount}}</td>
+                    <td> </td>
+                    <td>{{$k->point_present_nhan}}</td>
+                    @else
                     <td>{{$k->point_past_chuyen}}</td>
+                    <td> </td>
                     <td>{{$k->amount}}</td>
                     <td>{{$k->point_present_chuyen}}</td>
+                    @endif
+                    <td>Khả dụng</td>
                 </tr>
                 @endforeach
 
-                @foreach ($tietkiem as $tk)
-                <tr>
-                    <td>{{$tk->created_at}}</td>
-                    <td>{{$tk->makhachhang_chuyen}}</td>
-                    <td>{{$tk->magiaodich}}</td>
-                    <td>{{$tk->note}}</td>
-                    <td>{{$tk->point_past_chuyen}}</td>
-                    <td>{{$tk->amount}}</td>
-                    <td>{{$tk->point_present_chuyen}}</td>
-                </tr>
-                @endforeach
 
-                @foreach ($hoandonhuy as $hdh)
-                <tr>
-                    <td>{{$hdh->created_at}}</td>
-                    <td>{{$hdh->makhachhang_chuyen}}</td>
-                    <td>{{$hdh->magiaodich}}</td>
-                    <td>{{$hdh->note}}</td>
-                    <td>{{$hdh->point_past_nhan}}</td>
-                    <td>{{$hdh->amount}}</td>
-                    <td>{{$hdh->point_present_nhan}}</td>
-                </tr>
-                @endforeach
                 <!-- and so on... -->
             </tbody>
         </table>
