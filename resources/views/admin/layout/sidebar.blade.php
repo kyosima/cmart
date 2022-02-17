@@ -79,11 +79,12 @@
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
             <span class="dropdown-content">
+                <a href="{{route('lichsunhanC')}}">Lịch sử nhận C</a>
                 <a href="{{route('lichsuchuyenkhoan')}}">Lịch sử chuyển khoản</a>
-                <a href="{{route('lichsutichluy')}}">Lịch sử tích luỹ</a>
-                <a href="{{route('lichsutietkiem')}}">Lịch sử thanh toán tiết kiệm C</a>
+                <a href="{{route('lichsutichluy')}}">Lịch sử thanh toán tích luỹ</a>
+                <a href="{{route('lichsutietkiem')}}">Lịch sử thanh toán tiết kiệm</a>
+                <a href="{{route('lichsudiemm')}}">Lịch sử thanh toán tích luỹ M</a>
                 <a href="{{route('lichsudonhanghuy')}}">Lịch sử hoàn đơn hàng huỷ</a>
-                <a href="{{route('lichsudiemm')}}">Lịch sử điểm tích luỹ M</a>
             </span>
             @endif
         </li>

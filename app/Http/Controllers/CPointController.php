@@ -27,7 +27,7 @@ class CPointController extends Controller
         $pointC = PointC::where('user_id',$user->id)->first();
         $tietkiem = PointCHistory::where('type',3)->where('point_c_idnhan','=',auth()->user()->id)->get();
         $hoandonhuy = PointCHistory::where('type',4)->where('point_c_idnhan','=',auth()->user()->id)->get();
-        $history = PointCHistory::where('point_c_idchuyen', $pointC->id)->get();
+        $history = PointCHistory::where('point_c_idchuyen', $pointC->id)->orWhere('point_c_idnhan', $pointC->id)->get();
         return view('account.cpoint_history',[
             'user'=>$user,
             'pointC'=>$pointC,

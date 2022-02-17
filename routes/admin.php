@@ -35,6 +35,9 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('/export',[UserController::class, 'export']);
 
+    Route::get('lichsunhanC',[PointHistoryController::class, 'lichsunhanC'])->name('lichsunhanC');
+    Route::get('lichsunhanC/download', [PointHistoryController::class, 'dowLichsunhanC']);
+
     Route::get('lichsuchuyenkhoan',[PointHistoryController::class, 'chuyenkhoan'])->name('lichsuchuyenkhoan');
     Route::get('lichsuchuyenkhoan/download', [PointHistoryController::class, 'dowChuyenKhoan']);
 

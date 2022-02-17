@@ -10,6 +10,14 @@
 
 @section('content')
 <div class="container pt-4 pb-4">
+    <div class="row pb-3">
+        <div class="col-12">
+            <a class="btn btn-primary text-white" style="width: 100%">
+                Tổng điểm C hiện tại tài khoản Cmart: {{$pointC->point_c}}
+            </a>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12">
         <form action="{{route('postNapC')}}" method="POST">
@@ -19,9 +27,9 @@
                 <!-- <textarea name="note" class="form-control mt-2" placeholder="Nội dung chuyển khoản"></textarea> -->
                 <div class="pt-1">Số dư hiện tại:</div>
                 <input class="form-control" id="point_present" name="point_present" value="{{$pointC->point_c}}" readonly>
-                <div class="pt-1">Số điểm chuyển:</div>
-                <input class="form-control" id="sodiemchuyen" name="sodiemchuyen" placeholder="Nhập số điểm muốn chuyển">
-
+                <div class="pt-1">Số điểm nạp:</div>
+                <input class="form-control" id="sodiemchuyen" name="sodiemchuyen" placeholder="Nhập số điểm muốn nạp">
+                <div class="pt-1">Số dư cuối:</div>
                 <input class="form-control" id="point_past" name="point_past" value="{{$pointC->value('point_c')}}" readonly>
                 <button type="submit" class="btn btn-primary mt-2 text-uppercase" style="width: 100%">Nạp điểm ngay</button>
         @csrf

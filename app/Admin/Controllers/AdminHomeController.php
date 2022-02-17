@@ -50,6 +50,7 @@ class AdminHomeController extends Controller
                     $id_user_chuyen = User::where('id','=',1)->first()->id;
                     $vi_user_chuyen = PointC::where('user_id','=',$id_user_chuyen)->first();
                     // luu lich su 
+    
                     $lichsu_chuyen = new PointCHistory;
                     $lichsu_chuyen->point_c_idnhan = $us->id;
                     $lichsu_chuyen->point_past_nhan = $pointC->point_c;
@@ -58,13 +59,13 @@ class AdminHomeController extends Controller
                     $lichsu_chuyen->note = 'Tich luy tiet kiem';
                     $lichsu_chuyen->amount = $amount;
                     $lichsu_chuyen->type = 3;
-                    $lichsu_chuyen->save();
-    
+                    
                     $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
                     $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
                     $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $amount;
                     $lichsu_chuyen->makhachhang_chuyen = 202201170001;
-                    
+                    $lichsu_chuyen->save();
+    
                     $pointC->point_c = $pointTietKiem;
                     $vi_user_chuyen->point_c -= $amount;
                     $vi_user_chuyen->save();
