@@ -82,7 +82,7 @@
                                                                 đơn
                                                                 hàng</a>
                                                             <a class="dropdown-item text-dark" href="{{ url('/lich-su-tien-tich-luy') }}">Tài khoản tiền tích lũy</a>
-                                                            <a class="dropdown-item text-dark" href="{{ route('chuyen-tien-tich-luy') }}">Chuyển tiền tích lũy</a>
+                                                            <!-- <a class="dropdown-item text-dark" href="{{ route('chuyen-tien-tich-luy') }}">Chuyển tiền tích lũy</a> -->
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item text-danger"
                                                                 href="{{ route('logoutuser') }}">Đăng

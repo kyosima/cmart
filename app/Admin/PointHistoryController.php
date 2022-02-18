@@ -33,9 +33,19 @@ class PointHistoryController extends Controller
         return view('admin.history.chuyenkhoan',['listHistory' => $listHistory]);
     }
 
-    public function dowChuyenKhoan(Excel $excel) {
-        return $excel->download(new ChuyenKhoan, 'lichsuchuyenkhoan.xlsx');
+    public function dowChuyenKhoan(Excel $excel, $type) {
+        if($type == 'pdf'){
+            return $excel->download(new ChuyenKhoan, 'lichsuchuyenkhoan.pdf');
+        } elseif($type == 'xlsx') {
+            return $excel->download(new ChuyenKhoan, 'lichsuchuyenkhoan.xlsx');
+        } else {
+            return redirect()->back();
+        }
     }
+
+    // public function downChuyenKhoanPDF(){
+    //     $em
+    // }
 
     public function tichluy() {
         $listHistory = PointCHistory::where('type','=',2)->get();
@@ -43,8 +53,14 @@ class PointHistoryController extends Controller
         return view('admin.history.tichluy',['listHistory'=>$listHistory]);
     }
 
-    public function dowTichLuy(Excel $excel) {
-        return $excel->download(new TichLuy, 'lichsutichluy.xlsx');
+    public function dowTichLuy(Excel $excel, $type) {
+        if($type == 'pdf'){
+            return $excel->download(new TichLuy, 'lichsutichluy.pdf');
+        } elseif($type == 'xlsx') {
+            return $excel->download(new TichLuy, 'lichsutichluy.xlsx');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function tinhdiemtietkiem() {
@@ -93,8 +109,14 @@ class PointHistoryController extends Controller
     }
 
 
-    public function dowTietKiem(Excel $excel) {
-        return $excel->download(new TietKiem, 'lichsutietkiem.xlsx');
+    public function dowTietKiem(Excel $excel, $type) {
+        if($type == 'pdf'){
+            return $excel->download(new TichLuy, 'lichsutietkiem.pdf');
+        } elseif($type == 'xlsx') {
+            return $excel->download(new TichLuy, 'lichsutietkiem.xlsx');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function huydonhang() {
@@ -103,8 +125,14 @@ class PointHistoryController extends Controller
         return view('admin.history.huydonhang',['listHistory'=>$listHistory]);
     }
 
-    public function dowDonHangHuy(Excel $excel) {
-        return $excel->download(new DonHangHuy, 'lichsuhoandiemdh.xlsx');
+    public function dowDonHangHuy(Excel $excel, $type) {
+        if($type == 'pdf'){
+            return $excel->download(new TichLuy, 'lichsuhoandiemdh.pdf');
+        } elseif($type == 'xlsx') {
+            return $excel->download(new TichLuy, 'lichsuhoandiemdh.xlsx');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function lichsudiemM() {

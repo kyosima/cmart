@@ -85,7 +85,7 @@
             <tr style="text-align:center">
                 <th>Thời gian</th>
                 <th>Mã khách hàng</th>
-                <th>Số dư C</th>
+                <th>Tổng C</th>
                 <th>Tăng do CK</th>
                 <th>Tăng do TK</th>
                 <th>Tăng do TL C</th>

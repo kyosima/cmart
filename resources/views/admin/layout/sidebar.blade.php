@@ -66,23 +66,23 @@
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
             <span class="dropdown-content">
                 <a href="{{url('admin/danh-sach-user')}}">Danh sách khách hàng</a>
-                <a href="{{route('tongdiemuser')}}">Danh sách điểm khách hàng</a>
-                <a href="{{route('chuyendiem')}}">Chuyển điểm</a>
-                <a href="{{route('napC')}}">Nạp điểm</a>
             </span>
             @endif
          </li>
-         <li class="dropdown">
+         <li class="dropdown" >
             <a href="#" class="dropbtn">
             <i class="fas fa-history"></i>
-             <span class="links_name w-100 align-items-center d-flex">Lịch sử CPoint <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+             <span class="links_name w-100 align-items-center d-flex">Điểm tích lũy <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
-            <span class="dropdown-content">
+            <span class="dropdown-content" style="top: -30px;">
+                <a href="{{route('tongdiemuser')}}">Ví điểm tích lũy khách hàng</a>
+                <a href="{{route('chuyendiem')}}">Chuyển điểm tích lũy</a>
+                <a href="{{route('napC')}}">Nạp điểm tích lũy</a>
                 <a href="{{route('lichsunhanC')}}">Lịch sử nhận C</a>
-                <a href="{{route('lichsuchuyenkhoan')}}">Lịch sử chuyển khoản</a>
-                <a href="{{route('lichsutichluy')}}">Lịch sử thanh toán tích luỹ</a>
-                <a href="{{route('lichsutietkiem')}}">Lịch sử thanh toán tiết kiệm</a>
+                <a href="{{route('lichsuchuyenkhoan')}}">Lịch sử chuyển khoản C</a>
+                <a href="{{route('lichsutichluy')}}">Lịch sử thanh toán tích luỹ C</a>
+                <a href="{{route('lichsutietkiem')}}">Lịch sử thanh toán tiết kiệm C</a>
                 <a href="{{route('lichsudiemm')}}">Lịch sử thanh toán tích luỹ M</a>
                 <a href="{{route('lichsudonhanghuy')}}">Lịch sử hoàn đơn hàng huỷ</a>
             </span>

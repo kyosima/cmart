@@ -11,17 +11,25 @@
 <body>
     <div class="container pt-4 pb-4">
         <div class="row">
-            <div class="col-4">
+            <div class="col-3">
                 <input type="text" class="form-control" id="search_time" onkeyup="search_time()" placeholder="Nhập thời gian tìm kiếm">
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <input type="text" class="form-control" id="search_makhachhang" onkeyup="search_makhachhang()" placeholder="Nhập mã khách hàng tìm kiêm">
             </div>
-            <!-- <div class="col-3">
-                <input type="text" class="form-control" id="search_magiaodich" onkeyup="search_magiaodich()" placeholder="Nhập nội dung tìm kiếm">
-            </div> -->
-            <div class="col-4">
-                <a href="{{asset('admin/lichsutietkiem/download')}}" class="btn btn-primary text-white" style="width: 100%">Xuất File Excel</a>
+            <div class="col-3">
+                <input type="text" class="form-control" id="search_magiaodich" onkeyup="search_noidung()" placeholder="Nhập nội dung tìm kiếm">
+            </div>
+
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-6">
+                        <a href="{{asset('admin/lichsutietkiem/download/pdf')}}" class="btn btn-primary text-white" style="width: 100%">
+                        Xuất PDF</a></div>
+                    <div class="col-6">
+                        <a href="{{asset('admin/lichsutietkiem/download/xlsx')}}" class="btn btn-primary text-white" style="width: 100%">
+                        Xuất Excel</a></div>
+                </div>
             </div>
         </div>
     </div>
@@ -40,7 +48,7 @@
             @foreach ($listHistory as $value)
                 <tr style="text-align:center">
                     <td>{{$value->created_at}}</td>
-                    <td>{{$value->makhachhang_chuyen}}</td>
+                    <td>{{$value->makhachhang}}</td>
                     <td>{{$value->note}}</td>
                     <td>{{$value->point_past_chuyen}}</td>
                     <td>{{$value->amount}}</td>
