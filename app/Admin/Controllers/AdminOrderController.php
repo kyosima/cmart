@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Admin\Exports\OrderExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\PaymentPaymeController;
 
 class AdminOrderController extends Controller
 {
@@ -135,7 +136,23 @@ class AdminOrderController extends Controller
         Log::info('Admin '.auth()->guard('admin')->user()->name.' cập nhật đơn hàng #'.$order->id, ['data' => $request->all()]);
         Session::flash('success','Sửa đơn hàng thành công');
         return back();
-    }  
+    }
+
+    public function orderRefund(Request $request){
+        $order = Order::find($request->id);
+        $paymentPaymeController = new PaymentPaymeController();
+        $result = $paymentPaymeController->refund($order);
+        $result = json_decode($result);
+        if( $result->code == 105003){
+            $order->status = 6;
+            $order->save();
+            Session::flash('success', $result->message);
+            return back();
+        }else{
+            Session::flash('error', $result->message);
+            return back();
+        }
+    }
 
     public function delete(Request $request, Order $order){
         $order->delete();

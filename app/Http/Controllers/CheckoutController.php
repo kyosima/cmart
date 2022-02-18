@@ -222,7 +222,7 @@ class CheckoutController extends Controller
         $order->order_info()->save($order_info);
 
         Session::forget('store_ids');
-
+        Session::put('order_code', $order->order_code);
         if($payment_method == 2){
             $paymentPaymeController = new PaymentPaymeController();
             $result = $paymentPaymeController->PaymentPayme($order);

@@ -194,11 +194,17 @@
                                                         <!-- <tr class="checkout-shipping-label-curent">
                                                             <th>Phí ship hiện tại</th>
                                                             <td>Giao hàng miễn phí</td>
-                                                        </tr>
-                                                        <tr class="checkout-shipping-label-curent">
-                                                            <th>Phương thức hiện tại</th>
-                                                            <td>COD</td>
                                                         </tr> -->
+                                                        <tr class="checkout-shipping-label-curent">
+                                                            <th>Phương thức TT</th>
+                                                            <td>
+                                                                @if($order->payment_method == 1)
+                                                                    COD
+                                                                @elseif($order->payment_method == 2)
+                                                                    TT Online ({!! $order->status == 0 ? '<a href="'.optional($order->order_payme)->link_payment.'" target="_blank">Chưa thanh toán</a>' : 'Đã thanh toán' !!})
+                                                                @endif
+                                                            </td>
+                                                        </tr>
                                                         <tr class="order-total">
                                                             <th>Tổng GTGD</th>
                                                             <td><strong><span class="amount" data-total={{number_format($order->total)}}>{{number_format($order->total + $order->shipping_total)}} ₫</span></strong> </td>
@@ -211,7 +217,10 @@
                                     <div class="card-footer">
                                         <div class="d-flex justify-content-between align-items-center">
                                             @if(auth()->guard('admin')->user()->can('Cập nhật đơn hàng'))
-                                            <button type="submit" class="btn btn-info btn-submit-unit">Cập nhật</button>
+                                                    <button type="submit" class="btn btn-info btn-submit-unit">Cập nhật</button>
+                                                @if($order->payment_method == 2 && $order->status != 6 && $order->status != 0)
+                                                    <button type="button" class="btn btn-warning btn-submit-refund">Hoàn tiền</button>
+                                                @endif
                                             @endif
                                             @if(auth()->guard('admin')->user()->can('Xóa đơn hàng'))
                                             <a href="{{route('order.delete', ['order' => $order->id])}}" class="btn btn-danger btn-submit-unit" onclick="return confirm('Are you sure you want to delete this order?')">Xóa</a>
@@ -228,6 +237,10 @@
         </div>
     </div>
 </div>
+<form id="formRefund" action="{{ route('admin.order.refund') }}" method="post">
+    @csrf
+    <input type="hidden" name="id" value="{{$order->id}}">
+</form>
 @endsection
 
 @push('scripts')

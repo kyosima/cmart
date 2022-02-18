@@ -136,6 +136,7 @@ class HomeController extends Controller
 
     public function postRegister (Request $request)
     {
+        dd($request);
         $this->validate($request, [
             'hoten' => 'required|min:5|max:30',
             'phone' => 'required|min:8|unique:users,name,phone',

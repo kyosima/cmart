@@ -156,6 +156,9 @@ if (!function_exists('helper')) {
     }
 
     function orderStatusOtion($status){
+        if($status == 6){
+            $status = 5;
+        }
         $array = array('Đã đặt hàng', 'Đã xác nhận thanh toán', 'Đang xử lý', 'Đang vận chuyển', 'Hoàn thành', 'Đã hủy');
         $string = '';
         foreach($array as $key => $value){
