@@ -1,4 +1,11 @@
-<table class="styled-table table-sortable" id="myTable">
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <title>ABC | XYZ</title>
+        <meta charshet="utf-8" />
+    </head>
+<body>
+    <table class="styled-table table-sortable" id="myTable">
         <thead>
             <tr style="text-align:center">
                 <th>Thời gian giao dịch</th>
@@ -30,3 +37,5 @@
             @endforeach
         </tbody>
     </table>
+</body>
+</html>

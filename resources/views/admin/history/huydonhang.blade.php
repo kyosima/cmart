@@ -11,17 +11,25 @@
 <body>
     <div class="container pt-4 pb-4">
         <div class="row">
-            <div class="col-4">
+            <div class="col-3">
                 <input type="text" class="form-control" id="search_time" onkeyup="search_time()" placeholder="Nhập thời gian tìm kiếm">
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <input type="text" class="form-control" id="search_makhachhang" onkeyup="search_makhachhang()" placeholder="Nhập mã khách hàng tìm kiêm">
             </div>
-            <!-- <div class="col-3">
-                <input type="text" class="form-control" id="search_magiaodich" onkeyup="search_magiaodich()" placeholder="Nhập nội dung tìm kiếm">
-            </div> -->
-            <div class="col-4">
-                <a href="{{asset('admin/lichsudonhanghuy/download')}}" class="btn btn-primary text-white" style="width: 100%">Xuất File Excel</a>
+            <div class="col-3">
+                <input type="text" class="form-control" id="search_magiaodich" onkeyup="search_noidung()" placeholder="Nhập nội dung tìm kiếm">
+            </div>
+
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-6">
+                        <a href="{{asset('admin/lichsudonhanghuy/download/pdf')}}" class="btn btn-primary text-white" style="width: 100%">
+                        Xuất PDF</a></div>
+                    <div class="col-6">
+                        <a href="{{asset('admin/lichsudonhanghuy/download/xlsx')}}" class="btn btn-primary text-white" style="width: 100%">
+                        Xuất Excel</a></div>
+                </div>
             </div>
         </div>
     </div>
@@ -56,24 +64,4 @@
 
 @push('scripts')
 <script type="text/javascript" src="{{asset('public/css/table/table.js')}}"></script>
-<script>
-      function search_magiaodich() {
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("search_magiaodich");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[6];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }       
-    }
-  }
-</script>
 @endpush
