@@ -72,11 +72,11 @@
          <li class="dropdown" >
             <a href="#" class="dropbtn">
             <i class="fas fa-history"></i>
-             <span class="links_name w-100 align-items-center d-flex">Điểm tích lũy <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+             <span class="links_name w-100 align-items-center d-flex">Tiền tích lũy C <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
-            <span class="dropdown-content" style="top: -30px;">
-                <a href="{{route('tongdiemuser')}}">Ví điểm tích lũy khách hàng</a>
+            <span class="dropdown-content" style="top: -90;">
+                <a href="{{route('tongdiemuser')}}">Ví điểm tícha lũy khách hàng</a>
                 <a href="{{route('chuyendiem')}}">Chuyển điểm tích lũy</a>
                 <a href="{{route('napC')}}">Nạp điểm tích lũy</a>
                 <a href="{{route('lichsunhanC')}}">Lịch sử nhận C</a>
