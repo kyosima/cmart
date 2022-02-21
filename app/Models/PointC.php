@@ -8,6 +8,10 @@ class PointC extends Model
 {
     protected $table = 'point_c';
     protected $guarded =[];
+    protected $fillable = [
+        'point_c',
+        'user_id'
+    ];
 
     public function user(){
         return $this->belongsTo(User::class, 'user_id', 'id');

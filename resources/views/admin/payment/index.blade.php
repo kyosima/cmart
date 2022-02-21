@@ -125,10 +125,10 @@
                                         Tên hình thức thanh toán
                                     </th>
                                     <th class="title-text">
-                                        Phương thức trả trước
+                                       Trả trước
                                     </th>
                                     <th class="title-text">
-                                        Phương thức trả sau
+                                        Trả sau
                                     </th>
                                     <th class="title-text title3">
                                         Ghi chú</th>
@@ -359,6 +359,7 @@
                 },
                 {
                     targets: 1,
+                    visible: false,
                     data: 'id',
                     render: function(data, type, row) {
                         return `${row.id}`

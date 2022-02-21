@@ -9,6 +9,11 @@
 @endpush
 
 @section('content')
+<style>
+    div.dtsb-searchBuilder div.dtsb-group{
+        display: none;
+    }
+</style>
 @if(auth()->guard('admin')->user()->can('Thêm cửa hàng'))
     <!-- Modal TẠO CỬA HÀNG MỚI -->
     <div class="modal fade" id="warehouse_create" tabindex="-1" aria-hidden="true">
@@ -32,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Chủ cửa hàng:<span class="required"
+                                <label class="col-md-3 control-label">Admin:<span class="required"
                                     aria-required="true">(*)</span></label>
                                 <div class="col-md-9">
                                     <select class="form-control select-owner" id="select-owner" name="id_owner">
@@ -54,7 +59,7 @@
                                 </div>
                             </div>
                             <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Thành phố:<span class="required"
+                                <label class="col-md-3 control-label">Cấp tỉnh:<span class="required"
                                         aria-required="true">(*)</span></label>
                                 <div class="col-md-9">
                                     <select class="js-location" id="selectCity" name="id_province" data-type="city"
@@ -68,7 +73,7 @@
                                 </div>
                             </div>
                             <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Quận/ huyện:<span class="required"
+                                <label class="col-md-3 control-label">Cấp huyện:<span class="required"
                                         aria-required="true">(*)</span></label>
                                 <div class="col-md-9">
                                     <select class="js-location" id="selectDistrict" name="id_district"
@@ -78,7 +83,7 @@
                                 </div>
                             </div>
                             <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Phường/ Xã:<span class="required"
+                                <label class="col-md-3 control-label">Cấp xã:<span class="required"
                                         aria-required="true">(*)</span></label>
                                 <div class="col-md-9">
                                     <select id="selectWard" name="id_ward" data-type="ward"
@@ -129,21 +134,19 @@
                                 </div>
                                 @endif
                             </div>
-                            @if(auth()->guard('admin')->user()->can('Xóa cửa hàng'))
+                            {{-- @if(auth()->guard('admin')->user()->can('Xóa cửa hàng'))
                             <div>
                                 <div class="input-group action-multiple">
                                     <select class="custom-select" name="action" required="">
                                         <option value="">Chọn hành động</option>
                                         <option value="delete">Xóa</option>
-                                        {{-- <option value="show">Hiện</option>
-                                        <option value="hidden">Ẩn</option> --}}
-                                    </select>
+                                                                          </select>
                                     <div class="input-group-append">
                                         <a href="javascript:multiDel()" class="btn btn-outline-secondary">Áp dụng</a>
                                     </div>
                                 </div>
                             </div>
-                            @endif
+                            @endif --}}
                         </div>
                         <div class="collapse show" id="collapseExample">
                             <div class="row">
@@ -159,9 +162,9 @@
                                                 <th></th>
                                                 <th class="title">STT</th>
                                                 <th class="title">Tên cửa hàng</th>
-                                                <th class="title">Chủ cửa hàng</th>
+                                                <th class="title">Admin CH</th>
                                                 <th class="title">Địa chỉ</th>
-                                                <th class="title">Thao tác</th>
+                                                <th class="title">Chỉnh sửa</th>
                                             </tr>
                                         </thead>
                                         <tbody style="color: #748092; font-size: 14px;">
@@ -229,6 +232,7 @@
             columnDefs: [
                 {
                     targets: 0,
+                    visible: false,
                     defaultContent: '',
                     'render': function(data, type, row, meta){
                         if(type === 'display'){
@@ -239,6 +243,14 @@
                     'checkboxes': {
                         'selectRow': true,
                     }
+                },
+                {
+                    targets: 1,
+                    visible: false,
+                },
+                {
+                    targets: 4,
+                    visible: false,
                 },
             ],
             searchBuilder: {
@@ -315,6 +327,7 @@
                 },
             },
             dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf>tip',
+            
         });
 
         $(document).ready(function() {

@@ -57,7 +57,7 @@
                                     </div>
 
                                     <div class="form-group d-flex mb-2">
-                                        <label class="col-md-3 control-label">Chủ cửa hàng<span class="required"
+                                        <label class="col-md-3 control-label">Admin CH<span class="required"
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
                                             <select class="form-control select-owner" id="select-owner" name="id_owner"
@@ -89,7 +89,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group d-flex mb-2">
-                                        <label class="col-md-3 control-label">Thành phố:<span class="required"
+                                        <label class="col-md-3 control-label">Cấp tỉnh:<span class="required"
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
                                             <select class="form-control js-location" id="selectCity" name="id_province" data-type="city"
@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group d-flex mb-2">
-                                        <label class="col-md-3 control-label">Quận/ huyện:<span class="required"
+                                        <label class="col-md-3 control-label">Cấp huyện:<span class="required"
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
                                             <select class="form-control js-location" id="selectDistrict" name="id_district"
@@ -137,7 +137,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group d-flex mb-2">
-                                        <label class="col-md-3 control-label">Phường/ Xã:<span class="required"
+                                        <label class="col-md-3 control-label">Cấp Xã:<span class="required"
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
                                             <select id="selectWard" name="id_ward" data-type="ward"

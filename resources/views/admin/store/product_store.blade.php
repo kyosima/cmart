@@ -24,18 +24,22 @@
                         </div>
                         <div class="col-md-7">
                             <div class="form-group">
-                                <label class="col-md-12 control-label text-left">Hiển thị cho user:</label>
+                                <label class="col-md-12 control-label text-left">Hiển thị cho:</label>
                                 <div class="col-md-12">
                                     <select name="for_user[]" class="form-control for_user" multiple data-placeholder="Chọn level">
                                         @if ($product->getOriginal('pivot_for_user'))
                                             <?php $arr = explode(',', $product->getOriginal('pivot_for_user')); ?>
-                                            <option value="0" {{in_array("0", $arr) ? 'selected' : ''}}>0</option>
-                                            <option value="1" {{in_array("1", $arr) ? 'selected' : ''}}>1</option>
-                                            <option value="2" {{in_array("2", $arr) ? 'selected' : ''}}>2</option>
+                                            <option value="0" {{in_array("0", $arr) ? 'selected' : ''}}>Khách hàng thân thiết</option>
+                                            <option value="1" {{in_array("1", $arr) ? 'selected' : ''}}>Khách hàng VIP</option>
+                                            <option value="2" {{in_array("2", $arr) ? 'selected' : ''}}>Cộng tác viên</option>
+                                            <option value="3" {{in_array("3", $arr) ? 'selected' : ''}}>Purchasing</option>
+                                            <option value="4" {{in_array("4", $arr) ? 'selected' : ''}}>Khách hàng thương mại</option>
                                         @else
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
+                                            <option value="0">Khách hàng thân thiết</option>
+                                            <option value="1">Khách hàng VIP</option>
+                                            <option value="2">Cộng tác viên</option>
+                                            <option value="3">Purchasing</option>
+                                            <option value="4">Khách hàng thương mại</option>
                                         @endif
                                     </select>
                                 </div>

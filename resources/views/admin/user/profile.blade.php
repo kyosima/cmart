@@ -28,7 +28,6 @@
         }
 
         tbody tr:nth-child(even) td {
-            color: white;
         }
 
         .styled-table tbody tr {
@@ -36,7 +35,6 @@
         }
 
         .styled-table tbody tr:nth-of-type(even) {
-            background-color: #11101d;
         }
 
         .styled-table tbody tr:last-of-type {
@@ -82,7 +80,7 @@
                 <div class="profile-card js-profile-card">
                     <div class="profile-card__img">
                         @if ($user->avatar != null)
-                            <img src="{{ asset('/public/images/' . $user->avatar) }}" alt="profile">
+                            <img src="{{ $user->avatar }}" alt="profile">
                         @else
                             <img src="{{ asset('/public/avatar.png') }}" alt="profile">
                         @endif
@@ -97,8 +95,8 @@
                             @endif
                         </div>
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
-                            <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
-                            <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
+                                            <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
+                                            <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
                         <div class="row">
                             <div class="col-6">
                                 <button class="alert alert-success m-0 text-center"
@@ -106,10 +104,12 @@
                                     đã hoàn thành: {{ $sodonhang }}</button>
                             </div>
                             <!-- <div class="col-4">
-                                <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
-                                </div> -->
+                                                <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
+                                                </div> -->
                             <div class="col-6">
-                                <button class="alert alert-warning m-0" style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C: {{$pointC}}</button>
+                                <button class="alert alert-warning m-0"
+                                    style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C:
+                                    {{ $pointC }}</button>
                             </div>
                         </div>
 
@@ -132,8 +132,8 @@
                                         <input type="phone" class="form-control mb-2" name="phone"
                                             placeholder="Nhập số điện thoại" value="{{ $user->phone }}">
                                         <!-- <span class="text-uppercase">Email</span>
-                                        <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
-                                            value="{{ $user->email }}" readonly=""> -->
+                                                        <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
+                                                            value="{{ $user->email }}" readonly=""> -->
                                     </div>
 
                                     <div class="col-lg-4 text-start">
@@ -141,26 +141,37 @@
                                         <select class="form-select mb-2" name="level" aria-label="Default select example">
                                             <option value="{{ $user->level }}" selected>
                                                 @if ($user->level == 0)
-                                                    Khách hàng bình thường
-                                                @elseif($user->level == 1)
                                                     Khách hàng thân thiết
-                                                @elseif($user->level == 2)
+                                                @elseif($user->level == 1)
                                                     Khách hàng VIP
-                                                @else
+                                                @elseif($user->level == 2)
+                                                    Công tác viên
+                                                @elseif($user->level == 3)
+                                                    Purchasing
+                                                @elseif($user->level == 4)
+                                                    Khách hàng thương mại
                                                 @endif
                                             </option>
                                             @if ($user->level != 0)
-                                                <option value="0">Khách hàng bình thường</option>
+                                                <option value="0">Khách hàng thân thiết</option>
                                             @else
                                             @endif
 
                                             @if ($user->level != 1)
-                                                <option value="1">Khách hàng thân thiết</option>
+                                                <option value="1">Khách hàng VIP</option>
                                             @else
                                             @endif
 
                                             @if ($user->level != 2)
-                                                <option value="2">Khách hàng VIP</option>
+                                                <option value="2">Cộng tác viên</option>
+                                            @else
+                                            @endif
+                                            @if ($user->level != 3)
+                                                <option value="3">Purchasing</option>
+                                            @else
+                                            @endif
+                                            @if ($user->level != 4)
+                                                <option value="4">Khách hàng thương mại</option>
                                             @else
                                             @endif
 
@@ -268,7 +279,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
+                                        {{-- <div class="row mb-3">
                                             <div class="col-lg-6">
                                                 <span class="text-uppercase">Trạng thái KYC</span>
                                                 <select class="form-select" name="check_kyc"
@@ -289,23 +300,66 @@
 
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-lg-6">
-                                                <p class="text-uppercase text-center">Mặt trước CMND</p>
-                                                <img src="{{ asset('/public/images/' . $user->cmnd_image) }}" width="100%"
-                                                    alt="profile" height="300px">
+                                        </div> --}}
+                                        @if ($user->is_ekyc == 1)
+                                            <div class="row mb-3">
+                                                <div class="col-lg-6">
+                                                    <p class="text-uppercase text-center">Mặt trước CMND</p>
+                                                    <img src="{{ $user->cmnd_image }}" width="100%" alt="profile"
+                                                        height="300px">
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <p class="text-uppercase text-center">Mặt sau CMND</p>
+                                                    <img src="{{ $user->cmnd_image2 }}" alt="profile" width="100%"
+                                                        height="300px">
+                                                </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <p class="text-uppercase text-center">Mặt sau CMND</p>
-                                                <img src="{{ asset('/public/images/' . $user->cmnd_image2) }}" alt="profile"
-                                                    height="300px">
-                                            </div>
-                                        </div>
+                                        @endif
 
                                         <div class="pt-5">
-                                            <div class="col-lg-12">
-                                                <h3 class="text-uppercase text-center">- Lịch sử chuyển khoản C -</h3>
+                                            <div class="row mb-3">
+                                                <div class="col-lg-12">
+                                                    <h3 class="text-uppercase text-center">- Lịch sử đơn hàng -</h3>
+                                                    <div class="d-flex justify-content-between">
+                                                        <div>
+                                                            <span>Tổng đơn hàng: <b>{{ formatNumber($user->orders()->count())}}</b></span>
+                                                        </div>
+                                                        <div>
+                                                            <span>Tổng đơn hàng hoàn thành(tháng): <b>{{ formatNumber($user->orders()->where('status',4)->count())}}</b></span>
+                                                        </div>
+                                                        <div>
+                                                            <span>Tổng đơn hàng hủy(tháng): <b>{{ formatNumber($user->orders()->where('status',5)->count())}}</b></span>
+                                                        </div>
+                                                    </div>
+                                                    <table class="styled-table table-sortable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Mã giao dịch</th>
+                                                                <th>Trạng thái</th>
+                                                                <th>Chi tiết đơn hàng</th>
+                                                                <th></th>
+                                                                
+                                                                <!-- <th>Chi tiết đơn hàng</th> -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($user->orders()->latest()->get() as $order)
+                                                                <tr style="text-align:center">
+                                                                    <td>{{ $order->order_code }}</td>
+                                                                    <td>{!! orderStatus($order->status) !!}</td>
+                                                                    <td><a href="{{route('order.show', ['order' => $order->id])}}" class="btn btn-info">Chi tiết</a></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            @endforeach
+                                                            <!-- and so on... -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+
+                                                <div class="col-lg-12">
+                                                    <h3 class="text-uppercase text-center">- Lịch sử chuyển khoản C -</h3>
                                                     <table class="styled-table table-sortable">
                                                         <thead>
                                                             <tr>
@@ -320,20 +374,21 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($lichsuchuyen as $value)
-                                                            <tr style="text-align:center">
-                                                                <td>{{$value->created_at}}</td>
-                                                                <td>{{$value->makhachhang}}</td>
-                                                                <td>{{$value->point_past_chuyen}}</td>
-                                                                <td>{{$value->point_present_chuyen}}</td>
-                                                                <td>{{$value->amount}}</td>
-                                                                <td>{{$value->note}}</td>
-                                                            </tr>
+                                                                <tr style="text-align:center">
+                                                                    <td>{{ $value->created_at }}</td>
+                                                                    <td>{{ $value->makhachhang }}</td>
+                                                                    <td>{{ $value->point_past_chuyen }}</td>
+                                                                    <td>{{ $value->point_present_chuyen }}</td>
+                                                                    <td>{{ $value->amount }}</td>
+                                                                    <td>{{ $value->note }}</td>
+                                                                </tr>
                                                             @endforeach
                                                             <!-- and so on... -->
-                                                        </tbody> 
+                                                        </tbody>
                                                     </table>
+                                                </div>
                                             </div>
-                                            <div class="row mb-3 pt-3">
+                                            {{-- <div class="row mb-3 pt-3">
                                                 <div class="col-lg-12">
                                                     <h3 class="text-uppercase text-center">- Lịch sử nhận C -
                                                     </h3>
@@ -351,17 +406,59 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($lichsunhan as $value)
-                                                            <tr style="text-align:center">
-                                                                <td>{{$value->created_at}}</td>
-                                                                <td>{{$value->makhachhang_chuyen}}</td>
-                                                                <td>{{$value->point_past_chuyen}}</td>
-                                                                <td>{{$value->point_present_chuyen}}</td>
-                                                                <td>{{$value->amount}}</td>
-                                                                <td>{{$value->note}}</td>
-                                                            </tr>
+                                                                <tr style="text-align:center">
+                                                                    <td>{{ $value->created_at }}</td>
+                                                                    <td>{{ $value->makhachhang_chuyen }}</td>
+                                                                    <td>{{ $value->point_past_chuyen }}</td>
+                                                                    <td>{{ $value->point_present_chuyen }}</td>
+                                                                    <td>{{ $value->amount }}</td>
+                                                                    <td>{{ $value->note }}</td>
+                                                                </tr>
                                                             @endforeach
                                                             <!-- and so on... -->
-                                                        </tbody> 
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div> --}}
+                                            <div class="row mb-3 pt-3">
+                                                <div class="col-lg-12">
+                                                    <h3 class="text-uppercase text-center">- Lịch sử nhận C -
+                                                    </h3>
+                                                    <div class="d-flex justify-content-between">
+                                                        <div>
+                                                            <span>Tổng C: <b>{{ formatNumber($user->point_c()->value('point_c'))}}</b></span>
+                                                        </div>
+                                                        <div>
+                                                            <span>Số C khả dụng: <b>{{ formatNumber($user->point_c()->value('point_c'))}}</b></span>
+                                                        </div>
+                                                    </div>
+                                                    <table class="styled-table table-sortable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Thời gian giao dịch</th>
+                                                                <th>Mã giao dịch</th>
+                                                                <th>Nội dung</th>
+                                                                <th>Số dư ban đầu</th>
+                                                                <th>Tăng</th>
+                                                                <th>Giảm</th>
+                                                                <th>Số dư cuối</th>
+                                                                <!-- <th>Chi tiết đơn hàng</th> -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($lichsunhan as $value)
+                                                                <tr style="text-align:center">
+                                                                    <td>{{ Date('H:i:s d/m/Y',strtotime($value->created_at)) }}</td>
+                                                                    <td>{{ $value->transaction_code }}</td>
+                                                                    <td>{{ $value->note }}</td>
+                                                                    <td>{{ $value->point_past_nhan }}</td>
+                                                                    <td>@if($value->point_past_nhan< $value->point_present_nhan) {{ formatNumber($value->amount) }} @endif</td>
+                                                                    <td>@if($value->point_past_nhan > $value->point_present_nhan) {{ formatNumber($value->amount) }} @endif</td>
+                                                                    <td>{{ formatNumber($value->point_present_nhan) }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                            <!-- and so on... -->
+                                                        </tbody>
                                                     </table>
                                                 </div>
                                             </div>

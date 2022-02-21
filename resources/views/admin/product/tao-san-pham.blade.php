@@ -244,6 +244,23 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Thuế suất<span
+                                                    class="required" aria-required="true">(*)</span>:</label>
+                                            <div class="col-md-12">
+                                                <select class="form-control selectpicker" name="tax"
+                                                    required data-placeholder="Chọn thuế suất">
+                                                    <option></option>
+                                                    <option value="0" {{ old("tax") == 0 && old("tax") != null ? "selected":"" }}>0%</option>
+                                                    <option value="0" {{ old("tax") == 0 ? "selected":"" }}>KKK</option>
+                                                    <option value="0" {{ old("tax") == 0 ? "selected":"" }}>KTT</option>
+                                                    <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
+                                                    <option value="0.08" {{ old("tax") == 0.08 ? "selected":"" }}>8%</option>
+                                                    <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="form-group">

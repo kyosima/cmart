@@ -76,10 +76,10 @@
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
             <span class="dropdown-content" style="top: -90;">
-                <a href="{{route('tongdiemuser')}}">Ví điểm tícha lũy khách hàng</a>
-                <a href="{{route('chuyendiem')}}">Chuyển điểm tích lũy</a>
-                <a href="{{route('napC')}}">Nạp điểm tích lũy</a>
-                <a href="{{route('lichsunhanC')}}">Lịch sử nhận C</a>
+                <a href="{{route('tongdiemuser')}}">Tài khoản C / HSKH</a>
+                <a href="{{route('chuyendiem')}}">Chuyển C</a>
+                <a href="{{route('napC')}}">Tài khoản C / C-Mart</a>
+                <a href="{{route('lichsunhanC')}}">Tiền Tích Lũy</a>
                 <a href="{{route('lichsuchuyenkhoan')}}">Lịch sử chuyển khoản C</a>
                 <a href="{{route('lichsutichluy')}}">Lịch sử thanh toán tích luỹ C</a>
                 <a href="{{route('lichsutietkiem')}}">Lịch sử thanh toán tiết kiệm C</a>
@@ -107,7 +107,7 @@
             <li class="dropdown">
                 <a href="#" class="dropbtn">
                     <i class="fas fa-book"></i>
-                    <span class="links_name w-100 align-items-center d-flex">Trang - banner <i
+                    <span class="links_name w-100 align-items-center d-flex">Thông tin <i
                             class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
                 </a>
                 <span class="dropdown-content">

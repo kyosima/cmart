@@ -27,7 +27,7 @@
                     @endif
                 </div>
 
-                @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') &&
+                {{-- @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') &&
         auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
                     <div>
                         <div class="input-group action-multiple">
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                     </div>
-                @endif
+                @endif --}}
 
             </div>
             <div class="portlet-body">
@@ -179,6 +179,7 @@
         );
 
         $('#table-product').DataTable({
+            "order": [[ 3, "desc" ]],
             serverSide: true,
             responsive: true,
             ordering: true,
@@ -192,6 +193,7 @@
                     targets: 0,
                     orderable: false,
                     searchable: false,
+                    visible: false,
                     defaultContent: '',
                     'render': function(data, type, row, meta) {
                         if (type === 'display') {
@@ -213,6 +215,7 @@
                 },
                 {
                     targets: 2,
+                    orderable: false,
                     render: function(data, type, row) {
                         return `${row.sku}`
                     }
@@ -291,7 +294,7 @@
                 {
                     targets: 12,
                     render: function(data, type, row) {
-                        return `${row.weight}`
+                        return `${Math.max(row.weight, ((row.height*row.width*row.length)/6000))}`
                     }
                 },
                 {

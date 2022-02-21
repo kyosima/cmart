@@ -10,7 +10,6 @@
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 @endpush
 
 @section('content')
@@ -44,7 +43,6 @@
                             <img src="{{ asset($product->feature_img) }}" alt="">
                             @foreach (explode(',', $product->gallery) as $item)
                                 <img src="{{ asset($item) }}" alt="">
-
                             @endforeach
                         </div>
                     </div>
@@ -153,10 +151,13 @@
                                             <select name="store_id" id="sl-store" class="form-control">
                                                 <option value="0">---Chọn cửa hàng---</option>
                                                 @foreach ($stores as $store)
-                                                    <option value="{{ $store->id }}" @if ($store->getOriginal('pivot_soluong') == 0) disabled @endif>
-                                                        {{ $store->name }} còn
-                                                        {{ $store->getOriginal('pivot_soluong') }} sản
-                                                        phẩm</option>
+                                                    @if (in_array($user->level, explode(',', $store->getOriginal('pivot_for_user'))))
+                                                        <option value="{{ $store->id }}"
+                                                            @if ($store->getOriginal('pivot_soluong') == 0) disabled @endif>
+                                                            {{ $store->name }} còn
+                                                            {{ $store->getOriginal('pivot_soluong') }} sản
+                                                            phẩm</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                             <p class="text-danger" id="notice-store" style="display:none">Chọn cửa hàng
@@ -526,7 +527,6 @@
                         <div class="product-carousel-header">Sản phẩm đã xem</div>
                         <div class="product-carousel">
                             @foreach ($lastview_product as $item)
-
                                 <div class="product">
                                     <div class="product-top">
                                         <a href="{{ route('san-pham.show', $item->slug) }}">
@@ -542,7 +542,6 @@
                                     <div class="product-bottom">
                                         <p class="product-prices">
                                             @if ($item->productPrice()->value('shock_price') != null || $item->productPrice()->value('shock_price') != 0)
-
                                                 <span
                                                     class="price-was">{{ formatPrice($item->productPrice()->value('regular_price')) }}</span>
                                                 <span
@@ -573,5 +572,4 @@
     <script src="https://kenwheeler.github.io/slick/slick/slick.js"></script>
     <script src="{{ asset('public/js/rating.js') }}"></script>
     <script src="{{ asset('public/js/lastview_product.js') }}"></script>
-
 @endpush

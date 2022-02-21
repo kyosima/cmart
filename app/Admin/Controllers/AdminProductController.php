@@ -24,9 +24,8 @@ class AdminProductController extends Controller
     {
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
         Log::info($message);
-        $products = Product::latest()
-                    ->select(['id', 'slug', 'name', 'sku', 'feature_img', 'weight', 'status'])
-                    ->get();
+        $products = Product::select(['id', 'slug', 'name', 'sku', 'feature_img', 'weight','height','width', 'length', 'status'])
+                    ->orderBy('name', 'desc')->get();
         return view('admin.product.san-pham', compact('products'));
     }
 

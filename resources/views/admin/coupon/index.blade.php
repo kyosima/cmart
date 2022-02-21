@@ -136,7 +136,7 @@
                         </div>
                     @endif
                 </div>
-                @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi') && auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
+                {{-- @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi') && auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
                     <div>   
                         <div class="input-group action-multiple">
                             <select class="custom-select" name="action" required="">
@@ -152,7 +152,7 @@
                             </div>
                         </div>
                     </div>
-                @endif
+                @endif --}}
 
             </div>
             <hr>

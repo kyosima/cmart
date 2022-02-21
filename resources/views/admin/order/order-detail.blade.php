@@ -32,16 +32,16 @@
                                             <div class="form-group mb-3 w-100">
                                                 <label for="fullname">Họ và Tên <abbr class="required"
                                                         title="bắt buộc">*</abbr></label>
-                                                <input type="text" class="form-control" id="fullname" name="fullname" value="{{$order->order_info->fullname}}" required>
+                                                <input type="text" class="form-control" id="fullname" name="fullname" value="{{$order->order_info->fullname}}" required readonly>
                                             </div>
                                             <div class="form-group mb-3 w-100">
                                                 <label for="fullname">Số điện thoại <abbr class="required"
                                                         title="bắt buộc">*</abbr></label>
-                                                <input type="text" class="form-control" id="phone" name="phone" value="{{$order->order_info->phone}}" required>
+                                                <input type="text" class="form-control" id="phone" name="phone" value="{{$order->order_info->phone}}" required readonly>
                                             </div>
                                             <div class="form-group mb-3 w-100">
                                                 <label for="fullname">Email</label>
-                                                <input type="text" class="form-control" id="email" name="email" value="{{$order->order_info->email}}">
+                                                <input type="text" class="form-control" id="email" name="email" value="{{$order->order_info->email}}" readonly>
                                             </div>
                                             <div class="form-group mb-3 w-100">
                                                 <label for="fullname">Trạng thái <abbr class="required"
@@ -55,46 +55,46 @@
                                             <div class="form-group mb-3 w-100">
                                                 <label for="">Tỉnh thành <abbr class="required"
                                                             title="bắt buộc">*</abbr></label>
-                                                    <select name="sel_province" class="form-control select2" data-placeholder="---Chọn tỉnh thành---" required>
+                                                    <select name="sel_province" class="form-control select2" data-placeholder="---Chọn tỉnh thành---" required readonly>
                                                         <option value="{{$order->order_address->province->matinhthanh}}">{{$order->order_address->province->tentinhthanh}}</option>
-                                                        @foreach($provinces as $value)
+                                                        {{-- @foreach($provinces as $value)
                                                             <option value="{{$value->matinhthanh}}">{{$value->tentinhthanh}}</option>
-                                                        @endforeach
+                                                        @endforeach --}}
                                                     </select>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group mb-3 col-sm-12 col-lg-6">
                                                     <label for="">Quận huyện <abbr class="required"
                                                             title="bắt buộc">*</abbr></label>
-                                                        <select class="form-control select2" name="sel_district" data-placeholder="---Chọn quận huyên---" required>
+                                                        <select class="form-control select2" name="sel_district" data-placeholder="---Chọn quận huyên---" required readonly>
                                                             <option value="{{$order->order_address->district->maquanhuyen}}">{{$order->order_address->district->tenquanhuyen}}</option>
-                                                            @foreach($districts as $value)
+                                                            {{-- @foreach($districts as $value)
                                                                 <option value="{{$value->maquanhuyen}}">{{$value->tenquanhuyen}}</option>
-                                                            @endforeach
+                                                            @endforeach --}}
                                                         </select>
                                                     </div>
                                                     <div class="form-group mb-3 col-sm-12 col-lg-6">
                                                     <label for="">Phường xã <abbr class="required"
                                                             title="bắt buộc">*</abbr></label>
-                                                        <select class="form-control select2" name="sel_ward" data-placeholder="---Chọn phường xã---" required>
+                                                        <select class="form-control select2" name="sel_ward" data-placeholder="---Chọn phường xã---" required readonly>
                                                             <option value="{{$order->order_address->ward->maphuongxa}}">{{$order->order_address->ward->tenphuongxa}}</option>
-                                                            @foreach($wards as $value)
+                                                            {{-- @foreach($wards as $value)
                                                                 <option value="{{$value->maphuongxa}}">{{$value->tenphuongxa}}</option>
-                                                            @endforeach
+                                                            @endforeach --}}
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group w-100 mb-3">
                                                     <label for="address">Địa chỉ <abbr class="required"
                                                             title="bắt buộc">*</abbr><small class="text-danger">( Địa chỉ không bao gồm phường xã, quận huyện, tỉnh thành.)</small></label>
-                                                    <input type="text" class="form-control" id="address" name="address" value="{{$order->order_address->address}}" required>
+                                                    <input type="text" class="form-control" id="address" name="address" value="{{$order->order_address->address}}" required readonly>
                                                     
                                                 </div>
                                                 <div class="form-group mb-3 w-100">
                                                 <label for="fullname">Ngày đặt <abbr class="required"
                                                         title="bắt buộc">*</abbr></label>
                                                  
-                                                <input type="text" class="form-control" name="in_created_at" id="fdate" value="{{date('Y-m-d H:i:s', strtotime($order->created_at))}}" required>
+                                                <input type="text" class="form-control" name="in_created_at" id="fdate" value="{{date('Y-m-d H:i:s', strtotime($order->created_at))}}" required readonly>
                                             </div>
                                         </div>
                                     </div>     

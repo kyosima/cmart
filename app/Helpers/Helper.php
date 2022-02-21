@@ -6,7 +6,12 @@ if (!function_exists('formatPrice')) {
         return number_format($price, 0, '.', ',') . ' ₫';
     }
 }
-
+if (!function_exists('formatNumber')) {
+    function formatNumber($number)
+    {
+        return number_format($number, 0, ',', '.');
+    }
+}
 if (!function_exists('formatPriceAdmin')) {
     function formatPriceAdmin($price)
     {
