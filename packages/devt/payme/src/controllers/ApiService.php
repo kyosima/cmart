@@ -1,10 +1,11 @@
 <?php 
 
-namespace Devt\Payme\controllers;
+namespace Devt\Payme\Controllers;
 
 use Devt\Payme\core\Crypt\Crypt_RSA;
 use Devt\Payme\core\Crypt\CryptoJSAES;
 use Devt\Payme\Models\SettingPaymentPayme;
+use Illuminate\Support\Facades\Http;
 
 class ApiService
 {
@@ -20,7 +21,7 @@ class ApiService
 
     public function PayMEApi($url, $method = 'POST', $payload = [])
     {
-      return $this->RequestSecurity($url, $method, $payload);
+      return $this->call($url, $method, $payload);
     }
 
     private function call($url, $method = 'POST', $payload = []){

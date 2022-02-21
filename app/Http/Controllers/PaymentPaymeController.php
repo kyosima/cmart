@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Devt\Payme\Models\SettingPaymentPayme;
-use Devt\Payme\controllers\ApiService;
+use Devt\Payme\Controllers\ApiService;
 use App\Models\OrderPayme;
 use App\Models\Order;
 
