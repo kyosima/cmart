@@ -156,12 +156,13 @@
                             </div>
                             <div class="box-infocart list-order list-store">
                                 @foreach ($order_stores as $order_store)
-                                    <h3 class="title">Thông tin đơn hàng -
-                                        {{ $order_store->store()->value('name') }}:
+                                    <h3 class="title">Cửa hàng
+                                        {{ $order_store->store()->value('name') }} - {{ formatMethod($order_store->shipping_method) }}
                                     </h3>
                                     <table class="table table-bordered table-striped">
                                         <tbody>
                                             <tr>
+                                                <th style=" border">Mã sản phẩm</th>
                                                 <th style=" border">Tên sản phẩm</th>
                                                 <th style="">Số lượng</th>
                                                 <th style="">Trọng lượng</th>
@@ -169,6 +170,7 @@
                                             </tr>
                                             @foreach ($order_store->order_products()->get() as $row)
                                                 <tr>
+                                                    <td>{{$row->product()->value('sku')}}</td>
                                                     <td><a
                                                             href="{{ route('san-pham.show', $row->slug) }}">{{ $row->name }}</a>
                                                     </td>

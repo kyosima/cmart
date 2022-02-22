@@ -49,7 +49,11 @@ class CartController extends Controller
         $storeid = $_POST['storeid'];
         Cart::instance($storeid)->update($rowId, ['qty' => $qty]);
         return response()->json([
-            formatPrice(Cart::instance($storeid)->get($rowId)->price * $qty)
+            formatPrice(Cart::instance($storeid)->get($rowId)->price * $qty),
+            // formatNumber(Cart::instance($storeid)->get($rowId)->model->product_price()->value('cpoint')),
+            // formatNumber(Cart::instance($storeid)->get($rowId)->model->product_price()->value('mpoint')),
+
+
         ], 200);
     }
     public function toCheckout(Request $request)
@@ -92,8 +96,8 @@ class CartController extends Controller
                 $subtotal += intval(str_replace(",", "", $cart->subtotal()));
                 $count_cart += $cart->count();
                 foreach ($cart->content() as $row){
-                    $c_point += $row->model->productPrice()->value('cpoint');
-                    $m_point += $row->model->productPrice()->value('mpoint');
+                    $c_point += $row->model->productPrice()->value('cpoint') * $row->qty;
+                    $m_point += $row->model->productPrice()->value('mpoint') * $row->qty;
                 }
             }
         }

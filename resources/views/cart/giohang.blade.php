@@ -48,10 +48,10 @@
                                                 <b>Mã sản phẩm</b>
                                             </div>
                                             <div class="col-lg-1 col-md-2 col-xs-3 text-center">
-                                                <b> Điểm dịch vụ</b>
+                                                <b> C</b>
                                             </div>
                                             <div class="col-lg-1 col-md-2 col-xs-3 text-center">
-                                                <b> Tiền tích lũy</b>
+                                                <b> M</b>
                                             </div>
                                             <div class="col-lg-1 col-md-2 col-xs-3 text-center">
                                                 <b> Đơn giá</b>
@@ -180,14 +180,14 @@
                         <form action="{{ route('cart.checkout') }}" method="post">
                             @csrf
                             <input type="hidden" name="store_ids" value="">
-                            <div class="d-flex justify-content-between row">
-                                <div class="col-md-3">
-                                    <b>Tổng giá trị: </b><span class="text-danger" id="total">0 đ</span>
+                            <div class="d-md-flex justify-content-between ">
+                                <div class="">
+                                    <b>Tổng giá trị Sản phẩm: </b><span class="text-danger" id="total">0 đ</span>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="">
                                     <b>Tiền tích lũy (C): </b><span class="text-danger" id="cpoint">0</span>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="">
                                     <b>Điểm dịch vụ (M): </b><span class="text-danger" id="mpoint">0</span>
                                 </div>
                             </div>

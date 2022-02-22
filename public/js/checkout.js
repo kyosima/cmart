@@ -1,4 +1,7 @@
 $('input[name="address"], select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function() {
+    getship();
+});
+function getship(){
     address = $('input[name="address"]');
     ward = $('select[name="sel_ward"]');
     district = $('select[name="sel_district"]');
@@ -6,8 +9,7 @@ $('input[name="address"], select[name="sel_ward"], select[name="sel_district"], 
     if ((address.val() != '') && (ward.val() != '') && (district.val() != '') && (province.val() != '')) {
         cal_ship(province, district, ward, address);
     }
-});
-
+}
 function cal_ship(province, district, ward, address) {
     shipcmart = [];
     $(".list-stores-body input.receiverstore:checked").each(function() {
@@ -53,7 +55,7 @@ function cal_ship(province, district, ward, address) {
                             console.log(key);
                             console.log(val);
                             $('#' + store_name + ' .ship-normal').empty().append(' <input checked type="radio" onclick="calTotal(this)" data-id="' + store_id + '" data-type="1" data-store="' + store_name + '" id="ship_normal' + store_name + '" name="shipping_value' + store_name + '" value="' + val.value + '">' +
-                                ' <label for="ship_normal' + store_name + '"  >Thường: ' + val.text + '</label>');
+                                ' <label for="ship_normal' + store_name + '"  >Tiêu chuẩn: ' + val.text + '</label>');
                             $('#' + store_name + ' input.ship-fee').val(val.value);
 
                         } else {

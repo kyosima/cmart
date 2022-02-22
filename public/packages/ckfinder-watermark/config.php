@@ -170,8 +170,8 @@ $config['ImageWatermark'] = array(
     'imagePath' => __DIR__.'/watermark/logo-cpc.png',
     'size' => 1,
     'position' => array(
-        'right'  => 10,
-        'bottom' => 10,
+        'right'  => 12,
+        'bottom' => 12,
         
     )
 );

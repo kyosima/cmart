@@ -22,7 +22,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\PaymentPaymeController;
-
+use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 class CheckoutController extends Controller
 {
@@ -34,12 +34,11 @@ class CheckoutController extends Controller
     public function index()
     {        
         if (Auth::check()) {
-            if (1 > 0) {
-                if (Auth::check()) {
-                    $user = Auth::user();
-                } else {
-                    $user = null;
+                $user = Auth::user();
+                if($user->is_ekyc == 0){
+                    return redirect()->route('ekyc.getVerify');
                 }
+       
                 if (Session::has('store_ids') == false) {
                     return redirect()->route('cart.index');
                 }
@@ -81,9 +80,7 @@ class CheckoutController extends Controller
                     'count_cart' => $count_cart,
                     'store_ids' => $store_ids
                 ]);
-            } else {
-                return redirect()->route('cart.index');
-            }
+           
         } else {
             return redirect()->route('account');
         }
@@ -91,14 +88,14 @@ class CheckoutController extends Controller
 
     public function getAddress(Request $request)
     {
-        $address = StoreAddress::find($request->id)->first();
-        $a_province = Province::where('matinhthanh', $address->id_province)->first();
-        $a_district = District::where('maquanhuyen', $address->id_district)->first();
-        $a_ward = Ward::where('maphuongxa', $address->id_ward)->first();
+        $user = Auth::user();
+        $a_province = Province::where('matinhthanh', $user->id_tinhthanh)->first();
+        $a_district = District::where('maquanhuyen', $user->id_quanhuyen)->first();
+        $a_ward = Ward::where('maphuongxa', $user->id_phuongxa)->first();
         $province = Province::select('matinhthanh', 'tentinhthanh')->get();
         $district = $a_province->district()->select('maquanhuyen', 'tenquanhuyen')->get();
         $ward = $a_district->ward()->select('maphuongxa', 'tenphuongxa')->get();
-        $arr = [$address, $a_province, $a_district, $a_ward, $province, $district, $ward];
+        $arr = [$user,$a_province, $a_district, $a_ward, $province, $district, $ward];
         return $arr;
     }
 
@@ -122,7 +119,7 @@ class CheckoutController extends Controller
         }
         $store_address = $request->input('store_address');
         $show_vat = $request->input('show_vat');
-        $payment_method = $request->input('payment_method');
+        // $payment_method = $request->input('payment_method');
         $store_ids = Session::get('store_ids');
         $order = Order::create([
             'user_id' => $user_id
@@ -199,7 +196,7 @@ class CheckoutController extends Controller
             $vat->save();
         }
         $order->order_code = 'CMART-' . $order->id . time();
-        $order->payment_method = $payment_method;
+        $order->payment_method = null;
         $order->tax = $total_tax;
         $order->shipping_total = $total_shipping;
         $order->c_point = $total_c;
@@ -223,27 +220,31 @@ class CheckoutController extends Controller
 
         Session::forget('store_ids');
         Session::put('order_code', $order->order_code);
-        if($payment_method == 2){
-            $paymentPaymeController = new PaymentPaymeController();
-            $result = $paymentPaymeController->PaymentPayme($order);
-            $result = json_decode($result);
-            if( $result->code == '105000'){
-                $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
-                return redirect($result->data->url);
-            }else{
-                return redirect()->route('paymentFail');
+        // if($payment_method == 2){
+        //     $paymentPaymeController = new PaymentPaymeController();
+        //     $result = $paymentPaymeController->PaymentPayme($order);
+        //     $result = json_decode($result);
+        //     if( $result->code == '105000'){
+        //         $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
+        //         return redirect($result->data->url);
+        //     }else{
+        //         return redirect()->route('paymentFail');
                 
-            }
+        //     }
             
-        }else{
-            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-        }
+        // }else{
+            return redirect()->route('checkout.getPayment', ['order_code' => $order->order_code]);
+        // }
           
         // } else {
         //     return redirect()->route('cart.index');
         // }
     }
-
+    public function getPayment(Request $request){
+        $user = Auth::user();
+        $order = Order::whereOrderCode($request->order_code)->first();
+        return view('checkout.payment', compact('order', 'user'));
+    }
 
     public function orderSuccess(Request $request)
     {

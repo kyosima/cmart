@@ -16,6 +16,8 @@ use App\Http\Controllers\CPointController;
 use App\Http\Controllers\EkycController;
 
 use App\Http\Controllers\PaymentPaymeController;
+use Psy\VersionUpdater\Checker;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,9 +62,10 @@ Route::prefix('gio-hang')->group(function () {
 
 });
 
-Route::prefix('thanh-toan')->group(function () {
+Route::prefix('dat-hang')->group(function () {
     Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('post', [CheckoutController::class, 'postOrder'])->name('checkout.post');
+    Route::get('thanh-toan', [CheckoutController::class, 'getPayment'])->name('checkout.getPayment');
     Route::get('get-address', [CheckoutController::class, 'getAddress'])->name('checkout.getAddress');
     Route::get('thanh-cong/{order_code}', [CheckoutController::class, 'orderSuccess'])->name('checkout.orderSuccess');
     Route::get('cal-ship', [CheckoutController::class, 'calShip'])->name('checkout.calship');

@@ -203,7 +203,7 @@
                                             <div class="col-md-12">
                                                 <input type="text" class="form-control number-separator-2"
                                                 required value="{{ old('product_wholesale_price') }}">
-                                                <input type="hidden" id="product_wholesale_price" required name="product_wholesale_price" value="{{ old('product_wholesale_price') }}">
+                                                <input type="hidden" id="product_wholesale_price" required name="product_wholesale_price" value="{{ old('product_shock_price') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -230,20 +230,7 @@
                                                 <input type="hidden" id="phi_xuly" name="phi_xuly" value="{{ old('phi_xuly') }}">
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-12 control-label text-left">Thuế suất<span
-                                                    class="required" aria-required="true">(*)</span>:</label>
-                                            <div class="col-md-12">
-                                                <select class="form-control selectpicker" name="tax"
-                                                    required data-placeholder="Chọn thuế suất">
-                                                    <option></option>
-                                                    <option value="0" {{ old("tax") == 0 && old("tax") != null ? "selected":"" }}>0%</option>
-                                                    <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
-                                                    <option value="0.08" {{ old("tax") == 0.08 ? "selected":"" }}>8%</option>
-                                                    <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="form-group">
                                             <label class="col-md-12 control-label text-left">Thuế suất<span
                                                     class="required" aria-required="true">(*)</span>:</label>

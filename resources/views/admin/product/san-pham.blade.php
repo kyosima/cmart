@@ -294,7 +294,7 @@
                 {
                     targets: 12,
                     render: function(data, type, row) {
-                        return `${Math.max(row.weight, ((row.height*row.width*row.length)/6000))}`
+                        return `${Math.max(row.weight/1000, ((row.height*row.width*row.length)/6000))}`
                     }
                 },
                 {

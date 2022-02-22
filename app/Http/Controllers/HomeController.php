@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use App\Models\PointC;
 use App\Models\PointM;
 use App\Models\PointCHistory;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -36,7 +37,7 @@ class HomeController extends Controller
 
     public function getAccessAccount() {
         if (Auth::check()) {;
-            return view('home');
+            return redirect()->route('home');
         }
         else {
             $province = Province::select('matinhthanh', 'tentinhthanh')->get();
@@ -117,6 +118,12 @@ class HomeController extends Controller
     
             //     $us->save();
             // }
+            if(Session::has('url_back')){
+                $url_back = Session::get('url_back');
+                Session::forget('url_back');
+                return redirect($url_back);
+            }
+
             return redirect('/');
         }
         else {

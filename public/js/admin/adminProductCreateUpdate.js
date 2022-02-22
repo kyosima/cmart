@@ -34,22 +34,22 @@ $(document).ready(function () {
                 number: true,
             },
             product_price: {
-                min: 1,
+                min: 0,
                 required: true,
                 number: true,
             },
             product_regular_price: {
-                min: 1,
+                min: 0,
                 required: true,
                 number: true,
             },
             product_wholesale_price: {
-                min: 1,
+                min: 0,
                 required: true,
                 number: true,
             },
             product_shock_price: {
-                min: 1,
+                min: 0,
                 required: true,
                 number: true,
             },

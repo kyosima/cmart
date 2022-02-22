@@ -12,6 +12,8 @@ use App\Models\ProductRating;
 use Illuminate\Support\Facades\URL;
 use App\Models\Store;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 
 class ProductController extends Controller
 {
@@ -27,10 +29,9 @@ class ProductController extends Controller
         $brandIds = $products->pluck('brand')->toArray();
         $brands = array_unique($brandIds);
         $brands = Brand::whereIn('id', $brands)->get();
-        $countBrand = array_count_values($brandIds);                                    
+        $countBrand = array_count_values($brandIds);
 
         return view('product.category', compact('products', 'subcategory', 'brands', 'countBrand'));
-    
     }
 
     /**
@@ -62,7 +63,7 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
-        {
+        if (Auth::check()) {
             //
             $user = Auth::user();
             $product = Product::whereSlug($slug)->firstorfail();
@@ -72,7 +73,7 @@ class ProductController extends Controller
             SEOMeta::addMeta('name', $product->name, 'itemprop');
             SEOMeta::setDescription($product->meta_desc);
             SEOMeta::addKeyword(explode(",", $product->meta_keyword));
-    
+
             OpenGraph::setTitle($product->name)
                 // ->setDescription('Some Article')
                 ->setSiteName('cmart.vn')
@@ -85,28 +86,34 @@ class ProductController extends Controller
                 ->addProperty('og:image:width', 600)
                 ->addProperty('og:image:height', 600);
             $categoryIds = ProductCategory::where('id', $parentId = ProductCategory::where('id', $product->category_id)
-            ->pluck('category_parent')->toArray())
-            ->pluck('category_parent')
-            ->merge($parentId)
-            ->merge($product->category_id)
-            ->toArray();
-            $categoryIds = array_diff( $categoryIds, [0] );
+                ->pluck('category_parent')->toArray())
+                ->pluck('category_parent')
+                ->merge($parentId)
+                ->merge($product->category_id)
+                ->toArray();
+            $categoryIds = array_diff($categoryIds, [0]);
             $new_products = Product::latest()->paginate(5);
             $related_product = $product->productUpsell($product->id);
             $lastview_product = Product::latest()->paginate(10);
             $ratings = $product->ratings()->latest()->get();
             $rating_sum = $product->ratings()->sum('value');
             $rating_count = $product->ratings()->count();
-            
-            $rating_average = $rating_sum >0 ?  number_format($rating_sum / $rating_count,1):0;
-            $rating_list = [$product->ratings()->whereValue(5)->count(),
-                            $product->ratings()->whereValue(4)->count(),
-                            $product->ratings()->whereValue(3)->count(),
-                            $product->ratings()->whereValue(2)->count(),
-                            $product->ratings()->whereValue(1)->count()
-                           ];
+
+            $rating_average = $rating_sum > 0 ?  number_format($rating_sum / $rating_count, 1) : 0;
+            $rating_list = [
+                $product->ratings()->whereValue(5)->count(),
+                $product->ratings()->whereValue(4)->count(),
+                $product->ratings()->whereValue(3)->count(),
+                $product->ratings()->whereValue(2)->count(),
+                $product->ratings()->whereValue(1)->count()
+            ];
             $stores = $product->stores()->get();
-            return view('product.product_detail', ['user'=>$user,'stores'=>$stores,'related_product'=>$related_product,'ratings'=>$ratings, 'rating_list'=>$rating_list,'rating_count'=>$rating_count,'rating_average'=>$rating_average, 'product' => $product, 'categoryIds' => $categoryIds, 'new_products'=>$new_products, 'lastview_product'=>$lastview_product]);
+            return view('product.product_detail', ['user' => $user, 'stores' => $stores, 'related_product' => $related_product, 'ratings' => $ratings, 'rating_list' => $rating_list, 'rating_count' => $rating_count, 'rating_average' => $rating_average, 'product' => $product, 'categoryIds' => $categoryIds, 'new_products' => $new_products, 'lastview_product' => $lastview_product]);
+        } else {
+            
+            Session::put('url_back', URL::current());
+
+            return redirect()->route('account');
         }
     }
 
@@ -143,22 +150,21 @@ class ProductController extends Controller
     {
         //
     }
-    
 
-    public function postRating(Request $request){
+
+    public function postRating(Request $request)
+    {
         $phone = $_POST['phone'];
         $value = $_POST['value'];
         $fullname = $_POST['fullname'];
         $comment = $_POST['comment'];
         $product_id = $_POST['product_id'];
         $check = ProductRating::wherePhone($phone)->whereProductId($product_id)->first();
-        if($check == null){
-            ProductRating::insert(['phone'=> $phone, 'fullname'=>$fullname, 'value'=>$value, 'product_id'=>$product_id, 'comment'=>$comment]);
+        if ($check == null) {
+            ProductRating::insert(['phone' => $phone, 'fullname' => $fullname, 'value' => $value, 'product_id' => $product_id, 'comment' => $comment]);
             return 'Gửi đánh giá thành công';
-        }else{
+        } else {
             return  'Bạn đã đánh giá sản phẩm này rồi';
         }
     }
-
-   
 }

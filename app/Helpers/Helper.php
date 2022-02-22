@@ -76,10 +76,19 @@ if (!function_exists('getPriceOfLevel')) {
     {
         if (Auth::check()) {
             $user = Auth::user();
-            if($user->level ==0){
-                return $product->productPrice()->value('regular_price');
-            }else{
-                return $product->productPrice()->value('shock_price');
+            switch ($user->level) {
+                case 0: 
+                    return $product->productPrice()->value('regular_price');
+                case 1:
+                    return $product->productPrice()->value('shock_price');
+                case 3:
+                    return $product->productPrice()->value('shock_price');
+                case 4: 
+                    return $product->productPrice()->value('price');
+                case 5:
+                    return $product->productPrice()->value('wholesale_price');
+                default:
+                    return $product->productPrice()->value('regular_price');
             }
         }else{
 

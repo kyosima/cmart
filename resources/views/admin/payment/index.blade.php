@@ -132,7 +132,7 @@
                                     </th>
                                     <th class="title-text title3">
                                         Ghi chú</th>
-                                    <th class="title-text title4">
+                                    <th class="title-text title4" style="width: 200px">
                                         Thao tác</th>
                                 </tr>
                             </thead>

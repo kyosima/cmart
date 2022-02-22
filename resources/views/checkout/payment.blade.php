@@ -13,211 +13,51 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-xl-12 col-sm-12 col-12">
+                <div class="col-xl-8 col-sm-12 col-12">
                     <div class="card-left">
-                        <div class="card-information">
-                            <div class="card-information-header pt-4">
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-xs-12 col-sm-12">
-                                        <h3 class="text-center">THÔNG TIN NHẬN HÀNG</h3>
-                                    </div>
-                                    {{-- <div class="col-xl-6 col-md-6 col-xs-12 col-sm-12">
-                                        <select id="pickAdress" class="form-control"
-                                            data-url="{{ route('checkout.getAddress') }}">
-                                            <option value="">Chọn địa chỉ đã lưu</option>
-                                            @foreach ($store_address as $adr)
-                                                <option value="{{ $adr->id }}">{{ $adr->fullname }}</option>
-                                            @endforeach
-                                        </select> 
-                                        
-                                    </div> --}}
-                                </div>
-
-                            </div>
-                            <hr>
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                            <div class="col-md-12 col-12">
-                                <label for="pickAdress"><input type="checkbox" id="pickAdress" name=""
-                                        data-url="{{ route('checkout.getAddress') }}"> Thông tin nhận hàng giống
-                                    thông tin đặt hàng</label>
-                            </div>
-                            <div class="card-information-body">
-                                
-                                <div class="col-xl-6 ">
-                                    <div class="form-group">
-                                        <label for="">Họ và tên<sup class="text-danger">*</sup></label>
-                                        <input type="text" class="form-control" name="fullname"
-                                            placeholder="Mời nhập họ và tên có dấu" required value="{{ $user->hoten }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Cấp tỉnh<sup class="text-danger">*</sup></label>
-                                        <select name="sel_province" class="form-control select2"
-                                            data-placeholder="---Chọn tỉnh thành---" required>
-
-                                            <option value="">---Chọn tỉnh thành---</option>
-                                            @foreach ($province as $value)
-                                                <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Cấp xã<sup class="text-danger">*</sup></label>
-                                        <select class="form-control select2" name="sel_ward"
-                                            data-placeholder="---Chọn phường xã---" required>
-
-                                            <option value="">---Chọn phường xã---</option>
-                                        </select>
-                                    </div>
-                                    {{-- <div class="form-group">
-                                        <label for="">Email<sup class="text-danger">*</sup></label>
-                                        <input type="email" class="form-control" name="email" placeholder="Nhập email"
-                                            value="{{ $user->email }}">
-                                    </div> --}}
-                                </div>
-                                <div class="col-xl-6 ">
-                                    <div class="form-group">
-                                        <label for="">Số điện thoại<sup class="text-danger">*</sup></label>
-                                        <input type="text" class="form-control" name="phone"
-                                            placeholder="Mời nhập số điện thoại nhận hàng" value="{{ $user->phone }}"
-                                            required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Cấp huyện<sup class="text-danger">*</sup></label>
-                                        <select class="form-control select2" name="sel_district"
-                                            data-placeholder="---Chọn quận huyên---" required>
-
-                                            <option value="">---Chọn quận huyện---</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>
-                                        <input type="text" name="address" class="form-control" value=""
-                                            placeholder="Mời nhập địa chỉ" required>
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="">Ghi chú</label>
-                                    <input type="text" name="note" class="form-control"
-                                        placeholder="Mời nhập ghi chú đơn hàng">
-                                </div>
-                            </div>
-                            {{-- <div class="col-xl-12">
-                                <div class="form-group">
-
-                                    <label onclick="storeaddress()"><input type="checkbox" id="store-address"
-                                            name="store_address" value="1"> Lưu lại thông
-                                        tin người nhận</label>
-
-
-                                </div>
-
-                            </div> --}}
-                            <br />
-                        </div>
-                        <div class="phuongthuc-thanhtoan">
-                            <div class="phuongthuc-thanhtoan-card-header">
-                                <h3>THÔNG TIN HÓA ĐƠN GTGT</h3>
-                            </div>
-                            <hr>
-                            <div class="phuongthuc-thanhtoan-card-body">
-
-                                <!--<div class="form-group">-->
-                                <!--    <label onclick="showvat()"><input type="checkbox" id="show-vat" name="show_vat"-->
-                                <!--            value="1"> Xác nhận xuất hóa GTGT</label>-->
-                                <!--</div>-->
-                                <input type="hidden" id="show-vat" name="show_vat" value="1">
-                                <div class="form-vat">
-                                    <div class="form-group">
-                                        <!--<label for="">Tên người mua<sup class="text-danger">*</sup></label>-->
-                                        <input type="text" name="vat_email" class="form-control" value=""
-                                            placeholder="Mời nhập email nhận hóa đơn">
-                                    </div>
-                                    <div class="form-group">
-                                        <!--<label for="">Tên công ty<sup class="text-danger">*</sup></label>-->
-                                        <input type="text" name="vat_company" class="form-control" value=""
-                                            placeholder="Mời nhập tên công ty">
-                                    </div>
-                                    <div class="form-group">
-                                        <!--<label for="">Mã số thuế<sup class="text-danger">*</sup></label>-->
-                                        <input type="number" name="vat_mst" class="form-control" value=""
-                                            placeholder="Mời nhập mã số thuế công ty">
-                                    </div>
-                                    <div class="form-group">
-                                        <!--<label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>-->
-                                        <input type="text" name="vat_address" class="form-control" value=""
-                                            placeholder="Mời nhập địa chỉ công ty">
-                                    </div>
-                                    <div>
-
-                                        <p class="mb-0">- Nếu Quý Khách Hàng không nhập thông tin thì C-Mart sẽ
-                                            ghi nhận <b>“Người mua không
-                                                lấy hóa đơn”</b>, và không gửi hóa đơn GTGT đến Quý Khách Hàng.</p>
-                                        <p class="mb-0">- C-Mart xin phép từ chối hỗ trợ xử lý các thao tác về hóa
-                                            đơn sau khi đặt hàng.
-                                        </p>
-                                    </div>
-                                    <br />
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-stores-checkout">
+                        <div class="list-stores-checkout mt-0">
                             <div class="list-stores-title text-center" id="url-update-type"
                                 data-url="{{ route('checkout.updateTypeShip') }}">
-                                <h3>Danh sách cửa hàng</h3>
+                                <h3>Danh sách sản phẩm</h3>
                             </div>
                             <hr>
                             <div class="list-stores-body">
-                                @foreach (explode(',', $store_ids) as $store_id)
-                                    @php
+                                @foreach ($order->order_stores()->get() as $order_store)
+                                    {{-- @php
                                         $cart = Cart::instance($store_id);
                                         $store = App\Models\Store::whereId($store_id)->first();
-                                    @endphp
-                                    <div class="store-block" id="store{{ $store_id }}">
+                                    @endphp --}}
+                                    <div class="store-block" id="store{{ $order_store->id_store }}">
                                         <div class="store-title d-flex justify-content-between">
-                                            <h4>{{ $store->name }}</h4>
+                                            <h4>Cửa hàng {{ $order_store->store()->value('name') }}</h4>
 
-                                            <label for="receiverstore{{ $store_id }}"><input class="receiverstore"
+                                            {{-- <label for="receiverstore{{ $store_id }}"><input class="receiverstore"
                                                     type="checkbox" id="receiverstore{{ $store_id }}"
                                                     name="receiverstore{{ $store_id }}" value="{{ $store_id }}"
                                                     data-storeid="{{ $store_id }}" onclick="receiverStore(this)"> Nhận
                                                 tại cửa
-                                                hàng</label>
+                                                hàng</label> --}}
                                         </div>
-                                        {{-- <div class="store-body">
-                                            @foreach ($cart->content() as $row)
-                                                <div id="{{ $row->rowId }}" class="store-product row">
+                                        <div class="store-body">
+                                            @foreach ($order_store->order_products()->get() as $row)
+                                                <div id="" class="store-product row">
                                                     <div class="product-image col-1 p-2">
-                                                        <img src="{{ asset($row->model->feature_img) }}">
+                                                        <img src="{{ asset($row->feature_img) }}">
                                                     </div>
                                                     <div class="product-info col-11 pt-2 pb-2">
                                                         <div class="product-name">
                                                             <p>{{ $row->name }}</p>
                                                         </div>
                                                         <div class="product-cart d-flex justify-content-between">
-                                                            <div class="quantity">SL: {{ $row->qty }}</div>
+                                                            <div class="quantity">SL: {{ $row->quantity }}</div>
                                                             <div class="price">Tổng tiền:
-                                                                {{ formatPrice($row->price * $row->qty) }}
+                                                                {{ formatPrice($row->price * $row->quantity) }}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             @endforeach
-                                        </div> --}}
+                                        </div>
                                         <div class="store-footer d-none justify-content-between ">
                                             <div>Phương thức: <span class="name-method"></span></div>
                                             <div><span class="ship-normal"> </span><span class="ship-fast"></span>
@@ -232,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                 <div class="col-xl-4 col-sm-12 col-12 d-none">
+                <div class="col-xl-4 col-sm-12 col-12">
                     <div class="card-left">
                         <div class="makhuyenmai">
                             <div class="makhuyenmai-header">
@@ -240,12 +80,14 @@
                             </div>
                             <div class="makhuyenmai-body">
                                 <input type="text" class="makhuyenmai-body-input" placeholder="Nhập mã...">
-                                <button class="btn btn-primary" type="button">Áp dụng</button>
+                                <button class="btn btn-primary" id="btn-apply-coupon" type="button">Áp dụng</button>
+                                <p style="display: none" class="text-danger alert-coupon">Hệ thống không xác thực được mã này. Vui lòng liên hệ Hotline 0899.663.883 để được hỗ trợ</p>
+
                             </div>
                         </div>
                         <div class="donhang">
                             <div class="donhang-header">
-                                <h3>ĐƠN HÀNG</h3> <span>({{ $count_cart }} SẢN PHẨM)</span>
+                                <h3>ĐƠN HÀNG</h3> <span> SẢN PHẨM)</span>
                             </div>
                             <div class="donhang-body">
 
@@ -284,33 +126,22 @@
                                     </div> --}}
                                     <div class="card-body">
                                         <p class="tamtinh"> <span class="tamtinh-title">Tạm tính:</span> <span
-                                                class="tamtinh-price">{{ formatPrice($cart_subtotal) }} </span> </p>
+                                                class="tamtinh-price">{{ formatPrice($order->sub_total) }} </span> </p>
 
                                         <hr>
                                         {{-- <p class="tamtinh"> <span class="tamtinh-title">Phí xử lý:</span> <span
                                                 class="tamtinh-price">{{ formatPrice($process_fee) }} </span> </p>
                                         <hr> --}}
                                         <p class="tamtinh"> <span class="tamtinh-title">Thuế VAT:</span> <span
-                                                class="tamtinh-price">{{ formatPrice($tax) }} </span> </p>
+                                                class="tamtinh-price">{{ formatPrice($order->tax) }} </span> </p>
                                         <hr>
                                         <p class="tamtinh"><span>Phí vận chuyển:</span> <span id="amount-shipping"
-                                                class="tamtinh-price">0 đ</span></p>
-                                        <div class="form-group" id="method-ship"
-                                            data-url="{{ route('checkout.calship') }}"
-                                            data-urlcmartship="{{ route('checkout.calCmartShip') }}">
-                                            {{-- <input type="radio" id="vship" name="shipping_method" value="v_ship" checked
-                                                style="display:none">
-                                            <label for="vship" id="lbvship" style="display:none">Viettel Shipping
-                                                ({{ formatPrice($v_ship) }})</label>
-                                            <input type="radio" id="cship" name="shipping_method" value="c_ship"
-                                                style="display:none">
-                                            <label for="cship" id="lbcship" style="display:none">CMart Shipping
-                                                ({{ formatPrice($c_ship) }})</label> --}}
-                                        </div>
+                                                class="tamtinh-price">{{formatPrice($order->shipping_total)}} đ</span></p>
+                                      
                                         <hr>
                                         <p class="total"> <span>Giá trị giao dịch:</span> <span
                                                 class="total-price" id="total-price-checkout"
-                                                data-value="{{ $cart_total }}">{{ formatPrice($cart_total) }}
+                                                data-value="{{ $order->total }}">{{ formatPrice($order->total) }}
                                             </span> </p>
                                     </div>
                                 </div>
@@ -325,6 +156,7 @@
                             <div class="chinhsach-body">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
+                                        <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="nhanhang"
                                                 id="check1">
@@ -334,6 +166,7 @@
                                         </div>
                                     </li>
                                     <li class="list-group-item">
+                                        <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="giaonhan"
                                                 id="check2">
@@ -342,6 +175,7 @@
                                         </div>
                                     </li>
                                     <li class="list-group-item">
+                                        <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="doitra" id="check3">
                                             <label class="custom-control-label" for="check3">Tôi đã đọc và đồng ý với Chính
@@ -349,6 +183,7 @@
                                         </div>
                                     </li>
                                     <li class="list-group-item">
+                                        <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="baohanh" id="check4">
                                             <label class="custom-control-label" for="check4">Tôi đã đọc và đồng ý với Chính
@@ -356,6 +191,7 @@
                                         </div>
                                     </li>
                                     <li class="list-group-item">
+                                        <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="dieukhoan"
                                                 id="check5">
@@ -364,12 +200,14 @@
                                         </div>
                                     </li>
                                     {{-- <li class="list-group-item">
+                                        <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
                                           <input type="checkbox" class="custom-control-input" name="dieukhoan" id="check6">
                                           <label class="custom-control-label" for="check6"></label>
                                         </div>
                                       </li> --}}
                                     <li class="list-group-item">
+                                        <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="checkall"
                                                 id="check7">
@@ -401,12 +239,12 @@
                                     <span>Thanh toán online</span>
                                     <img src="{{ asset('assets/image/payme.png') }}">
                                 </div>
-                               <div class="thanhtoantructuyen">
+                                <!-- <div class="thanhtoantructuyen">
                                             <input type="radio" name="payment_method" value="2" readonly="readonly" disabled>
                                             <span>Chuyển khoản qua ngân hàng</span>
                                             <img src="{{ asset('assets/image/vnpay.png') }}">
-                                        </div> 
-                              <div class="chuyenkhoan">
+                                        </div> -->
+                                <!-- <div class="chuyenkhoan">
                                             <input type="radio" name="payment_method" value="3" readonly="readonly" disabled>
                                             <span>Chuyển khoản qua ngân hàng</span>
                                             <div class="tk-nganhang">
@@ -414,18 +252,14 @@
                                                 <p>TK ngân hàng: Công ty cổ phần</p>
                                                 <p>Chi nhánh: Công ty cổ phần</p>
                                             </div>
-                                        </div>
+                                        </div> -->
                             </div>
                         </div>
-                        {{-- <a class="btn-back-cart" href="{{ route('cart.index') }}">Quay lại Giỏ hàng</a>
+                        <a class="btn-back-cart" href="{{ route('cart.index') }}">Quay lại Giỏ hàng</a>
 
-                        <button class="btn-dathang" type="submit">Tiếp tục Thanh toán</button> --}}
+                        <button class="btn-dathang" type="submit">Tiếp tục Thanh toán</button>
                     </div>
                 </div>
-            </div>
-            <div class="d-flex justify-between-center">
-                <a class="btn-back-cart" href="{{ route('cart.index') }}">Quay lại Giỏ hàng</a>
-                <button class="btn-dathang" type="submit">Tiếp tục Thanh toán</button>
             </div>
         </div>
     </form>
@@ -458,14 +292,14 @@
         $("input[name='checkall']").click(function() {
             $('.chinhsach-body input:checkbox').not(this).prop('checked', this.checked);
         });
-        // $('.btn-dathang').click(function(e) {
-        //     if ($('.chinhsach-body input:checkbox').is(':checked')) {
+        $('.btn-dathang').click(function(e) {
+            if ($('.chinhsach-body input:checkbox').is(':checked')) {
 
-        //     } else {
-        //         e.preventDefault();
-        //         $('.error-chinhsach').css('display', 'block');
-        //     }
-        // })
+            } else {
+                e.preventDefault();
+                $('.error-chinhsach').css('display', 'block');
+            }
+        })
 
         function storeaddress() {
             if ($('#store-address').is(':checked')) {
@@ -482,6 +316,9 @@
                 $('.form-vat').css("display", "none");
             }
         }
+        $('#btn-apply-coupon').click(function(){
+            $('.alert-coupon').css('display', 'block');
+        });
         $('#pickAdress').on('click', function() {
             id_address = $('#pickAdress').val();
             url = $('#pickAdress').data('url');

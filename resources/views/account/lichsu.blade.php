@@ -84,6 +84,11 @@
 </style>
 <body>
     <div style="text-align: -webkit-center;">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <h3 class="text-center">DANH SÁCH ĐƠN HÀNG</h3>
+            </div>
+        </div>
     <form data-action="lichsu" method="POST">
     @csrf 
     <table class="styled-table table-sortable">
@@ -119,13 +124,7 @@
                 {{-- <td>{{formatPrice($k->tax)}}</td>
                 <td>{{formatPrice($k->process_fee)}}</td> --}}
                 <td>
-                    @if($k->payment_method == 1)
-                        Đang vận chuyển
-                    @elseif($k->payment_method != 1)
-                        Đang chờ thanh toán
-                    @else
-                        Đang vận chuyển
-                    @endif
+                    {{orderStatusSimple($k->status)}}
                 </td>
                 <td style="text-align: center"><a href="{{route('theo-doi-don-hang.show', $k->order_code)}}">Xem</a></td>
             </tr>

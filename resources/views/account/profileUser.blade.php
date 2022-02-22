@@ -93,11 +93,15 @@
                                         <p class="text-muted">
                                             Định danh Khách hàng:
                                             @if ($profileUser->level == 1)
-                                                Member Vip
+                                                Khách hàng VIP
                                             @elseif($profileUser->level == 2)
                                                 Cộng tác viên
+                                            @elseif($profileUser->level == 3)
+                                                Purchasing
+                                            @elseif($profileUser->level == 4)
+                                                Khách hàng thương mại
                                             @else
-                                                Member bình thường
+                                                Khách hàng thân thiết
                                             @endif
                                         </p>
                                         <!--<div class="">Tích lũy: {{ $profileUser->tichluyC }} point</div>-->

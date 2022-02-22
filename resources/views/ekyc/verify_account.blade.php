@@ -4,17 +4,61 @@
 
 @push('css')
     <link href="{{ asset('public/css/ekyc.css') }}" rel="stylesheet" type="text/css">
-
 @endpush
 
 @section('content')
     <div class="container">
-        @if(Session::has('message'))
+        @if (Session::has('message'))
             <p class="alert alert-danger text-center">{{ Session::get('message') }}</p>
         @endif
         <form action="{{ route('ekyc.postVerify') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <h4 class="text-center">XÁC THỰC HỒ SƠ KHÁCH HÀNG</h4>
+                    <ul style="list-style: none">
+                        <li>- Quý Khách Hàng vui lòng thực hiện theo hướng dẫn để xác minh nhanh nhân thân với công nghệ
+                            eKYC.
+                            C-Mart là một trong số các công ty thương mại điện tử tiên phong áp dụng công nghệ này để xác
+                            minh
+                            Khách Hàng là chính chủ của danh tính cung cấp chỉ trong vài phút.</li>
+
+                        <li>- Giới thiệu sơ lược về công nghệ eKYC: eKYC là hình thức định danh Khách Hàng điện tử, đã được
+                            Nhà
+                            nước chấp thuận cấp phép. Theo Quyết định 149/QĐ-TTg về việc phê duyệt Chiến lược tài chính toàn
+                            diện quốc gia đến năm 2025, định hướng đến năm 2030 của Thủ tướng Chính phủ “cho phép áp dụng
+                            quy
+                            trình nhận biết khách hàng đơn giản và gián tiếp từ xa bằng phương thức điện tử trực tuyến
+                            (eKYC)
+                            đối với việc mở tài khoản tại các tổ chức được cấp phép để phục vụ cho nhu cầu thanh toán giá
+                            trị
+                            nhỏ của cá nhân và doanh nghiệp”. Điều này góp phần giúp xác minh danh tính của Khách Hàng trực
+                            tuyến và đánh giá rủi ro, phát hiện lừa đảo trong mỗi giao dịch,...</li>
+
+                        <li>- C-Mart luôn muốn mang đến những trải nghiệm văn hóa phục vụ chuyên nghiệp, an toàn. Vì thế,
+                            C-Mart
+                            đã lựa chọn công nghệ hiện đại nhất để nâng cao độ bảo mật, nâng cao trải nghiệm Khách Hàng, đơn
+                            giản hóa các thủ tục. Trong sự bảo vệ tối đa dành cho Quý Khách Hàng, mang đến sự an tâm khi
+                            giao
+                            dịch cùng C-Mart, mà vẫn đáp ứng nhu cầu của Khách Hàng ngày càng tốt hơn theo hướng One Stop
+                            Shopping (Khách Hàng chỉ truy cập một nơi và đáp ứng mọi nhu cầu giao dịch của mình).</li>
+
+                        <li>- Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm
+                            túc, và
+                            chúng tôi thực hiện vô cùng nghiêm ngặt. Các thông tin này CHỈ DÙNG ĐỂ XÁC MINH NH N TH N nhằm
+                            đảm
+                            bảo an toàn giao dịch theo quy định, và cho chính quyền lợi của Khách Hàng</li>
+                    </ul>
+                </div>
+                <div class="col-lg-12 col-md-12 col-12">
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="accept_ekyc" id="accept-ekyc" value="1" required
+                            oninvalid="this.setCustomValidity('Vui lòng đồng ý trước khi bắt đầu duyệt eKYC')">
+                        <label class="form-check-label" for="accept-ekyc">Tôi đã đọc và đồng ý với Quy
+                            định Điều khoản & Điều kiện eKYC</label>
+                    </div>
+                </div>
                 <div class="col-lg-12 col-md-12 col-12">
                     <h4>Cung cấp thông tin tài khoản</h4>
                 </div>
@@ -56,7 +100,9 @@
                             <button id="click-photo" class="btn btn-danger w-100" type="button">Chụp ảnh</button>
                         </div>
                         <div class="col-lg-6 col-md-6 col-12">
-                            <button id="confirm-image" type="button" class="btn btn-primary w-100" onclick="confirmImage()">Chọn ảnh</button>
+                            <button id="confirm-image" type="button" class="btn btn-primary w-100"
+                                onclick="confirmImage()">Chọn
+                                ảnh</button>
                         </div>
                     </div>
                     <div class="live_cam">
