@@ -449,7 +449,7 @@
                                                             @foreach ($lichsunhan as $value)
                                                                 <tr style="text-align:center">
                                                                     <td>{{ Date('H:i:s d/m/Y',strtotime($value->created_at)) }}</td>
-                                                                    <td>{{ $value->transaction_code }}</td>
+                                                                    <td>{{ $value->magiaodich }}</td>
                                                                     <td>{{ $value->note }}</td>
                                                                     <td>{{ $value->point_past_nhan }}</td>
                                                                     <td>@if($value->point_past_nhan< $value->point_present_nhan) {{ formatNumber($value->amount) }} @endif</td>

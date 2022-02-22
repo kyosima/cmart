@@ -84,6 +84,7 @@ class HomeController extends Controller
                     $lichsu_chuyen->note = 'Tiết kiệm ngày '.$notelichsu.' từ TK '.$value->code_customer;
                     $lichsu_chuyen->amount = $amount;
                     $lichsu_chuyen->type = 3;
+                    $lichsu_chuyen->magiaodich = time();
                     $lichsu_chuyen->created_at = $value->created_at->startOfDay();
     
                     $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;

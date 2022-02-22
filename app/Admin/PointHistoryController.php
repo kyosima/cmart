@@ -166,6 +166,7 @@ class PointHistoryController extends Controller
     // 3. Tang do tiet kiem
     // 4. Tang do huy don hang
     // 5. Tang do TL C
+    // 6. Nap C
 
     public function tongdiem() {
         $id = User::get('id')->toArray();
@@ -242,7 +243,8 @@ class PointHistoryController extends Controller
         $lichsu_chuyen->point_present_nhan = $vi_user_nhan->point_c + $request->sodiemchuyen;
         $lichsu_chuyen->makhachhang = $request->id_user_nhan;
         $lichsu_chuyen->note = $request->note;
-        $lichsu_chuyen->magiaodich = $request->code_chuyenkhoan;
+        $magiaodich = time();
+        $lichsu_chuyen->magiaodich = $magiaodich;
         $lichsu_chuyen->amount = $request->sodiemchuyen;
         $lichsu_chuyen->type = 1;
         
@@ -274,7 +276,20 @@ class PointHistoryController extends Controller
         $id_user_nhan = User::where('code_customer','=',$makhachhang)->first()->id;
         $vi_user_nhan = PointC::where('user_id','=',$id_user_nhan)->first();
         $vi_user_nhan->point_c += $request->sodiemchuyen;
+        $magiaodich = time();
         $vi_user_nhan->save();
+
+        $lichsu_chuyen = new PointCHistory;
+        
+        $lichsu_chuyen->point_c_idnhan = $vi_user_nhan->id;
+        $lichsu_chuyen->point_past_nhan = $vi_user_nhan->point_c;
+        $lichsu_chuyen->point_present_nhan = $vi_user_nhan->point_c + $request->sodiemchuyen;
+        $lichsu_chuyen->makhachhang = $request->id_user_nhan;
+        $lichsu_chuyen->note = 'Nap diem C '.$magiaodich;
+        $lichsu_chuyen->magiaodich = $magiaodich;
+        $lichsu_chuyen->amount = $request->sodiemchuyen;
+        $lichsu_chuyen->type = 6;
+        $lichsu_chuyen->save();
         return redirect()->back()->with('thongbao','Nạp C thành công!');
     }
 
