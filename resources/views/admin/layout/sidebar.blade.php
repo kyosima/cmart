@@ -34,7 +34,7 @@
             <li class="dropdown">
                 <a href="#" class="dropbtn">
                     <i class="fa fa-cube"></i>
-                    <span class="links_name w-100 align-items-center d-flex">Quản lý sản phẩm <i
+                    <span class="links_name w-100 align-items-center d-flex">Sản phẩm/Thanh toán<i
                             class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
                 </a>
                 <span class="dropdown-content">
@@ -53,14 +53,14 @@
         <li class="dropdown">
             <a href="{{ route('coupon.index') }}" class="dropbtn">
                 <i class="fa fa-tag"></i>
-                <span class="links_name w-100 align-items-center d-flex">Quản lý mã ưu đãi</span>
+                <span class="links_name w-100 align-items-center d-flex">Ưu đãi</span>
             </a>
 
         </li>
         <li class="dropdown">
             <a href="#" class="dropbtn">
                 <i class="fa fa-users" aria-hidden="true"></i>
-                <span class="links_name w-100 align-items-center d-flex">Quản lý khách hàng <i
+                <span class="links_name w-100 align-items-center d-flex">Khách hàng <i
                         class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
@@ -92,7 +92,7 @@
             <li class="dropdown">
                 <a href="#" class="dropbtn">
                     <i class="fas fa-user-shield"></i>
-                    <span class="links_name w-100 align-items-center d-flex">Quản lý Admin <i
+                    <span class="links_name w-100 align-items-center d-flex">Admin <i
                             class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
                 </a>
                 <span class="dropdown-content">

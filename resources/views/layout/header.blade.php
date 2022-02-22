@@ -233,7 +233,7 @@
         </span> --}}
 
         <p>
-            Mọi liên hệ nên thực hiện từ Số điện thoại đăng ký giao dịch và đến các kênh kết nối chính thức của C-Mart
+            Mọi liên hệ nên thực hiện từ <b>Số điện thoại đăng ký giao dịch</b> và đến các kênh kết nối chính thức của C-Mart
         </p>
 
     </div>
@@ -243,7 +243,7 @@
             <div class="box-contacth">
                 <b class="d-flex align-items-center justify-content-center"><img
                         src="{{ asset('/public/image/phone.png') }}" alt=""><a
-                        href="tel:0899302323">0899.302.323</a></b>
+                        href="tel:0899663883">0899.663.883</a></b>
                 <small>Kênh Hỗ trợ - Đặt hàng</small>
             </div>
             <div class="box-contacth">
@@ -263,13 +263,13 @@
                 <b class="d-flex align-items-center justify-content-center"><img
                         src="{{ asset('/public/image/email.png') }}" alt=""><a
                         href="mailto:hotro@cm.com.vn">hotro@cm.com.vn</a></b>
-                <small>Kênh dành cho Đối tác</small>
+                <small>Kênh dành cho Đối Tác</small>
 
             </div>
         </div>
         <div class="text-center">
             <h5 class="store-system-hello"><b> Hệ thống các kênh Cửa hàng C-Store </b></h5>
-            <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách hàng</p>
+            <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách Hàng</p>
         </div>
     </div>
 
