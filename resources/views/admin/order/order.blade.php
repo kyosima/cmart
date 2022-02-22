@@ -128,12 +128,15 @@
 									</div>
 									<div class="row">
 										<div class="col-sm-12" style="overflow-x: auto;">
-											<table id="tblOrder" class="table table-hover align-middle">
+											<table id="tblOrder" style="width: 1350px;" class="table table-hover align-middle">
 												<thead>
 													<tr>
 														<th class="title" style="width: 30px;"><input class="form-check" name="checkAll" type="checkbox"></th>
+														<th class="title">Thời gian đặt hàng</th>
 														<th class="title">Mã giao dịch</th>
+														<th class="title">Tên KH</th>
 														<th class="title">GTTT sản phẩm</th>
+														<th class="title">Tổng C</th>
 														<th class="title">Trạng thái</th>
 														<th class="title">Phí DVVC</th>
 														<th class="title">Phí DVGTGT</th>
@@ -147,8 +150,11 @@
 													@foreach ( $orders as $order)
 													<tr>
 														<td><input type="checkbox" name="id[]" value="{{ $order->id }}"></td>
+														<td>{{date('d-m-Y H:i:s', strtotime($order->created_at))}}</td>
 														<td>{{$order->order_code}}</td>
+														<td>{{ optional($order->order_info)->fullname }}</td>
 														<td>{{number_format($order->sub_total)}} đ</td>
+														<td>{{$order->c_point}}</td>
 														<td>{!! orderStatus($order->status) !!}</td>
 														<td>{{ number_format($order->shipping_total) }} đ</td>
 														<td>{{ number_format($order->shipping_total + $order->tax) }} đ</td>

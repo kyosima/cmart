@@ -27,7 +27,7 @@ class AdminOrderController extends Controller
     //
 
     public function index(Request $request){
-        $orders = Order::orderBy('id', 'DESC')->with('order_info:id_order,note')->get();
+        $orders = Order::orderBy('id', 'DESC')->with('order_info:id_order,fullname,note')->get();
         $orders_count = $orders->groupBy('status')->map(function ($row) {
             // dd($row);
             return $row->count();
