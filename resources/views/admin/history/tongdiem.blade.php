@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Danh sách ví điểm khách hàng')
+@section('title', 'Danh sách ví điểm khách hàng trong ngày')
 
 @push('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin/dashboard.css') }}">
@@ -83,9 +83,9 @@
     <table class="styled-table table-sortable">
         <thead>
             <tr style="text-align:center">
-                <th>Thời gian</th>
                 <th>Mã khách hàng</th>
-                <th>Tổng C</th>
+                <th>Số dư C</th>
+                <th>Bình quân C</th>
                 <th>Tăng do CK</th>
                 <th>Tăng do TK</th>
                 <th>Tăng do TL C</th>
@@ -98,27 +98,27 @@
         <tbody>
             @foreach($user as $v)
             <tr>
-                <td>{{$v->point_c->updated_at}}</td>
                 <td><a href="{{url('admin/danh-sach-user')}}/{{$v->id}}">{{$v->code_customer}}</a></td>
                 <td>{{$v->point_c->point_c}}</td>
+                <td>{{$v->point_c->point_c}}</td>
                 <td>{{$tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan
-                    ->where('type',1)->sum('amount')}}</td>
+                    ->where('type',1)->where('created_at','>=',$today)->sum('amount')}}</td>
                 <td>{{$tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan
-                    ->where('type',3)->sum('amount')}}</td>
+                    ->where('type',3)->where('created_at','>=',$today)->sum('amount')}}</td>
                 <td>{{$tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan
-                    ->where('type',5)->sum('amount')}}</td>
+                    ->where('type',5)->where('created_at','>=',$today)->sum('amount')}}</td>
                 <td>{{$tienViM[$v->id - 1]->getViM->where('id_vi',1)->sum('amount')}}</td>
                 <td>{{$tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan
-                    ->where('type',4)->sum('amount')}}</td>
+                    ->where('type',4)->where('created_at','>=',$today)->sum('amount')}}</td>
                 <td>
-                    {{$tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan->where('type',1)->sum('amount') +
-                        $tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan->where('type',4)->sum('amount') +
-                        $tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan->where('type',5)->sum('amount') +
-                        $tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan->where('type',3)->sum('amount') +
-                        $tienViM[$v->id - 1]->getViM->where('id_vi',1)->sum('amount')}}
+                    {{$tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan->where('type',1)->where('created_at','>=',$today)->sum('amount') +
+                        $tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan->where('type',4)->where('created_at','>=',$today)->sum('amount') +
+                        $tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan->where('type',5)->where('created_at','>=',$today)->sum('amount') +
+                        $tongpointnhan[$v->id - 1]->getHistoryChuyenKhoan->where('type',3)->where('created_at','>=',$today)->sum('amount') +
+                        $tienViM[$v->id - 1]->getViM->where('id_vi',1)->where('created_at','>=',$today)->sum('amount')}}
                 </td>
                 <td>{{$tienGiam[$v->id - 1]->getTienGiam
-                    ->where('type',2)->sum('amount')}}</td>
+                    ->where('type',2)->where('created_at','>=',$today)->sum('amount')}}</td>
             </tr>
             @endforeach
         </tbody>

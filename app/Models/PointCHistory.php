@@ -12,4 +12,8 @@ class PointCHistory extends Model
     public function getViPointChuyenKhoan(){
         return $this->belongsTo(PointC::class, 'point_c_idnhan', 'id');
     }
+
+    public function getName() {
+        return $this->hasOne(User::class, 'point_c_idchuyen', 'id');
+    }
 }

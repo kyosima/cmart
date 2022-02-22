@@ -17,6 +17,7 @@ use Maatwebsite\Excel\Excel;
 use App\Exports\TietKiem;
 use App\Exports\ChuyenKhoan;
 use App\Exports\TichLuy;
+use App\Exports\TongDiem;
 use App\Exports\DonHangHuy;
 
 class PointHistoryController extends Controller
@@ -24,13 +25,19 @@ class PointHistoryController extends Controller
     public function lichsunhanC() {
         $listHistory = PointCHistory::where('type','=',1)->orWhere('type','=',3)->get();
         $this->tinhdiemtietkiem();
-        return view('admin.history.lichsunhanC',['listHistory' => $listHistory]);
+        $user = User::find(1)->with('point_c')->first();
+        return view('admin.history.lichsunhanC',[
+            'listHistory' => $listHistory,
+            'user' => $user
+        ]);
     }
 
     public function chuyenkhoan() {
         $listHistory = PointCHistory::where('type','=',1)->get();
         $this->tinhdiemtietkiem();
-        return view('admin.history.chuyenkhoan',['listHistory' => $listHistory]);
+        $user = User::find(1)->with('point_c')->first();
+        return view('admin.history.chuyenkhoan',['listHistory' => $listHistory,
+        'user' => $user]);
     }
 
     public function dowChuyenKhoan(Excel $excel, $type) {
@@ -43,14 +50,14 @@ class PointHistoryController extends Controller
         }
     }
 
-    // public function downChuyenKhoanPDF(){
-    //     $em
-    // }
-
     public function tichluy() {
         $listHistory = PointCHistory::where('type','=',2)->get();
         $this->tinhdiemtietkiem();
-        return view('admin.history.tichluy',['listHistory'=>$listHistory]);
+        $user = User::find(1)->with('point_c')->first();
+        return view('admin.history.tichluy',[
+            'listHistory'=>$listHistory,
+            'user' => $user,
+        ]);
     }
 
     public function dowTichLuy(Excel $excel, $type) {
@@ -66,9 +73,11 @@ class PointHistoryController extends Controller
     public function tinhdiemtietkiem() {
         $user = User::all();
         foreach ($user->where('id','!=',1) as $us) {
-            $datePoint = $us->created_at->addMonth('1');
+            $datePoint = $us->created_at->addMonth('1')->startOfDay();
             if (Carbon::now() >= $datePoint) {
-                $us->created_at = $us->created_at->addMonth('1');
+                $us->created_at = $us->created_at->addMonth('1')->startOfDay();
+                $notelichsu = Carbon::parse($us->created_at)->format('Y-m-d');
+                
                 $pointC = PointC::where('user_id','=',$us->id)->first();
                 $amount = round($pointC->point_c * 0.01, 0);
                 $pointTietKiem = $pointC->point_c + $amount;
@@ -76,15 +85,16 @@ class PointHistoryController extends Controller
                 $id_user_chuyen = User::where('id','=',1)->first()->id;
                 $vi_user_chuyen = PointC::where('user_id','=',$id_user_chuyen)->first();
                 // luu lich su 
-
+                
                 $lichsu_chuyen = new PointCHistory;
                 $lichsu_chuyen->point_c_idnhan = $us->id;
                 $lichsu_chuyen->point_past_nhan = $pointC->point_c;
                 $lichsu_chuyen->point_present_nhan = $pointTietKiem;
                 $lichsu_chuyen->makhachhang = $us->code_customer;
-                $lichsu_chuyen->note = 'Tich luy tiet kiem';
+                $lichsu_chuyen->note = 'Tiết kiệm ngày '.$notelichsu.' từ TK '.$us->code_customer;
                 $lichsu_chuyen->amount = $amount;
                 $lichsu_chuyen->type = 3;
+                $lichsu_chuyen->created_at = $us->created_at->startOfDay();
                 
                 $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
                 $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
@@ -105,7 +115,9 @@ class PointHistoryController extends Controller
     public function tietkiem() {
         $listHistory = PointCHistory::where('type','=',3)->get();
         $this->tinhdiemtietkiem();
-        return view('admin.history.tietkiem',['listHistory'=>$listHistory]);
+        $user = User::find(1)->with('point_c')->first();
+        return view('admin.history.tietkiem',['listHistory'=>$listHistory,
+            'user'=>$user]);
     }
 
 
@@ -122,7 +134,11 @@ class PointHistoryController extends Controller
     public function huydonhang() {
         $listHistory = PointCHistory::where('type','=',4)->get();
         $this->tinhdiemtietkiem();
-        return view('admin.history.huydonhang',['listHistory'=>$listHistory]);
+        $user = User::find(1)->with('point_c')->first();
+        return view('admin.history.huydonhang',[
+            'listHistory'=>$listHistory,
+            'user'=>$user
+        ]);
     }
 
     public function dowDonHangHuy(Excel $excel, $type) {
@@ -137,7 +153,11 @@ class PointHistoryController extends Controller
 
     public function lichsudiemM() {
         $listHistory = PointMHistory::all();
-        return view('admin.history.m_point',['listHistory'=>$listHistory]);
+        $user = User::find(1)->with('point_c')->first();
+        return view('admin.history.m_point',[
+            'listHistory'=>$listHistory,
+            'user'=>$user
+        ]);
     }
 
     // Type Lich su
@@ -151,14 +171,25 @@ class PointHistoryController extends Controller
         $id = User::get('id')->toArray();
         $id_viC = PointC::get('id')->toArray();
         $user = User::with('point_c.user')->find($id);
-        $tongpointnhan = PointC::with('getHistoryChuyenKhoan.getViPointChuyenKhoan')->find($id);
+        $yesterday = Carbon::yesterday()->endOfDay();
+        $today = Carbon::today()->startOfDay();
+        $tongpointnhan = PointC::with('getHistoryChuyenKhoan.getViPointChuyenKhoan')
+            ->find($id);
         $tienGiam = PointC::with('getTienGiam')->find($id);
         $tienViM = PointM::with('getViM')->find($id);
-        // dd($id);
-        // dd($tongpointnhan);
-        // $test = array_merge($user,$tongpointnhan);
+        
         return view('admin.history.tongdiem',
-            ['user'=>$user,'tongpointnhan'=>$tongpointnhan,'tienGiam'=>$tienGiam,'tienViM'=>$tienViM]);
+            ['user'=>$user,'tongpointnhan'=>$tongpointnhan,'tienGiam'=>$tienGiam,'tienViM'=>$tienViM,'today'=>$today]);
+    }    
+    
+    public function dowTongdiem(Excel $excel, $type) {
+        if($type == 'pdf'){
+            return $excel->download(new TongDiem, 'lichsuVidiemtrongngay.pdf');
+        } elseif($type == 'xlsx') {
+            return $excel->download(new TongDiem, 'lichsuVidiemtrongngay.xlsx');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function chuyendiem() {
@@ -242,18 +273,6 @@ class PointHistoryController extends Controller
         $makhachhang = $request->id_user_nhan;
         $id_user_nhan = User::where('code_customer','=',$makhachhang)->first()->id;
         $vi_user_nhan = PointC::where('user_id','=',$id_user_nhan)->first();
-        //luu vao bang lich su
-        // $lichsu_chuyen = new PointCHistory;
-        
-        // $lichsu_chuyen->point_c_idnhan = $vi_user_nhan->id;
-        // $lichsu_chuyen->point_past_nhan = $vi_user_nhan->point_c;
-        // $lichsu_chuyen->point_present_nhan = $vi_user_nhan->point_c + $request->sodiemchuyen;
-        // $lichsu_chuyen->makhachhang = $request->id_user_nhan;
-        // $lichsu_chuyen->note =$request->note;
-        // $lichsu_chuyen->magiaodich = $request->code_chuyenkhoan;
-        // $lichsu_chuyen->amount = $request->sodiemchuyen;
-        // $lichsu_chuyen->type = 1;
-
         $vi_user_nhan->point_c += $request->sodiemchuyen;
         $vi_user_nhan->save();
         return redirect()->back()->with('thongbao','Nạp C thành công!');
