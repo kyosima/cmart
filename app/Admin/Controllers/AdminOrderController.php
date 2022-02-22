@@ -29,8 +29,18 @@ class AdminOrderController extends Controller
     public function index(Request $request){
         $orders = Order::orderBy('id', 'DESC')->with('order_info:id_order,note')->get();
         $orders_count = $orders->groupBy('status')->map(function ($row) {
+            // dd($row);
             return $row->count();
         });
+
+        //chuyển đổi trạng thái hoàn tiền thành đã hủy
+        $filtered = $orders_count->filter(function ($value, $key) {
+            return $key == 6;
+        });
+
+        if(count($filtered->all()) > 0){
+            $orders_count->prepend($filtered->all()[6], 5);
+        }
 
         $shipping_method_count = OrderStore::select('shipping_method')->get()->groupBy('shipping_method')->map(function ($row) {
             return $row->count();
