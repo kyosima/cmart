@@ -54,6 +54,8 @@ Route::group(['middleware' => ['admin']], function () {
 
     //Danh sach vi diem
     Route::get('tongdiemuser',[PointHistoryController::class, 'tongdiem'])->name('tongdiemuser');
+    Route::get('tongdiemuser/download/{type}',[PointHistoryController::class, 'dowTongdiem']);
+
     Route::get('chuyendiem',[PointHistoryController::class, 'chuyendiem'])->name('chuyendiem');
     Route::post('chuyendiem',[PointHistoryController::class, 'postChuyendiem'])->name('postChuyendiem');
 

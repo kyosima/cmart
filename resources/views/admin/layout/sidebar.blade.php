@@ -75,7 +75,7 @@
              <span class="links_name w-100 align-items-center d-flex">Tiền tích lũy C <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
-            <span class="dropdown-content" style="top: -90;">
+            <span class="dropdown-content" style="top: -90px;">
                 <a href="{{route('tongdiemuser')}}">Tài khoản C / HSKH</a>
                 <a href="{{route('chuyendiem')}}">Chuyển C</a>
                 <a href="{{route('napC')}}">Tài khoản C / C-Mart</a>

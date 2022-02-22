@@ -62,61 +62,44 @@ class HomeController extends Controller
             $us = User::where('phone','=',$request->phone)->first();
             $datePoint = $us->created_at->addMonth('1');
             $user = User::all();
-            foreach ($user->where('id','!=',1) as $us) {
-                $datePoint = $us->created_at->addMonth('1');
+            foreach ($user->where('id','!=',1) as $value) {
+                $datePoint = $value->created_at->addMonth('1')->startOfDay();
                 if (Carbon::now() >= $datePoint) {
-                    $us->created_at = $us->created_at->addMonth('1');
-                    $pointC = PointC::where('user_id','=',$us->id)->first();
+                    $value->created_at = $value->created_at->addMonth('1')->startOfDay();
+                    $notelichsu = Carbon::parse($value->created_at)->format('Y-m-d');
+                    
+                    $pointC = PointC::where('user_id','=',$value->id)->first();
                     $amount = round($pointC->point_c * 0.01, 0);
                     $pointTietKiem = $pointC->point_c + $amount;
     
                     $id_user_chuyen = User::where('id','=',1)->first()->id;
                     $vi_user_chuyen = PointC::where('user_id','=',$id_user_chuyen)->first();
                     // luu lich su 
+                    
                     $lichsu_chuyen = new PointCHistory;
-                    $lichsu_chuyen->point_c_idnhan = $us->id;
+                    $lichsu_chuyen->point_c_idnhan = $value->id;
                     $lichsu_chuyen->point_past_nhan = $pointC->point_c;
                     $lichsu_chuyen->point_present_nhan = $pointTietKiem;
-                    $lichsu_chuyen->makhachhang = $us->code_customer;
-                    $lichsu_chuyen->note = 'Tich luy tiet kiem';
+                    $lichsu_chuyen->makhachhang = $value->code_customer;
+                    $lichsu_chuyen->note = 'Tiết kiệm ngày '.$notelichsu.' từ TK '.$value->code_customer;
                     $lichsu_chuyen->amount = $amount;
                     $lichsu_chuyen->type = 3;
-                    $lichsu_chuyen->save();
+                    $lichsu_chuyen->created_at = $value->created_at->startOfDay();
     
                     $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
                     $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
                     $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $amount;
                     $lichsu_chuyen->makhachhang_chuyen = 202201170001;
-                    
+                    $lichsu_chuyen->save();
+    
                     $pointC->point_c = $pointTietKiem;
                     $vi_user_chuyen->point_c -= $amount;
                     $vi_user_chuyen->save();
                     $pointC->save();
     
-                    $us->save();
+                    $value->save();
                 }
             }
-            // if (Carbon::now() >= $datePoint) {
-            //     $us->created_at = $us->created_at->addMonth('1');
-            //     $pointC = PointC::where('user_id','=',$us->id)->first();
-            //     $pointTietKiem = $pointC->point_c + ($pointC->point_c * 0.01);
-                
-            //     // luu lich su 
-            //     $lichsu_chuyen = new PointCHistory;
-            //     $lichsu_chuyen->point_c_idnhan = $us->id;
-            //     $lichsu_chuyen->point_past_nhan = $pointC->point_c;
-            //     $lichsu_chuyen->point_present_nhan = $pointTietKiem;
-            //     $lichsu_chuyen->makhachhang = $us->code_customer;
-            //     $lichsu_chuyen->note = 'Tich luy tiet kiem';
-            //     $lichsu_chuyen->amount = $pointC->point_c * 0.01;
-            //     $lichsu_chuyen->type = 3;
-            //     $lichsu_chuyen->save();
-    
-            //     $pointC->point_c = $pointTietKiem;
-            //     $pointC->save();
-    
-            //     $us->save();
-            // }
             return redirect('/');
         }
         else {

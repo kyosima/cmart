@@ -117,7 +117,7 @@
                             <p class="alert alert-danger m-0">Từ chối</p>
                         @endif
                     </td> --}}
-                        <td>
+                        <td style="text-align: -webkit-center;">
                             {{-- <form data-action="danh-sach-user/{{ $k->id }}" method="POST"
                                 style="text-align: -webkit-center;">
                                 @csrf --}}
@@ -134,7 +134,7 @@
                                     Nâng cấp lên VIP
                                 </a>
                             @elseif($k->status == 1)
-                                <span style=" max-width: 82px;min-width: 82px;" type="text"
+                                <span style=" max-width: 82px;min-width: 82px; " type="text"
                                     class="form-control form-control-sm font-size-s text-white active text-center"
                                     aria-label="Text input with dropdown button">Hoạt động</span>
                             @else

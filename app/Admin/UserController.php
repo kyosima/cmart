@@ -22,33 +22,32 @@ class UserController extends Controller
 {
     public function getDanhSach() {
         $user = User::all();
-        // dd($pointC = PointC::where('user_id','=',User::select('id')->get('id'))->select('point_c')->get());
-        // dd($pointC = User::select('id')->get('id'));
-        // dd(User::pluck('updated_at'));
-        foreach ($user as $us) {
-            $datePoint = $us->created_at->addMonth('1');
-            if (Carbon::now() >= $datePoint) {
-                $us->created_at = $us->created_at->addMonth('1');
-                $pointC = PointC::where('user_id','=',$us->id)->first();
-                $pointTietKiem = $pointC->point_c + ($pointC->point_c * 0.01);
+        // foreach ($user as $us) {
+        //     $datePoint = $us->created_at->addMonth('1');
+        //     if (Carbon::now() >= $datePoint) {
+        //         $us->created_at = $us->created_at->addMonth('1')->startOfDay();
+        //         $pointC = PointC::where('user_id','=',$us->id)->first();
+        //         $pointTietKiem = $pointC->point_c + ($pointC->point_c * 0.01);
 
-                // luu lich su 
-                $lichsu_chuyen = new PointCHistory;
-                $lichsu_chuyen->point_c_idnhan = $us->id;
-                $lichsu_chuyen->point_past_nhan = $pointC->point_c;
-                $lichsu_chuyen->point_present_nhan = $pointTietKiem;
-                $lichsu_chuyen->makhachhang = $us->code_customer;
-                $lichsu_chuyen->note = 'Tich luy tiet kiem';
-                $lichsu_chuyen->amount = $pointC->point_c * 0.01;
-                $lichsu_chuyen->type = 3;
-                $lichsu_chuyen->save();
+        //         // luu lich su 
+        //         $lichsu_chuyen = new PointCHistory;
+        //         $lichsu_chuyen->point_c_idnhan = $us->id;
+        //         $lichsu_chuyen->point_past_nhan = $pointC->point_c;
+        //         $lichsu_chuyen->point_present_nhan = $pointTietKiem;
+        //         $lichsu_chuyen->makhachhang = $us->code_customer;
 
-                $pointC->point_c = $pointTietKiem;
-                $pointC->save();
+        //         $notelichsu = Carbon::parse($us->created_at)->format('Y-m-d');
+        //         $lichsu_chuyen->note = 'Tiết kiệm ngày '.$notelichsu.' từ TK '.$us->code_customer;
+        //         $lichsu_chuyen->amount = $pointC->point_c * 0.01;
+        //         $lichsu_chuyen->type = 3;
+        //         $lichsu_chuyen->save();
 
-                $us->save();
-            }
-        }
+        //         $pointC->point_c = $pointTietKiem;
+        //         $pointC->save();
+        //         $us->save();
+        //     }
+        // }
+        
         return view('admin.user.listuser',['user'=>$user]);
     }
 
