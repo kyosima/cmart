@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Chuyển điểm')
+@section('title', 'Chuyển C')
 
 @push('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin/dashboard.css') }}">
@@ -13,7 +13,7 @@
     <div class="row pb-1">
         <div class="col-12">
             <a class="btn btn-primary text-white" style="width: 100%">
-                Tổng điểm C hiện tại tài khoản Cmart: {{$pointC->point_c}}
+               Tài khoản C của C-mart: {{$pointC->point_c}}
             </a>
         </div>
     </div>
@@ -27,10 +27,10 @@
                 <textarea name="note" class="form-control mt-2" placeholder="Nội dung chuyển khoản"></textarea>
                 <div class="pt-1">Số dư hiện tại:</div>
                 <input class="form-control" id="point_present" name="point_present" value="{{$pointC->value('point_c')}}" readonly>
-                <div class="pt-1">Số điểm chuyển:</div>
-                <input class="form-control" name="sodiemchuyen" id="sodiemchuyen" placeholder="Nhập số điểm muốn chuyển">
+                <div class="pt-1">Giá trị giao dịch:</div>
+                <input class="form-control" name="sodiemchuyen" id="sodiemchuyen" placeholder="Giá trị giao dịch">
                 <div class="pt-1">Số dư cuối:</div>
-                <input class="form-control" name="point_past" id="point_past" placeholder="Nhập số điểm muốn chuyển" value="" readonly>
+                <input class="form-control" name="point_past" id="point_past" placeholder="Số dư cuối" value="" readonly>
                 <button type="submit" class="btn btn-primary mt-2 text-uppercase" style="width: 100%">Chuyển khoản ngay</button>
         @csrf
         </form>

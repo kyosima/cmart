@@ -27,15 +27,13 @@
             padding: 12px 15px;
         }
 
-        tbody tr:nth-child(even) td {
-        }
+        tbody tr:nth-child(even) td {}
 
         .styled-table tbody tr {
             border-bottom: 1px solid #11101d;
         }
 
-        .styled-table tbody tr:nth-of-type(even) {
-        }
+        .styled-table tbody tr:nth-of-type(even) {}
 
         .styled-table tbody tr:last-of-type {
             border-bottom: 2px solid #11101d;
@@ -95,21 +93,27 @@
                             @endif
                         </div>
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
-                                            <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
-                                            <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
+                                                            <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
+                                                            <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <button class="alert alert-success m-0 text-center"
                                     style="width: 85%;border-radius: 40px; background: orangered; color: white;">Số đơn hàng
                                     đã hoàn thành: {{ $sodonhang }}</button>
                             </div>
                             <!-- <div class="col-4">
-                                                <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
-                                                </div> -->
-                            <div class="col-6">
+                                                                <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
+                                                                </div> -->
+                            <div class="col-4">
+                                <button class="alert alert-success m-0 text-center"
+                                    style="width: 85%;border-radius: 40px; background: rgb(255, 0, 21); color: white;">
+                                    Số đơn hàng hủy:
+                                    {{ formatNumber($user->orders()->where('status', 5)->count()) }}</button>
+                            </div>
+                            <div class="col-4">
                                 <button class="alert alert-warning m-0"
                                     style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C:
-                                    {{ $pointC }}</button>
+                                    {{ formatNumber($pointC) }}</button>
                             </div>
                         </div>
 
@@ -132,8 +136,8 @@
                                         <input type="phone" class="form-control mb-2" name="phone"
                                             placeholder="Nhập số điện thoại" value="{{ $user->phone }}">
                                         <!-- <span class="text-uppercase">Email</span>
-                                                        <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
-                                                            value="{{ $user->email }}" readonly=""> -->
+                                                                        <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
+                                                                            value="{{ $user->email }}" readonly=""> -->
                                     </div>
 
                                     <div class="col-lg-4 text-start">
@@ -158,7 +162,7 @@
                                             @endif
 
                                             @if ($user->level != 1)
-                                                <option value="1">Khách hàng VIP</option>
+                                                <option value="1">Khách hàng V.I.P</option>
                                             @else
                                             @endif
 
@@ -213,7 +217,7 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <input type="text" class="form-control mb-2" name="address"
-                                                    placeholder="Nhập địa chỉ" value="{{ $user->address }}">
+                                                    placeholder="Nhập địa chỉ" value="{{ $user->address }}" readonly>
                                             </div>
                                             {{-- <div class="col-lg-3">
                                             <input type="text" class="form-control mb-2" name="duong" placeholder="Nhập tên đường"
@@ -222,7 +226,7 @@
                                             <div class="col-lg-4">
 
                                                 @if ($user->id_tinhthanh == null)
-                                                    <select name="sel_province" class="form-control select2"
+                                                    <select name="sel_province" class="form-control select2" disabled
                                                         data-placeholder="---Chọn tỉnh thành---">
                                                         <option value="">---Chọn tỉnh thành---</option>
                                                         @foreach ($province as $value)
@@ -232,7 +236,7 @@
                                                         @endforeach
                                                     </select>
                                                 @else
-                                                    <select name="sel_province" class="form-control select2"
+                                                    <select name="sel_province" class="form-control select2" disabled
                                                         data-placeholder="---Chọn tỉnh thành---">
                                                         <option value="{{ $user->id_tinhthanh }}">
                                                             {{ $tinh }}
@@ -248,12 +252,12 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 @if ($user->id_quanhuyen == null)
-                                                    <select class="form-control select2" name="sel_district"
+                                                    <select class="form-control select2" name="sel_district" disabled
                                                         data-placeholder="---Chọn quận huyên---">
                                                         <option value="">---Chọn quận huyên---</option>
                                                     </select>
                                                 @else
-                                                    <select class="form-control select2" name="sel_district"
+                                                    <select class="form-control select2" name="sel_district" disabled
                                                         data-placeholder="---Chọn quận huyên---">
                                                         <option value="{{ $user->id_quanhuyen }}">
                                                             {{ $quan }}
@@ -264,12 +268,12 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 @if ($user->id_phuongxa == null)
-                                                    <select class="form-control select2" name="sel_ward"
+                                                    <select class="form-control select2" name="sel_ward" disabled
                                                         data-placeholder="---Chọn phường xã---">
                                                         <option value="">---Chọn phường xã---</option>
                                                     </select>
                                                 @else
-                                                    <select class="form-control select2" name="sel_ward"
+                                                    <select class="form-control select2" name="sel_ward" disabled
                                                         data-placeholder="---Chọn phường xã---">
                                                         <option value="{{ $user->id_phuongxa }}">
                                                             {{ $phuongxa }}
@@ -320,17 +324,20 @@
                                             <div class="row mb-3">
                                                 <div class="col-lg-12">
                                                     <h3 class="text-uppercase text-center">- Lịch sử đơn hàng -</h3>
-                                                    <div class="d-flex justify-content-between">
+                                                    {{-- <div class="d-flex justify-content-between">
                                                         <div>
-                                                            <span>Tổng đơn hàng: <b>{{ formatNumber($user->orders()->count())}}</b></span>
+                                                            <span>Tổng đơn hàng:
+                                                                <b>{{ formatNumber($user->orders()->count()) }}</b></span>
                                                         </div>
                                                         <div>
-                                                            <span>Tổng đơn hàng hoàn thành(tháng): <b>{{ formatNumber($user->orders()->where('status',4)->count())}}</b></span>
+                                                            <span>Tổng đơn hàng hoàn thành(tháng):
+                                                                <b>{{ formatNumber($user->orders()->where('status', 4)->count()) }}</b></span>
                                                         </div>
                                                         <div>
-                                                            <span>Tổng đơn hàng hủy(tháng): <b>{{ formatNumber($user->orders()->where('status',5)->count())}}</b></span>
+                                                            <span>Tổng đơn hàng hủy(tháng):
+                                                                <b>{{ formatNumber($user->orders()->where('status', 5)->count()) }}</b></span>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <table class="styled-table table-sortable">
                                                         <thead>
                                                             <tr>
@@ -338,16 +345,18 @@
                                                                 <th>Trạng thái</th>
                                                                 <th>Chi tiết đơn hàng</th>
                                                                 <th></th>
-                                                                
+
                                                                 <!-- <th>Chi tiết đơn hàng</th> -->
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($user->orders()->latest()->get() as $order)
+                                                            @foreach ($user->orders()->latest()->get()
+        as $order)
                                                                 <tr style="text-align:center">
                                                                     <td>{{ $order->order_code }}</td>
                                                                     <td>{!! orderStatus($order->status) !!}</td>
-                                                                    <td><a href="{{route('order.show', ['order' => $order->id])}}" class="btn btn-info">Chi tiết</a></td>
+                                                                    <td><a href="{{ route('order.show', ['order' => $order->id]) }}"
+                                                                            class="btn btn-info">Chi tiết</a></td>
                                                                     <td></td>
                                                                 </tr>
                                                             @endforeach
@@ -363,12 +372,13 @@
                                                     <table class="styled-table table-sortable">
                                                         <thead>
                                                             <tr>
-                                                                <th>Thời gian</th>
-                                                                <th>Mã khách hàng chuyển</th>
-                                                                <th>Số dư đầu</th>
-                                                                <th>Số dư cuối</th>
-                                                                <th>Giá trị chuyển khoản</th>
+                                                                <th>Thời gian giao dịch</th>
+                                                                <th>Mã giao dịch</th>
                                                                 <th>Nội dung</th>
+                                                                <th>Số dư ban đầu</th>
+                                                                <th>Tăng</th>
+                                                                <th>Giảm</th>
+                                                                <th>Số dư cuối</th>
                                                                 <!-- <th>Chi tiết đơn hàng</th> -->
                                                             </tr>
                                                         </thead>
@@ -376,11 +386,23 @@
                                                             @foreach ($lichsuchuyen as $value)
                                                                 <tr style="text-align:center">
                                                                     <td>{{ $value->created_at }}</td>
-                                                                    <td>{{ $value->makhachhang }}</td>
-                                                                    <td>{{ $value->point_past_chuyen }}</td>
-                                                                    <td>{{ $value->point_present_chuyen }}</td>
-                                                                    <td>{{ $value->amount }}</td>
+                                                                    <td>{{ $value->magiaodich }}</td>
                                                                     <td>{{ $value->note }}</td>
+                                                                    <td>{{ formatNumber($value->point_past_chuyen) }}
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($value->point_past_chuyen < $value->point_present_chuyen)
+                                                                            {{ formatNumber($value->amount) }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($value->point_past_chuyen > $value->point_present_chuyen)
+                                                                            {{ formatNumber($value->amount) }}
+                                                                        @endif
+                                                                    </td>
+
+                                                                    <td>{{ formatNumber($value->point_present_chuyen) }}
+                                                                    </td>
                                                                 </tr>
                                                             @endforeach
                                                             <!-- and so on... -->
@@ -426,10 +448,12 @@
                                                     </h3>
                                                     <div class="d-flex justify-content-between">
                                                         <div>
-                                                            <span>Tổng C: <b>{{ formatNumber($user->point_c()->value('point_c'))}}</b></span>
+                                                            <span>Tổng C:
+                                                                <b>{{ formatNumber($user->point_c()->value('point_c')) }}</b></span>
                                                         </div>
                                                         <div>
-                                                            <span>Số C khả dụng: <b>{{ formatNumber($user->point_c()->value('point_c'))}}</b></span>
+                                                            <span>Số C khả dụng:
+                                                                <b>{{ formatNumber($user->point_c()->value('point_c')) }}</b></span>
                                                         </div>
                                                     </div>
                                                     <table class="styled-table table-sortable">
@@ -448,13 +472,23 @@
                                                         <tbody>
                                                             @foreach ($lichsunhan as $value)
                                                                 <tr style="text-align:center">
-                                                                    <td>{{ Date('H:i:s d/m/Y',strtotime($value->created_at)) }}</td>
+                                                                    <td>{{ Date('H:i:s d/m/Y', strtotime($value->created_at)) }}
+                                                                    </td>
                                                                     <td>{{ $value->magiaodich }}</td>
                                                                     <td>{{ $value->note }}</td>
                                                                     <td>{{ $value->point_past_nhan }}</td>
-                                                                    <td>@if($value->point_past_nhan< $value->point_present_nhan) {{ formatNumber($value->amount) }} @endif</td>
-                                                                    <td>@if($value->point_past_nhan > $value->point_present_nhan) {{ formatNumber($value->amount) }} @endif</td>
-                                                                    <td>{{ formatNumber($value->point_present_nhan) }}</td>
+                                                                    <td>
+                                                                        @if ($value->point_past_nhan < $value->point_present_nhan)
+                                                                            {{ formatNumber($value->amount) }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($value->point_past_nhan > $value->point_present_nhan)
+                                                                            {{ formatNumber($value->amount) }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>{{ formatNumber($value->point_present_nhan) }}
+                                                                    </td>
                                                                 </tr>
                                                             @endforeach
                                                             <!-- and so on... -->

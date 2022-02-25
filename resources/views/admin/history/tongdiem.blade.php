@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Danh sách ví điểm khách hàng trong ngày')
+@section('title', 'Thống kê chi tiết tất cả tài khoản tiền tích lũy HSKH')
 
 @push('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin/dashboard.css') }}">

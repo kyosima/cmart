@@ -48,6 +48,8 @@ class Order extends Model
 		'm_point',
 		'tax',
 		'sub_total',
+		'vat_products',
+		'discount_products',
 		'total',
 		'status',
 		'user_id'

@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Lịch sử điểm tích luỹ M')
+@section('title', 'Lịch sử thanh toán tích lũy M')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/amcharts.css') }}" type="text/css">
@@ -16,7 +16,7 @@
                 <input type="text" class="form-control" id="search_time" onkeyup="search_time()" placeholder="Nhập thời gian tìm kiếm">
             </div> -->
             <div class="col-3">
-                <input type="text" class="form-control" id="search_makhachhang" onkeyup="search_makhachhang()" placeholder="Nhập mã khách hàng tìm kiêm">
+                <input type="text" class="form-control" id="search_makhachhang" onkeyup="search_makhachhang()" placeholder="Nhập mã khách hàng tìm kiếm">
             </div>
             <div class="col-3">
                 <input type="text" class="form-control" id="search_magiaodich" onkeyup="search_noidung()" placeholder="Nhập tên khách hàng tìm kiếm">

@@ -17,6 +17,7 @@ use App\Models\PointCHistory;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Excel;
 use App\Exports\UsersExport;
+use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 class UserController extends Controller
 {
@@ -134,6 +135,25 @@ class UserController extends Controller
     public function nangcap(Request $request){
         $user = User::where('user_id',Auth::user()->id);
         return redirect('admin/danh-sach-user');
+    }
+
+    public function changeStatusUser(Request $request){
+        $user = User::whereId($request->id)->first();
+        if($user->status == 1){
+            $user->status = 0;
+            $user->save();
+        }else{
+            $user->status = 1;
+            $user->save();
+        }
+        return back();
+    }
+
+    public function upgrageVipUser(Request $request){
+        $user = User::whereId($request->id)->first();
+        $user->level = 1;
+        $user->save();
+        return back();
     }
 
 

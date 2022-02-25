@@ -81,6 +81,7 @@
                     <th>Họ và tên</th>
                     <th>Số điện thoại</th>
                     <th>Định danh Khách Hàng</th>
+                    <th>Giá trị C từ mua SP/tháng</th>
                     <th>Số dư C</th>
                     {{-- <th>Thông tin chi tiết</th> --}}
                     {{-- <th>Trạng thái KYC</th> --}}
@@ -95,13 +96,10 @@
                         <td>{{ $k->hoten }}</td>
                         <td>{{ $k->phone }}</td>
                         <td>
-                            @if ($k->level == 1)
-                                {{ 'Member Thân Thiết' }}
-                            @elseif($k->level == 2)
-                                {{ 'Member VIP' }}
-                            @else
-                                {{ 'Member Thuong' }}
-                            @endif
+                          {{formatLevel($k->level)}}
+                        </td>
+                        <td>
+                            {{ formatNumber($k->orders()->where('status', 4)->sum('c_point')) }}
                         </td>
                         <td>
                             {{ formatNumber($k->point_c()->value('point_c')) }}
@@ -128,20 +126,35 @@
                                         Nâng cấp lên thân thiết
                                     </a>
                                 @else --}}
-                            @if ($k->point_c()->value('point_c') >= 30000000 && $k->level == 1)
-                                <a class="alert alert-warning m-0" style="color:black;text-decoration: none;"
-                                    href="nang-cap-user/{{ $k->id }}">
-                                    Nâng cấp lên VIP
-                                </a>
-                            @elseif($k->status == 1)
-                                <span style=" max-width: 82px;min-width: 82px; " type="text"
-                                    class="form-control form-control-sm font-size-s text-white active text-center"
-                                    aria-label="Text input with dropdown button">Hoạt động</span>
-                            @else
-                                <span style=" max-width: 82px;min-width: 82px;" type="text"
-                                    class="form-control form-control-sm font-size-s text-white stop text-center"
-                                    aria-label="Text input with dropdown button">Ngừng</span>
-                            @endif
+                            <div class="input-group" style="min-width: 108px;">
+                                    <span style=" max-width: 82px;min-width: 82px;" type="text"
+                                        class="form-control form-control-sm font-size-s text-white @if($k->status==1) active @else stop @endif text-center"
+                                        aria-label="Text input with dropdown button">@if($k->status==1) Hoạt động @else Ngừng @endif</span>
+                                    <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
+                                            aria-hidden="true"></i></button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a href="{{route('user.changeStatus', $k->id)}}">
+
+                                            <span class="dropdown-item changeStatus">
+                                                    @if($k->status == 0)
+                                                        Hoạt động
+                                                    @else
+                                                        Ngừng
+                                                    @endif
+                                               
+                                            </span>
+                                        </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('user.upgradeVip', $k->id)}}"> <span class="dropdown-item btn-delete">
+                                              Nâng cấp VIP
+                                            </span>
+                                        </a>
+                                        </li>
+                                    </ul>
+                            </div>
                             {{-- elseif(($k->point_c()->value('point_c') >= 5000000 && $k->level == 1) || ($k->tichluyC >= 30000000 && $k->level == 2))
                                 @endif --}}
                         </td>

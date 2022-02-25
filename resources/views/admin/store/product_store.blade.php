@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
-                                <label class="col-md-12 control-label text-left">Số lượng:</label>
+                                <label class="col-md-12 control-label text-left">Tồn kho:</label>
                                 <div class="col-md-12">
                                     <input type="number" min="0" name="quantity" value="{{$product->getOriginal('pivot_soluong') ?? 1}}" class="form-control">
                                 </div>

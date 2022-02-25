@@ -50,7 +50,7 @@
                                     thông tin đặt hàng</label>
                             </div>
                             <div class="card-information-body">
-                                
+
                                 <div class="col-xl-6 ">
                                     <div class="form-group">
                                         <label for="">Họ và tên<sup class="text-danger">*</sup></label>
@@ -128,53 +128,7 @@
                             </div> --}}
                             <br />
                         </div>
-                        <div class="phuongthuc-thanhtoan">
-                            <div class="phuongthuc-thanhtoan-card-header">
-                                <h3>THÔNG TIN HÓA ĐƠN GTGT</h3>
-                            </div>
-                            <hr>
-                            <div class="phuongthuc-thanhtoan-card-body">
 
-                                <!--<div class="form-group">-->
-                                <!--    <label onclick="showvat()"><input type="checkbox" id="show-vat" name="show_vat"-->
-                                <!--            value="1"> Xác nhận xuất hóa GTGT</label>-->
-                                <!--</div>-->
-                                <input type="hidden" id="show-vat" name="show_vat" value="1">
-                                <div class="form-vat">
-                                    <div class="form-group">
-                                        <!--<label for="">Tên người mua<sup class="text-danger">*</sup></label>-->
-                                        <input type="text" name="vat_email" class="form-control" value=""
-                                            placeholder="Mời nhập email nhận hóa đơn">
-                                    </div>
-                                    <div class="form-group">
-                                        <!--<label for="">Tên công ty<sup class="text-danger">*</sup></label>-->
-                                        <input type="text" name="vat_company" class="form-control" value=""
-                                            placeholder="Mời nhập tên công ty">
-                                    </div>
-                                    <div class="form-group">
-                                        <!--<label for="">Mã số thuế<sup class="text-danger">*</sup></label>-->
-                                        <input type="number" name="vat_mst" class="form-control" value=""
-                                            placeholder="Mời nhập mã số thuế công ty">
-                                    </div>
-                                    <div class="form-group">
-                                        <!--<label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>-->
-                                        <input type="text" name="vat_address" class="form-control" value=""
-                                            placeholder="Mời nhập địa chỉ công ty">
-                                    </div>
-                                    <div>
-
-                                        <p class="mb-0">- Nếu Quý Khách Hàng không nhập thông tin thì C-Mart sẽ
-                                            ghi nhận <b>“Người mua không
-                                                lấy hóa đơn”</b>, và không gửi hóa đơn GTGT đến Quý Khách Hàng.</p>
-                                        <p class="mb-0">- C-Mart xin phép từ chối hỗ trợ xử lý các thao tác về hóa
-                                            đơn sau khi đặt hàng.
-                                        </p>
-                                    </div>
-                                    <br />
-
-                                </div>
-                            </div>
-                        </div>
                         <div class="list-stores-checkout">
                             <div class="list-stores-title text-center" id="url-update-type"
                                 data-url="{{ route('checkout.updateTypeShip') }}">
@@ -222,7 +176,8 @@
                                             <div>Phương thức: <span class="name-method"></span></div>
                                             <div><span class="ship-normal"> </span><span class="ship-fast"></span>
                                             </div>
-                                            <div>Tổng tiền: <span class="total-cost"></span></div>
+                                            <div class="d-none">Tổng tiền: <span class="total-cost"></span>
+                                            </div>
                                             <input type="hidden" class="ship-fee">
 
                                         </div>
@@ -230,9 +185,56 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div class="phuongthuc-thanhtoan">
+                            <div class="phuongthuc-thanhtoan-card-header">
+                                <h3 class="text-center">THÔNG TIN HÓA ĐƠN GTGT</h3>
+                            </div>
+                            <hr>
+                            <div class="phuongthuc-thanhtoan-card-body">
+
+                                <!--<div class="form-group">-->
+                                <!--    <label onclick="showvat()"><input type="checkbox" id="show-vat" name="show_vat"-->
+                                <!--            value="1"> Xác nhận xuất hóa GTGT</label>-->
+                                <!--</div>-->
+                                <input type="hidden" id="show-vat" name="show_vat" value="1">
+                                <div class="form-vat">
+                                    <div class="form-group">
+                                        <!--<label for="">Tên người mua<sup class="text-danger">*</sup></label>-->
+                                        <input type="text" name="vat_email" class="form-control" value=""
+                                            placeholder="Mời nhập email nhận hóa đơn">
+                                    </div>
+                                    <div class="form-group">
+                                        <!--<label for="">Tên công ty<sup class="text-danger">*</sup></label>-->
+                                        <input type="text" name="vat_company" class="form-control" value=""
+                                            placeholder="Mời nhập tên công ty">
+                                    </div>
+                                    <div class="form-group">
+                                        <!--<label for="">Mã số thuế<sup class="text-danger">*</sup></label>-->
+                                        <input type="number" name="vat_mst" class="form-control" value=""
+                                            placeholder="Mời nhập mã số thuế công ty">
+                                    </div>
+                                    <div class="form-group">
+                                        <!--<label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>-->
+                                        <input type="text" name="vat_address" class="form-control" value=""
+                                            placeholder="Mời nhập địa chỉ công ty">
+                                    </div>
+                                    <div>
+
+                                        <p class="mb-0">- Nếu Quý Khách Hàng không nhập thông tin thì C-Mart sẽ
+                                            ghi nhận <b>“Người mua không
+                                                lấy hóa đơn”</b>, và không gửi hóa đơn GTGT đến Quý Khách Hàng.</p>
+                                        <p class="mb-0">- C-Mart xin phép từ chối hỗ trợ xử lý các thao tác về hóa
+                                            đơn sau khi đặt hàng.
+                                        </p>
+                                    </div>
+                                    <br />
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                 <div class="col-xl-4 col-sm-12 col-12 d-none">
+                <div class="col-xl-4 col-sm-12 col-12 d-none">
                     <div class="card-left">
                         <div class="makhuyenmai">
                             <div class="makhuyenmai-header">
@@ -326,8 +328,7 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="nhanhang"
-                                                id="check1">
+                                            <input type="checkbox" class="custom-control-input" name="nhanhang" id="check1">
                                             <label class="custom-control-label" for="check1">Tôi đã đọc và đồng ý với Quy
                                                 định Thao tác khi nhận hàng
                                             </label>
@@ -401,20 +402,20 @@
                                     <span>Thanh toán online</span>
                                     <img src="{{ asset('assets/image/payme.png') }}">
                                 </div>
-                               <div class="thanhtoantructuyen">
-                                            <input type="radio" name="payment_method" value="2" readonly="readonly" disabled>
-                                            <span>Chuyển khoản qua ngân hàng</span>
-                                            <img src="{{ asset('assets/image/vnpay.png') }}">
-                                        </div> 
-                              <div class="chuyenkhoan">
-                                            <input type="radio" name="payment_method" value="3" readonly="readonly" disabled>
-                                            <span>Chuyển khoản qua ngân hàng</span>
-                                            <div class="tk-nganhang">
-                                                <p>Doanh nghiệp: Công ty cổ phần</p>
-                                                <p>TK ngân hàng: Công ty cổ phần</p>
-                                                <p>Chi nhánh: Công ty cổ phần</p>
-                                            </div>
-                                        </div>
+                                <div class="thanhtoantructuyen">
+                                    <input type="radio" name="payment_method" value="2" readonly="readonly" disabled>
+                                    <span>Chuyển khoản qua ngân hàng</span>
+                                    <img src="{{ asset('assets/image/vnpay.png') }}">
+                                </div>
+                                <div class="chuyenkhoan">
+                                    <input type="radio" name="payment_method" value="3" readonly="readonly" disabled>
+                                    <span>Chuyển khoản qua ngân hàng</span>
+                                    <div class="tk-nganhang">
+                                        <p>Doanh nghiệp: Công ty cổ phần</p>
+                                        <p>TK ngân hàng: Công ty cổ phần</p>
+                                        <p>Chi nhánh: Công ty cổ phần</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         {{-- <a class="btn-back-cart" href="{{ route('cart.index') }}">Quay lại Giỏ hàng</a>
@@ -436,6 +437,16 @@
     <script src="{{ asset('public/js/checkout.js') }}"></script>
 
     <script>
+        $(".receiverstore").change(function() {
+            if ($('.receiverstore:checked').length == $('.receiverstore').length) {
+                $('select[name="sel_province"]').prop('required',false);
+                $('select[name="sel_district"]').prop('required',false);
+                $('select[name="sel_ward"]').prop('required',false);
+                $('input[name="address"]').prop('required',false);
+
+
+            }
+        });
         $("select[name='sel_province']").change(function() {
             if ($(this).val() == '70') {
                 $('#cship').prop('checked', true);

@@ -71,9 +71,9 @@
                                             thanh toán tại C-Mart và các Đối Tác Liên Liên Kết, giá trị đầu tư tốt theo
                                             Chính sách Tiết Kiệm Tích Tài C-Saving, giá trị lưu trữ không giới hạn
                                         </span></span> --}}
-                                                <span class="text-dark">Tiền tích lũy (C):</span><span
-                                                    class="text-dark"
-                                                    style="font-weight: 300">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
+                                                <span class="text-dark" style="font-weight: 300">Tiền tích lũy
+                                                    (C):</span><span class="text-dark"
+                                                    style="font-weight: 600">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
                                                     điểm</span>
 
                                             </p>
@@ -83,9 +83,9 @@
                                             năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển,
                                             phí thanh toán...) và chỉ có giá trị trong chính đơn hàng đó.
                                         </span></span> --}}
-                                                <span class="text-dark">Điểm dịch vụ (M):</span><span
-                                                    class="text-dark"
-                                                    style="font-weight: 300">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
+                                                <span class="text-dark" style="font-weight: 300">Điểm dịch vụ
+                                                    (M):</span><span class="text-dark"
+                                                    style="font-weight: 600">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
                                                     điểm</span>
 
                                             </p>
@@ -151,7 +151,7 @@
                                             <select name="store_id" id="sl-store" class="form-control">
                                                 <option value="0">---Chọn cửa hàng---</option>
                                                 @foreach ($stores as $store)
-                                                    @if (in_array($user->level, explode(',', $store->getOriginal('pivot_for_user'))))
+                                                    @if (in_array($user->level, array_diff(explode(',', $store->getOriginal('pivot_for_user')),array(""))))
                                                         <option value="{{ $store->id }}"
                                                             @if ($store->getOriginal('pivot_soluong') == 0) disabled @endif>
                                                             {{ $store->name }} còn

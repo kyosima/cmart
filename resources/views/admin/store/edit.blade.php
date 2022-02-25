@@ -141,7 +141,7 @@
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
                                             <select id="selectWard" name="id_ward" data-type="ward"
-                                                data-placeholder="Chọn phường/xã" class="form-control js-location"
+                                                data-placeholder="Chọn phường/xã" class="form-control"
                                                 {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
                                                 >
                                                 @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))

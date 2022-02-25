@@ -32,55 +32,53 @@ class CheckoutController extends Controller
         $this->api_key = 'VuBqJVkHv1wiBSdJArMeq5rhSCC6q12e3cVeVxmc';
     }
     public function index()
-    {        
+    {
         if (Auth::check()) {
-                $user = Auth::user();
-                if($user->is_ekyc == 0){
-                    return redirect()->route('ekyc.getVerify');
+            $user = Auth::user();
+            if ($user->is_ekyc == 0) {
+                return redirect()->route('ekyc.getVerify');
+            }
+
+            if (Session::has('store_ids') == false) {
+                return redirect()->route('cart.index');
+            }
+            $store_ids = Session::get('store_ids');
+            $province = Province::select('matinhthanh', 'tentinhthanh')->get();
+            $store_address = $user->getstoreAddress()->get();
+            $tax = 0;
+            $m_point = 0;
+            $c_point = 0;
+            $sub_total = 0;
+            $total = 0;
+            $count_cart = 0;
+            foreach (explode(",", $store_ids) as $store_id) {
+                $cart = Cart::instance($store_id);
+                foreach ($cart->content() as $row) {
+                    $price = $row->model->productPrice()->first();
+                    $tax += ($row->price * $price->tax) * $row->qty;
+                    $m_point += $price->mpoint * $row->qty;
+                    $c_point += $price->cpoint * $row->qty;
                 }
-       
-                if (Session::has('store_ids') == false) {
-                    return redirect()->route('cart.index');
-                }
-                $store_ids = Session::get('store_ids');
-                $province = Province::select('matinhthanh', 'tentinhthanh')->get();
-                $store_address = $user->getstoreAddress()->get();
-                $tax = 0;
-                $m_point = 0;
-                $c_point = 0;
-                $sub_total = 0;
-                $total = 0;
-                $count_cart = 0;
-                foreach (explode(",", $store_ids) as $store_id) {
-                    $cart = Cart::instance($store_id);
-                    foreach ($cart->content() as $row) {
-                        $price = $row->model->productPrice()->first();
-                        $tax += ($row->price * $price->tax) * $row->qty;
-                        $m_point += $price->mpoint * $row->qty;
-                        $c_point += $price->cpoint * $row->qty;
-                    }
-                    $count_cart += $cart->count();
+                $count_cart += $cart->count();
 
-                    $sub_total += intval(str_replace(",", "", $cart->subtotal()));
+                $sub_total += intval(str_replace(",", "", $cart->subtotal()));
 
-                    $total += intval(str_replace(",", "", $cart->total()));
-
-                }
+                $total += intval(str_replace(",", "", $cart->total()));
+            }
 
 
-                return view('checkout.thanhtoan', [
-                    'cart_subtotal' => $sub_total,
-                    'cart_total' => $total + $tax,
-                    'province' => $province,
-                    'user' => $user,
-                    'tax' => $tax,
-                    'm_point' => $m_point,
-                    'c_point' => $c_point,
-                    'store_address' => $store_address,
-                    'count_cart' => $count_cart,
-                    'store_ids' => $store_ids
-                ]);
-           
+            return view('checkout.thanhtoan', [
+                'cart_subtotal' => $sub_total,
+                'cart_total' => $total + $tax,
+                'province' => $province,
+                'user' => $user,
+                'tax' => $tax,
+                'm_point' => $m_point,
+                'c_point' => $c_point,
+                'store_address' => $store_address,
+                'count_cart' => $count_cart,
+                'store_ids' => $store_ids
+            ]);
         } else {
             return redirect()->route('account');
         }
@@ -95,7 +93,7 @@ class CheckoutController extends Controller
         $province = Province::select('matinhthanh', 'tentinhthanh')->get();
         $district = $a_province->district()->select('maquanhuyen', 'tenquanhuyen')->get();
         $ward = $a_district->ward()->select('maphuongxa', 'tenphuongxa')->get();
-        $arr = [$user,$a_province, $a_district, $a_ward, $province, $district, $ward];
+        $arr = [$user, $a_province, $a_district, $a_ward, $province, $district, $ward];
         return $arr;
     }
 
@@ -105,13 +103,13 @@ class CheckoutController extends Controller
             'fullname' => 'required',
             'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/'],
             // 'email' => 'required|email',
-            'sel_province' => 'required',
-            'sel_district' => 'required',
-            'sel_ward' => 'required',
-            'address' => 'required',
+            // 'sel_province' => 'required',
+            // 'sel_district' => 'required',
+            // 'sel_ward' => 'required',
+            // 'address' => 'required',
             // 'shipping_method' => 'required',
         ]);
-       
+
         $user_id = null;
         if (Auth::check()) {
             $user = Auth::user();
@@ -128,20 +126,27 @@ class CheckoutController extends Controller
         $total_shipping = 0;
         $total_c = 0;
         $total_m = 0;
+        $total_vat_products = 0;
+        $total_discount_products = 0;
         $sub_total = 0;
         $total = 0;
-        foreach(explode(",",$store_ids) as $store_id){
+        $order->order_code = 'CMART-' . $order->id . time();
+
+        foreach (explode(",", $store_ids) as $store_id) {
             $cart = Cart::instance($store_id);
             $order_store = OrderStore::create([
                 'id_order' => $order->id,
-                'id_store' => $store_id
+                'id_store' => $store_id,
+
             ]);
             $store_tax = 0;
-            $store_shipping_total =0;
+            $store_shipping_total = 0;
             $store_shipping_method = 0;
             $store_shipping_type = 0;
             $store_c = 0;
             $store_m = 0;
+            $vat_products = 0;
+            $discount_products = 0;
             foreach ($cart->content() as $row) {
                 $price = $row->model->productPrice()->first();
                 $store_tax += ($row->price * $price->tax) * $row->qty;
@@ -149,39 +154,67 @@ class CheckoutController extends Controller
                 $store_m += $price->mpoint * $row->qty;
                 $store_shipping_method = $row->options->method_ship;
                 $store_shipping_type = $row->options->type_ship;
-                if(in_array($store_shipping_type, [0,1])){
-                    $store_shipping_total += $row->options->price_normal;
-                }else{
-                    $store_shipping_total += $row->options->price_fast;
+
+                switch ($store_shipping_type) {
+                    case 2:
+                        $store_shipping_total += $row->options->price_fast;
+                        break;
+                    default:
+                        $store_shipping_total += $row->options->price_normal;
+                        break;
                 }
+                $vat_products += $row->price * $price->tax * $row->qty;
                 OrderProduct::create([
                     'id_order' => $order->id,
                     'id_order_store' => $order_store->id,
                     'id_product' => $row->model->id,
+                    'sku' => $row->model->sku,
                     'name' => $row->name,
                     'slug' => $row->model->slug,
                     'feature_img' => $row->model->feature_img,
                     'quantity' => $row->qty,
                     'price' => $row->price,
+                    'discount' => 0,
                     'c_point' => $price->cpoint,
                     'm_point' => $price->mpoint
                 ]);
             }
+            OrderProduct::create([
+                'id_order' => $order->id,
+                'id_order_store' => $order_store->id,
+                'id_product' => null,
+                'sku' => null,
+                'name' => "Hóa đơn GTGT",
+                'slug' => null,
+                'feature_img' => null,
+                'quantity' => 1,
+                'price' => 300,
+                'discount' => 0,
+                'c_point' => 0,
+                'm_point' => 0,
+            ]);
             $order_store->tax = $store_tax;
             $order_store->shipping_method = $store_shipping_method;
+            if (($store_shipping_method == 0) || ($store_shipping_method == 1)) {
+                $order_store->shipping_code = $order->order_code;
+            }
             $order_store->shipping_type = $store_shipping_type;
             $order_store->shipping_total = $store_shipping_total;
+            $order_store->remaining_m_point = max($store_m - $store_shipping_total, 0);
             $order_store->c_point = $store_c;
             $order_store->m_point = $store_m;
-            $order_store->sub_total = intval(str_replace(",", "", $cart->subtotal()));
-            $order_store->total = $order_store->sub_total + $store_tax + $store_shipping_total;
+            $order_store->vat_products = $vat_products;
+            $order_store->sub_total = intval(str_replace(",", "", $cart->subtotal())) + 300;
+            $order_store->total = $order_store->sub_total + $vat_products;
             $order_store->save();
             $total_tax += $store_tax;
             $total_shipping += $store_shipping_total;
             $total_c += $store_c;
             $total_m += $store_m;
-            $sub_total =+ $order_store->sub_total;
-            $total += $order_store->total ;
+            $total_vat_products += $vat_products;
+            $total_discount_products += $discount_products;
+            $sub_total = +$order_store->sub_total;
+            $total += $order_store->total;
             Cart::instance($store_id)->destroy();
         }
 
@@ -195,14 +228,15 @@ class CheckoutController extends Controller
             ]);
             $vat->save();
         }
-        $order->order_code = 'CMART-' . $order->id . time();
         $order->payment_method = null;
         $order->tax = $total_tax;
         $order->shipping_total = $total_shipping;
         $order->c_point = $total_c;
         $order->m_point = $total_m;
-        $order->sub_total = $sub_total; 
+        $order->sub_total = $sub_total;
         $order->total = $total;
+        $order->vat_products = $total_vat_products;
+        $order->discount_products = $total_discount_products;
         $order->save();
 
         $order_address = new OrderAddress();
@@ -229,18 +263,19 @@ class CheckoutController extends Controller
         //         return redirect($result->data->url);
         //     }else{
         //         return redirect()->route('paymentFail');
-                
+
         //     }
-            
+
         // }else{
-            return redirect()->route('checkout.getPayment', ['order_code' => $order->order_code]);
+        return redirect()->route('checkout.getPayment', ['order_code' => $order->order_code]);
         // }
-          
+
         // } else {
         //     return redirect()->route('cart.index');
         // }
     }
-    public function getPayment(Request $request){
+    public function getPayment(Request $request)
+    {
         $user = Auth::user();
         $order = Order::whereOrderCode($request->order_code)->first();
         return view('checkout.payment', compact('order', 'user'));
@@ -258,12 +293,18 @@ class CheckoutController extends Controller
         return view('checkout.thanhcong', ['order' => $order, 'address' => $order_address, 'order_info' => $order_info, 'order_stores' => $order_stores]);
     }
 
-    public function updateTypeShip(Request $request){
+    public function updateTypeShip(Request $request)
+    {
+
         $cart = Cart::instance($request->storeid);
-        foreach($cart->content() as $row){
-            $cart->update($row->rowId, ['options'=>['type_ship'=>$request->type]]);
+
+        foreach ($cart->content() as $row) {
+
+            $options = $row->options;
+            $options = $options->merge(['type_ship' => $request->type]);
+            $cart->update($row->rowId, ['options' => $options]);
         }
-        return json_encode($cart->content());
+        return $cart->content();
     }
 
     public function calShip(Request $request)
@@ -272,12 +313,12 @@ class CheckoutController extends Controller
         $store_ids = Session::get('store_ids');
         $store_ships = array();
         $store_ids = explode(",", $store_ids);
-        if(isset($data['shipcmart'])){
+        if (isset($data['shipcmart'])) {
             $arr2 = $data['shipcmart'];
             $store_ids = array_diff($store_ids, $arr2);
         }
- 
- 
+
+
         foreach ($store_ids as $store_id) {
             $store = Store::whereId($store_id)->first();
             $cart = Cart::instance($store_id);
@@ -293,38 +334,39 @@ class CheckoutController extends Controller
                     $ship_temp = $this->getCShip($process_fee, $this->getWeight($row->model, $row->qty), $distance);
                     $ship_arr[0] += $ship_temp[0];
                     $ship_arr[1] += $ship_temp[1];
-                    $cart->update($row->rowId, ['options'=>['method_ship' => 1, 'type_ship' =>1, 'price_normal'=>$ship_temp[0], 'price_fast'=>$ship_temp[1]]]);
+                    $cart->update($row->rowId, ['options' => ['method_ship' => 1, 'type_ship' => 1, 'price_normal' => $ship_temp[0], 'price_fast' => $ship_temp[1]]]);
                 }
                 $store_ships['store' . $store_id]['name'] = 'store' . $store_id;
+                $store_ships['store' . $store_id]['id'] = $store_id;
                 $store_ships['store' . $store_id]['ship_total']['ship'] = array('value' => $ship_arr[0], 'text' => formatPrice($ship_arr[0]));
                 $store_ships['store' . $store_id]['ship_total']['ship_fast'] = array('value' => $ship_arr[1], 'text' => formatPrice($ship_arr[1]));
                 $store_ships['store' . $store_id]['method'] = 1;
-                $store_ships['store' . $store_id]['total_cost']['text'] = formatPrice(intval(str_replace(",", "", $cart->total()))+$ship_arr[0]);
+                $store_ships['store' . $store_id]['total_cost']['text'] = formatPrice(intval(str_replace(",", "", $cart->total())) + $ship_arr[0]);
                 $store_ships['store' . $store_id]['total_cost']['value'] = intval(str_replace(",", "", $cart->total()));
-                
-            }else{
+            } else {
                 $ship_arr = array(0, 0);
                 foreach ($cart->content() as $row) {
                     $price = $row->model->productPrice()->first();
                     $process_fee = $row->qty * $price->phi_xuly;
-                    $ship_temp = $this->getVShip($process_fee, $this->getWeight($row->model, $row->qty));
+                    $ship_temp = $this->getVShip($process_fee, $this->getWeight($row->model, $row->qty), $data['province'], $store->province()->value('matinhthanh'));
                     $ship_arr[0] += $ship_temp[0];
                     $ship_arr[1] += $ship_temp[1];
-                    $cart->update($row->rowId, ['options'=>['method_ship' => 2, 'type_ship' =>1, 'price_normal'=>$ship_temp[0], 'price_fast'=>$ship_temp[1]]]);
+                    $cart->update($row->rowId, ['options' => ['method_ship' => 2, 'type_ship' => 1, 'price_normal' => $ship_temp[0], 'price_fast' => $ship_temp[1]]]);
                 }
                 $store_ships['store' . $store_id]['name'] = 'store' . $store_id;
                 $store_ships['store' . $store_id]['id'] = $store_id;
                 $store_ships['store' . $store_id]['ship_total']['ship'] = array('value' => $ship_arr[0], 'text' => formatPrice($ship_arr[0]));
                 $store_ships['store' . $store_id]['ship_total']['ship_fast'] = array('value' => $ship_arr[1], 'text' => formatPrice($ship_arr[1]));
                 $store_ships['store' . $store_id]['method'] = 2;
-                $store_ships['store' . $store_id]['total_cost']['text'] = formatPrice(intval(str_replace(",", "", $cart->total()))+$ship_arr[0]);
+                $store_ships['store' . $store_id]['total_cost']['text'] = formatPrice(intval(str_replace(",", "", $cart->total())) + $ship_arr[0]);
                 $store_ships['store' . $store_id]['total_cost']['value'] = intval(str_replace(",", "", $cart->total()));
             }
         }
         return json_encode($store_ships);
     }
 
-    public function calCmartShip(Request $request){
+    public function calCmartShip(Request $request)
+    {
         $store_id = $request->storeid;
         $cart = Cart::instance($store_id);
         $ship_cost = 0;
@@ -333,16 +375,14 @@ class CheckoutController extends Controller
             $process_fee = $row->qty * $price->phi_xuly;
             $ship_price = $this->getCmartShip($process_fee, $this->getWeight($row->model, $row->qty));
             $ship_cost += $ship_price;
-            $cart->update($row->rowId, ['options'=>['method_ship' => 0, 'type_ship' =>0, 'price_normal'=>$ship_price, 'price_fast'=>0]]);
-
+            $cart->update($row->rowId, ['options' => ['method_ship' => 0, 'type_ship' => 0, 'price_normal' => $ship_price, 'price_fast' => 0]]);
         }
         $store_ships['store' . $store_id]['name'] = 'store' . $store_id;
-        $store_ships['store' . $store_id]['ship_total']= array('value' => $ship_cost, 'text' => formatPrice($ship_cost));
+        $store_ships['store' . $store_id]['ship_total'] = array('value' => $ship_cost, 'text' => formatPrice($ship_cost));
         $store_ships['store' . $store_id]['method'] = 0;
-        $store_ships['store' . $store_id]['total_cost']['text'] = formatPrice(intval(str_replace(",", "", $cart->total()))+$ship_cost);
+        $store_ships['store' . $store_id]['total_cost']['text'] = formatPrice(intval(str_replace(",", "", $cart->total())) + $ship_cost);
         $store_ships['store' . $store_id]['total_cost']['value'] = intval(str_replace(",", "", $cart->total()));
         return json_encode($store_ships);
-
     }
 
     public function getCmartShip($process_fee, $weight)
@@ -351,63 +391,276 @@ class CheckoutController extends Controller
         if ($weight <= 0) {
             $ship = $process_fee;
         } else {
-            $ship = $process_fee + (max(3000, (1500 * round($weight / 500))));
+            $ship = $process_fee + (max(0, (3500 + (1000 * round($weight / 500)))));
         }
         return $ship;
     }
 
     public function getCShip($process_fee, $weight, $distance)
     {
-        $ship = $process_fee + 3000 + (4 * $weight) + max(3000, (1500 * round($weight / 500)));
-        $ship_fast = $process_fee + max(20000, 3000 + (3600 * $distance) + $weight) + max(3000, (1500 * round($weight / 500)));
+        $ship = 0;
+        switch (true) {
+            case in_array($weight, range(0, 2599)):
+                $ship += 6500 + (4.01 * $weight + (1000 * round($weight / 500)));
+                break;
+            case in_array($weight, range(2600, 3000)):
+                $ship += 6500 + (3.01 * $weight + (1000 * round($weight / 500)));
+                break;
+            case in_array($weight, range(3001, 29000)):
+                $ship += 6500 + (3.64 * $weight + (1000 * round($weight / 500)));
+                break;
+            case in_array($weight, range(29001, 49999)):
+                $ship += 6500 + (3.7 * $weight + (1000 * round($weight / 500)));
+                break;
+            case in_array($weight, range(50000, 99999)):
+                $ship += 6500 + (3.45 * $weight + (1000 * round($weight / 500)));
+                break;
+            case in_array($weight, range(100000, 199999)):
+                $ship += 6500 + (2.55 * $weight + (1000 * round($weight / 500)));
+                break;
+            case in_array($weight, range(200000, 499999)):
+                $ship += 6500 + (1.62 * $weight + (1000 * round($weight / 500)));
+                break;
+            case in_array($weight, range(500000, 1000000)):
+                $ship += 6500 + (1.11 * $weight + (1000 * round($weight / 500)));
+                break;
+            default:
+                $ship += 6500 + (1 * $weight + (1000 * round($weight / 500)));
+                break;
+        }
+        $ship = $process_fee +  round(max(10000, $ship));
+        $distance = max(round($distance, 1), 3);
+        $ship_fast = $process_fee + 6500 + (5000 * $distance) + (1 * $weight) + (1000 * round($weight / 500));
+        // $ship = $process_fee + 3000 + (4 * $weight) + max(3000, (1500 * round($weight / 500)));
+        // $ship_fast = $process_fee + max(20000, 3000 + (3600 * $distance) + $weight) + max(3000, (1500 * round($weight / 500)));
         return array(round($ship), round($ship_fast));
     }
-
-    public function getVShip($process_fee, $weight)
+    public function getProvinceArea($province_code)
+    {
+        switch (true) {
+            case in_array($province_code, range(10, 48)):
+                return 0;
+                break;
+            case in_array($province_code, range(10, 48)):
+                return 1;
+                break;
+            default:
+                return 2;
+                break;
+        }
+    }
+    public function getVShip($process_fee, $weight, $province_customer, $province_store)
     {
         $ship = $process_fee;
         $ship_fast = $process_fee;
+        //MB 10-48
+        //MT 49-66
+
         switch (true) {
-            case in_array($weight, range(0, 99)):
-                $ship += 26637;
-                $ship_fast += 28454;
+            case in_array($weight, range(0, 249)):
+                if ($province_customer == $province_store) {
+                    $ship +=  15278;
+                    $ship_fast += 20371;
+                } else {
+                    if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
+                        $ship += 25926;
+                        $ship_fast += 25926;
+                    } else {
+                        $ship +=  28704;
+                        $ship_fast += 35649;
+                    }
+                }
                 break;
-            case in_array($weight, range(100, 249)):
-                $ship += 28454;
-                $ship_fast += 38000;
+            case in_array($weight, range(250, 500)):
+                if ($province_customer == $province_store) {
+                    $ship +=  15278;
+                    $ship_fast += 20371;
+                } else {
+                    if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
+                        $ship += 27778;
+                        $ship_fast += 27778;
+                    } else {
+                        $ship += 29630;
+                        $ship += 45371;
+                    }
+                }
                 break;
-            case in_array($weight, range(250, 499)):
-                $ship += 30272;
-                $ship_fast += 47545;
+            case in_array($weight, range(501, 29500)):
+                if ($province_customer == $province_store) {
+                    $ship += 15278 + (2315 * floor($weight / 500));
+                    $ship_fast += 20371 + (2315 * floor($weight / 500));
+                } else {
+                    if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
+                        $ship += 27778 + (2963 * floor($weight / 500));
+                        $ship_fast += 27778 + (2963 * floor($weight / 500));
+                    } else {
+                        $ship +=  29630 + (4167 * floor($weight / 500));
+                        $ship_fast += 45371 + (11575 * floor($weight / 500));
+                    }
+                }
                 break;
-            case in_array($weight, range(500, 999)):
-                $ship += 33000;
-                $ship_fast += 53636;
+            case in_array($weight, range(29501, 29999)):
+                if ($province_customer == $province_store) {
+                    $ship += 128704;
+                    $ship_fast += 128704;
+                } else {
+                    if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
+                        $ship += 138889;
+                        $ship_fast += 193519;
+                    } elseif (
+                        in_array($this->getProvinceArea($province_customer), [0, 2])
+                        && in_array($this->getProvinceArea($province_store), [0, 2])
+                    ) {
+                        $ship += 216667;
+                        $ship_fast += 693519;
+                    } else {
+                        $ship += 164815;
+                        $ship_fast += 693519;
+                    }
+                }
                 break;
-            case in_array($weight, range(1000, 1999)):
-                $ship += 41363;
-                $ship_fast += 67727;
+            case in_array($weight, range(30000, 99999)):
+                if ($province_customer == $province_store) {
+                    $ship += 128704  + (3704 * floor($weight / 30000));
+                    $ship_fast += 128704   + (3704 * floor($weight / 30000));
+                } else {
+                    if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
+                        $ship += 138889 + (3704 * floor($weight / 30000));
+                        $ship_fast += 193519  + (4630 * floor($weight / 30000));
+                    } elseif (
+                        in_array($this->getProvinceArea($province_customer), [0, 2])
+                        && in_array($this->getProvinceArea($province_store), [0, 2])
+                    ) {
+                        $ship += 216667 + (6482 * floor($weight / 30000));
+                        $ship_fast += 693519 + (23149 * floor($weight / 30000));
+                    } else {
+                        $ship += 164815 + (4630 * floor($weight / 30000));
+                        $ship_fast += 693519 + (16667 * floor($weight / 30000));
+                    }
+                }
                 break;
-            case in_array($weight, range(2000, 4999)):
-                $ship += 27636 + (4409 * round($weight / 500));
-                $ship_fast += 35457 + (10590 * round($weight / 500));
+
+            case in_array($weight, range(100000, 199999)):
+                if ($province_customer == $province_store) {
+                    $ship += 387984  + (2593 * floor($weight / 100000));
+                    $ship_fast += 387984 + (2593 * floor($weight / 30000));
+                } else {
+                    if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
+                        $ship += 398169 + (3519 * floor($weight / 100000));
+                        $ship_fast += 517619 + (3704 * floor($weight / 30000));
+                    } elseif (
+                        in_array($this->getProvinceArea($province_customer), [0, 2])
+                        && in_array($this->getProvinceArea($province_store), [0, 2])
+                    ) {
+                        $ship += 670407 + (5186 * floor($weight / 100000));
+                        $ship_fast += 2313949 + (22686 * floor($weight / 30000));
+                    } else {
+                        $ship += 488915 + (4538 * floor($weight / 100000));
+                        $ship_fast += 1860209 + (16204 * floor($weight / 30000));
+                    }
+                }
                 break;
-            case in_array($weight, range(5000, 9999)):
-                $ship += 33370 + (3772 * round($weight / 500));
-                $ship_fast += 35457 + (10590 * round($weight / 500));
+            case in_array($weight, range(200000, 499999)):
+                if ($province_customer == $province_store) {
+                    $ship += 647284  + (2130 * floor($weight / 200000));
+                    $ship_fast += 647284 + (2130 * floor($weight / 30000));
+                } else {
+                    if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
+                        $ship += 750069 + (3056 * floor($weight / 200000));
+                        $ship_fast += 888019 + (3519 * floor($weight / 30000));
+                    } elseif (
+                        in_array($this->getProvinceArea($province_customer), [0, 2])
+                        && in_array($this->getProvinceArea($province_store), [0, 2])
+                    ) {
+                        $ship += 1189007 + (4630 * floor($weight / 200000));
+                        $ship_fast += 4582549 + (22038 * floor($weight / 30000));
+                    } else {
+                        $ship += 942715  + (4167 * floor($weight / 200000));
+                        $ship_fast += 3480609 + (15741 * floor($weight / 30000));
+                    }
+                }
+                break;
+            case in_array($weight, range(500000, 999999)):
+                if ($province_customer == $province_store) {
+                    $ship += 1286284  + (1852 * floor($weight / 500000));
+                    $ship_fast += 1286284 + (1852 * floor($weight / 30000));
+                } else {
+                    if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
+                        $ship += 1666869 + (2778 * floor($weight / 200000));
+                        $ship_fast += 1943719 + (3334 * floor($weight / 30000));
+                    } elseif (
+                        in_array($this->getProvinceArea($province_customer), [0, 2])
+                        && in_array($this->getProvinceArea($province_store), [0, 2])
+                    ) {
+                        $ship += 2578007 + (4352 * floor($weight / 200000));
+                        $ship_fast += 11193949 + (21297 * floor($weight / 30000));
+                    } else {
+                        $ship +=  2192815  + (3704 * floor($weight / 200000));
+                        $ship_fast += 8202909 + (15278 * floor($weight / 30000));
+                    }
+                }
                 break;
             default:
-                $ship += 123854 + (3318 * round($weight / 500));
-                $ship_fast += 35457 + (10590 * round($weight / 500));
+                if ($province_customer == $province_store) {
+                    $ship += 2212284  + (1667 * floor($weight / 1000000));
+                    $ship_fast += 2212284 + (1667 * floor($weight / 30000));
+                } else {
+                    if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
+                        $ship += 3055869 + (2593 * floor($weight / 1000000));
+                        $ship_fast += 3610719 + (3149 * floor($weight / 30000));
+                    } elseif (
+                        in_array($this->getProvinceArea($province_customer), [0, 2])
+                        && in_array($this->getProvinceArea($province_store), [0, 2])
+                    ) {
+                        $ship += 4430007 + (3519 * floor($weight / 1000000));
+                        $ship_fast += 21842449 + (20834 * floor($weight / 30000));
+                    } else {
+                        $ship +=  4368815  + (3704 * floor($weight / 1000000));
+                        $ship_fast += 15841909 + (15000 * floor($weight / 30000));
+                    }
+                }
                 break;
         }
+        // switch (true) {
+        //     case in_array($weight, range(0, 99)):
+        //         $ship += 26637;
+        //         $ship_fast += 28454;
+        //         break;
+        //     case in_array($weight, range(100, 249)):
+        //         $ship += 28454;
+        //         $ship_fast += 38000;
+        //         break;
+        //     case in_array($weight, range(250, 499)):
+        //         $ship += 30272;
+        //         $ship_fast += 47545;
+        //         break;
+        //     case in_array($weight, range(500, 999)):
+        //         $ship += 33000;
+        //         $ship_fast += 53636;
+        //         break;
+        //     case in_array($weight, range(1000, 1999)):
+        //         $ship += 41363;
+        //         $ship_fast += 67727;
+        //         break;
+        //     case in_array($weight, range(2000, 4999)):
+        //         $ship += 27636 + (4409 * round($weight / 500));
+        //         $ship_fast += 35457 + (10590 * round($weight / 500));
+        //         break;
+        //     case in_array($weight, range(5000, 9999)):
+        //         $ship += 33370 + (3772 * round($weight / 500));
+        //         $ship_fast += 35457 + (10590 * round($weight / 500));
+        //         break;
+        //     default:
+        //         $ship += 123854 + (3318 * round($weight / 500));
+        //         $ship_fast += 35457 + (10590 * round($weight / 500));
+        //         break;
+        // }
         return array(round($ship), round($ship_fast));
     }
     public function getWeight($product, $quantity)
     {
-        $weight1 = $product->weight * $quantity;
-        $weight2 = ($product->height * $product->length * $product->width) / 600 * $quantity;
-        return max(round($weight1), round($weight2));
+        $weight = max($product->weight / 1000, (($product->height * $product->width * $product->length) / 3000) * 1000);
+        return $weight * $quantity;
     }
     public function getDistance($address1, $address2)
     {
@@ -416,7 +669,7 @@ class CheckoutController extends Controller
         $checkoutControles = new CheckoutController;
         $coordinates1 = $checkoutControles->getCoordinates($address1);
         $coordinates2 = $checkoutControles->getCoordinates($address2);
-        if($coordinates1 == null || $coordinates2 == null){
+        if ($coordinates1 == null || $coordinates2 == null) {
             return 0;
         }
         $url = 'https://rsapi.goong.io/Direction?origin=' . $coordinates1['lat'] . ',' . $coordinates1['lng'] . '&destination=' . $coordinates2['lat'] . ',' . $coordinates2['lng'] . '&vehicle=car&api_key=' . $checkoutControles->api_key . '';
@@ -426,7 +679,7 @@ class CheckoutController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
         $output = json_decode($result, true);
-      
+
         return round(($output['routes'][0]['legs'][0]['distance']['value'] / 1000), 1);
     }
 
@@ -445,7 +698,7 @@ class CheckoutController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
         $output = json_decode($result, true);
-        if($output == null){
+        if ($output == null) {
             return null;
         }
         return $output['results'][0]['geometry']['location'];
@@ -476,7 +729,8 @@ class CheckoutController extends Controller
         return $str;
     }
 
-    public function createOrderPayme($order_id, $transaction_partner_id, $link_payment, $transaction_payme_id){
+    public function createOrderPayme($order_id, $transaction_partner_id, $link_payment, $transaction_payme_id)
+    {
         $order_payme = new OrderPayme;
         $order_payme->order_id = $order_id;
         $order_payme->transaction_partner_id = $transaction_partner_id;

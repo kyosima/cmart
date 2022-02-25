@@ -140,14 +140,14 @@
 														<th class="title">Tổng thuế VAT</th>
 														<th class="title">Tổng GTGD</th>
 														<th class="title">Ghi chú</th>
-														<th class="title" style="width:75px;">Thao tác</th>
+														{{-- <th class="title" style="width:75px;">Thao tác</th> --}}
 													</tr>
 												</thead>
 												<tbody style="color: #748092; font-size: 14px;">
 													@foreach ( $orders as $order)
 													<tr>
 														<td><input type="checkbox" name="id[]" value="{{ $order->id }}"></td>
-														<td>{{$order->order_code}}</td>
+														<td><a href="{{route('order.show', ['order' => $order->id])}}">{{$order->order_code}}</a></td>
 														<td>{{number_format($order->sub_total)}} đ</td>
 														<td>{!! orderStatus($order->status) !!}</td>
 														<td>{{ number_format($order->shipping_total) }} đ</td>
@@ -155,7 +155,7 @@
 														<td>{{ number_format($order->tax) }} đ</td>
 														<td>{{number_format($order->total)}} đ</td>
 														<td>{{ optional($order->order_info)->note }}</td>
-														<td>
+														{{-- <td>
 															<div class="btn-group" role="group" aria-label="Basic mixed styles example">
 																@if(auth()->guard('admin')->user()->can('Xem đơn hàng'))
 																<a href="{{route('order.show', ['order' => $order->id])}}" class="btn bg-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -164,7 +164,7 @@
 																<button type="button" data-url="{{route('order.delete', ['order' => $order->id])}}" class="btn btn-danger ajax-delete"><i class="fa fa-trash"></i></button>
 																@endif
 															</div>
-														</td>
+														</td> --}}
 													</tr>
 													@endforeach
 												</tbody>

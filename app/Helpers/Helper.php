@@ -44,6 +44,23 @@ if (!function_exists('formatType')) {
         }
     }
 }
+if (!function_exists('formatLevel')) {
+    function formatLevel($type)
+    {
+        switch ($type) {
+            case 0: 
+                return 'Khách hàng thân thiết';
+            case 1:
+                return 'Khách hàng VIP';
+            case 2:
+                return 'Cộng tác viên';
+            case 3:
+                return 'Purchasing';
+            case 4: 
+                return 'Khách hàng thương mại';
+        }
+    }
+}
 if (!function_exists('formatPriceOfLevel')) {
 
 if (!function_exists('formatPriceOfLevel')) {
@@ -81,11 +98,11 @@ if (!function_exists('getPriceOfLevel')) {
                     return $product->productPrice()->value('regular_price');
                 case 1:
                     return $product->productPrice()->value('shock_price');
-                case 3:
+                case 2:
                     return $product->productPrice()->value('shock_price');
-                case 4: 
+                case 3: 
                     return $product->productPrice()->value('price');
-                case 5:
+                case 4:
                     return $product->productPrice()->value('wholesale_price');
                 default:
                     return $product->productPrice()->value('regular_price');

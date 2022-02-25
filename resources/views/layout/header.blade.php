@@ -81,7 +81,7 @@
                                                                 href="{{ url('/lichsu') }}">Lịch sử
                                                                 đơn
                                                                 hàng</a>
-                                                            <a class="dropdown-item text-dark" href="{{ url('/lich-su-tien-tich-luy') }}">Tài khoản tiền tích lũy</a>
+                                                            <a class="dropdown-item text-dark" href="{{ url('/lich-su-tien-tich-luy') }}">Tài khoản C</a>
                                                             <a class="dropdown-item text-dark" href="{{ route('chuyen-tien-tich-luy') }}">Chuyển tiền tích lũy</a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item text-danger"
@@ -233,7 +233,7 @@
         </span> --}}
 
         <p>
-            Mọi liên hệ nên thực hiện từ <b>Số điện thoại đăng ký giao dịch</b> và đến các kênh kết nối chính thức của C-Mart
+            Mọi liên hệ nên thực hiện <b>từ Số điện thoại đăng ký giao dịch</b> và <b>đến các kênh kết nối chính thức của C-Mart</b>
         </p>
 
     </div>

@@ -26,6 +26,8 @@ use App\Admin\Controllers\AdminStoreController;
 Route::group(['middleware' => ['admin']], function () {
     // Route::resource('permissions', AdminPermissionsController::class);
     Route::get('danh-sach-user',[UserController::class, 'getDanhsach']);
+    Route::get('doi-trang-thai-user/{id}', [UserController::class, 'changeStatusUser'])->name('user.changeStatus');
+    Route::get('/nang-cap-vip/{id}', [UserController::class, 'upgrageVipUser'])->name('user.upgradeVip');
     Route::get('/nang-cap-user/{id}',[UserController::class, 'postDanhsach']);
     
     Route::group(['prefix'=>'danh-sach-user'], function() {

@@ -39,12 +39,14 @@ class OrderProduct extends Model
 		'id_order',
 		'id_order_store',
 		'id_product',
+		'sku',
 		'name',
 		'feature_img',
 		'slug',
 		'c_point',
 		'm_point',
 		'quantity',
+		'discount',
 		'price',
 	];
 

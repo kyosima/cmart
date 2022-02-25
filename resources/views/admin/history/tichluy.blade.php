@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Lịch sử tích luỹ')
+@section('title', 'Lịch sử thanh toán tích luỹ C')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/amcharts.css') }}" type="text/css">
@@ -49,6 +49,7 @@
                 <th>Nội dung</th>
                 <th>Số dư ban đầu</th>
                 <th>Giá trị giao dịch</th>
+
                 <th>Số dư cuối</th>
             </tr>
         </thead>
@@ -61,7 +62,9 @@
                     <td>{{$value->note}}</td>
                     <td>{{$value->point_past_chuyen}}</td>
                     <td>{{$value->amount}}</td>
+
                     <td>{{$value->point_present_chuyen}}</td>
+
                 </tr>
             @endforeach
         </tbody>

@@ -9,102 +9,104 @@
 @endpush
 
 @section('content')
-<style>
-    div.dtsb-searchBuilder div.dtsb-group{
-        display: none;
-    }
-</style>
-@if(auth()->guard('admin')->user()->can('Thêm cửa hàng'))
-    <!-- Modal TẠO CỬA HÀNG MỚI -->
-    <div class="modal fade" id="warehouse_create" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"><i class="fas fa-anchor"></i> Thông tin cửa hàng </h4>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" id="formCreateUnit" action="{{ route('store.store') }}" role="form"
-                        method="POST">
-                        @csrf
-                        <div class="form-body">
-                            <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Tên cửa hàng:<span class="required"
-                                        aria-required="true">(*)</span></label>
-                                <div class="col-md-9">
-                                    <input type="text" name="store_name" class="form-control" required
-                                        value="{{ old('store_name') }}">
-                                </div>
-                            </div>
-                            <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Admin:<span class="required"
-                                    aria-required="true">(*)</span></label>
-                                <div class="col-md-9">
-                                    <select class="form-control select-owner" id="select-owner" name="id_owner">
-                                        @if (old('id_owner'))
-                                        @php
-                                            $owner = App\Models\Admin::findOrFail(old('id_owner'));
-                                        @endphp
-                                            <option value="{{ old('id_owner') }}" selected="selected">{{ $owner->name }} ({{$owner->email}})</option>
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Địa chỉ cửa hàng:<span class="required"
-                                        aria-required="true">(*)</span></label>
-                                <div class="col-md-9">
-                                    <input type="text" name="store_address" class="form-control" required
-                                        value="{{ old('store_address') }}">
-                                </div>
-                            </div>
-                            <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Cấp tỉnh:<span class="required"
-                                        aria-required="true">(*)</span></label>
-                                <div class="col-md-9">
-                                    <select class="js-location" id="selectCity" name="id_province" data-type="city"
-                                        data-placeholder="Chọn tỉnh/thành">
-                                        <option></option>
-                                        @foreach ($cities as $city)
-                                            <option value="{{ $city->matinhthanh }}">{{ $city->matinhthanh }} -
-                                                {{ $city->tentinhthanh }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Cấp huyện:<span class="required"
-                                        aria-required="true">(*)</span></label>
-                                <div class="col-md-9">
-                                    <select class="js-location" id="selectDistrict" name="id_district"
-                                        data-type="district" data-placeholder="Chọn quận/huyện">
-                                        <option></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Cấp xã:<span class="required"
-                                        aria-required="true">(*)</span></label>
-                                <div class="col-md-9">
-                                    <select id="selectWard" name="id_ward" data-type="ward"
-                                        data-placeholder="Chọn phường/xã">
-                                        <option></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-dark" data-dismiss="modal">Hủy</button>
-                            <button type="submit" class="btn btn-info btn-submit-unit">Lưu</button>
-                        </div>
-                    </form>
-                </div>
+    <style>
+        div.dtsb-searchBuilder div.dtsb-group {
+            display: none;
+        }
 
+    </style>
+    @if (auth()->guard('admin')->user()->can('Thêm cửa hàng'))
+        <!-- Modal TẠO CỬA HÀNG MỚI -->
+        <div class="modal fade" id="warehouse_create" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><i class="fas fa-anchor"></i> Thông tin cửa hàng </h4>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="formCreateUnit" action="{{ route('store.store') }}" role="form"
+                            method="POST">
+                            @csrf
+                            <div class="form-body">
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Tên cửa hàng:<span class="required"
+                                            aria-required="true">(*)</span></label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="store_name" class="form-control" required
+                                            value="{{ old('store_name') }}">
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Admin:<span class="required"
+                                            aria-required="true">(*)</span></label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-owner" id="select-owner" name="id_owner">
+                                            @if (old('id_owner'))
+                                                @php
+                                                    $owner = App\Models\Admin::findOrFail(old('id_owner'));
+                                                @endphp
+                                                <option value="{{ old('id_owner') }}" selected="selected">
+                                                    {{ $owner->name }} ({{ $owner->email }})</option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Địa chỉ cửa hàng:<span class="required"
+                                            aria-required="true">(*)</span></label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="store_address" class="form-control" required
+                                            value="{{ old('store_address') }}">
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Cấp tỉnh:<span class="required"
+                                            aria-required="true">(*)</span></label>
+                                    <div class="col-md-9">
+                                        <select class="js-location" id="selectCity" name="id_province" data-type="city"
+                                            data-placeholder="Chọn tỉnh/thành">
+                                            <option></option>
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->matinhthanh }}">{{ $city->matinhthanh }} -
+                                                    {{ $city->tentinhthanh }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Cấp huyện:<span class="required"
+                                            aria-required="true">(*)</span></label>
+                                    <div class="col-md-9">
+                                        <select class="js-location" id="selectDistrict" name="id_district"
+                                            data-type="district" data-placeholder="Chọn quận/huyện">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Cấp xã:<span class="required"
+                                            aria-required="true">(*)</span></label>
+                                    <div class="col-md-9">
+                                        <select id="selectWard" name="id_ward" data-type="ward"
+                                            data-placeholder="Chọn phường/xã">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-dark" data-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-info btn-submit-unit">Lưu</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
-    <!-- END MODAL -->
-@endif
+        <!-- END MODAL -->
+    @endif
     <div class="m-3">
         <div class="row">
             <div class="col-sm-12">
@@ -112,11 +114,11 @@
                     <div class="card-body">
                         @if ($errors->any())
                             <div class="bg-danger p-2 mb-2">
-                                <p class="text-light m-0">{{$errors->first()}}</p>
+                                <p class="text-light m-0">{{ $errors->first() }}</p>
                             </div>
-                        @elseif(session('success'))    
+                        @elseif(session('success'))
                             <div class="bg-success p-2 mb-2">
-                                <p class="text-light m-0">{{session('success')}}</p>
+                                <p class="text-light m-0">{{ session('success') }}</p>
                             </div>
                         @endif
                         <div class="portlet-title d-flex align-items-center justify-content-between">
@@ -127,14 +129,15 @@
                                         DANH SÁCH CỬA HÀNG </span>
                                     <span class="caption-helper"></span>
                                 </div>
-                                @if(auth()->guard('admin')->user()->can('Thêm cửa hàng'))
-                                <div class="ps-4">
-                                    <a href="#warehouse_create" data-toggle="modal" class="btn btn-add"><i class="fa fa-plus"></i>
-                                        Thêm mới cửa hàng</a>
-                                </div>
+                                @if (auth()->guard('admin')->user()->can('Thêm cửa hàng'))
+                                    <div class="ps-4">
+                                        <a href="#warehouse_create" data-toggle="modal" class="btn btn-add"><i
+                                                class="fa fa-plus"></i>
+                                            Thêm mới cửa hàng</a>
+                                    </div>
                                 @endif
                             </div>
-                            {{-- @if(auth()->guard('admin')->user()->can('Xóa cửa hàng'))
+                            {{-- @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
                             <div>
                                 <div class="input-group action-multiple">
                                     <select class="custom-select" name="action" required="">
@@ -151,19 +154,20 @@
                         <div class="collapse show" id="collapseExample">
                             <div class="row">
                                 <div class="col-sm-12" style="overflow-x: auto;">
-                                @if(auth()->guard('admin')->user()->can('Xóa cửa hàng'))
-                                    <form id="myform" action="{{ route('store.multiChange') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="action" value="" id="input-action">
-                                @endif
+                                    @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
+                                        <form id="myform" action="{{ route('store.multiChange') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="action" value="" id="input-action">
+                                    @endif
                                     <table id="warehouse_table" class="table table-hover align-middle">
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th class="title">STT</th>
                                                 <th class="title">Tên cửa hàng</th>
                                                 <th class="title">Admin CH</th>
-                                                <th class="title">Địa chỉ</th>
+                                                {{-- <th class="title">Địa chỉ</th> --}}
+                                                <th>SL sản phẩm</th>
+                                                <th>Tổng SL tồn kho</th>
                                                 <th class="title">Chỉnh sửa</th>
                                             </tr>
                                         </thead>
@@ -172,26 +176,34 @@
                                                 @if ($admin->name == 'admin')
                                                     <tr>
                                                         <td></td>
-                                                        <td>{{ $item->id }}</td>
                                                         <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->owner->name }} ({{$item->owner->email}})</td>
-                                                        <td>{{ $item->address .', P.'. $item->ward->tenphuongxa .', Q.'. $item->district->tenquanhuyen. ', '.$item->province->tentinhthanh   }}</td>
+                                                        <td>{{ $item->owner->name }} ({{ $item->owner->email }})</td>
+                                                        {{-- <td>{{ $item->address .', P.' .$item->ward->tenphuongxa .', Q.' .$item->district->tenquanhuyen .', ' .$item->province->tentinhthanh }}
+                                                        </td> --}}
+                                                        <td>{{ $item->products()->count() }}</td>
+                                                        <td>{{ $item->product_stores()->sum('soluong') }}</td>
                                                         <td>
-                                                            <a class="btn modal-edit-unit" href="{{route('store.edit', ['slug' => $item->slug, 'id' => $item->id])}}">
+                                                            <a class="btn modal-edit-unit"
+                                                                href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
                                                                 <i class="fas fa-pen"></i>
                                                             </a>
                                                         </td>
                                                     </tr>
                                                 @else
-                                                    @if ( $item->owner->id == $admin->id )
+                                                    @if ($item->owner->id == $admin->id)
                                                         <tr>
                                                             <td></td>
                                                             <td>{{ $item->id }}</td>
                                                             <td>{{ $item->name }}</td>
-                                                            <td>{{ $item->owner->name }} ({{$item->owner->email}})</td>
-                                                            <td>{{ $item->address .', P.'. $item->ward->tenphuongxa .', Q.'. $item->district->tenquanhuyen. ', '.$item->province->tentinhthanh   }}</td>
+                                                            <td>{{ $item->owner->name }} ({{ $item->owner->email }})
+                                                            </td>
+                                                            <td>{{ $item->address .', P.' .$item->ward->tenphuongxa .', Q.' .$item->district->tenquanhuyen .', ' .$item->province->tentinhthanh }}
+                                                            </td>
+                                                            <td>{{ $item->products()->count() }}</td>
+                                                            <td></td>
                                                             <td>
-                                                                <a class="btn modal-edit-unit" href="{{route('store.edit', ['slug' => $item->slug, 'id' => $item->id])}}">
+                                                                <a class="btn modal-edit-unit"
+                                                                    href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
                                                                     <i class="fas fa-pen"></i>
                                                                 </a>
                                                             </td>
@@ -201,8 +213,8 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    @if(auth()->guard('admin')->user()->can('Xóa cửa hàng'))
-                                    </form>
+                                    @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
+                                        </form>
                                     @endif
                                 </div>
                             </div>
@@ -217,10 +229,10 @@
 @push('scripts')
 
     <script>
-        @if(auth()->guard('admin')->user()->can('Xóa cửa hàng'))
-        function multiDel() {
+        @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
+            function multiDel() {
             confirm('Bạn chắc chắn muốn thực hiện tác vụ này?') == true && $('#myform').submit()
-        }
+            }
         @endif
 
         $('#warehouse_table').DataTable({
@@ -229,28 +241,20 @@
                 [25, 50, -1],
                 [25, 50, "All"]
             ],
-            columnDefs: [
-                {
+            columnDefs: [{
                     targets: 0,
                     visible: false,
                     defaultContent: '',
-                    'render': function(data, type, row, meta){
-                        if(type === 'display'){
-                            data = `<input type="checkbox" class="dt-checkboxes" name="id[]" value="${row[1]}">`;
+                    'render': function(data, type, row, meta) {
+                        if (type === 'display') {
+                            data =
+                                `<input type="checkbox" class="dt-checkboxes" name="id[]" value="${row[1]}">`;
                         }
                         return data;
                     },
                     'checkboxes': {
                         'selectRow': true,
                     }
-                },
-                {
-                    targets: 1,
-                    visible: false,
-                },
-                {
-                    targets: 4,
-                    visible: false,
                 },
             ],
             searchBuilder: {
@@ -327,42 +331,42 @@
                 },
             },
             dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf>tip',
-            
+
         });
 
         $(document).ready(function() {
-            @if(auth()->guard('admin')->user()->can('Xóa cửa hàng'))
+            @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
                 $("form").validate({
-                    rules: {
-                        store_name: {
-                            required: true,
-                        },
-                        store_address: {
-                            required: true,
-                        },
-                        id_province: {
-                            required: true,
-                        },
-                        id_district: {
-                            required: true,
-                        },
-                        id_ward: {
-                            required: true,
-                        },
-
-                    },
-                    messages: {
-                        store_name: "Không được để trống",
-                        store_address: "Không được để trống",
-                        id_province: "Không được để trống",
-                        id_district: "Không được để trống",
-                        id_ward: "Không được để trống",
-                    }
+                rules: {
+                store_name: {
+                required: true,
+                },
+                store_address: {
+                required: true,
+                },
+                id_province: {
+                required: true,
+                },
+                id_district: {
+                required: true,
+                },
+                id_ward: {
+                required: true,
+                },
+            
+                },
+                messages: {
+                store_name: "Không được để trống",
+                store_address: "Không được để trống",
+                id_province: "Không được để trống",
+                id_district: "Không được để trống",
+                id_ward: "Không được để trống",
+                }
                 });
-
-                $('.custom-select').change(function (e) { 
-                    e.preventDefault();
-                    $('#input-action').val($(this).val())
+            
+                $('.custom-select').change(function (e) {
+                e.preventDefault();
+                $('#input-action').val($(this).val())
                 });
             @endif
 
@@ -377,87 +381,87 @@
                 }
             });
 
-            @if(auth()->guard('admin')->user()->can('Thêm cửa hàng'))
+            @if (auth()->guard('admin')->user()->can('Thêm cửa hàng'))
                 $('.js-location').change(function(e) {
-                    e.preventDefault();
-                    let route = '{{ route('store.getLocation') }}';
-                    let type = $(this).attr('data-type');
-                    let parentId = $(this).val();
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        type: "GET",
-                        url: route,
-                        data: {
-                            type: type,
-                            parent: parentId
-                        },
-                        success: function(response) {
-                            if (response.data) {
-                                let html = '';
-                                let element = '';
-                                if (type == 'city') {
-                                    html = "<option>Mời bạn chọn Quận/Huyện</option>";
-                                    element = '#selectDistrict';
-                                    $.each(response.data, function(idx, val) {
-                                        html += "<option value='" + val.maquanhuyen + "'>" +
-                                            val.maquanhuyen + " - " + val.tenquanhuyen +
-                                            "</option>";
-                                    });
-                                    $(element).html('').append(html);
-                                } else {
-                                    html = "<option>Mời bạn chọn Phường/Xã</option>";
-                                    element = '#selectWard';
-                                    $.each(response.data, function(idx, val) {
-                                        html += "<option value='" + val.maphuongxa + "'>" +
-                                            val.maphuongxa + " - " + val.tenphuongxa +
-                                            "</option>";
-                                    });
-                                    $(element).html('').append(html);
-                                }
-
-                            }
-                        }
-                    });
+                e.preventDefault();
+                let route = '{{ route('store.getLocation') }}';
+                let type = $(this).attr('data-type');
+                let parentId = $(this).val();
+                $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
                 });
-
+                $.ajax({
+                type: "GET",
+                url: route,
+                data: {
+                type: type,
+                parent: parentId
+                },
+                success: function(response) {
+                if (response.data) {
+                let html = '';
+                let element = '';
+                if (type == 'city') {
+                html = "<option>Mời bạn chọn Quận/Huyện</option>";
+                element = '#selectDistrict';
+                $.each(response.data, function(idx, val) {
+                html += "<option value='" + val.maquanhuyen + "'>" +
+                    val.maquanhuyen + " - " + val.tenquanhuyen +
+                    "</option>";
+                });
+                $(element).html('').append(html);
+                } else {
+                html = "<option>Mời bạn chọn Phường/Xã</option>";
+                element = '#selectWard';
+                $.each(response.data, function(idx, val) {
+                html += "<option value='" + val.maphuongxa + "'>" +
+                    val.maphuongxa + " - " + val.tenphuongxa +
+                    "</option>";
+                });
+                $(element).html('').append(html);
+                }
+            
+                }
+                }
+                });
+                });
+            
                 $('#select-owner').select2({
-                    width: '100%',
-                    allowClear: true,
-                    dropdownParent: $('#warehouse_create'),
-                    minimumInputLength: 3,
-                    dataType: 'json',
-                    delay: 250,
-                    ajax: {
-                        url: `{{ route('store.getListOwner') }}`,
-                        dataType: 'json',
-                        data: function (params) {
-                            var query = {
-                                search: params.term,
-                            }
-                            return query;
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: data.data
-                            };
-                        },
-                        cache: true
-                    },
-                    placeholder: 'Chọn chủ cửa hàng...',
-                    templateResult: formatRepoSelection,
-                    templateSelection: formatRepoSelection
+                width: '100%',
+                allowClear: true,
+                dropdownParent: $('#warehouse_create'),
+                minimumInputLength: 3,
+                dataType: 'json',
+                delay: 250,
+                ajax: {
+                url: `{{ route('store.getListOwner') }}`,
+                dataType: 'json',
+                data: function (params) {
+                var query = {
+                search: params.term,
+                }
+                return query;
+                },
+                processResults: function (data) {
+                return {
+                results: data.data
+                };
+                },
+                cache: true
+                },
+                placeholder: 'Chọn chủ cửa hàng...',
+                templateResult: formatRepoSelection,
+                templateSelection: formatRepoSelection
                 })
-
+            
                 function formatRepoSelection(repo) {
-                    if (repo.text) {
-                    return repo.text
-                    } else {
-                        return `${repo.name} (#${repo.email})`;
-                    }
+                if (repo.text) {
+                return repo.text
+                } else {
+                return `${repo.name} (#${repo.email})`;
+                }
                 }
             @endif
 

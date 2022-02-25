@@ -1,425 +1,465 @@
-    .list-stores-checkout {
-        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
-        margin-top: 20px;
-        background: #fff;
-    }
-    
-    .list-stores-title {
-        padding: 10px 10px 0 10px;
-    }
-    
-    .list-stores-title h3 {
-        font-size: 16px !important;
-        font-weight: 600;
-        color: #333942;
-        text-transform: uppercase;
-    }
-    
-    .info_order_success p {
-        margin-bottom: 0;
-    }
-    
-    .info_order_success .row>div {
-        padding-bottom: 10px;
-    }
-    
-    .list-stores-body {
-        padding: 10px 20px;
-    }
-    
-    .store-body {
-        padding: 5px 10px;
-    }
-    
-    .store-product {
-        border-bottom: 1px solid #ddd;
-        padding: 5px 10px;
-    }
-    
-    .store-body .store-product:last-child {
-        border-bottom: none;
-        ;
-    }
-    
-    .product-name {
-        height: 20px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 1;
-        text-transform: uppercase;
-    }
-    
-    .store-title h4 {
-        font-size: 16px;
-        text-transform: uppercase;
-        text-decoration: underline;
-        margin-bottom: 0;
-        color: #BB0029;
-    }
-    
-    .store-footer {
-        padding: 15px 20px 5px 20px;
-        border-top: 1px solid #ddd;
-    }
-    
-    .product-image img {
-        width: 100%;
-    }
-    
-    .store-block {
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        ;
-    }
-    
-    .card-left {}
-    
-    .card-information {
-        background-color: #fff;
-        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
-    }
-    
-    .form-checkout {
-        padding-top: 20px;
-    }
-    
-    .card-information-body {
-        display: flex;
-    }
-    
-    .order-complete-info ul li {
-        margin-bottom: 5px;
-    }
-    
-    .order-complete-info b {
-        margin-bottom: 10px;
-    }
-    
-    .card-information-header {
-        padding: 10px 10px 0 10px;
-    }
-    
-    .card-information-header h3 {
-        font-size: 16px !important;
-        font-weight: 600;
-        color: #333942;
-        text-transform: uppercase;
-    }
-    
-    .btn-back-cart {
-        font-size: 13px !important;
-        font-weight: 400 !important;
-        color: #FFFFFF;
-        background-color: #00e6f8;
-        border: 1px solid #00b0be;
-        padding: 9px 0;
-        border-radius: 17px !important;
-        width: 100%;
-        display: inline-block;
-        text-align: center;
-        margin-top: 10px;
-    }
-    
-    .btn-back-cart:hover {
-        background-color: #FFFFFF !important;
-        color: #00b0be !important;
-        border: 1px solid #00b0be !important;
-    }
-    
-    .card-information label {
-        transform: translate(0, -3.5px) scale(0.9);
-        transform-origin: top left;
-        color: #BB0029;
-    }
-    
-    .back-cart {
-        font-weight: 600;
-        font-size: 20px;
-        margin: 10px 0px;
-        display: block;
-    }
-    
-    .card-information .form-control {
-        border-radius: 0;
-        margin: -9px 0 20px;
-        /* box-shadow: -1px 1px 1px 0 rgb(137 152 172 / 50%); */
-        padding: 8px 0;
-        border: 0;
-        /* border-bottom: 1px solid #DEE5EE; */
-        /* box-shadow: none; */
-        padding: 10px;
-        border-radius: 10px;
-        height: 38px;
-        border: 1px solid #ddd;
-        font-size: 13px !important;
-        /* font-weight: 500 !important; */
-        color: #333;
-        width: 100%;
-    }
-    
-    .card-information .form-control:focus,
-    .card-information .form-control:hover {
-        border-color: orange;
-    }
-    /* ------------------ */
-    
-    .phuongthuc-thanhtoan {
-        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
-        margin-top: 20px;
-        background: #fff;
-    }
-    
-    .phuongthuc-thanhtoan-card-header {
-        padding: 10px 10px 0 10px;
-    }
-    
-    .phuongthuc-thanhtoan-card-header h3 {
-        font-size: 16px !important;
-        font-weight: 600;
-        color: #333942;
-        text-transform: uppercase;
-    }
-    
-    .phuongthuc-thanhtoan-card-body {
-        padding: 0 20px;
-    }
-    
-    .chuyenkhoan,
-    .thanhtoantructuyen,
-    .thanhtoankhigiaohang {
-        display: table;
-        box-sizing: border-box;
-        width: 100%;
-        position: relative;
-        padding: 1em;
-    }
-    
-    .thanhtoankhigiaohang i {
-        right: 35px;
-        position: absolute;
-    }
-    
-    .thanhtoantructuyen img {
-        width: 50px;
-        right: 35px;
-        position: absolute;
-    }
-    
-    .thanhtoankhigiaohang input,
-    .thanhtoantructuyen input,
-    .chuyenkhoan input {
-        margin-right: 10px;
-    }
-    
-    .chuyenkhoan {}
-    
-    .chuyenkhoan span {
-        align-items: baseline;
-    }
-    
-    .tk-nganhang {
-        margin-top: 20px;
-        display: none;
-    }
-    /* -------- */
-    
-    .card-left {}
-    
-    .makhuyenmai {
-        background: #fff;
-        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
-    }
-    
-    .makhuyenmai-header {
-        padding: 10px 10px 0 10px;
-    }
-    
-    .makhuyenmai-header h3 {
-        font-size: 16px !important;
-        font-weight: 600;
-        color: #333942;
-        text-transform: uppercase;
-    }
-    
-    .makhuyenmai-body {
-        padding: 0px 10px 15px 10px;
-    }
-    
-    .makhuyenmai-body-input {
-        min-height: 34px;
-        height: 34px;
-        border-radius: 17px 0 0 17px;
-        border: 1px solid #DEE5EE;
-        font-size: 13px !important;
-        /* font-weight: 500 !important; */
-        color: #333942;
-        width: 80%;
-        padding-left: 10px;
-    }
-    
-    .makhuyenmai-body-input:focus {
-        outline: none
-    }
-    
-    .makhuyenmai-body .btn.btn-primary {
-        border-radius: 0 17px 17px 0;
-        border: 1px solid #BB0029;
-        background-color: #BB0029;
-        width: 20%;
-        height: 34px;
-        font-size: 13px !important;
-        font-weight: 400 !important;
-        color: #fff;
-        margin-bottom: 3px;
-        margin-left: -4px;
-    }
-    /* -------------- */
-    
-    .donhang {
-        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
-        margin-top: 10px;
-        background: #fff;
-    }
-    
-    .donhang-header {
-        display: flex;
-        align-items: center;
-        padding: 10px 10px 0 10px;
-    }
-    
-    .donhang-header h3 {
-        font-size: 16px !important;
-        font-weight: unset !important;
-        color: #333942;
-        text-transform: uppercase;
-    }
-    
-    .donhang-header span {
-        font-size: 13px !important;
-        font-weight: 400 !important;
-        color: #333942;
-        margin-bottom: 8px;
-        margin-left: 3px;
-    }
-    
-    .donhang-body .table thead th {
-        border-bottom: 1px dashed #666;
-    }
-    
-    tr th {
-        padding: 15px 0;
-        font-size: 13px !important;
-        font-weight: 700 !important;
-        color: #333942;
-    }
-    
-    .chinhsach-body .custom-control {
-        padding-left: 0;
-    }
-    
-    .chinhsach {
-        margin-top: 10px;
-        background: #fff;
-        box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
-    }
-    
-    .chinhsach-body {
-        padding: 10px 10px 0 10px;
-    }
-    
-    .chinhsach-header h3 {
-        font-size: 16px !important;
-        font-weight: 600;
-        color: #333942;
-        text-transform: uppercase;
-    }
-    
-    .chinhsach-body ul li:last-child {
-        border: unset;
-    }
-    
-    .chinhsach-header {
-        padding: 10px 10px 0 10px;
-    }
-    
-    .chinhsach-body .list-group-item {
-        padding: 5px 0px !important;
-    }
-    
-    .chinhsach-body .custom-control-label {
-        padding-left: 20px;
-    }
-    
-    tr .title {
-        padding: 10px;
-        width: 219px;
-        height: 72px;
-        line-height: 1.8;
-        vertical-align: top;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        text-overflow: ellipsis;
-    }
-    
-    .table td {
-        border-top: 0;
-    }
-    /* ---------------- */
-    
-    .donhang-footer {
-        border-top: 1px dashed#666;
-    }
-    
-    .card-body {
-        padding: 10px;
-    }
-    
-    .tamtinh {
-        justify-content: space-between;
-        display: flex;
-    }
-    
-    .total {
-        margin-top: 10px;
-        justify-content: space-between;
-        display: flex;
-    }
-    
-    .total-price,
-    .tamtinh-price {
-        color: #bb0029;
-    }
-    
-    .btn-dathang {
-        font-size: 13px !important;
-        font-weight: 400 !important;
-        color: #FFFFFF;
-        background-color: #BB0029;
-        border: 1px solid #BB0029;
-        padding: 9px 0;
-        border-radius: 17px !important;
-        width: 100%;
-        display: inline-block;
-        text-align: center;
-        margin-top: 10px;
-    }
-    
-    .btn-dathang:hover {
-        background-color: #FFFFFF !important;
-        color: #BB0029 !important;
-        border: 1px solid #BB0029 !important;
-    }
-    
-    .btn-dathang:focus {
-        outline: none;
-    }
-    /* .phuongthuc-thanhtoan-card-body>div>div {
+.list-stores-checkout {
+    box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+    margin-top: 20px;
+    background: #fff;
+}
+
+.payment-store-footer p {
+    margin-bottom: 0;
+}
+
+.result-order p {
+    margin-bottom: 0;
+}
+
+.result-order h3 {
+    font-size: 16px !important;
+    font-weight: 600;
+    color: #333942;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.result-order {
+    padding: 20px 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    margin-top: 20px;
+    box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+}
+
+.payment-store-footer>div>div {
+    padding: 10px 0px;
+}
+
+.list-stores-title {
+    padding: 10px 10px 0 10px;
+}
+
+.list-stores-title h3 {
+    font-size: 16px !important;
+    font-weight: 600;
+    color: #333942;
+    text-transform: uppercase;
+}
+
+.info_order_success p {
+    margin-bottom: 0;
+}
+
+.info_order_success .row>div {
+    padding-bottom: 10px;
+}
+
+.list-stores-body {
+    padding: 10px 20px;
+}
+
+.store-body {
+    padding: 5px 10px;
+}
+
+.store-product {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 10px;
+}
+
+.store-body .store-product:last-child {
+    border-bottom: none;
+    ;
+}
+
+.product-name {
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-transform: uppercase;
+}
+
+.store-title h4 {
+    font-size: 16px;
+    text-transform: uppercase;
+    text-decoration: underline;
+    margin-bottom: 0;
+    color: #BB0029;
+}
+
+.store-footer {
+    padding: 15px 20px 5px 20px;
+    border-top: 1px solid #ddd;
+}
+
+.product-image img {
+    width: 100%;
+}
+
+.store-block {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    ;
+}
+
+.card-left {}
+
+.card-information {
+    background-color: #fff;
+    box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+}
+
+.form-checkout {
+    padding-top: 20px;
+}
+
+.card-information-body {
+    display: flex;
+}
+
+.order-complete-info ul li {
+    margin-bottom: 5px;
+}
+
+.order-complete-info b {
+    margin-bottom: 10px;
+}
+
+.card-information-header {
+    padding: 10px 10px 0 10px;
+}
+
+.card-information-header h3 {
+    font-size: 16px !important;
+    font-weight: 600;
+    color: #333942;
+    text-transform: uppercase;
+}
+
+.btn-back-cart {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: #FFFFFF;
+    background-color: #00e6f8;
+    border: 1px solid #00b0be;
+    padding: 9px 0;
+    border-radius: 17px !important;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btn-back-cart:hover {
+    background-color: #FFFFFF !important;
+    color: #00b0be !important;
+    border: 1px solid #00b0be !important;
+}
+
+.card-information label {
+    transform: translate(0, -3.5px) scale(0.9);
+    transform-origin: top left;
+    color: #BB0029;
+}
+
+.back-cart {
+    font-weight: 600;
+    font-size: 20px;
+    margin: 10px 0px;
+    display: block;
+}
+
+.card-information .form-control {
+    border-radius: 0;
+    margin: -9px 0 20px;
+    /* box-shadow: -1px 1px 1px 0 rgb(137 152 172 / 50%); */
+    padding: 8px 0;
+    border: 0;
+    /* border-bottom: 1px solid #DEE5EE; */
+    /* box-shadow: none; */
+    padding: 10px;
+    border-radius: 10px;
+    height: 38px;
+    border: 1px solid #ddd;
+    font-size: 13px !important;
+    /* font-weight: 500 !important; */
+    color: #333;
+    width: 100%;
+}
+
+.card-information .form-control:focus,
+.card-information .form-control:hover {
+    border-color: orange;
+}
+
+
+/* ------------------ */
+
+.phuongthuc-thanhtoan {
+    box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+    margin-top: 20px;
+    background: #fff;
+}
+
+.phuongthuc-thanhtoan-card-header {
+    padding: 10px 10px 0 10px;
+}
+
+.phuongthuc-thanhtoan-card-header h3 {
+    font-size: 16px !important;
+    font-weight: 600;
+    color: #333942;
+    text-transform: uppercase;
+}
+
+.phuongthuc-thanhtoan-card-body {
+    padding: 0 20px;
+}
+
+.chuyenkhoan,
+.thanhtoantructuyen,
+.thanhtoankhigiaohang {
+    display: table;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+    padding: 1em;
+}
+
+.thanhtoankhigiaohang i {
+    right: 35px;
+    position: absolute;
+}
+
+.thanhtoantructuyen img {
+    width: 50px;
+    right: 35px;
+    position: absolute;
+}
+
+.thanhtoankhigiaohang input,
+.thanhtoantructuyen input,
+.chuyenkhoan input {
+    margin-right: 10px;
+}
+
+.chuyenkhoan {}
+
+.chuyenkhoan span {
+    align-items: baseline;
+}
+
+.tk-nganhang {
+    margin-top: 20px;
+    display: none;
+}
+
+
+/* -------- */
+
+.card-left {}
+
+.makhuyenmai {
+    background: #fff;
+    box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+}
+
+.makhuyenmai-header {
+    padding: 10px 10px 0 10px;
+}
+
+.makhuyenmai-header h3 {
+    font-size: 16px !important;
+    font-weight: 600;
+    color: #333942;
+    text-transform: uppercase;
+}
+
+.makhuyenmai-body {
+    padding: 0px 10px 15px 10px;
+}
+
+.makhuyenmai-body-input {
+    min-height: 34px;
+    height: 34px;
+    border-radius: 17px 0 0 17px;
+    border: 1px solid #DEE5EE;
+    font-size: 13px !important;
+    /* font-weight: 500 !important; */
+    color: #333942;
+    width: 80%;
+    padding-left: 10px;
+}
+
+.makhuyenmai-body-input:focus {
+    outline: none
+}
+
+.makhuyenmai-body .btn.btn-primary {
+    border-radius: 0 17px 17px 0;
+    border: 1px solid #BB0029;
+    background-color: #BB0029;
+    width: 20%;
+    height: 34px;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: #fff;
+    margin-bottom: 3px;
+    margin-left: -4px;
+}
+
+
+/* -------------- */
+
+.donhang {
+    box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+    margin-top: 10px;
+    background: #fff;
+}
+
+.donhang-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 10px 0 10px;
+}
+
+.donhang-header h3 {
+    font-size: 16px !important;
+    font-weight: unset !important;
+    color: #333942;
+    text-transform: uppercase;
+}
+
+.donhang-header span {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: #333942;
+    margin-bottom: 8px;
+    margin-left: 3px;
+}
+
+.donhang-body .table thead th {
+    border-bottom: 1px dashed #666;
+}
+
+tr th {
+    padding: 15px 0;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #333942;
+}
+
+.chinhsach-body .custom-control {
+    padding-left: 0;
+}
+
+.chinhsach {
+    margin-top: 10px;
+    background: #fff;
+    box-shadow: -1px 1px 4px 0 rgb(137 152 172 / 50%);
+}
+
+.chinhsach-body {
+    padding: 10px 10px 0 10px;
+}
+
+.chinhsach-header h3 {
+    font-size: 16px !important;
+    font-weight: 600;
+    color: #333942;
+    text-transform: uppercase;
+}
+
+.chinhsach-body ul li:last-child {
+    border: unset;
+}
+
+.chinhsach-header {
+    padding: 10px 10px 0 10px;
+}
+
+.chinhsach-body .list-group-item {
+    padding: 5px 0px !important;
+}
+
+.chinhsach-body .custom-control-label {
+    padding-left: 20px;
+}
+
+tr .title {
+    padding: 10px;
+    width: 219px;
+    height: 72px;
+    line-height: 1.8;
+    vertical-align: top;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+}
+
+.table td {
+    border-top: 0;
+}
+
+
+/* ---------------- */
+
+.donhang-footer {
+    border-top: 1px dashed#666;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.tamtinh {
+    justify-content: space-between;
+    display: flex;
+}
+
+.total {
+    margin-top: 10px;
+    justify-content: space-between;
+    display: flex;
+}
+
+.total-price,
+.tamtinh-price {
+    color: #bb0029;
+}
+
+.btn-dathang {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: #FFFFFF;
+    background-color: #BB0029;
+    border: 1px solid #BB0029;
+    padding: 9px 0;
+    border-radius: 17px !important;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btn-dathang:hover {
+    background-color: #FFFFFF !important;
+    color: #BB0029 !important;
+    border: 1px solid #BB0029 !important;
+}
+
+.btn-dathang:focus {
+    outline: none;
+}
+
+
+/* .phuongthuc-thanhtoan-card-body>div>div {
         display: flex;
         align-items: center;
         justify-content: space-between;

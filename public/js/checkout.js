@@ -1,7 +1,8 @@
 $('input[name="address"], select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function() {
     getship();
 });
-function getship(){
+
+function getship() {
     address = $('input[name="address"]');
     ward = $('select[name="sel_ward"]');
     district = $('select[name="sel_district"]');
@@ -10,6 +11,7 @@ function getship(){
         cal_ship(province, district, ward, address);
     }
 }
+
 function cal_ship(province, district, ward, address) {
     shipcmart = [];
     $(".list-stores-body input.receiverstore:checked").each(function() {
@@ -38,7 +40,7 @@ function cal_ship(province, district, ward, address) {
                         method = 'C-Ship';
                         break;
                     case 2:
-                        method = 'Vietel Post';
+                        method = 'Viettel Post';
                         break;
                     default:
                         method = 'C-Mart';
@@ -46,6 +48,7 @@ function cal_ship(province, district, ward, address) {
                 }
                 store_name = this.name;
                 store_id = this.id;
+                console.log('id ' + this.id);
                 if ($('#' + store_name + ' .receiverstore').prop('checked') == false) {
                     $('#' + store_name + ' .name-method').text(method);
                     $('#' + store_name + ' .total-cost').text(this.total_cost.text);
