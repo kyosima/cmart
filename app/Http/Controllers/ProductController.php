@@ -63,7 +63,7 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
-        if (Auth::check()) {
+        // if (Auth::check()) {
             //
             $user = Auth::user();
             $product = Product::whereSlug($slug)->firstorfail();
@@ -109,12 +109,12 @@ class ProductController extends Controller
             ];
             $stores = $product->stores()->get();
             return view('product.product_detail', ['user' => $user, 'stores' => $stores, 'related_product' => $related_product, 'ratings' => $ratings, 'rating_list' => $rating_list, 'rating_count' => $rating_count, 'rating_average' => $rating_average, 'product' => $product, 'categoryIds' => $categoryIds, 'new_products' => $new_products, 'lastview_product' => $lastview_product]);
-        } else {
+        // } else {
             
-            Session::put('url_back', URL::current());
+        //     Session::put('url_back', URL::current());
 
-            return redirect()->route('account');
-        }
+        //     return redirect()->route('account');
+        // }
     }
 
     /**

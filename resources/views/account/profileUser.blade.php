@@ -235,8 +235,7 @@
                             <label for="" class="col-sm-2 col-form-label">Cấp Tỉnh</label>
 
                             <div class="col-sm-10">
-                                <input type="text" name="address" class="form-control" value="{{ DB::table('province')->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->where('province.matinhthanh', '=', auth()->user()->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh }}
-        " placeholder="Địa chỉ chi tiết" readonly>
+                                <input type="text" name="address" class="form-control" value="{{$user_province->PROVINCE_NAME}}" placeholder="Địa chỉ chi tiết" readonly>
 
                             </div>
                         </div>
@@ -244,16 +243,14 @@
                             <label for="" class="col-sm-2 col-form-label">Cấp Huyện</label>
 
                             <div class="col-sm-10">
-                                <input type="text" name="address" class="form-control" value="{{ DB::table('district')->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->where('district.maquanhuyen', '=', auth()->user()->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen }}
-                                    " placeholder="Địa chỉ chi tiết" readonly>
+                                <input type="text" name="address" class="form-control" value="{{$user_district->DISTRICT_NAME}}" placeholder="Địa chỉ chi tiết" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label">Cấp Xã</label>
 
                             <div class=" col-sm-10">
-                                <input type="text" name="address" class="form-control" value="{{ DB::table('ward')->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->where('ward.maphuongxa', '=', auth()->user()->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa }}
-                                    " placeholder="Địa chỉ chi tiết" readonly>
+                                <input type="text" name="address" class="form-control" value="{{$user_ward->WARDS_NAME}}" placeholder="Địa chỉ chi tiết" readonly>
 
                             </div>
                         </div>

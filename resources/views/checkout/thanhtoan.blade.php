@@ -61,12 +61,11 @@
                                         <label for="">Cấp tỉnh<sup class="text-danger">*</sup></label>
                                         <select name="sel_province" class="form-control select2"
                                             data-placeholder="---Chọn tỉnh thành---" required>
-
-                                            <option value="">---Chọn tỉnh thành---</option>
+                                            {{-- <option value="">---Chọn tỉnh thành---</option>
                                             @foreach ($province as $value)
                                                 <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
                                                 </option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -74,7 +73,7 @@
                                         <select class="form-control select2" name="sel_ward"
                                             data-placeholder="---Chọn phường xã---" required>
 
-                                            <option value="">---Chọn phường xã---</option>
+                                            <option value="">Cấp xã</option>
                                         </select>
                                     </div>
                                     {{-- <div class="form-group">
@@ -95,7 +94,7 @@
                                         <select class="form-control select2" name="sel_district"
                                             data-placeholder="---Chọn quận huyên---" required>
 
-                                            <option value="">---Chọn quận huyện---</option>
+                                            <option value="">Cấp huyện</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -433,16 +432,16 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('public/js/shipping.js') }}"></script>
+    <script src="{{ asset('public/js/address.js') }}"></script>
     <script src="{{ asset('public/js/checkout.js') }}"></script>
 
     <script>
         $(".receiverstore").change(function() {
             if ($('.receiverstore:checked').length == $('.receiverstore').length) {
-                $('select[name="sel_province"]').prop('required',false);
-                $('select[name="sel_district"]').prop('required',false);
-                $('select[name="sel_ward"]').prop('required',false);
-                $('input[name="address"]').prop('required',false);
+                $('select[name="sel_province"]').prop('required', false);
+                $('select[name="sel_district"]').prop('required', false);
+                $('select[name="sel_ward"]').prop('required', false);
+                $('input[name="address"]').prop('required', false);
 
 
             }
@@ -496,7 +495,7 @@
         $('#pickAdress').on('click', function() {
             id_address = $('#pickAdress').val();
             url = $('#pickAdress').data('url');
-            if (id_address != '') {
+            if ($('#pickAdress').is(':checked')) {
                 $.ajax({
                         url: url,
                         type: 'GET',
@@ -512,30 +511,58 @@
                         // $('input[name="email"]').val(data[0].email);
                         $('input[name="address"]').val(data[0].address);
 
-                        var province = '<option value="' + data[1].matinhthanh + '">' + data[1].tentinhthanh +
+                        var province = '<option value="' + data[1].PROVINCE_ID + '">' + data[1].PROVINCE_NAME +
                             '</option>';
-                        $.each(data[4], function(index, value) {
-                            province += '<option value="' + value.matinhthanh + '">' + value
-                                .tentinhthanh + '</option>';
-                        });
+                        // $.each(data[4], function(index, value) {
+                        //     province += '<option value="' + value.matinhthanh + '">' + value
+                        //         .tentinhthanh + '</option>';
+                        // });
                         $('select[name="sel_province"]').empty().html(province);
 
-                        var district = '<option value="' + data[2].maquanhuyen + '">' + data[2].tenquanhuyen +
+                        var district = '<option value="' + data[2].DISTRICT_ID + '">' + data[2].DISTRICT_NAME +
                             '</option>';
-                        $.each(data[5], function(index, value) {
-                            district += '<option value="' + value.maquanhuyen + '">' + value
-                                .tenquanhuyen + '</option>';
-                        });
+                        // $.each(data[5], function(index, value) {
+                        //     district += '<option value="' + value.maquanhuyen + '">' + value
+                        //         .tenquanhuyen + '</option>';
+                        // });
                         $('select[name="sel_district"]').empty().html(district);
 
-                        var ward = '<option value="' + data[3].maphuongxa + '">' + data[3].tenphuongxa +
+                        var ward = '<option value="' + data[3].WARDS_ID + '">' + data[3].WARDS_NAME +
                             '</option>';
-                        $.each(data[6], function(index, value) {
-                            ward += '<option value="' + value.maphuongxa + '">' + value.tenphuongxa +
-                                '</option>';
-                        });
+                        // $.each(data[6], function(index, value) {
+                        //     ward += '<option value="' + value.maphuongxa + '">' + value.tenphuongxa +
+                        //         '</option>';
+                        // });
                         $('select[name="sel_ward"]').empty().html(ward);
                         getship();
+
+                    });
+            } else {
+                $.ajax({
+                        url: urlHome + '/lay-dia-chi/cap-tinh',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            id: $(this).val()
+                        },
+                    })
+                    .fail(function(data) {
+                        console.log(data);
+
+                    })
+                    .done(function(data) {
+                        console.log(data);
+                        var html = '<option value="">Cấp tỉnh</option>';
+                        $.each(data, function(index, value) {
+                            html += '<option value="' + value.PROVINCE_ID + '">' + value.PROVINCE_NAME +
+                                '</option>';
+                        });
+
+                        $('select[name="sel_province"]').empty(html);
+
+                        $('select[name="sel_province"]').append(html);
+                        $('select[name="sel_district"]').empty().append('<option value="">Cấp huyện</option>');
+                        $('select[name="sel_ward"]').empty().append('<option value="">Cấp xã</option>');
 
                     });
             }

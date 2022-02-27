@@ -79,7 +79,7 @@
                 <a href="{{route('tongdiemuser')}}">Tài khoản C / HSKH</a>
                 <a href="{{route('chuyendiem')}}">Chuyển C</a>
                 <a href="{{route('napC')}}">Tài khoản C / C-Mart</a>
-                <a href="{{route('lichsunhanC')}}">Tiền Tích Lũy</a>
+                <a href="{{route('lichsunhanC')}}">Lịch sử nhận C</a>
                 <a href="{{route('lichsuchuyenkhoan')}}">Lịch sử chuyển khoản C</a>
                 <a href="{{route('lichsutichluy')}}">Lịch sử thanh toán tích luỹ C</a>
                 <a href="{{route('lichsutietkiem')}}">Lịch sử thanh toán tiết kiệm C</a>

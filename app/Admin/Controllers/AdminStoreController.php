@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Http\Controllers\AddressController;
 
 
 class AdminStoreController extends Controller
@@ -37,17 +38,17 @@ class AdminStoreController extends Controller
             'store_name' => 'required|unique:stores,name',
             'store_address' => 'required',
             'id_owner' => 'required',
-            'id_province' => 'required',
-            'id_district' => 'required',
-            'id_ward' => 'required',
+            'sel_province' => 'required',
+            'sel_district' => 'required',
+            'sel_ward' => 'required',
         ], [
             'store_name.required' => 'Tên cửa hàng không được để trống',
             'store_name.unique' => 'Tên cửa hàng đã bị trùng lặp, vui lòng đặt tên khác',
             'store_address.required' => 'Địa chỉ cửa hàng không được để trống',
             'id_owner.required' => 'Chủ cửa hàng không được để trống',
-            'id_province.required' => 'Địa chỉ cửa hàng không được để trống',
-            'id_district.required' => 'Địa chỉ cửa hàng không được để trống',
-            'id_ward.required' => 'Địa chỉ cửa hàng không được để trống',
+            'sel_province.required' => 'Địa chỉ cửa hàng không được để trống',
+            'sel_district.required' => 'Địa chỉ cửa hàng không được để trống',
+            'sel_ward.required' => 'Địa chỉ cửa hàng không được để trống',
         ]);
 
 
@@ -60,9 +61,9 @@ class AdminStoreController extends Controller
                     'slug' => $slug,
                     'address' => $request->store_address,
                     'id_owner' => $request->id_owner,
-                    'id_province' => $request->id_province,
-                    'id_district' => $request->id_district,
-                    'id_ward' => $request->id_ward,
+                    'id_province' => $request->sel_province,
+                    'id_district' => $request->sel_district,
+                    'id_ward' => $request->sel_ward,
                 ]);
 
                 $message = 'User: '. auth('admin')->user()->name . ' thực hiện tạo mới cửa hàng ' . $request->name;
@@ -81,17 +82,17 @@ class AdminStoreController extends Controller
             'store_name' => 'required|unique:stores,name,'.$id,
             'store_address' => 'required',
             'id_owner' => 'required',
-            'id_province' => 'required',
-            'id_district' => 'required',
-            'id_ward' => 'required',
+            'sel_province' => 'required',
+            'sel_district' => 'required',
+            'sel_ward' => 'required',
         ], [
             'store_name.required' => 'Tên cửa hàng không được để trống',
             'store_name.unique' => 'Tên cửa hàng đã bị trùng lặp, vui lòng đặt tên khác',
             'store_address.required' => 'Địa chỉ cửa hàng không được để trống',
             'id_owner.required' => 'Chủ cửa hàng không được để trống',
-            'id_province.required' => 'Địa chỉ cửa hàng không được để trống',
-            'id_district.required' => 'Địa chỉ cửa hàng không được để trống',
-            'id_ward.required' => 'Địa chỉ cửa hàng không được để trống',
+            'sel_province.required' => 'Địa chỉ cửa hàng không được để trống',
+            'sel_district.required' => 'Địa chỉ cửa hàng không được để trống',
+            'sel_ward.required' => 'Địa chỉ cửa hàng không được để trống',
         ]);
 
 
@@ -104,9 +105,9 @@ class AdminStoreController extends Controller
                     'slug' => $slug,
                     'address' => $request->store_address,
                     'id_owner' => $request->id_owner,
-                    'id_province' => $request->id_province,
-                    'id_district' => $request->id_district,
-                    'id_ward' => $request->id_ward,
+                    'id_province' => $request->sel_province,
+                    'id_district' => $request->sel_district,
+                    'id_ward' => $request->sel_ward,
                 ]);
 
                 $message = 'User: '. auth('admin')->user()->name . ' thực hiện chỉnh sửa cửa hàng ' . $request->name;
@@ -126,12 +127,15 @@ class AdminStoreController extends Controller
         $districts = District::where('matinhthanh', $store->id_province)->get();
         $wards = Ward::where('maquanhuyen', $store->id_district)->get();
         $products = $store->products; // lấy theo relationship
+        $addressController = new AddressController();
 
         $admin = auth('admin')->user();
-
+        $store_province = $addressController->getProvinceDetail($store->id_province);
+        $store_district = $addressController->getDistrictDetail($store->id_province,$store->id_district);
+        $store_ward = $addressController->getWardDetail($store->id_district,$store->id_ward);
         $message = 'User: '. $admin->name . ' truy cập trang chỉnh sửa cửa hàng ' . $store->name;
         Log::info($message);
-        return view('admin.store.edit', compact('cities', 'store', 'districts', 'wards', 'products', 'admin'));
+        return view('admin.store.edit', compact('cities', 'store', 'districts', 'wards', 'products', 'admin', 'store_province', 'store_district', 'store_ward'));
     }
 
     public function storeProduct(Request $request)

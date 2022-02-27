@@ -22,8 +22,15 @@ use App\Exports\DonHangHuy;
 
 class PointHistoryController extends Controller
 {
+    /*
+    1 nhận c
+    2 thanh toán tiết kiệm c
+    3 chuyển khoản c
+    4 thanh toán tích lũy c
+    5 hoàn c
+    */
     public function lichsunhanC() {
-        $listHistory = PointCHistory::where('type','=',1)->orWhere('type','=',3)->get();
+        $listHistory = PointCHistory::where('type','=',1)->latest()->get();
         $this->tinhdiemtietkiem();
         $user = User::find(1)->with('point_c')->first();
         return view('admin.history.lichsunhanC',[
@@ -33,7 +40,7 @@ class PointHistoryController extends Controller
     }
 
     public function chuyenkhoan() {
-        $listHistory = PointCHistory::where('type','=',1)->get();
+        $listHistory = PointCHistory::where('type','=',3)->get();
         $this->tinhdiemtietkiem();
         $user = User::find(1)->with('point_c')->first();
         return view('admin.history.chuyenkhoan',['listHistory' => $listHistory,
@@ -51,7 +58,7 @@ class PointHistoryController extends Controller
     }
 
     public function tichluy() {
-        $listHistory = PointCHistory::where('type','=',2)->get();
+        $listHistory = PointCHistory::where('type','=',4)->get();
         $this->tinhdiemtietkiem();
         $user = User::find(1)->with('point_c')->first();
         return view('admin.history.tichluy',[
@@ -113,7 +120,7 @@ class PointHistoryController extends Controller
     }
 
     public function tietkiem() {
-        $listHistory = PointCHistory::where('type','=',3)->get();
+        $listHistory = PointCHistory::where('type','=',2)->get();
         $this->tinhdiemtietkiem();
         $user = User::find(1)->with('point_c')->first();
         return view('admin.history.tietkiem',['listHistory'=>$listHistory,
@@ -132,7 +139,7 @@ class PointHistoryController extends Controller
     }
 
     public function huydonhang() {
-        $listHistory = PointCHistory::where('type','=',4)->get();
+        $listHistory = PointCHistory::where('type','=',5)->get();
         $this->tinhdiemtietkiem();
         $user = User::find(1)->with('point_c')->first();
         return view('admin.history.huydonhang',[
@@ -246,7 +253,7 @@ class PointHistoryController extends Controller
         $magiaodich = time();
         $lichsu_chuyen->magiaodich = $magiaodich;
         $lichsu_chuyen->amount = $request->sodiemchuyen;
-        $lichsu_chuyen->type = 1;
+        $lichsu_chuyen->type = 3;
         
         $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
         $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;

@@ -8,6 +8,8 @@
     <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="url-home" content="{{ URL::to('/') }}" />
+    <meta name="url-home-customer" content="{{ url('/') }}" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="{{ asset('public/js/slickslider.js') }}"></script>

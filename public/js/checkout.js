@@ -31,7 +31,6 @@ function cal_ship(province, district, ward, address) {
             console.log(data);
         },
         success: function(response) {
-            console.log(response);
             response = JSON.parse(response);
             console.log(response);
             $.each(response, function() {
@@ -48,15 +47,12 @@ function cal_ship(province, district, ward, address) {
                 }
                 store_name = this.name;
                 store_id = this.id;
-                console.log('id ' + this.id);
                 if ($('#' + store_name + ' .receiverstore').prop('checked') == false) {
                     $('#' + store_name + ' .name-method').text(method);
                     $('#' + store_name + ' .total-cost').text(this.total_cost.text);
                     $('#' + store_name + ' .total-cost').attr('data-total', this.total_cost.value);
                     $.each(this.ship_total, function(key, val) {
                         if (key == 'ship') {
-                            console.log(key);
-                            console.log(val);
                             $('#' + store_name + ' .ship-normal').empty().append(' <input checked type="radio" onclick="calTotal(this)" data-id="' + store_id + '" data-type="1" data-store="' + store_name + '" id="ship_normal' + store_name + '" name="shipping_value' + store_name + '" value="' + val.value + '">' +
                                 ' <label for="ship_normal' + store_name + '"  >Tiêu chuẩn: ' + val.text + '</label>');
                             $('#' + store_name + ' input.ship-fee').val(val.value);

@@ -55,8 +55,8 @@
                                             <div class="form-group mb-3 w-100">
                                                 <label for="">Tỉnh thành <abbr class="required"
                                                             title="bắt buộc">*</abbr></label>
-                                                    <select name="sel_province" class="form-control select2" data-placeholder="---Chọn tỉnh thành---" required readonly>
-                                                        <option value="{{$order->order_address->province->matinhthanh}}">{{$order->order_address->province->tentinhthanh}}</option>
+                                                    <select name="sel_province" class="form-control select2" data-placeholder="---Chọn tỉnh thành---" required >
+                                                        <option value="{{$order_province->PROVINCE_ID}}">{{$order_province->PROVINCE_NAME}}</option>
                                                         {{-- @foreach($provinces as $value)
                                                             <option value="{{$value->matinhthanh}}">{{$value->tentinhthanh}}</option>
                                                         @endforeach --}}
@@ -66,8 +66,8 @@
                                                     <div class="form-group mb-3 col-sm-12 col-lg-6">
                                                     <label for="">Quận huyện <abbr class="required"
                                                             title="bắt buộc">*</abbr></label>
-                                                        <select class="form-control select2" name="sel_district" data-placeholder="---Chọn quận huyên---" required readonly>
-                                                            <option value="{{$order->order_address->district->maquanhuyen}}">{{$order->order_address->district->tenquanhuyen}}</option>
+                                                        <select class="form-control select2" name="sel_district" data-placeholder="---Chọn quận huyên---" required  >
+                                                            <option value="{{$order_district->DISTRICT_ID}}">{{$order_district->DISTRICT_NAME}}</option>
                                                             {{-- @foreach($districts as $value)
                                                                 <option value="{{$value->maquanhuyen}}">{{$value->tenquanhuyen}}</option>
                                                             @endforeach --}}
@@ -76,8 +76,8 @@
                                                     <div class="form-group mb-3 col-sm-12 col-lg-6">
                                                     <label for="">Phường xã <abbr class="required"
                                                             title="bắt buộc">*</abbr></label>
-                                                        <select class="form-control select2" name="sel_ward" data-placeholder="---Chọn phường xã---" required readonly>
-                                                            <option value="{{$order->order_address->ward->maphuongxa}}">{{$order->order_address->ward->tenphuongxa}}</option>
+                                                        <select class="form-control select2" name="sel_ward" data-placeholder="---Chọn phường xã---" required >
+                                                            <option value="{{$order_ward->WARDS_ID}}">{{$order_ward->WARDS_NAME}}</option>
                                                             {{-- @foreach($wards as $value)
                                                                 <option value="{{$value->maphuongxa}}">{{$value->tenphuongxa}}</option>
                                                             @endforeach --}}
@@ -87,7 +87,7 @@
                                                 <div class="form-group w-100 mb-3">
                                                     <label for="address">Địa chỉ <abbr class="required"
                                                             title="bắt buộc">*</abbr><small class="text-danger">( Địa chỉ không bao gồm phường xã, quận huyện, tỉnh thành.)</small></label>
-                                                    <input type="text" class="form-control" id="address" name="address" value="{{$order->order_address->address}}" required readonly>
+                                                    <input type="text" class="form-control" id="address" name="address" value="{{$order_address->address}}" required readonly>
                                                     
                                                 </div>
                                                 <div class="form-group mb-3 w-100">

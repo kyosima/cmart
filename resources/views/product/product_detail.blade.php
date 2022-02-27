@@ -55,7 +55,7 @@
                                     <h2>{{ $product->name }}</h2>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-5">
+                                    <div class="col-sm-12 col-md-12 col-lg-6">
                                         <div class="code info-detail">
                                             <p><span>Mã sản phẩm:</span>{{ $product->sku }}</p>
                                         </div>
@@ -64,30 +64,74 @@
                                                     href="{{ route('proBrand.index', $product->brand) }}">{{ $product->brand }}</a>
                                             </p>
                                         </div>
+                                        @if(Auth::check())
+                                            @if(in_array(Auth::user()->level, [3,4]))
+                                            @else
+                                                <div class="manufacture info-detail">
+                                                    <p>
+                                                    
+                                                        <span class="text-dark" style="font-weight: 300">Chiết khấu C <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
+                                                            class="ttt text-justify p-1"> Tiền Tích Lũy C là chiết khấu nhận được khi mua sản phẩm, có giá trị thanh toán tại C-Mart và các Đối Tác Liên Kết, có giá trị tích lũy tốt theo Chính sách Tiết Kiệm Tích Tài C-Saving, có giá trị lưu trữ không giới hạn
+                                                        </span></span>:</span><span class="text-dark"
+                                                            style="font-weight: 600">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
+                                                            điểm</span>
+                                                         
+                                                    </p>
+                                                    <p>
+                                                    
+                                                        <span class="text-dark" style="font-weight: 300">Điểm dịch vụ (M) <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
+                                                            class="ttt text-justify p-1">Điểm Dịch Vụ M là chiết khấu nhận được khi mua sản phẩm, có chức năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển, phí thanh toán...). Số dư M còn lại sẽ được hoàn vào Tài khoản Tiền Tích Lũy của HSKH đặt hàng. Thời gian tra soát: 30 ngày kể từ ngày đơn hàng hoàn thành
+                                                        </span></span>:</span><span class="text-dark"
+                                                            style="font-weight: 600">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
+                                                            điểm</span>
+                                                                                
+                                                    </p>
+        
+                                                    <style>
+                                                        .tt {
+                                                            position: relative;
+                                                            display: inline-block;
+                                                        }
+        
+                                                        .tt .ttt {
+                                                            visibility: hidden;
+                                                            top: -25px;
+                                                            width: 400px;
+                                                            background-color: #0000008c;
+                                                            color: #fff !important;
+                                                            text-align: center;
+                                                            border-radius: 6px;
+                                                            padding: 5px 0;
+                                                            position: absolute;
+                                                            z-index: 1;
+                                                        }
+        
+                                                        .tt:hover .ttt {
+                                                            visibility: visible;
+                                                        }
+        
+                                                    </style>
+                                                </div>
+                                            @endif
+                                        @else
                                         <div class="manufacture info-detail">
                                             <p>
-                                                {{-- <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
-                                            class="ttt">C là Tiền Tích Lũy nhận được khi mua sản phẩm, có giá trị
-                                            thanh toán tại C-Mart và các Đối Tác Liên Liên Kết, giá trị đầu tư tốt theo
-                                            Chính sách Tiết Kiệm Tích Tài C-Saving, giá trị lưu trữ không giới hạn
-                                        </span></span> --}}
-                                                <span class="text-dark" style="font-weight: 300">Tiền tích lũy
-                                                    (C):</span><span class="text-dark"
+                                              
+                                                <span class="text-dark" style="font-weight: 300">Chiết khấu C:</span><span class="text-dark"
                                                     style="font-weight: 600">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
                                                     điểm</span>
-
+                                                    <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
+                                                        class="ttt"> Tiền Tích Lũy C là chiết khấu nhận được khi mua sản phẩm, có giá trị thanh toán tại C-Mart và các Đối Tác Liên Liên Kết, có giá trị tích lũy tốt theo Chính sách Tiết Kiệm Tích Tài C-Saving, có giá trị lưu trữ không giới hạn
+                                                    </span></span>
                                             </p>
                                             <p>
-                                                {{-- <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
-                                            class="ttt">M là Điểm Dịch Vụ nhận được khi mua sản phẩm, có chức
-                                            năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển,
-                                            phí thanh toán...) và chỉ có giá trị trong chính đơn hàng đó.
-                                        </span></span> --}}
-                                                <span class="text-dark" style="font-weight: 300">Điểm dịch vụ
-                                                    (M):</span><span class="text-dark"
+                                              
+                                                <span class="text-dark" style="font-weight: 300">Điểm dịch vụ (M):</span><span class="text-dark"
                                                     style="font-weight: 600">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
                                                     điểm</span>
-
+                                                                        <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
+                                                        class="ttt">Điểm Dịch Vụ M là chiết khấu nhận được khi mua sản phẩm, có chức năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển, phí thanh toán...). Số dư M còn lại sẽ được hoàn vào Tài khoản Tiền Tích Lũy của HSKH đặt hàng. Thời gian tra soát: 30 ngày kể từ ngày đơn hàng hoàn thành
+                                                    </span></span>
                                             </p>
 
                                             <style>
@@ -115,6 +159,8 @@
 
                                             </style>
                                         </div>
+                                        @endif
+                                        
 
                                         <div class="all-price">
                                             <p class="new-price">{{ formatPriceOfLevel($product) }}</p>
@@ -143,26 +189,36 @@
                                         </div>
                                     </div> --}}
                                     </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-7 d-flex align-items-end">
+                                    <div class="col-sm-12 col-md-12 col-lg-6">
+                                        @if(Auth::check())
                                         <input type="hidden" class="card-quality-input" name="product_id"
                                             value="{{ $product->id }}">
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
+
                                             <label for="sl-store">Chọn cửa hàng</label>
                                             <select name="store_id" id="sl-store" class="form-control">
-                                                <option value="0">---Chọn cửa hàng---</option>
+                                                <option value="0">---Chọn cửa hàng---</option> --}}
+                                                <p><b>Danh sách cửa hàng</b></p>
                                                 @foreach ($stores as $store)
                                                     @if (in_array($user->level, array_diff(explode(',', $store->getOriginal('pivot_for_user')),array(""))))
-                                                        <option value="{{ $store->id }}"
+                                                        {{-- <option value="{{ $store->id }}"
                                                             @if ($store->getOriginal('pivot_soluong') == 0) disabled @endif>
                                                             {{ $store->name }} còn
                                                             {{ $store->getOriginal('pivot_soluong') }} sản
-                                                            phẩm</option>
+                                                            phẩm</option> --}}
+                                                            <div class="form-group">
+                                                                <input type="radio" id="store-{{ $store->id}}" name="store_id" value="{{ $store->id }}">
+                                                                <label for="store-{{ $store->id}}"> {{ $store->name }} (còn
+                                                                    {{ $store->getOriginal('pivot_soluong') }} sản
+                                                                    phẩm)</label>
+                                                            </div>
                                                     @endif
                                                 @endforeach
-                                            </select>
+                                            {{-- </select> --}}
                                             <p class="text-danger" id="notice-store" style="display:none">Chọn cửa hàng
                                                 trước khi thêm</p>
-                                        </div>
+                                        {{-- </div> --}}
+                                        @endif
                                     </div>
                                 </div>
 
@@ -182,8 +238,13 @@
                                                 <i class="decrement" onclick="decrementQty()">-</i>
                                             </div>
                                         </div>
+                                        @if(Auth::check())
                                         <button type="submit" title="Add to Cart" class="btn-cart">Thêm vào
                                             giỏ hàng</button>
+                                        @else
+                                        <button onclick="location.href='{{ route('account') }}'" title="Add to Cart" class="btn-cart">Thêm vào
+                                            giỏ hàng</button>
+                                        @endif
                                     </div>
                                 </div>
 

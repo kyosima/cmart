@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Lịch sử thanh toán tiết kiệm C')
+@section('title', 'Lịch sử nhận C')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/amcharts.css') }}" type="text/css">
@@ -11,11 +11,14 @@
 <body>
     <div class="container pt-4 pb-4">
         <div class="row">
-            <!-- <div class="col-3">
-                <input type="text" class="form-control" id="search_time" onkeyup="search_time()" placeholder="Nhập thời gian tìm kiếm">
-            </div> -->
-   
+
+            <div class="col-md-6 col-12 px-3">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="search_makhachhang" onkeyup="search_makhachhang()" placeholder="Nhập mã khách hàng">
+                </div>
+            </div>
             <div class="col-6">
+                
                 <div class="row">
                     <div class="col-6">
                         <a href="{{asset('admin/lichsutietkiem/download/pdf')}}" class="btn btn-primary text-white" style="width: 100%">
@@ -26,20 +29,16 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
-            <div class="col-3"></div>
-            <div class="col-6">
-                <a class="btn btn-tongC" href="{{asset('admin/danh-sach-user/1')}}">
-                    Tổng C hiện tại TK C-MART: {{$user->point_c->point_c}}</a>
-            </div>
-        </div>
+     
+    </div>
+    <div class="row">
+       
     </div>
     <table class="styled-table table-sortable" id="myTable">
         <thead>
             <tr style="text-align:center">
                 <th>Thời gian giao dịch</th>
                 <th>Mã khách hàng</th>
-                <th>Tên khách hàng</th>
                 <th>Nội dung</th>
                 <th>Số dư ban đầu</th>
                 <th>Giá trị giao dịch</th>
@@ -51,7 +50,6 @@
                 <tr style="text-align:center">
                     <td>{{$value->created_at}}</td>
                     <td>{{$value->makhachhang}}</td>
-                    <td>{{DB::table('users')->where('id',$value->point_c_idnhan)->first()->hoten}}</td>
                     <td>{{$value->note}}</td>
                     <td>{{$value->point_past_nhan}}</td>
                     <td>{{$value->amount}}</td>

@@ -16,7 +16,7 @@ use App\Models\Store;
 use App\Models\OrderVat;
 use App\Models\OrderPayme;
 use App\Models\OrderStore;
-
+use App\Http\Controllers\ViettelPostController;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
@@ -87,13 +87,11 @@ class CheckoutController extends Controller
     public function getAddress(Request $request)
     {
         $user = Auth::user();
-        $a_province = Province::where('matinhthanh', $user->id_tinhthanh)->first();
-        $a_district = District::where('maquanhuyen', $user->id_quanhuyen)->first();
-        $a_ward = Ward::where('maphuongxa', $user->id_phuongxa)->first();
-        $province = Province::select('matinhthanh', 'tentinhthanh')->get();
-        $district = $a_province->district()->select('maquanhuyen', 'tenquanhuyen')->get();
-        $ward = $a_district->ward()->select('maphuongxa', 'tenphuongxa')->get();
-        $arr = [$user, $a_province, $a_district, $a_ward, $province, $district, $ward];
+        $addressController = new AddressController();
+        $user_province = $addressController->getProvinceDetail($user->id_tinhthanh);
+        $user_district = $addressController->getDistrictDetail($user->id_tinhthanh,$user->id_quanhuyen);
+        $user_ward = $addressController->getWardDetail($user->id_quanhuyen,$user->id_phuongxa);
+        $arr = [$user, $user_province, $user_district, $user_ward];
         return $arr;
     }
 
@@ -115,6 +113,7 @@ class CheckoutController extends Controller
             $user = Auth::user();
             $user_id = $user->id;
         }
+        $viettelPostController = new ViettelPostController();
         $store_address = $request->input('store_address');
         $show_vat = $request->input('show_vat');
         // $payment_method = $request->input('payment_method');
@@ -128,6 +127,7 @@ class CheckoutController extends Controller
         $total_m = 0;
         $total_vat_products = 0;
         $total_discount_products = 0;
+        $total_remaining_m_point = 0;
         $sub_total = 0;
         $total = 0;
         $order->order_code = 'CMART-' . $order->id . time();
@@ -164,6 +164,10 @@ class CheckoutController extends Controller
                         break;
                 }
                 $vat_products += $row->price * $price->tax * $row->qty;
+                if (in_array(Auth::user()->level, [3, 4])){
+                    $price->cpoint = 0;
+                    $price->mpoint = 0;
+                }
                 OrderProduct::create([
                     'id_order' => $order->id,
                     'id_order_store' => $order_store->id,
@@ -178,6 +182,7 @@ class CheckoutController extends Controller
                     'c_point' => $price->cpoint,
                     'm_point' => $price->mpoint
                 ]);
+               
             }
             OrderProduct::create([
                 'id_order' => $order->id,
@@ -195,25 +200,30 @@ class CheckoutController extends Controller
             ]);
             $order_store->tax = $store_tax;
             $order_store->shipping_method = $store_shipping_method;
-            if (($store_shipping_method == 0) || ($store_shipping_method == 1)) {
-                $order_store->shipping_code = $order->order_code;
-            }
+           
             $order_store->shipping_type = $store_shipping_type;
             $order_store->shipping_total = $store_shipping_total;
             $order_store->remaining_m_point = max($store_m - $store_shipping_total, 0);
+            if (in_array(Auth::user()->level, [3, 4])){
+                $store_c = 0;
+                $store_m = 0;
+            }
+
             $order_store->c_point = $store_c;
             $order_store->m_point = $store_m;
             $order_store->vat_products = $vat_products;
             $order_store->sub_total = intval(str_replace(",", "", $cart->subtotal())) + 300;
-            $order_store->total = $order_store->sub_total + $vat_products;
+            $order_store->total = $order_store->sub_total + $vat_products +  max($store_shipping_total - $store_m, 0);
+         
             $order_store->save();
             $total_tax += $store_tax;
             $total_shipping += $store_shipping_total;
             $total_c += $store_c;
             $total_m += $store_m;
             $total_vat_products += $vat_products;
+            $total_remaining_m_point += $order_store->remaining_m_point;
             $total_discount_products += $discount_products;
-            $sub_total = +$order_store->sub_total;
+            $sub_total += $order_store->sub_total;
             $total += $order_store->total;
             Cart::instance($store_id)->destroy();
         }
@@ -267,6 +277,7 @@ class CheckoutController extends Controller
         //     }
 
         // }else{
+         
         return redirect()->route('checkout.getPayment', ['order_code' => $order->order_code]);
         // }
 
@@ -317,14 +328,23 @@ class CheckoutController extends Controller
             $arr2 = $data['shipcmart'];
             $store_ids = array_diff($store_ids, $arr2);
         }
+        $addressController = new AddressController();
 
 
         foreach ($store_ids as $store_id) {
             $store = Store::whereId($store_id)->first();
             $cart = Cart::instance($store_id);
             $store_ships['store' . $store_id]['products'] = $cart->content();
-            $address1 = $store->address . ' ' . $store->ward()->value('tenphuongxa') . ' ' . $store->district()->value('tenquanhuyen') . ' ' . $store->province()->value('tentinhthanh');
-            $address2 =  $data['address'] . ' ' . Ward::where('maphuongxa', $data['ward'])->value('tenphuongxa') . ' ' . District::where('maquanhuyen', $data['district'])->value('tenquanhuyen') . ' ' . Province::where('matinhthanh', $data['province'])->value('tentinhthanh');
+            $address1_province = $addressController->getProvinceDetail($store->id_province);
+            $address1_district = $addressController->getDistrictDetail($store->id_province,$store->id_district);
+            $address1_ward = $addressController->getWardDetail($store->id_district,$store->id_ward);
+
+            $address2_province = $addressController->getProvinceDetail ($data['province']);
+            $address2_district = $addressController->getDistrictDetail( $data['province'], $data['district']);
+            $address2_ward = $addressController->getWardDetail( $data['district'],$data['ward']);
+
+            $address1 = $store->address . ' ' . $address1_province->PROVINCE_NAME . ' ' . $address1_district->DISTRICT_NAME . ' ' . $address1_ward->WARDS_NAME;
+            $address2 = $data['address'] . ' ' . $address2_province->PROVINCE_NAME . ' ' . $address2_district->DISTRICT_NAME . ' ' . $address2_ward->WARDS_NAME;
             if ($data['province'] == $store->id_province) {
                 $distance =  $this->getDistance($address1, $address2);
                 $ship_arr = array(0, 0);
@@ -338,6 +358,7 @@ class CheckoutController extends Controller
                 }
                 $store_ships['store' . $store_id]['name'] = 'store' . $store_id;
                 $store_ships['store' . $store_id]['id'] = $store_id;
+                $store_ships['store' . $store_id]['distance'] = $distance;
                 $store_ships['store' . $store_id]['ship_total']['ship'] = array('value' => $ship_arr[0], 'text' => formatPrice($ship_arr[0]));
                 $store_ships['store' . $store_id]['ship_total']['ship_fast'] = array('value' => $ship_arr[1], 'text' => formatPrice($ship_arr[1]));
                 $store_ships['store' . $store_id]['method'] = 1;
@@ -441,7 +462,7 @@ class CheckoutController extends Controller
             case in_array($province_code, range(10, 48)):
                 return 0;
                 break;
-            case in_array($province_code, range(10, 48)):
+            case in_array($province_code, range(49, 66)):
                 return 1;
                 break;
             default:

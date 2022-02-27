@@ -93,8 +93,8 @@
                             @endif
                         </div>
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
-                                                            <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
-                                                            <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
+                                                                        <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
+                                                                        <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
                         <div class="row">
                             <div class="col-4">
                                 <button class="alert alert-success m-0 text-center"
@@ -102,8 +102,8 @@
                                     đã hoàn thành: {{ $sodonhang }}</button>
                             </div>
                             <!-- <div class="col-4">
-                                                                <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
-                                                                </div> -->
+                                                                            <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
+                                                                            </div> -->
                             <div class="col-4">
                                 <button class="alert alert-success m-0 text-center"
                                     style="width: 85%;border-radius: 40px; background: rgb(255, 0, 21); color: white;">
@@ -136,8 +136,8 @@
                                         <input type="phone" class="form-control mb-2" name="phone"
                                             placeholder="Nhập số điện thoại" value="{{ $user->phone }}">
                                         <!-- <span class="text-uppercase">Email</span>
-                                                                        <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
-                                                                            value="{{ $user->email }}" readonly=""> -->
+                                                                                    <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
+                                                                                        value="{{ $user->email }}" readonly=""> -->
                                     </div>
 
                                     <div class="col-lg-4 text-start">
@@ -224,8 +224,13 @@
                                             value="{{$user->duong}}">
                                         </div> --}}
                                             <div class="col-lg-4">
-
-                                                @if ($user->id_tinhthanh == null)
+                                                <select name="sel_province" class="form-control select2" disabled
+                                                    data-placeholder="---Chọn tỉnh thành---">
+                                                    <option value="{{ $user_province->PROVINCE_ID }}">
+                                                        {{ $user_province->PROVINCE_NAME }}
+                                                    </option>
+                                                </select>
+                                                {{-- @if ($user->id_tinhthanh == null)
                                                     <select name="sel_province" class="form-control select2" disabled
                                                         data-placeholder="---Chọn tỉnh thành---">
                                                         <option value="">---Chọn tỉnh thành---</option>
@@ -247,11 +252,17 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
-                                                @endif
+                                                @endif --}}
 
                                             </div>
                                             <div class="col-lg-4">
-                                                @if ($user->id_quanhuyen == null)
+                                                <select name="sel_district" class="form-control select2" disabled
+                                                    data-placeholder="---Chọn quận huyện---">
+                                                    <option value="{{ $user_district->DISTRICT_ID }}">
+                                                        {{ $user_district->DISTRICT_NAME }}
+                                                    </option>
+                                                </select>
+                                                {{-- @if ($user->id_quanhuyen == null)
                                                     <select class="form-control select2" name="sel_district" disabled
                                                         data-placeholder="---Chọn quận huyên---">
                                                         <option value="">---Chọn quận huyên---</option>
@@ -264,23 +275,29 @@
 
                                                         </option>
                                                     </select>
-                                                @endif
+                                                @endif --}}
                                             </div>
                                             <div class="col-lg-4">
-                                                @if ($user->id_phuongxa == null)
-                                                    <select class="form-control select2" name="sel_ward" disabled
-                                                        data-placeholder="---Chọn phường xã---">
-                                                        <option value="">---Chọn phường xã---</option>
-                                                    </select>
-                                                @else
-                                                    <select class="form-control select2" name="sel_ward" disabled
-                                                        data-placeholder="---Chọn phường xã---">
-                                                        <option value="{{ $user->id_phuongxa }}">
-                                                            {{ $phuongxa }}
+                                                <select name="sel_district" class="form-control select2" disabled
+                                                    data-placeholder="---Chọn phường xã---">
+                                                    <option value="{{ $user_ward->WARDS_ID }}">
+                                                        {{ $user_ward->WARDS_NAME }}
+                                                    </option>
+                                                </select>
+                                                {{-- @if ($user->id_phuongxa == null)
+                                                        <select class="form-control select2" name="sel_ward" disabled
+                                                            data-placeholder="---Chọn phường xã---">
+                                                            <option value="">---Chọn phường xã---</option>
+                                                        </select>
+                                                    @else
+                                                        <select class="form-control select2" name="sel_ward" disabled
+                                                            data-placeholder="---Chọn phường xã---">
+                                                            <option value="{{ $user->id_phuongxa }}">
+                                                                {{ $phuongxa }}
 
-                                                        </option>
-                                                    </select>
-                                                @endif
+                                                            </option>
+                                                        </select>
+                                                    @endif --}}
                                             </div>
                                         </div>
                                         {{-- <div class="row mb-3">
@@ -368,7 +385,8 @@
                                             <div class="row mb-3">
 
                                                 <div class="col-lg-12">
-                                                    <h3 class="text-uppercase text-center">- Lịch sử chuyển khoản C -</h3>
+                                                    <h3 class="text-uppercase text-center">- Lịch sử chuyển khoản C -
+                                                    </h3>
                                                     <table class="styled-table table-sortable">
                                                         <thead>
                                                             <tr>

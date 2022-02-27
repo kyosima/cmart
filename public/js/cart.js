@@ -3,8 +3,8 @@ $("#form-add-to-cart").submit(function(e) {
     var form = $(this);
     var url = form.attr('action');
     var method = form.attr('method');
-    var store_id = $('select[name="store_id"]').val();
-    if (store_id == 0) {
+    var store_id = $('input[name="store_id"]').val();
+    if (store_id == '' || store_id == null || (!$('input[name="store_id"]').is(":checked"))) {
         $('#notice-store').css('display', 'block');
     } else {
         $.ajaxSetup({

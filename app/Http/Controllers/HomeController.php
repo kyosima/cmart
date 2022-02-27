@@ -17,6 +17,8 @@ use Carbon\Carbon;
 use App\Models\PointC;
 use App\Models\PointM;
 use App\Models\PointCHistory;
+use App\Http\Controllers\AddressController;
+
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
@@ -121,15 +123,12 @@ class HomeController extends Controller
 
     public function postRegister (Request $request)
     {
-        dd($request);
         $this->validate($request, [
-            'hoten' => 'required|min:5|max:30',
             'phone' => 'required|min:8|unique:users,name,phone',
             'password' => 'required|min:8|max:30',
             'passwordAgain' => 'required|same:password',
         ],[
-            'hoten.min' => 'Tên người dùng ít nhất 5 ký tự',
-            'hoten.max' => 'Tên người dùng nhìu nhất 30 ký tự',
+
             'password.min' => 'Mật khẩu ít nhất có 8 ký tự',
             'password.max' => 'Mật khẩu chỉ có nhìu nhất 30 ký tự',
             'passwordAgain.required' => 'Bạn chưa nhập lại mật khẩu',
@@ -230,12 +229,13 @@ class HomeController extends Controller
 
     public function getProfile() {
         if (Auth::check()) {
+            $addressController = new AddressController();
             $user = Auth::user();
-            $province = Province::select('matinhthanh', 'tentinhthanh')->get();
-            $district = District::select('maquanhuyen', 'tenquanhuyen')->get();
-            $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
-            $name_province = DB::table("province")->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->pluck("tentinhthanh");
-                return view('account.profileUser',['profileUser'=>$user,'province'=>$province, 'district'=>$district, 'ward'=>$ward])->with(compact('province','name_province'));
+            $user_province = $addressController->getProvinceDetail($user->id_tinhthanh);
+            $user_district = $addressController->getDistrictDetail($user->id_tinhthanh,$user->id_quanhuyen);
+            $user_ward = $addressController->getWardDetail($user->id_quanhuyen,$user->id_phuongxa);
+
+                return view('account.profileUser',['profileUser'=>$user])->with(compact('user_province','user_district','user_ward'));
             
         }
         else {

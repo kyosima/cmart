@@ -92,11 +92,14 @@
                                         <label class="col-md-3 control-label">Cấp tỉnh:<span class="required"
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
-                                            <select class="form-control js-location" id="selectCity" name="id_province" data-type="city"
+                                            <select class="form-control" id="selectCity" name="sel_province" data-type="city"
                                                 data-placeholder="Chọn tỉnh/thành"
                                                 {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
                                                 >
-                                                @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
+                                                <option value="{{$store_province->PROVINCE_ID}}" selected>
+                                                    {{$store_province->PROVINCE_NAME}}
+                                                </option>
+                                                {{-- @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
                                                     <option value="{{$store->id_province}}" selected>
                                                         {{$store->id_province}} - {{$store->province->tentinhthanh}}
                                                     </option>
@@ -106,7 +109,7 @@
                                                         <option value="{{ $city->matinhthanh }}" {{ $city->matinhthanh == $store->id_province ? 'selected' : '' }} >{{ $city->matinhthanh }} -
                                                             {{ $city->tentinhthanh }}</option>
                                                     @endforeach
-                                                @endif
+                                                @endif --}}
                                             </select>
                                         </div>
                                     </div>
@@ -114,11 +117,14 @@
                                         <label class="col-md-3 control-label">Cấp huyện:<span class="required"
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
-                                            <select class="form-control js-location" id="selectDistrict" name="id_district"
+                                            <select class="form-control" id="selectDistrict" name="sel_district"
                                                 data-type="district" data-placeholder="Chọn quận/huyện"
                                                 {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
                                                 >
-                                                @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
+                                                <option value="{{$store_district->DISTRICT_ID}}" selected>
+                                                    {{$store_district->DISTRICT_NAME}}
+                                                </option>
+                                                {{-- @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
                                                     <option value="{{$store->id_district}}" selected>
                                                         {{$store->id_district}} - {{$store->district->tenquanhuyen}}
                                                     </option>
@@ -132,7 +138,7 @@
                                                             {{$district->maquanhuyen}} - {{$district->tenquanhuyen}}
                                                         </option>
                                                     @endforeach
-                                                @endif
+                                                @endif --}}
                                             </select>
                                         </div>
                                     </div>
@@ -140,11 +146,14 @@
                                         <label class="col-md-3 control-label">Cấp Xã:<span class="required"
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
-                                            <select id="selectWard" name="id_ward" data-type="ward"
+                                            <select id="selectWard" name="sel_ward" data-type="ward"
                                                 data-placeholder="Chọn phường/xã" class="form-control"
                                                 {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
                                                 >
-                                                @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
+                                                <option value="{{$store_ward->WARDS_ID}}" selected>
+                                                    {{$store_ward->WARDS_NAME}}
+                                                </option>
+                                                {{-- @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
                                                     <option value="{{$store->id_ward}}" selected>
                                                         {{$store->id_ward}} - {{$store->ward->tenphuongxa}}
                                                     </option>
@@ -158,7 +167,7 @@
                                                             {{$ward->maphuongxa}} - {{$ward->tenphuongxa}}
                                                         </option>
                                                     @endforeach
-                                                @endif
+                                                @endif --}}
                                             </select>
                                         </div>
                                     </div>
@@ -216,92 +225,94 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('public/js/address.js') }}"></script>
+
     <script>
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             }
         });
-    @if (auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
-        $(document).ready(function() {
-            $("form").validate({
-                rules: {
-                    store_name: {
-                        required: true,
-                    },
-                    store_address: {
-                        required: true,
-                    },
-                    id_province: {
-                        required: true,
-                    },
-                    id_district: {
-                        required: true,
-                    },
-                    id_ward: {
-                        required: true,
-                    },
+    // @if (auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
+    //     $(document).ready(function() {
+    //         $("form").validate({
+    //             rules: {
+    //                 store_name: {
+    //                     required: true,
+    //                 },
+    //                 store_address: {
+    //                     required: true,
+    //                 },
+    //                 id_province: {
+    //                     required: true,
+    //                 },
+    //                 id_district: {
+    //                     required: true,
+    //                 },
+    //                 id_ward: {
+    //                     required: true,
+    //                 },
 
-                },
-                messages: {
-                    store_name: "Không được để trống",
-                    store_address: "Không được để trống",
-                    id_province: "Không được để trống",
-                    id_district: "Không được để trống",
-                    id_ward: "Không được để trống",
-                }
-            });
-            $('.js-location').select2({
-                width: '100%',
-            })
-            $('.for_user').select2();
+    //             },
+    //             messages: {
+    //                 store_name: "Không được để trống",
+    //                 store_address: "Không được để trống",
+    //                 id_province: "Không được để trống",
+    //                 id_district: "Không được để trống",
+    //                 id_ward: "Không được để trống",
+    //             }
+    //         });
+    //         $('.js-location').select2({
+    //             width: '100%',
+    //         })
+    //         $('.for_user').select2();
 
-            $('.js-location').change(function(e) {
-                e.preventDefault();
-                let route = '{{ route('store.getLocation') }}';
-                let type = $(this).attr('data-type');
-                let parentId = $(this).val();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: "GET",
-                    url: route,
-                    data: {
-                        type: type,
-                        parent: parentId
-                    },
-                    success: function(response) {
-                        if (response.data) {
-                            let html = '';
-                            let element = '';
-                            if (type == 'city') {
-                                html = "<option>Mời bạn chọn Quận/Huyện</option>";
-                                $.each(response.data, function(idx, val) {
-                                    html += "<option value='" + val.maquanhuyen + "'>" +
-                                        val.maquanhuyen + " - " + val.tenquanhuyen +
-                                        "</option>";
-                                });
-                                $('#selectDistrict').html('').append(html);
-                                $('#selectWard').html('');
-                            } else {
-                                html = "<option>Mời bạn chọn Phường/Xã</option>";
-                                $.each(response.data, function(idx, val) {
-                                    html += "<option value='" + val.maphuongxa + "'>" +
-                                        val.maphuongxa + " - " + val.tenphuongxa +
-                                        "</option>";
-                                });
-                                $('#selectWard').html('').append(html);
-                            }
+    //         $('.js-location').change(function(e) {
+    //             e.preventDefault();
+    //             let route = '{{ route('store.getLocation') }}';
+    //             let type = $(this).attr('data-type');
+    //             let parentId = $(this).val();
+    //             $.ajaxSetup({
+    //                 headers: {
+    //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //                 }
+    //             });
+    //             $.ajax({
+    //                 type: "GET",
+    //                 url: route,
+    //                 data: {
+    //                     type: type,
+    //                     parent: parentId
+    //                 },
+    //                 success: function(response) {
+    //                     if (response.data) {
+    //                         let html = '';
+    //                         let element = '';
+    //                         if (type == 'city') {
+    //                             html = "<option>Mời bạn chọn Quận/Huyện</option>";
+    //                             $.each(response.data, function(idx, val) {
+    //                                 html += "<option value='" + val.maquanhuyen + "'>" +
+    //                                     val.maquanhuyen + " - " + val.tenquanhuyen +
+    //                                     "</option>";
+    //                             });
+    //                             $('#selectDistrict').html('').append(html);
+    //                             $('#selectWard').html('');
+    //                         } else {
+    //                             html = "<option>Mời bạn chọn Phường/Xã</option>";
+    //                             $.each(response.data, function(idx, val) {
+    //                                 html += "<option value='" + val.maphuongxa + "'>" +
+    //                                     val.maphuongxa + " - " + val.tenphuongxa +
+    //                                     "</option>";
+    //                             });
+    //                             $('#selectWard').html('').append(html);
+    //                         }
 
-                        }
-                    }
-                });
-            });
-        });
-    @endif
+    //                     }
+    //                 }
+    //             });
+    //         });
+    //     });
+    // @endif
     </script>
 
 @if (auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm cửa hàng'))

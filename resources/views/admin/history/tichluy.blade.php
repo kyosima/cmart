@@ -14,12 +14,12 @@
             <!-- <div class="col-3">
                 <input type="text" class="form-control" id="search_time" onkeyup="search_time()" placeholder="Nhập thời gian tìm kiếm">
             </div> -->
-            <div class="col-3">
+            <div class="col-6">
                 <input type="text" class="form-control" id="search_makhachhang" onkeyup="search_makhachhang()" placeholder="Nhập mã khách hàng tìm kiêm">
             </div>
-            <div class="col-3">
+            {{-- <div class="col-3">
                 <input type="text" class="form-control" id="search_magiaodich" onkeyup="search_noidung()" placeholder="Nhập tên khách hàng tìm kiếm">
-            </div> 
+            </div>  --}}
 
             <div class="col-6">
                 <div class="row">
@@ -32,13 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
-            <div class="col-3"></div>
-            <div class="col-6">
-                <a class="btn btn-tongC" href="{{asset('admin/danh-sach-user/1')}}">
-                    Tổng C hiện tại TK C-MART: {{$user->point_c->point_c}}</a>
-            </div>
-        </div>
+     
     </div>
     <table class="styled-table table-sortable" id="myTable">
         <thead>

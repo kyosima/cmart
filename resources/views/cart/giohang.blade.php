@@ -27,10 +27,10 @@
                                 <div class="cart-block">
                                     <div class="store-title">
                                         <input type="checkbox" id="store-{{ $store->id }}" value="{{ $store->id }}">
-                                        <label for="store-{{ $store->id }}">Cửa hàng 
-                                            <span>{{ $store->name }}</span> 
+                                        <label for="store-{{ $store->id }}">Cửa hàng
+                                            <span>{{ $store->name }}</span>
                                             {{-- <span>- {{ $cart->count() }}</span> sản phẩm --}}
-                                        </span>
+                                            </span>
                                         </label>
 
                                     </div>
@@ -40,19 +40,22 @@
                                             <div class="col-lg-1 col-md-2 col-xs-12 text-center">
                                                 <b>Ảnh</b>
                                             </div>
-                                    
+
                                             <div class="col-lg-4 col-md-4 col-xs-12 text-center">
                                                 <b>Tên sản phẩm</b>
                                             </div>
                                             <div class="col-lg-1 col-md-2 col-xs-12 text-center">
                                                 <b>Mã sản phẩm</b>
                                             </div>
-                                            <div class="col-lg-1 col-md-2 col-xs-3 text-center">
-                                                <b> C</b>
-                                            </div>
-                                            <div class="col-lg-1 col-md-2 col-xs-3 text-center">
-                                                <b> M</b>
-                                            </div>
+                                            @if (!in_array(Auth::user()->level, [3, 4]))
+                                                <div class="col-lg-1 col-md-2 col-xs-3 text-center">
+                                                    <b> C</b>
+                                                </div>
+                                                <div class="col-lg-1 col-md-2 col-xs-3 text-center">
+                                                    <b> M</b>
+                                                </div>
+                                            @endif
+
                                             <div class="col-lg-1 col-md-2 col-xs-3 text-center">
                                                 <b> Đơn giá</b>
                                             </div>
@@ -74,36 +77,37 @@
                                                 </div>
                                                 <div
                                                     class="col-lg-4 col-md-4 col-12 d-flex align-items-center justify-content-center">
-                                                    <a
-                                                        href="{{ route('san-pham.show', $row->model->slug) }}" class="cart-item-name">{{ $row->name }}</a>
-                                                </div>
-                                                <div
-                                                class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
-                                                <span> {{ $row->model->sku }}</span>
-                                            </div>
-                                                <div
-                                                    class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
-                                                    <span> {{ $row->model->productPrice()->value('cpoint') }}</span>
+                                                    <a href="{{ route('san-pham.show', $row->model->slug) }}"
+                                                        class="cart-item-name">{{ $row->name }}</a>
                                                 </div>
                                                 <div
                                                     class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
-                                                    <span> {{ $row->model->productPrice()->value('mpoint') }}</span>
+                                                    <span> {{ $row->model->sku }}</span>
                                                 </div>
-                                           
+                                                @if (!in_array(Auth::user()->level, [3, 4]))
+                                                    <div
+                                                        class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
+                                                        <span> {{ $row->model->productPrice()->value('cpoint') }}</span>
+                                                    </div>
+                                                    <div
+                                                        class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
+                                                        <span> {{ $row->model->productPrice()->value('mpoint') }}</span>
+                                                    </div>
+                                                @endif
                                                 <div
-                                                class="col-lg-1 col-md-1 col-6 d-flex align-items-center justify-content-center">
-                                                <b> {{ formatPrice($row->price) }}</b>
-                                            </div>
-                                            <div
-                                                class="col-lg-2 col-md-2 col-6 d-flex align-items-center justify-content-center">
-                                                <input type="number"
-                                                    class="product-qty soluong form-control form-control-sm text-center"
-                                                    value="{{ $row->qty }}" step="1" min="1" max="" name="qty"
-                                                    value="{{ $row->qty }}" data-rowid="{{ $row->rowId }}"
-                                                    data-url="{{ route('cart.update') }}"
-                                                    data-storeid="{{ $store->id }}" title="SL" size="3"
-                                                    pattern="[0-9]*" inputmode="numeric">
-                                            </div>
+                                                    class="col-lg-1 col-md-1 col-6 d-flex align-items-center justify-content-center">
+                                                    <b> {{ formatPrice($row->price) }}</b>
+                                                </div>
+                                                <div
+                                                    class="col-lg-2 col-md-2 col-6 d-flex align-items-center justify-content-center">
+                                                    <input type="number"
+                                                        class="product-qty soluong form-control form-control-sm text-center"
+                                                        value="{{ $row->qty }}" step="1" min="1" max="" name="qty"
+                                                        value="{{ $row->qty }}" data-rowid="{{ $row->rowId }}"
+                                                        data-url="{{ route('cart.update') }}"
+                                                        data-storeid="{{ $store->id }}" title="SL" size="3"
+                                                        pattern="[0-9]*" inputmode="numeric">
+                                                </div>
                                                 <div
                                                     class="col-lg-1 col-md-1 col-12 text-center d-flex align-items-center justify-content-center">
                                                     <img src="https://i.imgur.com/bI4oD5C.png" width="15px"
@@ -180,16 +184,19 @@
                         <form action="{{ route('cart.checkout') }}" method="post">
                             @csrf
                             <input type="hidden" name="store_ids" value="">
-                            <div class="d-md-flex justify-content-between ">
+
+                            <div class="d-md-flex  @if (in_array(Auth::user()->level, [3, 4])) justify-content-center @else justify-content-around @endif">
                                 <div class="">
                                     <b>Tổng giá trị Sản phẩm: </b><span class="text-danger" id="total">0 đ</span>
                                 </div>
-                                <div class="">
-                                    <b>Tiền tích lũy (C): </b><span class="text-danger" id="cpoint">0</span>
-                                </div>
-                                <div class="">
-                                    <b>Điểm dịch vụ (M): </b><span class="text-danger" id="mpoint">0</span>
-                                </div>
+                                @if (!in_array(Auth::user()->level, [3, 4]))
+                                    <div class="">
+                                        <b>Tổng C: </b><span class="text-danger" id="cpoint">0</span>
+                                    </div>
+                                    <div class="">
+                                        <b>Tổng M: </b><span class="text-danger" id="mpoint">0</span>
+                                    </div>
+                                @endif
                             </div>
                             <div class="d-flex justify-content-around row">
                                 <div class="col-md-3">
@@ -197,7 +204,8 @@
                                         sắm</a>
                                 </div>
                                 <div class="col-md-3">
-                                    <button id="btn-to-checkout" class="btn-dathang" type="submit" disabled>Chọn cửa hàng cần thanh
+                                    <button id="btn-to-checkout" class="btn-dathang" type="submit" disabled>Chọn cửa hàng
+                                        cần thanh
                                         toán</button>
                                 </div>
                             </div>

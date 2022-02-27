@@ -21,6 +21,13 @@ use Illuminate\Support\Facades\DB;
 use App\Admin\Exports\OrderExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\PaymentPaymeController;
+use App\Http\Controllers\ViettelPostController;
+use App\Http\Controllers\AddressController;
+
+use App\Models\PointCHistory;
+use App\Models\PointMHistory;
+use App\Models\PointC;
+use App\Models\PointM;
 
 class AdminOrderController extends Controller
 {
@@ -52,8 +59,13 @@ class AdminOrderController extends Controller
         
         $wards = Ward::where([['maphuongxa', '<>',$order->order_address->id_ward], ['maquanhuyen', '=', $order->order_address->id_district]])
         ->select('maphuongxa', 'tenphuongxa')->get();
+        $addressController = new AddressController();
+        $order_address = $order->order_address()->first();
+        $order_province = $addressController->getProvinceDetail($order_address->id_province);
+        $order_district = $addressController->getDistrictDetail($order_address->id_province,$order_address->id_district);
+        $order_ward = $addressController->getWardDetail($order_address->id_district,$order_address->id_ward);
         
-        return view('admin.order.order-detail', compact('order', 'provinces', 'districts', 'wards'));
+        return view('admin.order.order-detail', compact('order', 'provinces', 'districts', 'wards', 'order_address', 'order_province', 'order_district', 'order_ward'));
     }
 
     public function create(){
@@ -115,7 +127,18 @@ class AdminOrderController extends Controller
     public function update(Request $request, Order $order){
 
         $this->proccessCpoint($order->user, $request->sel_status, $order->status, $order->c_point);
-
+        $viettelPostController = new ViettelPostController();
+        if($request->sel_status == 1){
+            foreach($order->order_stores()->get() as $order_store){
+                if (($order_store->shipping_method == 0) || ($order_store->shipping_method == 1)) {
+                    $order_store->shipping_code = $order->order_code;
+                }else{
+                    $result_vt = $viettelPostController->createOrder($order_store);
+                    $order_store->shipping_code = $result_vt['data']['ORDER_NUMBER'];
+                }
+                $order_store->save();
+            }
+        }
         $order->status = $request->sel_status;
         $order->created_at = $request->in_created_at;
         $order->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
@@ -169,11 +192,31 @@ class AdminOrderController extends Controller
 
     public function proccessCpoint($user, $request_status, $order_status, $order_cpoint){
         if($request_status == 4 && $order_status != 4){
-            $user->tichluyC = $user->tichluyC + $order_cpoint;
-            $user->save();
+            $point_c = $user->point_c()->first();
+            $id_user_chuyen = User::where('id','=',1)->first()->id;
+            $vi_user_chuyen = PointC::where('user_id','=',$id_user_chuyen)->first();
+            $lichsu_chuyen = new PointCHistory;
+            $lichsu_chuyen->point_c_idnhan = $user->id;
+            $lichsu_chuyen->point_past_nhan = $point_c->point_c;
+            $lichsu_chuyen->point_present_nhan = $point_c->point_c + $order_cpoint;
+            $lichsu_chuyen->makhachhang = $user->code_customer;
+            $lichsu_chuyen->note = 'Tich luy C '.time();
+            $lichsu_chuyen->amount = $order_cpoint;
+            $lichsu_chuyen->type = 1;
+            $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
+            $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
+            $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $order_cpoint;
+            $lichsu_chuyen->makhachhang_chuyen = 202201170001;
+            $lichsu_chuyen->save();
+
+            $point_c->point_c = $point_c->point_c + $order_cpoint;
+            $vi_user_chuyen->point_c = $vi_user_chuyen->point_c - $order_cpoint;
+            $vi_user_chuyen->save();
+            $point_c->save();
         }elseif($request_status != 4 && $order_status == 4){
-            $user->tichluyC = $user->tichluyC - $order_cpoint;
-            $user->save();
+            $point_c = $user->point_c()->first();
+            $point_c->point_c-$order_cpoint;
+            $point_c->save();
         }else{
             return true;
         }

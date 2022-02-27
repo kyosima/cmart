@@ -14,7 +14,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InfoCompanyController;
 use App\Http\Controllers\CPointController;
 use App\Http\Controllers\EkycController;
-
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\PaymentPaymeController;
 use Psy\VersionUpdater\Checker;
 
@@ -111,6 +112,21 @@ Route::resources([
     'theo-doi-don-hang' => OrderController::class,
     'chinh-sach' => InfoCompanyController::class,
 ]);
+Route::prefix('lay-dia-chi')->group(function () {
+    Route::get('cap-tinh', [AddressController::class, 'getAllProvince'])->name('getAllprovince');
+    Route::get('cap-huyen', [AddressController::class, 'getDistrictByProvince'])->name('getDistrictByProvince');
+    Route::get('cap-xa', [AddressController::class, 'getWardByDistrict'])->name('getWardByDistrict');
+    Route::get('thong-tin-tinh', [AddressController::class, 'getProvinceDetail']);
+    Route::get('thong-tin-huyen', [AddressController::class, 'getDistrictDetail']);
+    Route::get('thong-tin-xa', [AddressController::class, 'getWardDetail']);
+
+});
+
+Route::prefix('viettel-post')->group(function () {
+    Route::get('get-token', [ViettelPostController::class, 'getToken'])->name('viettel.getToken');
+    Route::get('create-order', [ViettelPostController::class, 'createOrder'])->name('viettel.createOrder');
+
+});
 
 Route::get('lay-quan-huyen-theo-tinh-thanh', [ShippingController::class, 'districtOfProvince']);
 

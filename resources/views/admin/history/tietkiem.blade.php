@@ -32,13 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
-            <div class="col-3"></div>
-            <div class="col-6">
-                <a class="btn btn-tongC" href="{{asset('admin/danh-sach-user/1')}}">
-                    Tổng C hiện tại TK C-MART: {{$user->point_c->point_c}}</a>
-            </div>
-        </div>
+        
     </div>
     <table class="styled-table table-sortable" id="myTable">
         <thead>

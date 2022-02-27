@@ -18,7 +18,7 @@
                         <div class="list-stores-checkout mt-0">
                             <div class="list-stores-title text-center" id="url-update-type"
                                 data-url="{{ route('checkout.updateTypeShip') }}">
-                                <h3>Danh sách sản phẩm</h3>
+                                <h3>DANH SÁCH ĐƠN HÀNG</h3>
                             </div>
                             <hr>
                             <div class="list-stores-body">
@@ -29,8 +29,8 @@
                                     @endphp --}}
                                     <div class="store-block" id="store{{ $order_store->id_store }}">
                                         <div class="store-title d-flex justify-content-between">
-                                            <h4>Cửa hàng {{ $order_store->store()->value('name') }} -
-                                                {{ formatMethod($order_store->shipping_method) }}</h4>
+                                            <h4>Cửa hàng {{ $order_store->store()->value('name') }} 
+                                                {{ formatMethod($order_store->shipping_method) }} @if($order_store->shipping_type ==0) Tiêu chuẩn @else Hỏa tốc @endif</h4>
 
                                             {{-- <label for="receiverstore{{ $store_id }}"><input class="receiverstore"
                                                     type="checkbox" id="receiverstore{{ $store_id }}"
@@ -89,7 +89,7 @@
                                             <div class="d-md-flex justify-content-between">
                                                 <div class="text-center">
                                                     <p>Phí Vận chuyển</p>
-                                                    <p><small>(Chưa bao gồm thuế VAT(8%)</small></p>
+                                                    <p><small>(Chưa bao gồm thuế VAT 8%)</small></p>
                                                     <p>{{ formatPrice($order_store->shipping_total) }}</p>
                                                 </div>
                                                 <div class="text-center">
@@ -118,67 +118,71 @@
                                 <div class="text-center">
                                     <p>Tổng phí vận chuyển</p>
                                     <p><small>(Chưa bao gồm thuế VAT 8%)</small></p>
-                                    <p>{{formatPrice($order->shipping_total)}}</p>
+                                    <p>{{ formatPrice($order->shipping_total) }}</p>
                                 </div>
                                 <div class="text-center">
                                     <p>Tổng phí DV GTGT</p>
                                     <p><small>(Đã bao gồm thuế VAT 8%)</small></p>
-                                    <p>{{formatPrice($order->vat_services)}}</p>
+                                    <p>{{ formatPrice($order->vat_services) }}</p>
                                 </div>
                                 <div class="text-center">
                                     <p>Tổng Giảm giá Dịch vụ</p>
                                     <p><small>(Tích M giảm giá DV)</small></p>
-                                    <p>{{formatPrice($order->m_point)}}</p>
+                                    <p>{{ formatPrice($order->m_point) }}</p>
                                 </div>
                                 <div class="text-center">
                                     <p>Giá trị thanh toán Dịch vụ</p>
                                     <p><small>(Đã bao gồm thuế VAT 8%)</small></p>
-                                    <p>{{formatPrice(max((max($order->shipping_total - $order->m_point, 0)*108/100)+($order->vat_services-max($order->m_point-$order->shipping_total,0)),0))}}</p>
+                                    <p>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0)) }}
+                                    </p>
                                 </div>
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <div class="text-center">
                                     <p>Tổng Giá trị Sản phẩm</p>
-                                    <p>{{formatPrice($order->sub_total)}}</p>
+                                    <p>{{ formatPrice($order->sub_total) }}</p>
                                 </div>
                                 <div class="text-center">
                                     <p>Tổng Giảm giá Sản phẩm</p>
-                                    <p>{{formatPrice($order->discount_products)}}</p>
+                                    <p>{{ formatPrice($order->discount_products) }}</p>
                                 </div>
                                 <div class="text-center">
                                     <p>Tổng Tiền Tích Lũy</p>
-                                    <p>{{formatNumber($order->c_point)}}</p>
+                                    <p>{{ formatNumber($order->c_point) }}</p>
                                 </div>
                                 <div class="text-center">
                                     <p>Số dư M còn lại</p>
-                                    <p>{{formatNumber(max($order->m_point-$order->shipping_total-$order->vat_services,0))}}</p>
+                                    <p>{{ formatNumber($order->remaining_m_point) }}</p>
                                 </div>
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <div class="text-center">
                                     <p>Thuế GTGT Sản phẩm</p>
-                                    <p>{{formatPrice($order->vat_products)}}</p>
+                                    <p>{{ formatPrice($order->vat_products) }}</p>
 
                                 </div>
                                 <div class="text-center">
                                     <p>Thuế GTGT Dịch vụ</p>
-                                    <p>{{formatPrice($order->vat_services/1.08)}}</p>
+                                    <p>{{ formatPrice($order->vat_services / 1.08) }}</p>
                                 </div>
                                 <div class="text-center">
                                     <p>Tổng Thuế GTGT</p>
-                                    <p>{{formatPrice($order->vat_products+$order->vat_services)}}</p>
+                                    <p>{{ formatPrice($order->vat_products + $order->vat_services) }}</p>
                                 </div>
-                                <div class="text-center">
-                                    <p>Giá trị giao dịch</p>
-                                    <p>{{formatPrice($order->total)}}</p>
-                                </div>
+                            
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <h5>Giá trị giao dịch</h5>
+                                <b>{{ formatPrice($order->total) }}</b>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
-                <div class="col-xl-4 col-sm-12 col-12">
+                <div class="col-xl-4 col-sm-12 col-12 ">
                     <div class="card-left">
                         <div class="makhuyenmai">
                             <div class="makhuyenmai-header">
@@ -259,7 +263,8 @@
                                     <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="nhanhang" id="check1" checked readonly  onclick="return false;">
+                                            <input type="checkbox" class="custom-control-input" name="nhanhang" id="check1"
+                                                checked readonly onclick="return false;">
                                             <label class="custom-control-label" for="check1">Tôi đã đọc và đồng ý với Quy
                                                 định Thao tác khi nhận hàng
                                             </label>
@@ -268,7 +273,8 @@
                                     <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="giaonhan" id="check2" checked readonly  onclick="return false;">
+                                            <input type="checkbox" class="custom-control-input" name="giaonhan" id="check2"
+                                                checked readonly onclick="return false;">
                                             <label class="custom-control-label" for="check2">Tôi đã đọc và đồng ý với Chính
                                                 sách Giao - Nhận</label>
                                         </div>
@@ -276,7 +282,8 @@
                                     <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="doitra" id="check3" checked readonly  onclick="return false;">
+                                            <input type="checkbox" class="custom-control-input" name="doitra" id="check3"
+                                                checked readonly onclick="return false;">
                                             <label class="custom-control-label" for="check3">Tôi đã đọc và đồng ý với Chính
                                                 sách Đổi - Trả</label>
                                         </div>
@@ -284,7 +291,8 @@
                                     <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="baohanh" id="check4" checked readonly  onclick="return false;">
+                                            <input type="checkbox" class="custom-control-input" name="baohanh" id="check4"
+                                                checked readonly onclick="return false;">
                                             <label class="custom-control-label" for="check4">Tôi đã đọc và đồng ý với Chính
                                                 sách Bảo hành</label>
                                         </div>
@@ -292,8 +300,8 @@
                                     <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="dieukhoan"
-                                                id="check5"  checked readonly  onclick="return false;">
+                                            <input type="checkbox" class="custom-control-input" name="dieukhoan" id="check5"
+                                                checked readonly onclick="return false;">
                                             <label class="custom-control-label" for="check5">Tôi đã đọc và đồng ý với Quy
                                                 định Điều khoản & Điều kiện giao dịch</label>
                                         </div>
@@ -313,50 +321,140 @@
                                         </div>
                                     </li> --}}
                                 </ul>
-                                <p class="text-danger error-chinhsach p-1" style="display: none">Bạn phải đồng ý tất cả
+                                {{-- <p class="text-danger error-chinhsach p-1" style="display: none">Bạn phải đồng ý tất cả
                                     chính sách của Cmart</p>
                                 <p class="py-1">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông
                                     tin là điều vô cùng nghiêm túc, và chúng tôi thực hiện vô cùng nghiêm ngặt. Các thông
                                     tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, tạo
-                                    sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết</p>
+                                    sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết</p> --}}
                             </div>
+                        </div>
+                        {{-- <div class="phuongthuc-thanhtoan">
+                            
                         </div>
                         <div class="phuongthuc-thanhtoan">
-                            <div class="phuongthuc-thanhtoan-card-header">
-                                <h3>THANH TOÁN</h3>
-                            </div>
-                            <hr>
-                            <div class="phuongthuc-thanhtoan-card-body">
-                                <div class="thanhtoankhigiaohang">
-                                    <input type="radio" name="payment_method" checked="checked" value="1"> <span>COD(Thanh
-                                        toán nhận hàng)</span>
-                                    <i class="fa fa-money"></i>
-                                </div>
-                                <div class="thanhtoantructuyen">
-                                    <input type="radio" name="payment_method" value="2">
-                                    <span>Thanh toán online</span>
-                                    <img src="{{ asset('assets/image/payme.png') }}">
-                                </div>
-                                <!-- <div class="thanhtoantructuyen">
-                                                                            <input type="radio" name="payment_method" value="2" readonly="readonly" disabled>
-                                                                            <span>Chuyển khoản qua ngân hàng</span>
-                                                                            <img src="{{ asset('assets/image/vnpay.png') }}">
-                                                                        </div> -->
-                                <!-- <div class="chuyenkhoan">
-                                                                            <input type="radio" name="payment_method" value="3" readonly="readonly" disabled>
-                                                                            <span>Chuyển khoản qua ngân hàng</span>
-                                                                            <div class="tk-nganhang">
-                                                                                <p>Doanh nghiệp: Công ty cổ phần</p>
-                                                                                <p>TK ngân hàng: Công ty cổ phần</p>
-                                                                                <p>Chi nhánh: Công ty cổ phần</p>
-                                                                            </div>
-                                                                        </div> -->
-                            </div>
-                        </div>
+                            
+                        </div> --}}
 
-                        <button class="btn-dathang" type="submit">Tiếp tục Thanh toán</button>
+
                     </div>
                 </div>
+                <div class="col-12">
+                    <div class="result-order">
+                        <div>
+                            <h3>PHƯƠNG THỨC THANH TOÁN</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="phuongthuc-thanhtoan-card-header">
+                                    <h3>THANH TOÁN TRẢ TRƯỚC</h3>
+                                </div>
+                                <hr>
+                                <div class="phuongthuc-thanhtoan-card-body">
+                                    <div class="form-group">
+                                        <input type="radio" id="pay0" name="payment_method" value="0">
+                                        <label for="pay0">Tiền tích lũy</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay1" name="payment_method" value="1" disabled>
+                                        <label for="pay1">Nạp tiền</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay2" name="payment_method" value="2" disabled>
+                                        <label for="pay2">Chuyển tiền</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay3" name="payment_method" value="3" disabled>
+                                        <label for="pay3">Công nợ linh hoạt</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay4" name="payment_method" value="4" disabled>
+                                        <label for="pay4">Thanh toán online bằng Thẻ Visa / Mastercard</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay5" name="payment_method" value="5" disabled>
+                                        <label for="pay5">Thanh toán online bằng Thẻ JCB / CUP</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay6" name="payment_method" value="6" disabled>
+                                        <label for="pay6">Thanh toán online bằng Thẻ Amex / Diners Club</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay7" name="payment_method" value="7" disabled>
+                                        <label for="pay7">Thanh toán online bằng Thẻ Ngoài nước / Discover</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay8" name="payment_method" value="8" disabled>
+                                        <label for="pay8">Thanh toán online bằng Thẻ Nội địa</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="phuongthuc-thanhtoan-card-header">
+                                    <h3>THANH TOÁN TRẢ SAU</h3>
+                                </div>
+                                <hr>
+                                <div class="phuongthuc-thanhtoan-card-body">
+                                    <div class="form-group">
+                                        <input type="radio" id="pay9" name="payment_method" value="9">
+                                        <label for="pay9">Thanh toán khi nhận hàng (Chuyển khoản)</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay10" name="payment_method" value="10" disabled>
+                                        <label for="pay10">Thanh toán trực tiếp bằng Thẻ Visa / Mastercard </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay11" name="payment_method" value="11" disabled>
+                                        <label for="pay11">Thanh toán trực tiếp bằng Thẻ Visa / Mastercard do SHB phát hành, qua app QR SHB</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay12" name="payment_method" value="12" disabled>
+                                        <label for="pay12">Thanh toán trực tiếp bằng Thẻ Visa / Mastercard / JCB do TPBank phát hành, qua app QR TPBank</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay13" name="payment_method" value="13" disabled>
+                                        <label for="pay13">Thanh toán trực tiếp bằng Thẻ JCB / CUP </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay14" name="payment_method" value="14" disabled>
+                                        <label for="pay14">Thanh toán trực tiếp bằng Thẻ JCB / CUP do MBBank phát hành</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay15" name="payment_method" value="15" disabled>
+                                        <label for="pay15">Thanh toán trực tiếp bằng Thẻ Amex / Diners Club</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay16" name="payment_method" value="16" disabled>
+                                        <label for="pay16">Thanh toán trực tiếp bằng Thẻ Ngoài nước / Discover</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay17" name="payment_method" value="17" disabled>
+                                        <label for="pay17">Thanh toán trực tiếp bằng Thẻ Nội địa</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay18" name="payment_method" value="18" disabled>
+                                        <label for="pay18">Thanh toán trực tiếp bằng Thẻ Nội địa do MBBank phát hành</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay19" name="payment_method" value="19" disabled>
+                                        <label for="pay19">Thanh toán trực tiếp bằng Thẻ Nội địa do SCB phát hành</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" id="pay20" name="payment_method" value="20" disabled>
+                                        <label for="pay20">Thanh toán trực tiếp bằng Thẻ Nội địa do TPBank phát hành, qua app QR TPBank</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div>
+                        <button class="btn-dathang" type="submit">Thanh toán</button>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </form>

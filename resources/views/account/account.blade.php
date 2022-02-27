@@ -114,11 +114,7 @@
                                         <div class="col-md-12 pb-3">
                                             <select name="sel_province" class="form-control select2"
                                                 data-placeholder=" Cấp tỉnh " required>
-                                                <option value=""> Cấp tỉnh </option>
-                                                    @foreach ($province as $value)
-                                                        <option value="{{ $value->matinhthanh }}">{{ $value->tentinhthanh }}
-                                                        </option>
-                                                    @endforeach
+                                               
                                             </select>
                                         </div>
                                         <div class="col-md-12 pb-3">
@@ -165,7 +161,7 @@
     <script type="text/JavaScript" 
 src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
 </script>
-<script src="{{ asset('public/js/shipping.js') }}"></script>
+<script src="{{ asset('public/js/address.js') }}"></script>
     <script>
         var x = document.getElementById("login")
         var y = document.getElementById("register")

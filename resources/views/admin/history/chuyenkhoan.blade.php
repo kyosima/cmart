@@ -21,20 +21,13 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-3">
-            <div class="col-3"></div>
-            <div class="col-6">
-                <a class="btn btn-tongC" href="{{asset('admin/danh-sach-user/1')}}">
-                    Tổng C hiện tại TK C-MART: {{$user->point_c->point_c}}</a>
-            </div>
-        </div>
+     
     </div>
     <table class="styled-table table-sortable" id="myTable">
         <thead>
             <tr style="text-align:center">
                 <th>Thời gian giao dịch</th>
                 <th>Mã khách hàng</th>
-                <th>Tên khách hàng</th>
                 <th>Nội dung</th>
                 <th>Số dư ban đầu</th>
                 <th>Giá trị giao dịch</th>
@@ -49,7 +42,6 @@
                 <tr style="text-align:center">
                     <td>{{$value->created_at}}</td>
                     <td>{{$value->makhachhang}}</td>
-                    <td>{{DB::table('users')->where('id',$value->point_c_idchuyen)->first()->hoten}}</td>
                     <td>{{$value->note}}</td>
                     <td>{{$value->point_past_chuyen}}</td>
                     <td>{{$value->amount}}</td>
