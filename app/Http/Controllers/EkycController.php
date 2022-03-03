@@ -28,10 +28,10 @@ class EkycController extends Controller
             $result_verify =  json_decode($this->postVerification($image_front, $image_portrait));
             switch ($result_verify->verify_result) {
                 case 0:
-                    return back()->with(['message' => 'Thông tin không khớp, vui lòng thực hiện lại']);
+                    return back()->with(['message' => 'Hệ thống không xác minh được danh tính. Vui lòng liên hệ Hotline 0899.663.883 để được hỗ trợ']);
                     break;
                 case 1:
-                    return back()->with(['message' => 'Không thể thực hiện EKYC, vui lòng thực hiện lại']);
+                    return back()->with(['message' => 'Hệ thống không xác minh được danh tính. Vui lòng liên hệ Hotline 0899.663.883 để được hỗ trợ']);
                     break;
                 case 2:
                     $user = Auth::user();
@@ -44,7 +44,7 @@ class EkycController extends Controller
                     $user->avatar = $image_portrait;
                     $user->save();
 
-                    return back()->with(['message' => 'Tài khoản đã được EKYC thành công']);
+                    return back()->with(['message' => 'Tài khoản đã được xác minh thành công']);
                     break;
             }
         } else {

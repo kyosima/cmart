@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\OrderStore;
 use App\Http\Controllers\AddressController;
+
 class ViettelPostController extends Controller
 {
     //
-    public function getToken(){
+    public function getToken()
+    {
         $endPoint = 'https://partner.viettelpost.vn/v2/user/Login';
         $url = $endPoint;
         $data = [
@@ -34,7 +36,8 @@ class ViettelPostController extends Controller
         curl_close($ch);
         return $result['data']['token'];
     }
-    public function createOrder($order_store){
+    public function createOrder($order_store)
+    {
         $endPoint = 'https://partner.viettelpost.vn/v2/order/createOrder';
         $token = $this->getToken();
         $url = $endPoint;
@@ -44,16 +47,44 @@ class ViettelPostController extends Controller
         $order_info = $order->order_info()->first();
         $addressController = new AddressController();
         $address1_province = $addressController->getProvinceDetail($store->id_province);
-        $address1_district = $addressController->getDistrictDetail($store->id_province,$store->id_district);
-        $address1_ward = $addressController->getWardDetail($store->id_district,$store->id_ward);
+        $address1_district = $addressController->getDistrictDetail($store->id_province, $store->id_district);
+        $address1_ward = $addressController->getWardDetail($store->id_district, $store->id_ward);
         $address_store = $store->address . ' ' . $address1_province->PROVINCE_NAME . ' ' . $address1_district->DISTRICT_NAME . ' ' . $address1_ward->WARDS_NAME;
 
         $address2_province = $addressController->getProvinceDetail($order_address->id_province);
-        $address2_district = $addressController->getDistrictDetail($order_address->id_province,$order_address->id_district);
+        $address2_district = $addressController->getDistrictDetail($order_address->id_province, $order_address->id_district);
         $address2_ward = $addressController->getWardDetail($order_address->id_district, $order_address->id_ward);
         $address2 = $order_address->address . ' ' . $address2_province->PROVINCE_NAME . ' ' . $address2_district->DISTRICT_NAME . ' ' . $address2_ward->WARDS_NAME;
+        $height = 0;
+        $width = 0;
+        $length = 0;
+        $list_items = [];
+        $store = $order_store->store()->first();
+        foreach ($order_store->order_products()->get() as $order_product) {
+            $product = $order_product->product()->first();
+            if($product == null){
+                $item = [
+                    "PRODUCT_NAME" =>  $order_product->name,
+                    "PRODUCT_PRICE" => $order_product->price,
+                    "PRODUCT_WEIGHT" => 0,
+                    "PRODUCT_QUANTITY" => $order_product->quantity,
+                ];
+                array_push($list_items,$item);
 
+            }else{
+                $height += $product->height;
+                $width += $product->width;
+                $length += $product->length;
+                $item = [
+                    "PRODUCT_NAME" =>  $order_product->name,
+                    "PRODUCT_PRICE" => $order_product->price,
+                    "PRODUCT_WEIGHT" => $order_product->weight,
+                    "PRODUCT_QUANTITY" => $order_product->quantity,
+                ];
+                array_push($list_items,$item);
 
+            }
+        }
         $data = [
             "ORDER_NUMBER" => $order_store->id,
             "GROUPADDRESS_ID" => "5818802",
@@ -63,12 +94,12 @@ class ViettelPostController extends Controller
             "SENDER_ADDRESS" => $address_store,
             "SENDER_PHONE" => "0967.363.789",
             "SENDER_EMAIL" => "",
-            "SENDER_WARD" => $order_address->id_ward,
-            "SENDER_DISTRICT" =>  $order_address->id_district,
-            "SENDER_PROVINCE" =>  $order_address->id_province,
+            "SENDER_WARD" => $store->id_ward,
+            "SENDER_DISTRICT" =>  $store->id_district,
+            "SENDER_PROVINCE" =>  $store->id_province,
             "SENDER_LATITUDE" => 0,
             "SENDER_LONGITUDE" => 0,
-            "RECEIVER_FULLNAME" =>  $order_info->fullname ."- Test",
+            "RECEIVER_FULLNAME" =>  $order_info->fullname . "- Test",
             "RECEIVER_ADDRESS" => $address2,
             "RECEIVER_PHONE" => $order_info->phone,
             "RECEIVER_EMAIL" => "",
@@ -77,41 +108,34 @@ class ViettelPostController extends Controller
             "RECEIVER_PROVINCE" => $order_address->id_province,
             "RECEIVER_LATITUDE" => 0,
             "RECEIVER_LONGITUDE" => 0,
-            "PRODUCT_NAME" => "Máy xay sinh tố Philips HR2118 2.0L ",
-            "PRODUCT_DESCRIPTION" => "Máy xay sinh tố Philips HR2118 2.0L ",
+            "PRODUCT_NAME" => $order_store->order_products()->first()->name,
+            "PRODUCT_DESCRIPTION" => $order_store->order_products()->first()->name,
             "PRODUCT_QUANTITY" => 1,
-            "PRODUCT_PRICE" => 5000000,
-            "PRODUCT_WEIGHT" => 500,
-            "PRODUCT_LENGTH" => 38,
-            "PRODUCT_WIDTH" => 24,
-            "PRODUCT_HEIGHT" => 25,
+            "PRODUCT_PRICE" => $order_store->sub_total,
+            "PRODUCT_WEIGHT" => $order_store->shipping_weight,
+            "PRODUCT_LENGTH" => $length,
+            "PRODUCT_WIDTH" => $width,
+            "PRODUCT_HEIGHT" => $height,
             "PRODUCT_TYPE" => "HH",
             "ORDER_PAYMENT" => 1,
             "ORDER_SERVICE" => "VCN",
             "ORDER_SERVICE_ADD" => "",
             "ORDER_VOUCHER" => "",
-            "ORDER_NOTE" => "cho xem hàng, không cho thử",
+            "ORDER_NOTE" => "",
             "MONEY_COLLECTION" => 0,
             "MONEY_TOTALFEE" => 0,
             "MONEY_FEECOD" => 0,
             "MONEY_FEEVAS" => 0,
             "MONEY_FEEINSURRANCE" => 0,
-            "MONEY_FEE" => 5000,
+            "MONEY_FEE" => 0,
             "MONEY_FEEOTHER" => 0,
-            "MONEY_TOTALVAT" => 195000,
-            "MONEY_TOTAL" => 5200000,
-            "LIST_ITEM" => array([
-                
-                "PRODUCT_NAME" => "Máy xay sinh tố Philips HR2118 2.0L ",
-                "PRODUCT_PRICE" => 5000000,
-                "PRODUCT_WEIGHT" => 500,
-                "PRODUCT_QUANTITY" => 1
-                ],
-            ),
+            "MONEY_TOTALVAT" => 0,
+            "MONEY_TOTAL" => $order_store->total,
+            "LIST_ITEM" => $list_items,
         ];
         $ch = curl_init($url);
         $headers = array(
-            "token: ".$token,
+            "token: " . $token,
             "Content-Type: application/json",
         );
         //  $headers[] = "Content-Type: application/json";
@@ -127,7 +151,6 @@ class ViettelPostController extends Controller
         $result = curl_exec($ch);
         $result = json_decode($result, TRUE);
         curl_close($ch);
-        return $result;
+        return  $result;
     }
-
 }

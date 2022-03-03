@@ -65,16 +65,30 @@ Route::prefix('gio-hang')->group(function () {
 
 Route::prefix('dat-hang')->group(function () {
     Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::get('/thay-doi-thong-tin', [CheckoutController::class, 'getEditOrder'])->name('checkout.edit');
     Route::post('post', [CheckoutController::class, 'postOrder'])->name('checkout.post');
     Route::get('thanh-toan', [CheckoutController::class, 'getPayment'])->name('checkout.getPayment');
+    Route::post('thanh-toan', [CheckoutController::class, 'postPayment'])->name('checkout.postPayment');
+    Route::post('thanh-toan/thay-doi-thong-tin', [CheckoutController::class, 'postEditOrder'])->name('checkout.postEditOrder');
+    Route::get('thanh-toan/chon-hinh-thuc', [CheckoutController::class, 'getPaymentMethod'])->name('checkout.getPaymentMethod');
     Route::get('get-address', [CheckoutController::class, 'getAddress'])->name('checkout.getAddress');
-    Route::get('thanh-cong/{order_code}', [CheckoutController::class, 'orderSuccess'])->name('checkout.orderSuccess');
+    Route::get('thanh-toan/thanh-cong', [CheckoutController::class, 'orderSuccess'])->name('checkout.orderSuccess');
     Route::get('cal-ship', [CheckoutController::class, 'calShip'])->name('checkout.calship');
     Route::get('cal-ship-cmart', [CheckoutController::class, 'calCmartShip'])->name('checkout.calCmartShip');
     Route::get('update-type-ship', [CheckoutController::class, 'updateTypeShip'])->name('checkout.updateTypeShip');
+    Route::get('show-policy', [CheckoutController::class, 'showPolicy'])->name('showPolicy');
+});
+Route::prefix('dat-hang/thanh-toan')->group(function () {
+    Route::get('tien-tich-luy', [CheckoutController::class, 'getPaymentC'])->name('payment.C');
+    Route::post('tien-tich-luy', [CheckoutController::class, 'postPaymentC'])->name('payment.C.post');
+    Route::get('chuyen-tien', [CheckoutController::class, 'getPaymentSend'])->name('payment.Send');
+    Route::post('chuyen-tien', [CheckoutController::class, 'postPaymentSend'])->name('payment.postSend');
+    Route::get('nap-tien', [CheckoutController::class, 'getPaymentDeposit'])->name('payment.Deposit');
+    Route::post('nap-tien', [CheckoutController::class, 'postPaymentDeposit'])->name('payment.postDeposit');
+
+    Route::get('lay-thong-tin-ngan-hang', [CheckoutController::class, 'getInfoPaymentOption'])->name('payment.getInfo');
 
 });
-
 Route::get('tim-kiem', [ProductCategoryController::class, 'getSearch'])->name('search');
 Route::get('tim-kiem/goi-y', [ProductCategoryController::class, 'getSearchSuggest'])->name('search.suggest');
 
@@ -91,6 +105,13 @@ Route::get('/lien-he', function () {
 Route::get('/quen-mat-khau', function () {
     return view('account.quen-mat-khau');
 });
+
+Route::post('/quen-mat-khau', [HomeController::class, 'findForgetPassword'])->name('forgetPassword');
+Route::get('/ekyc-quen-mat-khau', [HomeController::class, 'getEkycForgetPassword'])->name('getEkycForgetPassword');
+
+Route::post('/ekyc-quen-mat-khau', [HomeController::class, 'ekycForgetPassword'])->name('ekycforgetPassword');
+Route::get('/nhap-mat-khau-moi', [HomeController::class, 'getResetPassword'])->name('getResetPassword');
+Route::post('/nhap-mat-khau-moi', [HomeController::class, 'postResetPassword'])->name('postResetPassword');
 
 // Route::resources([
 //     'san-pham' => ProductController::class

@@ -31,8 +31,8 @@
                             trình nhận biết khách hàng đơn giản và gián tiếp từ xa bằng phương thức điện tử trực tuyến
                             (eKYC)
                             đối với việc mở tài khoản tại các tổ chức được cấp phép để phục vụ cho nhu cầu thanh toán giá
-                            trị
-                            nhỏ của cá nhân và doanh nghiệp”. Điều này góp phần giúp xác minh danh tính của Khách Hàng trực
+                            trị nhỏ của cá nhân và doanh nghiệp”. Điều này góp phần giúp xác minh danh tính của Khách Hàng
+                            trực
                             tuyến và đánh giá rủi ro, phát hiện lừa đảo trong mỗi giao dịch,...</li>
 
                         <li>- C-Mart luôn muốn mang đến những trải nghiệm văn hóa phục vụ chuyên nghiệp, an toàn. Vì thế,
@@ -44,17 +44,16 @@
                             Shopping (Khách Hàng chỉ truy cập một nơi và đáp ứng mọi nhu cầu giao dịch của mình).</li>
 
                         <li>- Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông tin là điều vô cùng nghiêm
-                            túc, và
-                            chúng tôi thực hiện vô cùng nghiêm ngặt. Các thông tin này CHỈ DÙNG ĐỂ XÁC MINH NH N TH N nhằm
-                            đảm
-                            bảo an toàn giao dịch theo quy định, và cho chính quyền lợi của Khách Hàng</li>
+                            túc, và chúng tôi thực hiện vô cùng nghiêm ngặt. Các thông tin này CHỈ DÙNG ĐỂ XÁC MINH nhằm
+                            đảm bảo an toàn giao dịch theo quy định, và cho chính quyền lợi của Khách Hàng</li>
                     </ul>
                 </div>
                 <div class="col-lg-12 col-md-12 col-12">
 
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="accept_ekyc" id="accept-ekyc" value="1" required
-                            oninvalid="this.setCustomValidity('Vui lòng đồng ý trước khi bắt đầu duyệt eKYC')">
+                        <input class="form-check-input" type="checkbox" name="accept_ekyc" id="accept-ekyc" value="1"
+                            required oninvalid="this.setCustomValidity('Vui lòng đồng ý trước khi bắt đầu duyệt eKYC')"
+                            checked>
                         <label class="form-check-label" for="accept-ekyc">Tôi đã đọc và đồng ý với Quy
                             định Điều khoản & Điều kiện eKYC</label>
                     </div>

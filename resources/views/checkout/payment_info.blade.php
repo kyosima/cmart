@@ -8,51 +8,61 @@
 @endpush
 
 @section('content')
-    <form action="{{ route('checkout.post') }}" class="form-checkout" method="post" enctype="multipart/form">
-        @csrf
-        <div class="container">
-
-            <div class="row">
-                <div class="col-xl-8 col-sm-12 col-12">
-                    <div class="card-left">
-                        <div class="list-stores-checkout mt-0">
-                            <div class="list-stores-title text-center" id="url-update-type"
-                                data-url="{{ route('checkout.updateTypeShip') }}">
-                                <h3>DANH SÁCH ĐƠN HÀNG</h3>
-                            </div>
-                            <hr>
-                            <div class="list-stores-body">
-                                @foreach ($order->order_stores()->get() as $order_store)
-                                    {{-- @php
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-sm-12 col-12">
+                <div class="card-left">
+                    <div class="list-stores-checkout mt-0">
+                        <div class="list-stores-title text-center" id="url-update-type"
+                            data-url="{{ route('checkout.updateTypeShip') }}">
+                            <h3>DANH SÁCH ĐƠN HÀNG</h3>
+                        </div>
+                        <hr>
+                        <div class="list-stores-body">
+                            @foreach ($order->order_stores()->get() as $order_store)
+                                {{-- @php
                                         $cart = Cart::instance($store_id);
                                         $store = App\Models\Store::whereId($store_id)->first();
                                     @endphp --}}
-                                    <div class="store-block" id="store{{ $order_store->id_store }}">
-                                        <div class="store-title d-flex justify-content-between">
-                                            <h4>Cửa hàng {{ $order_store->store()->value('name') }} 
-                                                {{ formatMethod($order_store->shipping_method) }} @if($order_store->shipping_type ==0) Tiêu chuẩn @else Hỏa tốc @endif</h4>
+                                <div class="store-block" id="store{{ $order_store->id_store }}">
+                                    <div class="store-title ">
+                                        <h4>Cửa hàng {{ $order_store->store()->value('name') }}</h4>
+                                        <h5> {{ formatMethod($order_store->shipping_method) }} <span
+                                                class="pl-1">
+                                                @if ($order_store->shipping_type == 0)
+                                                    @if ($order->shipping_method == 0)
+                                                        Nhận tại cửa hàng
+                                                    @else
+                                                        Tiêu chuẩn
+                                                    @endif
+                                                @else
+                                                    Hỏa tốc
+                                                @endif
+                                            </span>
+                                        </h5>
 
-                                            {{-- <label for="receiverstore{{ $store_id }}"><input class="receiverstore"
+                                        {{-- <label for="receiverstore{{ $store_id }}"><input class="receiverstore"
                                                     type="checkbox" id="receiverstore{{ $store_id }}"
                                                     name="receiverstore{{ $store_id }}" value="{{ $store_id }}"
                                                     data-storeid="{{ $store_id }}" onclick="receiverStore(this)"> Nhận
                                                 tại cửa
                                                 hàng</label> --}}
-                                        </div>
-                                        <div class="store-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered table-striped w-100">
-                                                    <thead class="thead-dark">
-                                                        <th>Mã SP</th>
-                                                        <th>Tên sản phẩm</th>
-                                                        <th>C</th>
-                                                        <th>M</th>
-                                                        <th>Đơn giá</th>
-                                                        <th>Giảm giá</th>
-                                                        <th>SL</th>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($order_store->order_products()->get() as $order_product)
+                                    </div>
+                                    <div class="store-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped w-100">
+                                                <thead class="thead-dark">
+                                                    <th>Mã SP</th>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>C</th>
+                                                    <th>M</th>
+                                                    <th>Đơn giá</th>
+                                                    <th>Giảm giá</th>
+                                                    <th>SL</th>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($order_store->order_products()->get() as $order_product)
+                                                        @if ($order_product->sku != null)
                                                             <tr>
                                                                 <td>{{ $order_product->sku }}</td>
                                                                 <td>{{ $order_product->name }}</td>
@@ -62,141 +72,159 @@
                                                                 <td>{{ formatPrice($order_product->discount) }}</td>
                                                                 <td>{{ $order_product->quantity }}</td>
                                                             </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                                        @else
+                                                            <tr>
+                                                                <td>{{ $order_product->sku }}</td>
+                                                                <td>{{ $order_product->name }}
+                                                                    @if ($order_vat->vat_company != null)
+                                                                        <br>
+                                                                        {{ $order_vat->vat_email }} <br>
+                                                                        {{ $order_vat->vat_company }} <br>
+                                                                        {{ $order_vat->vat_mst }}<br>
+                                                                        {{ $order_vat->vat_address }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>{{ $order_product->c_point }}</td>
+                                                                <td>{{ $order_product->m_point }}</td>
+                                                                <td>{{ formatPrice($order_product->price) }}</td>
+                                                                <td>{{ formatPrice($order_product->discount) }}</td>
+                                                                <td>{{ $order_product->quantity }}</td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="store-footer payment-store-footer">
+                                        <div class="d-md-flex justify-content-between">
+                                            <div class="text-center">
+                                                <p>Giá trị sản phẩm</p>
+                                                <p>{{ formatPrice($order_store->sub_total) }}</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p>Giảm giá sản phẩm</p>
+                                                <p>{{ formatPrice($order_store->discount_product) }}</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p>Thuế GTGT sản phẩm</p>
+                                                <p>{{ formatPrice($order_store->vat_products) }}</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p>Tích M giảm giá dịch vụ</p>
+                                                <p>{{ formatNumber($order_store->m_point) }}</p>
                                             </div>
                                         </div>
-                                        <div class="store-footer payment-store-footer">
-                                            <div class="d-md-flex justify-content-between">
-                                                <div class="text-center">
-                                                    <p>Giá trị sản phẩm</p>
-                                                    <p>{{ formatPrice($order_store->sub_total) }}</p>
-                                                </div>
-                                                <div class="text-center">
-                                                    <p>Giảm giá sản phẩm</p>
-                                                    <p>{{ formatPrice($order_store->discount_product) }}</p>
-                                                </div>
-                                                <div class="text-center">
-                                                    <p>Thuế GTGT sản phẩm</p>
-                                                    <p>{{ formatPrice($order_store->vat_products) }}</p>
-                                                </div>
-                                                <div class="text-center">
-                                                    <p>Tích M giảm giá dịch vụ</p>
-                                                    <p>{{ formatNumber($order_store->m_point) }}</p>
-                                                </div>
+                                        <div class="d-md-flex justify-content-between">
+                                            <div class="text-center">
+                                                <p>Phí Vận chuyển</p>
+                                                <p><small>(Chưa bao gồm thuế VAT 8%)</small></p>
+                                                <p>{{ formatPrice($order_store->shipping_total) }}</p>
                                             </div>
-                                            <div class="d-md-flex justify-content-between">
-                                                <div class="text-center">
-                                                    <p>Phí Vận chuyển</p>
-                                                    <p><small>(Chưa bao gồm thuế VAT 8%)</small></p>
-                                                    <p>{{ formatPrice($order_store->shipping_total) }}</p>
-                                                </div>
-                                                <div class="text-center">
-                                                    <p>Phí DV GTGT</p>
-                                                    <p><small>(Đã bao gồm thuế VAT 8%)</small></p>
-                                                    <p>{{ formatPrice($order_store->vat_services) }}</p>
+                                            <div class="text-center">
+                                                <p>Phí DV GTGT</p>
+                                                <p><small>(Đã bao gồm thuế VAT 8%)</small></p>
+                                                <p>{{ formatPrice($order_store->vat_services) }}</p>
 
-                                                </div>
-                                                <div class="text-center">
-                                                    <p>Giá trị thanh toán cho ĐH</p>
-                                                    <p><small>(Đã bao gồm thuế)</small></p>
-                                                    <p>{{ formatPrice($order_store->total) }}</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p>Giá trị thanh toán cho ĐH</p>
+                                                <p><small>(Đã bao gồm thuế)</small></p>
+                                                <p>{{ formatPrice($order_store->total) }}</p>
 
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="result-order">
+                        <div>
+                            <h3>TỔNG KẾT</h3>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="text-center">
+                                <p>Tổng phí vận chuyển</p>
+                                <p><small>(Chưa bao gồm thuế VAT 8%)</small></p>
+                                <p>{{ formatPrice($order->shipping_total) }}</p>
+                            </div>
+                            <div class="text-center">
+                                <p>Tổng phí DV GTGT</p>
+                                <p><small>(Đã bao gồm thuế VAT 8%)</small></p>
+                                <p>{{ formatPrice($order->vat_services) }}</p>
+                            </div>
+                            <div class="text-center">
+                                <p>Tổng Giảm giá Dịch vụ</p>
+                                <p>{{ formatPrice($order->m_point) }}</p>
+                            </div>
+                            <div class="text-center">
+                                <p>Giá trị thanh toán Dịch vụ</p>
+                                <p><small>(Đã bao gồm thuế VAT 8%)</small></p>
+                                <p>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) }}
+                                </p>
                             </div>
                         </div>
-                        <div class="result-order">
-                            <div>
-                                <h3>TỔNG KẾT</h3>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <div class="text-center">
+                                <p>Tổng Giá trị Sản phẩm</p>
+                                <p>{{ formatPrice($order->sub_total) }}</p>
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <div class="text-center">
-                                    <p>Tổng phí vận chuyển</p>
-                                    <p><small>(Chưa bao gồm thuế VAT 8%)</small></p>
-                                    <p>{{ formatPrice($order->shipping_total) }}</p>
-                                </div>
-                                <div class="text-center">
-                                    <p>Tổng phí DV GTGT</p>
-                                    <p><small>(Đã bao gồm thuế VAT 8%)</small></p>
-                                    <p>{{ formatPrice($order->vat_services) }}</p>
-                                </div>
-                                <div class="text-center">
-                                    <p>Tổng Giảm giá Dịch vụ</p>
-                                    <p><small>(Tích M giảm giá DV)</small></p>
-                                    <p>{{ formatPrice($order->m_point) }}</p>
-                                </div>
-                                <div class="text-center">
-                                    <p>Giá trị thanh toán Dịch vụ</p>
-                                    <p><small>(Đã bao gồm thuế VAT 8%)</small></p>
-                                    <p>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0)) }}
-                                    </p>
-                                </div>
+                            <div class="text-center">
+                                <p>Tổng Giảm giá Sản phẩm</p>
+                                <p>{{ formatPrice($order->discount_products) }}</p>
                             </div>
-                            <hr>
-                            <div class="d-flex justify-content-between">
-                                <div class="text-center">
-                                    <p>Tổng Giá trị Sản phẩm</p>
-                                    <p>{{ formatPrice($order->sub_total) }}</p>
-                                </div>
-                                <div class="text-center">
-                                    <p>Tổng Giảm giá Sản phẩm</p>
-                                    <p>{{ formatPrice($order->discount_products) }}</p>
-                                </div>
-                                <div class="text-center">
-                                    <p>Tổng Tiền Tích Lũy</p>
-                                    <p>{{ formatNumber($order->c_point) }}</p>
-                                </div>
-                                <div class="text-center">
-                                    <p>Số dư M còn lại</p>
-                                    <p>{{ formatNumber($order->remaining_m_point) }}</p>
-                                </div>
+                            <div class="text-center">
+                                <p>Tổng Tiền Tích Lũy</p>
+                                <p>{{ formatNumber($order->c_point) }}</p>
                             </div>
-                            <hr>
-                            <div class="d-flex justify-content-between">
-                                <div class="text-center">
-                                    <p>Thuế GTGT Sản phẩm</p>
-                                    <p>{{ formatPrice($order->vat_products) }}</p>
+                            <div class="text-center">
+                                <p>Số dư M còn lại</p>
+                                <p>{{ formatNumber($order->remaining_m_point) }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <div class="text-center">
+                                <p>Thuế GTGT Sản phẩm</p>
+                                <p>{{ formatPrice($order->vat_products) }}</p>
 
-                                </div>
-                                <div class="text-center">
-                                    <p>Thuế GTGT Dịch vụ</p>
-                                    <p>{{ formatPrice($order->vat_services / 1.08) }}</p>
-                                </div>
-                                <div class="text-center">
-                                    <p>Tổng Thuế GTGT</p>
-                                    <p>{{ formatPrice($order->vat_products + $order->vat_services) }}</p>
-                                </div>
-                            
                             </div>
-                            <hr>
+                            <div class="text-center">
+                                <p>Thuế GTGT Dịch vụ</p>
+                                <p>{{ formatPrice($order->vat_services / 1.08) }}</p>
+                            </div>
+                            <div class="text-center">
+                                <p>Tổng Thuế GTGT</p>
+                                <p>{{ formatPrice($order->vat_products + $order->vat_services) }}</p>
+                            </div>
                             <div class="text-center">
                                 <h5>Giá trị giao dịch</h5>
                                 <b>{{ formatPrice($order->total) }}</b>
                             </div>
+
+                        </div>
+                     
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-xl-4 col-sm-12 col-12 ">
+                <div class="card-left">
+                    <div class="makhuyenmai">
+                        <div class="makhuyenmai-header">
+                            <h3>Giảm giá sản phẩm</h3>
+                        </div>
+                        <div class="makhuyenmai-body">
+                            <input type="text" class="makhuyenmai-body-input" placeholder="Nhập mã...">
+                            <button class="btn btn-primary" id="btn-apply-coupon" type="button">Áp dụng</button>
+                            <p style="display: none" class="text-danger alert-coupon">Hệ thống không xác thực được mã
+                                này. Vui lòng liên hệ Hotline 0899.663.883 để được hỗ trợ</p>
+
                         </div>
                     </div>
-                    
-                </div>
-                <div class="col-xl-4 col-sm-12 col-12 ">
-                    <div class="card-left">
-                        <div class="makhuyenmai">
-                            <div class="makhuyenmai-header">
-                                <h3>Mã khuyến mãi</h3>
-                            </div>
-                            <div class="makhuyenmai-body">
-                                <input type="text" class="makhuyenmai-body-input" placeholder="Nhập mã...">
-                                <button class="btn btn-primary" id="btn-apply-coupon" type="button">Áp dụng</button>
-                                <p style="display: none" class="text-danger alert-coupon">Hệ thống không xác thực được mã
-                                    này. Vui lòng liên hệ Hotline 0899.663.883 để được hỗ trợ</p>
-
-                            </div>
-                        </div>
-                        {{-- <div class="donhang">
+                    {{-- <div class="donhang">
                             <div class="donhang-header">
                                 <h3>ĐƠN HÀNG</h3> <span> SẢN PHẨM)</span>
                             </div>
@@ -254,82 +282,101 @@
                             </div>
 
                         </div> --}}
-                        <div class="chinhsach">
-                            <div class="chinhsach-header">
-                                <h3>Điều khoản và chính sách</h3>
-                            </div>
-                            <div class="chinhsach-body">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <!-- Default checked -->
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="nhanhang" id="check1"
-                                                checked readonly onclick="return false;">
-                                            <label class="custom-control-label" for="check1">Tôi đã đọc và đồng ý với Quy
-                                                định Thao tác khi nhận hàng
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <!-- Default checked -->
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="giaonhan" id="check2"
-                                                checked readonly onclick="return false;">
-                                            <label class="custom-control-label" for="check2">Tôi đã đọc và đồng ý với Chính
-                                                sách Giao - Nhận</label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <!-- Default checked -->
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="doitra" id="check3"
-                                                checked readonly onclick="return false;">
-                                            <label class="custom-control-label" for="check3">Tôi đã đọc và đồng ý với Chính
-                                                sách Đổi - Trả</label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <!-- Default checked -->
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="baohanh" id="check4"
-                                                checked readonly onclick="return false;">
-                                            <label class="custom-control-label" for="check4">Tôi đã đọc và đồng ý với Chính
-                                                sách Bảo hành</label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <!-- Default checked -->
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="dieukhoan" id="check5"
-                                                checked readonly onclick="return false;">
-                                            <label class="custom-control-label" for="check5">Tôi đã đọc và đồng ý với Quy
-                                                định Điều khoản & Điều kiện giao dịch</label>
-                                        </div>
-                                    </li>
-                                    {{-- <li class="list-group-item">
+                    <div class="chinhsach">
+                        <div class="chinhsach-header">
+                            <h3>Điều khoản và chính sách</h3>
+                        </div>
+                        <div class="chinhsach-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <!-- Default checked -->
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="nhanhang" id="check1"
+                                            checked readonly onclick="return false;">
+                                        <label class="custom-control-label" for="check1" onclick="showPolicy(this)"
+                                            data-slug="chinh-sach-thanh-toan" data-url="{{ route('showPolicy') }}">Tôi
+                                            đã đọc và đồng ý với
+                                            Chính sách thanh toán
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <!-- Default checked -->
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="giaonhan" id="check2"
+                                            checked readonly onclick="return false;">
+                                        <label class="custom-control-label" for="check2" onclick="showPolicy(this)"
+                                            data-slug="chinh-sach-giao-nhan" data-url="{{ route('showPolicy') }}">Tôi đã
+                                            đọc và đồng ý với Chính
+                                            sách Giao - Nhận</label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <!-- Default checked -->
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="doitra" id="check3"
+                                            checked readonly onclick="return false;">
+                                        <label class="custom-control-label" for="check3" onclick="showPolicy(this)"
+                                            data-slug="chinh-sach-doi-tra" data-url="{{ route('showPolicy') }}">Tôi đã
+                                            đọc và đồng ý với Chính
+                                            sách Đổi - Trả</label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <!-- Default checked -->
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="baohanh" id="check4"
+                                            checked readonly onclick="return false;">
+                                        <label class="custom-control-label" for="check4" onclick="showPolicy(this)"
+                                            data-slug="chinh-sach-bao-hanh" data-url="{{ route('showPolicy') }}">Tôi đã
+                                            đọc và đồng ý với Chính
+                                            sách Bảo hành</label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <!-- Default checked -->
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="dieukhoan" id="check5"
+                                            checked readonly onclick="return false;">
+                                        <label class="custom-control-label" for="check5" onclick="showPolicy(this)"
+                                            data-slug="quy-dinh-dieu-khoan-dieu-kien-giao-dich"
+                                            data-url="{{ route('showPolicy') }}">Tôi đã đọc và đồng ý với Quy
+                                            định Điều khoản & Điều kiện giao dịch</label>
+                                    </div>
+                                </li>
+                                {{-- <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
                                           <input type="checkbox" class="custom-control-input" name="dieukhoan" id="check6">
                                           <label class="custom-control-label" for="check6"></label>
                                         </div>
                                       </li> --}}
-                                    {{-- <li class="list-group-item">
+                                {{-- <li class="list-group-item">
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="checkall" id="check7">
                                             <label class="custom-control-label" for="check7">Chọn tất cả</label>
                                         </div>
                                     </li> --}}
-                                </ul>
-                                {{-- <p class="text-danger error-chinhsach p-1" style="display: none">Bạn phải đồng ý tất cả
+                            </ul>
+                            {{-- <p class="text-danger error-chinhsach p-1" style="display: none">Bạn phải đồng ý tất cả
                                     chính sách của Cmart</p>
                                 <p class="py-1">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc bảo mật thông
                                     tin là điều vô cùng nghiêm túc, và chúng tôi thực hiện vô cùng nghiêm ngặt. Các thông
                                     tin chỉ dùng để hướng đến sự chuyên nghiệp, tiện lợi hơn trong phục vụ Khách Hàng, tạo
                                     sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết</p> --}}
-                            </div>
+
                         </div>
-                        {{-- <div class="phuongthuc-thanhtoan">
+                    </div>
+                    <form action="{{ route('checkout.postPayment') }}" class="form-checkout" method="post"
+                        enctype="multipart/form">
+                        @csrf
+                        <input type="hidden" name="order_code" value="{{ $order->order_code }}">
+                        <a class="btn-back-cart" href="{{ url()->previous() }}">Quay lại Trang trước</a>
+                        <button class="btn-dathang" type="submit">Thanh toán</button>
+                    </form>
+
+                    {{-- <div class="phuongthuc-thanhtoan">
                             
                         </div>
                         <div class="phuongthuc-thanhtoan">
@@ -337,12 +384,31 @@
                         </div> --}}
 
 
+                </div>
+            </div>
+            <div class="modal fade" id="modal-policy" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="policy-title"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body policy-content" style="overflow-y: scroll; height: 70vh">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-12">
+            </div>
+            {{-- <div class="col-12">
                     <div class="result-order">
                         <div>
-                            <h3>PHƯƠNG THỨC THANH TOÁN</h3>
+                            <h3>HÌNH THỨC THANH TOÁN</h3>
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-12">
@@ -405,11 +471,13 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="radio" id="pay11" name="payment_method" value="11" disabled>
-                                        <label for="pay11">Thanh toán trực tiếp bằng Thẻ Visa / Mastercard do SHB phát hành, qua app QR SHB</label>
+                                        <label for="pay11">Thanh toán trực tiếp bằng Thẻ Visa / Mastercard do SHB phát hành,
+                                            qua app QR SHB</label>
                                     </div>
                                     <div class="form-group">
                                         <input type="radio" id="pay12" name="payment_method" value="12" disabled>
-                                        <label for="pay12">Thanh toán trực tiếp bằng Thẻ Visa / Mastercard / JCB do TPBank phát hành, qua app QR TPBank</label>
+                                        <label for="pay12">Thanh toán trực tiếp bằng Thẻ Visa / Mastercard / JCB do TPBank
+                                            phát hành, qua app QR TPBank</label>
                                     </div>
                                     <div class="form-group">
                                         <input type="radio" id="pay13" name="payment_method" value="13" disabled>
@@ -417,7 +485,8 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="radio" id="pay14" name="payment_method" value="14" disabled>
-                                        <label for="pay14">Thanh toán trực tiếp bằng Thẻ JCB / CUP do MBBank phát hành</label>
+                                        <label for="pay14">Thanh toán trực tiếp bằng Thẻ JCB / CUP do MBBank phát
+                                            hành</label>
                                     </div>
                                     <div class="form-group">
                                         <input type="radio" id="pay15" name="payment_method" value="15" disabled>
@@ -441,23 +510,19 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="radio" id="pay20" name="payment_method" value="20" disabled>
-                                        <label for="pay20">Thanh toán trực tiếp bằng Thẻ Nội địa do TPBank phát hành, qua app QR TPBank</label>
+                                        <label for="pay20">Thanh toán trực tiếp bằng Thẻ Nội địa do TPBank phát hành, qua
+                                            app QR TPBank</label>
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
-                </div>
-                <div class="col-12">
-                    <div>
-                        <button class="btn-dathang" type="submit">Thanh toán</button>
-                    </div>
-                </div>
-                
-            </div>
+                </div> --}}
+
+
         </div>
-    </form>
+    </div>
 @endsection
 
 @push('scripts')

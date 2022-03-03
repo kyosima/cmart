@@ -26,6 +26,7 @@ class OrderStore extends Model
 	protected $fillable = [
 		'id_order',
 		'id_store',
+		'order_store_code',
 		'shipping_code',
 		'shipping_total',
 		'vat_products',
@@ -34,6 +35,8 @@ class OrderStore extends Model
 		'discount_services',
 		'shipping_method',
 		'remaining_m_point',
+		'shipping_weight',
+		'shipping_type',
 		'tax',
 		'c_point',
 		'm_point',

@@ -81,8 +81,11 @@
                                                                 href="{{ url('/lichsu') }}">Lịch sử
                                                                 đơn
                                                                 hàng</a>
-                                                            <a class="dropdown-item text-dark" href="{{ url('/lich-su-tien-tich-luy') }}">Tài khoản C</a>
-                                                            <a class="dropdown-item text-dark" href="{{ route('chuyen-tien-tich-luy') }}">Chuyển tiền tích lũy</a>
+                                                            <a class="dropdown-item text-dark"
+                                                                href="{{ url('/lich-su-tien-tich-luy') }}">Tài khoản
+                                                                C</a>
+                                                            <a class="dropdown-item text-dark"
+                                                                href="">Thông báo</a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item text-danger"
                                                                 href="{{ route('logoutuser') }}">Đăng
@@ -185,7 +188,9 @@
                                         </a>
                                         <ul class="dropdown-navcmart dvcmart">
                                             @php
-                                                $pages = App\Models\InfoCompany::whereType('service')->orderBy('sort','asc')->get();
+                                                $pages = App\Models\InfoCompany::whereType('service')
+                                                    ->orderBy('sort', 'asc')
+                                                    ->get();
                                             @endphp
                                             @foreach ($pages as $page)
                                                 <li><a rel="nofollow"
@@ -206,7 +211,9 @@
                                         <a class="text-color-white" href="#">Điều khoản và Chính sách</a>
                                         <ul class="dropdown-navcmart">
                                             @php
-                                                $pages = App\Models\InfoCompany::whereType('policy')->orderBy('sort','asc')->get();
+                                                $pages = App\Models\InfoCompany::whereType('policy')
+                                                    ->orderBy('sort', 'asc')
+                                                    ->get();
                                             @endphp
                                             @foreach ($pages as $page)
                                                 <li><a rel="nofollow"
@@ -233,7 +240,8 @@
         </span> --}}
 
         <p>
-            Mọi liên hệ nên thực hiện <b>từ Số điện thoại đăng ký giao dịch</b> và <b>đến các kênh kết nối chính thức của C-Mart</b>
+            Mọi liên hệ nên thực hiện <b>từ Số điện thoại đăng ký giao dịch</b> và <b>đến các kênh kết nối chính thức
+                của C-Mart</b>
         </p>
 
     </div>
@@ -255,7 +263,8 @@
             </div>
             <div class="box-contacth">
                 <b class="d-flex align-items-center justify-content-center"><img
-                        src="{{ asset('/public/image/zalo.png') }}" alt=""><a href="https://zalo.me/3597490523695148504">Zalo</a></b>
+                        src="{{ asset('/public/image/zalo.png') }}" alt=""><a
+                        href="https://zalo.me/3597490523695148504">Zalo</a></b>
                 <small>Kênh Hỗ trợ - Đặt hàng</small>
 
             </div>

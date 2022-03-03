@@ -30,7 +30,7 @@ class PointHistoryController extends Controller
     5 hoàn c
     */
     public function lichsunhanC() {
-        $listHistory = PointCHistory::where('type','=',1)->latest()->get();
+        $listHistory = PointCHistory::where('type','=',4)->latest()->get();
         $this->tinhdiemtietkiem();
         $user = User::find(1)->with('point_c')->first();
         return view('admin.history.lichsunhanC',[
@@ -58,7 +58,7 @@ class PointHistoryController extends Controller
     }
 
     public function tichluy() {
-        $listHistory = PointCHistory::where('type','=',4)->get();
+        $listHistory = PointCHistory::where('type','=',1)->get();
         $this->tinhdiemtietkiem();
         $user = User::find(1)->with('point_c')->first();
         return view('admin.history.tichluy',[
@@ -216,8 +216,10 @@ class PointHistoryController extends Controller
             $pointC = 'Không có mã khách hàng này trên hệ thống!';
         } else {
             $id = $id_user->id;
-            $pointC = PointC::where('user_id','=',$id)->first()->point_c;
-            $point_past = $pointC + $request->point_past;
+            $id_user = User::where('code_customer','=',202201170001)->first();
+
+            $pointC = PointC::where('user_id','=',$id_user->id)->first()->point_c;
+            $point_past = $pointC - $request->point_past;
         }
         return response()->json([
             'pointC' => $pointC,

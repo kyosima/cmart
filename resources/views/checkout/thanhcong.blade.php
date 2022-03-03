@@ -3,14 +3,22 @@
 @section('title', 'Đặt hàng thành công')
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/thanhtoan.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 @endpush
 
 @section('content')
+
     <div class="container">
-        <h3 class="text-center">Đặt hàng thành công</h3>
         <div class="row">
+            <div class="col-md-12 col-12">
+                <h3 class="text-center">THÔNG BÁO XÁC NHẬN ĐẶT HÀNG THÀNH CÔNG</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-12">
+                @include('order_tracking.c_bill', ['order'=>$order])
+            </div>
+        </div>
+        {{-- <div class="row">
             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                 <div class="alert alert-light order-complete-info  text-dark">
                     <h5>Mã giao dịch: <span class="text-danger">{{ $order->order_code }}</span></h5>
@@ -18,7 +26,6 @@
                     <ul>
                         <li>Họ và tên: {{ $order_info->fullname }}</li>
                         <li>Số điện thoại: {{ $order_info->phone }}</li>
-                        {{-- <li>Email: {{ $order_info->email }}</li> --}}
                         <li>Ghi chú: {{ $order_info->note }}</li>
                     </ul>
                     <hr>
@@ -114,7 +121,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection
 

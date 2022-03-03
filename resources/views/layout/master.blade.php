@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="url-home" content="{{ URL::to('/') }}" />
     <meta name="url-home-customer" content="{{ url('/') }}" />
+    <meta name="url-ekyc" content="{{ route('ekyc.getVerify') }}" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
@@ -32,8 +33,15 @@
 
     @stack('css')
 </head>
+
 <body>
-    
+        {{-- @if (Auth::check()) 
+            @if (Auth::user()->is_kyc == 0) 
+                <script>
+                    location.href= $("meta[name='url-ekyc']").attr("content");
+                </script>
+            @endif
+        @endif --}}
     @include('layout.header')
 
     @yield('content')

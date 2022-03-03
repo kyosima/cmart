@@ -74,16 +74,16 @@
                                                             class="ttt text-justify p-1"> Tiền Tích Lũy C là chiết khấu nhận được khi mua sản phẩm, có giá trị thanh toán tại C-Mart và các Đối Tác Liên Kết, có giá trị tích lũy tốt theo Chính sách Tiết Kiệm Tích Tài C-Saving, có giá trị lưu trữ không giới hạn
                                                         </span></span>:</span><span class="text-dark"
                                                             style="font-weight: 600">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
-                                                            điểm</span>
+                                                            </span>
                                                          
                                                     </p>
                                                     <p>
                                                     
-                                                        <span class="text-dark" style="font-weight: 300">Điểm dịch vụ (M) <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
+                                                        <span class="text-dark" style="font-weight: 300">Chiết khấu M <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
                                                             class="ttt text-justify p-1">Điểm Dịch Vụ M là chiết khấu nhận được khi mua sản phẩm, có chức năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển, phí thanh toán...). Số dư M còn lại sẽ được hoàn vào Tài khoản Tiền Tích Lũy của HSKH đặt hàng. Thời gian tra soát: 30 ngày kể từ ngày đơn hàng hoàn thành
                                                         </span></span>:</span><span class="text-dark"
                                                             style="font-weight: 600">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
-                                                            điểm</span>
+                                                            </span>
                                                                                 
                                                     </p>
         
@@ -119,16 +119,16 @@
                                               
                                                 <span class="text-dark" style="font-weight: 300">Chiết khấu C:</span><span class="text-dark"
                                                     style="font-weight: 600">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
-                                                    điểm</span>
+                                                    </span>
                                                     <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
-                                                        class="ttt"> Tiền Tích Lũy C là chiết khấu nhận được khi mua sản phẩm, có giá trị thanh toán tại C-Mart và các Đối Tác Liên Liên Kết, có giá trị tích lũy tốt theo Chính sách Tiết Kiệm Tích Tài C-Saving, có giá trị lưu trữ không giới hạn
+                                                        class="ttt"> Tiền Tích Lũy C là chiết khấu nhận được khi mua sản phẩm, có giá trị thanh toán tại C-Mart và các Đối Tác Liênz Kết, có giá trị tích lũy tốt theo Chính sách Tiết Kiệm Tích Tài C-Saving, có giá trị lưu trữ không giới hạn
                                                     </span></span>
                                             </p>
                                             <p>
                                               
-                                                <span class="text-dark" style="font-weight: 300">Điểm dịch vụ (M):</span><span class="text-dark"
+                                                <span class="text-dark" style="font-weight: 300">Chiết khấu M:</span><span class="text-dark"
                                                     style="font-weight: 600">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
-                                                    điểm</span>
+                                                    </span>
                                                                         <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
                                                         class="ttt">Điểm Dịch Vụ M là chiết khấu nhận được khi mua sản phẩm, có chức năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển, phí thanh toán...). Số dư M còn lại sẽ được hoàn vào Tài khoản Tiền Tích Lũy của HSKH đặt hàng. Thời gian tra soát: 30 ngày kể từ ngày đơn hàng hoàn thành
                                                     </span></span>
@@ -206,12 +206,14 @@
                                                             {{ $store->name }} còn
                                                             {{ $store->getOriginal('pivot_soluong') }} sản
                                                             phẩm</option> --}}
-                                                            <div class="form-group">
+                                                            @if( $store->getOriginal('pivot_soluong') >0)
+                                                            <div class="form-group d-flex justify-content-start align-items-center">
                                                                 <input type="radio" id="store-{{ $store->id}}" name="store_id" value="{{ $store->id }}">
-                                                                <label for="store-{{ $store->id}}"> {{ $store->name }} (còn
+                                                                <label style="margin-bottom: 0; padding-left: 3px" for="store-{{ $store->id}}"> {{ $store->name }} (còn
                                                                     {{ $store->getOriginal('pivot_soluong') }} sản
                                                                     phẩm)</label>
                                                             </div>
+                                                            @endif
                                                     @endif
                                                 @endforeach
                                             {{-- </select> --}}

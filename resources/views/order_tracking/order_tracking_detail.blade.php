@@ -172,11 +172,11 @@
                                                 <tr>
                                                     <td>{{$row->product()->value('sku')}}</td>
                                                     <td><a
-                                                            href="{{ route('san-pham.show', $row->slug) }}">{{ $row->name }}</a>
+                                                            @if($row->slug != null) href="{{ route('san-pham.show', $row->slug) }}" @endif>{{ $row->name }}</a>
                                                     </td>
                                                     <td>{{ $row->quantity }}</td>
-                                                    <td>{{ App\Http\Controllers\CheckoutController::getWeight($row->product()->first(), $row->qty) }}
-                                                        g</td>
+                                                    <td>@if($row->slug != null) {{$row->weight}}
+                                                        g @endif </td>
                                                     <td>{{ formatPrice($row->price * $row->quantity) }}</td>
                                                 </tr>
                                             @endforeach
@@ -236,7 +236,8 @@
                                 <hr>
                                 <div class="box-allprice box-price-order">
                                     <p>Tạm tính:<span> {{ formatPrice($order->sub_total) }}</span></p>
-                                    <p>Thuế GTGT:<span> {{ formatPrice($order->tax) }}</span></p>
+                                    <p>Thuế GTGT Sản phẩm:<span> {{ formatPrice($order->vat_products) }}</span></p>
+                                    <p>Thuế GTGT Dịch vụ:<span> {{ formatPrice($order->vat_services / 1.08)  }}</span></p>
                                     <p>Điểm dịch vụ (M):<span> {{ number_format($order->m_point, 0, '.', ',') }}
                                             điểm</span></p>
                                     <p>Tiền tích lũy (C):<span> {{ number_format($order->c_point, 0, '.', ',') }}

@@ -51,7 +51,7 @@ if (!function_exists('formatLevel')) {
             case 0: 
                 return 'Khách hàng thân thiết';
             case 1:
-                return 'Khách hàng VIP';
+                return 'Khách hàng V.I.P';
             case 2:
                 return 'Cộng tác viên';
             case 3:
@@ -85,6 +85,15 @@ if (!function_exists('getTagSale')) {
             }else{
                 return null;
             }
+        }
+    }
+}
+if (!function_exists('getTaxValue')) {
+    function getTaxValue($tax){
+        if($tax == 'KKK' || $tax = 'KTT'){
+            return 0;
+        }else{
+            return floatval($tax);
         }
     }
 }

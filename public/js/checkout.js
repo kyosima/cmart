@@ -1,6 +1,47 @@
+var loadingOverlay = document.querySelector('.loading');
+
+function toggleLoading(event) {
+    if (event.keyCode !== 13) return;
+
+    document.activeElement.blur();
+
+    if (loadingOverlay.classList.contains('hidden')) {
+        loadingOverlay.classList.remove('hidden');
+    } else {
+        loadingOverlay.classList.add('hidden');
+    }
+}
+
+document.addEventListener('keydown', toggleLoading);
+
+function showPolicy(e) {
+    slug = $(e).data('slug');
+    url = $(e).data('url');
+    $.ajax({
+        type: 'GET',
+        url: url,
+        data: {
+            slug: slug,
+            url: url,
+        },
+        error: function(data) {
+            console.log(data);
+        },
+        success: function(response) {
+            console.log(response);
+            $('#modal-policy #policy-title').text(response.name);
+            $('#modal-policy .policy-content').html(response.content);
+            $('#modal-policy').modal('show');
+        }
+    });
+}
+$('select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function() {
+    $('input[name="address"]').val('');
+});
 $('input[name="address"], select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function() {
     getship();
 });
+
 
 function getship() {
     address = $('input[name="address"]');
@@ -26,6 +67,10 @@ function cal_ship(province, district, ward, address) {
             ward: ward.val(),
             address: address.val(),
             shipcmart: shipcmart
+        },
+        beforeSend: function() {
+            $('.loading').show();
+            $("#btn-to-payment").attr('disabled', 'disabled');
         },
         error: function(data) {
             console.log(data);
@@ -70,11 +115,13 @@ function cal_ship(province, district, ward, address) {
 
             });
             showShipTotal();
-
+            $("#btn-to-payment").removeAttr("disabled");
+            $('.loading').hide();
 
         }
     });
 }
+
 
 function showShipTotal() {
     total_ship = 0;
@@ -132,7 +179,7 @@ function receiverStore(e) {
                 $('#' + store_name + ' .ship-normal').empty().append(' <input checked type="radio" onclick="calTotal(this)" data-store="' + store_name + '" id="ship_cmart' + store_name + '" name="shipping_value' + store_name + '" value="' + store.ship_total.value + '">' +
                     ' <label for="ship_cmart' + store_name + '"  >Phí: ' + store.ship_total.text + '</label>');
                 $('#' + store_name + ' .ship-fast').empty();
-                $('#' + store_name + ' .name-method').text('Nhận tại cửa hàng');
+                $('#' + store_name + ' .name-method').text('C-Mart');
                 $('#' + store_name + ' .total-cost').text(store.total_cost.text);
                 $('#' + store_name + ' .total-cost').attr('data-total', store.total_cost.value);
                 $('#' + store_name + ' input.ship-fee').val(store.ship_total.value);

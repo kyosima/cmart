@@ -19,6 +19,7 @@
                             </div>
                             
                         </div>
+             
                         <div class="collapse show" id="collapseExample">
                             <div class="row">
                                 <div class="col-sm-12" style="overflow-x: auto;">
@@ -222,9 +223,9 @@
                                                     <button type="button" class="btn btn-warning btn-submit-refund">Hoàn tiền</button>
                                                 @endif
                                             @endif
-                                            @if(auth()->guard('admin')->user()->can('Xóa đơn hàng'))
+                                            {{-- @if(auth()->guard('admin')->user()->can('Xóa đơn hàng'))
                                             <a href="{{route('order.delete', ['order' => $order->id])}}" class="btn btn-danger btn-submit-unit" onclick="return confirm('Are you sure you want to delete this order?')">Xóa</a>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </form>

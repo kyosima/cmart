@@ -34,7 +34,11 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('{id}',[UserController::class, 'getEdit']);
         Route::post('{id}',[UserController::class, 'postEdit']);
     });
+    Route::group(['prefix' => 'don-hang'], function () {
+        Route::get('xem-c-bill', [AdminOrderController::class, 'viewPDF'])->name('order.viewPDF');
+        Route::get('down-c-bill', [AdminOrderController::class, 'downPDF'])->name('order.downPDF');
 
+    });
     Route::get('/export',[UserController::class, 'export']);
 
     Route::get('lichsunhanC',[PointHistoryController::class, 'lichsunhanC'])->name('lichsunhanC');

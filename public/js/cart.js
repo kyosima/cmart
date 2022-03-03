@@ -20,15 +20,28 @@ $("#form-add-to-cart").submit(function(e) {
                 console.log(data);
             },
             success: function(response) {
-                button = form.find('button');
-                content = button.text();
-                button.html('<i class="fa fa-check"></i> Thêm thành công');
-                button.attr('type', 'button');
-                button.css('background-color', '#0fd840');
-                button.css('color', '#fff');
-                settimeoutAddCart(button);
-                $('.cart .number-cart .count-giohang').text(response[0]);
-                $('#notice-store').css('display', 'none');
+                if (response[0] == 0) {
+                    button = form.find('button');
+                    button.css('font-size', '15px');
+                    content = button.text();
+                    button.html('<i class="fa fa-close"></i> Không đủ sản phẩm');
+                    button.attr('type', 'button');
+                    button.css('background-color', '#e25300');
+                    button.css('color', '#00');
+
+                    settimeoutAddCart(button);
+                } else {
+                    button = form.find('button');
+                    content = button.text();
+                    button.html('<i class="fa fa-check"></i> Thêm thành công');
+                    button.attr('type', 'button');
+                    button.css('background-color', '#0fd840');
+                    button.css('color', '#fff');
+                    settimeoutAddCart(button);
+                    $('.cart .number-cart .count-giohang').text(response[0]);
+                    $('#notice-store').css('display', 'none');
+                }
+
 
             }
         });

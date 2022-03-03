@@ -8,6 +8,11 @@
 @endpush
 
 @section('content')
+    <div class="loading">
+        <div class='uil-ring-css' style='transform:scale(0.79);'>
+            <div></div>
+        </div>
+    </div>
     <form action="{{ route('checkout.post') }}" class="form-checkout" method="post" enctype="multipart/form">
         @csrf
         <div class="container">
@@ -45,9 +50,13 @@
                                 </div>
                             @endif
                             <div class="col-md-12 col-12">
-                                <label for="pickAdress"><input type="checkbox" id="pickAdress" name=""
+                                <label for="pickAdress1"><input type="radio" id="pickAdress1" name="pick_address" value="1"
                                         data-url="{{ route('checkout.getAddress') }}"> Thông tin nhận hàng giống
                                     thông tin đặt hàng</label>
+                                    <br>
+                                <label for="pickAdress2"><input type="radio" id="pickAdress2" value="2" name="pick_address"
+                                        data-url="{{ route('checkout.getAddress') }}" checked> Thông tin nhận hàng mới</label>
+
                             </div>
                             <div class="card-information-body">
 
@@ -127,8 +136,10 @@
                             </div> --}}
                             <br />
                         </div>
-
-                        <div class="list-stores-checkout">
+                        <input type="hidden" name="in_store" id="in_store" value="0">
+                        <div class="list-stores-checkout" id="method-ship"
+                        data-url="{{ route('checkout.calship') }}"
+                        data-urlcmartship="{{ route('checkout.calCmartShip') }}">
                             <div class="list-stores-title text-center" id="url-update-type"
                                 data-url="{{ route('checkout.updateTypeShip') }}">
                                 <h3>Danh sách cửa hàng</h3>
@@ -172,7 +183,7 @@
                                             @endforeach
                                         </div> --}}
                                         <div class="store-footer d-none justify-content-between ">
-                                            <div>Phương thức: <span class="name-method"></span></div>
+                                            <div>Đơn vị vận chuyển: <span class="name-method"></span></div>
                                             <div><span class="ship-normal"> </span><span class="ship-fast"></span>
                                             </div>
                                             <div class="d-none">Tổng tiền: <span class="total-cost"></span>
@@ -327,7 +338,8 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="nhanhang" id="check1">
+                                            <input type="checkbox" class="custom-control-input" name="nhanhang"
+                                                id="check1">
                                             <label class="custom-control-label" for="check1">Tôi đã đọc và đồng ý với Quy
                                                 định Thao tác khi nhận hàng
                                             </label>
@@ -425,7 +437,7 @@
             </div>
             <div class="d-flex justify-between-center">
                 <a class="btn-back-cart" href="{{ route('cart.index') }}">Quay lại Giỏ hàng</a>
-                <button class="btn-dathang" type="submit">Tiếp tục Thanh toán</button>
+                <button id="btn-to-payment" class="btn-dathang" type="submit" disabled>Tiếp tục Thanh toán</button>
             </div>
         </div>
     </form>
@@ -468,6 +480,24 @@
         $("input[name='checkall']").click(function() {
             $('.chinhsach-body input:checkbox').not(this).prop('checked', this.checked);
         });
+        $('input.receiverstore').change(function() {
+            if ($('input.receiverstore').not(':checked').length == 0) {
+                $('select[name="sel_province"]').removeAttr('required');
+                $('select[name="sel_district"]').removeAttr('required');
+                $('select[name="sel_ward"]').removeAttr('required');
+                $('input[name="address"]').removeAttr('required');
+                $('#btn-to-payment').removeAttr('disabled');
+                $('#in_store').val(1);
+            }else{
+                $('select[name="sel_province"]').attr('required','true');
+                $('select[name="sel_district"]').attr('required','true');
+                $('select[name="sel_ward"]').attr('required','true');
+                $('input[name="address"]').attr('required','true');
+                $('#in_store').val(0);
+
+            }
+        });
+
         // $('.btn-dathang').click(function(e) {
         //     if ($('.chinhsach-body input:checkbox').is(':checked')) {
 
@@ -492,17 +522,15 @@
                 $('.form-vat').css("display", "none");
             }
         }
-        $('#pickAdress').on('click', function() {
-            id_address = $('#pickAdress').val();
-            url = $('#pickAdress').data('url');
-            if ($('#pickAdress').is(':checked')) {
+        $('input[name="pick_address"]').on('click', function() {
+            id = $(this).val();
+            url = $(this).data('url');
+            if (id == 1) {
                 $.ajax({
                         url: url,
                         type: 'GET',
                         dataType: 'json',
-                        data: {
-                            id: id_address
-                        },
+
                     })
                     .done(function(data) {
                         console.log(data);

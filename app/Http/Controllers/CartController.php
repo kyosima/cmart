@@ -16,6 +16,9 @@ class CartController extends Controller
 
     public function index()
     {
+        if(Session::has('edit_order')){
+            return redirect()->route('checkout.getPaymentMethod', ['order_code'=>Session::get('edit_order')]);
+        }
         $stores = Store::get();
         Session::forget('store_ids');
         $count_cart = 0;
@@ -31,6 +34,15 @@ class CartController extends Controller
         $qty = $_POST['qty'];
         $store_id = $_POST['store_id'];
         $product = Product::whereId($product_id)->firstOrFail();
+        $stores = $product->stores()->get();
+
+        $store = Store::whereId($store_id)->first();
+        $store_product = $store->product_stores()->where('id_ofproduct', $product->id)->first();
+        if($qty > $store_product->soluong){
+            return response()->json([
+                0
+            ], 200);
+        }
         Cart::instance($store_id)->add(['id' => $product->id, 'name' => $product->name, 'price' => getPriceOfLevel($product), 'qty' => $qty, 'options' => [ 'method_ship' => 0, 'type_ship' => 0, 'price_normal' => 0, 'price_fast'=>0]])->associate('App\Models\Product');
         $stores = Store::get();
         $count_cart = 0;

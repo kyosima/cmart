@@ -136,23 +136,19 @@
 														<th class="title">GTTT sản phẩm</th>
 														<th class="title">Trạng thái</th>
 														<th class="title">Phí DVVC</th>
-														<th class="title">Phí DVGTGT</th>
-														<th class="title">Tổng thuế VAT</th>
 														<th class="title">Tổng GTGD</th>
 														<th class="title">Ghi chú</th>
-														{{-- <th class="title" style="width:75px;">Thao tác</th> --}}
+														<th class="title" style="width:75px;">Thao tác</th>
 													</tr>
 												</thead>
 												<tbody style="color: #748092; font-size: 14px;">
 													@foreach ( $orders as $order)
 													<tr>
 														<td><input type="checkbox" name="id[]" value="{{ $order->id }}"></td>
-														<td><a href="{{route('order.show', ['order' => $order->id])}}">{{$order->order_code}}</a></td>
+														<td><a target="_blank" href="{{route('order.viewPDF', ['order_code'=>$order->order_code])}}">{{$order->order_code}}</a></td>
 														<td>{{number_format($order->sub_total)}} đ</td>
 														<td>{!! orderStatus($order->status) !!}</td>
 														<td>{{ number_format($order->shipping_total) }} đ</td>
-														<td>{{ number_format($order->shipping_total + $order->tax) }} đ</td>
-														<td>{{ number_format($order->tax) }} đ</td>
 														<td>{{number_format($order->total)}} đ</td>
 														<td>{{ optional($order->order_info)->note }}</td>
 														{{-- <td>
@@ -165,6 +161,12 @@
 																@endif
 															</div>
 														</td> --}}
+														<td>
+															<a class="btn modal-edit-unit"
+															href="{{route('order.show', ['order' => $order->id])}}">
+															<i class="fas fa-pen"></i>
+														</a>
+														</td>
 													</tr>
 													@endforeach
 												</tbody>

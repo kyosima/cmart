@@ -1,0 +1,20 @@
+.info-order {
+    padding-left: 0;
+}
+
+.c-bill {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 35px 15px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+}
+
+.order-sign-body .order-sign p {
+    margin-bottom: 0;
+}
+
+.order-sign-body .order-sign {
+    padding-bottom: 55px;
+}

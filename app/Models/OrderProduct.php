@@ -46,6 +46,7 @@ class OrderProduct extends Model
 		'c_point',
 		'm_point',
 		'quantity',
+		'weight',
 		'discount',
 		'price',
 	];

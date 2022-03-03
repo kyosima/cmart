@@ -237,7 +237,13 @@
                 {
                     targets: 4,
                     render: function(data, type, row) {
-                        return `${row.product_price.tax*100}%`
+                        if(row.product_price.tax == 'KKK' || row.product_price.tax == 'KTT' ){
+                            return `${row.product_price.tax}`
+
+                        }else{
+                            return `${row.product_price.tax*100}%`
+
+                        }
                     }
                 },
                 {
