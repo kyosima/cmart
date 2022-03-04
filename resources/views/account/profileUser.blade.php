@@ -121,6 +121,8 @@
 
                                     </div>
                                 </div>
+                                <a href="{{route('ekyc.getVerify')}}" class="w-100 btn btn-info">Xác minh lại thông tin</a>
+
                             </div>
                         </div>
                         <hr class="my-4" />

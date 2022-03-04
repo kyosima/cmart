@@ -109,7 +109,7 @@
                 <div class="row">
                     <div class="col-md-12 col-12">
                         <p class="font-20 text-center  text-bold text-up">
-                            c-bill hóa đơn C-MART
+                            C-BILL HÓA ĐƠN C-MART
                             </b>
                             @php
                                 $user = $order->user()->first();
@@ -170,8 +170,14 @@
                                         <div class="order-title ">
                                             <h5 class="text-cap">cửa hàng
                                                 {{ $order_store->store()->value('name') }}</h4>
-                                                <h5> {{ formatMethod($order_store->shipping_method) }} @if ($order_store->shipping_type == 0)
-                                                        Tiêu chuẩn
+                                                <h5> {{ formatMethod($order_store->shipping_method) }}
+
+                                                    @if ($order_store->shipping_type == 0)
+                                                        @if ($order->shipping_method == 0)
+                                                            Nhận tại cửa hàng
+                                                        @else
+                                                            Tiêu chuẩn
+                                                        @endif
                                                     @else
                                                         Hỏa tốc
                                                     @endif
@@ -227,7 +233,11 @@
                                                                 <tr>
                                                                     <td>{{ $order_product->sku }}</td>
                                                                     <td>{{ $order_product->name }}@if ($order_vat->vat_company != null)
-                                                                            ({{ $order_vat->vat_company }},{{ $order_vat->vat_email }})
+                                                                            <br>
+                                                                            {{ $order_vat->vat_email }} <br>
+                                                                            {{ $order_vat->vat_company }} <br>
+                                                                            {{ $order_vat->vat_mst }}<br>
+                                                                            {{ $order_vat->vat_address }}
                                                                         @endif
                                                                     </td>
                                                                     <td>{{ $order_product->c_point }}</td>

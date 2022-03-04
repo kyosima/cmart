@@ -210,7 +210,7 @@
                                 <div class="form-vat">
                                     <div class="form-group">
                                         <!--<label for="">Tên người mua<sup class="text-danger">*</sup></label>-->
-                                        <input type="text" name="vat_email" class="form-control" value=""
+                                        <input type="email" name="vat_email" class="form-control" value=""
                                             placeholder="Mời nhập email nhận hóa đơn">
                                     </div>
                                     <div class="form-group">
@@ -486,6 +486,9 @@
                 $('select[name="sel_district"]').removeAttr('required');
                 $('select[name="sel_ward"]').removeAttr('required');
                 $('input[name="address"]').removeAttr('required');
+                $('input[name="fullname"]').removeAttr('required');
+                $('input[name="phone"]').removeAttr('required');
+
                 $('#btn-to-payment').removeAttr('disabled');
                 $('#in_store').val(1);
             }else{
@@ -493,6 +496,9 @@
                 $('select[name="sel_district"]').attr('required','true');
                 $('select[name="sel_ward"]').attr('required','true');
                 $('input[name="address"]').attr('required','true');
+                $('input[name="fullname"]').attr('required','true');
+                $('input[name="phone"]').attr('required','true');
+
                 $('#in_store').val(0);
 
             }

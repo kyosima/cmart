@@ -145,6 +145,7 @@ function removeRowCart(e) {
         success: function(response) {
             e.closest('.cart_item').remove();
             updateCheckout();
+            $('#store-b-' + storeid).remove();
 
         }
     });

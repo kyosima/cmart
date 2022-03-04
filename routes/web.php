@@ -18,6 +18,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\PaymentPaymeController;
 use Psy\VersionUpdater\Checker;
+use App\Http\Controllers\SendEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -116,6 +117,8 @@ Route::post('/nhap-mat-khau-moi', [HomeController::class, 'postResetPassword'])-
 // Route::resources([
 //     'san-pham' => ProductController::class
 // ]);
+
+Route::post('send-email-pdf', [SendEmailController::class, 'sendemail'])->name('share.CBill');
 
 Route::prefix('san-pham')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('san-pham.index');

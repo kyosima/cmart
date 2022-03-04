@@ -80,9 +80,16 @@ class CartController extends Controller
         $rowId = $_POST['rowid'];
         $storeid = $_POST['storeid'];
         Cart::instance($storeid)->remove($rowId);
-        return response()->json([
-            true
-        ], 200);
+        if(Cart::instance($storeid)->count() == 0 ){
+            return response()->json([
+                0
+            ], 200);
+        }else{
+            return response()->json([
+                1
+            ], 200);
+        }
+       
     }
 
     public function updateCheckout(Request $request)

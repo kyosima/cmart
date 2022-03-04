@@ -90,10 +90,10 @@ if (!function_exists('getTagSale')) {
 }
 if (!function_exists('getTaxValue')) {
     function getTaxValue($tax){
-        if($tax == 'KKK' || $tax = 'KTT'){
+        if($tax == 'KKK' || $tax == 'KTT'){
             return 0;
         }else{
-            return floatval($tax);
+            return $tax;
         }
     }
 }

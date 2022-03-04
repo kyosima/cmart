@@ -26,7 +26,7 @@
                                     <h3>ĐƠN VỊ THANH TOÁN</h3>
                                 </div>
                                 <div class="phuongthuc-thanhtoan-card-body">
-                                    <input type="hidden" name="payment_method" value="{{ $payment_method->id }}" data-url="{{ route('payment.Send.getInfo') }}">
+                                    <input type="hidden" name="payment_method" value="{{ $payment_method->id }}" data-url="{{ route('payment.getInfo') }}">
                                     <div class="row" id="list-payment-method-options">
                                         @foreach ($payment_method->options()->orderBy('id', 'asc')->get() as $payment_method_option)
                                             <div class="col-md-3 col-6">

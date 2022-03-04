@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-md-12 col-12">
                         <h4 class="text-center text-uppercase">
-                                C-BILL HÓA ĐƠN C-MART
+                            C-BILL - HÓA ĐƠN C-MART
                         </h4>
                         @php
                             $user = $order->user()->first();
@@ -30,7 +30,9 @@
                     <div class="col-md-12 col-12">
                         <ul class="info-order">
                             <li>Thời gian đặt hàng: {{ date('H:i:s d/m/Y', strtotime($order->created_at)) }}</li>
-                            <li>Người đặt: {{ $user->hoten }} - {{ $user->phone }} - {{formatLevel($user->level)}}</li>
+                            <li>Người đặt: {{ $user->hoten }} - {{ $user->phone }} -
+                                {{ formatLevel($user->level) }}
+                            </li>
                             <li>Người nhận:
                                 <div>
                                     <table class="table table-bordered text-center">
@@ -68,8 +70,13 @@
                                     <div class="c-bill-order" id="store{{ $order_store->id_store }}">
                                         <div class="order-title ">
                                             <h4>Cửa hàng {{ $order_store->store()->value('name') }}</h4>
-                                            <h5> {{ formatMethod($order_store->shipping_method) }} @if ($order_store->shipping_type == 0)
-                                                    Tiêu chuẩn
+                                            <h5> {{ formatMethod($order_store->shipping_method) }}
+                                                @if ($order_store->shipping_type == 0)
+                                                    @if ($order->shipping_method == 0)
+                                                        Nhận tại cửa hàng
+                                                    @else
+                                                        Tiêu chuẩn
+                                                    @endif
                                                 @else
                                                     Hỏa tốc
                                                 @endif
@@ -125,7 +132,11 @@
                                                                 <tr>
                                                                     <td>{{ $order_product->sku }}</td>
                                                                     <td>{{ $order_product->name }}@if ($order_vat->vat_company != null)
-                                                                            ({{ $order_vat->vat_company }},{{ $order_vat->vat_email }})
+                                                                            <br>
+                                                                            {{ $order_vat->vat_email }} <br>
+                                                                            {{ $order_vat->vat_company }} <br>
+                                                                            {{ $order_vat->vat_mst }}<br>
+                                                                            {{ $order_vat->vat_address }}
                                                                         @endif
                                                                     </td>
                                                                     <td>{{ $order_product->c_point }}</td>
@@ -273,7 +284,8 @@
                         <div class="col-md-12 col-12 text-center">
                             <p> --------------------------------------------------------------------------------------------------------------------------
                             </p>
-                            <p class="text-justify"> Bằng cách giao dịch với C-Mart, Quý Khách đồng ý ghi nợ khoản giá trị đặt cọc cho
+                            <p class="text-justify"> Bằng cách giao dịch với C-Mart, Quý Khách đồng ý ghi nợ khoản giá
+                                trị đặt cọc cho
                                 C-Mart. Giá
                                 trị
                                 Đặt cọc sẽ trở thành Giá trị Trả trước (trong giao dịch thành công); hoặc Giá trị Bồi

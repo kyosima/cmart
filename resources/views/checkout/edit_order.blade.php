@@ -300,13 +300,18 @@
                 $('select[name="sel_district"]').removeAttr('required');
                 $('select[name="sel_ward"]').removeAttr('required');
                 $('input[name="address"]').removeAttr('required');
+                $('input[name="fullname"]').removeAttr('required');
+                $('input[name="phone"]').removeAttr('required');
+
                 $('#btn-to-payment').removeAttr('disabled');
                 $('#in_store').val(1);
-            } else {
-                $('select[name="sel_province"]').attr('required', 'true');
-                $('select[name="sel_district"]').attr('required', 'true');
-                $('select[name="sel_ward"]').attr('required', 'true');
-                $('input[name="address"]').attr('required', 'true');
+            }else{
+                $('select[name="sel_province"]').attr('required','true');
+                $('select[name="sel_district"]').attr('required','true');
+                $('select[name="sel_ward"]').attr('required','true');
+                $('input[name="address"]').attr('required','true');
+                $('input[name="fullname"]').attr('required','true');
+                $('input[name="phone"]').attr('required','true');
                 $('#in_store').val(0);
 
             }

@@ -34,8 +34,25 @@
                                                     name="payment_method" value="{{ $payment_method->id }}"
                                                     @if ($payment_method->id == 1 && $point_c->point_c < $order->total) disabled @endif
                                                     @if ($payment_method->id == 3) checked @endif>
-                                                <label
-                                                    for="pay{{ $payment_method->id }}">{{ $payment_method->name }}</label>
+                                                <label for="pay{{ $payment_method->id }}">{{ $payment_method->name }}
+                                                    @if ($payment_method->has_options == 1)
+                                                        (
+                                                        @php 
+                                                            $count = 0;
+                                                        @endphp
+                                                        @foreach ($payment_method->options()->get() as $payment_option)
+                                                            @php 
+                                                                $count++;
+                                                            @endphp
+                                                            @if ($count == $payment_method->options()->count())
+                                                                {{ $payment_option->name }}
+                                                            @else
+                                                                {{ $payment_option->name }},
+                                                            @endif
+                                                        @endforeach
+                                                        )
+                                                    @endif
+                                                </label>
                                             </div>
                                         @endif
                                     @endforeach
@@ -163,7 +180,9 @@
                 </div>
                 <div class="col-12">
                     <div class="d-flex justify-content-between">
-                        <a class="btn-back-cart" href="{{route('checkout.edit', ['order_code'=>$order->order_code])}}">Quay lại trang trước</a>
+                        <a class="btn-back-cart"
+                            href="{{ route('checkout.edit', ['order_code' => $order->order_code]) }}">Quay lại trang
+                            trước</a>
                         <button class="btn-dathang" type="submit">Tổng kết đơn hàng</button>
                     </div>
                 </div>

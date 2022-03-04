@@ -24,7 +24,7 @@
                                 $cart = Cart::instance($store->id);
                             @endphp
                             @if ($cart->count() > 0)
-                                <div class="cart-block">
+                                <div class="cart-block" id="store-b-{{ $store->id }}">
                                     <div class="store-title">
                                         <input type="checkbox" id="store-{{ $store->id }}" value="{{ $store->id }}">
                                         <label for="store-{{ $store->id }}">Cửa hàng

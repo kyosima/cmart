@@ -118,10 +118,11 @@ class CheckoutController extends Controller
             $user_id = $user->id;
         }
         if ($request->in_store == 1) {
-            $validation = $request->validate([
-                'fullname' => 'required',
-                'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/']
-            ]);
+            $order_info = new OrderInfo();
+
+            $order_info->fullname = $user->hoten;
+            $order_info->phone = $user->phone;
+            $order_info->note = $request->note;
             $order_address = new OrderAddress();
             $order_address->id_province = $user->id_tinhthanh;
             $order_address->id_district = $user->id_quanhuyen;
@@ -143,6 +144,10 @@ class CheckoutController extends Controller
                 'sel_ward.required' => 'Vui lòng chọn phường/xã',
                 'address.required' => 'Địa chỉ không được để trống'
             ]);
+            $order_info = new OrderInfo();
+            $order_info->fullname = $request->fullname;
+            $order_info->phone = $request->phone;
+            $order_info->note = $request->note;
             $order_address = new OrderAddress();
             $order_address->id_province = $request->sel_province;
             $order_address->id_district = $request->sel_district;
@@ -210,6 +215,7 @@ class CheckoutController extends Controller
                         break;
                 }
                 $vat_products += $row->price * getTaxValue($price->tax) * $row->qty;
+
                 if (in_array(Auth::user()->level, [3, 4])) {
                     $price->cpoint = 0;
                     $price->mpoint = 0;
@@ -305,10 +311,7 @@ class CheckoutController extends Controller
 
         $order->order_address()->save($order_address);
 
-        $order_info = new OrderInfo();
-        $order_info->fullname = $request->fullname;
-        $order_info->phone = $request->phone;
-        $order_info->note = $request->note;
+       
         $order->order_info()->save($order_info);
         Session::put('edit_order', $order->order_code);
 
@@ -351,10 +354,10 @@ class CheckoutController extends Controller
         $order = Order::whereOrderCode($request->order_code)->first();
 
         if ($request->in_store == 1) {
-            $validation = $request->validate([
-                'fullname' => 'required',
-                'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/']
-            ]);
+            $order_info = $order->order_info()->first();
+            $order_info->fullname = $user->hoten;
+            $order_info->phone = $user->phone;
+            $order_info->note = $request->note;
             $order_address = $order->order_address()->first();
             $order_address->id_province = $user->id_tinhthanh;
             $order_address->id_district = $user->id_quanhuyen;
@@ -376,6 +379,10 @@ class CheckoutController extends Controller
                 'sel_ward.required' => 'Vui lòng chọn phường/xã',
                 'address.required' => 'Địa chỉ không được để trống'
             ]);
+            $order_info = $order->order_info()->first();
+            $order_info->fullname = $request->fullname;
+            $order_info->phone = $request->phone;
+            $order_info->note = $request->note;
             $order_address = $order->order_address()->first();
             $order_address->id_province = $request->sel_province;
             $order_address->id_district = $request->sel_district;
@@ -443,6 +450,7 @@ class CheckoutController extends Controller
                         $store_shipping_total += $row->options->price_normal;
                         break;
                 }
+            
                 $vat_products += $row->price * getTaxValue($price->tax) * $row->qty;
                 if (in_array(Auth::user()->level, [3, 4])) {
                     $price->cpoint = 0;
@@ -536,10 +544,7 @@ class CheckoutController extends Controller
 
         // $order->order_address()->save($order_address);
         $order_address->save();
-        $order_info = $order->order_info()->first();
-        $order_info->fullname = $request->fullname;
-        $order_info->phone = $request->phone;
-        $order_info->note = $request->note;
+        
         $order_info->save();
 
         // Session::forget('store_ids');
@@ -678,7 +683,7 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $payment_method = PaymentMethod::whereId($request->payment_method)->first();
-        return view('checkout.payment.payment_send', compact('payment_method', 'order'));
+        return view('checkout.payment.payment_nap', compact('payment_method', 'order'));
     }
     public function postPaymentDeposit(Request $request)
     {
