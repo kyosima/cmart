@@ -78,7 +78,7 @@
                                                                 href="{{ url('/xac-thuc-ho-so') }}">Thông tin
                                                                 HSKH</a>
                                                             <a class="dropdown-item text-dark"
-                                                                href="{{ url('/lichsu') }}">Lịch sử
+                                                                href="{{ route('order.history')}}">Lịch sử
                                                                 đơn
                                                                 hàng</a>
                                                             <a class="dropdown-item text-dark"

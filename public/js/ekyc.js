@@ -16,6 +16,7 @@ var loadFile2 = function(event) {
 };
 let camera_button = document.querySelector("#start-camera");
 let click_button = document.querySelector("#click-photo");
+let confirm_image = document.querySelector("#confirm-image")
 let live_cam = document.querySelector(".live_cam");
 let tool_kyc = document.querySelector('.tool-ekyc');
 let block_front = document.querySelector(".verify_image_front");
@@ -153,6 +154,8 @@ function confirmImage() {
         } else {
             status_front.value = 1;
             block_back.style.display = 'block';
+            confirm_image.text('Xác nhận hình ảnh mặt sau GTTT');
+            click_button.text('Mời chụp mặt sau giấy tờ tuỳ thân');
         }
     } else if (status_back.value == 0) {
         if (result_back.value == '') {
@@ -160,6 +163,8 @@ function confirmImage() {
         } else {
             status_back.value = 1;
             block_portrait.style.display = 'block';
+            confirm_image.text('Xác nhận hình ảnh khuôn mặt');
+            click_button.text('Mời chụp ảnh khuôn mặt');
         }
     } else if (status_portrait.value == 0) {
         if (result_portrait.value == '') {

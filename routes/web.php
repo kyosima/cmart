@@ -170,7 +170,7 @@ Route::post('/thong-tin-tai-khoan', [HomeController::class, 'postProfile']);
 
 Route::get('/xac-thuc-ho-so', [HomeController::class, 'getXacthuc']);
 
-Route::get('/lichsu', [HomeController::class, 'getLichsu']);
+Route::get('/lich-su-don-hang', [HomeController::class, 'getLichsu'])->name('order.history');
 
 Route::prefix('/lich-su-tien-tich-luy')->group(function () {
     Route::get('/', [CPointController::class, 'index'])->name('account.cpoint_history');
