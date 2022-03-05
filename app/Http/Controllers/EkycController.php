@@ -11,8 +11,7 @@ class EkycController extends Controller
     public function getVerifyAccount()
     {
         $user = Auth::user();
-            return view('ekyc.verify_account');
-       
+        return view('ekyc.verify_account');
     }
 
     public function postVerifyAccount(Request $request)
@@ -21,31 +20,54 @@ class EkycController extends Controller
         $image_back = $request->image_back;
         $image_portrait = $request->image_portrait;
         $result_recognition = json_decode($this->postRecognition($image_front));
-        if ($result_recognition->name != "N/A") {
-            $result_verify =  json_decode($this->postVerification($image_front, $image_portrait));
-            switch ($result_verify->verify_result) {
-                case 0:
-                    return back()->with(['message' => 'Hệ thống đối chiếu thông tin không khớp. Quý Khách Hàng vui lòng thực hiện lại']);
-                    break;
-                case 1:
-                    return back()->with(['message' => 'Hệ thống đối chiếu thông tin không khớp. Quý Khách Hàng vui lòng thực hiện lại']);
-                    break;
-                case 2:
-                    $user = Auth::user();
-                    $user->is_ekyc = 1;
-                    $user->hoten = $result_recognition->name;
-                    $user->cmnd = $result_recognition->id;
-                    $user->type_cmnd = $request->type_cmnd;
-                    $user->cmnd_image = $image_front;
-                    $user->cmnd_image2 = $image_back;
-                    $user->avatar = $image_portrait;
-                    $user->save();
+        if ($result_recognition->result_code == 200) {
+            if (count($result_recognition->warning) <2) {
+                $result_verify =  json_decode($this->postVerification($image_front, $image_portrait));
+                switch ($result_verify->verify_result) {
+                    case 0:
+                        return back()->with(['message' => 'Hệ thống đối chiếu thông tin không khớp. Quý Khách Hàng vui lòng thực hiện lại']);
+                        break;
+                    case 1:
+                        return back()->with(['message' => 'Hệ thống đối chiếu thông tin không khớp. Quý Khách Hàng vui lòng thực hiện lại']);
+                        break;
+                    case 2:
+                        $user = Auth::user();
+                        $user->is_ekyc = 1;
+                        $user->hoten = $result_recognition->name;
+                        $user->cmnd = $result_recognition->id;
+                        $user->type_cmnd = $request->type_cmnd;
+                        $user->cmnd_image = $image_front;
+                        $user->cmnd_image2 = $image_back;
+                        $user->avatar = $image_portrait;
+                        $user->save();
 
-                    return back()->with(['message' => 'Tài khoản đã được xác minh thành công']);
-                    break;
+                        return back()->with(['message' => 'Tài khoản đã được xác minh thành công']);
+                        break;
+                }
+            } else {
+                foreach ($result_recognition->warning as $warning) {
+                    switch ($warning) {
+                        case 'giay_to_co_do_phan_giai_thap':
+                            return back()->with(['message' => 'Giấy tờ có độ phân giải thấp']);
+                        case 'giay_to_bi_mo':
+                            return back()->with(['message' => 'Giấy tờ có bị mờ']);
+                        case 'giay_to_bi_choi_sang':
+                            return back()->with(['message' => 'Giấy tờ bị chói sáng']);
+                        case 'chung_minh_nhan_dan_bi_mat_goc':
+                            return back()->with(['message' => 'Chứng minh nhân dân bị mất góc']);
+                        case 'thong_tin_bi_che_khuat':
+                            return back()->with(['message' => 'Thông tin giấy tờ bị che khuất']);
+                        case 'giay_to_qua_han':
+                            return back()->with(['message' => 'Giấy tờ tùy thân bị hết hạn']);
+                        case 'so_cmnd_cmnd_khong_hop_le':
+                            return back()->with(['message' => 'Số CMND, CCCD không hợp lệ']);
+                        case 'anh_giay_to_la_anh_photo':
+                            return back()->with(['message' => 'Ảnh giấy tờ là ảnh photo']);
+                    }
+                }
             }
         } else {
-            return back()->with(['message' => 'Hệ thống đối chiếu thông tin không khớp. Quý Khách Hàng vui lòng thực hiện lại']);
+            return back()->with(['message' => $result_recognition->result_message]);
         }
     }
 

@@ -150,25 +150,25 @@ function confirmImage() {
     // status_portrait = document.querySelector("#status-portrait");
     if (status_front.value == 0) {
         if (result_front.value == '') {
-            alert('Bạn chưa chụp ảnh mặt trước hồ sơ');
+            alert('Bạn chưa chụp ảnh mặt trước giấy tờ tùy thân');
         } else {
             status_front.value = 1;
             block_back.style.display = 'block';
-            confirm_image.text('Xác nhận hình ảnh mặt sau GTTT');
-            click_button.text('Mời chụp mặt sau giấy tờ tuỳ thân');
+            confirm_image.textContent = 'Xác nhận hình ảnh mặt sau GTTT';
+            click_button.textContent = 'Mời chụp mặt sau giấy tờ tuỳ thân';
         }
     } else if (status_back.value == 0) {
         if (result_back.value == '') {
-            alert('Bạn chưa chụp ảnh mặt trước hồ sơ');
+            alert('Bạn chưa chụp ảnh mặt sau giấy tờ tùy thân');
         } else {
             status_back.value = 1;
             block_portrait.style.display = 'block';
-            confirm_image.text('Xác nhận hình ảnh khuôn mặt');
-            click_button.text('Mời chụp ảnh khuôn mặt');
+            confirm_image.textContent = 'Xác nhận hình ảnh khuôn mặt';
+            click_button.textContent = 'Mời chụp ảnh khuôn mặt';
         }
     } else if (status_portrait.value == 0) {
         if (result_portrait.value == '') {
-            alert('Bạn chưa chụp ảnh mặt trước hồ sơ');
+            alert('Bạn chưa chụp ảnh khuôn mặt');
         } else {
             status_portrait.value = 1;
             tool_kyc.style.display = 'none';

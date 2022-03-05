@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-center">
-                <div class="col-lg-6 col-md-6 col-12">
+                <div class="col-lg-8 col-md-8 col-12">
                     <div class="verify_image_front">
                         <input id="image-front" type="hidden" name="image_front">
                         <input id="status-front" type="hidden" name="status_front" value="0">
@@ -83,7 +83,7 @@
                         <canvas id="preview-portrait" width="800px" height="600px" max-width="100%"></canvas>
                     </div>
                     <div class="tool-ekyc">
-                        <div class="d-flex justify-content-around">
+                        <div class="d-flex justify-content-between">
                             <button id="click-photo" class="btn btn-danger w-100" type="button">Mời chụp mặt trước giấy tờ tùy thân</button>
                             <button id="confirm-image" type="button" class="btn btn-primary w-100"
                                 onclick="confirmImage()">Xác nhận hình ảnh mặt trước GTTT</button>
@@ -93,7 +93,7 @@
 
                 <div class="live_cam">
                     <video id="video" autoplay playsInline></video>
-                    <div class="d-md-none d-flex justify-content-around">
+                    <div class="d-md-none d-flex justify-content-between">
                         <button id="btn-front" class="btn btn-secondary" type="button">Camera trước</button>
                         <button id="btn-back" class="btn btn-secondary" type="button">Camera sau</button>
                     </div>
