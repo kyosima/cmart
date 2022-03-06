@@ -41,11 +41,12 @@
                                                 <b>Ảnh</b>
                                             </div>
 
-                                            <div class="col-lg-4 col-md-4 col-xs-12 text-center">
-                                                <b>Tên sản phẩm</b>
-                                            </div>
+                                            
                                             <div class="col-lg-1 col-md-2 col-xs-12 text-center">
                                                 <b>Mã sản phẩm</b>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-xs-12 text-center">
+                                                <b>Tên sản phẩm</b>
                                             </div>
                                             @if (!in_array(Auth::user()->level, [3, 4]))
                                                 <div class="col-lg-1 col-md-2 col-xs-3 text-center">
@@ -75,15 +76,16 @@
                                                             class="w-50">
                                                     </a>
                                                 </div>
-                                                <div
-                                                    class="col-lg-4 col-md-4 col-12 d-flex align-items-center justify-content-center">
-                                                    <a href="{{ route('san-pham.show', $row->model->slug) }}"
-                                                        class="cart-item-name">{{ $row->name }}</a>
-                                                </div>
+                                               
                                                 <div
                                                     class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
                                                     <span> {{ $row->model->sku }}</span>
                                                 </div>
+                                                <div
+                                                class="col-lg-4 col-md-4 col-12 d-flex align-items-center justify-content-center">
+                                                <a href="{{ route('san-pham.show', $row->model->slug) }}"
+                                                    class="cart-item-name">{{ $row->name }}</a>
+                                            </div>
                                                 @if (!in_array(Auth::user()->level, [3, 4]))
                                                     <div
                                                         class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">

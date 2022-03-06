@@ -16,5 +16,11 @@
 }
 
 .order-sign-body .order-sign {
-    padding-bottom: 55px;
+    padding-bottom: 155px;
+}
+.order-footer p, .order-sign p{
+    margin-bottom: 0;
+}
+.order-footer .d-md-flex >div{
+    padding-bottom: 20px ;
 }

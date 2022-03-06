@@ -175,7 +175,10 @@ class CheckoutController extends Controller
         $total_remaining_m_point = 0;
         $sub_total = 0;
         $total = 0;
-        $order->order_code = 'CMART-' . $order->id . time();
+        $time = (string)date('Y-m-d-H-i-s');
+        $order_code = str_replace('-', '', $time) ;
+
+        $order->order_code =$order_code;
         $count_store = 0;
 
         foreach (explode(",", $store_ids) as $store_id) {
@@ -271,7 +274,6 @@ class CheckoutController extends Controller
             $order_store->vat_products = $vat_products;
             $order_store->sub_total = intval(str_replace(",", "", $cart->subtotal())) + 300;
             $order_store->total = $order_store->sub_total + $vat_products + $vat_services;
-            $time = (string)date('Y-m-d-H-i-s');
             $order_store_code = str_replace('-', '', $time) . '-' . '00'. $count_store;
             $order_store->order_store_code = $order_store_code;
             $order_store->save();
@@ -678,7 +680,6 @@ class CheckoutController extends Controller
     {
 
         $order = Order::whereOrderCode($request->order_code)->first();
-
         if ($order->status > 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
@@ -687,6 +688,7 @@ class CheckoutController extends Controller
     }
     public function postPaymentDeposit(Request $request)
     {
+
         $validation = $request->validate([
             'payment_option' => 'required',
 
@@ -694,6 +696,9 @@ class CheckoutController extends Controller
             'payment_option.required' => "Mời chọn đơn vị thanh toán",
         ]);
         $order = Order::whereOrderCode($request->order_code)->first();
+        if ($order->status > 0) {
+            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
+        }
         $order->payment_method_option = $request->payment_option;
         $order->save();
         $this->processOrder($order);
@@ -720,6 +725,9 @@ class CheckoutController extends Controller
             'payment_option.required' => "Mời chọn đơn vị thanh toán",
         ]);
         $order = Order::whereOrderCode($request->order_code)->first();
+        if ($order->status > 0) {
+            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
+        }
         $order->payment_method_option = $request->payment_option;
         $order->save();
         $this->processOrder($order);
@@ -751,6 +759,9 @@ class CheckoutController extends Controller
 
         $user = Auth::user();
         $order = Order::whereOrderCode($request->order_code)->first();
+        if ($order->status > 0) {
+            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
+        }
         $image_portrait = $request->image_portrait;
         $ekycController = new EkycController();
         $result_verify =  json_decode($ekycController->postVerification($user->cmnd_image, $image_portrait));
@@ -762,6 +773,8 @@ class CheckoutController extends Controller
                 return back()->with(['message' => 'Hệ thống không xác minh được danh tính. Vui lòng liên hệ Hotline 0899.663.883 để được hỗ trợ']);
                 break;
             case 2:
+                $time = (string)date('Y-m-d-H-i-s');
+                $transaction_code = str_replace('-', '', $time) ;
                 $this->processOrder($order);
                 $user_receiver = User::whereCodeCustomer('202201170001')->first();
                 $lichsu_chuyen = new PointCHistory;
@@ -771,7 +784,7 @@ class CheckoutController extends Controller
                 $lichsu_chuyen->point_past_nhan = $point_c_receiver->point_c;
                 $lichsu_chuyen->point_present_nhan = $point_c_receiver->point_c + $order->total;
                 $lichsu_chuyen->makhachhang = $user_receiver->code_customer;
-                $transaction_code = time();
+                $transaction_code = $transaction_code;
                 $lichsu_chuyen->note = 'Da thanh toan GD ' . $transaction_code;
                 $lichsu_chuyen->magiaodich =  $transaction_code;
                 $lichsu_chuyen->amount = $order->total;

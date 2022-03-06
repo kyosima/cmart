@@ -156,11 +156,12 @@
                             </div>
                             <div class="text-center">
                                 <p>Tổng Giảm giá Dịch vụ</p>
+                                <p style="visibility:hidden">s</p>
                                 <p>{{ formatPrice($order->m_point) }}</p>
                             </div>
                             <div class="text-center">
                                 <p>Giá trị thanh toán Dịch vụ</p>
-                                <p><small>(Đã bao gồm thuế VAT 8%)</small></p>
+                                <p><small>(Đã bao gồm thuế VAT 8%)<br><b>=Số M cần tìm thêm để miễn phí dịch vụ</b></small></p>
                                 <p>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) }}
                                 </p>
                             </div>
@@ -180,7 +181,7 @@
                                 <p>{{ formatNumber($order->c_point) }}</p>
                             </div>
                             <div class="text-center">
-                                <p>Số dư M còn lại</p>
+                                <p><b>Số dư M còn lại</b></p>
                                 <p>{{ formatNumber($order->remaining_m_point) }}</p>
                             </div>
                         </div>
@@ -193,14 +194,14 @@
                             </div>
                             <div class="text-center">
                                 <p>Thuế GTGT Dịch vụ</p>
-                                <p>{{ formatPrice($order->vat_services / 1.08) }}</p>
+                                <p>{{ formatPrice((max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) - (max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08)) }}</p>
                             </div>
                             <div class="text-center">
                                 <p>Tổng Thuế GTGT</p>
                                 <p>{{ formatPrice($order->vat_products + $order->vat_services) }}</p>
                             </div>
                             <div class="text-center">
-                                <h5>Giá trị giao dịch</h5>
+                                <p>Giá trị giao dịch</p>
                                 <b>{{ formatPrice($order->total) }}</b>
                             </div>
 
@@ -400,7 +401,7 @@
                             ...
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                         </div>
                     </div>
                 </div>

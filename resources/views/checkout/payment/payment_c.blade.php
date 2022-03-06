@@ -17,26 +17,29 @@
             <input type="hidden" name="order_code" value="{{ $order->order_code }}">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-12">
-                    <h4 class="text-center">XÁC THỰC THANH TOÁN TIỀN TÍCH LŨY CÙNG C-MART mới đúng </h4>
+                    <h4 class="text-center">XÁC THỰC THANH TOÁN TIỀN TÍCH LŨY CÙNG C-MART</h4>
                 </div>
+            </div>
+            <div class="row div col-12">
+                @include('order_tracking.c_bill', [
+                    'order' => $order,
+                ])
             </div>
 
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="verify_image_portrait">
-                        <label for="">Mời bạn chụp ảnh chân dung</label>
                         <input id="image-portrait" type="hidden" name="image_portrait">
                         <input id="status-portrait" type="hidden" name="status_portrait" value="0">
                         <canvas id="preview-portrait" width="800px" height="600px" max-width="100%"></canvas>
                     </div>
                     <div class="row tool-ekyc">
                         <div class="col-lg-6 col-md-6 col-12">
-                            <button id="click-photo" class="btn btn-danger w-100" type="button">Chụp ảnh</button>
+                            <button id="click-photo" class="btn btn-danger w-100" type="button">Mời chụp ảnh khuôn mặt</button>
                         </div>
                         <div class="col-lg-6 col-md-6 col-12">
                             <button id="confirm-image" type="button" class="btn btn-primary w-100"
-                                onclick="confirmImage()">Chọn
-                                ảnh</button>
+                                onclick="confirmImage()">Xác nhận hình ảnh khuôn mặt</button>
                         </div>
                     </div>
                     <div class="live_cam">

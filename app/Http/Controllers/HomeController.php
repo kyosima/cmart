@@ -421,9 +421,10 @@ class HomeController extends Controller
     public function getLichsu()
     {
         if (Auth::check()) {
-            $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
-                ->where('orders.user_id', '=', auth()->user()->id)->select('orders.*')->latest()->get();
-            return view('account.lichsu', compact('orders'));
+            $user = Auth::user();
+            $orders = $user->orders()->latest()->get();
+            $orders_month = $user->orders()->whereMonth('created_at', Carbon::today()->month)->orderBy('id', 'DESC')->get();
+            return view('account.lichsu', compact('orders','orders_month'));
         } else {
             return redirect('tai-khoan')->with('thongbao', 'Bạn chưa đăng nhập!');
         }

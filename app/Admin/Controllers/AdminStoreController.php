@@ -141,10 +141,13 @@ class AdminStoreController extends Controller
     public function storeProduct(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'quantity' => 'required',
+            'quantity' => 'min:0|required',
             'for_user' => 'required',
-        ]);
-        
+        ],
+    [
+        'quantity.min:0'=>'Số lượng tồn kho lớn hơn 0'
+    ]);
+    
         if($validator->fails()){
             return response()->json([
                 'error' => $validator->errors(),

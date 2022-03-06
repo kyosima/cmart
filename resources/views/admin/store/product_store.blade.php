@@ -104,8 +104,15 @@
         function postCampaign(e) {
             id = $(e).data('value');
             var url = $(`#product-box-${id} .form`).attr('action');
-            
-            $.ajax({
+            if($(`#product-box-${id} .form input[name=quantity]`).val() <0){
+                $.toast({
+                        heading: 'Thất bại',
+                        text: `Số lượng tồn kho phải lớn hơn hoặc bằng 0`,
+                        position: 'top-right',
+                        icon: 'error'
+                    });
+            }else{
+                $.ajax({
                 type: "POST",
                 url: url,
                 data: {
@@ -136,6 +143,8 @@
                     $(`#product-box-${id} .notice-k p`).text('Cập nhật thành công');
                 }
             });
+            }
+            
         }
     </script>
 </div>

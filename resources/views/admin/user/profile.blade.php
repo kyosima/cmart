@@ -93,27 +93,42 @@
                             @endif
                         </div>
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
-                                                                        <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
-                                                                        <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
+                                                                                    <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
+                                                                                    <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
                         <div class="row">
                             <div class="col-4">
                                 <button class="alert alert-success m-0 text-center"
-                                    style="width: 85%;border-radius: 40px; background: orangered; color: white;">Số đơn hàng
-                                    đã hoàn thành: {{ $sodonhang }}</button>
+                                    style="width: 85%;border-radius: 40px; background: orangered; color: white;">Đơn hàng
+                                    hoàn thành: {{ $sodonhang }}</button>
                             </div>
                             <!-- <div class="col-4">
-                                                                            <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
-                                                                            </div> -->
+                                                                                        <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
+                                                                                        </div> -->
                             <div class="col-4">
                                 <button class="alert alert-success m-0 text-center"
                                     style="width: 85%;border-radius: 40px; background: rgb(255, 0, 21); color: white;">
-                                    Số đơn hàng hủy:
+                                    Đơn hàng hủy:
                                     {{ formatNumber($user->orders()->where('status', 5)->count()) }}</button>
                             </div>
                             <div class="col-4">
                                 <button class="alert alert-warning m-0"
                                     style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C:
                                     {{ formatNumber($pointC) }}</button>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-around">
+                            <div class="col-md-4 col-12">
+                                <button class="alert alert-success m-0 text-center"
+                                    style="border-radius: 40px; background: rgb(0, 139, 23); color: white;">
+                                    Đơn hàng hoàn thành/tháng:
+                                    {{ formatNumber($order_done_month) }}</button>
+                            </div>
+
+                            <div class="col-md-4 col-12">
+                                <button class="alert alert-success m-0 text-center"
+                                    style="border-radius: 40px; background: rgb(0, 26, 5); color: white;">
+                                    Đơn hàng hủy/tháng:
+                                    {{ formatNumber($order_cancel_month) }}</button>
                             </div>
                         </div>
 
@@ -136,8 +151,8 @@
                                         <input type="phone" class="form-control mb-2" name="phone"
                                             placeholder="Nhập số điện thoại" value="{{ $user->phone }}">
                                         <!-- <span class="text-uppercase">Email</span>
-                                                                                    <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
-                                                                                        value="{{ $user->email }}" readonly=""> -->
+                                                                                                <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
+                                                                                                    value="{{ $user->email }}" readonly=""> -->
                                     </div>
 
                                     <div class="col-lg-4 text-start">
@@ -369,13 +384,16 @@
                                                         <tbody>
                                                             @foreach ($user->orders()->latest()->get()
         as $order)
-                                                                <tr style="text-align:center">
-                                                                    <td>{{ $order->order_code }}</td>
-                                                                    <td>{!! orderStatus($order->status) !!}</td>
-                                                                    <td><a href="{{ route('order.show', ['order' => $order->id]) }}"
-                                                                            class="btn btn-info">Chi tiết</a></td>
-                                                                    <td></td>
-                                                                </tr>
+                                                                @foreach ($order->order_stores()->get() as $order_store)
+                                                                    <tr style="text-align:center">
+                                                                        <td>{{ $order_store->order_store_code }}</td>
+                                                                        <td>{!! orderStatus($order->status) !!}</td>
+                                                                        <td><a target="_blank"
+                                                                                href="{{ route('order.viewPDF', ['order_code' => $order->order_code]) }}"
+                                                                                class="btn btn-info">Chi tiết</a></td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                @endforeach
                                                             @endforeach
                                                             <!-- and so on... -->
                                                         </tbody>

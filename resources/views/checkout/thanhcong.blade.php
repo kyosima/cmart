@@ -226,7 +226,7 @@
                             <div class="form-group">
                                 <input type="hidden" name="order_code" value="{{ $order->order_code }}">
                                 <input type="email" name="email" class="form-control"
-                                    placeholder="Mời nhập Email cần chia sẽ" required>
+                                    placeholder="Mời nhập Email cần chia sẻ" required>
                             </div>
                             <div class="notice-email alert alert-success m-0 text-center">
                                 <p class="m-0"></p>

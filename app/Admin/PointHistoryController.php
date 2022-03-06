@@ -40,7 +40,7 @@ class PointHistoryController extends Controller
     }
 
     public function chuyenkhoan() {
-        $listHistory = PointCHistory::where('type','=',3)->get();
+        $listHistory = PointCHistory::where('type','=',3)->latest()->get();
         $this->tinhdiemtietkiem();
         $user = User::find(1)->with('point_c')->first();
         return view('admin.history.chuyenkhoan',['listHistory' => $listHistory,
@@ -58,7 +58,7 @@ class PointHistoryController extends Controller
     }
 
     public function tichluy() {
-        $listHistory = PointCHistory::where('type','=',1)->get();
+        $listHistory = PointCHistory::where('type','=',1)->latest()->get();
         $this->tinhdiemtietkiem();
         $user = User::find(1)->with('point_c')->first();
         return view('admin.history.tichluy',[

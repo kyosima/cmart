@@ -18,7 +18,17 @@
                 <div class="col-12">
                     <div class="text-center">
                         <h3>THANH TOÁN NẠP TIỀN</h3>
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul style="list-style: none">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                     </div>
+                    
                     <div class="result-order">
                         <div class="row">
                             <div class="col-md-6 col-12">
@@ -26,6 +36,8 @@
                                     <h3>ĐƠN VỊ THANH TOÁN</h3>
                                 </div>
                                 <div class="phuongthuc-thanhtoan-card-body">
+                                    <input type="hidden" name="order_code" value="{{ $order->order_code }}">
+
                                     <input type="hidden" name="payment_method" value="{{ $payment_method->id }}" data-url="{{ route('payment.getInfo') }}">
                                     <div class="row" id="list-payment-method-options">
                                         @foreach ($payment_method->options()->orderBy('id', 'asc')->get() as $payment_method_option)

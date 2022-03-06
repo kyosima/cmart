@@ -271,13 +271,13 @@
             <div class="box-contacth">
                 <b class="d-flex align-items-center justify-content-center"><img
                         src="{{ asset('/public/image/email.png') }}" alt=""><a
-                        href="mailto:hotro@cm.com.vn">hotro@cm.com.vn</a></b>
-                <small>Kênh dành cho Đối Tác</small>
+                        href="mailto:center@cm.com.vn">center@cm.com.vn</a></b>
+                <small>Kênh dành cho Tổ chức</small>
 
             </div>
         </div>
         <div class="text-center">
-            <h5 class="store-system-hello"><b> Hệ thống các kênh Cửa hàng C-Store </b></h5>
+            <h5 class="store-system-hello"><a href="https://cm.com.vn/chinh-sach/he-thong-kenh-cua-hang-c-store"><b> Hệ thống các kênh Cửa hàng C-Store </b></a></h5>
             <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách Hàng</p>
         </div>
     </div>

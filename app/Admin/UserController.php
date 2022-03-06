@@ -101,10 +101,12 @@ class UserController extends Controller
         $addDate = Carbon::now();
 
         $history_chuyen = PointCHistory::where('point_c_idchuyen','=',$user->id)->where('type','=',1)->get();
+        $order_done_month = $user->orders()->whereMonth('created_at', Carbon::today()->month)->where('status', 4)->count();
+        $order_cancel_month = $user->orders()->whereMonth('created_at', Carbon::today()->month)->where('status', 5)->count();
 
         return view('admin.user.profile',['user'=>$user,'province'=>$province,
          'district'=>$district, 'ward'=>$ward,'pointC'=>$pointC, 'lichsunhan'=>$lichsunhan, 'lichsuchuyen'=>$lichsuchuyen]
-         ,compact('orders','sodonhang','date','addDate','user_province', 'user_district', 'user_ward'));
+         ,compact('orders', 'order_done_month', 'order_cancel_month','sodonhang','date','addDate','user_province', 'user_district', 'user_ward'));
     }
 
     public function postEdit(Request $request, $id) {

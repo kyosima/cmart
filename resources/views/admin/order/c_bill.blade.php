@@ -60,7 +60,7 @@
     }
 
     .font-italic {
-        font-size: italic;
+        font-style: italic;
     }
 
     .container {
@@ -93,11 +93,17 @@
     }
 
     .order-sign table td {
-        padding-bottom: 55px;
+        padding-bottom: 155px;
     }
 
     .text-justify {
         text-align: justify;
+    }
+
+    .order-footer tr td p,
+    .order-sign p {
+        margin-bottom: 0 !important;
+        padding-bottom: 0;
     }
 
 </style>
@@ -155,7 +161,7 @@
                                         </tr>
                                     </table>
                             </li>
-                            <li>Ghi chú: {{ $order_info->note }}</li>
+                            <li style=" word-wrap: break-word;">Ghi chú: <span>{{ $order_info->note }}</span></li>
                         </ul>
 
                     </div>
@@ -169,19 +175,17 @@
                                     <div class="c-bill-order" id="store{{ $order_store->id_store }}">
                                         <div class="order-title ">
                                             <h5 class="text-cap">cửa hàng
-                                                {{ $order_store->store()->value('name') }}</h4>
-                                                <h5> {{ formatMethod($order_store->shipping_method) }}
+                                                {{ $order_store->store()->value('name') }}</h5>
+                                            <h5> {{ formatMethod($order_store->shipping_method) }}
 
-                                                    @if ($order_store->shipping_type == 0)
-                                                        @if ($order->shipping_method == 0)
-                                                            Nhận tại cửa hàng
-                                                        @else
-                                                            Tiêu chuẩn
-                                                        @endif
-                                                    @else
-                                                        Hỏa tốc
-                                                    @endif
-                                                </h5>
+                                                @if ($order_store->shipping_type == 0)
+                                                    Nhân tại cửa hàng
+                                                @elseif ($order->shipping_method == 0)
+                                                    Tiêu chuẩn
+                                                @else
+                                                    Hỏa tốc
+                                                @endif
+                                            </h5>
                                         </div>
                                         <div class="order-head">
                                             <ul>
@@ -189,6 +193,7 @@
                                                 <li>Mã vận chuyển: {{ $order_store->shipping_code }}</li>
                                             </ul>
                                         </div>
+                                        <br><br>
                                         <div class="order-body">
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-striped w-100">
@@ -268,52 +273,57 @@
                                                 $address2 = $order_address->address . ' ' . $order_address->ward()->value('tenphuongxa') . ' ' . $order_address->district()->value('tenquanhuyen') . ' ' . $order_address->province()->value('tentinhthanh');
                                             @endphp
                                             <span class="text-danger"></span>
-                                            <div class="d-md-flex justify-content-around">
+                                            <div class="d-md-flex justify-content-between">
 
                                                 <table class="table text-center">
                                                     <tr>
                                                         <td>
-                                                            <p>Giá trị sản phẩm</p>
+                                                            <p><b>Giá trị sản phẩm</b></p>
                                                             <p>{{ formatPrice($order_store->sub_total) }}</p>
                                                         </td>
                                                         <td>
-                                                            <p>Giảm giá sản phẩm</p>
+                                                            <p><b>Giảm giá sản phẩm</b></p>
                                                             <p>{{ formatPrice($order_store->discount_product) }}</p>
                                                         </td>
                                                         <td>
-                                                            <p>Thuế GTGT sản phẩm</p>
+                                                            <p><b>Thuế GTGT sản phẩm</b></p>
                                                             <p>{{ formatPrice($order_store->vat_products) }}</p>
 
                                                         </td>
                                                         <td>
-                                                            <p>Tích M giảm giá dịch vụ</p>
+                                                            <p><b>Tích M giảm giá dịch vụ</b></p>
                                                             <p>{{ formatNumber($order_store->m_point) }}</p>
                                                         </td>
                                                     </tr>
                                                 </table>
                                             </div>
-                                            <div class="d-md-flex justify-content-around">
+                                            <div class="d-md-flex justify-content-between">
                                                 <table class="table text-center">
                                                     <tr>
                                                         <td>
-                                                            <p>Số Km</p>
+                                                            <p><b>Số Km</b></p>
+                                                            <p><small class="font-italic"
+                                                                    style="visibility: hidden;"> s</small></p>
                                                             <p>{{ App\Http\Controllers\CheckoutController::getDistance($address1, $address2) }}
                                                                 km</p>
                                                         </td>
                                                         <td>
-                                                            <p>Phí Vận chuyển</p>
-                                                            <p><small>(Chưa bao gồm thuế VAT 8%)</small></p>
+                                                            <p><b>Phí Vận chuyển</b></p>
+                                                            <p><small class="font-italic">(Chưa bao gồm thuế VAT
+                                                                    8%)</small></p>
                                                             <p>{{ formatPrice($order_store->shipping_total) }}</p>
                                                         </td>
                                                         <td>
-                                                            <p>Phí DV GTGT</p>
-                                                            <p><small>(Đã bao gồm thuế VAT 8%)</small></p>
+                                                            <p><b>Phí DV GTGT</b></p>
+                                                            <p><small class="font-italic">(Đã bao gồm thuế VAT
+                                                                    8%)</small></p>
                                                             <p>{{ formatPrice($order_store->vat_services) }}</p>
 
                                                         </td>
                                                         <td>
-                                                            <p>Giá trị thanh toán cho ĐH</p>
-                                                            <p><small>(Đã bao gồm thuế)</small></p>
+                                                            <p><b>Giá trị thanh toán cho ĐH</b></p>
+                                                            <p><small class="font-italic">(Đã bao gồm thuế)</small>
+                                                            </p>
                                                             <p>{{ formatPrice($order_store->total) }}</p>
                                                         </td>
                                                     </tr>
@@ -389,8 +399,8 @@
                                 <li>Tổng Phí DV Vận chuyển: <b>{{ formatPrice($order->shipping_total) }}</b></li>
                                 <li>Tổng Phí DV GTGT: <b>{{ formatPrice($order->vat_services) }}</b></li>
                                 <li>Tổng chiết khấu M: <b>{{ formatPrice($order->m_point) }}</b></li>
-                                <li>Giá trị thanh toán Dịch vụ:
-                                    <b>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) }}</b>
+                                <li>Giá trị thanh toán Dịch vụ <b>=Số M cần tìm thêm để miễn phí dịch vụ</b>:
+                                    <b>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) -max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08) }}</b>
                                 </li>
                                 <li>Số dư M còn lại: <b>{{ formatNumber($order->remaining_m_point) }}</b></li>
                                 <li>Thuế GTGT Sản phẩm: <b>{{ formatPrice($order->vat_products) }}</b></li>

@@ -46,7 +46,14 @@ class AdminOrderController extends Controller
             return $row->count();
         });
         $doanh_thu = Order::where('status', 4)->sum('total');
-        return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count'));
+        if($request->status != null){
+            $status = $request->status;
+            return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count', 'status'));
+
+        }else{
+            return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count'));
+
+        }
     }
 
     public function show(Request $request, Order $order)
@@ -176,24 +183,24 @@ class AdminOrderController extends Controller
     public function update(Request $request, Order $order)
     {
 
-        $this->proccessCpoint($order->user, $request->sel_status, $order->status, $order->c_point, $order);
+        // $this->proccessCpoint($order->user, $request->sel_status, $order->status, $order->c_point, $order);
         // if($request->sel_status == 4){
         //     $this->addC($order);
         // }
-        $order->status = $request->sel_status;
-        $order->created_at = $request->in_created_at;
-        $order->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
-        $order->save();
-        $order->order_address()->update([
-            'id_province' => $request->sel_province,
-            'id_district' => $request->sel_district,
-            'id_ward' => $request->sel_ward,
-            'address' => $request->address,
-            'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
-        ]);
+        // $order->status = $request->sel_status;
+        // $order->created_at = $request->in_created_at;
+        // $order->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+        // $order->save();
+        // $order->order_address()->update([
+        //     'id_province' => $request->sel_province,
+        //     'id_district' => $request->sel_district,
+        //     'id_ward' => $request->sel_ward,
+        //     'address' => $request->address,
+        //     'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
+        // ]);
         $order->order_info()->update([
-            'fullname' => $request->fullname,
-            'phone' => $request->phone,
+            // 'fullname' => $request->fullname,
+            // 'phone' => $request->phone,
             'note' => $request->note,
             'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
         ]);
@@ -231,33 +238,52 @@ class AdminOrderController extends Controller
 
         return response('Thành công', 200);
     }
+    public function changeStatusOrderStore(Request $request){
+        $order_store = OrderStore::whereId($request->order_id)->first();
+        $order = $order_store->order()->first();
 
+        $this->proccessCpoint($order->user, $request->status, $order_store->status, $order_store->c_point, $order_store);
+        $order_store->status = $request->status;
+
+        $order_store->save();
+
+
+        Session::flash('success', 'Thực hiện thành công');
+        
+        return back();
+
+    }
     public function proccessCpoint($user, $request_status, $order_status, $order_cpoint, $order)
     {
         if ($request_status == 4 && $order_status != 4) {
-            $point_c = $user->point_c()->first();
-            $id_user_chuyen = User::where('id', '=', 1)->first()->id;
-            $vi_user_chuyen = PointC::where('user_id', '=', $id_user_chuyen)->first();
-            $lichsu_chuyen = new PointCHistory;
-            $lichsu_chuyen->point_c_idnhan = $user->id;
-            $lichsu_chuyen->point_past_nhan = $point_c->point_c;
-            $lichsu_chuyen->point_present_nhan = $point_c->point_c + $order_cpoint;
-            $lichsu_chuyen->makhachhang = $user->code_customer;
-            $transaction_code = time();
-            $lichsu_chuyen->note = 'Tich luy C ' . $transaction_code;
-            $lichsu_chuyen->magiaodich =  $transaction_code;
-            $lichsu_chuyen->amount = $order_cpoint;
-            $lichsu_chuyen->type = 1;
-            $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
-            $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
-            $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $order_cpoint;
-            $lichsu_chuyen->makhachhang_chuyen = 202201170001;
-            $lichsu_chuyen->save();
 
-            $point_c->point_c = $point_c->point_c + $order_cpoint;
-            $vi_user_chuyen->point_c = $vi_user_chuyen->point_c - $order_cpoint;
-            $vi_user_chuyen->save();
-            $point_c->save();
+            $count_store = 0;
+                $time = (string)date('Y-m-d-H-i-s');
+                $count_store++;
+                $transaction_code = str_replace('-', '', $time) . '-' . '00'. $count_store;
+                $point_c = $user->point_c()->first();
+                $id_user_chuyen = User::where('id', '=', 1)->first()->id;
+                $vi_user_chuyen = PointC::where('user_id', '=', $id_user_chuyen)->first();
+                $lichsu_chuyen = new PointCHistory;
+                $lichsu_chuyen->point_c_idnhan = $user->id;
+                $lichsu_chuyen->point_past_nhan = $point_c->point_c;
+                $lichsu_chuyen->point_present_nhan = $point_c->point_c + $order_cpoint;
+                $lichsu_chuyen->makhachhang = $user->code_customer;
+                $lichsu_chuyen->note = 'Tich luy C ' . $transaction_code;
+                $lichsu_chuyen->magiaodich =  $transaction_code;
+                $lichsu_chuyen->amount = $order_cpoint;
+                $lichsu_chuyen->type = 1;
+                $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
+                $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
+                $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $order_cpoint;
+                $lichsu_chuyen->makhachhang_chuyen = 202201170001;
+                $lichsu_chuyen->save();
+    
+                $point_c->point_c = $point_c->point_c + $order_cpoint;
+                $vi_user_chuyen->point_c = $vi_user_chuyen->point_c - $order_cpoint;
+                $vi_user_chuyen->save();
+                $point_c->save();
+           
         } elseif ($request_status == 5 && $order_status != 5) {
 
             $user = User::whereCodeCustomer('202201170001')->first();

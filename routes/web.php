@@ -172,6 +172,8 @@ Route::get('/xac-thuc-ho-so', [HomeController::class, 'getXacthuc']);
 
 Route::get('/lich-su-don-hang', [HomeController::class, 'getLichsu'])->name('order.history');
 
+Route::get('/lich-su-don-hang/c-bill', [OrderController::class, 'viewPdf'])->name('order.viewPdf');
+
 Route::prefix('/lich-su-tien-tich-luy')->group(function () {
     Route::get('/', [CPointController::class, 'index'])->name('account.cpoint_history');
 });

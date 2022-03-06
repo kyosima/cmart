@@ -11,6 +11,9 @@ use App\Models\Order;
 use App\Models\OrderInfo;
 use App\Models\OrderAddress;
 use App\Models\OrderProduct;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -22,12 +25,18 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         //
+        $order_code = explode('-', $request->order_code);
+
         if(!$request->order_code){
             return view('order_tracking.order_tracking');
-        }elseif( !$order = Order::whereOrderCode($request->order_code)->first()){
+        }elseif( !$order = Order::whereOrderCode($order_code[0])->first()){
             return view('order_tracking.order_tracking', ['error'=>'Mã đơn hàng không tồn tại']);
         }else{
-            return redirect(route('theo-doi-don-hang.show', $order->order_code));
+            $user = Auth::user();
+
+            $orders = Order::whereOrderCode($order_code[0])->get();
+
+            return view('account.lichsu', compact('orders'));
 
         }
     }
@@ -61,16 +70,30 @@ class OrderController extends Controller
      */
     public function show($order_code)
     {
+        $order_code = explode('-', $order_code);
+        dd($order_code[0]);
         if(!$order_code){
             return view('order_tracking.order_tracking', ['error'=>'Đơn hàng không tồn tại']);
         }elseif( !$order = Order::whereOrderCode($order_code)->first()){
             return view('order_tracking.order_tracking', ['error'=>'Đơn hàng không tồn tại']);
         }else{
-            $order_info = $order->order_info()->first();
-            $order_address = $order->order_address()->first();
-            $order_stores = $order->order_stores()->get();
-            return view('order_tracking.order_tracking_detail',compact('order', 'order_info', 'order_address', 'order_stores'));
+            // $order_info = $order->order_info()->first();
+            // $order_address = $order->order_address()->first();
+            // $order_stores = $order->order_stores()->get();
+            // return view('order_tracking.order_tracking_detail',compact('order', 'order_info', 'order_address', 'order_stores'));
+
         }
+    }
+
+    public function viewPdf(Request $request)
+    {
+      
+
+        $order = Order::whereOrderCode($request->order_code)->first();
+
+        $pdf = PDF::loadView('admin.order.c_bill', compact('order')); //load view page
+
+        return $pdf->stream();
     }
 
     /**
