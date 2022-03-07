@@ -20,6 +20,16 @@
             color: #fff !important;
         }
 
+        .order-note {
+            height: 105px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 5;
+            word-break: break-word;
+        }
+
     </style>
     {{-- <script>
         $(document).ready(function() {
@@ -101,6 +111,24 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm-6 text-center">
+                                        <div class="alert alert-success">
+                                            <p>Số đơn hàng hoàn thành trong tháng:</p>
+                                            <b>{{ formatNumber($order_done_month) }}</b>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-6 text-center">
+                                        <div class="alert alert-danger">
+
+                                            <p>Số đơn hàng đã hủy trong tháng:</p>
+
+                                            <b>{{ formatNumber($order_cancel_month) }}</b>
+                                        </div>
+
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -166,23 +194,23 @@
                                             <div class="col-sm-12" style="overflow-x: auto;">
                                                 @if (isset($status))
                                                     <div class="d-flex justify-content-between fillorder">
-                                                        <a href="{{ route('order.index', ['status' => 0]) }}"
-                                                            class="@if ($status == 0) active-or @endif">Đã
+                                                        <a
+                                                            @if ($status == 0) class="active-or" href="{{ route('order.index') }}" @else  href="{{ route('order.index', ['status' => 0]) }}" @endif>Đã
                                                             đặt hàng</a>
-                                                        <a href="{{ route('order.index', ['status' => 1]) }}"
-                                                            class="@if ($status == 1) active-or @endif">Đã
+                                                        <a
+                                                            @if ($status == 1) class="active-or" href="{{ route('order.index') }}" @else  href="{{ route('order.index', ['status' => 0]) }}" @endif>Đã
                                                             xác nhận thanh toán</a>
-                                                        <a href="{{ route('order.index', ['status' => 2]) }}"
-                                                            class="@if ($status == 2) active-or @endif">Đang
+                                                        <a
+                                                            @if ($status == 2) class="active-or" href="{{ route('order.index') }}" @else  href="{{ route('order.index', ['status' => 0]) }}" @endif>Đang
                                                             xử lý</a>
-                                                        <a href="{{ route('order.index', ['status' => 3]) }}"
-                                                            class="@if ($status == 3) active-or @endif">Đang
+                                                        <a
+                                                            @if ($status == 3) class="active-or" href="{{ route('order.index') }}" @else  href="{{ route('order.index', ['status' => 0]) }}" @endif>Đang
                                                             vận chuyển</a>
-                                                        <a href="{{ route('order.index', ['status' => 4]) }}"
-                                                            class="@if ($status == 4) active-or @endif">Hoàn
+                                                        <a
+                                                            @if ($status == 4) class="active-or" href="{{ route('order.index') }}" @else  href="{{ route('order.index', ['status' => 0]) }}" @endif>Hoàn
                                                             thành</a>
-                                                        <a href="{{ route('order.index', ['status' => 5]) }}"
-                                                            class="@if ($status == 5) active-or @endif">Đã
+                                                        <a
+                                                            @if ($status == 5) class="active-or" href="{{ route('order.index') }}" @else  href="{{ route('order.index', ['status' => 0]) }}" @endif>Đã
                                                             hủy</a>
                                                     </div>
                                                 @else
@@ -191,18 +219,20 @@
                                                             hàng</a>
                                                         <a href="{{ route('order.index', ['status' => 1]) }}">Đã xác nhận
                                                             thanh toán</a>
-                                                        <a href="{{ route('order.index', ['status' => 2]) }}">Đang xử lý</a>
+                                                        <a href="{{ route('order.index', ['status' => 2]) }}">Đang xử
+                                                            lý</a>
                                                         <a href="{{ route('order.index', ['status' => 3]) }}">Đang vận
                                                             chuyển</a>
-                                                        <a href="{{ route('order.index', ['status' => 4]) }}">Hoàn thành</a>
+                                                        <a href="{{ route('order.index', ['status' => 4]) }}">Hoàn
+                                                            thành</a>
                                                         <a href="{{ route('order.index', ['status' => 5]) }}">Đã hủy</a>
                                                     </div>
                                                 @endif
                                             </div>
-                                            <div class="col-sm-12" style="overflow-x: auto;">
+                                            <div class="col-sm-12" style="">
                                                 <div class="table-responsive">
 
-                                                    <table id="" class="table table-hover align-middle">
+                                                    <table id="" class="table table-striped table-hover align-middle">
                                                         <thead>
                                                             <tr>
                                                                 <th class="title" style="width: 30px;"><input
@@ -211,17 +241,17 @@
                                                                 </th>
                                                                 <th class="title">Mã giao dịch</th>
                                                                 <th class="title">Cửa hàng</th>
-                                                                <th class="title">C</th>
-                                                                <th class="title">M</th>
+                                                                <th class="title" style="width: 50px">C</th>
+                                                                <th class="title" style="width: 50px">M</th>
                                                                 <th class="title">Giá trị SP</th>
                                                                 <th class="title">Giảm giá SP</th>
                                                                 <th class="title">ĐVVC</th>
                                                                 <th class="title">Phí VC</th>
-                                                                <th class="title">HTTT</th>
+                                                                <th class="title" style="width: 100px">HTTT</th>
                                                                 <th class="title">Phí DVGTT</th>
                                                                 <th class="title">Giảm giá DV</th>
                                                                 {{-- <th class="title">Trạng thái</th> --}}
-                                                                <th class="title">Ghi chú</th>
+                                                                <th class="title" style="width: 100px">Ghi chú</th>
                                                                 <th class="title" style="width:75px;">Chuyển tiếp
                                                                 </th>
                                                             </tr>
@@ -243,7 +273,7 @@
                                                                         <td><input type="checkbox" name="id[]"
                                                                                 value="{{ $order->id }}"></td>
                                                                         <td><a target="_blank"
-                                                                                href="{{ route('order.viewPDF', ['order_code' => $order->order_code]) }}">{{ $order_store->order_store_code }}</a>
+                                                                                href="{{ route('order.viewCbill', ['order_code' => $order->order_code]) }}">{{ $order_store->order_store_code }}</a>
                                                                         </td>
                                                                         <td>{{ $order_store->store()->value('name') }}
                                                                         </td>
@@ -255,7 +285,7 @@
                                                                         </td>
                                                                         <td>{{ formatPrice($order_store->discount_products) }}
                                                                         </td>
-                                                                        <td>{{ formatPrice($order_store->shipping_total) }}
+                                                                        <td> {{ formatMethod($order_store->shipping_method) }}
                                                                         </td>
                                                                         <td>{{ formatPrice($order_store->shipping_total) }}
                                                                         </td>
@@ -266,10 +296,19 @@
                                                                         <td>{{ formatPrice($order_store->discount_services) }}
                                                                         </td>
                                                                         {{-- <td>{!! orderStatus($order_store->status) !!}</td> --}}
-                                                                        <td>{{ optional($order->order_info)->note }}	@if (auth()->guard('admin')->user()->can('Xem đơn hàng'))
-																			<a href="{{route('order.show', ['order' => $order->id])}}" target="_blank" class="text-danger"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-																			@endif</td>
-                                                      
+                                                                        <td>
+                                                                            <span
+                                                                                class="order-note">{{ optional($order->order_info)->note }}
+                                                                            </span>
+                                                                            @if (auth()->guard('admin')->user()->can('Xem đơn hàng'))
+                                                                                <a href="{{ route('order.show', ['order' => $order->id]) }}"
+                                                                                    target="_blank"
+                                                                                    class="text-danger"><i
+                                                                                        class="fa fa-pencil-square-o"
+                                                                                        aria-hidden="true"></i></a>
+                                                                            @endif
+                                                                        </td>
+
                                                                         <td>
                                                                             <div class="input-group"
                                                                                 style="min-width: 108px;">
@@ -286,65 +325,65 @@
                                                                                     aria-expanded="false"><i
                                                                                         class="fa fa-angle-down text-primary"
                                                                                         aria-hidden="true"></i></button>
-																		@if (auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng'))
-
-                                                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                                                    <li>
-                                                                                        <a
-                                                                                            href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 0]) }}">
-                                                                                            <span
-                                                                                                class="dropdown-item changeStatus">
-                                                                                                Đã đặt hàng
-                                                                                            </span>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a
-                                                                                            href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 1]) }}">
-                                                                                            <span
-                                                                                                class="dropdown-item changeStatus">
-                                                                                                Đã xác nhận thanh toán
-                                                                                            </span>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a
-                                                                                            href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 2]) }}">
-                                                                                            <span
-                                                                                                class="dropdown-item changeStatus">
-                                                                                                Đang xử lý
-                                                                                            </span>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a
-                                                                                            href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 3]) }}">
-                                                                                            <span
-                                                                                                class="dropdown-item changeStatus">
-                                                                                                Đang vận chuyển
-                                                                                            </span>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a
-                                                                                            href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 4]) }}">
-                                                                                            <span
-                                                                                                class="dropdown-item changeStatus">
-                                                                                                Hoàn thành
-                                                                                            </span>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a
-                                                                                            href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 5]) }}">
-                                                                                            <span
-                                                                                                class="dropdown-item changeStatus">
-                                                                                                Đã hủy
-                                                                                            </span>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                </ul>
-																				@endif
+                                                                                @if (auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng'))
+                                                                                    <ul
+                                                                                        class="dropdown-menu dropdown-menu-end">
+                                                                                        <li>
+                                                                                            <a
+                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 0]) }}">
+                                                                                                <span
+                                                                                                    class="dropdown-item changeStatus">
+                                                                                                    Đã đặt hàng
+                                                                                                </span>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a
+                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 1]) }}">
+                                                                                                <span
+                                                                                                    class="dropdown-item changeStatus">
+                                                                                                    Đã xác nhận thanh toán
+                                                                                                </span>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a
+                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 2]) }}">
+                                                                                                <span
+                                                                                                    class="dropdown-item changeStatus">
+                                                                                                    Đang xử lý
+                                                                                                </span>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a
+                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 3]) }}">
+                                                                                                <span
+                                                                                                    class="dropdown-item changeStatus">
+                                                                                                    Đang vận chuyển
+                                                                                                </span>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a
+                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 4]) }}">
+                                                                                                <span
+                                                                                                    class="dropdown-item changeStatus">
+                                                                                                    Hoàn thành
+                                                                                                </span>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a
+                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 5]) }}">
+                                                                                                <span
+                                                                                                    class="dropdown-item changeStatus">
+                                                                                                    Đã hủy
+                                                                                                </span>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                @endif
                                                                             </div>
                                                                         </td>
                                                                     </tr>

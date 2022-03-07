@@ -90,6 +90,8 @@ Route::prefix('dat-hang/thanh-toan')->group(function () {
     Route::get('lay-thong-tin-ngan-hang', [CheckoutController::class, 'getInfoPaymentOption'])->name('payment.getInfo');
 
 });
+Route::get('don-hang/chi-tiet', [OrderController::class, 'getCbill'])->name('getCbill');
+
 Route::get('tim-kiem', [ProductCategoryController::class, 'getSearch'])->name('search');
 Route::get('tim-kiem/goi-y', [ProductCategoryController::class, 'getSearchSuggest'])->name('search.suggest');
 

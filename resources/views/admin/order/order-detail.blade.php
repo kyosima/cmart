@@ -40,10 +40,13 @@
                                     
                                     <div class="card-footer">
                                         <div class="d-flex justify-content-between align-items-center">
+                                            <a  href="{{route('order.index')}}"class="btn btn-primary ">Quay lại</a>
+
                                             @if(auth()->guard('admin')->user()->can('Cập nhật đơn hàng'))
                                                     <button type="submit" class="btn btn-info btn-submit-unit">Cập nhật</button>
                                              
                                             @endif
+                                            
                                             {{-- @if(auth()->guard('admin')->user()->can('Xóa đơn hàng'))
                                             <a href="{{route('order.delete', ['order' => $order->id])}}" class="btn btn-danger btn-submit-unit" onclick="return confirm('Are you sure you want to delete this order?')">Xóa</a>
                                             @endif --}}

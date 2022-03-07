@@ -97,6 +97,16 @@ if (!function_exists('getTaxValue')) {
         }
     }
 }
+
+if (!function_exists('formatTax')) {
+    function formatTax($tax){
+        if($tax == 'KKK' || $tax == 'KTT'){
+            return $tax;
+        }else{
+            return ($tax *100).'%';
+        }
+    }
+}
 if (!function_exists('getPriceOfLevel')) {
     function getPriceOfLevel($product)
     {

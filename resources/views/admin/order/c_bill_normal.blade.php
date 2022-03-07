@@ -1,12 +1,16 @@
 <link rel="stylesheet" href="{{ asset('css/c_bill.css') }}">
 <link rel="stylesheet" href="{{ asset('css/header.css') }}">
 
-{{-- <link href="{{ asset('public/css/boostrap/bootstrap.min.css') }}" rel="stylesheet" type="text/css"> --}}
+<link href="{{ asset('public/css/boostrap/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
 <div class="container">
     <div class="c-bill">
         <div class="d-flex justify-content-center">
             <div class="col-md-10 col-12">
-
+                <div class="row">
+                    <div class="col-12 text-right">
+                        <a href="{{route('order.downPDF', ['order_code'=> $order->order_code])}}" class="btn btn-primary">Tải về</a>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12 col-12">
                         <h4 class="text-center text-uppercase">
@@ -28,7 +32,7 @@
                             ○○○○○○○○○○○○○○○○○○○○○○○
                         </p>
                         <h4 class="text-center text-uppercase">
-                            Hóa đơn
+                            HÓA ĐƠN
                         </h4>
                     </div>
                 </div>

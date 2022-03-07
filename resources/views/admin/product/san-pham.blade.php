@@ -300,7 +300,7 @@
                 {
                     targets: 12,
                     render: function(data, type, row) {
-                        return `${Math.max(row.weight/1000, ((row.height*row.width*row.length)/3000)*1000).toFixed(0)}`
+                        return `${(Math.max(row.weight/1000, ((row.height*row.width*row.length)/3000))*1000).toFixed(0)}`
                     }
                 },
                 {

@@ -46,12 +46,14 @@ class AdminOrderController extends Controller
             return $row->count();
         });
         $doanh_thu = Order::where('status', 4)->sum('total');
+        $order_done_month = Order::whereMonth('created_at', Carbon::today()->month)->where('status', 4)->count();
+        $order_cancel_month = Order::whereMonth('created_at', Carbon::today()->month)->where('status', 5)->count();
         if($request->status != null){
             $status = $request->status;
-            return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count', 'status'));
+            return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count', 'status', 'order_done_month', 'order_cancel_month'));
 
         }else{
-            return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count'));
+            return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count', 'order_done_month', 'order_cancel_month'));
 
         }
     }
@@ -86,6 +88,10 @@ class AdminOrderController extends Controller
         $product = Product::select('id', 'name')->get();
         return view('admin.order.order-new', compact('provinces', 'user', 'product'));
     }
+    public function viewCbill(Request $request){
+        $order = Order::whereOrderCode($request->order_code)->first();
+        return view('admin.order.c_bill_normal', compact('order'));
+    }
     public function viewPDF(Request $request)
     {
       
@@ -99,7 +105,7 @@ class AdminOrderController extends Controller
     public function downPDF(Request $request)
     {
         $order = Order::whereOrderCode($request->order_code)->first();
-        $pdf = PDF::loadView('admin.order.c_bill', $order); //load view page
+        $pdf = PDF::loadView('admin.order.c_bill', compact('order')); //load view page
         return $pdf->download('C-Bill-' . $order->order_code . '.pdf'); // download pdf file
     }
     public function store(Request $request)
@@ -285,9 +291,8 @@ class AdminOrderController extends Controller
                 $point_c->save();
            
         } elseif ($request_status == 5 && $order_status != 5) {
-
             $user = User::whereCodeCustomer('202201170001')->first();
-            $user_receiver = User::whereId($order->user_id)->first();
+            $user_receiver = User::whereId($order->order()->value('user_id'))->first();
             $lichsu_chuyen = new PointCHistory;
             $point_c = $user->point_c()->first();
             $point_c_receiver = $user_receiver->point_c()->first();
@@ -310,9 +315,8 @@ class AdminOrderController extends Controller
 
             $point_c->point_c -= $order->total;
             $point_c->save();
-            foreach($order->order_stores()->get() as $order_store){
-                $store = $order_store->store()->first();
-                foreach($order_store->order_products()->get() as $order_product){
+                $store = $order->store()->first();
+                foreach($order->order_products()->get() as $order_product){
                     if($order_product->sku != null){
                         $store_product = $store->product_stores()->where('id_ofproduct', $order_product->id_product)->first();
                         $store_product->soluong += $order_product->quantity;
@@ -320,7 +324,7 @@ class AdminOrderController extends Controller
                     }
                  
                 }
-            }
+            
             
         } elseif ($request_status != 4 && $order_status == 4) {
             // $point_c = $user->point_c()->first();

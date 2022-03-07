@@ -387,9 +387,9 @@
                                                                 @foreach ($order->order_stores()->get() as $order_store)
                                                                     <tr style="text-align:center">
                                                                         <td>{{ $order_store->order_store_code }}</td>
-                                                                        <td>{!! orderStatus($order->status) !!}</td>
+                                                                        <td>{!! orderStatus($order_store->status) !!}</td>
                                                                         <td><a target="_blank"
-                                                                                href="{{ route('order.viewPDF', ['order_code' => $order->order_code]) }}"
+                                                                                href="{{ route('order.viewCbill', ['order_code' => $order->order_code]) }}"
                                                                                 class="btn btn-info">Chi tiết</a></td>
                                                                         <td></td>
                                                                     </tr>

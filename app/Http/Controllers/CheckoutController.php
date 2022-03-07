@@ -868,17 +868,21 @@ class CheckoutController extends Controller
             if ($data['province'] == $store->id_province) {
                 $distance =  $this->getDistance($address1, $address2);
                 $ship_arr = array(0, 0);
+                $weight = 0;
+
                 foreach ($cart->content() as $row) {
                     $price = $row->model->productPrice()->first();
                     $process_fee = $row->qty * $price->phi_xuly;
                     $ship_temp = $this->getCShip($process_fee, $this->getWeight($row->model, $row->qty), $distance);
                     $ship_arr[0] += $ship_temp[0];
                     $ship_arr[1] += $ship_temp[1];
+                    $weight += $this->getWeight($row->model, $row->qty);
                     $cart->update($row->rowId, ['options' => ['method_ship' => 1, 'type_ship' => 1, 'price_normal' => $ship_temp[0], 'price_fast' => $ship_temp[1]]]);
                 }
                 $store_ships['store' . $store_id]['name'] = 'store' . $store_id;
                 $store_ships['store' . $store_id]['id'] = $store_id;
                 $store_ships['store' . $store_id]['distance'] = $distance;
+                $store_ships['store' . $store_id]['weight'] = $weight;
                 $store_ships['store' . $store_id]['ship_total']['ship'] = array('value' => $ship_arr[0], 'text' => formatPrice($ship_arr[0]));
                 $store_ships['store' . $store_id]['ship_total']['ship_fast'] = array('value' => $ship_arr[1], 'text' => formatPrice($ship_arr[1]));
                 $store_ships['store' . $store_id]['method'] = 1;
@@ -1205,7 +1209,7 @@ class CheckoutController extends Controller
     }
     public function getWeight($product, $quantity)
     {
-        $weight = round(max($product->weight / 1000, (($product->height * $product->width * $product->length) / 3000) * 1000));
+        $weight = round(max($product->weight / 1000, (($product->height * $product->width * $product->length) / 3000) )* 1000);
         return $weight * $quantity;
     }
     public function getDistance($address1, $address2)

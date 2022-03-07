@@ -115,8 +115,8 @@
                 <div class="row">
                     <div class="col-md-12 col-12">
                         <p class="font-20 text-center  text-bold text-up">
-                            C-BILL HÓA ĐƠN C-MART
-                            </b>
+                            C-MART
+                        </p>
                             @php
                                 $user = $order->user()->first();
                                 $order_address = $order->order_address()->first();
@@ -129,6 +129,12 @@
                                 $order_vat = $order->order_vat()->first();
                             @endphp
                         <p class="text-center font-italic">“Tất cả trong Một”</p>
+                        <p class="text-center">
+                            ○○○○○○○○○○○○○○○○○○○○○○○
+                        </p>
+                        <p class="font-20 text-center  text-bold text-up">
+                            HÓA ĐƠN
+                        </p>
                     </div>
                 </div>
                 <div class="row">
@@ -148,13 +154,13 @@
                                             <td>Số điện thoại: {{ $order_info->phone }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Địa chỉ chi tiết: {{ $user->address }}</td>
+                                            <td>Địa chỉ chi tiết: {{ $order_address->address }}</td>
                                         </tr>
                                         <tr>
                                             <td>Cấp tỉnh: {{ $order_province->PROVINCE_NAME }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Địa huyện: {{ $order_district->DISTRICT_NAME }}</td>
+                                            <td>Cấp huyện: {{ $order_district->DISTRICT_NAME }}</td>
                                         </tr>
                                         <tr>
                                             <td>Cấp xã: {{ $order_ward->WARDS_NAME }}</td>
@@ -178,13 +184,7 @@
                                                 {{ $order_store->store()->value('name') }}</h5>
                                             <h5> {{ formatMethod($order_store->shipping_method) }}
 
-                                                @if ($order_store->shipping_type == 0)
-                                                    Nhân tại cửa hàng
-                                                @elseif ($order->shipping_method == 0)
-                                                    Tiêu chuẩn
-                                                @else
-                                                    Hỏa tốc
-                                                @endif
+                                                {{formatType($order_store->shipping_type)}}
                                             </h5>
                                         </div>
                                         <div class="order-head">
@@ -202,7 +202,7 @@
                                                         <th>Tên sản phẩm</th>
                                                         <th>Chiết khấu C</th>
                                                         <th>Chiết khấu M</th>
-                                                        <th>Đơn giá</th>
+                                                        <th style="width: 120px">Đơn giá</th>
                                                         <th>Giảm giá</th>
                                                         <th>Thuế suất</th>
                                                         <th>PXL</th>
@@ -215,19 +215,19 @@
                                                                 <tr>
                                                                     <td>{{ $order_product->sku }}</td>
                                                                     <td>{{ $order_product->name }}</td>
-                                                                    <td>{{ $order_product->c_point }}</td>
-                                                                    <td>{{ $order_product->m_point }}</td>
+                                                                    <td>{{ formatNumber($order_product->c_point) }}</td>
+                                                                    <td>{{ formatNumber($order_product->m_point) }}</td>
                                                                     <td>{{ formatPrice($order_product->price) }}</td>
                                                                     <td>{{ formatPrice($order_product->discount) }}
                                                                     </td>
                                                                     <td>
                                                                         @if ($order_product->product()->first() != null)
-                                                                            {{ $order_product->product()->first()->productPrice()->value('tax') }}
-                                                                        @endif
+                                                                        {{ formatTax($order_product->product()->first()->productPrice()->value('tax'))}}
+                                                                    @endif
                                                                     </td>
                                                                     <td>
                                                                         @if ($order_product->product()->first() != null)
-                                                                            {{ $order_product->product()->first()->productPrice()->value('phi_xuly') }}
+                                                                            {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly')) }}
                                                                         @endif
                                                                     </td>
                                                                     <td>{{ $order_product->weight }}g</td>
@@ -399,15 +399,15 @@
                                 <li>Tổng Phí DV Vận chuyển: <b>{{ formatPrice($order->shipping_total) }}</b></li>
                                 <li>Tổng Phí DV GTGT: <b>{{ formatPrice($order->vat_services) }}</b></li>
                                 <li>Tổng chiết khấu M: <b>{{ formatPrice($order->m_point) }}</b></li>
-                                <li>Giá trị thanh toán Dịch vụ <b>=Số M cần tìm thêm để miễn phí dịch vụ</b>:
-                                    <b>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) -max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08) }}</b>
+                                <li>Giá trị thanh toán Dịch vụ <b>= Số M cần tìm thêm để miễn phí dịch vụ</b>:
+                                    <b>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) }}</b>
                                 </li>
                                 <li>Số dư M còn lại: <b>{{ formatNumber($order->remaining_m_point) }}</b></li>
                                 <li>Thuế GTGT Sản phẩm: <b>{{ formatPrice($order->vat_products) }}</b></li>
-                                <li>Thuế GTGT Dịch vụ: <b>{{ formatPrice($order->vat_services) }}</b></li>
+                                <li>Thuế GTGT Dịch vụ: <b>{{ formatPrice((max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) - (max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08)) }}</b></li>
                                 <li>Tổng Thuế GTGT:
-                                    <b>{{ formatPrice($order->vat_products + $order->vat_services) }}</b>
-                                </li>
+                                    <b>{{ formatPrice($order->vat_products + (max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) - (max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08)) }}</b>
+                                    </li>
                                 <li>Hình thức thanh toán:
                                     <b>{{ App\Models\PaymentMethod::whereId($order->payment_method)->value('name') }}</b>
                                 </li>

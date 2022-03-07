@@ -35,11 +35,11 @@ class SendEmailController extends Controller
             $this->statusdesc  =   "Error sending mail";
             $this->statuscode  =   "0";
             return response()->json(
-                'Chia sẽ thất bại'
+                'Chia sẻ thất bại'
             );
         } else {
             return response()->json(
-                'Chia sẽ thành công'
+                'Chia sẻ thành công'
             );
         }
     }

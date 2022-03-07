@@ -27,7 +27,7 @@
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="in_id_order" value="{{$order->id}}">
-                                    {{-- <p>Thông tin người đặt</p>
+                                    <p>Thông tin người đặt</p>
                                     <div class="row">
                                         <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                             <div class="form-group mb-3 w-100">
@@ -98,7 +98,7 @@
                                                 <input type="text" class="form-control" name="in_created_at" id="fdate" value="{{date('Y-m-d H:i:s', strtotime($order->created_at))}}" required readonly>
                                             </div>
                                         </div>
-                                    </div>      --}}
+                                    </div>     
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                                             <div class="form-group w-100">

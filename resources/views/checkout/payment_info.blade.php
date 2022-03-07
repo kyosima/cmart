@@ -29,15 +29,8 @@
                                         <h4>Cửa hàng {{ $order_store->store()->value('name') }}</h4>
                                         <h5> {{ formatMethod($order_store->shipping_method) }} <span
                                                 class="pl-1">
-                                                @if ($order_store->shipping_type == 0)
-                                                    @if ($order->shipping_method == 0)
-                                                        Nhận tại cửa hàng
-                                                    @else
-                                                        Tiêu chuẩn
-                                                    @endif
-                                                @else
-                                                    Hỏa tốc
-                                                @endif
+                                                {{formatType($order_store->shipping_type)}}
+
                                             </span>
                                         </h5>
 
@@ -56,7 +49,7 @@
                                                     <th>Tên sản phẩm</th>
                                                     <th>C</th>
                                                     <th>M</th>
-                                                    <th>Đơn giá</th>
+                                                    <th style="width: 120px">Đơn giá</th>
                                                     <th>Giảm giá</th>
                                                     <th>SL</th>
                                                 </thead>
@@ -161,7 +154,7 @@
                             </div>
                             <div class="text-center">
                                 <p>Giá trị thanh toán Dịch vụ</p>
-                                <p><small>(Đã bao gồm thuế VAT 8%)<br><b>=Số M cần tìm thêm để miễn phí dịch vụ</b></small></p>
+                                <p><small>(Đã bao gồm thuế VAT 8%)<br><b>= Số M cần tìm thêm để miễn phí dịch vụ</b></small></p>
                                 <p>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) }}
                                 </p>
                             </div>
@@ -198,7 +191,7 @@
                             </div>
                             <div class="text-center">
                                 <p>Tổng Thuế GTGT</p>
-                                <p>{{ formatPrice($order->vat_products + $order->vat_services) }}</p>
+                                <p>{{ formatPrice($order->vat_products + (max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) - (max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08)) }}</p>
                             </div>
                             <div class="text-center">
                                 <p>Giá trị giao dịch</p>

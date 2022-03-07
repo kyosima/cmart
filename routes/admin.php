@@ -35,7 +35,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('{id}',[UserController::class, 'postEdit']);
     });
     Route::group(['prefix' => 'don-hang'], function () {
-        Route::get('xem-c-bill', [AdminOrderController::class, 'viewPDF'])->name('order.viewPDF');
+        Route::get('xem-c-bill', [AdminOrderController::class, 'viewCbill'])->name('order.viewCbill');
         Route::get('down-c-bill', [AdminOrderController::class, 'downPDF'])->name('order.downPDF');
 
     });

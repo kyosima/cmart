@@ -36,7 +36,7 @@ class OrderController extends Controller
 
             $orders = Order::whereOrderCode($order_code[0])->get();
 
-            return view('account.lichsu', compact('orders'));
+            return view('order_tracking.order_search', compact('orders'));
 
         }
     }
@@ -84,7 +84,11 @@ class OrderController extends Controller
 
         }
     }
+    public function getCbill(Request $request){
+        $order = Order::whereOrderCode($request->order_code)->first();
 
+        return view('order_tracking.c_bill_master', ['order' => $order]);
+    }
     public function viewPdf(Request $request)
     {
       
