@@ -273,7 +273,7 @@ class CheckoutController extends Controller
             $order_store->m_point = $store_m;
             $order_store->vat_products = $vat_products;
             $order_store->sub_total = intval(str_replace(",", "", $cart->subtotal())) + 300;
-            $order_store->total = $order_store->sub_total + $vat_products + $vat_services;
+            $order_store->total = $order_store->sub_total + $vat_products + $vat_services+ $store_shipping_total;
             $order_store_code = str_replace('-', '', $time) . '-' . '00'. $count_store;
             $order_store->order_store_code = $order_store_code;
             $order_store->save();

@@ -268,9 +268,19 @@
                                         </div>
                                         <div class="order-footer payment-store-footer">
                                             @php
+                                                $addressController = new App\Http\Controllers\AddressController();
                                                 $store = $order_store->store()->first();
-                                                $address1 = $store->address . ' ' . $store->ward()->value('tenphuongxa') . ' ' . $store->district()->value('tenquanhuyen') . ' ' . $store->province()->value('tentinhthanh');
-                                                $address2 = $order_address->address . ' ' . $order_address->ward()->value('tenphuongxa') . ' ' . $order_address->district()->value('tenquanhuyen') . ' ' . $order_address->province()->value('tentinhthanh');
+
+                                                $address1_province = $addressController->getProvinceDetail($store->id_province);
+                                                $address1_district = $addressController->getDistrictDetail($store->id_province, $store->id_district);
+                                                $address1_ward = $addressController->getWardDetail($store->id_district, $store->id_ward);
+                                                
+                                                $address2_province = $addressController->getProvinceDetail($order_address->id_province);
+                                                $address2_district = $addressController->getDistrictDetail($order_address->id_province, $order_address->id_district);
+                                                $address2_ward = $addressController->getWardDetail($order_address->id_district,$order_address->id_ward);
+                                                
+                                                $address1 = $store->address . ' ' . $address1_province->PROVINCE_NAME . ' ' . $address1_district->DISTRICT_NAME . ' ' . $address1_ward->WARDS_NAME;
+                                                $address2 = $order_address->address . ' ' . $address2_province->PROVINCE_NAME . ' ' . $address2_district->DISTRICT_NAME . ' ' . $address2_ward->WARDS_NAME;
                                             @endphp
                                             <span class="text-danger"></span>
                                             <div class="d-md-flex justify-content-between">

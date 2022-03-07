@@ -95,17 +95,16 @@
             
             </div>
             <div class="d-flex row justify-content-center">
-                <div class="col-md-10 col-12">
+                <div class="col-md-6 col-12">
                     <input id="myInput" class="form-control" type="text" placeholder="Mời nhập mã đơn hàng">
                 <div class="table-responsive">
                     <table class="table styled-table table-sortable">
                         <thead>
                             <tr>
                                 <th>Mã giao dịch</th>
-                                <th>Thời gian đặt hàng</th>
+                                
                                 <th>Trạng thái</th>
-                                <th>Đơn vị vận chuyển</th>
-                                <th>Mã vận chuyển</th>
+                                <th>Chi tiết đơn hàng</th>
                             </tr>
                         </thead>
                         <tbody id="myTable">
@@ -113,13 +112,11 @@
                                 @foreach ($order->order_stores()->get() as $order_store)
                                     <tr>
                                         <td>{{ $order_store->order_store_code }}</td>
-                                        <td>{{date('Y-m-d H:i:s', strtotime($order_store->created_at)) }}</td>
                                         <td>
                                             {!! orderStatus($order_store->status) !!}
                                         </td>
-                                    
-                                            <td>{{formatMethod($order_store->shipping_method)}}</td>
-                                            <td>{{$order_store->shipping_code}}</td>
+                                        <td style="text-align: center"><a
+                                            target="_blank" href="{{route('getCbill', ['order_code'=>$order->order_code])}}">Xem</a></td>
                                     </tr>
                                 @endforeach
                             @endforeach
