@@ -127,6 +127,8 @@ class CheckoutController extends Controller
             $order_address->id_province = $user->id_tinhthanh;
             $order_address->id_district = $user->id_quanhuyen;
             $order_address->id_ward = $user->id_phuongxa;
+            $order_address->address = $user->address;
+
         } else {
             $validation = $request->validate([
                 'fullname' => 'required',
@@ -638,6 +640,32 @@ class CheckoutController extends Controller
                         break;
                     case 3:
                         return redirect()->route('payment.Send', ['order_code' => $order->order_code, 'payment_method' => $payment_method->id]);
+                        break;
+                    case 5 || 6:
+                        Session::put('order_code', $order->order_code);
+                        $paymentPaymeController = new PaymentPaymeController();
+                        $result = $paymentPaymeController->PaymentPayme($order, $pay_method = 'CREDITCARD');
+                        $result = json_decode($result);
+
+                        if( $result->code == '105000'){
+                            $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
+                            return redirect($result->data->url);
+                        }else{
+                            return redirect()->route('paymentFail');
+                        }
+                        break;
+                    case 9:
+                        Session::put('order_code', $order->order_code);
+                        $paymentPaymeController = new PaymentPaymeController();
+                        $result = $paymentPaymeController->PaymentPayme($order);
+                        $result = json_decode($result);
+
+                        if( $result->code == '105000'){
+                            $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
+                            return redirect($result->data->url);
+                        }else{
+                            return redirect()->route('paymentFail');
+                        }
                         break;
                     default:
                         return redirect()->route('checkout.getPaymentMethod', ['order_code' => $order->order_code])->with(['message' => 'Hình thức thanh toán không khả dụng']);

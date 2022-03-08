@@ -39,12 +39,27 @@ class AdminOrderController extends Controller
     {
         $orders = Order::whereMonth('created_at', Carbon::today()->month)->orderBy('id', 'DESC')->with('order_info:id_order,note')->get();
         $orders_count = $orders->groupBy('status')->map(function ($row) {
+            // dd($row);
             return $row->count();
         });
+
+        //chuyển đổi trạng thái hoàn tiền thành đã hủy
+        $filtered = $orders_count->filter(function ($value, $key) {
+            return $key == 6;
+        });
+
+        if(count($filtered->all()) > 0){
+            $orders_count->prepend($filtered->all()[6], 5);
+        }
+
+        // $shipping_method_count = OrderStore::select('shipping_method')->get()->groupBy('shipping_method')->map(function ($row) {
+        //     return $row->count();
+        // });
 
         $shipping_method_count = OrderStore::whereMonth('created_at', Carbon::today()->month)->select('shipping_method')->get()->groupBy('shipping_method')->map(function ($row) {
             return $row->count();
         });
+
         $doanh_thu = Order::where('status', 4)->sum('total');
         return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count'));
     }

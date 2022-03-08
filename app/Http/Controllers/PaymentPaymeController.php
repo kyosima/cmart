@@ -14,7 +14,7 @@ use App\Models\Order;
 class PaymentPaymeController extends Controller
 {
     //
-    public function PaymentPayme($order){
+    public function PaymentPayme($order, $pay_method = 'ATMCARD'){
         //lấy cấu hình
     	$setting_payment_payme = SettingPaymentPayme::first();
         // đưa dữ liệu bảo mật.
@@ -26,6 +26,7 @@ class PaymentPaymeController extends Controller
 			'amount' => $order->total,
 			'storeId' => $setting_payment_payme->store_id,
 			'partnerTransaction' => $order->order_code,
+			'payMethod' => $pay_method,
 			'desc' => 'Thanh toán đơn hàng từ cmart',
 			'expiryAt' => now()->addMinutes(120),
 			'ipnUrl' => route('ipnUrl'),
@@ -48,7 +49,6 @@ class PaymentPaymeController extends Controller
 				$order_payme->save();
 				return redirect()->route('checkout.orderSuccess', ['order_code' => $order_payme->transaction_partner_id ]);
 			}
-			return redirect()->route('paymentFail');
 		}
 		return redirect()->route('paymentFail');
     }
