@@ -93,7 +93,7 @@
     }
 
     .order-sign table td {
-        padding-bottom: 155px;
+        padding-bottom:185px;
     }
 
     .text-justify {
