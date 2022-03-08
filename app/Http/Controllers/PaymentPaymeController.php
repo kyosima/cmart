@@ -26,6 +26,7 @@ class PaymentPaymeController extends Controller
 			'amount' => $order->total,
 			'storeId' => $setting_payment_payme->store_id,
 			'partnerTransaction' => $order->order_code,
+			'payMethod' => 'CREDITCARD',
 			'desc' => 'Thanh toán đơn hàng từ cmart',
 			'expiryAt' => now()->addMinutes(120),
 			'ipnUrl' => route('ipnUrl'),
