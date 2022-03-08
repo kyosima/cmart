@@ -56,7 +56,7 @@
                 @foreach ($listHistory as $value)
                     <tr style="text-align:center">
                         <td>{{ $value->created_at }}</td>
-                        <td>{{ $value->makhachhang_chuyen }}</td>
+                        <td>{{ $value->makhachhang }}</td>
                         <td>{{ $value->note }}</td>
                         <td>{{ $value->point_past_chuyen }}</td>
                         <td>{{ $value->amount }}</td>

@@ -127,7 +127,6 @@ class CheckoutController extends Controller
             $order_address->id_province = $user->id_tinhthanh;
             $order_address->id_district = $user->id_quanhuyen;
             $order_address->id_ward = $user->id_phuongxa;
-            $order_address->address = $user->address;
         } else {
             $validation = $request->validate([
                 'fullname' => 'required',
@@ -653,11 +652,12 @@ class CheckoutController extends Controller
 
     public function processOrder($order)
     {
-        $viettelPostController = new ViettelPostController();
         foreach ($order->order_stores()->get() as $order_store) {
             if (($order_store->shipping_method == 0) || ($order_store->shipping_method == 1)) {
                 $order_store->shipping_code = $order_store->order_store_code;
             } else {
+                $viettelPostController = new ViettelPostController();
+
                 $result_vt = $viettelPostController->createOrder($order_store);
                 $order_store->shipping_code = $result_vt['data']['ORDER_NUMBER'];
             }
