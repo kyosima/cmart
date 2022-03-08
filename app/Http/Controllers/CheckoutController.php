@@ -127,6 +127,8 @@ class CheckoutController extends Controller
             $order_address->id_province = $user->id_tinhthanh;
             $order_address->id_district = $user->id_quanhuyen;
             $order_address->id_ward = $user->id_phuongxa;
+            $order_address->address = $user->address;
+
         } else {
             $validation = $request->validate([
                 'fullname' => 'required',
