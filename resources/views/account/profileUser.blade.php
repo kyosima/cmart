@@ -4,7 +4,6 @@
 
 @push('css')
     <link href="{{ asset('css/home.css') }}" rel="stylesheet" type="text/css">
-
 @endpush
 
 @section('content')
@@ -66,8 +65,8 @@
                             <div class="col-md-3 text-center mb-5">
                                 <div class="avatar avatar-xl">
                                     @if ($profileUser->avatar != null)
-                                        <img for="img_avatar" src="{{ asset('/public/images/' . $profileUser->avatar) }}"
-                                            width="150px" height="150px" />
+                                        <img for="img_avatar" src="{{ $profileUser->avatar }}" width="150px"
+                                            height="150px" />
                                         <input type="file" class="form-control" name="avatar" id="img_avatar"
                                             style="display: none">
                                         {{-- <label for="img_avatar" class="btn btn-primary profile-button mt-2">Ảnh chân dung</label> --}}
@@ -93,11 +92,15 @@
                                         <p class="text-muted">
                                             Định danh Khách hàng:
                                             @if ($profileUser->level == 1)
-                                                Member Vip
+                                                Khách hàng VIP
                                             @elseif($profileUser->level == 2)
                                                 Cộng tác viên
+                                            @elseif($profileUser->level == 3)
+                                                Purchasing
+                                            @elseif($profileUser->level == 4)
+                                                Khách hàng thương mại
                                             @else
-                                                Member bình thường
+                                                Khách hàng thân thiết
                                             @endif
                                         </p>
                                         <!--<div class="">Tích lũy: {{ $profileUser->tichluyC }} point</div>-->
@@ -118,6 +121,8 @@
 
                                     </div>
                                 </div>
+                                <a href="{{route('ekyc.getVerify')}}" class="w-100 btn btn-info">Xác minh lại thông tin</a>
+
                             </div>
                         </div>
                         <hr class="my-4" />
@@ -166,35 +171,34 @@
                         </div>
                         <div class="form-group">
                             <label for="inputAddress5">Ảnh CMND</label>
-                            @if ($profileUser->cmnd_image != null)
-                                <img id="imgFileUpload" src="{{ asset('/public/images/' . $profileUser->cmnd_image) }}"
-                                    width="100%" height="250px" style="cursor: pointer" />
-                                <br />
+                            {{-- @if ($profileUser->cmnd_image != null) --}}
+                            <img id="imgFileUpload" src="{{ $profileUser->cmnd_image }}" width="100%"
+                                style="cursor: pointer" />
+                            {{-- <br />
                                 <span id="spnFilePath"></span>
-                                <input type="file" id="FileUpload1" style="display: none" name="image_cmnd" id="img_cmnd" />
-                            @else
+                                <input type="file" id="FileUpload1" style="display: none" name="image_cmnd" id="img_cmnd" /> --}}
+                            {{-- @else
                                 <p>
                                     <input class="form-control" type="file" accept="image/*" onchange="loadFile(event)"
                                         name="image_cmnd">
                                     <img id="output" />
                                 </p>
-                            @endif
+                            @endif --}}
                         </div>
                         <div class="form-group">
                             <label for="inputAddress5">Ảnh CMND mặt sau</label>
-                            @if ($profileUser->cmnd_image2 != null)
-                                <img id="imgFileUpload2"
-                                    src="{{ asset('/public/images2/' . $profileUser->cmnd_image2) }}" width="100%"
-                                    height="250px" style="cursor: pointer" />
-                                <br />
+                            {{-- @if ($profileUser->cmnd_image2 != null) --}}
+                            <img id="imgFileUpload2" src="{{ $profileUser->cmnd_image2 }}" width="100%"
+                                style="cursor: pointer" />
+                            {{-- <br />
                                 <span id="spnFilePath2"></span>
                                 <input type="file" id="FileUpload2" style="display: none" name="image_cmnd2"
-                                    id="img_cmnd2" />
-                            @else
+                                    id="img_cmnd2" /> --}}
+                            {{-- @else
                                 <input class="form-control" type="file" accept="image/*" onchange="loadFile2(event)"
                                     name="image_cmnd2">
                                 <img id="output2" />
-                            @endif
+                            @endif --}}
                         </div>
 
                         <div class="form-group row">
@@ -231,8 +235,8 @@
                             <label for="" class="col-sm-2 col-form-label">Cấp Tỉnh</label>
 
                             <div class="col-sm-10">
-                                <input type="text" name="address" class="form-control" value="{{ DB::table('province')->join('users', 'users.id_tinhthanh', '=', 'province.matinhthanh')->where('province.matinhthanh', '=', auth()->user()->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh }}
-        " placeholder="Địa chỉ chi tiết" readonly>
+                                <input type="text" name="address" class="form-control"
+                                    value="{{ $user_province->PROVINCE_NAME }}" placeholder="Địa chỉ chi tiết" readonly>
 
                             </div>
                         </div>
@@ -240,16 +244,16 @@
                             <label for="" class="col-sm-2 col-form-label">Cấp Huyện</label>
 
                             <div class="col-sm-10">
-                                <input type="text" name="address" class="form-control" value="{{ DB::table('district')->join('users', 'users.id_quanhuyen', '=', 'district.maquanhuyen')->where('district.maquanhuyen', '=', auth()->user()->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen }}
-                                    " placeholder="Địa chỉ chi tiết" readonly>
+                                <input type="text" name="address" class="form-control"
+                                    value="{{ $user_district->DISTRICT_NAME }}" placeholder="Địa chỉ chi tiết" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label">Cấp Xã</label>
 
                             <div class=" col-sm-10">
-                                <input type="text" name="address" class="form-control" value="{{ DB::table('ward')->join('users', 'users.id_phuongxa', '=', 'ward.maphuongxa')->where('ward.maphuongxa', '=', auth()->user()->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa }}
-                                    " placeholder="Địa chỉ chi tiết" readonly>
+                                <input type="text" name="address" class="form-control"
+                                    value="{{ $user_ward->WARDS_NAME }}" placeholder="Địa chỉ chi tiết" readonly>
 
                             </div>
                         </div>
@@ -260,14 +264,14 @@
                                             type="checkbox" id="changePassword" name="changePassword"> Đổi mật khẩu</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputPassword5">Mật khẩu mới</label>
+                                    <label for="inputPassword5">Nhập mật khẩu mới </label>
                                     <input type="password" class="form-control password" name="password"
-                                        placeholder="Mời nhập mật khẩu" disabled>
+                                        placeholder="Mời nhập mật khẩu mới từ 8 kí tự" minlength="8" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputPassword6">Nhập lại mật khẩu</label>
+                                    <label for="inputPassword6">Nhập lại mật khẩu mới</label>
                                     <input type="password" class="form-control password" name="passwordAgain"
-                                        placeholder="Mời nhập lại mật khẩu" disabled>
+                                        placeholder="Mời nhập lại mật khẩu mới" minlength="8" disabled>
                                 </div>
                             </div>
                             {{-- <div class="col-md-6">
@@ -279,9 +283,9 @@
                         </ul>
                     </div> --}}
                         </div>
-                        {{-- <div class="text-center">
+                        <div class="text-center">
                             <button type="submit" class="btn btn-primary">Lưu Thông Tin</button>
-                        </div> --}}
+                        </div>
                     </form>
                 </div>
             </div>
@@ -364,5 +368,4 @@
             }
         };
     </script>
-
 @endpush

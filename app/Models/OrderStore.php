@@ -26,8 +26,17 @@ class OrderStore extends Model
 	protected $fillable = [
 		'id_order',
 		'id_store',
+		'order_store_code',
+		'shipping_code',
 		'shipping_total',
+		'vat_products',
+		'vat_services',
+		'discount_products',
+		'discount_services',
 		'shipping_method',
+		'remaining_m_point',
+		'shipping_weight',
+		'shipping_type',
 		'tax',
 		'c_point',
 		'm_point',
@@ -35,7 +44,10 @@ class OrderStore extends Model
 		'total'
 	];
 
+	public function order(){
+		return $this->belongsTo(Order::class,  'id_order', 'id');
 
+	}
 	public function order_products(){
 		return $this->hasMany(OrderProduct::class, 'id_order_store');
 	}

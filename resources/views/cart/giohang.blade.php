@@ -24,12 +24,13 @@
                                 $cart = Cart::instance($store->id);
                             @endphp
                             @if ($cart->count() > 0)
-                                <div class="cart-block">
+                                <div class="cart-block" id="store-b-{{ $store->id }}">
                                     <div class="store-title">
                                         <input type="checkbox" id="store-{{ $store->id }}" value="{{ $store->id }}">
-                                        <label for="store-{{ $store->id }}">
-                                            <span>{{ $store->name }}</span> <span>- {{ $cart->count() }}</span> sản
-                                            phẩm</span>
+                                        <label for="store-{{ $store->id }}">Cửa hàng
+                                            <span>{{ $store->name }}</span>
+                                            {{-- <span>- {{ $cart->count() }}</span> sản phẩm --}}
+                                            </span>
                                         </label>
 
                                     </div>
@@ -39,23 +40,28 @@
                                             <div class="col-lg-1 col-md-2 col-xs-12 text-center">
                                                 <b>Ảnh</b>
                                             </div>
+
+                                            
+                                            <div class="col-lg-1 col-md-2 col-xs-12 text-center">
+                                                <b>Mã sản phẩm</b>
+                                            </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 text-center">
                                                 <b>Tên sản phẩm</b>
                                             </div>
+                                            @if (!in_array(Auth::user()->level, [3, 4]))
+                                                <div class="col-lg-1 col-md-2 col-xs-3 text-center">
+                                                    <b> C</b>
+                                                </div>
+                                                <div class="col-lg-1 col-md-2 col-xs-3 text-center">
+                                                    <b> M</b>
+                                                </div>
+                                            @endif
+
                                             <div class="col-lg-1 col-md-2 col-xs-3 text-center">
                                                 <b> Đơn giá</b>
                                             </div>
                                             <div class="col-lg-2 col-md-2 col-xs-3 text-center">
                                                 <b> Số lượng</b>
-                                            </div>
-                                            <div class="col-lg-1 col-md-2 col-xs-3 text-center">
-                                                <b> Điểm dịch vụ</b>
-                                            </div>
-                                            <div class="col-lg-1 col-md-2 col-xs-3 text-center">
-                                                <b> Tiền tích lũy</b>
-                                            </div>
-                                            <div class="col-lg-1 col-md-2 col-xs-3 text-center">
-                                                <b> Tổng phụ</b>
                                             </div>
                                             <div class="col-lg-1 col-md-2 col-xs-3">
 
@@ -70,11 +76,26 @@
                                                             class="w-50">
                                                     </a>
                                                 </div>
+                                               
                                                 <div
-                                                    class="col-lg-4 col-md-4 col-12 d-flex align-items-center justify-content-center">
-                                                    <a
-                                                        href="{{ route('san-pham.show', $row->model->slug) }}" class="cart-item-name">{{ $row->name }}</a>
+                                                    class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
+                                                    <span> {{ $row->model->sku }}</span>
                                                 </div>
+                                                <div
+                                                class="col-lg-4 col-md-4 col-12 d-flex align-items-center justify-content-center">
+                                                <a href="{{ route('san-pham.show', $row->model->slug) }}"
+                                                    class="cart-item-name">{{ $row->name }}</a>
+                                            </div>
+                                                @if (!in_array(Auth::user()->level, [3, 4]))
+                                                    <div
+                                                        class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
+                                                        <span> {{ $row->model->productPrice()->value('cpoint') }}</span>
+                                                    </div>
+                                                    <div
+                                                        class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
+                                                        <span> {{ $row->model->productPrice()->value('mpoint') }}</span>
+                                                    </div>
+                                                @endif
                                                 <div
                                                     class="col-lg-1 col-md-1 col-6 d-flex align-items-center justify-content-center">
                                                     <b> {{ formatPrice($row->price) }}</b>
@@ -88,18 +109,6 @@
                                                         data-url="{{ route('cart.update') }}"
                                                         data-storeid="{{ $store->id }}" title="SL" size="3"
                                                         pattern="[0-9]*" inputmode="numeric">
-                                                </div>
-                                                <div
-                                                    class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
-                                                    <span> {{ $row->model->productPrice()->value('cpoint') }}</span>
-                                                </div>
-                                                <div
-                                                    class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
-                                                    <span> {{ $row->model->productPrice()->value('mpoint') }}</span>
-                                                </div>
-                                                <div
-                                                    class="col-lg-1 col-md-1 col-4 cart_price_col d-flex align-items-center justify-content-center">
-                                                    <span>{{ formatPrice($row->price * $row->qty) }}</span>
                                                 </div>
                                                 <div
                                                     class="col-lg-1 col-md-1 col-12 text-center d-flex align-items-center justify-content-center">
@@ -177,16 +186,19 @@
                         <form action="{{ route('cart.checkout') }}" method="post">
                             @csrf
                             <input type="hidden" name="store_ids" value="">
-                            <div class="d-flex justify-content-between row">
-                                <div class="col-md-3">
-                                    <b>Tổng giá trị: </b><span class="text-danger" id="total">0 đ</span>
+
+                            <div class="d-md-flex  @if (in_array(Auth::user()->level, [3, 4])) justify-content-center @else justify-content-around @endif">
+                                <div class="">
+                                    <b>Tổng giá trị Sản phẩm: </b><span class="text-danger" id="total">0 đ</span>
                                 </div>
-                                <div class="col-md-3">
-                                    <b>Tiền tích lũy (C): </b><span class="text-danger" id="cpoint">0</span>
-                                </div>
-                                <div class="col-md-3">
-                                    <b>Điểm dịch vụ (M): </b><span class="text-danger" id="mpoint">0</span>
-                                </div>
+                                @if (!in_array(Auth::user()->level, [3, 4]))
+                                    <div class="">
+                                        <b>Tổng C: </b><span class="text-danger" id="cpoint">0</span>
+                                    </div>
+                                    <div class="">
+                                        <b>Tổng M: </b><span class="text-danger" id="mpoint">0</span>
+                                    </div>
+                                @endif
                             </div>
                             <div class="d-flex justify-content-around row">
                                 <div class="col-md-3">
@@ -194,7 +206,8 @@
                                         sắm</a>
                                 </div>
                                 <div class="col-md-3">
-                                    <button id="btn-to-checkout" class="btn-dathang" type="submit" disabled>Chọn cửa hàng cần thanh
+                                    <button id="btn-to-checkout" class="btn-dathang" type="submit" disabled>Chọn cửa hàng
+                                        cần thanh
                                         toán</button>
                                 </div>
                             </div>

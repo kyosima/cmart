@@ -73,7 +73,7 @@ function search_time() {
     }
   }
   
-  function search_magiaodich() {
+  function search_noidung() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("search_magiaodich");
     filter = input.value.toUpperCase();

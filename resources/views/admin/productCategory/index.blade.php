@@ -8,81 +8,81 @@
 @endpush
 
 @section('content')
-@if(auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
-    <!-- Modal -->
-    <div class="modal fade" id="product_category_create" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"><i class="fas fa-map-signs"></i> Thông tin danh mục sản phẩm </h4>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" id="formCreateProductCategory"
-                        action="{{ route('nganh-nhom-hang.store') }}" role="form" method="POST">
-                        @csrf
-                        <div class="form-body">
-                            <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Chọn danh mục cha<span class="required"
-                                        aria-required="true">(*)</span></label>
-                                <div class="col-md-9">
-                                    <select name="proCatParent" class="form-control proCatType">
-                                        <option value="0" selected>None</option>
-                                    </select>
+    @if (auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
+        <!-- Modal -->
+        <div class="modal fade" id="product_category_create" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><i class="fas fa-map-signs"></i> Thông tin danh mục sản phẩm </h4>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="formCreateProductCategory"
+                            action="{{ route('nganh-nhom-hang.store') }}" role="form" method="POST">
+                            @csrf
+                            <div class="form-body">
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Chọn danh mục cha<span class="required"
+                                            aria-required="true">(*)</span></label>
+                                    <div class="col-md-9">
+                                        <select name="proCatParent" class="form-control proCatType">
+                                            <option value="0" selected>None</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Tên danh mục<span class="required"
+                                            aria-required="true">(*)</span></label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="proCatName" class="form-control" required
+                                            value="{{ old('proCatName') }}">
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Đường dẫn (có thể để trống)</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="proCatSlug" class="form-control"
+                                            value="{{ old('proCatSlug') }}">
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Liên kết tới danh mục khác</label>
+                                    <div class="col-md-9">
+                                        <select name="linkProCat" class="form-control proCatType">
+                                            <option value="0" selected>None</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Thứ tự ưu tiên</label>
+                                    <div class="col-md-9">
+                                        <input type="number" min="1" name="proCatPriority" class="form-control"
+                                            value="{{ old('proCatPriority', 1) }}">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Tên danh mục<span class="required"
-                                        aria-required="true">(*)</span></label>
-                                <div class="col-md-9">
-                                    <input type="text" name="proCatName" class="form-control" required
-                                        value="{{ old('proCatName') }}">
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-dark" data-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-info btn-submit-unit">Lưu</button>
                             </div>
-                            <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Đường dẫn (có thể để trống)</label>
-                                <div class="col-md-9">
-                                    <input type="text" name="proCatSlug" class="form-control"
-                                        value="{{ old('proCatSlug') }}">
-                                </div>
-                            </div>
-                            <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Liên kết tới danh mục khác</label>
-                                <div class="col-md-9">
-                                    <select name="linkProCat" class="form-control proCatType">
-                                        <option value="0" selected>None</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group d-flex mb-2">
-                                <label class="col-md-3 control-label">Thứ tự ưu tiên</label>
-                                <div class="col-md-9">
-                                    <input type="number" min="1" name="proCatPriority" class="form-control"
-                                        value="{{ old('proCatPriority', 1) }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-dark" data-dismiss="modal">Hủy</button>
-                            <button type="submit" class="btn btn-info btn-submit-unit">Lưu</button>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
-    <!-- END MODAL -->
-@else 
-    <div class="modal fade" id="product_category_create" tabindex="-1" aria-hidden="true"></div>
-@endif
+        <!-- END MODAL -->
+    @else
+        <div class="modal fade" id="product_category_create" tabindex="-1" aria-hidden="true"></div>
+    @endif
 
     <div class="m-3">
         <div class="wrapper bg-white p-4">
             @if (session('success'))
                 <div class="portlet-status mb-2">
                     <div class="caption bg-success p-3">
-                        <span class="caption-subject bold uppercase text-light">{{session('success')}}</span>
+                        <span class="caption-subject bold uppercase text-light">{{ session('success') }}</span>
                     </div>
                 </div>
             @endif
@@ -103,16 +103,17 @@
                             DANH MỤC SẢN PHẨM </span>
                         <span class="caption-helper"></span>
                     </div>
-                    @if(auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
-                    <div class="ps-4">
-                        <a href="#product_category_create" data-toggle="modal" class="btn btn-add"><i
-                                class="fa fa-plus"></i>
-                            Thêm mới </a>
-                    </div>
+                    @if (auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
+                        <div class="ps-4">
+                            <a href="#product_category_create" data-toggle="modal" class="btn btn-add"><i
+                                    class="fa fa-plus"></i>
+                                Thêm mới </a>
+                        </div>
                     @endif
                 </div>
 
-                @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm') && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                {{-- @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm') &&
+    auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
                 <div>   
                     <div class="input-group action-multiple">
                         <select class="custom-select" name="action" required="">
@@ -128,16 +129,17 @@
                         </div>
                     </div>
                 </div>
-                @endif
+                @endif --}}
 
             </div>
             <hr>
             <div class="portlet-body">
                 <div class="pt-3" style="overflow-x: auto;">
-                    @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm') && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
-                        <form id="myform" action="{{route('nganh-nhom-hang.multiChange')}}" method="post">
-                        @csrf
-                        <input type="hidden" name="action" value="" id="input-action">
+                    @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm') &&
+    auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                        <form id="myform" action="{{ route('nganh-nhom-hang.multiChange') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="action" value="" id="input-action">
                     @endif
                     <table id="table-product-category" class="table table-hover table-main" width="100%">
                         <thead class="thead1" style="vertical-align: middle;">
@@ -146,37 +148,39 @@
                                 <th class="title title-text">
                                     Tên ngành hàng
                                 </th>
-                                <th class="title title-text">
-                                    Đường dẫn</th>
+                                {{-- <th class="title title-text">
+                                    Đường dẫn</th> --}}
                                 <th class="title title-text">
                                     Trạng thái</th>
                                 <th class="title title-text">
                                     Thứ tự</th>
-                                <th class="title title-text">
-                                    Thao tác</th>
+                                {{-- <th class="title title-text">
+                                    Thao tác</th> --}}
                             </tr>
                         </thead>
                         <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
                             @foreach ($categories as $category)
-                                <tr data-categoryid="{{$category->id}}">
+                                <tr data-categoryid="{{ $category->id }}">
                                     <td style="width: 3%;">
                                         @if ($category->id != 1)
-                                        <input type="checkbox" name="id[]" value="{{$category->id}}">
-                                        @endif    
+                                            <input type="checkbox" name="id[]" value="{{ $category->id }}">
+                                        @endif
                                     </td>
                                     <td>
-                                        @if ($category->slug != 'uncategorized' && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                                        @if ($category->slug != 'uncategorized' &&
+    auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
                                             <a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
-                                                href="{{route('nganh-nhom-hang.edit', $category->id)}}">{{ $category->name }}</a>
+                                                href="{{ route('nganh-nhom-hang.edit', $category->id) }}">{{ $category->name }}</a>
                                             @if (count($category->childrenCategoriesOnly) > 0)
                                                 <a style="display: block; text-decoration: none; cursor: pointer; color: #36c6d3;"
-                                                href="{{route('nganh-nhom-hang.showChild', ['parentId' => $category->id, 'level' => $category->level])}}">Xem danh mục con</a>
+                                                    href="{{ route('nganh-nhom-hang.showChild', ['parentId' => $category->id, 'level' => $category->level]) }}">Xem
+                                                    danh mục con</a>
                                             @endif
-                                        @else 
+                                        @else
                                             {{ $category->name }}
                                         @endif
                                     </td>
-                                    <td>{{ $category->slug }}</td>
+                                    {{-- <td>{{ $category->slug }}</td> --}}
                                     <td>
                                         @if ($category->slug != 'uncategorized')
                                             <div class="input-group" style="min-width: 108px;">
@@ -238,22 +242,25 @@
                                     </td>
                                     <td>
                                         <span class="priority priority-cha">
-                                            {{$category->priority}}
+                                            {{ $category->priority }}
                                         </span>
                                     </td>
-                                    <td>
-                                        @if ($category->slug != 'uncategorized' && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
-                                            <a style="text-decoration: none; cursor: pointer;" class="btn btn-warning modal-edit-proCat"
-                                            data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
-                                            data-unitid="{{ $category->id }}"><i class="fa fa-pencil"></i></a>
-                                        @endif 
-                                    </td>
+                                    {{-- <td>
+                                        @if ($category->slug != 'uncategorized' &&
+    auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                                            <a style="text-decoration: none; cursor: pointer;"
+                                                class="btn btn-warning modal-edit-proCat"
+                                                data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
+                                                data-unitid="{{ $category->id }}"><i class="fa fa-pencil"></i></a>
+                                        @endif
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
 
-                    @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm') && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                    @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm') &&
+    auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
                         </form>
                     @endif
                 </div>
@@ -273,8 +280,8 @@
             confirm('Bạn chắc chắn muốn thực hiện tác vụ này?') == true && $('#myform').submit()
         }
 
-        $(document).ready(function () {
-            $('.custom-select').change(function (e) { 
+        $(document).ready(function() {
+            $('.custom-select').change(function(e) {
                 e.preventDefault();
                 $('#input-action').val($(this).val())
             });
@@ -285,10 +292,19 @@
         $(document).ready(function() {
             var table = $('#table-product-category').DataTable({
                 ordering: false,
+                searching: false,
                 lengthMenu: [
                     [50, -1],
                     [50, "All"]
                 ],
+                columnDefs: [
+                    {
+                        targets: 0,
+                        visible: false,
+                    },{
+                    targets: 1,
+                    "width": "50%",
+                }],
                 language: {
                     search: "Tìm kiếm:",
                     lengthMenu: "Hiển thị _MENU_ kết quả",
@@ -317,13 +333,13 @@
                     ajax: {
                         url: ajaxSelectCategory,
                         dataType: 'json',
-                        data: function (params) {
+                        data: function(params) {
                             var query = {
                                 search: params.term,
                             }
                             return query;
                         },
-                        processResults: function (data) {
+                        processResults: function(data) {
                             return {
                                 results: data.data
                             };
@@ -334,7 +350,8 @@
                     templateResult: formatRepoSelection,
                     templateSelection: formatRepoSelection
                 });
-                function formatRepoSelection (repo) {
+
+                function formatRepoSelection(repo) {
                     if (repo.name) {
                         return `${repo.name}`
                     }
@@ -342,7 +359,7 @@
                 }
             })
 
-            $('.changeStatus').click(function(){
+            $('.changeStatus').click(function() {
                 var id = $(this).data('id')
                 var value = $(this).data('value')
                 var url = $(this).data('url')
@@ -357,7 +374,7 @@
                     data: {
                         unitStatus: value
                     },
-                    success: function (response) {
+                    success: function(response) {
                         $.toast({
                             heading: 'Thành công',
                             text: 'Thực hiện thành công',
@@ -366,7 +383,7 @@
                         });
                         location.reload();
                     },
-                    error: function (response) {
+                    error: function(response) {
                         $.toast({
                             heading: 'Thất bại',
                             text: 'Thực hiện không thành công',
@@ -378,44 +395,44 @@
             })
 
             // DELETE
-            @if(auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+            @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
                 $(document).on('click', '.btn-delete', function () {
-                    var url = $(this).data('url')
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    if(confirm('Bạn có chắc muốn xóa')){
-                        $.ajax({
-                            type: "DELETE",
-                            url: url,
-                            success: function (response) {
-                                $.toast({
-                                    heading: 'Thành công',
-                                    text: 'Thực hiện thành công',
-                                    position: 'top-right',
-                                    icon: 'success'
-                                });
-                                location.reload();
-                            },
-                            error: function(response) {
-                                $.toast({
-                                    heading: 'Thất bại',
-                                    text: 'Thực hiện không thành công',
-                                    position: 'top-right',
-                                    icon: 'error'
-                                });
-                            }
-                        });
-                    }
+                var url = $(this).data('url')
+                $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                });
+                if(confirm('Bạn có chắc muốn xóa')){
+                $.ajax({
+                type: "DELETE",
+                url: url,
+                success: function (response) {
+                $.toast({
+                heading: 'Thành công',
+                text: 'Thực hiện thành công',
+                position: 'top-right',
+                icon: 'success'
+                });
+                location.reload();
+                },
+                error: function(response) {
+                $.toast({
+                heading: 'Thất bại',
+                text: 'Thực hiện không thành công',
+                position: 'top-right',
+                icon: 'error'
+                });
+                }
+                });
+                }
                 })
             @endif
         });
     </script>
 
-@if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
-    <script type="text/javascript" src="{{ asset('/js/admin/adminProductCategory.js') }}"></script>
-@endif
+    @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+        <script type="text/javascript" src="{{ asset('/js/admin/adminProductCategory.js') }}"></script>
+    @endif
 
 @endpush

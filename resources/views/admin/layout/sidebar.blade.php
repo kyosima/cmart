@@ -34,7 +34,7 @@
             <li class="dropdown">
                 <a href="#" class="dropbtn">
                     <i class="fa fa-cube"></i>
-                    <span class="links_name w-100 align-items-center d-flex">Quản lý sản phẩm <i
+                    <span class="links_name w-100 align-items-center d-flex">Sản phẩm/Thanh toán<i
                             class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
                 </a>
                 <span class="dropdown-content">
@@ -53,36 +53,38 @@
         <li class="dropdown">
             <a href="{{ route('coupon.index') }}" class="dropbtn">
                 <i class="fa fa-tag"></i>
-                <span class="links_name w-100 align-items-center d-flex">Quản lý mã ưu đãi</span>
+                <span class="links_name w-100 align-items-center d-flex">Ưu đãi</span>
             </a>
 
         </li>
         <li class="dropdown">
             <a href="#" class="dropbtn">
                 <i class="fa fa-users" aria-hidden="true"></i>
-                <span class="links_name w-100 align-items-center d-flex">Quản lý khách hàng <i
+                <span class="links_name w-100 align-items-center d-flex">Khách hàng <i
                         class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
             <span class="dropdown-content">
                 <a href="{{url('admin/danh-sach-user')}}">Danh sách khách hàng</a>
-                <a href="{{route('tongdiemuser')}}">Danh sách điểm khách hàng</a>
-                <a href="{{route('chuyendiem')}}">Chuyển điểm user</a>
             </span>
             @endif
          </li>
-         <li class="dropdown">
+         <li class="dropdown" >
             <a href="#" class="dropbtn">
             <i class="fas fa-history"></i>
-             <span class="links_name w-100 align-items-center d-flex">Lịch sử CPoint <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+             <span class="links_name w-100 align-items-center d-flex">Tiền tích lũy C <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
-            <span class="dropdown-content">
-                <a href="{{route('lichsuchuyenkhoan')}}">Lịch sử chuyển khoản</a>
-                <a href="{{route('lichsutichluy')}}">Lịch sử tích luỹ</a>
-                <a href="{{route('lichsutietkiem')}}">Lịch sử tiết kiệm</a>
+            <span class="dropdown-content" style="top: -90px;">
+                <a href="{{route('tongdiemuser')}}">Tài khoản C / HSKH</a>
+                <a href="{{route('chuyendiem')}}">Chuyển C</a>
+                <a href="{{route('napC')}}">Tài khoản C / C-Mart</a>
+                <a href="{{route('lichsunhanC')}}">Lịch sử nhận C</a>
+                <a href="{{route('lichsuchuyenkhoan')}}">Lịch sử chuyển khoản C</a>
+                <a href="{{route('lichsutichluy')}}">Lịch sử thanh toán tích luỹ C</a>
+                <a href="{{route('lichsutietkiem')}}">Lịch sử thanh toán tiết kiệm C</a>
+                <a href="{{route('lichsudiemm')}}">Lịch sử thanh toán tích luỹ M</a>
                 <a href="{{route('lichsudonhanghuy')}}">Lịch sử hoàn đơn hàng huỷ</a>
-                <a href="{{route('lichsudiemm')}}">Lịch sử điểm tích luỹ M</a>
             </span>
             @endif
         </li>
@@ -90,7 +92,7 @@
             <li class="dropdown">
                 <a href="#" class="dropbtn">
                     <i class="fas fa-user-shield"></i>
-                    <span class="links_name w-100 align-items-center d-flex">Quản lý Admin <i
+                    <span class="links_name w-100 align-items-center d-flex">Admin <i
                             class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
                 </a>
                 <span class="dropdown-content">
@@ -105,7 +107,7 @@
             <li class="dropdown">
                 <a href="#" class="dropbtn">
                     <i class="fas fa-book"></i>
-                    <span class="links_name w-100 align-items-center d-flex">Trang - banner <i
+                    <span class="links_name w-100 align-items-center d-flex">Thông tin <i
                             class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
                 </a>
                 <span class="dropdown-content">

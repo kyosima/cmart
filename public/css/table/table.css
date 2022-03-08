@@ -55,3 +55,13 @@ margin-left: 5px;
 .table-sortable .th-sort-desc {
 background: rgba(0, 0, 0, 0.1);
 }
+
+.btn-tongC {
+    width: 100%;
+    background: darkblue; 
+    color: white !important;
+}
+
+.btn-tongC:hover {
+    color: rgb(253, 255, 107);
+}

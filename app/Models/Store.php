@@ -30,5 +30,8 @@ class Store extends Model
     {
         return $this->belongsto(Admin::class, 'id_owner', 'id');
     }
+    public function product_stores(){
+		return $this->hasMany(ProductStore::class, 'id_ofstore');
+	}
 
 }

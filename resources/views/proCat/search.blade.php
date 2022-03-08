@@ -1,19 +1,16 @@
 @extends('layout.master')
 
 @push('css')
-
     <link rel="stylesheet" href="{{ asset('public/css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/danhmucsanpham.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/pagination.css') }}">
 
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
-
 @endpush
 
 
 @section('content')
-
     <!-- breadcrumbs -->
     <section id="breadcrumbs">
         <div class="page-title shop-page-title">
@@ -83,20 +80,20 @@
                 <div class="shop-container col-lg-9 col-md-12 col-sm-12">
                     <div class="shop-container-inner">
                         <!-- TITLE -->
-                         @if (count($products) > 0)
-                        <h2 class="title-filter d-none d-lg-block text-uppercase"><span>
-                               Có ({{ count($products) }}
+                        @if (count($products) > 0)
+                            <h2 class="title-filter d-none d-lg-block text-uppercase"><span>
+                                    Có ({{ count($products) }}
                                     sản
-                                phẩm) với từ khóa <b>{{ $keyword }}</b>
-                                
-                            </span></h2>
-                            @else 
+                                    phẩm) với từ khóa <b>{{ $keyword }}</b>
+
+                                </span></h2>
+                        @else
                             <h2 class="title-filter d-none d-lg-block text-center"><span>
-                                Không tìm thấy sản phẩm.<br/> Quý Khách
+                                    Không tìm thấy sản phẩm.<br /> Quý Khách
                                     Hàng vui lòng liên hệ đến các kênh kết nối chính thức của C-Mart để được hỗ trợ ngay và
                                     luôn.
                                 </span></h2>
-                                    @endif
+                        @endif
                         <!-- Bộ lọc -->
                         {{-- <div class="filter-cate">
                             <ul>
@@ -130,7 +127,7 @@
                                     <div class="product-box row">
                                         <div class="box-image col-lg-12 col-md-4 col-4">
                                             <div class="image-cover">
-                                                <a href="#">
+                                                <a href="{{ route('san-pham.show', $item->slug) }}">
                                                     <img src="{{ asset($item->feature_img) }}" alt="">
                                                 </a>
                                             </div>
@@ -144,21 +141,12 @@
                                                 </a>
                                             </div>
                                             <div class="price-wrapper">
-                                                <li class="price">
-                                                    <span>{{ formatPriceOfLevel($item) }}</span>
-                                                </li>
-                                                {{-- @if ($item->shock_price != null || $item->shock_price != 0)
                                                 <span class="price">
-                                                    <span class="amount">{{number_format($item->shock_price)}}đ</span>
+                                                    <span class="amount">
+                                                        {{ formatPriceOfLevel($item) }}
+                                                    </span>
+
                                                 </span>
-                                                <span class="price-old">
-                                                    <span class="amount">{{number_format($item->regular_price)}}đ</span>
-                                                </span>
-                                            @else
-                                                <span class="price">
-                                                    <span class="amount">{{number_format($item->regular_price)}}đ</span>
-                                                </span>
-                                            @endif --}}
                                             </div>
                                         </div>
                                     </div>
@@ -229,5 +217,4 @@
 
 
     <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script>
-
 @endpush

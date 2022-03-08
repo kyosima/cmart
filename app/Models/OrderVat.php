@@ -35,6 +35,7 @@ class OrderVat extends Model
 		'id_order',
 		'vat_name',
 		'vat_company',
+		'vat_email',
 		'vat_mst',
 		'vat_address'
 	];

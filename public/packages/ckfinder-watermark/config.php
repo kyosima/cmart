@@ -20,7 +20,7 @@ function url(){
     else{
         $protocol = 'http';
     }
-    return $protocol . "://" . $_SERVER['HTTP_HOST'].'/cmart1';
+    return $protocol . "://" . $_SERVER['HTTP_HOST'].'/cmart';
 }
 function url_current(){
     $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -168,9 +168,11 @@ $config['pluginsDirectory'] = __DIR__ . '/plugins';
 $config['plugins'] = array('ImageWatermark');
 $config['ImageWatermark'] = array(
     'imagePath' => __DIR__.'/watermark/logo-cpc.png',
+    'size' => 1,
     'position' => array(
-        'right'  => 80,
-        'bottom' => 80,
+        'right'  => 12,
+        'bottom' => 12,
+        
     )
 );
 // }

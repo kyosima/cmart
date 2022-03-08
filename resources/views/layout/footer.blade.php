@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="info-company col-lg-12  col-md-12 col-sm-12 col-xs-12 col-12 ">
+            {{-- <div class="info-company col-lg-12  col-md-12 col-sm-12 col-xs-12 col-12 ">
                 <div class="row">
                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     </div>
@@ -34,7 +34,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> --}}
             {{-- <div class="ketnoi col-12">
                 <div class="box-hotline-f col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
 

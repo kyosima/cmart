@@ -1,4 +1,49 @@
-$('input[name="address"], select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function() {
+var loadingOverlay = document.querySelector('.loading');
+
+function toggleLoading(event) {
+    if (event.keyCode !== 13) return;
+
+    document.activeElement.blur();
+
+    if (loadingOverlay.classList.contains('hidden')) {
+        loadingOverlay.classList.remove('hidden');
+    } else {
+        loadingOverlay.classList.add('hidden');
+    }
+}
+
+document.addEventListener('keydown', toggleLoading);
+
+function showPolicy(e) {
+    slug = $(e).data('slug');
+    url = $(e).data('url');
+    $.ajax({
+        type: 'GET',
+        url: url,
+        data: {
+            slug: slug,
+            url: url,
+        },
+        error: function (data) {
+            console.log(data);
+        },
+        success: function (response) {
+            console.log(response);
+            $('#modal-policy #policy-title').text(response.name);
+            $('#modal-policy .policy-content').html(response.content);
+            $('#modal-policy').modal('show');
+        }
+    });
+}
+$('select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function () {
+    $('input[name="address"]').val('');
+});
+$('input[name="address"], select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function () {
+    getship();
+});
+
+
+function getship() {
     address = $('input[name="address"]');
     ward = $('select[name="sel_ward"]');
     district = $('select[name="sel_district"]');
@@ -6,11 +51,11 @@ $('input[name="address"], select[name="sel_ward"], select[name="sel_district"], 
     if ((address.val() != '') && (ward.val() != '') && (district.val() != '') && (province.val() != '')) {
         cal_ship(province, district, ward, address);
     }
-});
+}
 
 function cal_ship(province, district, ward, address) {
     shipcmart = [];
-    $(".list-stores-body input.receiverstore:checked").each(function() {
+    $(".list-stores-body input.receiverstore:checked").each(function () {
         shipcmart.push($(this).val());
     });
     $.ajax({
@@ -23,20 +68,23 @@ function cal_ship(province, district, ward, address) {
             address: address.val(),
             shipcmart: shipcmart
         },
-        error: function(data) {
+        beforeSend: function () {
+            $('.loading').show();
+            $("#btn-to-payment").attr('disabled', 'disabled');
+        },
+        error: function (data) {
             console.log(data);
         },
-        success: function(response) {
-            console.log(response);
+        success: function (response) {
             response = JSON.parse(response);
             console.log(response);
-            $.each(response, function() {
+            $.each(response, function () {
                 switch (this.method) {
                     case 1:
                         method = 'C-Ship';
                         break;
                     case 2:
-                        method = 'Vietel Post';
+                        method = 'Viettel Post';
                         break;
                     default:
                         method = 'C-Mart';
@@ -44,16 +92,17 @@ function cal_ship(province, district, ward, address) {
                 }
                 store_name = this.name;
                 store_id = this.id;
-                if ($('#' + store_name + ' .receiverstore').prop('checked') == false) {
+                if (this.weight == 0) {
+                    cshipbyweight('#' + store_name + ' .receiverstore');
+
+                } else if ($('#' + store_name + ' .receiverstore').prop('checked') == false) {
                     $('#' + store_name + ' .name-method').text(method);
                     $('#' + store_name + ' .total-cost').text(this.total_cost.text);
                     $('#' + store_name + ' .total-cost').attr('data-total', this.total_cost.value);
-                    $.each(this.ship_total, function(key, val) {
+                    $.each(this.ship_total, function (key, val) {
                         if (key == 'ship') {
-                            console.log(key);
-                            console.log(val);
                             $('#' + store_name + ' .ship-normal').empty().append(' <input checked type="radio" onclick="calTotal(this)" data-id="' + store_id + '" data-type="1" data-store="' + store_name + '" id="ship_normal' + store_name + '" name="shipping_value' + store_name + '" value="' + val.value + '">' +
-                                ' <label for="ship_normal' + store_name + '"  >Thường: ' + val.text + '</label>');
+                                ' <label for="ship_normal' + store_name + '"  >Tiêu chuẩn: ' + val.text + '</label>');
                             $('#' + store_name + ' input.ship-fee').val(val.value);
 
                         } else {
@@ -69,15 +118,17 @@ function cal_ship(province, district, ward, address) {
 
             });
             showShipTotal();
-
+            $("#btn-to-payment").removeAttr("disabled");
+            $('.loading').hide();
 
         }
     });
 }
 
+
 function showShipTotal() {
     total_ship = 0;
-    $('input.ship-fee').each(function() {
+    $('input.ship-fee').each(function () {
         total_ship += +$(this).val();
     });
     $('#amount-shipping').text(parseInt(total_ship).toLocaleString() + ' ₫');
@@ -99,13 +150,44 @@ function calTotal(e) {
             storeid: $(e).data('id'),
             type: $(e).data('type')
         },
-        error: function(data) {
+        error: function (data) {
             console.log(data);
         },
-        success: function(response) {
+        success: function (response) {
             console.log(response);
             showShipTotal();
 
+        }
+    });
+}
+function cshipbyweight(e){
+    $.ajax({
+        type: 'GET',
+        url: $("#method-ship").data('urlcmartship'),
+        data: {
+            storeid: $(e).data('storeid')
+        },
+        error: function (data) {
+            console.log(data);
+        },
+        success: function (response) {
+            response = JSON.parse(response);
+            console.log(response);
+    
+            store = response['store' + $(e).data('storeid')];
+            store_name = store.name;
+            $('#' + store_name + ' .ship-normal').empty().append(' <input checked type="radio" onclick="calTotal(this)" data-store="' + store_name + '" id="ship_cmart' + store_name + '" name="shipping_value' + store_name + '" value="' + store.ship_total.value + '">' +
+                ' <label for="ship_cmart' + store_name + '"  >Phí: ' + store.ship_total.text + '</label>');
+            $('#' + store_name + ' .ship-fast').empty();
+            $('#' + store_name + ' .name-method').text('C-Mart');
+            $('#' + store_name + ' .total-cost').text(store.total_cost.text);
+            $('#' + store_name + ' .total-cost').attr('data-total', store.total_cost.value);
+            $('#' + store_name + ' input.ship-fee').val(store.ship_total.value);
+    
+            $('#' + store_name + ' .store-footer').removeClass('d-none');
+            $('#' + store_name + ' .store-footer').addClass('d-flex');
+            showShipTotal();
+    
         }
     });
 }
@@ -119,10 +201,10 @@ function receiverStore(e) {
             data: {
                 storeid: $(e).data('storeid')
             },
-            error: function(data) {
+            error: function (data) {
                 console.log(data);
             },
-            success: function(response) {
+            success: function (response) {
                 response = JSON.parse(response);
                 console.log(response);
 
@@ -131,7 +213,7 @@ function receiverStore(e) {
                 $('#' + store_name + ' .ship-normal').empty().append(' <input checked type="radio" onclick="calTotal(this)" data-store="' + store_name + '" id="ship_cmart' + store_name + '" name="shipping_value' + store_name + '" value="' + store.ship_total.value + '">' +
                     ' <label for="ship_cmart' + store_name + '"  >Phí: ' + store.ship_total.text + '</label>');
                 $('#' + store_name + ' .ship-fast').empty();
-                $('#' + store_name + ' .name-method').text('Nhận tại cửa hàng');
+                $('#' + store_name + ' .name-method').text('C-Mart');
                 $('#' + store_name + ' .total-cost').text(store.total_cost.text);
                 $('#' + store_name + ' .total-cost').attr('data-total', store.total_cost.value);
                 $('#' + store_name + ' input.ship-fee').val(store.ship_total.value);

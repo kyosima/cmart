@@ -156,12 +156,13 @@
                             </div>
                             <div class="box-infocart list-order list-store">
                                 @foreach ($order_stores as $order_store)
-                                    <h3 class="title">Thông tin đơn hàng -
-                                        {{ $order_store->store()->value('name') }}:
+                                    <h3 class="title">Cửa hàng
+                                        {{ $order_store->store()->value('name') }} - {{ formatMethod($order_store->shipping_method) }}
                                     </h3>
                                     <table class="table table-bordered table-striped">
                                         <tbody>
                                             <tr>
+                                                <th style=" border">Mã sản phẩm</th>
                                                 <th style=" border">Tên sản phẩm</th>
                                                 <th style="">Số lượng</th>
                                                 <th style="">Trọng lượng</th>
@@ -169,12 +170,13 @@
                                             </tr>
                                             @foreach ($order_store->order_products()->get() as $row)
                                                 <tr>
+                                                    <td>{{$row->product()->value('sku')}}</td>
                                                     <td><a
-                                                            href="{{ route('san-pham.show', $row->slug) }}">{{ $row->name }}</a>
+                                                            @if($row->slug != null) href="{{ route('san-pham.show', $row->slug) }}" @endif>{{ $row->name }}</a>
                                                     </td>
                                                     <td>{{ $row->quantity }}</td>
-                                                    <td>{{ App\Http\Controllers\CheckoutController::getWeight($row->product()->first(), $row->qty) }}
-                                                        g</td>
+                                                    <td>@if($row->slug != null) {{$row->weight}}
+                                                        g @endif </td>
                                                     <td>{{ formatPrice($row->price * $row->quantity) }}</td>
                                                 </tr>
                                             @endforeach
@@ -234,7 +236,8 @@
                                 <hr>
                                 <div class="box-allprice box-price-order">
                                     <p>Tạm tính:<span> {{ formatPrice($order->sub_total) }}</span></p>
-                                    <p>Thuế GTGT:<span> {{ formatPrice($order->tax) }}</span></p>
+                                    <p>Thuế GTGT Sản phẩm:<span> {{ formatPrice($order->vat_products) }}</span></p>
+                                    <p>Thuế GTGT Dịch vụ:<span> {{ formatPrice($order->vat_services / 1.08)  }}</span></p>
                                     <p>Điểm dịch vụ (M):<span> {{ number_format($order->m_point, 0, '.', ',') }}
                                             điểm</span></p>
                                     <p>Tiền tích lũy (C):<span> {{ number_format($order->c_point, 0, '.', ',') }}

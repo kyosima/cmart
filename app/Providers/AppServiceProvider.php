@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Providers;
+use Illuminate\Support\Facades\Route;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {

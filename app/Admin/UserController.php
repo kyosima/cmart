@@ -15,13 +15,41 @@ use App\Models\Order;
 use App\Models\PointC;
 use App\Models\PointCHistory;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Excel;
+use App\Exports\UsersExport;
+use App\Http\Controllers\AddressController;
+use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 class UserController extends Controller
 {
     public function getDanhSach() {
         $user = User::all();
-        // dd($pointC = PointC::where('user_id','=',User::select('id')->get('id'))->select('point_c')->get());
-        // dd($pointC = User::select('id')->get('id'));
+        // foreach ($user as $us) {
+        //     $datePoint = $us->created_at->addMonth('1');
+        //     if (Carbon::now() >= $datePoint) {
+        //         $us->created_at = $us->created_at->addMonth('1')->startOfDay();
+        //         $pointC = PointC::where('user_id','=',$us->id)->first();
+        //         $pointTietKiem = $pointC->point_c + ($pointC->point_c * 0.01);
+
+        //         // luu lich su 
+        //         $lichsu_chuyen = new PointCHistory;
+        //         $lichsu_chuyen->point_c_idnhan = $us->id;
+        //         $lichsu_chuyen->point_past_nhan = $pointC->point_c;
+        //         $lichsu_chuyen->point_present_nhan = $pointTietKiem;
+        //         $lichsu_chuyen->makhachhang = $us->code_customer;
+
+        //         $notelichsu = Carbon::parse($us->created_at)->format('Y-m-d');
+        //         $lichsu_chuyen->note = 'Tiết kiệm ngày '.$notelichsu.' từ TK '.$us->code_customer;
+        //         $lichsu_chuyen->amount = $pointC->point_c * 0.01;
+        //         $lichsu_chuyen->type = 3;
+        //         $lichsu_chuyen->save();
+
+        //         $pointC->point_c = $pointTietKiem;
+        //         $pointC->save();
+        //         $us->save();
+        //     }
+        // }
+        
         return view('admin.user.listuser',['user'=>$user]);
     }
 
@@ -51,56 +79,50 @@ class UserController extends Controller
         $ward = Ward::select('maphuongxa', 'tenphuongxa')->get();
         $orders = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
         ->where('orders.user_id','=',$user->id)->select('orders.*')->get();
-
-        if(($user->id_tinhthanh != null) || ($user->id_quanhuyen != null) || ($user->id_phuongxa != null)) {
-            $tinh = DB::table('users')->join('province', 'province.matinhthanh', '=', 'users.id_tinhthanh')
-            ->where('province.matinhthanh','=',$user->id_tinhthanh)->select('province.tentinhthanh')->first()->tentinhthanh;
-
-            $quan = DB::table('users')->join('district', 'district.maquanhuyen', '=', 'users.id_quanhuyen')
-            ->where('district.maquanhuyen','=',$user->id_quanhuyen)->select('district.tenquanhuyen')->first()->tenquanhuyen;
-
-            $phuongxa = DB::table('users')->join('ward', 'ward.maphuongxa', '=', 'users.id_phuongxa')
-            ->where('ward.maphuongxa','=',$user->id_phuongxa)->select('ward.tenphuongxa')->first()->tenphuongxa;
-        } else {
-            $tinh = DB::table('users')->join('province', 'province.matinhthanh', '=', 'users.id_tinhthanh')->first()->tentinhthanh;
-
-            $quan = DB::table('users')->join('district', 'district.maquanhuyen', '=', 'users.id_quanhuyen')->first()->tenquanhuyen;
-
-            $phuongxa = DB::table('users')->join('ward', 'ward.maphuongxa', '=', 'users.id_phuongxa')->first()->tenphuongxa;
-        }
+       
         // $tinh =DB::table("province")->where('province.matinhthanh','=',$user->matinhthanh)->pluck("tentinhthanh");
         $sodonhang = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')
         ->where('orders.user_id','=',$user->id)->select('orders.status')->get()->count();
         
         // dd($orders); die;
+        $addressController = new AddressController();
+
+        $user_province = $addressController->getProvinceDetail($user->id_tinhthanh);
+        $user_district = $addressController->getDistrictDetail($user->id_tinhthanh,$user->id_quanhuyen);
+        $user_ward = $addressController->getWardDetail($user->id_quanhuyen,$user->id_phuongxa);
 
         $pointC = PointC::where('user_id','=',$user->id)->value('point_c');
         $code_customer = $user->code_customer;
         $id_vitien = PointC::where('user_id','=',$user->id)->value('id');
-        $lichsuchuyen = PointCHistory::where('point_c_idchuyen','=',$id_vitien)->where('type','=',1)->get();
-        $lichsunhan = PointCHistory::where('point_c_idnhan','=',$id_vitien)->where('type','=',1)->get();
+        $lichsuchuyen = PointCHistory::where('point_c_idchuyen','=',$id_vitien)->get();
+        $lichsunhan = PointCHistory::where('point_c_idnhan','=',$id_vitien)->get();
         
+        $date = $user->updated_at->addMonth('1');
+        $addDate = Carbon::now();
 
+        $history_chuyen = PointCHistory::where('point_c_idchuyen','=',$user->id)->where('type','=',1)->get();
+        $order_done_month = $user->orders()->whereMonth('created_at', Carbon::today()->month)->where('status', 4)->count();
+        $order_cancel_month = $user->orders()->whereMonth('created_at', Carbon::today()->month)->where('status', 5)->count();
 
         return view('admin.user.profile',['user'=>$user,'province'=>$province,
          'district'=>$district, 'ward'=>$ward,'pointC'=>$pointC, 'lichsunhan'=>$lichsunhan, 'lichsuchuyen'=>$lichsuchuyen]
-         ,compact('orders','sodonhang','tinh','quan','phuongxa'));
+         ,compact('orders', 'order_done_month', 'order_cancel_month','sodonhang','date','addDate','user_province', 'user_district', 'user_ward'));
     }
 
     public function postEdit(Request $request, $id) {
         $user = User::find($id);
         $user->hoten = $request->hoten;
         $user->level = $request->level;
-        $user->phone = $request->phone;
-        $user->address = $request->address;
-        $user->check_kyc = $request->check_kyc;
-        $user->type_cmnd = $request->type_cmnd;
-        $user->id_tinhthanh = $request->sel_province;
-        $user->id_quanhuyen = $request->sel_district;
-        $user->id_phuongxa = $request->sel_ward;
+        // $user->phone = $request->phone;
+        // $user->address = $request->address;
+        // $user->check_kyc = $request->check_kyc;
+        // $user->type_cmnd = $request->type_cmnd;
+        // $user->id_tinhthanh = $request->sel_province;
+        // $user->id_quanhuyen = $request->sel_district;
+        // $user->id_phuongxa = $request->sel_ward;
         $user->duong = $request->duong;
         $user->save();
-        return redirect('admin/danh-sach-user');
+        return back();
     }
 
     public function nangcap(Request $request){
@@ -108,4 +130,27 @@ class UserController extends Controller
         return redirect('admin/danh-sach-user');
     }
 
+    public function changeStatusUser(Request $request){
+        $user = User::whereId($request->id)->first();
+        if($user->status == 1){
+            $user->status = 0;
+            $user->save();
+        }else{
+            $user->status = 1;
+            $user->save();
+        }
+        return back();
+    }
+
+    public function upgrageVipUser(Request $request){
+        $user = User::whereId($request->id)->first();
+        $user->level = 1;
+        $user->save();
+        return back();
+    }
+
+
+    public function export(Excel $excel) {
+        return $excel->download(new UsersExport, 'users.xlsx');
+    }
 }

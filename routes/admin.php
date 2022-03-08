@@ -26,24 +26,50 @@ use App\Admin\Controllers\AdminStoreController;
 Route::group(['middleware' => ['admin']], function () {
     // Route::resource('permissions', AdminPermissionsController::class);
     Route::get('danh-sach-user',[UserController::class, 'getDanhsach']);
+    Route::get('doi-trang-thai-user/{id}', [UserController::class, 'changeStatusUser'])->name('user.changeStatus');
+    Route::get('/nang-cap-vip/{id}', [UserController::class, 'upgrageVipUser'])->name('user.upgradeVip');
     Route::get('/nang-cap-user/{id}',[UserController::class, 'postDanhsach']);
     
     Route::group(['prefix'=>'danh-sach-user'], function() {
         Route::get('{id}',[UserController::class, 'getEdit']);
         Route::post('{id}',[UserController::class, 'postEdit']);
     });
+    Route::group(['prefix' => 'don-hang'], function () {
+        Route::get('xem-c-bill', [AdminOrderController::class, 'viewCbill'])->name('order.viewCbill');
+        Route::get('down-c-bill', [AdminOrderController::class, 'downPDF'])->name('order.downPDF');
 
+    });
+    Route::get('/export',[UserController::class, 'export']);
+
+    Route::get('lichsunhanC',[PointHistoryController::class, 'lichsunhanC'])->name('lichsunhanC');
+    Route::get('lichsunhanC/download', [PointHistoryController::class, 'dowLichsunhanC']);
 
     Route::get('lichsuchuyenkhoan',[PointHistoryController::class, 'chuyenkhoan'])->name('lichsuchuyenkhoan');
+    Route::get('lichsuchuyenkhoan/download/{type}', [PointHistoryController::class, 'dowChuyenKhoan']);
+
     Route::get('lichsutietkiem',[PointHistoryController::class, 'tietkiem'])->name('lichsutietkiem');
+    Route::get('lichsutietkiem/download/{type}', [PointHistoryController::class, 'dowTietKiem']);
+
     Route::get('lichsutichluy',[PointHistoryController::class, 'tichluy'])->name('lichsutichluy');
+    Route::get('lichsutichluy/download/{type}', [PointHistoryController::class, 'dowTichLuy']);
+    
     Route::get('lichsudonhanghuy',[PointHistoryController::class, 'huydonhang'])->name('lichsudonhanghuy');
+    Route::get('lichsudonhanghuy/download/{type}', [PointHistoryController::class, 'dowDonHangHuy']);
+    
     Route::get('lichsudiemm',[PointHistoryController::class, 'lichsudiemM'])->name('lichsudiemm');
 
     //Danh sach vi diem
     Route::get('tongdiemuser',[PointHistoryController::class, 'tongdiem'])->name('tongdiemuser');
+    Route::get('tongdiemuser/download/{type}',[PointHistoryController::class, 'dowTongdiem']);
+
     Route::get('chuyendiem',[PointHistoryController::class, 'chuyendiem'])->name('chuyendiem');
     Route::post('chuyendiem',[PointHistoryController::class, 'postChuyendiem'])->name('postChuyendiem');
+
+    Route::get('napdiem',[PointHistoryController::class, 'napC'])->name('napC');
+    Route::post('napdiem',[PointHistoryController::class, 'postNapC'])->name('postNapC');
+    Route::get('tinhDiemNap',[PointHistoryController::class, 'tinhDiemNap'])->name('tinhDiemNap');
+    
+    
     Route::get('test',[PointHistoryController::class, 'test'])->name('test');
     // Route::get('',[UserController::class,'postDanhsach']);
 
@@ -55,6 +81,7 @@ Route::group(['middleware' => ['admin']], function () {
     //đơn hàng
     // xem ds đơn Hàng
     Route::get('don-hang', [AdminOrderController::class, 'index'])->name('order.index')->middleware('permission:Xem DS đơn hàng,admin');
+    Route::get('don-hang/change-status-order-store', [AdminOrderController::class, 'changeStatusOrderStore'])->name('order.changeStatus')->middleware('permission:Chuyển trạng thái đơn hàng,admin');
 
     // tạo đơn Hàng
     Route::get('lay-khach-hang', [AdminOrderController::class, 'getCustomer'])->middleware('permission:Xem DS đơn hàng,admin');
@@ -419,7 +446,6 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/ton-kho-dai-ly/modal-edit', [WarehouseController::class, 'modalEdit'])->name('warehouse.modalEdit');
     
 });
-
 
 
 

@@ -78,11 +78,14 @@
                                                                 href="{{ url('/xac-thuc-ho-so') }}">Thông tin
                                                                 HSKH</a>
                                                             <a class="dropdown-item text-dark"
-                                                                href="{{ url('/lichsu') }}">Lịch sử
+                                                                href="{{ route('order.history')}}">Lịch sử
                                                                 đơn
                                                                 hàng</a>
-                                                            <a class="dropdown-item text-dark" href="{{ url('/lichsu_cpoint') }}">Lịch sử C Point</a>
-                                                            <a class="dropdown-item text-dark" href="{{ route('chuyenkhoanC') }}">Chuyển C Point</a>
+                                                            <a class="dropdown-item text-dark"
+                                                                href="{{ url('/lich-su-tien-tich-luy') }}">Tài khoản
+                                                                C</a>
+                                                            <a class="dropdown-item text-dark"
+                                                                href="">Thông báo</a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item text-danger"
                                                                 href="{{ route('logoutuser') }}">Đăng
@@ -185,7 +188,9 @@
                                         </a>
                                         <ul class="dropdown-navcmart dvcmart">
                                             @php
-                                                $pages = App\Models\InfoCompany::whereType('service')->orderBy('sort','asc')->get();
+                                                $pages = App\Models\InfoCompany::whereType('service')
+                                                    ->orderBy('sort', 'asc')
+                                                    ->get();
                                             @endphp
                                             @foreach ($pages as $page)
                                                 <li><a rel="nofollow"
@@ -206,7 +211,9 @@
                                         <a class="text-color-white" href="#">Điều khoản và Chính sách</a>
                                         <ul class="dropdown-navcmart">
                                             @php
-                                                $pages = App\Models\InfoCompany::whereType('policy')->orderBy('sort','asc')->get();
+                                                $pages = App\Models\InfoCompany::whereType('policy')
+                                                    ->orderBy('sort', 'asc')
+                                                    ->get();
                                             @endphp
                                             @foreach ($pages as $page)
                                                 <li><a rel="nofollow"
@@ -233,7 +240,8 @@
         </span> --}}
 
         <p>
-            Mọi liên hệ nên thực hiện từ Số điện thoại đăng ký giao dịch và đến các kênh kết nối chính thức của C-Mart
+            Mọi liên hệ nên thực hiện <b>từ Số điện thoại đăng ký giao dịch</b> và <b>đến các kênh kết nối chính thức
+                của C-Mart</b>
         </p>
 
     </div>
@@ -243,7 +251,7 @@
             <div class="box-contacth">
                 <b class="d-flex align-items-center justify-content-center"><img
                         src="{{ asset('/public/image/phone.png') }}" alt=""><a
-                        href="tel:0899302323">0899.302.323</a></b>
+                        href="tel:0899663883">0899.663.883</a></b>
                 <small>Kênh Hỗ trợ - Đặt hàng</small>
             </div>
             <div class="box-contacth">
@@ -255,21 +263,22 @@
             </div>
             <div class="box-contacth">
                 <b class="d-flex align-items-center justify-content-center"><img
-                        src="{{ asset('/public/image/zalo.png') }}" alt=""><a href="https://zalo.me/3597490523695148504">Zalo</a></b>
+                        src="{{ asset('/public/image/zalo.png') }}" alt=""><a
+                        href="https://zalo.me/3597490523695148504">Zalo</a></b>
                 <small>Kênh Hỗ trợ - Đặt hàng</small>
 
             </div>
             <div class="box-contacth">
                 <b class="d-flex align-items-center justify-content-center"><img
                         src="{{ asset('/public/image/email.png') }}" alt=""><a
-                        href="mailto:hotro@cm.com.vn">hotro@cm.com.vn</a></b>
-                <small>Kênh dành cho Đối tác</small>
+                        href="mailto:center@cm.com.vn">center@cm.com.vn</a></b>
+                <small>Kênh dành cho Tổ chức</small>
 
             </div>
         </div>
         <div class="text-center">
-            <h5 class="store-system-hello"><b> Hệ thống các kênh Cửa hàng C-Store </b></h5>
-            <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách hàng</p>
+            <h5 class="store-system-hello"><a href="https://cm.com.vn/chinh-sach/he-thong-kenh-cua-hang-c-store"><b> Hệ thống các kênh Cửa hàng C-Store </b></a></h5>
+            <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách Hàng</p>
         </div>
     </div>
 
@@ -315,7 +324,7 @@
                 </li>
             </ul>
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="list">
+                {{-- <div role="tabpanel" class="tab-pane active" id="list">
                     <div class="box-tab">
                         <div class="menu-mobile">
                             @php
@@ -357,7 +366,7 @@
                             @endforeach
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div role="tabpanel" class="tab-pane " id="acc">
                     <div class="box-item">
                         <ul>

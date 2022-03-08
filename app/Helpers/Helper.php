@@ -6,7 +6,12 @@ if (!function_exists('formatPrice')) {
         return number_format($price, 0, '.', ',') . ' ₫';
     }
 }
-
+if (!function_exists('formatNumber')) {
+    function formatNumber($number)
+    {
+        return number_format($number, 0, ',', '.');
+    }
+}
 if (!function_exists('formatPriceAdmin')) {
     function formatPriceAdmin($price)
     {
@@ -39,6 +44,23 @@ if (!function_exists('formatType')) {
         }
     }
 }
+if (!function_exists('formatLevel')) {
+    function formatLevel($type)
+    {
+        switch ($type) {
+            case 0: 
+                return 'Khách hàng thân thiết';
+            case 1:
+                return 'Khách hàng V.I.P';
+            case 2:
+                return 'Cộng tác viên';
+            case 3:
+                return 'Purchasing';
+            case 4: 
+                return 'Khách hàng thương mại';
+        }
+    }
+}
 if (!function_exists('formatPriceOfLevel')) {
 
 if (!function_exists('formatPriceOfLevel')) {
@@ -66,15 +88,43 @@ if (!function_exists('getTagSale')) {
         }
     }
 }
+if (!function_exists('getTaxValue')) {
+    function getTaxValue($tax){
+        if($tax == 'KKK' || $tax == 'KTT'){
+            return 0;
+        }else{
+            return $tax;
+        }
+    }
+}
+
+if (!function_exists('formatTax')) {
+    function formatTax($tax){
+        if($tax == 'KKK' || $tax == 'KTT'){
+            return $tax;
+        }else{
+            return ($tax *100).'%';
+        }
+    }
+}
 if (!function_exists('getPriceOfLevel')) {
     function getPriceOfLevel($product)
     {
         if (Auth::check()) {
             $user = Auth::user();
-            if($user->level ==0){
-                return $product->productPrice()->value('regular_price');
-            }else{
-                return $product->productPrice()->value('shock_price');
+            switch ($user->level) {
+                case 0: 
+                    return $product->productPrice()->value('regular_price');
+                case 1:
+                    return $product->productPrice()->value('shock_price');
+                case 2:
+                    return $product->productPrice()->value('shock_price');
+                case 3: 
+                    return $product->productPrice()->value('price');
+                case 4:
+                    return $product->productPrice()->value('wholesale_price');
+                default:
+                    return $product->productPrice()->value('regular_price');
             }
         }else{
 

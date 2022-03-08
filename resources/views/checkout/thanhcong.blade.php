@@ -3,120 +3,253 @@
 @section('title', 'Đặt hàng thành công')
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/thanhtoan.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <style>
+        .notice-email {
+            display: none;
+        }
+
+        div.loading {
+            z-index: 99999999;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(16, 16, 16, 0.5);
+        }
+
+        @-webkit-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-webkit-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-moz-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-ms-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-moz-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-webkit-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-o-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        .uil-ring-css {
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+        }
+
+        .uil-ring-css>div {
+            position: absolute;
+            display: block;
+            width: 160px;
+            height: 160px;
+            top: 20px;
+            left: 20px;
+            border-radius: 80px;
+            box-shadow: 0 6px 0 0 #ffffff;
+            -ms-animation: uil-ring-anim 1s linear infinite;
+            -moz-animation: uil-ring-anim 1s linear infinite;
+            -webkit-animation: uil-ring-anim 1s linear infinite;
+            -o-animation: uil-ring-anim 1s linear infinite;
+            animation: uil-ring-anim 1s linear infinite;
+        }
+
+    </style>
 @endpush
 
 @section('content')
+    <div class="loading">
+        <div class='uil-ring-css' style='transform:scale(0.79);'>
+            <div></div>
+        </div>
+    </div>
     <div class="container">
-        <h3 class="text-center">Đặt hàng thành công</h3>
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                <div class="alert alert-light order-complete-info  text-dark">
-                    <h5>Mã giao dịch: <span class="text-danger">{{ $order->order_code }}</span></h5>
-                    <b>Thông tin khách hàng</b>
-                    <ul>
-                        <li>Họ và tên: {{ $order_info->fullname }}</li>
-                        <li>Số điện thoại: {{ $order_info->phone }}</li>
-                        {{-- <li>Email: {{ $order_info->email }}</li> --}}
-                        <li>Ghi chú: {{ $order_info->note }}</li>
-                    </ul>
-                    <hr>
-                    <b>Thông tin giao hàng</b>
-                    <ul>
-                        <li>Tỉnh/thành phố: {{ $address->province()->value('tentinhthanh') }}</li>
-                        <li>Quận/huyện: {{ $address->district()->value('tenquanhuyen') }}</li>
-                        <li>Phường xã: {{ $address->ward()->value('tenphuongxa') }}</li>
-                        <li>Địa chỉ: {{ $address->address }}</li>
-                    </ul>
-                    <hr>
-                    <p><b>Thông tin thanh toán</b></p>
-                    @if ($order->payment_method == 1)
-                        <p>Phương thức TT: Thanh toán khi nhận hàng(COD)</p>
-                    @elseif ($order->payment_method == 2)
-                        <p>Phương thức TT: Thanh toán online</p>
-                        @if($order->status == 0)
-                            <p>Trạng thái thanh toán: Chưa thanh toán</p>
-                            <a href="{{URL::to(optional($order->order_payme)->link_payment)}}" class="btn btn-primary">Thanh toán ngay</a>
-                        @else
-                            <p>Trạng thái thanh toán: Đã thanh thoán</p>
-                        @endif
-                    @endif
-                    <hr>
-                    <b>Thông tin đơn hàng tổng</b>
-                    <ul>
-                        <li>Thuế GTGT: {{ formatPrice($order->tax) }}</li>
-                        <li>Phí vận chuyển: {{ formatPrice($order->shipping_total) }}</li>
-                        <li>Giá trị giao dịch: {{ $order->total }}</li>
-                    </ul>
+            <div class="col-md-12 col-12">
+                <h3 class="text-center">THÔNG BÁO XÁC NHẬN ĐẶT HÀNG THÀNH CÔNG</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button class="btn btn-primary text-light" data-toggle="modal" data-target="#share-cbill"><i
+                        class="fa fa-share"></i> Chia sẻ C-Bill</button>
+            </div>
+        </div>
+        <div class="modal fade" id="share-cbill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="form-share-cbill" action="{{ route('share.CBill') }}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Chia sẻ C-Bill</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input type="hidden" name="order_code" value="{{ $order->order_code }}">
+                                <input type="email" name="email" class="form-control"
+                                    placeholder="Mời nhập Email cần chia sẻ" required>
+                            </div>
+                            <div class="notice-email alert alert-success m-0 text-center">
+                                <p class="m-0"></p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Chia sẻ</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                @foreach ($order_stores as $order_store)
-                    <div class="alert alert-light order-complete-info  text-dark">
-                        <b>Thông tin đơn hàng - {{ $order_store->store()->value('name') }}</b>
-                        <table class="table table-bordered">
-                            <thead>
-                                <th>Tên sản phẩm</th>
-                                <th>Số lượng</th>
-                                <th>Đơn giá</th>
-                                <th>Tổng phụ</th>
-                            </thead>
-                            <tbody>
-                                @foreach ($order_store->order_products()->get() as $product)
-                                    @php
-                                        $item = $product->product()->first();
-                                    @endphp
-                                    <tr>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $product->quantity }}</td>
-                                        <td>{{ formatPrice($product->price) }}</td>
-                                        <td>{{ formatPrice($product->price * $product->quantity) }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <div class="info_order_success">
-                            <div class="row text-center">
-                                <div class="col-4">
-                                    <p>Hình thức vận chuyển</p>
-                                    <span class="text-danger">{{ formatMethod($order_store->shipping_method) }}</span>
-                                </div>
-                                <div class="col-4">
-                                    <p>Phương thức vận chuyển</p>
-                                    <span class="text-danger">{{ formatType($order_store->shipping_type) }}</span>
-                                </div>
-                                <div class="col-4">
-                                    <p>Phí vận chuyển</p>
-                                    <span class="text-danger">{{ formatPrice($order_store->shipping_total) }}</span>
-                                </div>
-                            </div>
-                            <div class="row text-center">
-                                <div class="col-3">
-                                    <p>Điểm dịch vụ (M)</p>
-                                    <span class="text-danger">{{ number_format($order_store->m_point, 0, '.', ',') }} điểm</span>
-                                </div>
-                                <div class="col-3">
-                                    <p>Tiền tích lũy (C)</p>
-                                    <span class="text-danger">{{ number_format($order_store->c_point, 0, '.', ',') }} điểm</span>
-                                </div>
-                                <div class="col-3">
-                                    <p>Thuế GTGT</p>
-                                    <span class="text-danger">{{ formatPrice($order_store->tax) }}</span>
-                                </div>
-                                <div class="col-3">
-                                    <p>Giá trị giao dịch</p>
-                                    <span class="text-danger">{{ formatPrice($order_store->total) }}</span></li></span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                @endforeach
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-12">
+                @include('order_tracking.c_bill', [
+                    'order' => $order,
+                ])
             </div>
         </div>
     </div>
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('public/js/share_cbill.js') }}"></script>
 @endpush

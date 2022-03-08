@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Jan 24, 2022 at 05:44 AM
--- Server version: 5.7.34
--- PHP Version: 7.4.21
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th3 08, 2022 lúc 07:40 AM
+-- Phiên bản máy phục vụ: 10.4.14-MariaDB
+-- Phiên bản PHP: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cmartfull`
+-- Cơ sở dữ liệu: `cmartfull`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admins`
+-- Cấu trúc bảng cho bảng `admins`
 --
 
 CREATE TABLE `admins` (
@@ -33,12 +33,12 @@ CREATE TABLE `admins` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `admins`
+-- Đang đổ dữ liệu cho bảng `admins`
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -50,7 +50,30 @@ INSERT INTO `admins` (`id`, `name`, `email`, `password`, `remember_token`, `crea
 -- --------------------------------------------------------
 
 --
--- Table structure for table `blogs`
+-- Cấu trúc bảng cho bảng `banner`
+--
+
+CREATE TABLE `banner` (
+  `id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL DEFAULT 'home',
+  `link` text DEFAULT NULL,
+  `image` text NOT NULL,
+  `sort` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Đang đổ dữ liệu cho bảng `banner`
+--
+
+INSERT INTO `banner` (`id`, `type`, `link`, `image`, `sort`, `created_at`, `updated_at`) VALUES
+(15, 'home', '#', 'http://localhost/public/storage/files/297cf5ae4a3c8362da2d.jpg', 0, '2021-12-30 10:36:34', '2021-12-30 10:36:34');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `blogs`
 --
 
 CREATE TABLE `blogs` (
@@ -60,16 +83,16 @@ CREATE TABLE `blogs` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `feature_img` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8_unicode_ci,
-  `meta_keyword` text COLLATE utf8_unicode_ci,
-  `meta_desc` text COLLATE utf8_unicode_ci,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `content` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_keyword` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_desc` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `blogs`
+-- Đang đổ dữ liệu cho bảng `blogs`
 --
 
 INSERT INTO `blogs` (`id`, `id_ofcategory`, `id_ofauthor`, `name`, `slug`, `feature_img`, `content`, `meta_keyword`, `meta_desc`, `status`, `updated_at`, `created_at`) VALUES
@@ -80,19 +103,19 @@ INSERT INTO `blogs` (`id`, `id_ofcategory`, `id_ofauthor`, `name`, `slug`, `feat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `blog_category`
+-- Cấu trúc bảng cho bảng `blog_category`
 --
 
 CREATE TABLE `blog_category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `blog_category`
+-- Đang đổ dữ liệu cho bảng `blog_category`
 --
 
 INSERT INTO `blog_category` (`id`, `name`, `slug`, `updated_at`, `created_at`) VALUES
@@ -103,21 +126,21 @@ INSERT INTO `blog_category` (`id`, `name`, `slug`, `updated_at`, `created_at`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `coupons`
+-- Cấu trúc bảng cho bảng `coupons`
 --
 
 CREATE TABLE `coupons` (
   `id` int(11) NOT NULL,
   `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci,
+  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` int(11) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `coupons`
+-- Đang đổ dữ liệu cho bảng `coupons`
 --
 
 INSERT INTO `coupons` (`id`, `code`, `name`, `description`, `type`, `start_date`, `end_date`) VALUES
@@ -127,20 +150,20 @@ INSERT INTO `coupons` (`id`, `code`, `name`, `description`, `type`, `start_date`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `coupon_promo`
+-- Cấu trúc bảng cho bảng `coupon_promo`
 --
 
 CREATE TABLE `coupon_promo` (
   `id` int(11) NOT NULL,
   `id_ofcoupon` int(11) NOT NULL,
   `value_discount` int(11) DEFAULT NULL,
-  `is_percent` int(11) NOT NULL DEFAULT '0',
+  `is_percent` int(11) NOT NULL DEFAULT 0,
   `id_products` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_procats` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `coupon_promo`
+-- Đang đổ dữ liệu cho bảng `coupon_promo`
 --
 
 INSERT INTO `coupon_promo` (`id`, `id_ofcoupon`, `value_discount`, `is_percent`, `id_products`, `id_procats`) VALUES
@@ -150,7 +173,7 @@ INSERT INTO `coupon_promo` (`id`, `id_ofcoupon`, `value_discount`, `is_percent`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `district`
+-- Cấu trúc bảng cho bảng `district`
 --
 
 CREATE TABLE `district` (
@@ -163,7 +186,7 @@ CREATE TABLE `district` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `district`
+-- Đang đổ dữ liệu cho bảng `district`
 --
 
 INSERT INTO `district` (`id`, `maquanhuyen`, `tenquanhuyen`, `matinhthanh`, `created_at`, `updated_at`) VALUES
@@ -879,7 +902,7 @@ INSERT INTO `district` (`id`, `maquanhuyen`, `tenquanhuyen`, `matinhthanh`, `cre
 -- --------------------------------------------------------
 
 --
--- Table structure for table `info_company`
+-- Cấu trúc bảng cho bảng `info_company`
 --
 
 CREATE TABLE `info_company` (
@@ -888,14 +911,14 @@ CREATE TABLE `info_company` (
   `slug` varchar(255) NOT NULL,
   `content` longtext CHARACTER SET utf8mb4 NOT NULL,
   `type` varchar(255) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
-  `sort` int(11) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `sort` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `info_company`
+-- Đang đổ dữ liệu cho bảng `info_company`
 --
 
 INSERT INTO `info_company` (`id`, `name`, `slug`, `content`, `type`, `status`, `sort`, `created_at`, `updated_at`) VALUES
@@ -932,7 +955,7 @@ INSERT INTO `info_company` (`id`, `name`, `slug`, `content`, `type`, `status`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Cấu trúc bảng cho bảng `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -942,7 +965,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Đang đổ dữ liệu cho bảng `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -952,7 +975,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `model_has_permissions`
+-- Cấu trúc bảng cho bảng `model_has_permissions`
 --
 
 CREATE TABLE `model_has_permissions` (
@@ -964,7 +987,7 @@ CREATE TABLE `model_has_permissions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `model_has_roles`
+-- Cấu trúc bảng cho bảng `model_has_roles`
 --
 
 CREATE TABLE `model_has_roles` (
@@ -974,49 +997,59 @@ CREATE TABLE `model_has_roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `model_has_roles`
+-- Đang đổ dữ liệu cho bảng `model_has_roles`
 --
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (2, 'App\\Models\\Admin', 7),
+(2, 'App\\Models\\Admin', 11),
 (4, 'App\\Models\\Admin', 8),
 (4, 'App\\Models\\Admin', 9),
-(24, 'App\\Models\\Admin', 10),
-(2, 'App\\Models\\Admin', 11);
+(24, 'App\\Models\\Admin', 10);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Cấu trúc bảng cho bảng `orders`
 --
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `order_code` varchar(255) DEFAULT NULL,
-  `payment_method` int(11) NOT NULL DEFAULT '0',
+  `payment_method` int(11) NOT NULL DEFAULT 0,
   `user_id` int(11) DEFAULT NULL,
-  `tax` int(11) NOT NULL DEFAULT '0',
-  `shipping_total` int(11) NOT NULL DEFAULT '0',
-  `c_point` int(11) NOT NULL DEFAULT '0',
-  `m_point` int(11) NOT NULL DEFAULT '0',
-  `sub_total` double NOT NULL DEFAULT '0',
-  `total` double NOT NULL DEFAULT '0',
-  `status` int(11) NOT NULL DEFAULT '0',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `tax` int(11) NOT NULL DEFAULT 0,
+  `shipping_total` int(11) NOT NULL DEFAULT 0,
+  `c_point` int(11) NOT NULL DEFAULT 0,
+  `m_point` int(11) NOT NULL DEFAULT 0,
+  `sub_total` double NOT NULL DEFAULT 0,
+  `total` double NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `orders`
+-- Đang đổ dữ liệu cho bảng `orders`
 --
 
 INSERT INTO `orders` (`id`, `order_code`, `payment_method`, `user_id`, `tax`, `shipping_total`, `c_point`, `m_point`, `sub_total`, `total`, `status`, `updated_at`, `created_at`) VALUES
-(1, 'CMART-11643002881', 0, 53, 600000, 29640, 45, 30, 4000000, 6629640, 0, '2022-01-24 05:41:21', '2022-01-24 05:41:21');
+(1, 'CMART-11643104831', 0, 3, 623900, 15012, 40, 60, 4000000, 6877912, 0, '2022-01-25 10:00:31', '2022-01-25 10:00:31'),
+(2, 'CMART-21644834568', 0, 4, 23900, 26638, 10, 15, 239000, 289538, 0, '2022-02-14 10:29:28', '2022-02-14 10:29:28'),
+(3, 'CMART-31644914754', 2, 4, 23900, 26638, 10, 15, 239000, 289538, 0, '2022-02-15 08:45:54', '2022-02-15 08:45:54'),
+(4, NULL, 0, 4, 0, 0, 0, 0, 0, 0, 0, '2022-02-15 08:46:34', '2022-02-15 08:46:34'),
+(5, 'CMART-51644916728', 2, 4, 23900, 26638, 10, 15, 239000, 289538, 0, '2022-02-15 09:18:48', '2022-02-15 09:18:48'),
+(6, 'CMART-61644916951', 2, 4, 23900, 26638, 10, 15, 239000, 289538, 0, '2022-02-15 09:22:31', '2022-02-15 09:22:31'),
+(7, 'CMART-71644917022', 2, 4, 23900, 26638, 10, 15, 239000, 289538, 0, '2022-02-15 09:23:42', '2022-02-15 09:23:42'),
+(8, 'CMART-81644917110', 2, 4, 23900, 26638, 10, 15, 239000, 289538, 0, '2022-02-15 09:25:10', '2022-02-15 09:25:10'),
+(9, 'CMART-91644917718', 2, 4, 23900, 26638, 10, 15, 239000, 289538, 1, '2022-02-15 09:42:40', '2022-02-15 09:35:18'),
+(10, 'CMART-101644983698', 2, 4, 47800, 26639, 20, 30, 478000, 552439, 6, '2022-02-16 05:10:06', '2022-02-16 03:54:58'),
+(11, 'CMART-111644993382', 2, 4, 23900, 26638, 10, 15, 239000, 289538, 6, '2022-02-16 06:58:32', '2022-02-16 06:36:22');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_address`
+-- Cấu trúc bảng cho bảng `order_address`
 --
 
 CREATE TABLE `order_address` (
@@ -1026,21 +1059,30 @@ CREATE TABLE `order_address` (
   `id_district` int(11) NOT NULL,
   `id_ward` int(11) NOT NULL,
   `address` varchar(255) NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `order_address`
+-- Đang đổ dữ liệu cho bảng `order_address`
 --
 
 INSERT INTO `order_address` (`id`, `id_order`, `id_province`, `id_district`, `id_ward`, `address`, `updated_at`, `created_at`) VALUES
-(1, 1, 16, 1629, 16305, '28, đường số 27, phường Tân Quy', '2022-01-24 05:41:21', '2022-01-24 05:41:21');
+(1, 1, 70, 7270, 72830, '28 phạm văn chiêu', '2022-01-25 10:00:31', '2022-01-25 10:00:31'),
+(2, 2, 26, 2619, 26195, '954, quang trung', '2022-02-14 10:29:28', '2022-02-14 10:29:28'),
+(3, 3, 27, 2767, 27707, '954, quang trung', '2022-02-15 08:45:54', '2022-02-15 08:45:54'),
+(4, 5, 23, 2366, 23683, '954, quang trung', '2022-02-15 09:18:48', '2022-02-15 09:18:48'),
+(5, 6, 28, 2828, 28288, 'Quang trung, go vap', '2022-02-15 09:22:31', '2022-02-15 09:22:31'),
+(6, 7, 28, 2828, 28288, 'Quang trung, go vap', '2022-02-15 09:23:42', '2022-02-15 09:23:42'),
+(7, 8, 28, 2828, 28288, 'Quang trung, go vap', '2022-02-15 09:25:10', '2022-02-15 09:25:10'),
+(8, 9, 27, 2710, 27107, '440/45 Thống nhất', '2022-02-15 09:35:18', '2022-02-15 09:35:18'),
+(9, 10, 24, 2418, 24204, '954, quang trung', '2022-02-16 03:54:58', '2022-02-16 03:54:58'),
+(10, 11, 26, 2619, 26193, '440/45 Thống nhất', '2022-02-16 06:36:22', '2022-02-16 06:36:22');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_info`
+-- Cấu trúc bảng cho bảng `order_info`
 --
 
 CREATE TABLE `order_info` (
@@ -1048,22 +1090,58 @@ CREATE TABLE `order_info` (
   `id_order` int(11) NOT NULL,
   `fullname` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
-  `note` text,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `note` text DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `order_info`
+-- Đang đổ dữ liệu cho bảng `order_info`
 --
 
 INSERT INTO `order_info` (`id`, `id_order`, `fullname`, `phone`, `note`, `updated_at`, `created_at`) VALUES
-(1, 1, 'Nguyễn Chính Hưng', '0338927456', '11111', '2022-01-24 05:41:21', '2022-01-24 05:41:21');
+(1, 1, 'Nguyễn Chính Hưng', '0338927456', 'hihi', '2022-01-25 10:00:31', '2022-01-25 10:00:31'),
+(2, 2, 'Trần Văn Trường', '0342909557', 'Nhận tiền 1 -5 phút', '2022-02-14 10:29:28', '2022-02-14 10:29:28'),
+(3, 3, 'Trần Văn Trường', '0342909557', 'Nhận tiền 1 -5 phút', '2022-02-15 08:45:54', '2022-02-15 08:45:54'),
+(4, 5, 'Trần Văn Trường', '0342909557', 'Nhận tiền 1 -5 phút', '2022-02-15 09:18:48', '2022-02-15 09:18:48'),
+(5, 6, 'Duong tesst Thuy test', '0342909557', 'Nhận tiền 1 -5 phút', '2022-02-15 09:22:31', '2022-02-15 09:22:31'),
+(6, 7, 'Duong tesst Thuy test', '0342909557', 'Nhận tiền 1 -5 phút', '2022-02-15 09:23:42', '2022-02-15 09:23:42'),
+(7, 8, 'Duong tesst Thuy test', '0342909557', 'Nhận tiền 1 -5 phút', '2022-02-15 09:25:10', '2022-02-15 09:25:10'),
+(8, 9, 'Duong tesst Thuy test', '0342909557', 'Nhận tiền 1 -5 phút', '2022-02-15 09:35:18', '2022-02-15 09:35:18'),
+(9, 10, 'Trần Trường', '0342909557', 'Nhận tiền 1 -5 phút', '2022-02-16 03:54:58', '2022-02-16 03:54:58'),
+(10, 11, 'Trần Trường', '0342909557', 'Nhận tiền 1 -5 phút', '2022-02-16 06:36:22', '2022-02-16 06:36:22');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_products`
+-- Cấu trúc bảng cho bảng `order_payme`
+--
+
+CREATE TABLE `order_payme` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `transaction_partner_id` varchar(255) DEFAULT NULL,
+  `link_payment` text DEFAULT NULL,
+  `transaction_payme_id` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `order_payme`
+--
+
+INSERT INTO `order_payme` (`id`, `order_id`, `status`, `transaction_partner_id`, `link_payment`, `transaction_payme_id`, `created_at`, `updated_at`) VALUES
+(1, 8, 1, 'CMART-81644917110', 'http://sbx.payme.vn/g/payment/3443281680', '3443281680', '2022-02-15 09:25:11', '2022-02-15 09:33:21'),
+(2, 9, 1, 'CMART-91644917718', 'http://sbx.payme.vn/g/payment/9508993383', '9508993383', '2022-02-15 09:35:18', '2022-02-15 09:42:40'),
+(3, 10, 1, 'CMART-101644983698', 'http://sbx.payme.vn/g/payment/5085520938', '5085520938', '2022-02-16 03:54:58', '2022-02-16 04:21:58'),
+(4, 11, 1, 'CMART-111644993382', 'http://sbx.payme.vn/g/payment/3189335373', '3189335373', '2022-02-16 06:36:22', '2022-02-16 06:57:23');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `order_products`
 --
 
 CREATE TABLE `order_products` (
@@ -1076,54 +1154,73 @@ CREATE TABLE `order_products` (
   `feature_img` varchar(255) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` double NOT NULL,
-  `c_point` int(11) NOT NULL DEFAULT '0',
-  `m_point` int(11) NOT NULL DEFAULT '0',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `c_point` int(11) NOT NULL DEFAULT 0,
+  `m_point` int(11) NOT NULL DEFAULT 0,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `order_products`
+-- Đang đổ dữ liệu cho bảng `order_products`
 --
 
 INSERT INTO `order_products` (`id`, `id_order`, `id_order_store`, `id_product`, `name`, `slug`, `feature_img`, `quantity`, `price`, `c_point`, `m_point`, `updated_at`, `created_at`) VALUES
-(1, 1, 1, 39, 'Wonder Combo: Combo 02 vé VinWonders & Vinpearl Safari + 01 đêm nghỉ tại VinHolidays Fiesta Phú Quốc dành cho 02 người', 'wonder-combo-combo-02-ve-vinwonders-vinpearl-safari-01-dem-nghi-tai-vinholidays-fiesta-phu-quoc-danh-cho-02-nguoi', '/public/storage/files/a3a5b231231949e586efd41b43daf1d4_1920x1080_P3%20(2).png', 1, 2000000, 10, 15, '2022-01-24 05:41:21', '2022-01-24 05:41:21'),
-(2, 1, 2, 39, 'Wonder Combo: Combo 02 vé VinWonders & Vinpearl Safari + 01 đêm nghỉ tại VinHolidays Fiesta Phú Quốc dành cho 02 người', 'wonder-combo-combo-02-ve-vinwonders-vinpearl-safari-01-dem-nghi-tai-vinholidays-fiesta-phu-quoc-danh-cho-02-nguoi', '/public/storage/files/a3a5b231231949e586efd41b43daf1d4_1920x1080_P3%20(2).png', 2, 2000000, 10, 15, '2022-01-24 05:41:21', '2022-01-24 05:41:21');
+(1, 1, 1, 39, 'Wonder Combo: Combo 02 vé VinWonders & Vinpearl Safari + 01 đêm nghỉ tại VinHolidays Fiesta Phú Quốc dành cho 02 người', 'wonder-combo-combo-02-ve-vinwonders-vinpearl-safari-01-dem-nghi-tai-vinholidays-fiesta-phu-quoc-danh-cho-02-nguoi', 'public/image/logo-cpc.png', 1, 2000000, 10, 15, '2022-01-25 10:00:31', '2022-01-25 10:00:31'),
+(2, 1, 1, 16, 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'public/image/logo-cpc.png', 1, 239000, 10, 15, '2022-01-25 10:00:31', '2022-01-25 10:00:31'),
+(3, 1, 2, 39, 'Wonder Combo: Combo 02 vé VinWonders & Vinpearl Safari + 01 đêm nghỉ tại VinHolidays Fiesta Phú Quốc dành cho 02 người', 'wonder-combo-combo-02-ve-vinwonders-vinpearl-safari-01-dem-nghi-tai-vinholidays-fiesta-phu-quoc-danh-cho-02-nguoi', 'public/image/logo-cpc.png', 2, 2000000, 10, 15, '2022-01-25 10:00:31', '2022-01-25 10:00:31'),
+(4, 2, 3, 16, 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'public/image/logo-cpc.png', 1, 239000, 10, 15, '2022-02-14 10:29:28', '2022-02-14 10:29:28'),
+(5, 3, 4, 16, 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'public/image/logo-cpc.png', 1, 239000, 10, 15, '2022-02-15 08:45:54', '2022-02-15 08:45:54'),
+(6, 5, 5, 16, 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'public/image/logo-cpc.png', 1, 239000, 10, 15, '2022-02-15 09:18:48', '2022-02-15 09:18:48'),
+(7, 6, 6, 16, 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'public/image/logo-cpc.png', 1, 239000, 10, 15, '2022-02-15 09:22:31', '2022-02-15 09:22:31'),
+(8, 7, 7, 16, 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'public/image/logo-cpc.png', 1, 239000, 10, 15, '2022-02-15 09:23:42', '2022-02-15 09:23:42'),
+(9, 8, 8, 16, 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'public/image/logo-cpc.png', 1, 239000, 10, 15, '2022-02-15 09:25:10', '2022-02-15 09:25:10'),
+(10, 9, 9, 16, 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'public/image/logo-cpc.png', 1, 239000, 10, 15, '2022-02-15 09:35:18', '2022-02-15 09:35:18'),
+(11, 10, 10, 16, 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'public/image/logo-cpc.png', 2, 239000, 10, 15, '2022-02-16 03:54:58', '2022-02-16 03:54:58'),
+(12, 11, 11, 16, 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'public/image/logo-cpc.png', 1, 239000, 10, 15, '2022-02-16 06:36:22', '2022-02-16 06:36:22');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_stores`
+-- Cấu trúc bảng cho bảng `order_stores`
 --
 
 CREATE TABLE `order_stores` (
   `id` int(11) NOT NULL,
   `id_order` int(11) NOT NULL,
   `id_store` int(11) NOT NULL,
-  `tax` double NOT NULL DEFAULT '0',
-  `shipping_method` int(11) NOT NULL DEFAULT '0',
-  `shipping_type` int(11) NOT NULL DEFAULT '0',
-  `shipping_total` double NOT NULL DEFAULT '0',
-  `c_point` int(11) NOT NULL DEFAULT '0',
-  `m_point` int(11) NOT NULL DEFAULT '0',
-  `sub_total` double NOT NULL DEFAULT '0',
-  `total` double NOT NULL DEFAULT '0',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `tax` double NOT NULL DEFAULT 0,
+  `shipping_method` int(11) NOT NULL DEFAULT 0,
+  `shipping_type` int(11) NOT NULL DEFAULT 0,
+  `shipping_total` double NOT NULL DEFAULT 0,
+  `c_point` int(11) NOT NULL DEFAULT 0,
+  `m_point` int(11) NOT NULL DEFAULT 0,
+  `sub_total` double NOT NULL DEFAULT 0,
+  `total` double NOT NULL DEFAULT 0,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `order_stores`
+-- Đang đổ dữ liệu cho bảng `order_stores`
 --
 
 INSERT INTO `order_stores` (`id`, `id_order`, `id_store`, `tax`, `shipping_method`, `shipping_type`, `shipping_total`, `c_point`, `m_point`, `sub_total`, `total`, `updated_at`, `created_at`) VALUES
-(1, 1, 1, 200000, 0, 0, 3001, 15, 10, 2000000, 2203001, '2022-01-24 05:41:21', '2022-01-24 05:41:21'),
-(2, 1, 4, 400000, 2, 1, 26639, 30, 20, 4000000, 4426639, '2022-01-24 05:41:21', '2022-01-24 05:41:21');
+(1, 1, 1, 223900, 1, 1, 12010, 20, 30, 2239000, 2474910, '2022-01-25 10:00:31', '2022-01-25 10:00:31'),
+(2, 1, 6, 400000, 0, 0, 3002, 20, 30, 4000000, 4403002, '2022-01-25 10:00:31', '2022-01-25 10:00:31'),
+(3, 2, 1, 23900, 2, 1, 26638, 10, 15, 239000, 289538, '2022-02-14 10:29:28', '2022-02-14 10:29:28'),
+(4, 3, 1, 23900, 2, 1, 26638, 10, 15, 239000, 289538, '2022-02-15 08:45:54', '2022-02-15 08:45:54'),
+(5, 5, 1, 23900, 2, 1, 26638, 10, 15, 239000, 289538, '2022-02-15 09:18:48', '2022-02-15 09:18:48'),
+(6, 6, 1, 23900, 2, 1, 26638, 10, 15, 239000, 289538, '2022-02-15 09:22:31', '2022-02-15 09:22:31'),
+(7, 7, 1, 23900, 2, 1, 26638, 10, 15, 239000, 289538, '2022-02-15 09:23:42', '2022-02-15 09:23:42'),
+(8, 8, 1, 23900, 2, 1, 26638, 10, 15, 239000, 289538, '2022-02-15 09:25:10', '2022-02-15 09:25:10'),
+(9, 9, 1, 23900, 2, 1, 26638, 10, 15, 239000, 289538, '2022-02-15 09:35:18', '2022-02-15 09:35:18'),
+(10, 10, 1, 47800, 2, 1, 26639, 20, 30, 478000, 552439, '2022-02-16 03:54:58', '2022-02-16 03:54:58'),
+(11, 11, 1, 23900, 2, 1, 26638, 10, 15, 239000, 289538, '2022-02-16 06:36:22', '2022-02-16 06:36:22');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_vat`
+-- Cấu trúc bảng cho bảng `order_vat`
 --
 
 CREATE TABLE `order_vat` (
@@ -1133,36 +1230,45 @@ CREATE TABLE `order_vat` (
   `vat_email` varchar(255) DEFAULT NULL,
   `vat_mst` varchar(255) DEFAULT NULL,
   `vat_address` varchar(255) DEFAULT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `order_vat`
+-- Đang đổ dữ liệu cho bảng `order_vat`
 --
 
 INSERT INTO `order_vat` (`id`, `id_order`, `vat_company`, `vat_email`, `vat_mst`, `vat_address`, `updated_at`, `created_at`) VALUES
-(1, 1, 'TNHH 1 TV Anh Tuấn', NULL, '123123', '123', '2022-01-24 05:41:21', '2022-01-24 05:41:21');
+(1, 1, NULL, NULL, NULL, NULL, '2022-01-25 10:00:31', '2022-01-25 10:00:31'),
+(2, 2, '123', NULL, '42343242', '423432432', '2022-02-14 10:29:28', '2022-02-14 10:29:28'),
+(3, 3, '123', NULL, '123123', '321321321', '2022-02-15 08:45:54', '2022-02-15 08:45:54'),
+(4, 5, '123', NULL, '24324234', 'ưeqewqeqw', '2022-02-15 09:18:48', '2022-02-15 09:18:48'),
+(5, 6, '123', NULL, '423432432', 'ưeqewqeqw', '2022-02-15 09:22:31', '2022-02-15 09:22:31'),
+(6, 7, '123', NULL, '423432432', 'ưeqewqeqw', '2022-02-15 09:23:42', '2022-02-15 09:23:42'),
+(7, 8, '123', NULL, '423432432', 'ưeqewqeqw', '2022-02-15 09:25:10', '2022-02-15 09:25:10'),
+(8, 9, '123', NULL, '4324324', 'ưeqewqeqw', '2022-02-15 09:35:18', '2022-02-15 09:35:18'),
+(9, 10, 'mevivu', NULL, '12321321', '998 quang trung', '2022-02-16 03:54:58', '2022-02-16 03:54:58'),
+(10, 11, '123', NULL, '321321', '213213', '2022-02-16 06:36:22', '2022-02-16 06:36:22');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payments`
+-- Cấu trúc bảng cho bảng `payments`
 --
 
 CREATE TABLE `payments` (
   `id` int(11) NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `is_tratruoc` int(11) DEFAULT '0',
-  `is_trasau` int(11) DEFAULT '0',
-  `note` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `is_tratruoc` int(11) DEFAULT 0,
+  `is_trasau` int(11) DEFAULT 0,
+  `note` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `payments`
+-- Đang đổ dữ liệu cho bảng `payments`
 --
 
 INSERT INTO `payments` (`id`, `name`, `is_tratruoc`, `is_trasau`, `note`, `status`, `created_at`, `updated_at`) VALUES
@@ -1172,7 +1278,7 @@ INSERT INTO `payments` (`id`, `name`, `is_tratruoc`, `is_trasau`, `note`, `statu
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permissions`
+-- Cấu trúc bảng cho bảng `permissions`
 --
 
 CREATE TABLE `permissions` (
@@ -1184,7 +1290,7 @@ CREATE TABLE `permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `permissions`
+-- Đang đổ dữ liệu cho bảng `permissions`
 --
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
@@ -1238,7 +1344,7 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personal_access_tokens`
+-- Cấu trúc bảng cho bảng `personal_access_tokens`
 --
 
 CREATE TABLE `personal_access_tokens` (
@@ -1247,7 +1353,7 @@ CREATE TABLE `personal_access_tokens` (
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1256,7 +1362,122 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Cấu trúc bảng cho bảng `point_c`
+--
+
+CREATE TABLE `point_c` (
+  `id` int(10) NOT NULL,
+  `user_id` int(10) DEFAULT NULL,
+  `point_c` int(10) DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `point_c`
+--
+
+INSERT INTO `point_c` (`id`, `user_id`, `point_c`, `created_at`, `updated_at`) VALUES
+(1, 1, 550, '2022-01-17 04:09:59', '2022-01-18 08:42:15'),
+(2, 2, 623, '2022-01-17 05:06:36', '2022-01-25 09:45:34'),
+(3, 3, 123000, '2022-01-25 09:39:30', '2022-01-25 09:45:34'),
+(4, 4, 0, '2022-02-14 06:51:57', '2022-02-14 06:51:57');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `point_history`
+--
+
+CREATE TABLE `point_history` (
+  `id` int(10) NOT NULL,
+  `point_c_idchuyen` int(10) DEFAULT NULL,
+  `point_c_idnhan` int(10) DEFAULT NULL,
+  `point_past_chuyen` int(10) DEFAULT NULL,
+  `point_present_chuyen` int(10) DEFAULT NULL,
+  `point_past_nhan` int(10) DEFAULT NULL,
+  `point_present_nhan` int(10) DEFAULT NULL,
+  `makhachhang` varchar(255) DEFAULT NULL,
+  `makhachhang_chuyen` varchar(255) DEFAULT NULL,
+  `magiaodich` varchar(255) DEFAULT NULL,
+  `amount` int(10) DEFAULT 0,
+  `note` text DEFAULT NULL,
+  `type` int(11) DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `point_history`
+--
+
+INSERT INTO `point_history` (`id`, `point_c_idchuyen`, `point_c_idnhan`, `point_past_chuyen`, `point_present_chuyen`, `point_past_nhan`, `point_present_nhan`, `makhachhang`, `makhachhang_chuyen`, `magiaodich`, `amount`, `note`, `type`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 1000, 900, 0, 100, '202201170002', '202201170001', '3973842699', 100, 'Tặng chú 100 điểm', 1, '2022-01-17 09:28:31', '2022-01-17 09:28:31'),
+(5, 1, 2, 900, 800, 100, 200, '202201170002', '202201170001', '1448127809', 100, 'Tang 100', 1, '2022-01-18 08:37:31', '2022-01-18 08:37:31'),
+(6, 1, 2, 800, 700, 200, 300, '202201170002', '202201170001', '3326510286', 100, NULL, 1, '2022-01-18 08:38:27', '2022-01-18 08:38:27'),
+(7, 1, 2, 700, 550, 300, 450, '202201170002', '202201170001', '3326510124', 150, NULL, 1, '2022-01-18 08:39:16', '2022-01-18 08:39:16'),
+(8, 1, 2, 550, 450, 450, 550, '202201170002', '202201170001', '5311046462', 100, '150', 1, '2022-01-18 08:40:10', '2022-01-18 08:40:10'),
+(9, 2, 1, 550, 450, 450, 550, '202201170001', '202201170002', '9999532121', 100, NULL, 1, '2022-01-18 08:42:15', '2022-01-18 08:42:15'),
+(10, 1, NULL, 550, 200, NULL, NULL, NULL, '202201170001', 'CMART-251640158501', 350, 'Thanh toán đơn hàng', 2, '2022-01-18 09:39:43', '2022-01-18 09:39:43'),
+(11, 1, NULL, 200, 20, NULL, NULL, NULL, '202201170001', 'CMART-311640749108', 180, 'Thanh toán đơn hàng', 2, '2022-01-18 09:43:34', '2022-01-18 09:43:34'),
+(12, NULL, 1, 200, 150, NULL, NULL, NULL, '202201170001', 'CMART-311640749109', 50, 'Tiet kiem ngay 20/01 tu KH 202201170001', 3, '2022-01-20 05:45:53', '2022-01-20 05:45:53'),
+(13, NULL, 1, NULL, NULL, 150, 330, NULL, '202201170001', 'CMART-311640749108', 180, 'Hoàn điểm đơn hàng', 4, '2022-01-20 05:53:08', '2022-01-20 05:53:08'),
+(14, NULL, 2, NULL, NULL, 450, 550, '202201170002', NULL, '8576192803', 100, '100', 1, '2022-01-24 08:49:32', '2022-01-24 08:49:32'),
+(15, 3, 2, 123123, 123000, 500, 623, '202201170002', '202201250001', '2929530938', 123, '31231', 1, '2022-01-25 09:45:34', '2022-01-25 09:45:34');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `point_m`
+--
+
+CREATE TABLE `point_m` (
+  `id` int(10) NOT NULL,
+  `user_id` int(10) DEFAULT NULL,
+  `point_m` int(10) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `point_m`
+--
+
+INSERT INTO `point_m` (`id`, `user_id`, `point_m`, `created_at`, `updated_at`) VALUES
+(1, 1, 100, '2022-01-20 08:11:54', '2022-01-20 08:11:54'),
+(2, 2, 50, '2022-01-20 08:11:54', '2022-01-20 08:11:54'),
+(3, 3, NULL, '2022-01-25 09:39:30', '2022-01-25 09:39:30'),
+(4, 4, NULL, '2022-02-14 06:51:57', '2022-02-14 06:51:57');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `point_m_history`
+--
+
+CREATE TABLE `point_m_history` (
+  `id` int(10) NOT NULL,
+  `id_vi` int(10) DEFAULT NULL,
+  `makhachhang` varchar(255) DEFAULT NULL,
+  `point_present` int(10) DEFAULT NULL,
+  `point_past` int(10) DEFAULT NULL,
+  `amount` int(10) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `point_m_history`
+--
+
+INSERT INTO `point_m_history` (`id`, `id_vi`, `makhachhang`, `point_present`, `point_past`, `amount`, `note`, `created_at`, `updated_at`) VALUES
+(1, 1, '202201170001', 100, 50, 50, NULL, '2022-01-20 08:49:15', '2022-01-20 08:49:15');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `products`
 --
 
 CREATE TABLE `products` (
@@ -1264,9 +1485,9 @@ CREATE TABLE `products` (
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `sku` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `long_desc` text COLLATE utf8_unicode_ci,
+  `long_desc` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `feature_img` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `gallery` text COLLATE utf8_unicode_ci,
+  `gallery` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
   `weight` double NOT NULL,
   `height` double NOT NULL,
@@ -1276,51 +1497,51 @@ CREATE TABLE `products` (
   `upsell` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `payments` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `status` int(11) NOT NULL,
-  `meta_desc` text COLLATE utf8_unicode_ci,
-  `meta_keyword` text COLLATE utf8_unicode_ci,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `meta_desc` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_keyword` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `products`
+-- Đang đổ dữ liệu cho bảng `products`
 --
 
 INSERT INTO `products` (`id`, `slug`, `name`, `sku`, `long_desc`, `feature_img`, `gallery`, `category_id`, `weight`, `height`, `width`, `length`, `brand`, `upsell`, `payments`, `status`, `meta_desc`, `meta_keyword`, `created_at`, `updated_at`) VALUES
-(6, 'nuoc-rua-chen-dhc', 'Nước rửa chén DHC', 'NRC0001', '<p>10.000</p>', '/public/storage/images/420x420-1626941427-vien-rau-cu-qua-dhc-nhat-ban-99.jpg', '', 37, 1.1, 1.1, 1.1, 1.1, 'DHC', NULL, '1,2', 1, '10.000', '10.000', '2021-11-08 09:31:30', '2021-11-22 09:23:23'),
-(12, 'may-xay-thit-da-nang-perfect-pf-x01', 'MÁY XAY THỊT ĐA NĂNG PERFECT PF-X01', '159513', '<h5><strong>Thiết kế nhỏ gọn, chất liệu an to&agrave;n cho sức khỏe</strong></h5>\r\n\r\n<p><strong>M&aacute;y xay thịt Perfect PF-X01</strong>&nbsp;c&oacute; kiểu d&aacute;ng đơn giản m&agrave; tiện lợi, nhỏ gọn, ph&ugrave; hợp với mọi kh&ocirc;ng gian nh&agrave; bếp. Đầu m&aacute;y l&agrave;m bằng chất liệu th&eacute;p kh&ocirc;ng gỉ c&oacute; độ bền cao. Lưỡi dao 4 c&aacute;nh sắc b&eacute;n, kh&ocirc;ng gỉ, đảm bảo an to&agrave;n vệ sinh thực phẩm.</p>\r\n\r\n<p>Th&acirc;n cối bằng thuỷ tinh trong suốt, kh&ocirc;ng bị ph&ocirc;i nhiễm chất độc hại khi xay thực phẩm, đảm bảo an to&agrave;n cho sức khỏe người sử dụng. Đồng thời, người d&ugrave;ng c&oacute; thể dễ d&agrave;ng quan s&aacute;t thực phẩm b&ecirc;n trong khi m&aacute;y đang hoạt động.</p>\r\n\r\n<p><strong>M&aacute;y xay đa năng</strong></p>\r\n\r\n<p>Bạn c&oacute; thể sử dụng m&aacute;y xay Perfect PF-X01 để xay nhiều loại thực phẩm như: thịt heo, thịt gia cầm, t&ocirc;m c&aacute; tươi sống, c&aacute;c loại rau củ quả hay gia vị (tỏi, ớt, ti&ecirc;u,...). B&ecirc;n cạnh đ&oacute;, thiết kế của m&aacute;y c&oacute; thể dễ d&agrave;ng th&aacute;o rời, vệ sinh ch&ugrave;i rửa sạch sẽ để kh&ocirc;ng &aacute;m m&ugrave;i thực phẩm.</p>\r\n\r\n<p><strong>C&ocirc;ng suất mạnh mẽ, xay nhanh ch&oacute;ng</strong></p>\r\n\r\n<p>M&aacute;y xay hoạt động mạnh mẽ với c&ocirc;ng suất 300W, gi&uacute;p bạn xay trộn c&aacute;c loại thực phẩm ướt v&agrave; mềm cho độ nhuyễn mịn cao, tiết kiệm đ&aacute;ng kể thời gian v&agrave; c&ocirc;ng sức sơ chế.</p>', '/public/storage/files/159513L.jpg', '', 34, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 08:57:53', '2021-11-22 14:39:00'),
-(15, 'noi-chien-nuong-khong-dau-perfect-pf-335-5l', 'NỒI CHIÊN NƯỚNG KHÔNG DẦU PERFECT PF-335 (5L)', '161578', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p><strong>NỒI CHI&Ecirc;N NƯỚNG KH&Ocirc;NG DẦU PERFECT PF-335 (5L)</strong></p>\r\n\r\n<p><strong>*Nhận th&ecirc;m:</strong></p>\r\n\r\n<p>+ 1 nồi cơm điện nắp g&agrave;i Perfect PF-C101 (1.2L)</p>\r\n\r\n<p>+ 1 m&aacute;y xay thịt đa năng Perfect PF-X01</p>\r\n\r\n<p><strong>C&Ocirc;NG NGHỆ TURBO AIR RAPID</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>C&ocirc;ng nghệ lưu th&ocirc;ng d&ograve;ng kh&ocirc;ng kh&iacute; n&oacute;ng đi nhanh v&agrave; lan tỏa khắp l&ograve;ng nồi gi&uacute;p thức ăn chẳng những ch&iacute;n nhanh m&agrave; c&ograve;n ch&iacute;n đều, đảm bảo m&ugrave;i vị v&agrave; chất dinh dưỡng b&ecirc;n trong, tiết kiệm thời gian v&agrave; c&ocirc;ng sức chế biến.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Nồi chi&ecirc;n nướng Perfect PF-335 hỗ trợ t&ugrave;y chỉnh nhiệt độ l&ecirc;n đến 200<sup>0</sup>C, hẹn giờ đến 30 ph&uacute;t để việc nấu nướng trở n&ecirc;n tiện lợi v&agrave; dễ d&agrave;ng hơn.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://file.hstatic.net/1000218184/file/banner_content3_0c6f5c3358a84aa091853f44e83b2114_grande.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>GIẢM 80% LƯỢNG DẦU MỠ</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Nhờ khả năng chi&ecirc;n, nướng thức ăn bằng kh&ocirc;ng kh&iacute;, hạn chế dầu mỡ n&ecirc;n Perfect PF-335 sẽ gi&uacute;p bạn giảm đến 80% lượng dầu mỡ, bảo vệ sức khỏe cho cả gia đ&igrave;nh, nhất l&agrave; sức khỏe tim mạch.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://file.hstatic.net/1000218184/file/banner_content1_65f6a75a92b24275af0925e0462dfa3a_grande.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>DUNG T&Iacute;CH LỚN 5 L&Iacute;T</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dung t&iacute;ch lớn l&ecirc;n đến 5 l&iacute;t, ph&ugrave; hợp chế biến lượng thức ăn đủ d&ugrave;ng cho gia đ&igrave;nh 4 - 6 người. Chỉ cần cho thực phẩm v&agrave;o l&ograve;ng nồi một lần, t&ugrave;y chỉnh chế độ chế biến, tranh thủ l&agrave;m c&aacute;c c&ocirc;ng việc nội trợ kh&aacute;c v&agrave; sau đ&oacute; th&igrave; m&oacute;n ăn thơm ngon hấp dẫn đ&atilde; ch&iacute;n chờ cả nh&agrave; thưởng thức.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://file.hstatic.net/1000218184/file/banner_content4_d037cf339727435da6855c5eacdc3a3b_grande.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>CHẤT LIỆU BỀN BỈ</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Th&acirc;n nồi được l&agrave;m từ chất liệu nhựa PP cao cấp, chịu nhiệt v&agrave; chịu lực tốt. L&ograve;ng nồi sản xuất từ hợp kim chắc chắn, hạn chế gỉ s&eacute;t, phủ chống d&iacute;nh an to&agrave;n v&agrave; dễ d&agrave;ng ch&ugrave;i rửa. Perfect PF-335 c&ograve;n được trang bị tay cầm c&aacute;ch nhiệt để chống n&oacute;ng v&agrave; dễ d&agrave;ng lấy thức ăn ra sau khi chế biến. Nồi sở hữu thiết kế hiện đại, sang trọng với t&ocirc;ng m&agrave;u đen hạn chế b&aacute;m bẩn, ph&ugrave; hợp mọi kh&ocirc;ng gian bếp.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://file.hstatic.net/1000218184/file/banner_content2_daaad68951eb463c85e470642eeb5ce5_grande.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>Nồi chi&ecirc;n kh&ocirc;ng dầu Perfect PF-335</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&ocirc;ng suất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1400W</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Dung t&iacute;ch</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>5 l&iacute;t</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Nhựa PP, hợp kim nh&ocirc;m phủ chống d&iacute;nh</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>K&iacute;ch thước</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>32 x 32 x 37 (cm)</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>5kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Đen</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Perfect</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Sản xuất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:&nbsp;</strong>12 th&aacute;ng</p>', '/public/storage/files/161578L3.jpg', '', 34, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:01:17', '2021-11-22 09:22:15'),
-(16, 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', '239000', '<ul>\r\n	<li>V&iacute; Nam Da B&ograve; D&aacute;ng Đứng 399 12x9.8x2cm được may từ chất liệu da b&ograve; cao cấp, đường may tỉ mỉ, đem lại độ bền cao trong suốt qu&aacute; tr&igrave;nh sử dụng.</li>\r\n	<li>V&iacute; d&aacute;ng đứng thời trang, thiết kế nhỏ gọn, dễ d&agrave;ng ph&acirc;n loại quản l&yacute; c&aacute;c loại tiền, thẻ,... một c&aacute;ch khoa học. Sản phẩm k&egrave;m hộp tiện lợi, th&iacute;ch hợp d&ugrave;ng l&agrave;m qu&agrave; tặng.</li>\r\n	<li>K&iacute;ch thước: 12x9.8x2cm. Sản phẩm c&oacute; hai m&agrave;u: Đen v&agrave; n&acirc;u, vui l&ograve;ng ghi m&agrave;u sắc bạn lựa chọn v&agrave;o phần Ghi Ch&uacute; đơn h&agrave;ng.</li>\r\n	<li>Hướng dẫn bảo quản: Bảo quản nơi kh&ocirc; r&aacute;o, tho&aacute;ng m&aacute;t, tr&aacute;nh nơi c&oacute; nhiệt độ cao, h&oacute;a chất tẩy rửa. Xuất xứ: Việt Nam.</li>\r\n</ul>', '/public/storage/files/619721a4c6c8b.jpeg', '', 149, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:06:25', '2021-11-23 06:18:11'),
-(17, '4-can-nuoc-giat-xa-5-trong-1-swat-romantic-38kgcan', '4 CAN NƯỚC GIẶT XẢ 5 TRONG 1 SWAT ROMANTIC (3,8KG/CAN)', '160751', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p><strong>4 CAN NƯỚC GIẶT XẢ 5 TRONG 1 SWAT ROMANTIC (3,8KG/CAN)</strong></p>\r\n\r\n<p><strong>*Nhận th&ecirc;m:</strong></p>\r\n\r\n<p>+ 1 chai nước lau s&agrave;n Swat (1 l&iacute;t, hương ngẫu nhi&ecirc;n)</p>\r\n\r\n<p>+ 1 chai nước rửa ch&eacute;n Swat (750g)</p>\r\n\r\n<p>+ 1 chai nước tẩy nh&agrave; tắm Swat (1 l&iacute;t)</p>\r\n\r\n<p>+ 1 chai nước lau k&iacute;nh Swat (580ml)</p>\r\n\r\n<p>+ 1 chai nước hoa Adela 30ml (hương ngẫu nhi&ecirc;n)</p>\r\n\r\n<p><strong>Nước giặt xả Swat Romantic</strong>&nbsp;với c&ocirc;ng thức si&ecirc;u đậm đặc 5 trong 1 đ&aacute;nh bật c&aacute;c vết vẩn cứng đầu mang lại hiệu quả giặt sạch gấp 5 lần so với nhiều loại nước giặt kh&aacute;c. Chỉ với 1 nắp nước giặt xả c&oacute; thể giặt sạch đến 20 chiếc quần &aacute;o. Với 5 đặc điểm vượt trội l&agrave; giặt, xả, diệt khuẩn, lưu hương v&agrave; tăng độ bền của vải bằng c&ocirc;ng nghệ Th&aacute;i Lan, sản phẩm gi&uacute;p tiết kiệm thời gian, c&ocirc;ng sức v&agrave; chi ph&iacute; đ&aacute;ng kể.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/swatnuocgiatromantic1.jpg\" /></p>\r\n\r\n<p><strong>Nước giặt xả Swat Romantic</strong>&nbsp;mang hương hoa thi&ecirc;n nhi&ecirc;n lấy cảm hứng từ sự l&atilde;ng mạn gi&uacute;p loại bỏ m&ugrave;i ẩm mốc, khử sạch m&ugrave;i h&ocirc;i, để &aacute;o quần lu&ocirc;n thơm tho như mới.</p>\r\n\r\n<p>Sản phẩm th&iacute;ch hợp cho cả quần &aacute;o trắng v&agrave; quần &aacute;o m&agrave;u, tiện lợi cho cả giặt tay lẫn giặt m&aacute;y v&agrave; ho&agrave;n to&agrave;n dịu nhẹ với da tay, bảo vệ l&agrave;n da người nội trợ.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/swatnuocgiatromantic2.jpg\" /></p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>Nước giặt xả 5 trong 1Swat Romantic</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Khối lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>3.8kg/can</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu v&agrave; sản xuất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Việt Nam</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '/public/storage/files/160751L5.jpg', '', 37, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:11:02', '2021-11-22 09:20:32'),
-(18, 'chai-tha-bon-cau-joeunmiso', 'CHAI THẢ BỒN CẦU JOEUNMISO', '158386', '<p><strong>Chai thả bồn cầu Joeunmiso</strong>&nbsp;được nhập khẩu trực tiếp từ H&agrave;n Quốc. Sản phẩm được sản xuất bởi thương hiệu c&oacute; tr&ecirc;n 50 năm kinh nghiệm trong lĩnh vực sản xuất v&agrave; xuất khẩu mặt h&agrave;ng tẩy rửa đi nhiều nước tr&ecirc;n thế giới. Trọn bộ sản phẩm bao gồm 6 chai, gi&uacute;p người d&ugrave;ng tiết kiệm chi ph&iacute; đ&aacute;ng kể so với mua ri&ecirc;ng lẻ. Joeunmiso c&oacute; dạng gel được n&eacute;n bằng c&ocirc;ng nghệ cao n&ecirc;n ti&ecirc;u hao &iacute;t trong qu&aacute; tr&igrave;nh sử dụng, đ&acirc;y được xem l&agrave; ưu điểm vượt trội hơn so với dạng vi&ecirc;n th&ocirc;ng thường dễ bị tan chảy.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img alt=\"alt\" src=\"https://scj.vn/images/newContent/joeunmisochaithatoilet1.jpg\" /></p>\r\n\r\n<p><strong>C&Ocirc;NG DỤNG CỦA CHAI THẢ BỒN CẦU JOEUNMISO</strong></p>\r\n\r\n<p>- Tạo m&agrave;u xanh tươi m&aacute;t cho nước</p>\r\n\r\n<p>- Tự động tẩy sạch c&aacute;c vết bẩn b&aacute;m tr&ecirc;n th&agrave;nh bồn cầu</p>\r\n\r\n<p>- Ti&ecirc;u diệt v&agrave; hạn chế vi khuẩn ph&aacute;t triển trở lại</p>\r\n\r\n<p>- Khử m&ugrave;i h&ocirc;i v&agrave; lưu giữ hương hoa thơm m&aacute;t</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>Chai thả bồn cầu Joeunmiso</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>180g/chai</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thời gian sử dụng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1200 - 3000 lần xả/chai t&ugrave;y theo mức độ mở nắp</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Sản xuất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>H&agrave;n Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Nhận th&ecirc;m:</strong>&nbsp;4 g&oacute;i bột th&ocirc;ng cống Blue (100g/g&oacute;i)</p>\r\n\r\n<p><img alt=\"alt\" src=\"https://scj.vn/images/QuaTang/joeunmisochaithatoiletqt.jpg\" /></p>', '/public/storage/files/158386L.jpg', '', 37, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:24:18', '2021-11-22 14:38:25'),
-(21, 'that-lung-nam-449-mau-den-35x115cm', 'Thắt Lưng Nam 449 Màu Đen 3.5x115cm', '161468', '<ul>\r\n	<li>Thắt Lưng Nam 449 M&agrave;u Đen 3.5x115cm được l&agrave;m từ chất liệu da PU bền bỉ, mặt kh&oacute;a hợp kim kh&ocirc;ng gỉ đem lại độ bền cao trong suốt qu&aacute; tr&igrave;nh sử dụng.</li>\r\n	<li>Mặt kh&oacute;a trượt linh hoạt với c&aacute;c size quần. M&agrave;u đen dễ d&agrave;ng kết hợp với c&aacute;c trang phục c&ocirc;ng sở, lịch sự.</li>\r\n	<li>K&iacute;ch thước: Bản d&acirc;y 3.5cm; Chiều d&agrave;i: 115cm. Đường chỉ may tinh tế đem lại độ thẩm mỹ cho sản phẩm.</li>\r\n	<li>Hướng dẫn bảo quản: Kh&ocirc;ng sử dụng chất tẩy mạnh để vệ sinh sản phẩm, tr&aacute;nh để nơi c&oacute; nhiệt độ cao. Xuất xứ: Việt Nam.</li>\r\n</ul>', '/public/storage/files/61971575478a8.jpeg', '', 149, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:29:52', '2021-11-23 06:20:41'),
-(22, 'dong-ho-nam-tang-vong-deo-tay-swiss-guard-sport', 'Đồng hồ nam tặng vòng đeo tay SWISS GUARD SPORT', '161030', '<p><strong>Đồng hồ thời trang Swiss Guard</strong>&nbsp;l&agrave; d&ograve;ng sản phẩm cao cấp đến từ H&agrave;n Quốc với hơn 35 năm danh tiếng. Sản phẩm c&oacute; thiết kế mặt tr&ograve;n truyền thống nhưng kh&ocirc;ng đơn điệu, d&acirc;y th&eacute;p sang trọng t&ocirc;n l&ecirc;n vẻ c&aacute; t&iacute;nh, hiện đại cho người d&ugrave;ng. Sản phẩm c&oacute; 2 m&agrave;u l&agrave; xanh blue v&agrave; đen, ph&ugrave; hợp với thẩm mỹ của đa dạng đối tượng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/swissguarddonghothoitrang1.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Đồng hồ Swiss Guard<strong>&nbsp;</strong>được trang bị bộ m&aacute;y từ Nhật với độ ch&iacute;nh x&aacute;c ho&agrave;n hảo về thời gian. Đồng thời, thời lượng sử dụng pin d&agrave;i l&acirc;u đến hơn 700 ng&agrave;y.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Mặt đồng hồ sử dụng k&iacute;nh kho&aacute;ng (crystal) c&oacute; khả năng chống trầy xước vượt trội, cũng như hạn chế t&aacute;c động của mồ h&ocirc;i v&agrave; &aacute;nh nắng mặt trời.</p>\r\n\r\n<p>Bảng hiển thị ng&agrave;y v&agrave; giờ được lắp đặt th&ocirc;ng minh ở vị tr&iacute; số 3 gi&uacute;p dễ d&agrave;ng quan s&aacute;t. N&uacute;t xoay điều chỉnh trơn, thuận tiện điều chỉnh khi cần.</p>\r\n\r\n<p>B&ecirc;n cạnh đ&oacute;, kim đồng hồ c&oacute; khả năng phản quang, gi&uacute;p người d&ugrave;ng xem được giờ giấc trong điều kiện thiếu s&aacute;ng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/swissguarddonghothoitrang2.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Đồng hồ Swiss Guard sở hữu khả năng chống nước với &aacute;p suất 3 ATM, kết hợp với roong cao su chống thấm cao, gi&uacute;p người d&ugrave;ng y&ecirc;n t&acirc;m đi mưa hoặc sử dụng trong c&aacute;c hoạt động hằng ng&agrave;y như rửa tay, tắm,&hellip; m&agrave; kh&ocirc;ng lo đồng hồ bị v&ocirc; nước.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/swissguarddonghothoitrang3.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>Đồng hồ thời trang Swiss Guard</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>- D&acirc;y th&eacute;p</p>\r\n\r\n			<p>- Mặt k&iacute;nh kho&aacute;ng cứng</p>\r\n\r\n			<p>- Bộ m&aacute;y Nhật</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Độ chống thấm nước</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>3 ATM</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>- M&agrave;u xanh blue</p>\r\n\r\n			<p>- M&agrave;u đen</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Sản xuất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>H&agrave;n Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '/public/storage/files/DH.jpeg', '', 149, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:34:15', '2021-11-23 06:07:56'),
-(24, 'bo-vali-keo-cao-cap-kingtong', 'Bộ vali kéo cao cấp Kingtong', '160617', '<div class=\"title\" style=\"background-color:#ffffff; border:0px; box-sizing:border-box; color:#232323; font-family:Arial,sans-serif; font-size:13px; font-style:normal; font-variant-ligatures:normal; font-weight:400; outline:0px; padding:0px; text-align:start; text-decoration-color:initial; text-decoration-style:initial; text-decoration-thickness:initial; vertical-align:baseline; white-space:normal\">\r\n<h3 style=\"color:#000000; font-style:inherit\">Chi tiết sản phẩm</h3>\r\n</div>\r\n\r\n<div class=\"ct-info\" style=\"background-color:#ffffff; border:0px; box-sizing:border-box; color:#232323; font-family:Arial,sans-serif; font-size:13px; font-style:normal; font-variant-ligatures:normal; font-weight:400; outline:0px; padding:15px 0px; text-align:start; text-decoration-color:initial; text-decoration-style:initial; text-decoration-thickness:initial; vertical-align:baseline; white-space:normal\">\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<div class=\"info_wrap\" style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Trong cuộc sống đầy bận rộn, đ&ocirc;i khi ch&uacute;ng ta cần những chuyến đi để t&igrave;m lại sự c&acirc;n bằng v&agrave; c&oacute; th&ecirc;m những trải nghiệm mới mẻ. Trong những chuyến đi đ&oacute;, ch&uacute;ng ta kh&ocirc;ng thể thiếu người bạn đồng h&agrave;nh l&agrave; chiếc vali k&eacute;o tiện &iacute;ch.</span></span></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Nếu bạn c&ograve;n đang trăn trở t&igrave;m kiếm chiếc vali ưng &yacute;, th&igrave; </span></span></span></span><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Bộ vali k&eacute;o cao cấp Kingtong </span></span></strong></span></span><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">l&agrave; c&aacute;i t&ecirc;n đ&aacute;ng c&acirc;n nhắc. Với 2 size ti&ecirc;u chuẩn 20 inch v&agrave; 24 inch, vali k&eacute;o Kingtong kh&ocirc;ng chỉ đ&aacute;p ứng nhu cầu chứa đồ đạc m&agrave; c&ograve;n bắt mắt nhờ thiết kế thanh lịch v&agrave; hiện đại.</span></span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/160617L4_1619401425.jpg\" style=\"box-sizing:border-box; height:550px; max-width:100%; padding:0px; vertical-align:top; width:550px\" /></span></span></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">COMBO GI&Aacute; TỐT VỚI 2 SIZE TIỆN LỢI</span></span></strong></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Bộ vali Kingtong gồm 2 size l&agrave; 20 inch v&agrave; 24 inch. Trong đ&oacute; size x&aacute;ch tay 20 inch (m&agrave;u xanh navy) nhỏ gọn c&oacute; thể chứa từ 5 - 7kg h&agrave;nh l&yacute;, rất tiện lợi, ph&ugrave; hợp với c&aacute;c chuyến du lịch hay c&ocirc;ng t&aacute;c từ 1 đến 3 ng&agrave;y; C&ograve;n size 24 inch (m&agrave;u bạc) rộng r&atilde;i hơn c&oacute; thể chứa khoảng 20 - 25kg h&agrave;nh l&yacute;.</span></span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/160617L3_1619401425.jpg\" style=\"box-sizing:border-box; height:550px; max-width:100%; padding:0px; vertical-align:top; width:550px\" /></span></span></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">100% NHỰA PC &amp; ABS CAO CẤP, CỨNG C&Aacute;P</span></span></strong></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Vali l&agrave;m bằng chất liệu nhựa ABS c&oacute; trọng lượng nhẹ, dẻo dai, độ bền cao, chống thấm nước v&agrave; khả năng chống va đập tốt. B&ecirc;n cạnh đ&oacute;, bề mặt vali được dập nổi sọc, gi&uacute;p hạn chế b&aacute;m bẩn cũng như trầy xước.</span></span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/button-1_1619401180.png\" style=\"box-sizing:border-box; height:600px; max-width:100%; padding:0px; vertical-align:top; width:600px\" /></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">KH&Oacute;A SỐ BẢO MẬT CAO</span></span></strong></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Vali được trang bị kh&oacute;a số hiện đại, c&oacute; t&iacute;nh bảo mật cao, đạt ti&ecirc;u chuẩn của cục an ninh vận tải, cho bạn an t&acirc;m khi di chuyển.</span></span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/button-3_1619401187.png\" style=\"box-sizing:border-box; height:600px; max-width:100%; padding:0px; vertical-align:top; width:600px\" /></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">CẦN K&Eacute;O HỢP KIM CHỐNG RỈ S&Eacute;T</span></span></strong></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Cần k&eacute;o vali được l&agrave;m từ hợp kim cao cấp, sang trọng, mang lại sự chắc chắn. C&oacute; nấc k&eacute;o t&ugrave;y chỉnh ph&ugrave; hợp với chiều cao của người d&ugrave;ng.</span></span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/vali-20inch-kingtong-3_1619401187.png\" style=\"box-sizing:border-box; height:1000px; max-width:100%; padding:0px; vertical-align:top; width:456px\" /></span></span></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">QUAI X&Aacute;CH ĐỆM CAO SU &Ecirc;M &Aacute;I</span></span></strong></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\">Thiết kế quai x&aacute;ch th&ocirc;ng minh với lớp đệm cao su &ecirc;m &aacute;i, mang lại vẻ hiện đại v&agrave; thuận tiện cho việc n&acirc;ng nhấc ở địa h&igrave;nh hẹp.</span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/vali-24inch-kingtong-7_1619401198.png\" style=\"box-sizing:border-box; height:848px; max-width:100%; padding:0px; vertical-align:top; width:550px\" /></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\">B&Aacute;NH XE XOAY 360 ĐỘ HIỆN ĐẠI</span></strong></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">B&aacute;nh xe xoay 360 độ đặc chắc chắn, di chuyển nhẹ nh&agrave;ng tr&ecirc;n mọi bề mặt phẳng, khi di chuyển kh&ocirc;ng g&acirc;y ra tiếng ồn.</span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/vali-24inch-kingtong-4_1619401198.png\" style=\"box-sizing:border-box; height:617px; max-width:100%; padding:0px; vertical-align:top; width:550px\" /></span></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\">KHOANG CHỨA ĐỒ RỘNG R&Atilde;I, PH&Acirc;N NGĂN TH&Ocirc;NG MINH</span></strong></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Ngăn chứa đồ rộng r&atilde;i, thiết kế ph&acirc;n ngăn th&ocirc;ng minh c&oacute; đai chữ X gi&uacute;p đồ đạc được giữ cố định v&agrave; gọn g&agrave;ng. </span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/vali-20inch-kingtong-1_1619401187.png\" style=\"box-sizing:border-box; height:444px; max-width:100%; padding:0px; vertical-align:top; width:550px\" /></span></span></span></p>\r\n\r\n<p><br />\r\n&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#000000\">TH&Ocirc;NG SỐ KỸ THUẬT</span></strong></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; margin-left:-8px; outline:0px; padding:0px; vertical-align:baseline\">\r\n<table border=\"0\" cellspacing=\"0\" class=\"mceItemTable\" style=\"border-collapse:collapse; border-spacing:0px; border:none; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; margin-bottom:24px; outline:0px; padding:0px; vertical-align:baseline; width:1007.19px\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">T&ecirc;n sản phẩm</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#000000\">Bộ 2 vali Kingtong (20 inch v&agrave; 24 inch)</span></strong></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">M&agrave;u sắc</span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">M&agrave;u xanh navy (size 20 inch), m&agrave;u bạc (size 24 inch)</span></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Chất liệu</span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Nhựa PC v&agrave; ABS cao cấp</span></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">K&iacute;ch thước sản phẩm</span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">20inch: 55cm x 38cm x 20cm </span></span></span></span></span></span></span></p>\r\n\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">24inch: 65cm x 43cm x 24cm</span></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Thương hiệu</span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Kingtong</span></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Xuất xứ</span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Việt Nam</span></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n</div>\r\n</div>\r\n\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<p>&nbsp;</p>\r\n</div>\r\n\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#000000\">Thời gian bảo h&agrave;nh:</span></strong></span></span><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"> 2 năm</span></span></span></span></span></p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>', '/public/storage/files/160617L4.jpg', '', 28, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:42:34', '2021-11-23 06:02:59'),
-(25, 'set-4-quan-nu-ong-rong-thoi-trang-gl', 'Set 4 quần nữ ống rộng thời trang G&L', '161701', '<p>Quần đũi ống rộng được xem l&agrave; &ldquo;bảo bối&rdquo; kh&ocirc;ng thể thiếu trong tủ đồ của hội chị em. Item c&oacute; t&ecirc;n quần đũi bởi được l&agrave;m từ chất liệu c&oacute; nguồn gốc từ sợi tự nhi&ecirc;n. Với ưu điểm l&agrave; mỏng nhẹ, tho&aacute;ng m&aacute;t, tho&aacute;t độ ẩm tốt, kh&ocirc;ng g&acirc;y b&iacute; da, quần đũi ống rộng tạo cảm gi&aacute;c nhẹ nh&agrave;ng, đơn giản m&agrave; vẫn tinh tế khi diện. D&ugrave; bạn gầy hay c&oacute; phần mũm mĩm th&igrave; mặc vẫn t&ocirc;n d&aacute;ng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Mẫu quần đũi lụa ống rộng thương hiệu G&amp;L được thiết kế lưng thun mềm bản 3cm, được may dằn 2 đường kh&ocirc;ng bị lật khi mặc, đem đến sự thoải m&aacute;i cho người mặc. Chất liệu vải co gi&atilde;n nhẹ 4 chiều, kh&ocirc;ng nhăn, kh&ocirc;ng lem m&agrave;u. B&ecirc;n cạnh đ&oacute;, sản phẩm c&oacute; 2 t&uacute;i b&ecirc;n h&ocirc;ng tiện lợi.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Sản phẩm c&oacute; 4 m&agrave;u (kem sữa, đỏ đ&ocirc;, xanh r&ecirc;u, đen) hợp thời trang. D&ugrave; l&agrave; &aacute;o sơ mi, &aacute;o ph&ocirc;ng oversize, &aacute;o thun, &aacute;o kiểu trễ vai, hay &aacute;o croptop,&hellip; đều c&oacute; thể mix c&ugrave;ng mẫu quần ống rộng n&agrave;y.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/Quanongrong/pic1_1635309914.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>*Lưu &yacute;:&nbsp;</strong>Giặt tay hoặc bỏ v&agrave;o lồng giặt để tr&aacute;nh g&acirc;y chảy nh&atilde;o v&agrave; mất form d&aacute;ng sản phẩm</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>CHI TIẾT SẢN PHẨM</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>T&ecirc;n sản phẩm</strong></p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p><strong>Quần đũi lụa ống rộng thời trang</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>M&agrave;u kem, m&agrave;u đỏ đ&ocirc;, m&agrave;u xanh r&ecirc;u, m&agrave;u đen</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>65% cotton, 35% spandex v&agrave; poly</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>G&amp;L</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>Việt Nam</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td rowspan=\"3\">\r\n			<p>Size</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>&nbsp;</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chiều cao</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&acirc;n nặng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chi tiết</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>L</p>\r\n			</td>\r\n			<td>\r\n			<p>1m55 - 1m65</p>\r\n			</td>\r\n			<td>\r\n			<p>53 - 60kg</p>\r\n			</td>\r\n			<td>\r\n			<p>D&agrave;i quần: 73cm</p>\r\n\r\n			<p>V&ograve;ng bụng: 65cm</p>\r\n\r\n			<p>V&ograve;ng m&ocirc;ng: 105cm</p>\r\n\r\n			<p>Ống quần: 31cm</p>\r\n\r\n			<p>Đ&aacute;y: 61cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>XL</p>\r\n			</td>\r\n			<td>\r\n			<p>1m65 - 1m75</p>\r\n			</td>\r\n			<td>\r\n			<p>60 - 68kg</p>\r\n			</td>\r\n			<td>\r\n			<p>D&agrave;i quần: 75cm</p>\r\n\r\n			<p>V&ograve;ng bụng: 68cm</p>\r\n\r\n			<p>V&ograve;ng m&ocirc;ng: 112cm</p>\r\n\r\n			<p>Ống quần: 31cm</p>\r\n\r\n			<p>Đ&aacute;y: 61cm</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '/public/storage/files/161701L3.jpeg', '', 150, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:50:19', '2021-11-23 06:11:04');
+(6, 'nuoc-rua-chen-dhc', 'Nước rửa chén DHC', 'NRC0001', '<p>10.000</p>', 'public/image/logo-cpc.png', '', 37, 1.1, 1.1, 1.1, 1.1, 'DHC', NULL, '1,2', 1, '10.000', '10.000', '2021-11-08 09:31:30', '2021-11-22 09:23:23'),
+(12, 'may-xay-thit-da-nang-perfect-pf-x01', 'MÁY XAY THỊT ĐA NĂNG PERFECT PF-X01', '159513', '<h5><strong>Thiết kế nhỏ gọn, chất liệu an to&agrave;n cho sức khỏe</strong></h5>\r\n\r\n<p><strong>M&aacute;y xay thịt Perfect PF-X01</strong>&nbsp;c&oacute; kiểu d&aacute;ng đơn giản m&agrave; tiện lợi, nhỏ gọn, ph&ugrave; hợp với mọi kh&ocirc;ng gian nh&agrave; bếp. Đầu m&aacute;y l&agrave;m bằng chất liệu th&eacute;p kh&ocirc;ng gỉ c&oacute; độ bền cao. Lưỡi dao 4 c&aacute;nh sắc b&eacute;n, kh&ocirc;ng gỉ, đảm bảo an to&agrave;n vệ sinh thực phẩm.</p>\r\n\r\n<p>Th&acirc;n cối bằng thuỷ tinh trong suốt, kh&ocirc;ng bị ph&ocirc;i nhiễm chất độc hại khi xay thực phẩm, đảm bảo an to&agrave;n cho sức khỏe người sử dụng. Đồng thời, người d&ugrave;ng c&oacute; thể dễ d&agrave;ng quan s&aacute;t thực phẩm b&ecirc;n trong khi m&aacute;y đang hoạt động.</p>\r\n\r\n<p><strong>M&aacute;y xay đa năng</strong></p>\r\n\r\n<p>Bạn c&oacute; thể sử dụng m&aacute;y xay Perfect PF-X01 để xay nhiều loại thực phẩm như: thịt heo, thịt gia cầm, t&ocirc;m c&aacute; tươi sống, c&aacute;c loại rau củ quả hay gia vị (tỏi, ớt, ti&ecirc;u,...). B&ecirc;n cạnh đ&oacute;, thiết kế của m&aacute;y c&oacute; thể dễ d&agrave;ng th&aacute;o rời, vệ sinh ch&ugrave;i rửa sạch sẽ để kh&ocirc;ng &aacute;m m&ugrave;i thực phẩm.</p>\r\n\r\n<p><strong>C&ocirc;ng suất mạnh mẽ, xay nhanh ch&oacute;ng</strong></p>\r\n\r\n<p>M&aacute;y xay hoạt động mạnh mẽ với c&ocirc;ng suất 300W, gi&uacute;p bạn xay trộn c&aacute;c loại thực phẩm ướt v&agrave; mềm cho độ nhuyễn mịn cao, tiết kiệm đ&aacute;ng kể thời gian v&agrave; c&ocirc;ng sức sơ chế.</p>', 'public/image/logo-cpc.png', '', 34, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 08:57:53', '2021-11-22 14:39:00'),
+(15, 'noi-chien-nuong-khong-dau-perfect-pf-335-5l', 'NỒI CHIÊN NƯỚNG KHÔNG DẦU PERFECT PF-335 (5L)', '161578', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p><strong>NỒI CHI&Ecirc;N NƯỚNG KH&Ocirc;NG DẦU PERFECT PF-335 (5L)</strong></p>\r\n\r\n<p><strong>*Nhận th&ecirc;m:</strong></p>\r\n\r\n<p>+ 1 nồi cơm điện nắp g&agrave;i Perfect PF-C101 (1.2L)</p>\r\n\r\n<p>+ 1 m&aacute;y xay thịt đa năng Perfect PF-X01</p>\r\n\r\n<p><strong>C&Ocirc;NG NGHỆ TURBO AIR RAPID</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>C&ocirc;ng nghệ lưu th&ocirc;ng d&ograve;ng kh&ocirc;ng kh&iacute; n&oacute;ng đi nhanh v&agrave; lan tỏa khắp l&ograve;ng nồi gi&uacute;p thức ăn chẳng những ch&iacute;n nhanh m&agrave; c&ograve;n ch&iacute;n đều, đảm bảo m&ugrave;i vị v&agrave; chất dinh dưỡng b&ecirc;n trong, tiết kiệm thời gian v&agrave; c&ocirc;ng sức chế biến.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Nồi chi&ecirc;n nướng Perfect PF-335 hỗ trợ t&ugrave;y chỉnh nhiệt độ l&ecirc;n đến 200<sup>0</sup>C, hẹn giờ đến 30 ph&uacute;t để việc nấu nướng trở n&ecirc;n tiện lợi v&agrave; dễ d&agrave;ng hơn.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://file.hstatic.net/1000218184/file/banner_content3_0c6f5c3358a84aa091853f44e83b2114_grande.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>GIẢM 80% LƯỢNG DẦU MỠ</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Nhờ khả năng chi&ecirc;n, nướng thức ăn bằng kh&ocirc;ng kh&iacute;, hạn chế dầu mỡ n&ecirc;n Perfect PF-335 sẽ gi&uacute;p bạn giảm đến 80% lượng dầu mỡ, bảo vệ sức khỏe cho cả gia đ&igrave;nh, nhất l&agrave; sức khỏe tim mạch.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://file.hstatic.net/1000218184/file/banner_content1_65f6a75a92b24275af0925e0462dfa3a_grande.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>DUNG T&Iacute;CH LỚN 5 L&Iacute;T</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dung t&iacute;ch lớn l&ecirc;n đến 5 l&iacute;t, ph&ugrave; hợp chế biến lượng thức ăn đủ d&ugrave;ng cho gia đ&igrave;nh 4 - 6 người. Chỉ cần cho thực phẩm v&agrave;o l&ograve;ng nồi một lần, t&ugrave;y chỉnh chế độ chế biến, tranh thủ l&agrave;m c&aacute;c c&ocirc;ng việc nội trợ kh&aacute;c v&agrave; sau đ&oacute; th&igrave; m&oacute;n ăn thơm ngon hấp dẫn đ&atilde; ch&iacute;n chờ cả nh&agrave; thưởng thức.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://file.hstatic.net/1000218184/file/banner_content4_d037cf339727435da6855c5eacdc3a3b_grande.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>CHẤT LIỆU BỀN BỈ</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Th&acirc;n nồi được l&agrave;m từ chất liệu nhựa PP cao cấp, chịu nhiệt v&agrave; chịu lực tốt. L&ograve;ng nồi sản xuất từ hợp kim chắc chắn, hạn chế gỉ s&eacute;t, phủ chống d&iacute;nh an to&agrave;n v&agrave; dễ d&agrave;ng ch&ugrave;i rửa. Perfect PF-335 c&ograve;n được trang bị tay cầm c&aacute;ch nhiệt để chống n&oacute;ng v&agrave; dễ d&agrave;ng lấy thức ăn ra sau khi chế biến. Nồi sở hữu thiết kế hiện đại, sang trọng với t&ocirc;ng m&agrave;u đen hạn chế b&aacute;m bẩn, ph&ugrave; hợp mọi kh&ocirc;ng gian bếp.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://file.hstatic.net/1000218184/file/banner_content2_daaad68951eb463c85e470642eeb5ce5_grande.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>Nồi chi&ecirc;n kh&ocirc;ng dầu Perfect PF-335</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&ocirc;ng suất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1400W</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Dung t&iacute;ch</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>5 l&iacute;t</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Nhựa PP, hợp kim nh&ocirc;m phủ chống d&iacute;nh</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>K&iacute;ch thước</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>32 x 32 x 37 (cm)</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>5kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Đen</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Perfect</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Sản xuất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:&nbsp;</strong>12 th&aacute;ng</p>', 'public/image/logo-cpc.png', '', 34, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:01:17', '2021-11-22 09:22:15'),
+(16, 'vi-nam-da-bo-dang-dung-399-12x98x2cm', 'Ví Nam Da Bò Dáng Đứng 399 12x9.8x2cm', '239000', '<ul>\r\n	<li>V&iacute; Nam Da B&ograve; D&aacute;ng Đứng 399 12x9.8x2cm được may từ chất liệu da b&ograve; cao cấp, đường may tỉ mỉ, đem lại độ bền cao trong suốt qu&aacute; tr&igrave;nh sử dụng.</li>\r\n	<li>V&iacute; d&aacute;ng đứng thời trang, thiết kế nhỏ gọn, dễ d&agrave;ng ph&acirc;n loại quản l&yacute; c&aacute;c loại tiền, thẻ,... một c&aacute;ch khoa học. Sản phẩm k&egrave;m hộp tiện lợi, th&iacute;ch hợp d&ugrave;ng l&agrave;m qu&agrave; tặng.</li>\r\n	<li>K&iacute;ch thước: 12x9.8x2cm. Sản phẩm c&oacute; hai m&agrave;u: Đen v&agrave; n&acirc;u, vui l&ograve;ng ghi m&agrave;u sắc bạn lựa chọn v&agrave;o phần Ghi Ch&uacute; đơn h&agrave;ng.</li>\r\n	<li>Hướng dẫn bảo quản: Bảo quản nơi kh&ocirc; r&aacute;o, tho&aacute;ng m&aacute;t, tr&aacute;nh nơi c&oacute; nhiệt độ cao, h&oacute;a chất tẩy rửa. Xuất xứ: Việt Nam.</li>\r\n</ul>', 'public/image/logo-cpc.png', '', 149, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:06:25', '2021-11-23 06:18:11'),
+(17, '4-can-nuoc-giat-xa-5-trong-1-swat-romantic-38kgcan', '4 CAN NƯỚC GIẶT XẢ 5 TRONG 1 SWAT ROMANTIC (3,8KG/CAN)', '160751', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p><strong>4 CAN NƯỚC GIẶT XẢ 5 TRONG 1 SWAT ROMANTIC (3,8KG/CAN)</strong></p>\r\n\r\n<p><strong>*Nhận th&ecirc;m:</strong></p>\r\n\r\n<p>+ 1 chai nước lau s&agrave;n Swat (1 l&iacute;t, hương ngẫu nhi&ecirc;n)</p>\r\n\r\n<p>+ 1 chai nước rửa ch&eacute;n Swat (750g)</p>\r\n\r\n<p>+ 1 chai nước tẩy nh&agrave; tắm Swat (1 l&iacute;t)</p>\r\n\r\n<p>+ 1 chai nước lau k&iacute;nh Swat (580ml)</p>\r\n\r\n<p>+ 1 chai nước hoa Adela 30ml (hương ngẫu nhi&ecirc;n)</p>\r\n\r\n<p><strong>Nước giặt xả Swat Romantic</strong>&nbsp;với c&ocirc;ng thức si&ecirc;u đậm đặc 5 trong 1 đ&aacute;nh bật c&aacute;c vết vẩn cứng đầu mang lại hiệu quả giặt sạch gấp 5 lần so với nhiều loại nước giặt kh&aacute;c. Chỉ với 1 nắp nước giặt xả c&oacute; thể giặt sạch đến 20 chiếc quần &aacute;o. Với 5 đặc điểm vượt trội l&agrave; giặt, xả, diệt khuẩn, lưu hương v&agrave; tăng độ bền của vải bằng c&ocirc;ng nghệ Th&aacute;i Lan, sản phẩm gi&uacute;p tiết kiệm thời gian, c&ocirc;ng sức v&agrave; chi ph&iacute; đ&aacute;ng kể.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/swatnuocgiatromantic1.jpg\" /></p>\r\n\r\n<p><strong>Nước giặt xả Swat Romantic</strong>&nbsp;mang hương hoa thi&ecirc;n nhi&ecirc;n lấy cảm hứng từ sự l&atilde;ng mạn gi&uacute;p loại bỏ m&ugrave;i ẩm mốc, khử sạch m&ugrave;i h&ocirc;i, để &aacute;o quần lu&ocirc;n thơm tho như mới.</p>\r\n\r\n<p>Sản phẩm th&iacute;ch hợp cho cả quần &aacute;o trắng v&agrave; quần &aacute;o m&agrave;u, tiện lợi cho cả giặt tay lẫn giặt m&aacute;y v&agrave; ho&agrave;n to&agrave;n dịu nhẹ với da tay, bảo vệ l&agrave;n da người nội trợ.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/swatnuocgiatromantic2.jpg\" /></p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>Nước giặt xả 5 trong 1Swat Romantic</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Khối lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>3.8kg/can</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu v&agrave; sản xuất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Việt Nam</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'public/image/logo-cpc.png', '', 37, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:11:02', '2021-11-22 09:20:32'),
+(18, 'chai-tha-bon-cau-joeunmiso', 'CHAI THẢ BỒN CẦU JOEUNMISO', '158386', '<p><strong>Chai thả bồn cầu Joeunmiso</strong>&nbsp;được nhập khẩu trực tiếp từ H&agrave;n Quốc. Sản phẩm được sản xuất bởi thương hiệu c&oacute; tr&ecirc;n 50 năm kinh nghiệm trong lĩnh vực sản xuất v&agrave; xuất khẩu mặt h&agrave;ng tẩy rửa đi nhiều nước tr&ecirc;n thế giới. Trọn bộ sản phẩm bao gồm 6 chai, gi&uacute;p người d&ugrave;ng tiết kiệm chi ph&iacute; đ&aacute;ng kể so với mua ri&ecirc;ng lẻ. Joeunmiso c&oacute; dạng gel được n&eacute;n bằng c&ocirc;ng nghệ cao n&ecirc;n ti&ecirc;u hao &iacute;t trong qu&aacute; tr&igrave;nh sử dụng, đ&acirc;y được xem l&agrave; ưu điểm vượt trội hơn so với dạng vi&ecirc;n th&ocirc;ng thường dễ bị tan chảy.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img alt=\"alt\" src=\"https://scj.vn/images/newContent/joeunmisochaithatoilet1.jpg\" /></p>\r\n\r\n<p><strong>C&Ocirc;NG DỤNG CỦA CHAI THẢ BỒN CẦU JOEUNMISO</strong></p>\r\n\r\n<p>- Tạo m&agrave;u xanh tươi m&aacute;t cho nước</p>\r\n\r\n<p>- Tự động tẩy sạch c&aacute;c vết bẩn b&aacute;m tr&ecirc;n th&agrave;nh bồn cầu</p>\r\n\r\n<p>- Ti&ecirc;u diệt v&agrave; hạn chế vi khuẩn ph&aacute;t triển trở lại</p>\r\n\r\n<p>- Khử m&ugrave;i h&ocirc;i v&agrave; lưu giữ hương hoa thơm m&aacute;t</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>Chai thả bồn cầu Joeunmiso</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>180g/chai</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thời gian sử dụng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1200 - 3000 lần xả/chai t&ugrave;y theo mức độ mở nắp</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Sản xuất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>H&agrave;n Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Nhận th&ecirc;m:</strong>&nbsp;4 g&oacute;i bột th&ocirc;ng cống Blue (100g/g&oacute;i)</p>\r\n\r\n<p><img alt=\"alt\" src=\"https://scj.vn/images/QuaTang/joeunmisochaithatoiletqt.jpg\" /></p>', 'public/image/logo-cpc.png', '', 37, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:24:18', '2021-11-22 14:38:25'),
+(21, 'that-lung-nam-449-mau-den-35x115cm', 'Thắt Lưng Nam 449 Màu Đen 3.5x115cm', '161468', '<ul>\r\n	<li>Thắt Lưng Nam 449 M&agrave;u Đen 3.5x115cm được l&agrave;m từ chất liệu da PU bền bỉ, mặt kh&oacute;a hợp kim kh&ocirc;ng gỉ đem lại độ bền cao trong suốt qu&aacute; tr&igrave;nh sử dụng.</li>\r\n	<li>Mặt kh&oacute;a trượt linh hoạt với c&aacute;c size quần. M&agrave;u đen dễ d&agrave;ng kết hợp với c&aacute;c trang phục c&ocirc;ng sở, lịch sự.</li>\r\n	<li>K&iacute;ch thước: Bản d&acirc;y 3.5cm; Chiều d&agrave;i: 115cm. Đường chỉ may tinh tế đem lại độ thẩm mỹ cho sản phẩm.</li>\r\n	<li>Hướng dẫn bảo quản: Kh&ocirc;ng sử dụng chất tẩy mạnh để vệ sinh sản phẩm, tr&aacute;nh để nơi c&oacute; nhiệt độ cao. Xuất xứ: Việt Nam.</li>\r\n</ul>', 'public/image/logo-cpc.png', '', 149, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:29:52', '2021-11-23 06:20:41'),
+(22, 'dong-ho-nam-tang-vong-deo-tay-swiss-guard-sport', 'Đồng hồ nam tặng vòng đeo tay SWISS GUARD SPORT', '161030', '<p><strong>Đồng hồ thời trang Swiss Guard</strong>&nbsp;l&agrave; d&ograve;ng sản phẩm cao cấp đến từ H&agrave;n Quốc với hơn 35 năm danh tiếng. Sản phẩm c&oacute; thiết kế mặt tr&ograve;n truyền thống nhưng kh&ocirc;ng đơn điệu, d&acirc;y th&eacute;p sang trọng t&ocirc;n l&ecirc;n vẻ c&aacute; t&iacute;nh, hiện đại cho người d&ugrave;ng. Sản phẩm c&oacute; 2 m&agrave;u l&agrave; xanh blue v&agrave; đen, ph&ugrave; hợp với thẩm mỹ của đa dạng đối tượng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/swissguarddonghothoitrang1.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Đồng hồ Swiss Guard<strong>&nbsp;</strong>được trang bị bộ m&aacute;y từ Nhật với độ ch&iacute;nh x&aacute;c ho&agrave;n hảo về thời gian. Đồng thời, thời lượng sử dụng pin d&agrave;i l&acirc;u đến hơn 700 ng&agrave;y.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Mặt đồng hồ sử dụng k&iacute;nh kho&aacute;ng (crystal) c&oacute; khả năng chống trầy xước vượt trội, cũng như hạn chế t&aacute;c động của mồ h&ocirc;i v&agrave; &aacute;nh nắng mặt trời.</p>\r\n\r\n<p>Bảng hiển thị ng&agrave;y v&agrave; giờ được lắp đặt th&ocirc;ng minh ở vị tr&iacute; số 3 gi&uacute;p dễ d&agrave;ng quan s&aacute;t. N&uacute;t xoay điều chỉnh trơn, thuận tiện điều chỉnh khi cần.</p>\r\n\r\n<p>B&ecirc;n cạnh đ&oacute;, kim đồng hồ c&oacute; khả năng phản quang, gi&uacute;p người d&ugrave;ng xem được giờ giấc trong điều kiện thiếu s&aacute;ng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/swissguarddonghothoitrang2.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Đồng hồ Swiss Guard sở hữu khả năng chống nước với &aacute;p suất 3 ATM, kết hợp với roong cao su chống thấm cao, gi&uacute;p người d&ugrave;ng y&ecirc;n t&acirc;m đi mưa hoặc sử dụng trong c&aacute;c hoạt động hằng ng&agrave;y như rửa tay, tắm,&hellip; m&agrave; kh&ocirc;ng lo đồng hồ bị v&ocirc; nước.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/swissguarddonghothoitrang3.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>Đồng hồ thời trang Swiss Guard</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>- D&acirc;y th&eacute;p</p>\r\n\r\n			<p>- Mặt k&iacute;nh kho&aacute;ng cứng</p>\r\n\r\n			<p>- Bộ m&aacute;y Nhật</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Độ chống thấm nước</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>3 ATM</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>- M&agrave;u xanh blue</p>\r\n\r\n			<p>- M&agrave;u đen</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Sản xuất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>H&agrave;n Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'public/image/logo-cpc.png', '', 149, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:34:15', '2021-11-23 06:07:56'),
+(24, 'bo-vali-keo-cao-cap-kingtong', 'Bộ vali kéo cao cấp Kingtong', '160617', '<div class=\"title\" style=\"background-color:#ffffff; border:0px; box-sizing:border-box; color:#232323; font-family:Arial,sans-serif; font-size:13px; font-style:normal; font-variant-ligatures:normal; font-weight:400; outline:0px; padding:0px; text-align:start; text-decoration-color:initial; text-decoration-style:initial; text-decoration-thickness:initial; vertical-align:baseline; white-space:normal\">\r\n<h3 style=\"color:#000000; font-style:inherit\">Chi tiết sản phẩm</h3>\r\n</div>\r\n\r\n<div class=\"ct-info\" style=\"background-color:#ffffff; border:0px; box-sizing:border-box; color:#232323; font-family:Arial,sans-serif; font-size:13px; font-style:normal; font-variant-ligatures:normal; font-weight:400; outline:0px; padding:15px 0px; text-align:start; text-decoration-color:initial; text-decoration-style:initial; text-decoration-thickness:initial; vertical-align:baseline; white-space:normal\">\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<div class=\"info_wrap\" style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Trong cuộc sống đầy bận rộn, đ&ocirc;i khi ch&uacute;ng ta cần những chuyến đi để t&igrave;m lại sự c&acirc;n bằng v&agrave; c&oacute; th&ecirc;m những trải nghiệm mới mẻ. Trong những chuyến đi đ&oacute;, ch&uacute;ng ta kh&ocirc;ng thể thiếu người bạn đồng h&agrave;nh l&agrave; chiếc vali k&eacute;o tiện &iacute;ch.</span></span></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Nếu bạn c&ograve;n đang trăn trở t&igrave;m kiếm chiếc vali ưng &yacute;, th&igrave; </span></span></span></span><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Bộ vali k&eacute;o cao cấp Kingtong </span></span></strong></span></span><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">l&agrave; c&aacute;i t&ecirc;n đ&aacute;ng c&acirc;n nhắc. Với 2 size ti&ecirc;u chuẩn 20 inch v&agrave; 24 inch, vali k&eacute;o Kingtong kh&ocirc;ng chỉ đ&aacute;p ứng nhu cầu chứa đồ đạc m&agrave; c&ograve;n bắt mắt nhờ thiết kế thanh lịch v&agrave; hiện đại.</span></span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/160617L4_1619401425.jpg\" style=\"box-sizing:border-box; height:550px; max-width:100%; padding:0px; vertical-align:top; width:550px\" /></span></span></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">COMBO GI&Aacute; TỐT VỚI 2 SIZE TIỆN LỢI</span></span></strong></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Bộ vali Kingtong gồm 2 size l&agrave; 20 inch v&agrave; 24 inch. Trong đ&oacute; size x&aacute;ch tay 20 inch (m&agrave;u xanh navy) nhỏ gọn c&oacute; thể chứa từ 5 - 7kg h&agrave;nh l&yacute;, rất tiện lợi, ph&ugrave; hợp với c&aacute;c chuyến du lịch hay c&ocirc;ng t&aacute;c từ 1 đến 3 ng&agrave;y; C&ograve;n size 24 inch (m&agrave;u bạc) rộng r&atilde;i hơn c&oacute; thể chứa khoảng 20 - 25kg h&agrave;nh l&yacute;.</span></span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/160617L3_1619401425.jpg\" style=\"box-sizing:border-box; height:550px; max-width:100%; padding:0px; vertical-align:top; width:550px\" /></span></span></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">100% NHỰA PC &amp; ABS CAO CẤP, CỨNG C&Aacute;P</span></span></strong></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Vali l&agrave;m bằng chất liệu nhựa ABS c&oacute; trọng lượng nhẹ, dẻo dai, độ bền cao, chống thấm nước v&agrave; khả năng chống va đập tốt. B&ecirc;n cạnh đ&oacute;, bề mặt vali được dập nổi sọc, gi&uacute;p hạn chế b&aacute;m bẩn cũng như trầy xước.</span></span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/button-1_1619401180.png\" style=\"box-sizing:border-box; height:600px; max-width:100%; padding:0px; vertical-align:top; width:600px\" /></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">KH&Oacute;A SỐ BẢO MẬT CAO</span></span></strong></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Vali được trang bị kh&oacute;a số hiện đại, c&oacute; t&iacute;nh bảo mật cao, đạt ti&ecirc;u chuẩn của cục an ninh vận tải, cho bạn an t&acirc;m khi di chuyển.</span></span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/button-3_1619401187.png\" style=\"box-sizing:border-box; height:600px; max-width:100%; padding:0px; vertical-align:top; width:600px\" /></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">CẦN K&Eacute;O HỢP KIM CHỐNG RỈ S&Eacute;T</span></span></strong></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">Cần k&eacute;o vali được l&agrave;m từ hợp kim cao cấp, sang trọng, mang lại sự chắc chắn. C&oacute; nấc k&eacute;o t&ugrave;y chỉnh ph&ugrave; hợp với chiều cao của người d&ugrave;ng.</span></span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><span style=\"background-color:#ffffff\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/vali-20inch-kingtong-3_1619401187.png\" style=\"box-sizing:border-box; height:1000px; max-width:100%; padding:0px; vertical-align:top; width:456px\" /></span></span></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\"><span style=\"background-color:#ffffff\">QUAI X&Aacute;CH ĐỆM CAO SU &Ecirc;M &Aacute;I</span></span></strong></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\">Thiết kế quai x&aacute;ch th&ocirc;ng minh với lớp đệm cao su &ecirc;m &aacute;i, mang lại vẻ hiện đại v&agrave; thuận tiện cho việc n&acirc;ng nhấc ở địa h&igrave;nh hẹp.</span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#333333\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/vali-24inch-kingtong-7_1619401198.png\" style=\"box-sizing:border-box; height:848px; max-width:100%; padding:0px; vertical-align:top; width:550px\" /></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\">B&Aacute;NH XE XOAY 360 ĐỘ HIỆN ĐẠI</span></strong></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">B&aacute;nh xe xoay 360 độ đặc chắc chắn, di chuyển nhẹ nh&agrave;ng tr&ecirc;n mọi bề mặt phẳng, khi di chuyển kh&ocirc;ng g&acirc;y ra tiếng ồn.</span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/vali-24inch-kingtong-4_1619401198.png\" style=\"box-sizing:border-box; height:617px; max-width:100%; padding:0px; vertical-align:top; width:550px\" /></span></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#333333\">KHOANG CHỨA ĐỒ RỘNG R&Atilde;I, PH&Acirc;N NGĂN TH&Ocirc;NG MINH</span></strong></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Ngăn chứa đồ rộng r&atilde;i, thiết kế ph&acirc;n ngăn th&ocirc;ng minh c&oacute; đai chữ X gi&uacute;p đồ đạc được giữ cố định v&agrave; gọn g&agrave;ng. </span></span></span></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><img src=\"https://scj.vn/images/newContent/Kingtong/vali/vali-20inch-kingtong-1_1619401187.png\" style=\"box-sizing:border-box; height:444px; max-width:100%; padding:0px; vertical-align:top; width:550px\" /></span></span></span></p>\r\n\r\n<p><br />\r\n&nbsp;</p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#000000\">TH&Ocirc;NG SỐ KỸ THUẬT</span></strong></span></span></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; margin-left:-8px; outline:0px; padding:0px; vertical-align:baseline\">\r\n<table border=\"0\" cellspacing=\"0\" class=\"mceItemTable\" style=\"border-collapse:collapse; border-spacing:0px; border:none; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; margin-bottom:24px; outline:0px; padding:0px; vertical-align:baseline; width:1007.19px\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">T&ecirc;n sản phẩm</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#000000\">Bộ 2 vali Kingtong (20 inch v&agrave; 24 inch)</span></strong></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">M&agrave;u sắc</span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">M&agrave;u xanh navy (size 20 inch), m&agrave;u bạc (size 24 inch)</span></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Chất liệu</span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Nhựa PC v&agrave; ABS cao cấp</span></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">K&iacute;ch thước sản phẩm</span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">20inch: 55cm x 38cm x 20cm </span></span></span></span></span></span></span></p>\r\n\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">24inch: 65cm x 43cm x 24cm</span></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Thương hiệu</span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Kingtong</span></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:181px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Xuất xứ</span></span></span></span></span></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:487px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Việt Nam</span></span></span></span></span></span></span></p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n</div>\r\n</div>\r\n\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<p>&nbsp;</p>\r\n</div>\r\n\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><strong><span style=\"color:#000000\">Thời gian bảo h&agrave;nh:</span></strong></span></span><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"> 2 năm</span></span></span></span></span></p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>', 'public/image/logo-cpc.png', '', 28, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:42:34', '2021-11-23 06:02:59'),
+(25, 'set-4-quan-nu-ong-rong-thoi-trang-gl', 'Set 4 quần nữ ống rộng thời trang G&L', '161701', '<p>Quần đũi ống rộng được xem l&agrave; &ldquo;bảo bối&rdquo; kh&ocirc;ng thể thiếu trong tủ đồ của hội chị em. Item c&oacute; t&ecirc;n quần đũi bởi được l&agrave;m từ chất liệu c&oacute; nguồn gốc từ sợi tự nhi&ecirc;n. Với ưu điểm l&agrave; mỏng nhẹ, tho&aacute;ng m&aacute;t, tho&aacute;t độ ẩm tốt, kh&ocirc;ng g&acirc;y b&iacute; da, quần đũi ống rộng tạo cảm gi&aacute;c nhẹ nh&agrave;ng, đơn giản m&agrave; vẫn tinh tế khi diện. D&ugrave; bạn gầy hay c&oacute; phần mũm mĩm th&igrave; mặc vẫn t&ocirc;n d&aacute;ng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Mẫu quần đũi lụa ống rộng thương hiệu G&amp;L được thiết kế lưng thun mềm bản 3cm, được may dằn 2 đường kh&ocirc;ng bị lật khi mặc, đem đến sự thoải m&aacute;i cho người mặc. Chất liệu vải co gi&atilde;n nhẹ 4 chiều, kh&ocirc;ng nhăn, kh&ocirc;ng lem m&agrave;u. B&ecirc;n cạnh đ&oacute;, sản phẩm c&oacute; 2 t&uacute;i b&ecirc;n h&ocirc;ng tiện lợi.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Sản phẩm c&oacute; 4 m&agrave;u (kem sữa, đỏ đ&ocirc;, xanh r&ecirc;u, đen) hợp thời trang. D&ugrave; l&agrave; &aacute;o sơ mi, &aacute;o ph&ocirc;ng oversize, &aacute;o thun, &aacute;o kiểu trễ vai, hay &aacute;o croptop,&hellip; đều c&oacute; thể mix c&ugrave;ng mẫu quần ống rộng n&agrave;y.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/Quanongrong/pic1_1635309914.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>*Lưu &yacute;:&nbsp;</strong>Giặt tay hoặc bỏ v&agrave;o lồng giặt để tr&aacute;nh g&acirc;y chảy nh&atilde;o v&agrave; mất form d&aacute;ng sản phẩm</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>CHI TIẾT SẢN PHẨM</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>T&ecirc;n sản phẩm</strong></p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p><strong>Quần đũi lụa ống rộng thời trang</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>M&agrave;u kem, m&agrave;u đỏ đ&ocirc;, m&agrave;u xanh r&ecirc;u, m&agrave;u đen</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>65% cotton, 35% spandex v&agrave; poly</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>G&amp;L</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>Việt Nam</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td rowspan=\"3\">\r\n			<p>Size</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>&nbsp;</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chiều cao</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&acirc;n nặng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chi tiết</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>L</p>\r\n			</td>\r\n			<td>\r\n			<p>1m55 - 1m65</p>\r\n			</td>\r\n			<td>\r\n			<p>53 - 60kg</p>\r\n			</td>\r\n			<td>\r\n			<p>D&agrave;i quần: 73cm</p>\r\n\r\n			<p>V&ograve;ng bụng: 65cm</p>\r\n\r\n			<p>V&ograve;ng m&ocirc;ng: 105cm</p>\r\n\r\n			<p>Ống quần: 31cm</p>\r\n\r\n			<p>Đ&aacute;y: 61cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>XL</p>\r\n			</td>\r\n			<td>\r\n			<p>1m65 - 1m75</p>\r\n			</td>\r\n			<td>\r\n			<p>60 - 68kg</p>\r\n			</td>\r\n			<td>\r\n			<p>D&agrave;i quần: 75cm</p>\r\n\r\n			<p>V&ograve;ng bụng: 68cm</p>\r\n\r\n			<p>V&ograve;ng m&ocirc;ng: 112cm</p>\r\n\r\n			<p>Ống quần: 31cm</p>\r\n\r\n			<p>Đ&aacute;y: 61cm</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'public/image/logo-cpc.png', '', 150, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:50:19', '2021-11-23 06:11:04');
 INSERT INTO `products` (`id`, `slug`, `name`, `sku`, `long_desc`, `feature_img`, `gallery`, `category_id`, `weight`, `height`, `width`, `length`, `brand`, `upsell`, `payments`, `status`, `meta_desc`, `meta_keyword`, `created_at`, `updated_at`) VALUES
-(26, 'xe-dap-the-duc-air-bike-mk77', 'Xe đạp thể dục Air Bike MK77', '160472', '<p>Đạp xe mỗi ng&agrave;y l&agrave; một trong những c&aacute;ch để n&acirc;ng cao thể trạng cơ thể, tốt cho sức khỏe tim mạch v&agrave; hệ h&ocirc; hấp, ph&ograve;ng ngừa c&aacute;c chứng đau lưng, đau cột sống, giảm c&acirc;n, giữ v&oacute;c d&aacute;ng c&acirc;n đối v&agrave; l&agrave;m săn chắc c&aacute;c nh&oacute;m cơ tay, ch&acirc;n, h&ocirc;ng, eo, đ&ugrave;i, m&ocirc;ng,&hellip;</p>\r\n\r\n<p>Thay v&igrave; đến ph&ograve;ng tập gym vừa tốn thời gian đi lại, vừa tốn ph&iacute; tập luyện, với việc sở hữu một chiếc xe đạp nhỏ gọn v&agrave; đa năng như&nbsp;<strong>Xe đạp thể dục Air Bike MK77</strong>, l&agrave; bạn đ&atilde; đầu tư một lần kh&ocirc;ng tốn qu&aacute; nhiều chi ph&iacute;, nhưng c&oacute; thể r&egrave;n luyện, n&acirc;ng cao sức khỏe ngay tại nh&agrave; mỗi ng&agrave;y.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-4_1620721058.png\" style=\"height:524px; width:700px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-5_1620721058.png\" style=\"height:488px; width:700px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Xe đạp thể dục đa năng Air Bike MK77</strong>&nbsp;kh&ocirc;ng chỉ ch&uacute; trọng v&agrave;o chất lượng v&agrave; thiết kế của sản phẩm, m&agrave; c&ograve;n quan t&acirc;m đến việc tạo sự thoải m&aacute;i, ph&ugrave; hợp thể trạng của từng nh&oacute;m người d&ugrave;ng, để đem lại hiệu quả tập tốt nhất.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/sp1_1620721065.png\" style=\"height:850px; width:654px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Khung sườn xe đậm phong c&aacute;ch thể thao hiện đại, với tone m&agrave;u cam nổi bật, được chế tạo từ khung th&eacute;p cao cấp si&ecirc;u bền, kh&ocirc;ng gỉ với khả năng chịu lực v&agrave; va chạm cực tốt. Đồng thời được phủ sơn tĩnh điện, gi&uacute;p hạn chế trầy xước v&agrave; tăng độ bền m&agrave;u theo thời gian.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-3_1620721058.png\" style=\"height:392px; width:700px\" /></p>\r\n\r\n<p>Xe đạp nhỏ gọn gi&uacute;p tiết kiệm kh&ocirc;ng gian, bạn c&oacute; thể đặt xe ở nhiều kh&ocirc;ng gian như ngo&agrave;i s&acirc;n vườn, h&agrave;nh lang, ph&ograve;ng tập, ph&ograve;ng ngủ,&hellip; Xe c&oacute; thể chịu được tải trọng l&ecirc;n đến 120kg.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-6_1620721058.png\" style=\"height:470px; width:700px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-7_1620721058.png\" style=\"height:465px; width:700px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-8_1620721058.png\" style=\"height:416px; width:700px\" /></p>\r\n\r\n<p>Y&ecirc;n xe bọc da tạo độ &ecirc;m &aacute;i, thoải m&aacute;i. Bộ phận cốt y&ecirc;n d&agrave;i, c&oacute; thể t&ugrave;y chỉnh độ cao sao cho ph&ugrave; hợp với chiều cao thể trạng của người sử dụng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd26_1620721071.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd2_1620721065.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p>B&ecirc;n cạnh đ&oacute;, tay cầm xe cũng được bọc da, gi&uacute;p người d&ugrave;ng kh&ocirc;ng bị trượt tay khi ra mồ h&ocirc;i trong qu&aacute; tr&igrave;nh tập luyện.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd24_1620721071.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p>B&agrave;n đạp được thiết kế đặc biệt, c&oacute; quai c&agrave;i cố định &ocirc;m s&aacute;t ch&acirc;n người tập m&agrave; vẫn đảm bảo độ thoải m&aacute;i nhất định. Người lớn tuổi vẫn c&oacute; thể d&ugrave;ng xe đạp thể dục n&agrave;y m&agrave; kh&ocirc;ng phải lo lắng bị trượt ch&acirc;n hay t&eacute; ng&atilde;.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd7_1620721071.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd5_1620721065.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p>Xe được trang bị n&uacute;t vặn điều chỉnh độ kh&aacute;ng lực t&ugrave;y theo nhu cầu sử dụng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd6_1620721065.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p>B&aacute;nh xe l&agrave;m bằng cao su, b&aacute;nh đ&agrave; nặng gi&uacute;p tối ưu hiệu quả cho c&aacute;c b&agrave;i tập thể dục.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd4_1620721065.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p>Ch&acirc;n đế xe được bọc nhựa, gi&uacute;p xe vững ch&atilde;i hơn khi vận h&agrave;nh cũng như hạn chế trầy xước xe lẫn nền nh&agrave; khi di chuyển xe.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd36_1620721071.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>TH&Ocirc;NG SỐ KỸ THUẬT</strong></p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>Xe đạp thể dục đa năng Air Bike MK77</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Khung ống th&eacute;p cao cấp kh&ocirc;ng gỉ</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u cam</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>K&iacute;ch thước sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>116 x 112 x 60cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Khối lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>17,5kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Tải trọng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>150kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Kachi</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Nhận th&ecirc;m:&nbsp;</strong>M&aacute;y vật l&yacute; trị liệu 4 miếng d&aacute;n</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/qt_1620721065.png\" style=\"height:423px; width:550px\" /></p>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:&nbsp;</strong>12 th&aacute;ng</p>', '/public/storage/files/160472L2.jpg', '', 31, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:57:30', '2021-11-23 06:29:02'),
-(27, 'may-massage-chan-hahoo', 'Máy massage chân Hahoo', '161464', '<p>B&agrave;n ch&acirc;n kh&ocirc;ng chỉ chịu to&agrave;n bộ sức nặng của cơ thể m&agrave; c&ograve;n l&agrave; nơi tập trung nhiều huyệt ảnh hưởng trực tiếp tới c&aacute;c cơ quan tr&ecirc;n cơ thể. V&igrave; thế, chăm s&oacute;c tốt b&agrave;n ch&acirc;n c&oacute; t&aacute;c động t&iacute;ch cực tới sức khỏe.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Với việc sở hữu một chiếc m&aacute;y massage ch&acirc;n, bạn kh&ocirc;ng cần mất thời gian đến spa m&agrave; vẫn c&oacute; thể massage ch&acirc;n, thư gi&atilde;n tại nh&agrave;. V&agrave;&nbsp;<strong>m&aacute;y massage ch&acirc;n thế hệ mới Hahoo&nbsp;</strong>đa chức năng ch&iacute;nh l&agrave; một lựa chọn l&yacute; tưởng d&agrave;nh cho bạn v&agrave; gia đ&igrave;nh. Sản phẩm ph&ugrave; hợp với người lớn tuổi, người hay đi bộ, người thường xuy&ecirc;n mang gi&agrave;y cao g&oacute;t, người chơi thể thao, d&acirc;n văn ph&ograve;ng, nhất l&agrave; người gặp phải những vấn đề về khớp ch&acirc;n.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/pic1_1633947270.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>ƯU ĐIỂM NỔI BẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Hệ thống 4 t&uacute;i kh&iacute; cảm biến nhiệt, sưởi ấm hồng ngoại kết hợp xoa b&oacute;p bấm huyệt gi&uacute;p loại bỏ c&aacute;c cơn đau mỏi, th&uacute;c đẩy tuần ho&agrave;n m&aacute;u.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- 10 chế độ massage, bấm huyệt bằng c&aacute;c cụm bi lăn 2 chiều với 9 cường độ kh&aacute;c nhau.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Sử dụng rung tần số cao để t&aacute;c động trực tiếp l&ecirc;n cổ ch&acirc;n, bắp ch&acirc;n. Chuyển động đồng bộ, thư gi&atilde;n s&acirc;u l&ecirc;n c&aacute;c cơ bắp ch&acirc;n.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Cụm bi lăn x&uacute;c t&aacute;c s&acirc;u v&agrave;o l&ograve;ng b&agrave;n ch&acirc;n, g&oacute;t ch&acirc;n. Sử dụng phương ph&aacute;p massage bấm huyệt s&acirc;u theo y học được setup sẵn.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Tiết kiệm điện với c&ocirc;ng suất 24W, đảm bảo an to&agrave;n khi sử dụng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- M&agrave;n h&igrave;nh LED th&ocirc;ng minh, hiện thị r&otilde; n&eacute;t c&aacute;c th&ocirc;ng tin. Khởi động chỉ với 1 chạm, dễ d&agrave;ng sử dụng kể cả với người lớn tuổi.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- C&oacute; remote điều khiển từ xa gi&uacute;p qu&aacute; tr&igrave;nh sử dụng th&ecirc;m phần tiện lợi.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Chế độ hẹn giờ th&ocirc;ng minh</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Nắp ch&acirc;n c&oacute; thể th&aacute;o rời một c&aacute;ch đơn giản, dễ d&agrave;ng vệ sinh.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/06c078cfdb7128a6ddabe5d47e3d83fc_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/a753e0b933df17ab7a34c231a308f4ea_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/6b987a2224e4db3d1c3011ce3fbd4e6d_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/721368efde2aff6e1b5de8ebc91f2c16_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/3a5905a96476f545b74663872b4111bd_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/fe5ba75e25766d890d81a264fc6d65c6_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/80e379b98c98b8adbdd39fa50a6afeba_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/efd6eaa698f34e9decbe5f11f28e51da_1633947270.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>TH&Ocirc;NG</strong><strong>&nbsp;</strong><strong>SỐ</strong><strong>&nbsp;</strong><strong>KỸ</strong><strong>&nbsp;</strong><strong>THUẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>M&aacute;y massage ch&acirc;n thế hệ mới</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Nhựa PP cao cấp v&agrave; lớp đệm mềm mại</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>V&agrave;ng đồng</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Hahoo</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:</strong>&nbsp;12 th&aacute;ng</p>\r\n\r\n<table>\r\n	<tbody>\r\n		<tr>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '/public/storage/files/161464L2.jpg', '', 31, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 10:02:47', '2021-11-23 06:27:51'),
-(28, 'nhan-ma-nao-den-ban-tui-tien', 'Nhẫn mã não đen bản túi tiền', 'S6472', '<p>+ Chất liệu v&agrave; ho&agrave;n thiện: Nhẫn đ&aacute; m&atilde; n&atilde;o đen bản t&uacute;i tiền. (tại Việt Nam)<br />\r\n+ K&iacute;ch thước (đường k&iacute;nh x d&agrave;y): 2cm x 1cm.<br />\r\n+ Khối lượng: 8g &ndash; 10g.<br />\r\n+ &Yacute; nghĩa: Đ&aacute; m&atilde; n&atilde;o c&oacute; t&aacute;c dụng tăng cường khả năng giao tiếp, ngoại giao giỏi v&agrave; khả năng ứng xử linh hoạt. Ngo&agrave;i ra c&ograve;n c&oacute; thể l&agrave;m giảm t&iacute;nh bảo thủ, &aacute;p lực, h&oacute;a giải những sự c&atilde;i v&atilde;, m&acirc;u thuẫn đem lại sự b&igrave;nh y&ecirc;n, tốt cho sức khỏe, mang lại may mắn cho người d&ugrave;ng.<br />\r\n+ C&aacute;ch sử dụng: Trang sức nhẫn đeo tay</p>', '/public/storage/files/s6472-nhan-ma-nao-den-tui-tai-loc-1-90x90.jpeg', '', 148, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 10:12:37', '2021-11-23 06:13:42'),
-(29, 'may-loc-khong-khi-nagakawa-nag3501m', 'Máy lọc không khí Nagakawa NAG3501M', '160479', '<p>Theo Tổ chức Y tế Thế giới (WHO), c&aacute;c chất g&acirc;y &ocirc; nhiễm kh&ocirc;ng kh&iacute; trong nh&agrave; bao gồm những t&aacute;c nh&acirc;n như nấm mốc, vật liệu x&acirc;y dựng, l&ocirc;ng vật nu&ocirc;i, kh&iacute; gas,&hellip; khiến chất lượng kh&ocirc;ng kh&iacute; b&ecirc;n trong nh&agrave; thậm ch&iacute; &ocirc; nhiễm gấp 5 lần so với ngo&agrave;i trời. Cư d&acirc;n th&agrave;nh thị rơi v&agrave;o trạng th&aacute;i bế tắc trong việc t&igrave;m kiếm một m&ocirc;i trường sống trong l&agrave;nh - điều m&agrave; c&oacute; thể chừng 10 năm trước đ&acirc;y ch&uacute;ng ta chưa từng lo lắng đến. Trước t&igrave;nh trạng &ocirc; nhiễm kh&ocirc;ng kh&iacute; ng&agrave;y c&agrave;ng trở n&ecirc;n nghi&ecirc;m trọng, tập đo&agrave;n Nagakawa cho ra mắt thị trường&nbsp;<strong>M&aacute;y lọc kh&ocirc;ng kh&iacute; Nagakawa NAG3501M</strong>&nbsp;-&nbsp;<strong>Giải ph&aacute;p &ldquo;Kh&ocirc;ng gian sạch cho cuộc sống xanh&rdquo;.</strong></p>\r\n\r\n<p><strong><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/10_1620716766.jpg\" style=\"height:563px; width:1000px\" /></strong></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_1_1620716775.jpg\" style=\"height:998px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_2_1620716775.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_3_1620716775.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_4_1620716775.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_13_1620716775.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M5_1620716785.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M6_1620716785.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M7_1620716785.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M9_1620716785.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M10_1620716785.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M12_1620716785.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M13_1620716804.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M14_1620716804.jpg\" style=\"height:997px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501Mc8_1620716804.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_Screenshot_5_1620716809.png\" style=\"height:718px; width:1077px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/2_1620716766.png\" style=\"height:715px; width:506px\" /><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/5_1620716766.png\" style=\"height:800px; width:462px\" /></p>\r\n\r\n<p><strong>TH&Ocirc;NG SỐ KỸ THUẬT</strong></p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>M&aacute;y lọc kh&ocirc;ng kh&iacute; NAG3501M</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Nhựa ABS cao cấp</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;ng lọc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&iacute;ch hợp 3 trong 1: M&agrave;ng lọc kh&aacute;ng khuẩn, m&agrave;ng lọc HEPA, m&agrave;ng lọc than hoạt t&iacute;nh khử m&ugrave;i</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trắng</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>K&iacute;ch thước sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>33,4cm x 19,5cm x 54,5cm (DxRxC)</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Diện t&iacute;ch lọc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>30m2</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&ocirc;ng suất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>62W</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Năng suất lọc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>300 m3/h</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chế độ hoạt động</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>3 chế độ: Auto, Sleep, Speed</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Tốc độ lọc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>3 tốc độ: Cao, trung b&igrave;nh, thấp</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>6,2kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chức năng hẹn giờ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>L&ecirc;n đến 8 tiếng</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Nagakawa</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Malaysia</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:&nbsp;</strong>12 th&aacute;ng</p>', '/public/storage/files/160479L2.jpg', '', 34, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 10:26:34', '2021-11-23 06:59:30'),
-(30, 'may-lam-mat-khong-khi-perferct-us-0411br', 'Máy làm mát không khí Perferct US 0411BR', '160146', '<p>C&aacute;i n&oacute;ng gay gắt của m&ugrave;a h&egrave; khiến bạn v&agrave; gia đ&igrave;nh gặp phải v&ocirc; v&agrave;n rắc rối. Ngo&agrave;i cảm gi&aacute;c kh&oacute; chịu, t&acirc;m trạng bị ảnh hưởng, nguy cơ mắc c&aacute;c bệnh về da liễu hay đường h&ocirc; hấp mới l&agrave; mối bận t&acirc;m thực sự với nhiều người.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Một chiếc quạt m&aacute;y th&ocirc;ng thường chỉ c&oacute; thể giảm n&oacute;ng bức tức thời, kh&ocirc;ng c&oacute; t&aacute;c dụng l&agrave;m m&aacute;t hay lọc kh&ocirc;ng kh&iacute;, trong khi m&aacute;y lạnh hay điều h&ograve;a lại tốn kh&aacute; nhiều chi ph&iacute;. Bạn ho&agrave;n to&agrave;n c&oacute; thể giải quyết những vấn đề kể tr&ecirc;n với<strong>&nbsp;M&aacute;y l&agrave;m m&aacute;t kh&ocirc;ng kh&iacute; Perferct US 0411BR</strong>&nbsp;3 trong 1 c&oacute; chức năng quạt gi&oacute;, l&agrave;m lạnh v&agrave; lọc kh&ocirc;ng kh&iacute;.</p>\r\n\r\n<p>Với c&ocirc;ng nghệ l&agrave;m m&aacute;t bằng hơi nước, m&aacute;y gi&uacute;p hạ nhiệt nhanh, c&acirc;n bằng độ ẩm trong kh&ocirc;ng kh&iacute;, kh&ocirc;ng g&acirc;y ẩm mốc c&aacute;c nội thất trong nh&agrave;. Đặc biệt, sản phẩm tiết kiệm đến 90% lượng điện ti&ecirc;u thụ so với m&aacute;y lạnh.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Maylammatkhongkhi0411BR/5_1617681356.jpg\" style=\"height:1000px; width:683px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>THIẾT KẾ HIỆN ĐẠI, TINH TẾ</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>M&aacute;y l&agrave;m m&aacute;t kh&ocirc;ng kh&iacute; Perferct US 0411BR&nbsp;</strong>l&agrave; d&ograve;ng m&aacute;y th&ocirc;ng minh thế hệ mới, được thiết kế hiện đại, t&ocirc;ng m&agrave;u trắng x&aacute;m tinh tế, vừa l&agrave;m m&aacute;t, vừa t&ocirc; điểm cho nội thất nh&agrave; bạn th&ecirc;m tiện nghi, sang trọng. M&aacute;y ph&ugrave; hợp với ph&ograve;ng ngủ, ph&ograve;ng kh&aacute;ch, căn hộ chung cư,&hellip; v&agrave; hoạt động hiệu quả trong kh&ocirc;ng gian khoảng 20m2.</p>\r\n\r\n<p>Sản phẩm c&oacute; k&iacute;ch cỡ nhỏ gọn kh&ocirc;ng chiếm nhiều diện t&iacute;ch, cũng như được lắp 4 b&aacute;nh xe dưới ch&acirc;n đế gi&uacute;p bạn dễ d&agrave;ng di chuyển đến những vị tr&iacute; kh&aacute;c nhau.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Maylammatkhongkhi0411BR/4_1617681356.jpg\" style=\"height:750px; width:1000px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>ĐA NĂNG 3 TRONG 1</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>M&aacute;y l&agrave;m m&aacute;t kh&ocirc;ng kh&iacute; Perferct US 0411BR&nbsp;</strong>nhận được sự tin d&ugrave;ng của nhiều người nhờ t&iacute;nh đa năng, t&iacute;ch hợp l&agrave;m m&aacute;t - l&agrave;m lạnh - lọc kh&ocirc;ng kh&iacute;.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>B&igrave;nh nước lớn với dung t&iacute;ch l&ecirc;n đến 8 l&iacute;t, l&agrave;m m&aacute;t li&ecirc;n tục trong khoảng 8 giờ m&agrave; kh&ocirc;ng cần phải ch&acirc;m nước nhiều lần. Đặc biệt, với c&ocirc;ng suất 65W kết hợp c&ugrave;ng motor lỗi đồng 100%, m&aacute;y vận h&agrave;nh mạnh mẽ tạo ra lưu lượng gi&oacute; tới 400m3/giờ, gi&uacute;p nhiệt độ hạ từ 5 - 10 độ C.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Ngo&agrave;i ra, sản phẩm c&ograve;n c&oacute; chức năng tự động đảo chiều gi&uacute;p tăng độ m&aacute;t cho kh&ocirc;ng kh&iacute; v&agrave; hoạt động &ecirc;m &aacute;i cho giấc ngủ của bạn th&ecirc;m s&acirc;u giấc, chất lượng hơn.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Maylammatkhongkhi0411BR/3_1617681356.png\" style=\"height:450px; width:600px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>VẬN H&Agrave;NH TH&Ocirc;NG MINH, TIỆN &Iacute;CH</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>M&aacute;y l&agrave;m m&aacute;t kh&ocirc;ng kh&iacute; Perferct US 0411BR&nbsp;</strong>được trang bị m&agrave;n h&igrave;nh LED cảm ứng hiển thị th&ocirc;ng tin, chỉ cần chạm nhẹ v&agrave;o m&aacute;y sẽ dễ d&agrave;ng thao t&aacute;c sử dụng. Đặc biệt, người lớn tuổi vẫn c&oacute; thể d&ugrave;ng được nhờ t&iacute;nh trực quan.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Maylammatkhongkhi0411BR/2_1617681356.png\" style=\"height:750px; width:1000px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Ngo&agrave;i ra, đi k&egrave;m m&aacute;y c&ograve;n c&oacute; remote điều khiển từ xa, ngồi tại chỗ vẫn c&oacute; thể điều khiển sự vận h&agrave;nh của quạt. Đồng thời, remote c&oacute; chức năng hẹn giờ l&ecirc;n đến 12 giờ.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Maylammatkhongkhi0411BR/6_1617681356.png\" style=\"height:600px; width:600px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>TH&Ocirc;NG SỐ KỸ THUẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>M&aacute;y l&agrave;m m&aacute;t kh&ocirc;ng kh&iacute; 0411BR</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Vỏ ngo&agrave;i nhựa cao cấp, motor l&otilde;i đồng 100%</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trắng x&aacute;m</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Dung t&iacute;ch</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>8L</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Điện &aacute;p</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>220V</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&ocirc;ng suất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>65W</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Lưu lượng gi&oacute;</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>400m3/h</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Lượng nước ti&ecirc;u thụ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1 l&iacute;t/h</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Tốc độ gi&oacute;</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>3 tốc độ: nhẹ, vừa, mạnh</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>8kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Lưu &yacute;</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Remote điều khiển từ xa c&oacute; sẵn pin 3A</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Perfect US</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:&nbsp;</strong>12 th&aacute;ng</p>\r\n\r\n<table>\r\n	<tbody>\r\n		<tr>\r\n			<td>&nbsp;</td>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '/public/storage/files/160146L2.jpg', '', 34, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 10:36:57', '2021-11-23 06:58:57');
+(26, 'xe-dap-the-duc-air-bike-mk77', 'Xe đạp thể dục Air Bike MK77', '160472', '<p>Đạp xe mỗi ng&agrave;y l&agrave; một trong những c&aacute;ch để n&acirc;ng cao thể trạng cơ thể, tốt cho sức khỏe tim mạch v&agrave; hệ h&ocirc; hấp, ph&ograve;ng ngừa c&aacute;c chứng đau lưng, đau cột sống, giảm c&acirc;n, giữ v&oacute;c d&aacute;ng c&acirc;n đối v&agrave; l&agrave;m săn chắc c&aacute;c nh&oacute;m cơ tay, ch&acirc;n, h&ocirc;ng, eo, đ&ugrave;i, m&ocirc;ng,&hellip;</p>\r\n\r\n<p>Thay v&igrave; đến ph&ograve;ng tập gym vừa tốn thời gian đi lại, vừa tốn ph&iacute; tập luyện, với việc sở hữu một chiếc xe đạp nhỏ gọn v&agrave; đa năng như&nbsp;<strong>Xe đạp thể dục Air Bike MK77</strong>, l&agrave; bạn đ&atilde; đầu tư một lần kh&ocirc;ng tốn qu&aacute; nhiều chi ph&iacute;, nhưng c&oacute; thể r&egrave;n luyện, n&acirc;ng cao sức khỏe ngay tại nh&agrave; mỗi ng&agrave;y.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-4_1620721058.png\" style=\"height:524px; width:700px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-5_1620721058.png\" style=\"height:488px; width:700px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Xe đạp thể dục đa năng Air Bike MK77</strong>&nbsp;kh&ocirc;ng chỉ ch&uacute; trọng v&agrave;o chất lượng v&agrave; thiết kế của sản phẩm, m&agrave; c&ograve;n quan t&acirc;m đến việc tạo sự thoải m&aacute;i, ph&ugrave; hợp thể trạng của từng nh&oacute;m người d&ugrave;ng, để đem lại hiệu quả tập tốt nhất.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/sp1_1620721065.png\" style=\"height:850px; width:654px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Khung sườn xe đậm phong c&aacute;ch thể thao hiện đại, với tone m&agrave;u cam nổi bật, được chế tạo từ khung th&eacute;p cao cấp si&ecirc;u bền, kh&ocirc;ng gỉ với khả năng chịu lực v&agrave; va chạm cực tốt. Đồng thời được phủ sơn tĩnh điện, gi&uacute;p hạn chế trầy xước v&agrave; tăng độ bền m&agrave;u theo thời gian.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-3_1620721058.png\" style=\"height:392px; width:700px\" /></p>\r\n\r\n<p>Xe đạp nhỏ gọn gi&uacute;p tiết kiệm kh&ocirc;ng gian, bạn c&oacute; thể đặt xe ở nhiều kh&ocirc;ng gian như ngo&agrave;i s&acirc;n vườn, h&agrave;nh lang, ph&ograve;ng tập, ph&ograve;ng ngủ,&hellip; Xe c&oacute; thể chịu được tải trọng l&ecirc;n đến 120kg.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-6_1620721058.png\" style=\"height:470px; width:700px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-7_1620721058.png\" style=\"height:465px; width:700px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/BG-8_1620721058.png\" style=\"height:416px; width:700px\" /></p>\r\n\r\n<p>Y&ecirc;n xe bọc da tạo độ &ecirc;m &aacute;i, thoải m&aacute;i. Bộ phận cốt y&ecirc;n d&agrave;i, c&oacute; thể t&ugrave;y chỉnh độ cao sao cho ph&ugrave; hợp với chiều cao thể trạng của người sử dụng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd26_1620721071.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd2_1620721065.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p>B&ecirc;n cạnh đ&oacute;, tay cầm xe cũng được bọc da, gi&uacute;p người d&ugrave;ng kh&ocirc;ng bị trượt tay khi ra mồ h&ocirc;i trong qu&aacute; tr&igrave;nh tập luyện.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd24_1620721071.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p>B&agrave;n đạp được thiết kế đặc biệt, c&oacute; quai c&agrave;i cố định &ocirc;m s&aacute;t ch&acirc;n người tập m&agrave; vẫn đảm bảo độ thoải m&aacute;i nhất định. Người lớn tuổi vẫn c&oacute; thể d&ugrave;ng xe đạp thể dục n&agrave;y m&agrave; kh&ocirc;ng phải lo lắng bị trượt ch&acirc;n hay t&eacute; ng&atilde;.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd7_1620721071.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd5_1620721065.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p>Xe được trang bị n&uacute;t vặn điều chỉnh độ kh&aacute;ng lực t&ugrave;y theo nhu cầu sử dụng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd6_1620721065.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p>B&aacute;nh xe l&agrave;m bằng cao su, b&aacute;nh đ&agrave; nặng gi&uacute;p tối ưu hiệu quả cho c&aacute;c b&agrave;i tập thể dục.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd4_1620721065.png\" style=\"height:393px; width:700px\" /></p>\r\n\r\n<p>Ch&acirc;n đế xe được bọc nhựa, gi&uacute;p xe vững ch&atilde;i hơn khi vận h&agrave;nh cũng như hạn chế trầy xước xe lẫn nền nh&agrave; khi di chuyển xe.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/xd36_1620721071.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>TH&Ocirc;NG SỐ KỸ THUẬT</strong></p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>Xe đạp thể dục đa năng Air Bike MK77</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Khung ống th&eacute;p cao cấp kh&ocirc;ng gỉ</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u cam</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>K&iacute;ch thước sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>116 x 112 x 60cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Khối lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>17,5kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Tải trọng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>150kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Kachi</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Nhận th&ecirc;m:&nbsp;</strong>M&aacute;y vật l&yacute; trị liệu 4 miếng d&aacute;n</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/AirBike/Xedaptheducdanang/qt_1620721065.png\" style=\"height:423px; width:550px\" /></p>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:&nbsp;</strong>12 th&aacute;ng</p>', 'public/image/logo-cpc.png', '', 31, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 09:57:30', '2021-11-23 06:29:02'),
+(27, 'may-massage-chan-hahoo', 'Máy massage chân Hahoo', '161464', '<p>B&agrave;n ch&acirc;n kh&ocirc;ng chỉ chịu to&agrave;n bộ sức nặng của cơ thể m&agrave; c&ograve;n l&agrave; nơi tập trung nhiều huyệt ảnh hưởng trực tiếp tới c&aacute;c cơ quan tr&ecirc;n cơ thể. V&igrave; thế, chăm s&oacute;c tốt b&agrave;n ch&acirc;n c&oacute; t&aacute;c động t&iacute;ch cực tới sức khỏe.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Với việc sở hữu một chiếc m&aacute;y massage ch&acirc;n, bạn kh&ocirc;ng cần mất thời gian đến spa m&agrave; vẫn c&oacute; thể massage ch&acirc;n, thư gi&atilde;n tại nh&agrave;. V&agrave;&nbsp;<strong>m&aacute;y massage ch&acirc;n thế hệ mới Hahoo&nbsp;</strong>đa chức năng ch&iacute;nh l&agrave; một lựa chọn l&yacute; tưởng d&agrave;nh cho bạn v&agrave; gia đ&igrave;nh. Sản phẩm ph&ugrave; hợp với người lớn tuổi, người hay đi bộ, người thường xuy&ecirc;n mang gi&agrave;y cao g&oacute;t, người chơi thể thao, d&acirc;n văn ph&ograve;ng, nhất l&agrave; người gặp phải những vấn đề về khớp ch&acirc;n.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/pic1_1633947270.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>ƯU ĐIỂM NỔI BẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Hệ thống 4 t&uacute;i kh&iacute; cảm biến nhiệt, sưởi ấm hồng ngoại kết hợp xoa b&oacute;p bấm huyệt gi&uacute;p loại bỏ c&aacute;c cơn đau mỏi, th&uacute;c đẩy tuần ho&agrave;n m&aacute;u.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- 10 chế độ massage, bấm huyệt bằng c&aacute;c cụm bi lăn 2 chiều với 9 cường độ kh&aacute;c nhau.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Sử dụng rung tần số cao để t&aacute;c động trực tiếp l&ecirc;n cổ ch&acirc;n, bắp ch&acirc;n. Chuyển động đồng bộ, thư gi&atilde;n s&acirc;u l&ecirc;n c&aacute;c cơ bắp ch&acirc;n.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Cụm bi lăn x&uacute;c t&aacute;c s&acirc;u v&agrave;o l&ograve;ng b&agrave;n ch&acirc;n, g&oacute;t ch&acirc;n. Sử dụng phương ph&aacute;p massage bấm huyệt s&acirc;u theo y học được setup sẵn.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Tiết kiệm điện với c&ocirc;ng suất 24W, đảm bảo an to&agrave;n khi sử dụng.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- M&agrave;n h&igrave;nh LED th&ocirc;ng minh, hiện thị r&otilde; n&eacute;t c&aacute;c th&ocirc;ng tin. Khởi động chỉ với 1 chạm, dễ d&agrave;ng sử dụng kể cả với người lớn tuổi.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- C&oacute; remote điều khiển từ xa gi&uacute;p qu&aacute; tr&igrave;nh sử dụng th&ecirc;m phần tiện lợi.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Chế độ hẹn giờ th&ocirc;ng minh</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Nắp ch&acirc;n c&oacute; thể th&aacute;o rời một c&aacute;ch đơn giản, dễ d&agrave;ng vệ sinh.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/06c078cfdb7128a6ddabe5d47e3d83fc_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/a753e0b933df17ab7a34c231a308f4ea_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/6b987a2224e4db3d1c3011ce3fbd4e6d_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/721368efde2aff6e1b5de8ebc91f2c16_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/3a5905a96476f545b74663872b4111bd_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/fe5ba75e25766d890d81a264fc6d65c6_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/80e379b98c98b8adbdd39fa50a6afeba_1633947270.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Vaadoo/MayMassage/efd6eaa698f34e9decbe5f11f28e51da_1633947270.png\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>TH&Ocirc;NG</strong><strong>&nbsp;</strong><strong>SỐ</strong><strong>&nbsp;</strong><strong>KỸ</strong><strong>&nbsp;</strong><strong>THUẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>M&aacute;y massage ch&acirc;n thế hệ mới</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Nhựa PP cao cấp v&agrave; lớp đệm mềm mại</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>V&agrave;ng đồng</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Hahoo</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:</strong>&nbsp;12 th&aacute;ng</p>\r\n\r\n<table>\r\n	<tbody>\r\n		<tr>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'public/image/logo-cpc.png', '', 31, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 10:02:47', '2021-11-23 06:27:51'),
+(28, 'nhan-ma-nao-den-ban-tui-tien', 'Nhẫn mã não đen bản túi tiền', 'S6472', '<p>+ Chất liệu v&agrave; ho&agrave;n thiện: Nhẫn đ&aacute; m&atilde; n&atilde;o đen bản t&uacute;i tiền. (tại Việt Nam)<br />\r\n+ K&iacute;ch thước (đường k&iacute;nh x d&agrave;y): 2cm x 1cm.<br />\r\n+ Khối lượng: 8g &ndash; 10g.<br />\r\n+ &Yacute; nghĩa: Đ&aacute; m&atilde; n&atilde;o c&oacute; t&aacute;c dụng tăng cường khả năng giao tiếp, ngoại giao giỏi v&agrave; khả năng ứng xử linh hoạt. Ngo&agrave;i ra c&ograve;n c&oacute; thể l&agrave;m giảm t&iacute;nh bảo thủ, &aacute;p lực, h&oacute;a giải những sự c&atilde;i v&atilde;, m&acirc;u thuẫn đem lại sự b&igrave;nh y&ecirc;n, tốt cho sức khỏe, mang lại may mắn cho người d&ugrave;ng.<br />\r\n+ C&aacute;ch sử dụng: Trang sức nhẫn đeo tay</p>', 'public/image/logo-cpc.png', '', 148, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 10:12:37', '2021-11-23 06:13:42'),
+(29, 'may-loc-khong-khi-nagakawa-nag3501m', 'Máy lọc không khí Nagakawa NAG3501M', '160479', '<p>Theo Tổ chức Y tế Thế giới (WHO), c&aacute;c chất g&acirc;y &ocirc; nhiễm kh&ocirc;ng kh&iacute; trong nh&agrave; bao gồm những t&aacute;c nh&acirc;n như nấm mốc, vật liệu x&acirc;y dựng, l&ocirc;ng vật nu&ocirc;i, kh&iacute; gas,&hellip; khiến chất lượng kh&ocirc;ng kh&iacute; b&ecirc;n trong nh&agrave; thậm ch&iacute; &ocirc; nhiễm gấp 5 lần so với ngo&agrave;i trời. Cư d&acirc;n th&agrave;nh thị rơi v&agrave;o trạng th&aacute;i bế tắc trong việc t&igrave;m kiếm một m&ocirc;i trường sống trong l&agrave;nh - điều m&agrave; c&oacute; thể chừng 10 năm trước đ&acirc;y ch&uacute;ng ta chưa từng lo lắng đến. Trước t&igrave;nh trạng &ocirc; nhiễm kh&ocirc;ng kh&iacute; ng&agrave;y c&agrave;ng trở n&ecirc;n nghi&ecirc;m trọng, tập đo&agrave;n Nagakawa cho ra mắt thị trường&nbsp;<strong>M&aacute;y lọc kh&ocirc;ng kh&iacute; Nagakawa NAG3501M</strong>&nbsp;-&nbsp;<strong>Giải ph&aacute;p &ldquo;Kh&ocirc;ng gian sạch cho cuộc sống xanh&rdquo;.</strong></p>\r\n\r\n<p><strong><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/10_1620716766.jpg\" style=\"height:563px; width:1000px\" /></strong></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_1_1620716775.jpg\" style=\"height:998px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_2_1620716775.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_3_1620716775.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_4_1620716775.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_13_1620716775.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M5_1620716785.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M6_1620716785.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M7_1620716785.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M9_1620716785.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M10_1620716785.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M12_1620716785.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M13_1620716804.jpg\" style=\"height:1000px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501M14_1620716804.jpg\" style=\"height:997px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_NAG3501Mc8_1620716804.jpg\" style=\"height:999px; width:1000px\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/277_Screenshot_5_1620716809.png\" style=\"height:718px; width:1077px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/2_1620716766.png\" style=\"height:715px; width:506px\" /><img src=\"https://scj.vn/images/newContent/Nagakawa/MaylockhongkhiNAG3501M/5_1620716766.png\" style=\"height:800px; width:462px\" /></p>\r\n\r\n<p><strong>TH&Ocirc;NG SỐ KỸ THUẬT</strong></p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>M&aacute;y lọc kh&ocirc;ng kh&iacute; NAG3501M</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Nhựa ABS cao cấp</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;ng lọc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&iacute;ch hợp 3 trong 1: M&agrave;ng lọc kh&aacute;ng khuẩn, m&agrave;ng lọc HEPA, m&agrave;ng lọc than hoạt t&iacute;nh khử m&ugrave;i</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trắng</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>K&iacute;ch thước sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>33,4cm x 19,5cm x 54,5cm (DxRxC)</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Diện t&iacute;ch lọc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>30m2</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&ocirc;ng suất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>62W</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Năng suất lọc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>300 m3/h</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chế độ hoạt động</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>3 chế độ: Auto, Sleep, Speed</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Tốc độ lọc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>3 tốc độ: Cao, trung b&igrave;nh, thấp</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>6,2kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chức năng hẹn giờ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>L&ecirc;n đến 8 tiếng</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Nagakawa</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Malaysia</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:&nbsp;</strong>12 th&aacute;ng</p>', 'public/image/logo-cpc.png', '', 34, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 10:26:34', '2021-11-23 06:59:30'),
+(30, 'may-lam-mat-khong-khi-perferct-us-0411br', 'Máy làm mát không khí Perferct US 0411BR', '160146', '<p>C&aacute;i n&oacute;ng gay gắt của m&ugrave;a h&egrave; khiến bạn v&agrave; gia đ&igrave;nh gặp phải v&ocirc; v&agrave;n rắc rối. Ngo&agrave;i cảm gi&aacute;c kh&oacute; chịu, t&acirc;m trạng bị ảnh hưởng, nguy cơ mắc c&aacute;c bệnh về da liễu hay đường h&ocirc; hấp mới l&agrave; mối bận t&acirc;m thực sự với nhiều người.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Một chiếc quạt m&aacute;y th&ocirc;ng thường chỉ c&oacute; thể giảm n&oacute;ng bức tức thời, kh&ocirc;ng c&oacute; t&aacute;c dụng l&agrave;m m&aacute;t hay lọc kh&ocirc;ng kh&iacute;, trong khi m&aacute;y lạnh hay điều h&ograve;a lại tốn kh&aacute; nhiều chi ph&iacute;. Bạn ho&agrave;n to&agrave;n c&oacute; thể giải quyết những vấn đề kể tr&ecirc;n với<strong>&nbsp;M&aacute;y l&agrave;m m&aacute;t kh&ocirc;ng kh&iacute; Perferct US 0411BR</strong>&nbsp;3 trong 1 c&oacute; chức năng quạt gi&oacute;, l&agrave;m lạnh v&agrave; lọc kh&ocirc;ng kh&iacute;.</p>\r\n\r\n<p>Với c&ocirc;ng nghệ l&agrave;m m&aacute;t bằng hơi nước, m&aacute;y gi&uacute;p hạ nhiệt nhanh, c&acirc;n bằng độ ẩm trong kh&ocirc;ng kh&iacute;, kh&ocirc;ng g&acirc;y ẩm mốc c&aacute;c nội thất trong nh&agrave;. Đặc biệt, sản phẩm tiết kiệm đến 90% lượng điện ti&ecirc;u thụ so với m&aacute;y lạnh.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Maylammatkhongkhi0411BR/5_1617681356.jpg\" style=\"height:1000px; width:683px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>THIẾT KẾ HIỆN ĐẠI, TINH TẾ</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>M&aacute;y l&agrave;m m&aacute;t kh&ocirc;ng kh&iacute; Perferct US 0411BR&nbsp;</strong>l&agrave; d&ograve;ng m&aacute;y th&ocirc;ng minh thế hệ mới, được thiết kế hiện đại, t&ocirc;ng m&agrave;u trắng x&aacute;m tinh tế, vừa l&agrave;m m&aacute;t, vừa t&ocirc; điểm cho nội thất nh&agrave; bạn th&ecirc;m tiện nghi, sang trọng. M&aacute;y ph&ugrave; hợp với ph&ograve;ng ngủ, ph&ograve;ng kh&aacute;ch, căn hộ chung cư,&hellip; v&agrave; hoạt động hiệu quả trong kh&ocirc;ng gian khoảng 20m2.</p>\r\n\r\n<p>Sản phẩm c&oacute; k&iacute;ch cỡ nhỏ gọn kh&ocirc;ng chiếm nhiều diện t&iacute;ch, cũng như được lắp 4 b&aacute;nh xe dưới ch&acirc;n đế gi&uacute;p bạn dễ d&agrave;ng di chuyển đến những vị tr&iacute; kh&aacute;c nhau.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Maylammatkhongkhi0411BR/4_1617681356.jpg\" style=\"height:750px; width:1000px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>ĐA NĂNG 3 TRONG 1</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>M&aacute;y l&agrave;m m&aacute;t kh&ocirc;ng kh&iacute; Perferct US 0411BR&nbsp;</strong>nhận được sự tin d&ugrave;ng của nhiều người nhờ t&iacute;nh đa năng, t&iacute;ch hợp l&agrave;m m&aacute;t - l&agrave;m lạnh - lọc kh&ocirc;ng kh&iacute;.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>B&igrave;nh nước lớn với dung t&iacute;ch l&ecirc;n đến 8 l&iacute;t, l&agrave;m m&aacute;t li&ecirc;n tục trong khoảng 8 giờ m&agrave; kh&ocirc;ng cần phải ch&acirc;m nước nhiều lần. Đặc biệt, với c&ocirc;ng suất 65W kết hợp c&ugrave;ng motor lỗi đồng 100%, m&aacute;y vận h&agrave;nh mạnh mẽ tạo ra lưu lượng gi&oacute; tới 400m3/giờ, gi&uacute;p nhiệt độ hạ từ 5 - 10 độ C.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Ngo&agrave;i ra, sản phẩm c&ograve;n c&oacute; chức năng tự động đảo chiều gi&uacute;p tăng độ m&aacute;t cho kh&ocirc;ng kh&iacute; v&agrave; hoạt động &ecirc;m &aacute;i cho giấc ngủ của bạn th&ecirc;m s&acirc;u giấc, chất lượng hơn.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Maylammatkhongkhi0411BR/3_1617681356.png\" style=\"height:450px; width:600px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>VẬN H&Agrave;NH TH&Ocirc;NG MINH, TIỆN &Iacute;CH</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>M&aacute;y l&agrave;m m&aacute;t kh&ocirc;ng kh&iacute; Perferct US 0411BR&nbsp;</strong>được trang bị m&agrave;n h&igrave;nh LED cảm ứng hiển thị th&ocirc;ng tin, chỉ cần chạm nhẹ v&agrave;o m&aacute;y sẽ dễ d&agrave;ng thao t&aacute;c sử dụng. Đặc biệt, người lớn tuổi vẫn c&oacute; thể d&ugrave;ng được nhờ t&iacute;nh trực quan.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Maylammatkhongkhi0411BR/2_1617681356.png\" style=\"height:750px; width:1000px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Ngo&agrave;i ra, đi k&egrave;m m&aacute;y c&ograve;n c&oacute; remote điều khiển từ xa, ngồi tại chỗ vẫn c&oacute; thể điều khiển sự vận h&agrave;nh của quạt. Đồng thời, remote c&oacute; chức năng hẹn giờ l&ecirc;n đến 12 giờ.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Maylammatkhongkhi0411BR/6_1617681356.png\" style=\"height:600px; width:600px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>TH&Ocirc;NG SỐ KỸ THUẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>M&aacute;y l&agrave;m m&aacute;t kh&ocirc;ng kh&iacute; 0411BR</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Vỏ ngo&agrave;i nhựa cao cấp, motor l&otilde;i đồng 100%</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trắng x&aacute;m</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Dung t&iacute;ch</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>8L</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Điện &aacute;p</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>220V</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&ocirc;ng suất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>65W</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Lưu lượng gi&oacute;</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>400m3/h</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Lượng nước ti&ecirc;u thụ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1 l&iacute;t/h</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Tốc độ gi&oacute;</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>3 tốc độ: nhẹ, vừa, mạnh</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>8kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Lưu &yacute;</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Remote điều khiển từ xa c&oacute; sẵn pin 3A</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Perfect US</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:&nbsp;</strong>12 th&aacute;ng</p>\r\n\r\n<table>\r\n	<tbody>\r\n		<tr>\r\n			<td>&nbsp;</td>\r\n			<td>&nbsp;</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'public/image/logo-cpc.png', '', 34, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 10:36:57', '2021-11-23 06:58:57');
 INSERT INTO `products` (`id`, `slug`, `name`, `sku`, `long_desc`, `feature_img`, `gallery`, `category_id`, `weight`, `height`, `width`, `length`, `brand`, `upsell`, `payments`, `status`, `meta_desc`, `meta_keyword`, `created_at`, `updated_at`) VALUES
-(31, 'may-khoan-pin-cam-tay-12v-perfect-pf-k15', 'MÁY KHOAN PIN CẦM TAY 12V PERFECT PF-K15', '159750', '<div style=\"background-color:#ffffff; border:0px; box-sizing:border-box; color:#232323; font-family:Arial,sans-serif; font-size:13px; font-style:normal; font-variant-ligatures:normal; font-weight:400; outline:0px; padding:0px; text-align:start; text-decoration-color:initial; text-decoration-style:initial; text-decoration-thickness:initial; vertical-align:baseline; white-space:normal\">\r\n<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong>M&Aacute;Y KHOAN PIN CẦM TAY 12V PERFECT PF-K15</strong></span></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong>*Nhận th&ecirc;m:</strong></span></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><span style=\"font-size:large\"><span style=\"font-family:inherit\">+ 1 ổ kh&oacute;a chống trộm Perfect (m&agrave;u ngẫu nhi&ecirc;n)</span></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">+ 2 mắt k&iacute;nh bảo hộ</span></span></span></span></span></p>\r\n\r\n<hr />\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><strong>M&aacute;y khoan pin cầm tay 12V Perfect PF-K15</strong> c&oacute; thiết kế nhỏ gọn - nhẹ, gi&uacute;p bạn dễ thao t&aacute;c v&agrave; di chuyển, kh&ocirc;ng chiếm nhiều kh&ocirc;ng gian. Sử dụng pin thay thế cho việc d&ugrave;ng điện trực tiếp gi&uacute;p tăng t&iacute;nh linh động trong nhiều vị tr&iacute; l&agrave;m việc kh&aacute;c nhau.</span></span></span></strong></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><img alt=\"[PERFECT] Máy khoan pin cầm tay 12V Perfect (Tặng ổ khóa chống trộm+ 2 mắt kính)\" src=\"https://image.scj.vn/item_images/50/159750L.jpg\" style=\"box-sizing:border-box; max-width:100%; padding:0px; vertical-align:top\" /></strong></span></span></p>\r\n\r\n<p style=\"text-align:left\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">PF-K15 được sử dụng rộng r&atilde;i trong gia đ&igrave;nh hoặc thi c&ocirc;ng lắp đặt c&ocirc;ng tr&igrave;nh, ng&agrave;nh c&ocirc;ng nghiệp, cơ kh&iacute;, sửa chữa. Khi người d&ugrave;ng sử dụng m&aacute;y khoan pin sẽ lu&ocirc;n được đảm bảo sự an to&agrave;n nhờ bộ phận điện tử bảo vệ pin ngăn sự ph&oacute;ng điện qu&aacute; lớn. Khi pin hết điện, m&aacute;y tự tắt nhờ v&agrave;o thiết bị bảo vệ mạch.</span></span></span></strong></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p style=\"text-align:left\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">M&aacute;y c&oacute; vỏ bằng nhựa, tay cầm c&oacute; độ ma s&aacute;t cao gi&uacute;p bạn l&agrave;m việc với m&aacute;y khoan an to&agrave;n hơn. Khi muốn vặn v&iacute;t bạn chỉ cần nhấn n&uacute;t đảo chiều quay, pin sạc dễ d&agrave;ng th&aacute;o rời. <strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Đ&egrave;n LED chiếu s&aacute;ng gi&uacute;p người d&ugrave;ng c&oacute; thể dễ d&agrave;ng thao t&aacute;c trong c&aacute;c khu vực thiếu &aacute;nh s&aacute;ng.</span></span></span></strong></span></span></span></strong></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p style=\"text-align:center\"><strong><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><img alt=\"[PERFECT] Máy khoan pin cầm tay 12V Perfect (Tặng ổ khóa chống trộm+ 2 mắt kính)\" src=\"https://image.scj.vn/item_images/50/159750L1.jpg\" style=\"box-sizing:border-box; max-width:100%; padding:0px; vertical-align:top\" /></span></span></span></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p style=\"text-align:left\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Sản phẩm c&oacute; độ bền bỉ cao, kh&ocirc;ng bị m&agrave;i m&ograve;n v&agrave; c&oacute; khả năng chịu được điều kiện l&agrave;m việc khắc nghiệt. M&aacute;y c&oacute; thể kết hợp với những loại mũi khoan chuy&ecirc;n dụng để bạn c&oacute; thể khoan c&aacute;c tấm th&eacute;p, gỗ hay c&aacute;c vật liệu cứng kh&aacute;c một c&aacute;ch dễ d&agrave;ng. </span></span></span></strong></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p style=\"text-align:left\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Lưu &yacute;: Khoan li&ecirc;n tục trong 2 tiếng, ngưng 30 ph&uacute;t để m&aacute;y nguội.</span></span></span></span></span></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p style=\"text-align:left\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">TH&Ocirc;NG SỐ KỸ THUẬT</span></span></span></strong></strong></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<table border=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse; border-spacing:0px; border:none; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; margin-bottom:24px; outline:0px; padding:0px; vertical-align:baseline; width:1000px\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">M&ocirc;-men xoắn, tối đa (cứng/mềm)</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">28 / 11 Nm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Tốc độ kh&ocirc;ng tải</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">1300 v&ograve;ng/ph&uacute;t</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Tỷ lệ va đập tối đa</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">18,750 bpm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Khả năng của đầu cặp, tối đa/tối thiểu</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">0,3 - 10 mm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Kiểu pin</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Ion lithium</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Điện &aacute;p pin</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">12V</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">K&iacute;ch thước</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">188mm x 46mm x 205mm (DxRxC)</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Đường k&iacute;nh khoan tối đa tr&ecirc;n gỗ</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">19 mm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Đường k&iacute;nh khoan tối đa tr&ecirc;n th&eacute;p</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">6 mm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Đường k&iacute;nh khoan tối đa tr&ecirc;n khối x&acirc;y nề</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">8 mm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Đường k&iacute;nh v&iacute;t tối đa</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">7 mm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Trọng lượng</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">1,1 kg</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Bộ khoan bao gồm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">20 m&oacute;n</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Chế độ </span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">17 chế độ vặn ốc; 01 chế độ khoan</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Chất liệu</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">+ Mũi khoan: Th&eacute;p</span></span></span></span></span></strong></span></span></p>\r\n\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">+ Th&acirc;n m&aacute;y: Nhựa PP</span></span></span></span></span></strong></span></span></p>\r\n\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">+ Phần tay cầm th&acirc;n m&aacute;y: Bọc cao su</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">M&agrave;u sắc</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Xanh đen</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Thương hiệu </span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Perfect</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Sản xuất/Xuất xứ</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Trung Quốc</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n</div>\r\n</div>\r\n\r\n<div style=\"background-color:#ffffff; border:0px; box-sizing:border-box; color:#232323; font-family:Arial,sans-serif; font-size:13px; font-style:normal; font-variant-ligatures:normal; font-weight:400; outline:0px; padding:0px; text-align:start; text-decoration-color:initial; text-decoration-style:initial; text-decoration-thickness:initial; vertical-align:baseline; white-space:normal\">\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong>Thời gian bảo h&agrave;nh</strong>: 12 th&aacute;ng</span></span></p>\r\n</div>', '/public/storage/files/159750L.jpg', '', 40, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 12:41:44', '2021-11-23 06:58:22'),
-(32, 'may-phun-xit-cao-ap-tu-dong-perfect-pf-h09', 'Máy phun xịt cao áp tự động Perfect PF-H09', '161579', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>M&aacute;y</strong><strong>&nbsp;phun xịt&nbsp;</strong><strong>cao</strong><strong>&nbsp;</strong><strong>&aacute;p</strong><strong>&nbsp;</strong><strong>tự</strong><strong>&nbsp;</strong><strong>động</strong><strong>&nbsp;</strong><strong>Perfect</strong><strong>&nbsp;</strong><strong>PF</strong><strong>-</strong><strong>H</strong><strong>09&nbsp;</strong>c&oacute; kết cấu gọn, kh&ocirc;ng chiếm diện t&iacute;ch kh&ocirc;ng gian, tiện dụng, dễ d&agrave;ng khi di chuyển v&agrave; vận h&agrave;nh. Với đặc điểm tiết kiệm nguồn nước sử dụng v&agrave; &aacute;p lực cao, m&aacute;y kh&ocirc;ng chỉ hữu dụng trong việc rửa xe m&agrave; c&ograve;n c&oacute; thể:</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Tưới c&acirc;y, phun thuốc cho hoa l&aacute;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Tẩy rửa rong r&ecirc;u l&acirc;u năm l&agrave;m ố bề mặt ng&ocirc;i nh&agrave;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- B&oacute;c lớp sơn, v&ocirc;i cũ khi muốn l&agrave;m đẹp lại bề mặt ng&ocirc;i nh&agrave;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic4_1630817046.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>ĐỘNG CƠ C&Ocirc;NG SUẤT CAO CHO &Aacute;P LỰC NƯỚC MẠNH MẼ</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>M&aacute;y phun xịt cao &aacute;p Perfect PF-H09<strong>&nbsp;</strong>c&oacute; động cơ mạnh mẽ, c&ocirc;ng suất 1800W tạo &aacute;p lực phun mạnh đến 100 bar, gi&uacute;p đ&aacute;nh bay b&ugrave;n đất b&aacute;m l&acirc;u ng&agrave;y, l&agrave;m sạch mọi ng&oacute;c ng&aacute;ch xe của bạn. Sản phẩm hoạt động ổn định, tiết kiệm đ&aacute;ng kể lượng nước so với v&ograve;i nước thường.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic2_1630817046.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic3_1630817046.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic1_1630817046.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>MOTOR CẢM ỨNG TỪ HIỆN ĐẠI</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>M&aacute;y phun xịt cao &aacute;p Perfect PF-H09<strong>&nbsp;</strong>sử dụng c&ocirc;ng nghệ hiện đại motor từ t&iacute;nh kh&aacute;c hẳn với c&aacute;c d&ograve;ng m&aacute;y rửa xe chạy chổi than th&ocirc;ng thường. Motor cảm ứng từ &aacute;p dụng c&ocirc;ng nghệ ti&ecirc;n tiến hơn, c&oacute; độ ồn thấp, khả năng chịu tải v&agrave; c&oacute; độ bền cao. Loại motor n&agrave;y gi&uacute;p m&aacute;y hoạt động tốt trong m&ocirc;i trường ẩm ướt hay độ ẩm kh&ocirc;ng kh&iacute; cao.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic7_1630817046.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic12_1630817046.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>CHẾ ĐỘ TỰ H&Uacute;T NƯỚC TIỆN LỢI</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>M&aacute;y được cải tiến c&oacute; khả năng h&uacute;t nước tốt, chỉ cần cho ống nước v&agrave;o x&ocirc; nước, bạn c&oacute; thể linh hoạt phun xịt ở bất cứ đ&acirc;u m&agrave; kh&ocirc;ng cần kết nối với nguồn nước cố định.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic15_1630817046.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>THIẾT KẾ NHỎ GỌN, CHẤT LIỆU BỀN BỈ</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Vỏ m&aacute;y được l&agrave;m bằng nhựa tổng hợp chịu lực tốt, chống biến dạng khi bị t&aacute;c động mạnh sẽ l&agrave; thiết bị hữu dụng để xịt rửa xe &ocirc; t&ocirc;, rửa xe m&aacute;y, tưới c&acirc;y, vệ sinh thiết bị trong gia đ&igrave;nh.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic8_1630817046.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic20_1630819077.jpg\" style=\"height:360px; width:600px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>TH&Ocirc;NG</strong><strong>&nbsp;</strong><strong>SỐ</strong><strong>&nbsp;</strong><strong>KỸ</strong><strong>&nbsp;</strong><strong>THUẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>M&aacute;y</strong><strong>&nbsp;</strong><strong>phun</strong><strong>&nbsp;</strong><strong>xịt</strong><strong>&nbsp;</strong><strong>cao</strong><strong>&nbsp;</strong><strong>&aacute;p</strong><strong>&nbsp;</strong><strong>PF</strong><strong>-</strong><strong>H</strong><strong>09</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Th&agrave;nh phần chi tiết</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Th&acirc;n m&aacute;y, đầu phun xịt ngắn c&oacute; chỉnh tia, d&acirc;y cao &aacute;p 7m, d&acirc;y nước v&agrave;o 2m, bộ c&uacute;t nước đầu v&agrave;o</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Nhựa, kim loại</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>V&agrave;ng đen</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>8kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&ocirc;ng suất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1800W</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>&Aacute;p lực nước</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>100bar</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Điện &aacute;p</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>220V - 240V ~ 50Hz - 60Hz</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Perfect</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:</strong>&nbsp;12 th&aacute;ng</p>', '/public/storage/files/161579L.png', '', 40, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 12:48:13', '2021-11-23 07:01:07'),
-(33, 'combo-mung-tu-bung-cao-cap-18m-va-16-m-tang-chieu-may-dieu-hoa', 'Combo mùng tự bung cao cấp 1,8m và 1,6 m tặng chiếu mây điều hòa', '155670', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p><img alt=\"alt\" src=\"https://www.scj.vn/images/newContent/baolocmungtubungxanh.jpg\" /></p>\r\n\r\n<p><strong>Nhận th&ecirc;m:</strong>&nbsp;Chiếu m&acirc;y điều h&ograve;a</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/QuaTang/chieumaydieuhoa.jpg\" /></p>', '/public/storage/files/155670L.jpg', '', 36, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 12:54:02', '2021-11-22 14:46:37'),
-(34, 'bo-vong-xep-cao-cap-phu-dao-gia', 'Bộ võng xếp cao cấp Phú Đào Gia', '160860', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/PhuDaoGia/hinh2_1629778883.jpg\" /></p>', '/public/storage/files/160860L2.jpg', '', 36, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 12:57:50', '2021-11-22 14:46:57'),
-(35, 'ghe-xep-thu-gian-kachi-mk-116', 'Ghế xếp thư giãn Kachi MK-116', '159465', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p><strong>Ghế xếp thư gi&atilde;n Kachi MK-116</strong>&nbsp;sở hữu thiết kế hiện đại v&agrave; gọn nhẹ, vừa l&agrave; chiếc ghế vừa l&agrave; chiếc giường mini, th&iacute;ch hợp đặt ở nhiều kh&ocirc;ng gian như ph&ograve;ng kh&aacute;ch, ph&ograve;ng ngủ, s&acirc;n vườn, văn ph&ograve;ng l&agrave;m việc, ban c&ocirc;ng căn hộ chung cư,... Sản phẩm c&oacute; thể dễ d&agrave;ng xếp gọn v&agrave;&nbsp;mang theo trong những chuyến du lịch d&atilde; ngoại.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic11_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic1_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic2_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic3_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic5_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic4_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic6_1635735707.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>CHẤT LIỆU BỀN BỈ, THO&Aacute;NG M&Aacute;T</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Khung ghế được l&agrave;m bằng sắt sơn tĩnh điện, hạn chế gỉ s&eacute;t, chịu được tải trọng l&ecirc;n đến 90kg.<strong>&nbsp;</strong>Vải lưới texilent&nbsp;chất lượng cao&nbsp;c&oacute; t&iacute;nh th&ocirc;ng tho&aacute;ng, được l&agrave;m từ c&aacute;c sợi vải si&ecirc;u nhỏ đan chặt v&agrave;o nhau theo h&igrave;nh zic-zac tạo sự chắc chắn, kết nối với khung ghế bằng d&acirc;y thun co gi&atilde;n tốt, gi&uacute;p bạn c&oacute; cảm gi&aacute;c thoải m&aacute;i, &ecirc;m &aacute;i khi ngồi hoặc nằm.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic7_1635735707.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Ngo&agrave;i ra, ghế được trang bị tay vịn, khớp xoay điều chỉnh để hỗ trợ tối đa cho c&aacute;c tư thế. Người d&ugrave;ng c&oacute; thể t&ugrave;y chỉnh ng&atilde; ra sau đến 160&deg; v&agrave; bật thẳng đứng 90&deg;. Ph&iacute;a tr&ecirc;n t&iacute;ch hợp một chiếc gối tựa đầu ruột g&ograve;n c&oacute; thể đặt cố định hay th&aacute;o rời tuỳ &yacute;.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic13_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic15_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic16_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic17_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic18_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic19_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic20_1635735707.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>KHAY NƯỚC TIỆN LỢI</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Ghế xếp thư gi&atilde;n Kachi MK-116 c&oacute; khay đựng nước tiện dụng k&egrave;m theo. Người sử dụng c&oacute; thể vừa ngồi đọc s&aacute;ch, vừa thư gi&atilde;n c&ugrave;ng với t&aacute;ch tr&agrave; hay ly c&agrave; ph&ecirc; ngay b&ecirc;n cạnh v&ocirc; c&ugrave;ng thuận tiện.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic8_1635735707.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Nệm massage to&agrave;n th&acirc;n Bella MK-93&nbsp;</strong>(175cm x 59cm x 3cm) c&oacute; t&iacute;nh năng rung, k&iacute;ch th&iacute;ch c&aacute;c huyệt đạo với 10 điểm massage ph&acirc;n bố dọc theo cơ thể, gi&uacute;p xua tan mệt mỏi, đau nhức, th&uacute;c đẩy lưu th&ocirc;ng m&aacute;u, nhờ đ&oacute; cơ thể được thư gi&atilde;n to&agrave;n th&acirc;n.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/nem_1635735858.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/nem2_1635735858.png\" /></p>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:</strong>&nbsp;12 th&aacute;ng</p>', '/public/storage/files/159465L1.jpg', '', 36, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 13:09:22', '2021-11-22 14:47:26'),
-(36, 'binh-dun-sieu-toc-perfect-pf-t18', 'BÌNH ĐUN SIÊU TỐC PERFECT PF-T18', '161268', '<p><strong>B&Igrave;NH ĐUN SI&Ecirc;U TỐC PERFECT PF-T18</strong></p>\r\n\r\n<p><strong>*Nhận th&ecirc;m:&nbsp;</strong>1 ổ kh&oacute;a chống trộm</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<hr />\r\n<p><strong>ƯU ĐIỂM NỔI BẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- B&igrave;nh đun si&ecirc;u tốc Perfect PF-T18 c&oacute; khả năng đun nước mau s&ocirc;i. Đ&uacute;ng như t&ecirc;n gọi của n&oacute;, b&igrave;nh si&ecirc;u tốc l&agrave;m nước s&ocirc;i chỉ trong v&agrave;i ph&uacute;t, tầm 3 - 5 ph&uacute;t, rất tiết kiệm thời gian cho những người bận rộn.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- B&igrave;nh c&oacute; k&iacute;ch thức gọn nhẹ, thiết kế đơn giản n&ecirc;n dễ di chuyển v&agrave; dễ vệ sinh b&igrave;nh.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- B&igrave;nh c&oacute; chức năng ngắt điện tự động khi nước s&ocirc;i hoặc khi kh&ocirc;ng c&oacute; nước trong b&igrave;nh, đảm bảo an to&agrave;n cho người sử dụng v&agrave; vật dụng xung quanh.</p>\r\n\r\n<p>- Th&acirc;n b&igrave;nh bằng chất liệu thuỷ tinh cao cấp, kh&ocirc;ng sản sinh chất g&acirc;y độc hại khi đun nước ở nhiệt độ cao, đảm bảo an to&agrave;n cho sức khỏe.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Binhdun/z2516249794751_58019d655e891cfd4f7480e47f4503c5_e11a8dc321f242f7a3582ea191761bd4_master_1629074916.jpeg\" style=\"height:500px; width:500px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>NGUY&Ecirc;N L&Yacute; HOẠT ĐỘNG</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Khi bộ phận m&acirc;m nhiệt của b&igrave;nh được cấp điện th&igrave; l&uacute;c n&agrave;y điện năng sẽ được biến đổi th&agrave;nh nhiệt năng v&agrave; to&agrave;n bộ phần nhiệt n&agrave;y sẽ truyền trực tiếp v&agrave;o trong nước. Khi nhiệt độ nước đạt 100 độ C th&igrave; hơi nước sẽ đi qua ống dẫn v&agrave; thổi hơi n&oacute;ng v&agrave;o thanh nhiệt. L&uacute;c n&agrave;y, thanh nhiệt sẽ cong l&ecirc;n, t&aacute;c động v&agrave;o c&ocirc;ng tắc v&agrave; nguồn điện sẽ bị ngắt. Khi c&ocirc;ng tắc điện bị ngắt th&igrave; l&uacute;c n&agrave;y nước cũng vừa mới s&ocirc;i l&ecirc;n. Do đ&oacute;, người d&ugrave;ng sẽ kh&ocirc;ng thể bật lại c&ocirc;ng tắc ấm trong khoảng 20 - 30 gi&acirc;y bởi thanh nhiệt khi đ&oacute; vẫn c&ograve;n n&oacute;ng v&agrave; chưa trở về lại trạng th&aacute;i ban đầu.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Binhdun/z2516249786083_1d2530aadaf9d4d5c73abe8f58068e4a_691064e112d04d319abb4a036ba4578f_master_1629074916.jpeg\" style=\"height:500px; width:500px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>TH&Agrave;NH PHẦN CHI TIẾT</strong></p>\r\n\r\n<p>- Th&acirc;n b&igrave;nh đun: Được l&agrave;m bằng chất liệu nhựa v&agrave; thủy tinh.</p>\r\n\r\n<p>- Đế tiếp điện: Kết nối nguồn điện với phần th&acirc;n b&igrave;nh, gi&uacute;p l&agrave;m n&oacute;ng v&agrave; đun s&ocirc;i nước.</p>\r\n\r\n<p>- Đ&egrave;n hiển thị v&agrave; c&ocirc;ng tắc: Khi người d&ugrave;ng nhấn bật c&ocirc;ng tắc th&igrave; đ&egrave;n m&agrave;u xanh s&aacute;ng xung quanh th&acirc;n b&igrave;nh đun. C&ograve;n khi nước s&ocirc;i th&igrave; c&ocirc;ng tắc v&agrave; đ&egrave;n sẽ tự động tắt.</p>\r\n\r\n<p>- Rờ le nhiệt: Tự động ngắt điện khi nước s&ocirc;i 100 độ C</p>\r\n\r\n<p>- D&acirc;y nguồn: Kết nối nguồn điện với đế tiếp điện.</p>\r\n\r\n<p>- Nắp ấm: L&agrave;m bằng nhựa cao cấp, c&oacute; khả năng c&aacute;ch điện tốt v&agrave; giữ vệ sinh cho nước b&ecirc;n trong.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Binhdun/z2516249774206_35439040a1cdb46a6b46f2c352a73a37_1228cebe901a4c05acabc2876a86876b_master_1629074916.jpeg\" /></p>\r\n\r\n<p><strong>*Lưu &yacute; khi sử dụng:</strong></p>\r\n\r\n<p>- Lu&ocirc;n r&uacute;t ph&iacute;ch cắm sau khi sử dụng.</p>\r\n\r\n<p>- Kh&ocirc;ng để nước b&ecirc;n trong b&igrave;nh si&ecirc;u tốc qu&aacute; l&acirc;u để tr&aacute;nh đ&oacute;ng cặn v&agrave; rỉ s&eacute;t.</p>\r\n\r\n<p>- Sau khi sử dụng xong, &uacute;p ngược, để kh&ocirc;.</p>\r\n\r\n<p>- Đặt b&igrave;nh v&agrave; đế tiếp điện ở nơi kh&ocirc; r&aacute;o v&agrave; sạch sẽ.</p>\r\n\r\n<p><strong>TH&Ocirc;NG SỐ KỸ THUẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>B&igrave;nh đun si&ecirc;u tốc PF-T18</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Th&acirc;n b&igrave;nh thuỷ tinh trong, đế đen</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Điện &aacute;p</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>220V ~ 50Hz</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Dung t&iacute;ch</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1.8L</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&ocirc;ng suất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1500W</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">Chất liệu</td>\r\n			<td style=\"vertical-align:top\">Thuỷ tinh, nhựa cao cấp</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Perfect</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:</strong>&nbsp;12 th&aacute;ng</p>', '/public/storage/files/161268L.jpg', '', 34, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 13:19:07', '2021-11-22 14:47:49');
+(31, 'may-khoan-pin-cam-tay-12v-perfect-pf-k15', 'MÁY KHOAN PIN CẦM TAY 12V PERFECT PF-K15', '159750', '<div style=\"background-color:#ffffff; border:0px; box-sizing:border-box; color:#232323; font-family:Arial,sans-serif; font-size:13px; font-style:normal; font-variant-ligatures:normal; font-weight:400; outline:0px; padding:0px; text-align:start; text-decoration-color:initial; text-decoration-style:initial; text-decoration-thickness:initial; vertical-align:baseline; white-space:normal\">\r\n<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong>M&Aacute;Y KHOAN PIN CẦM TAY 12V PERFECT PF-K15</strong></span></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong>*Nhận th&ecirc;m:</strong></span></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><span style=\"font-size:large\"><span style=\"font-family:inherit\">+ 1 ổ kh&oacute;a chống trộm Perfect (m&agrave;u ngẫu nhi&ecirc;n)</span></span></span></span></span></p>\r\n\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">+ 2 mắt k&iacute;nh bảo hộ</span></span></span></span></span></p>\r\n\r\n<hr />\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><strong>M&aacute;y khoan pin cầm tay 12V Perfect PF-K15</strong> c&oacute; thiết kế nhỏ gọn - nhẹ, gi&uacute;p bạn dễ thao t&aacute;c v&agrave; di chuyển, kh&ocirc;ng chiếm nhiều kh&ocirc;ng gian. Sử dụng pin thay thế cho việc d&ugrave;ng điện trực tiếp gi&uacute;p tăng t&iacute;nh linh động trong nhiều vị tr&iacute; l&agrave;m việc kh&aacute;c nhau.</span></span></span></strong></span></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><img alt=\"[PERFECT] Máy khoan pin cầm tay 12V Perfect (Tặng ổ khóa chống trộm+ 2 mắt kính)\" src=\"https://image.scj.vn/item_images/50/159750L.jpg\" style=\"box-sizing:border-box; max-width:100%; padding:0px; vertical-align:top\" /></strong></span></span></p>\r\n\r\n<p style=\"text-align:left\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">PF-K15 được sử dụng rộng r&atilde;i trong gia đ&igrave;nh hoặc thi c&ocirc;ng lắp đặt c&ocirc;ng tr&igrave;nh, ng&agrave;nh c&ocirc;ng nghiệp, cơ kh&iacute;, sửa chữa. Khi người d&ugrave;ng sử dụng m&aacute;y khoan pin sẽ lu&ocirc;n được đảm bảo sự an to&agrave;n nhờ bộ phận điện tử bảo vệ pin ngăn sự ph&oacute;ng điện qu&aacute; lớn. Khi pin hết điện, m&aacute;y tự tắt nhờ v&agrave;o thiết bị bảo vệ mạch.</span></span></span></strong></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p style=\"text-align:left\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">M&aacute;y c&oacute; vỏ bằng nhựa, tay cầm c&oacute; độ ma s&aacute;t cao gi&uacute;p bạn l&agrave;m việc với m&aacute;y khoan an to&agrave;n hơn. Khi muốn vặn v&iacute;t bạn chỉ cần nhấn n&uacute;t đảo chiều quay, pin sạc dễ d&agrave;ng th&aacute;o rời. <strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Đ&egrave;n LED chiếu s&aacute;ng gi&uacute;p người d&ugrave;ng c&oacute; thể dễ d&agrave;ng thao t&aacute;c trong c&aacute;c khu vực thiếu &aacute;nh s&aacute;ng.</span></span></span></strong></span></span></span></strong></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p style=\"text-align:center\"><strong><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\"><img alt=\"[PERFECT] Máy khoan pin cầm tay 12V Perfect (Tặng ổ khóa chống trộm+ 2 mắt kính)\" src=\"https://image.scj.vn/item_images/50/159750L1.jpg\" style=\"box-sizing:border-box; max-width:100%; padding:0px; vertical-align:top\" /></span></span></span></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p style=\"text-align:left\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Sản phẩm c&oacute; độ bền bỉ cao, kh&ocirc;ng bị m&agrave;i m&ograve;n v&agrave; c&oacute; khả năng chịu được điều kiện l&agrave;m việc khắc nghiệt. M&aacute;y c&oacute; thể kết hợp với những loại mũi khoan chuy&ecirc;n dụng để bạn c&oacute; thể khoan c&aacute;c tấm th&eacute;p, gỗ hay c&aacute;c vật liệu cứng kh&aacute;c một c&aacute;ch dễ d&agrave;ng. </span></span></span></strong></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p style=\"text-align:left\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Lưu &yacute;: Khoan li&ecirc;n tục trong 2 tiếng, ngưng 30 ph&uacute;t để m&aacute;y nguội.</span></span></span></span></span></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p style=\"text-align:left\"><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong><strong><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">TH&Ocirc;NG SỐ KỸ THUẬT</span></span></span></strong></strong></span></span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<div style=\"border:0px; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; outline:0px; padding:0px; vertical-align:baseline\">\r\n<table border=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse; border-spacing:0px; border:none; box-sizing:border-box; font-family:inherit; font-size:13px; font-style:inherit; font-weight:inherit; margin-bottom:24px; outline:0px; padding:0px; vertical-align:baseline; width:1000px\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">M&ocirc;-men xoắn, tối đa (cứng/mềm)</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">28 / 11 Nm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Tốc độ kh&ocirc;ng tải</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">1300 v&ograve;ng/ph&uacute;t</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Tỷ lệ va đập tối đa</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">18,750 bpm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Khả năng của đầu cặp, tối đa/tối thiểu</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">0,3 - 10 mm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Kiểu pin</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Ion lithium</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Điện &aacute;p pin</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">12V</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">K&iacute;ch thước</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">188mm x 46mm x 205mm (DxRxC)</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Đường k&iacute;nh khoan tối đa tr&ecirc;n gỗ</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">19 mm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Đường k&iacute;nh khoan tối đa tr&ecirc;n th&eacute;p</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">6 mm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Đường k&iacute;nh khoan tối đa tr&ecirc;n khối x&acirc;y nề</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">8 mm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Đường k&iacute;nh v&iacute;t tối đa</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">7 mm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Trọng lượng</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">1,1 kg</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Bộ khoan bao gồm</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">20 m&oacute;n</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Chế độ </span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">17 chế độ vặn ốc; 01 chế độ khoan</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Chất liệu</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">+ Mũi khoan: Th&eacute;p</span></span></span></span></span></strong></span></span></p>\r\n\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">+ Th&acirc;n m&aacute;y: Nhựa PP</span></span></span></span></span></strong></span></span></p>\r\n\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">+ Phần tay cầm th&acirc;n m&aacute;y: Bọc cao su</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">M&agrave;u sắc</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Xanh đen</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Thương hiệu </span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Perfect</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:303px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Sản xuất/Xuất xứ</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n			<td style=\"border-bottom:1px solid #000000; border-left:1px solid #000000; border-right:1px solid #000000; border-top:1px solid #000000; text-align:left; vertical-align:top; width:281px\">\r\n			<p><span style=\"font-size:13px\"><span style=\"font-family:inherit\"><strong><span style=\"font-size:large\"><span style=\"font-family:inherit\"><span style=\"font-size:18px\"><span style=\"font-family:inherit\"><span style=\"color:#000000\">Trung Quốc</span></span></span></span></span></strong></span></span></p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n</div>\r\n</div>\r\n\r\n<div style=\"background-color:#ffffff; border:0px; box-sizing:border-box; color:#232323; font-family:Arial,sans-serif; font-size:13px; font-style:normal; font-variant-ligatures:normal; font-weight:400; outline:0px; padding:0px; text-align:start; text-decoration-color:initial; text-decoration-style:initial; text-decoration-thickness:initial; vertical-align:baseline; white-space:normal\">\r\n<p><span style=\"font-size:large\"><span style=\"font-family:inherit\"><strong>Thời gian bảo h&agrave;nh</strong>: 12 th&aacute;ng</span></span></p>\r\n</div>', 'public/image/logo-cpc.png', '', 40, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 12:41:44', '2021-11-23 06:58:22'),
+(32, 'may-phun-xit-cao-ap-tu-dong-perfect-pf-h09', 'Máy phun xịt cao áp tự động Perfect PF-H09', '161579', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>M&aacute;y</strong><strong>&nbsp;phun xịt&nbsp;</strong><strong>cao</strong><strong>&nbsp;</strong><strong>&aacute;p</strong><strong>&nbsp;</strong><strong>tự</strong><strong>&nbsp;</strong><strong>động</strong><strong>&nbsp;</strong><strong>Perfect</strong><strong>&nbsp;</strong><strong>PF</strong><strong>-</strong><strong>H</strong><strong>09&nbsp;</strong>c&oacute; kết cấu gọn, kh&ocirc;ng chiếm diện t&iacute;ch kh&ocirc;ng gian, tiện dụng, dễ d&agrave;ng khi di chuyển v&agrave; vận h&agrave;nh. Với đặc điểm tiết kiệm nguồn nước sử dụng v&agrave; &aacute;p lực cao, m&aacute;y kh&ocirc;ng chỉ hữu dụng trong việc rửa xe m&agrave; c&ograve;n c&oacute; thể:</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Tưới c&acirc;y, phun thuốc cho hoa l&aacute;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Tẩy rửa rong r&ecirc;u l&acirc;u năm l&agrave;m ố bề mặt ng&ocirc;i nh&agrave;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- B&oacute;c lớp sơn, v&ocirc;i cũ khi muốn l&agrave;m đẹp lại bề mặt ng&ocirc;i nh&agrave;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic4_1630817046.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>ĐỘNG CƠ C&Ocirc;NG SUẤT CAO CHO &Aacute;P LỰC NƯỚC MẠNH MẼ</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>M&aacute;y phun xịt cao &aacute;p Perfect PF-H09<strong>&nbsp;</strong>c&oacute; động cơ mạnh mẽ, c&ocirc;ng suất 1800W tạo &aacute;p lực phun mạnh đến 100 bar, gi&uacute;p đ&aacute;nh bay b&ugrave;n đất b&aacute;m l&acirc;u ng&agrave;y, l&agrave;m sạch mọi ng&oacute;c ng&aacute;ch xe của bạn. Sản phẩm hoạt động ổn định, tiết kiệm đ&aacute;ng kể lượng nước so với v&ograve;i nước thường.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic2_1630817046.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic3_1630817046.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic1_1630817046.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>MOTOR CẢM ỨNG TỪ HIỆN ĐẠI</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>M&aacute;y phun xịt cao &aacute;p Perfect PF-H09<strong>&nbsp;</strong>sử dụng c&ocirc;ng nghệ hiện đại motor từ t&iacute;nh kh&aacute;c hẳn với c&aacute;c d&ograve;ng m&aacute;y rửa xe chạy chổi than th&ocirc;ng thường. Motor cảm ứng từ &aacute;p dụng c&ocirc;ng nghệ ti&ecirc;n tiến hơn, c&oacute; độ ồn thấp, khả năng chịu tải v&agrave; c&oacute; độ bền cao. Loại motor n&agrave;y gi&uacute;p m&aacute;y hoạt động tốt trong m&ocirc;i trường ẩm ướt hay độ ẩm kh&ocirc;ng kh&iacute; cao.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic7_1630817046.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic12_1630817046.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>CHẾ ĐỘ TỰ H&Uacute;T NƯỚC TIỆN LỢI</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>M&aacute;y được cải tiến c&oacute; khả năng h&uacute;t nước tốt, chỉ cần cho ống nước v&agrave;o x&ocirc; nước, bạn c&oacute; thể linh hoạt phun xịt ở bất cứ đ&acirc;u m&agrave; kh&ocirc;ng cần kết nối với nguồn nước cố định.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic15_1630817046.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>THIẾT KẾ NHỎ GỌN, CHẤT LIỆU BỀN BỈ</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Vỏ m&aacute;y được l&agrave;m bằng nhựa tổng hợp chịu lực tốt, chống biến dạng khi bị t&aacute;c động mạnh sẽ l&agrave; thiết bị hữu dụng để xịt rửa xe &ocirc; t&ocirc;, rửa xe m&aacute;y, tưới c&acirc;y, vệ sinh thiết bị trong gia đ&igrave;nh.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic8_1630817046.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/MayphuncaoapH09/pic20_1630819077.jpg\" style=\"height:360px; width:600px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>TH&Ocirc;NG</strong><strong>&nbsp;</strong><strong>SỐ</strong><strong>&nbsp;</strong><strong>KỸ</strong><strong>&nbsp;</strong><strong>THUẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>M&aacute;y</strong><strong>&nbsp;</strong><strong>phun</strong><strong>&nbsp;</strong><strong>xịt</strong><strong>&nbsp;</strong><strong>cao</strong><strong>&nbsp;</strong><strong>&aacute;p</strong><strong>&nbsp;</strong><strong>PF</strong><strong>-</strong><strong>H</strong><strong>09</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Th&agrave;nh phần chi tiết</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Th&acirc;n m&aacute;y, đầu phun xịt ngắn c&oacute; chỉnh tia, d&acirc;y cao &aacute;p 7m, d&acirc;y nước v&agrave;o 2m, bộ c&uacute;t nước đầu v&agrave;o</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Nhựa, kim loại</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>V&agrave;ng đen</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>8kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&ocirc;ng suất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1800W</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>&Aacute;p lực nước</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>100bar</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Điện &aacute;p</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>220V - 240V ~ 50Hz - 60Hz</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Perfect</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:</strong>&nbsp;12 th&aacute;ng</p>', 'public/image/logo-cpc.png', '', 40, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 12:48:13', '2021-11-23 07:01:07'),
+(33, 'combo-mung-tu-bung-cao-cap-18m-va-16-m-tang-chieu-may-dieu-hoa', 'Combo mùng tự bung cao cấp 1,8m và 1,6 m tặng chiếu mây điều hòa', '155670', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p><img alt=\"alt\" src=\"https://www.scj.vn/images/newContent/baolocmungtubungxanh.jpg\" /></p>\r\n\r\n<p><strong>Nhận th&ecirc;m:</strong>&nbsp;Chiếu m&acirc;y điều h&ograve;a</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/QuaTang/chieumaydieuhoa.jpg\" /></p>', 'public/image/logo-cpc.png', '', 36, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 12:54:02', '2021-11-22 14:46:37'),
+(34, 'bo-vong-xep-cao-cap-phu-dao-gia', 'Bộ võng xếp cao cấp Phú Đào Gia', '160860', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/PhuDaoGia/hinh2_1629778883.jpg\" /></p>', 'public/image/logo-cpc.png', '', 36, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 12:57:50', '2021-11-22 14:46:57'),
+(35, 'ghe-xep-thu-gian-kachi-mk-116', 'Ghế xếp thư giãn Kachi MK-116', '159465', '<h3>Chi tiết sản phẩm</h3>\r\n\r\n<p><strong>Ghế xếp thư gi&atilde;n Kachi MK-116</strong>&nbsp;sở hữu thiết kế hiện đại v&agrave; gọn nhẹ, vừa l&agrave; chiếc ghế vừa l&agrave; chiếc giường mini, th&iacute;ch hợp đặt ở nhiều kh&ocirc;ng gian như ph&ograve;ng kh&aacute;ch, ph&ograve;ng ngủ, s&acirc;n vườn, văn ph&ograve;ng l&agrave;m việc, ban c&ocirc;ng căn hộ chung cư,... Sản phẩm c&oacute; thể dễ d&agrave;ng xếp gọn v&agrave;&nbsp;mang theo trong những chuyến du lịch d&atilde; ngoại.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic11_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic1_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic2_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic3_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic5_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic4_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic6_1635735707.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>CHẤT LIỆU BỀN BỈ, THO&Aacute;NG M&Aacute;T</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Khung ghế được l&agrave;m bằng sắt sơn tĩnh điện, hạn chế gỉ s&eacute;t, chịu được tải trọng l&ecirc;n đến 90kg.<strong>&nbsp;</strong>Vải lưới texilent&nbsp;chất lượng cao&nbsp;c&oacute; t&iacute;nh th&ocirc;ng tho&aacute;ng, được l&agrave;m từ c&aacute;c sợi vải si&ecirc;u nhỏ đan chặt v&agrave;o nhau theo h&igrave;nh zic-zac tạo sự chắc chắn, kết nối với khung ghế bằng d&acirc;y thun co gi&atilde;n tốt, gi&uacute;p bạn c&oacute; cảm gi&aacute;c thoải m&aacute;i, &ecirc;m &aacute;i khi ngồi hoặc nằm.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic7_1635735707.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Ngo&agrave;i ra, ghế được trang bị tay vịn, khớp xoay điều chỉnh để hỗ trợ tối đa cho c&aacute;c tư thế. Người d&ugrave;ng c&oacute; thể t&ugrave;y chỉnh ng&atilde; ra sau đến 160&deg; v&agrave; bật thẳng đứng 90&deg;. Ph&iacute;a tr&ecirc;n t&iacute;ch hợp một chiếc gối tựa đầu ruột g&ograve;n c&oacute; thể đặt cố định hay th&aacute;o rời tuỳ &yacute;.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic13_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic15_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic16_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic17_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic18_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic19_1635735707.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic20_1635735707.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>KHAY NƯỚC TIỆN LỢI</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Ghế xếp thư gi&atilde;n Kachi MK-116 c&oacute; khay đựng nước tiện dụng k&egrave;m theo. Người sử dụng c&oacute; thể vừa ngồi đọc s&aacute;ch, vừa thư gi&atilde;n c&ugrave;ng với t&aacute;ch tr&agrave; hay ly c&agrave; ph&ecirc; ngay b&ecirc;n cạnh v&ocirc; c&ugrave;ng thuận tiện.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/pic8_1635735707.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Nệm massage to&agrave;n th&acirc;n Bella MK-93&nbsp;</strong>(175cm x 59cm x 3cm) c&oacute; t&iacute;nh năng rung, k&iacute;ch th&iacute;ch c&aacute;c huyệt đạo với 10 điểm massage ph&acirc;n bố dọc theo cơ thể, gi&uacute;p xua tan mệt mỏi, đau nhức, th&uacute;c đẩy lưu th&ocirc;ng m&aacute;u, nhờ đ&oacute; cơ thể được thư gi&atilde;n to&agrave;n th&acirc;n.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/nem_1635735858.png\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Kachi/GhenemMK116/nem2_1635735858.png\" /></p>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:</strong>&nbsp;12 th&aacute;ng</p>', 'public/image/logo-cpc.png', '', 36, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 13:09:22', '2021-11-22 14:47:26'),
+(36, 'binh-dun-sieu-toc-perfect-pf-t18', 'BÌNH ĐUN SIÊU TỐC PERFECT PF-T18', '161268', '<p><strong>B&Igrave;NH ĐUN SI&Ecirc;U TỐC PERFECT PF-T18</strong></p>\r\n\r\n<p><strong>*Nhận th&ecirc;m:&nbsp;</strong>1 ổ kh&oacute;a chống trộm</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<hr />\r\n<p><strong>ƯU ĐIỂM NỔI BẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- B&igrave;nh đun si&ecirc;u tốc Perfect PF-T18 c&oacute; khả năng đun nước mau s&ocirc;i. Đ&uacute;ng như t&ecirc;n gọi của n&oacute;, b&igrave;nh si&ecirc;u tốc l&agrave;m nước s&ocirc;i chỉ trong v&agrave;i ph&uacute;t, tầm 3 - 5 ph&uacute;t, rất tiết kiệm thời gian cho những người bận rộn.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- B&igrave;nh c&oacute; k&iacute;ch thức gọn nhẹ, thiết kế đơn giản n&ecirc;n dễ di chuyển v&agrave; dễ vệ sinh b&igrave;nh.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- B&igrave;nh c&oacute; chức năng ngắt điện tự động khi nước s&ocirc;i hoặc khi kh&ocirc;ng c&oacute; nước trong b&igrave;nh, đảm bảo an to&agrave;n cho người sử dụng v&agrave; vật dụng xung quanh.</p>\r\n\r\n<p>- Th&acirc;n b&igrave;nh bằng chất liệu thuỷ tinh cao cấp, kh&ocirc;ng sản sinh chất g&acirc;y độc hại khi đun nước ở nhiệt độ cao, đảm bảo an to&agrave;n cho sức khỏe.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Binhdun/z2516249794751_58019d655e891cfd4f7480e47f4503c5_e11a8dc321f242f7a3582ea191761bd4_master_1629074916.jpeg\" style=\"height:500px; width:500px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>NGUY&Ecirc;N L&Yacute; HOẠT ĐỘNG</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Khi bộ phận m&acirc;m nhiệt của b&igrave;nh được cấp điện th&igrave; l&uacute;c n&agrave;y điện năng sẽ được biến đổi th&agrave;nh nhiệt năng v&agrave; to&agrave;n bộ phần nhiệt n&agrave;y sẽ truyền trực tiếp v&agrave;o trong nước. Khi nhiệt độ nước đạt 100 độ C th&igrave; hơi nước sẽ đi qua ống dẫn v&agrave; thổi hơi n&oacute;ng v&agrave;o thanh nhiệt. L&uacute;c n&agrave;y, thanh nhiệt sẽ cong l&ecirc;n, t&aacute;c động v&agrave;o c&ocirc;ng tắc v&agrave; nguồn điện sẽ bị ngắt. Khi c&ocirc;ng tắc điện bị ngắt th&igrave; l&uacute;c n&agrave;y nước cũng vừa mới s&ocirc;i l&ecirc;n. Do đ&oacute;, người d&ugrave;ng sẽ kh&ocirc;ng thể bật lại c&ocirc;ng tắc ấm trong khoảng 20 - 30 gi&acirc;y bởi thanh nhiệt khi đ&oacute; vẫn c&ograve;n n&oacute;ng v&agrave; chưa trở về lại trạng th&aacute;i ban đầu.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Binhdun/z2516249786083_1d2530aadaf9d4d5c73abe8f58068e4a_691064e112d04d319abb4a036ba4578f_master_1629074916.jpeg\" style=\"height:500px; width:500px\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>TH&Agrave;NH PHẦN CHI TIẾT</strong></p>\r\n\r\n<p>- Th&acirc;n b&igrave;nh đun: Được l&agrave;m bằng chất liệu nhựa v&agrave; thủy tinh.</p>\r\n\r\n<p>- Đế tiếp điện: Kết nối nguồn điện với phần th&acirc;n b&igrave;nh, gi&uacute;p l&agrave;m n&oacute;ng v&agrave; đun s&ocirc;i nước.</p>\r\n\r\n<p>- Đ&egrave;n hiển thị v&agrave; c&ocirc;ng tắc: Khi người d&ugrave;ng nhấn bật c&ocirc;ng tắc th&igrave; đ&egrave;n m&agrave;u xanh s&aacute;ng xung quanh th&acirc;n b&igrave;nh đun. C&ograve;n khi nước s&ocirc;i th&igrave; c&ocirc;ng tắc v&agrave; đ&egrave;n sẽ tự động tắt.</p>\r\n\r\n<p>- Rờ le nhiệt: Tự động ngắt điện khi nước s&ocirc;i 100 độ C</p>\r\n\r\n<p>- D&acirc;y nguồn: Kết nối nguồn điện với đế tiếp điện.</p>\r\n\r\n<p>- Nắp ấm: L&agrave;m bằng nhựa cao cấp, c&oacute; khả năng c&aacute;ch điện tốt v&agrave; giữ vệ sinh cho nước b&ecirc;n trong.</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Perfect/Binhdun/z2516249774206_35439040a1cdb46a6b46f2c352a73a37_1228cebe901a4c05acabc2876a86876b_master_1629074916.jpeg\" /></p>\r\n\r\n<p><strong>*Lưu &yacute; khi sử dụng:</strong></p>\r\n\r\n<p>- Lu&ocirc;n r&uacute;t ph&iacute;ch cắm sau khi sử dụng.</p>\r\n\r\n<p>- Kh&ocirc;ng để nước b&ecirc;n trong b&igrave;nh si&ecirc;u tốc qu&aacute; l&acirc;u để tr&aacute;nh đ&oacute;ng cặn v&agrave; rỉ s&eacute;t.</p>\r\n\r\n<p>- Sau khi sử dụng xong, &uacute;p ngược, để kh&ocirc;.</p>\r\n\r\n<p>- Đặt b&igrave;nh v&agrave; đế tiếp điện ở nơi kh&ocirc; r&aacute;o v&agrave; sạch sẽ.</p>\r\n\r\n<p><strong>TH&Ocirc;NG SỐ KỸ THUẬT</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>T&ecirc;n sản phẩm</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>B&igrave;nh đun si&ecirc;u tốc PF-T18</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Th&acirc;n b&igrave;nh thuỷ tinh trong, đế đen</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Điện &aacute;p</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>220V ~ 50Hz</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Dung t&iacute;ch</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1.8L</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&ocirc;ng suất</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1500W</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">Chất liệu</td>\r\n			<td style=\"vertical-align:top\">Thuỷ tinh, nhựa cao cấp</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trọng lượng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>1kg</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Perfect</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Trung Quốc</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>\r\n\r\n<p><strong>Thời gian bảo h&agrave;nh:</strong>&nbsp;12 th&aacute;ng</p>', 'public/image/logo-cpc.png', '', 34, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1,2', 1, NULL, NULL, '2021-11-22 13:19:07', '2021-11-22 14:47:49');
 INSERT INTO `products` (`id`, `slug`, `name`, `sku`, `long_desc`, `feature_img`, `gallery`, `category_id`, `weight`, `height`, `width`, `length`, `brand`, `upsell`, `payments`, `status`, `meta_desc`, `meta_keyword`, `created_at`, `updated_at`) VALUES
-(37, 'ao-khoac-nam-chong-nang-pargo', 'Áo khoác nam chống nắng P&ARGO', '160802', '<p>&Aacute;o kho&aacute;c thời trang P&amp;ARGO mặc được 2 mặt (1 &aacute;o 2 kiểu) nhờ đường may tinh tế với kỹ thuật giấu đường may n&ecirc;n khi lộn ngược ra bạn sẽ c&oacute; một chiếc &aacute;o kho&aacute;c kh&aacute;c thay đổi trong chớp nho&aacute;ng. &Aacute;o c&oacute; phần n&oacute;n c&oacute; thể th&aacute;o rời cực phong c&aacute;ch, chống nắng v&agrave; chống lạnh đều hiệu quả.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/hinh1_1635904940.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/hinh2_1635904940.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>MẶT NGO&Agrave;I</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Với chất liệu vải d&ugrave; polyeste hạn chế thấm nước, bạn sẽ tho&aacute;i m&aacute;i hơn khi mặc đi trời mưa ph&ugrave;n lất phất hay c&oacute; sương m&ugrave;.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Thiết kế cổ cao, d&acirc;y k&eacute;o kho&aacute; 2 chiều của nh&atilde;n hiệu YKK bền đẹp.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/hinh3_1635904940.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>MẶT TRONG</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Chất liệu vải nỉ foile dệt kim kh&ocirc;ng l&agrave;m x&ugrave; l&ocirc;ng trong qua tr&igrave;nh sử dụng, tho&aacute;ng kh&iacute;, thiết kế 2 viền trắng chạy từ 2 vai xuống tận cổ tay tạo cảm gi&aacute;c năng động. Khi đi ngo&agrave;i trời nắng v&agrave; chạy xe m&aacute;y, gi&oacute; sẽ l&ugrave;a qua lớp vải nỉ tạo cảm gi&aacute;c thoải m&aacute;i, tr&aacute;nh n&oacute;ng v&agrave; nắng hiệu quả.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Hệ thống t&uacute;i c&oacute; kho&aacute; k&eacute;o nh&ocirc;m cao cấp l&agrave; điểm nhấn của mặt trong. T&uacute;i dọc bạn c&oacute; thể đựng v&iacute;, vừa tr&aacute;nh cộm, vừa an to&agrave;n. C&ograve;n 2 t&uacute;i ngang rộng c&oacute; thể chứa được c&aacute;c vật dụng như điện thoại di động, ipad, sổ tay,&hellip; rất tiện lợi.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/pic3_1635908957.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/hinh4_1635904940.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/hinh5_1635904940.jpeg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>CHI TIẾT SẢN PHẨM</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>T&ecirc;n sản phẩm</strong></p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p><strong>&Aacute;o kho&aacute;c thời trang</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>Đen x&aacute;m/ Đen đỏ</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>Mặt ngo&agrave;i vải d&ugrave; polyeste, mặt trong vải nỉ foile dệt kim</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>P&amp;ARGO</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>Việt Nam</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td rowspan=\"6\">\r\n			<p>Size</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>&nbsp;</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chiều cao</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&acirc;n nặng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chi tiết</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>M</p>\r\n			</td>\r\n			<td>\r\n			<p>1m45 - 1m50</p>\r\n			</td>\r\n			<td>\r\n			<p>45 - 49kg</p>\r\n			</td>\r\n			<td>\r\n			<p>Vai: 44cm</p>\r\n\r\n			<p>D&agrave;i tay: 59cm</p>\r\n\r\n			<p>D&agrave;i &aacute;o: 65cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>L</p>\r\n			</td>\r\n			<td>\r\n			<p>1m50 - 1m60</p>\r\n			</td>\r\n			<td>\r\n			<p>50 - 58kg</p>\r\n			</td>\r\n			<td>\r\n			<p>Vai: 46cm</p>\r\n\r\n			<p>D&agrave;i tay: 61cm</p>\r\n\r\n			<p>D&agrave;i &aacute;o: 67cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>XL</p>\r\n			</td>\r\n			<td>\r\n			<p>1m60 - 1m65</p>\r\n			</td>\r\n			<td>\r\n			<p>59 - 64kg</p>\r\n			</td>\r\n			<td>\r\n			<p>Vai: 48cm</p>\r\n\r\n			<p>D&agrave;i tay: 63cm</p>\r\n\r\n			<p>D&agrave;i &aacute;o: 69.5cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>2XL</p>\r\n			</td>\r\n			<td>\r\n			<p>1m65 - 1m70</p>\r\n			</td>\r\n			<td>\r\n			<p>65 - 69kg</p>\r\n			</td>\r\n			<td>\r\n			<p>Vai: 50cm</p>\r\n\r\n			<p>D&agrave;i tay: 65cm</p>\r\n\r\n			<p>D&agrave;i &aacute;o: 72.5cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>3XL</p>\r\n			</td>\r\n			<td>\r\n			<p>1m70 trở l&ecirc;n</p>\r\n			</td>\r\n			<td>\r\n			<p>70 - 80kg</p>\r\n			</td>\r\n			<td>\r\n			<p>Vai: 52cm</p>\r\n\r\n			<p>D&agrave;i tay: 67cm</p>\r\n\r\n			<p>D&agrave;i &aacute;o: 74cm</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '/public/storage/files/160802L4.jpeg', '/public/storage/files/160802L2.jpeg, /public/storage/files/160802L3.jpeg', 149, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1', 1, NULL, NULL, '2021-11-23 02:54:25', '2021-11-23 05:55:00'),
-(38, 'vi-da-nam-dang-ngang-299-12x98x2cm', 'Ví Da Nam Dáng Ngang 299 12x9.8x2cm', '199000', '<ul>\r\n	<li>V&iacute; Da Nam D&aacute;ng Ngang 299 12x9.8x2cm được may từ chất liệu da PU, đường may tỉ mỉ, đem lại độ bền cao cho người sử dụng.</li>\r\n	<li>V&iacute; d&aacute;ng ngang thời trang, thiết kế nhỏ gọn, dễ d&agrave;ng ph&acirc;n loại quản l&yacute; c&aacute;c loại tiền, thẻ,... một c&aacute;ch khoa học. Sản phẩm k&egrave;m hộp tiện lợi, th&iacute;ch hợp d&ugrave;ng l&agrave;m qu&agrave; tặng.</li>\r\n	<li>K&iacute;ch thước: 12x9.8x2cm. Sản phẩm c&oacute; hai m&agrave;u: Đen v&agrave; n&acirc;u, vui l&ograve;ng ghi m&agrave;u sắc bạn lựa chọn v&agrave;o phần Ghi Ch&uacute; đơn h&agrave;ng.</li>\r\n	<li>Hướng dẫn bảo quản: Bảo quản nơi kh&ocirc; r&aacute;o, tho&aacute;ng m&aacute;t, tr&aacute;nh nơi c&oacute; nhiệt độ cao, h&oacute;a chất tẩy rửa. Xuất xứ: Việt Nam.</li>\r\n</ul>', '/public/storage/images/Desert.jpg', '', 149, 1.1, 1.1, 1.1, 1.1, 'KHÁC', '16,21', '1,2', 1, NULL, NULL, '2021-11-23 06:22:52', '2022-01-20 10:53:50'),
-(39, 'wonder-combo-combo-02-ve-vinwonders-vinpearl-safari-01-dem-nghi-tai-vinholidays-fiesta-phu-quoc-danh-cho-02-nguoi', 'Wonder Combo: Combo 02 vé VinWonders & Vinpearl Safari + 01 đêm nghỉ tại VinHolidays Fiesta Phú Quốc dành cho 02 người', '2000', '<p><strong>WONDER COMBO VUI CHƠI TRỌN VẸN TẠI VINWONDERS &amp; VINPEARL SAFARI C&Ugrave;NG KỲ NGHỈ MIỄN PH&Iacute; 2N1Đ</strong></p>\r\n\r\n<p>Thời gian ưu đ&atilde;i: &nbsp;01/10/2021 - 30/12/2021</p>\r\n\r\n<p>Thời gian lưu tr&uacute;: 01/10/2021- 30/12/2021</p>\r\n\r\n<p>Ưu đ&atilde;i Wonder Combo bao gồm:</p>\r\n\r\n<ul>\r\n	<li>02 Combo v&eacute;&nbsp;VinWonders &amp; Vinpearl Safari Ph&uacute; Quốc vui chơi thỏa th&iacute;ch trong 01 ng&agrave;y d&agrave;nh cho 02 người &nbsp;trị gi&aacute; 2.000.000 đồng</li>\r\n	<li>01 đ&ecirc;m nghỉ d&agrave;nh cho 02 người tại kh&aacute;ch sạn&nbsp;VinHolidays Fiesta Ph&uacute; Quốc&nbsp;&nbsp;trị gi&aacute; 1.440.000 đồng</li>\r\n	<li>Tặng th&ecirc;m 01 bữa s&aacute;ng ti&ecirc;u chuẩn tại kh&aacute;ch sạn</li>\r\n</ul>', '/public/storage/files/a3a5b231231949e586efd41b43daf1d4_1920x1080_P3%20(2).png', '', 31, 1.1, 1.1, 1.1, 1.1, 'KHÁC', '36', '1,2', 1, NULL, NULL, '2021-11-23 06:54:32', '2022-01-05 16:13:40'),
-(40, 'kem-cat-mong-inox', 'Kềm cắt móng inox', 'AT00000099', '<p>Kềm cắt m&oacute;ng inox</p>', 'https://cm.com.vn/public/storage/images/default_product.jpg', '', 40, 1.1, 1.1, 1.1, 1.1, 'NGHĨA', NULL, '1', 1, NULL, NULL, '2021-12-22 00:14:12', '2022-01-20 12:43:25'),
-(41, 'kem-cat-da-inox', 'Kềm cắt da inox', 'AT00000098', '<p>Kềm cắt da inox</p>', '/public/storage/images/Chrysanthemum.jpg', '', 28, 1.1, 1.1, 1.1, 1.1, 'NGHĨA', '37', '1', 1, NULL, NULL, '2021-12-22 00:15:22', '2022-01-20 12:42:18');
+(37, 'ao-khoac-nam-chong-nang-pargo', 'Áo khoác nam chống nắng P&ARGO', '160802', '<p>&Aacute;o kho&aacute;c thời trang P&amp;ARGO mặc được 2 mặt (1 &aacute;o 2 kiểu) nhờ đường may tinh tế với kỹ thuật giấu đường may n&ecirc;n khi lộn ngược ra bạn sẽ c&oacute; một chiếc &aacute;o kho&aacute;c kh&aacute;c thay đổi trong chớp nho&aacute;ng. &Aacute;o c&oacute; phần n&oacute;n c&oacute; thể th&aacute;o rời cực phong c&aacute;ch, chống nắng v&agrave; chống lạnh đều hiệu quả.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/hinh1_1635904940.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/hinh2_1635904940.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>MẶT NGO&Agrave;I</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Với chất liệu vải d&ugrave; polyeste hạn chế thấm nước, bạn sẽ tho&aacute;i m&aacute;i hơn khi mặc đi trời mưa ph&ugrave;n lất phất hay c&oacute; sương m&ugrave;.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Thiết kế cổ cao, d&acirc;y k&eacute;o kho&aacute; 2 chiều của nh&atilde;n hiệu YKK bền đẹp.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/hinh3_1635904940.jpg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>MẶT TRONG</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Chất liệu vải nỉ foile dệt kim kh&ocirc;ng l&agrave;m x&ugrave; l&ocirc;ng trong qua tr&igrave;nh sử dụng, tho&aacute;ng kh&iacute;, thiết kế 2 viền trắng chạy từ 2 vai xuống tận cổ tay tạo cảm gi&aacute;c năng động. Khi đi ngo&agrave;i trời nắng v&agrave; chạy xe m&aacute;y, gi&oacute; sẽ l&ugrave;a qua lớp vải nỉ tạo cảm gi&aacute;c thoải m&aacute;i, tr&aacute;nh n&oacute;ng v&agrave; nắng hiệu quả.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>- Hệ thống t&uacute;i c&oacute; kho&aacute; k&eacute;o nh&ocirc;m cao cấp l&agrave; điểm nhấn của mặt trong. T&uacute;i dọc bạn c&oacute; thể đựng v&iacute;, vừa tr&aacute;nh cộm, vừa an to&agrave;n. C&ograve;n 2 t&uacute;i ngang rộng c&oacute; thể chứa được c&aacute;c vật dụng như điện thoại di động, ipad, sổ tay,&hellip; rất tiện lợi.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/pic3_1635908957.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/hinh4_1635904940.jpg\" /></p>\r\n\r\n<p><img src=\"https://scj.vn/images/newContent/Thoitrang/aokhoacnam/hinh5_1635904940.jpeg\" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>CHI TIẾT SẢN PHẨM</strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\r\n	<tbody>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p><strong>T&ecirc;n sản phẩm</strong></p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p><strong>&Aacute;o kho&aacute;c thời trang</strong></p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>M&agrave;u sắc</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>Đen x&aacute;m/ Đen đỏ</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chất liệu</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>Mặt ngo&agrave;i vải d&ugrave; polyeste, mặt trong vải nỉ foile dệt kim</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Thương hiệu</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>P&amp;ARGO</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Xuất xứ</p>\r\n			</td>\r\n			<td colspan=\"4\" style=\"vertical-align:top\">\r\n			<p>Việt Nam</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td rowspan=\"6\">\r\n			<p>Size</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>&nbsp;</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chiều cao</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>C&acirc;n nặng</p>\r\n			</td>\r\n			<td style=\"vertical-align:top\">\r\n			<p>Chi tiết</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>M</p>\r\n			</td>\r\n			<td>\r\n			<p>1m45 - 1m50</p>\r\n			</td>\r\n			<td>\r\n			<p>45 - 49kg</p>\r\n			</td>\r\n			<td>\r\n			<p>Vai: 44cm</p>\r\n\r\n			<p>D&agrave;i tay: 59cm</p>\r\n\r\n			<p>D&agrave;i &aacute;o: 65cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>L</p>\r\n			</td>\r\n			<td>\r\n			<p>1m50 - 1m60</p>\r\n			</td>\r\n			<td>\r\n			<p>50 - 58kg</p>\r\n			</td>\r\n			<td>\r\n			<p>Vai: 46cm</p>\r\n\r\n			<p>D&agrave;i tay: 61cm</p>\r\n\r\n			<p>D&agrave;i &aacute;o: 67cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>XL</p>\r\n			</td>\r\n			<td>\r\n			<p>1m60 - 1m65</p>\r\n			</td>\r\n			<td>\r\n			<p>59 - 64kg</p>\r\n			</td>\r\n			<td>\r\n			<p>Vai: 48cm</p>\r\n\r\n			<p>D&agrave;i tay: 63cm</p>\r\n\r\n			<p>D&agrave;i &aacute;o: 69.5cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>2XL</p>\r\n			</td>\r\n			<td>\r\n			<p>1m65 - 1m70</p>\r\n			</td>\r\n			<td>\r\n			<p>65 - 69kg</p>\r\n			</td>\r\n			<td>\r\n			<p>Vai: 50cm</p>\r\n\r\n			<p>D&agrave;i tay: 65cm</p>\r\n\r\n			<p>D&agrave;i &aacute;o: 72.5cm</p>\r\n			</td>\r\n		</tr>\r\n		<tr>\r\n			<td>\r\n			<p>3XL</p>\r\n			</td>\r\n			<td>\r\n			<p>1m70 trở l&ecirc;n</p>\r\n			</td>\r\n			<td>\r\n			<p>70 - 80kg</p>\r\n			</td>\r\n			<td>\r\n			<p>Vai: 52cm</p>\r\n\r\n			<p>D&agrave;i tay: 67cm</p>\r\n\r\n			<p>D&agrave;i &aacute;o: 74cm</p>\r\n			</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'public/image/logo-cpc.png', '/public/storage/files/160802L2.jpeg, /public/storage/files/160802L3.jpeg', 149, 1.1, 1.1, 1.1, 1.1, 'KHÁC', NULL, '1', 1, NULL, NULL, '2021-11-23 02:54:25', '2021-11-23 05:55:00'),
+(38, 'vi-da-nam-dang-ngang-299-12x98x2cm', 'Ví Da Nam Dáng Ngang 299 12x9.8x2cm', '199000', '<ul>\r\n	<li>V&iacute; Da Nam D&aacute;ng Ngang 299 12x9.8x2cm được may từ chất liệu da PU, đường may tỉ mỉ, đem lại độ bền cao cho người sử dụng.</li>\r\n	<li>V&iacute; d&aacute;ng ngang thời trang, thiết kế nhỏ gọn, dễ d&agrave;ng ph&acirc;n loại quản l&yacute; c&aacute;c loại tiền, thẻ,... một c&aacute;ch khoa học. Sản phẩm k&egrave;m hộp tiện lợi, th&iacute;ch hợp d&ugrave;ng l&agrave;m qu&agrave; tặng.</li>\r\n	<li>K&iacute;ch thước: 12x9.8x2cm. Sản phẩm c&oacute; hai m&agrave;u: Đen v&agrave; n&acirc;u, vui l&ograve;ng ghi m&agrave;u sắc bạn lựa chọn v&agrave;o phần Ghi Ch&uacute; đơn h&agrave;ng.</li>\r\n	<li>Hướng dẫn bảo quản: Bảo quản nơi kh&ocirc; r&aacute;o, tho&aacute;ng m&aacute;t, tr&aacute;nh nơi c&oacute; nhiệt độ cao, h&oacute;a chất tẩy rửa. Xuất xứ: Việt Nam.</li>\r\n</ul>', 'public/image/logo-cpc.png', '', 149, 1.1, 1.1, 1.1, 1.1, 'KHÁC', '16,21', '1,2', 1, NULL, NULL, '2021-11-23 06:22:52', '2022-01-20 10:53:50'),
+(39, 'wonder-combo-combo-02-ve-vinwonders-vinpearl-safari-01-dem-nghi-tai-vinholidays-fiesta-phu-quoc-danh-cho-02-nguoi', 'Wonder Combo: Combo 02 vé VinWonders & Vinpearl Safari + 01 đêm nghỉ tại VinHolidays Fiesta Phú Quốc dành cho 02 người', '2000', '<p><strong>WONDER COMBO VUI CHƠI TRỌN VẸN TẠI VINWONDERS &amp; VINPEARL SAFARI C&Ugrave;NG KỲ NGHỈ MIỄN PH&Iacute; 2N1Đ</strong></p>\r\n\r\n<p>Thời gian ưu đ&atilde;i: &nbsp;01/10/2021 - 30/12/2021</p>\r\n\r\n<p>Thời gian lưu tr&uacute;: 01/10/2021- 30/12/2021</p>\r\n\r\n<p>Ưu đ&atilde;i Wonder Combo bao gồm:</p>\r\n\r\n<ul>\r\n	<li>02 Combo v&eacute;&nbsp;VinWonders &amp; Vinpearl Safari Ph&uacute; Quốc vui chơi thỏa th&iacute;ch trong 01 ng&agrave;y d&agrave;nh cho 02 người &nbsp;trị gi&aacute; 2.000.000 đồng</li>\r\n	<li>01 đ&ecirc;m nghỉ d&agrave;nh cho 02 người tại kh&aacute;ch sạn&nbsp;VinHolidays Fiesta Ph&uacute; Quốc&nbsp;&nbsp;trị gi&aacute; 1.440.000 đồng</li>\r\n	<li>Tặng th&ecirc;m 01 bữa s&aacute;ng ti&ecirc;u chuẩn tại kh&aacute;ch sạn</li>\r\n</ul>', 'public/image/logo-cpc.png', '', 31, 1.1, 1.1, 1.1, 1.1, 'KHÁC', '36', '1,2', 1, NULL, NULL, '2021-11-23 06:54:32', '2022-01-05 16:13:40'),
+(40, 'kem-cat-mong-inox', 'Kềm cắt móng inox', 'AT00000099', '<p>Kềm cắt m&oacute;ng inox</p>', 'public/image/logo-cpc.png', '', 40, 1.1, 1.1, 1.1, 1.1, 'NGHĨA', NULL, '1', 1, NULL, NULL, '2021-12-22 00:14:12', '2022-01-20 12:43:25'),
+(41, 'kem-cat-da-inox', 'Kềm cắt da inox', 'AT00000098', '<p>Kềm cắt da inox</p>', 'public/image/logo-cpc.png', '', 28, 1.1, 1.1, 1.1, 1.1, 'NGHĨA', '37', '1', 1, NULL, NULL, '2021-12-22 00:15:22', '2022-01-20 12:42:18');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_brand`
+-- Cấu trúc bảng cho bảng `product_brand`
 --
 
 CREATE TABLE `product_brand` (
@@ -1330,13 +1551,13 @@ CREATE TABLE `product_brand` (
   `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `status` int(11) NOT NULL DEFAULT 1,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `product_brand`
+-- Đang đổ dữ liệu cho bảng `product_brand`
 --
 
 INSERT INTO `product_brand` (`id`, `slug`, `name`, `code`, `type`, `description`, `status`, `updated_at`, `created_at`) VALUES
@@ -1350,7 +1571,7 @@ INSERT INTO `product_brand` (`id`, `slug`, `name`, `code`, `type`, `description`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_calculation_unit`
+-- Cấu trúc bảng cho bảng `product_calculation_unit`
 --
 
 CREATE TABLE `product_calculation_unit` (
@@ -1358,13 +1579,13 @@ CREATE TABLE `product_calculation_unit` (
   `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `note` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `status` int(11) NOT NULL DEFAULT 1,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `product_calculation_unit`
+-- Đang đổ dữ liệu cho bảng `product_calculation_unit`
 --
 
 INSERT INTO `product_calculation_unit` (`id`, `code`, `name`, `note`, `status`, `updated_at`, `created_at`) VALUES
@@ -1378,29 +1599,29 @@ INSERT INTO `product_calculation_unit` (`id`, `code`, `name`, `note`, `status`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_categories`
+-- Cấu trúc bảng cho bảng `product_categories`
 --
 
 CREATE TABLE `product_categories` (
   `id` int(11) NOT NULL,
-  `category_parent` int(11) NOT NULL DEFAULT '0',
-  `level` int(11) NOT NULL DEFAULT '0',
+  `category_parent` int(11) NOT NULL DEFAULT 0,
+  `level` int(11) NOT NULL DEFAULT 0,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `feature_img` text COLLATE utf8_unicode_ci,
-  `gallery` text COLLATE utf8_unicode_ci,
-  `meta_desc` text COLLATE utf8_unicode_ci,
+  `feature_img` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `gallery` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_desc` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_keyword` int(11) DEFAULT NULL,
-  `description` text COLLATE utf8_unicode_ci,
+  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `link_to_category` int(11) DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `priority` int(11) DEFAULT '200',
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `status` int(11) NOT NULL DEFAULT 1,
+  `priority` int(11) DEFAULT 200,
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `product_categories`
+-- Đang đổ dữ liệu cho bảng `product_categories`
 --
 
 INSERT INTO `product_categories` (`id`, `category_parent`, `level`, `slug`, `name`, `feature_img`, `gallery`, `meta_desc`, `meta_keyword`, `description`, `link_to_category`, `status`, `priority`, `updated_at`, `created_at`) VALUES
@@ -2441,7 +2662,7 @@ INSERT INTO `product_categories` (`id`, `category_parent`, `level`, `slug`, `nam
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_price`
+-- Cấu trúc bảng cho bảng `product_price`
 --
 
 CREATE TABLE `product_price` (
@@ -2451,16 +2672,16 @@ CREATE TABLE `product_price` (
   `regular_price` int(11) NOT NULL,
   `wholesale_price` int(11) NOT NULL,
   `shock_price` int(11) NOT NULL,
-  `cpoint` int(11) DEFAULT '0',
-  `mpoint` int(11) DEFAULT '0',
-  `phi_xuly` int(11) DEFAULT '0',
+  `cpoint` int(11) DEFAULT 0,
+  `mpoint` int(11) DEFAULT 0,
+  `phi_xuly` int(11) DEFAULT 0,
   `tax` double NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `product_price`
+-- Đang đổ dữ liệu cho bảng `product_price`
 --
 
 INSERT INTO `product_price` (`id`, `id_ofproduct`, `price`, `regular_price`, `wholesale_price`, `shock_price`, `cpoint`, `mpoint`, `phi_xuly`, `tax`, `updated_at`, `created_at`) VALUES
@@ -2505,7 +2726,7 @@ INSERT INTO `product_price` (`id`, `id_ofproduct`, `price`, `regular_price`, `wh
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_rating`
+-- Cấu trúc bảng cho bảng `product_rating`
 --
 
 CREATE TABLE `product_rating` (
@@ -2515,14 +2736,14 @@ CREATE TABLE `product_rating` (
   `comment` text NOT NULL,
   `value` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_store`
+-- Cấu trúc bảng cho bảng `product_store`
 --
 
 CREATE TABLE `product_store` (
@@ -2534,7 +2755,7 @@ CREATE TABLE `product_store` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `product_store`
+-- Đang đổ dữ liệu cho bảng `product_store`
 --
 
 INSERT INTO `product_store` (`id`, `id_ofproduct`, `id_ofstore`, `soluong`, `for_user`) VALUES
@@ -2552,7 +2773,7 @@ INSERT INTO `product_store` (`id`, `id_ofproduct`, `id_ofstore`, `soluong`, `for
 -- --------------------------------------------------------
 
 --
--- Table structure for table `province`
+-- Cấu trúc bảng cho bảng `province`
 --
 
 CREATE TABLE `province` (
@@ -2564,7 +2785,7 @@ CREATE TABLE `province` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `province`
+-- Đang đổ dữ liệu cho bảng `province`
 --
 
 INSERT INTO `province` (`id`, `matinhthanh`, `tentinhthanh`, `created_at`, `updated_at`) VALUES
@@ -2635,7 +2856,7 @@ INSERT INTO `province` (`id`, `matinhthanh`, `tentinhthanh`, `created_at`, `upda
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Cấu trúc bảng cho bảng `roles`
 --
 
 CREATE TABLE `roles` (
@@ -2647,7 +2868,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `roles`
+-- Đang đổ dữ liệu cho bảng `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
@@ -2660,7 +2881,7 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role_has_permissions`
+-- Cấu trúc bảng cho bảng `role_has_permissions`
 --
 
 CREATE TABLE `role_has_permissions` (
@@ -2669,36 +2890,50 @@ CREATE TABLE `role_has_permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `role_has_permissions`
+-- Đang đổ dữ liệu cho bảng `role_has_permissions`
 --
 
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (1, 2),
 (7, 2),
+(7, 3),
 (9, 2),
+(9, 3),
+(9, 4),
 (10, 2),
+(10, 3),
+(10, 4),
 (11, 2),
 (12, 2),
+(12, 25),
 (13, 2),
 (14, 2),
 (15, 2),
 (16, 2),
 (17, 2),
+(17, 24),
 (18, 2),
+(18, 24),
 (19, 2),
+(19, 24),
 (20, 2),
 (21, 2),
 (22, 2),
 (23, 2),
+(23, 25),
 (24, 2),
 (25, 2),
+(25, 25),
 (26, 2),
+(26, 24),
 (27, 2),
 (28, 2),
+(28, 24),
 (29, 2),
 (30, 2),
 (31, 2),
 (32, 2),
+(32, 24),
 (33, 2),
 (34, 2),
 (35, 2),
@@ -2718,38 +2953,24 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (49, 2),
 (50, 2),
 (51, 2),
-(52, 2),
-(7, 3),
-(9, 3),
-(10, 3),
-(9, 4),
-(10, 4),
-(17, 24),
-(18, 24),
-(19, 24),
-(26, 24),
-(28, 24),
-(32, 24),
-(12, 25),
-(23, 25),
-(25, 25);
+(52, 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `settings`
+-- Cấu trúc bảng cho bảng `settings`
 --
 
 CREATE TABLE `settings` (
   `id` int(11) NOT NULL,
   `key` varchar(191) NOT NULL,
-  `plain_value` text,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `plain_value` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `settings`
+-- Đang đổ dữ liệu cho bảng `settings`
 --
 
 INSERT INTO `settings` (`id`, `key`, `plain_value`, `created_at`, `updated_at`) VALUES
@@ -2765,7 +2986,33 @@ INSERT INTO `settings` (`id`, `key`, `plain_value`, `created_at`, `updated_at`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stores`
+-- Cấu trúc bảng cho bảng `setting_payment_payme`
+--
+
+CREATE TABLE `setting_payment_payme` (
+  `id` int(11) NOT NULL,
+  `private_key` text DEFAULT NULL,
+  `public_key` text DEFAULT NULL,
+  `accessToken` text DEFAULT NULL,
+  `app_id` varchar(255) DEFAULT NULL,
+  `store_id` int(11) NOT NULL,
+  `domain` text DEFAULT NULL,
+  `environment` tinyint(4) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `setting_payment_payme`
+--
+
+INSERT INTO `setting_payment_payme` (`id`, `private_key`, `public_key`, `accessToken`, `app_id`, `store_id`, `domain`, `environment`, `created_at`, `updated_at`) VALUES
+(1, '-----BEGIN RSA PRIVATE KEY-----\r\nMIIBOwIBAAJBAL8k/xiHJHKAvZSQUCy9GG3vfl3ejMlOsUI9a4o/sm5MjtGX1uJZ\r\nUCOykr6f3NnJi+8gyFySoPDCL1qj84fv93ECAwEAAQJBAJY4DCcJpnI6jUNhezD9\r\n12Imsugwy/I1XweQ36BB2Qfm0YjiMR/d7XnEd/6tcBC73k8c+WQ87aOVjraoaqQf\r\nmGUCIQD/sjJSIyllby9OysWajEjJa4fh+qABIYbNYAMCjt78FwIhAL9fKHjfTPUF\r\nLCui/LSAaPioF+u1tlBrfDSA+5ChDzW3AiA44nf3dgMboeSwbsQPYe4/gUC1sYAv\r\nQDoxLo783rQU+QIgUSv1qL9ejxcwkxnBAnbtD3uNGeerexT8S/Dhw4jtQKUCIQDq\r\nFDRGO+WCRf4VpdfG0fxWa8Av6XuCho7zonmVyutCCg==\r\n-----END RSA PRIVATE KEY-----', '-----BEGIN PUBLIC KEY-----\r\nMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIvcdo7xrkLeGjI8pYr+wOW8dIizA4Ui\r\nkT5wdnE6b3pvmyIcT81NfiezWllBbcFQkP/0FQzLAp2LWlsaPrCZys0CAwEAAQ==\r\n-----END PUBLIC KEY-----', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTIxOCwiYXBwSWQiOiIwMDcxMTUwMjM1ODQiLCJtZXJjaGFudElkIjoxMjg1MDUsInN0b3JlSWQiOjEwNTgxMjA3LCJhY2NvdW50SWQiOjQ0NywidHlwZSI6IkFQUCIsImlhdCI6MTYyMTY2MzQyN30.Y0jP1REH42l_gHjKUiMgXSkbiywNR1CpdnMfuskiO0I', '007115023584', 10581207, 'https://sbx-gapi.payme.vn', 0, '2022-02-14 10:00:07', '2022-02-14 10:00:07');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `stores`
 --
 
 CREATE TABLE `stores` (
@@ -2780,7 +3027,7 @@ CREATE TABLE `stores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `stores`
+-- Đang đổ dữ liệu cho bảng `stores`
 --
 
 INSERT INTO `stores` (`id`, `name`, `slug`, `id_owner`, `id_province`, `id_district`, `id_ward`, `address`) VALUES
@@ -2791,7 +3038,7 @@ INSERT INTO `stores` (`id`, `name`, `slug`, `id_owner`, `id_province`, `id_distr
 -- --------------------------------------------------------
 
 --
--- Table structure for table `store_address`
+-- Cấu trúc bảng cho bảng `store_address`
 --
 
 CREATE TABLE `store_address` (
@@ -2805,12 +3052,12 @@ CREATE TABLE `store_address` (
   `id_district` int(11) NOT NULL,
   `id_ward` int(11) NOT NULL,
   `address` varchar(255) NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `store_address`
+-- Đang đổ dữ liệu cho bảng `store_address`
 --
 
 INSERT INTO `store_address` (`id`, `id_user`, `name`, `fullname`, `phone`, `email`, `id_province`, `id_district`, `id_ward`, `address`, `updated_at`, `created_at`) VALUES
@@ -2827,7 +3074,7 @@ INSERT INTO `store_address` (`id`, `id_user`, `name`, `fullname`, `phone`, `emai
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
@@ -2839,64 +3086,42 @@ CREATE TABLE `users` (
   `password` varchar(500) CHARACTER SET utf8mb4 DEFAULT NULL,
   `email` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `level` tinyint(4) DEFAULT '0',
+  `level` tinyint(4) DEFAULT 0,
   `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_tinhthanh` int(9) DEFAULT NULL,
   `id_phuongxa` int(9) DEFAULT NULL,
   `id_quanhuyen` int(9) DEFAULT NULL,
   `duong` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `type_cmnd` int(9) DEFAULT '0',
+  `type_cmnd` int(9) DEFAULT 0,
   `cmnd` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cmnd_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cmnd_image2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `check_kyc` int(9) DEFAULT '0',
-  `tichluyC` int(9) DEFAULT '0',
+  `check_kyc` int(9) DEFAULT 0,
+  `tichluyC` int(9) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Đang đổ dữ liệu cho bảng `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `code_customer`, `avatar`, `hoten`, `password`, `email`, `phone`, `level`, `address`, `id_tinhthanh`, `id_phuongxa`, `id_quanhuyen`, `duong`, `type_cmnd`, `cmnd`, `cmnd_image`, `cmnd_image2`, `check_kyc`, `tichluyC`, `created_at`, `updated_at`) VALUES
-(1, 'truong', 'NONE', NULL, NULL, '$2y$10$GpRjtByq.8BL20XQ8aXWP.jD6P/EDOYzILU9BlIYNx.E1U1Tjd9Hq', 'truong@gmail.com', '1231324', 0, '998 Quang asfas', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 2, 1000, '2021-10-01 02:27:58', '2022-01-20 13:59:33'),
-(13, 'thinh3', 'NONE', 'GettyImages-1036106366-5c58ee26c9e77c00016b4152.jpg', 'Thinh nguyen', '$2y$10$9qzQ.LDsbPeMJAizEnHqnOL3I/j2bvnM1amPqPQQA6IBTj6p6BaI.', 'thinhnguyen01165@gmail.com', '01235221111', 1, '114 Quang Trung', NULL, NULL, NULL, NULL, 2, '215440000', 'cmnd.jpg', NULL, 1, 5400000, '2021-11-02 07:15:49', '2021-11-21 19:38:02'),
-(14, 'thinh4', 'NONE', NULL, NULL, '$2y$10$3LlJGvvRHNlC6YvT5RfZjudl7aZm5XTDcAkqrC.m9cZQSU5W4u4ji', 'thinh4@gmail.com', '0852211167', 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, '2021-11-03 07:07:51', '2021-11-03 07:07:51'),
-(15, 'thinh3', 'NONE', NULL, NULL, '$2y$10$5hYsnLLcFmc7ObBlu1b4oOYAYsbH0kChIffclx.FjABu.tYXofjPC', 'thinhnguyen065@gmail.com', '12345678912312', 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, '2021-11-04 07:47:44', '2021-11-04 07:47:44'),
-(16, 'thinh3', 'NONE', NULL, NULL, '$2y$10$yRF53CKEej7ntKVWpYBuSuXzQBK0atd146V/mZjmOFlOm1CJNwK6e', '124@gmail.com', '12345678912312', 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, '2021-11-04 07:49:09', '2021-11-04 07:49:09'),
-(17, 'thinh5', 'NONE', NULL, 'Thinh', '$2y$10$CcOnF1dpPKeP4lL5NK6UMeO8FrJd6mVYtiDNcrmOMXIgbB3Cj5I2.', 'thinhnguyen01144@gmail.com', '1234567890', 0, '115 Quang Trung', NULL, NULL, NULL, NULL, 0, '21526600', NULL, NULL, 0, 0, '2021-11-04 07:58:04', '2021-11-04 09:03:38'),
-(18, 'thinh6', 'NONE', 'call.png', 'Thinh nguyen day', '$2y$10$Zy9uIlkM2kpCYJr8RDhuvOOjlzQZiHAx7kbE2GH2ehCe8Fb1rCFBW', 'thinh6@gmail.com', '0123455789', 0, '114 Quang Trung', 23, 23539, 2353, NULL, 1, '215266001', 'cmnd.jpg', 'call.png', 1, 0, '2021-11-21 19:44:45', '2021-11-22 03:39:20'),
-(20, 'thinh7', 'NONE', NULL, 'Thinh nguyen', '$2y$10$YKrYHPuS5W9ZD9TYUhKnM.JXl6jhUc5VE72auzgg33lcIPlkcUjiq', 'thinh7@gmail.com', '0907777777', 0, '116 Quang Trung', 10, 18831, 1883, NULL, 0, '21526609', 'cmnd.jpg', 'cmnd.jpg', 0, 0, '2021-11-22 07:40:34', '2021-11-22 07:42:51'),
-(21, 'thinh8', 'NONE', NULL, NULL, '$2y$10$NDdFppR4mKCtn8.SDo6YZ.K11Cw4q8mGj5qTR2mchD6sLdTPzFlT6', 'thinh8@gmail.com', '0569999999', 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, '2021-12-03 06:56:23', '2021-12-03 06:56:23'),
-(22, 'thinh9', 'NONE', NULL, 'thinh day', '$2y$10$y2QlHE6c.Zu5zZ/cPnpMJOLAGp4nR/bLFfGGq4DLRvEvUdr7Llk4.', NULL, '0914241456', 0, '14355 thinh', 20, 20775, 2075, NULL, 1, '215445354', 'z2907591883518_062f411f6f0d3c91abcf42472994e8cc.jpg', 'z2907591901305_a8e93604b204c4160e898a3c72516cb5.jpg', 0, 0, '2021-12-03 07:22:54', '2021-12-03 07:24:03'),
-(23, 'kirabboy', 'NONE', NULL, NULL, '$2y$10$i71vfLZv.mJ94TS.K3qlFOe8a.x.M9hYDvl6m10.N1XP1ioaNXPWy', 'nc.hung0806@gmail.com', '0338927456', 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, '2021-12-04 07:28:11', '2021-12-04 07:28:11'),
-(24, 'Le Dai Cuong', 'NONE', NULL, NULL, '$2y$10$/cJs5v6.HpbKZ3CebLTsrej9K7OEVBstQa/3gvRFPFMcRfrWQtTvC', NULL, '0888826027', 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 1, 0, '2021-12-08 02:48:28', '2021-12-08 02:49:15'),
-(25, NULL, 'NONE', NULL, NULL, '$2y$10$zoeGtv3mdVjXtCdkx40/B.mUxlR3CbL.rOu21zBfzhOu4N6YrdFRG', NULL, '0899302323', 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, '2021-12-08 03:05:39', '2021-12-08 03:05:39'),
-(26, NULL, 'NONE', NULL, NULL, '$2y$10$yIUWp1MAHUwUFIRviWMHoeOBCx1/6OOlg1Nogh.IElc9vuvmIHt1S', NULL, '0905361059', 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 1, 0, '2021-12-08 03:07:06', '2021-12-08 03:07:35'),
-(28, 'cmart', 'NONE', NULL, NULL, '$2y$10$TwqsDAZIoQdGfzsbdX0TZe08s3ogKBkLlWTWUfGxO5.1GP1dQHTTG', NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 1, 0, '2021-12-13 08:21:58', '2021-12-25 07:40:32'),
-(29, 'truongvietan', 'NONE', NULL, NULL, '$2y$10$HShiK8bo64Wr.jpIhkpUnuf6ssPkqqaHWpghPo4dKDEQEH9s.qLoy', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, '2021-12-13 09:11:57', '2021-12-13 09:11:57'),
-(31, 'testingfinal', 'NONE', NULL, 'Thinh nguyen', '$2y$10$Fb8oCYYBe1tjB6dfI.ivK.SA3HAKV5LDG6Us.iBlv.0/ioH1q16He', NULL, '01235225465', 1, '114 Quang Trung5', 17, 17620, 1761, NULL, 1, NULL, NULL, NULL, 1, 0, '2021-12-13 09:31:59', '2021-12-13 09:43:29'),
-(32, '0849082949', 'NONE', NULL, 'GFHG', '$2y$10$APwm2kcXnBiWd9WkeQ8fQOuCmYN4k05R7juxeMLlf9OT2IBvOURQS', NULL, '0849082949', 0, 'a', 17, 17327, 1731, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2021-12-20 11:53:58', '2022-01-21 09:35:36'),
-(33, 'Đoàn quyết', 'NONE', NULL, 'Đoàn quyết', '$2y$10$EdwdV3/6RZ32jYnrAunlh.8EUah2lzsQ6aYoxFNgh05C6hf2m9vSu', NULL, '0942290942', 0, '185/9/1 nguyễn phúc chu', 70, 73690, 7360, NULL, 0, NULL, NULL, NULL, 1, 0, '2021-12-22 00:01:26', '2021-12-22 00:29:26'),
-(34, 'kira3', 'NONE', NULL, NULL, '$2y$10$xcRNZved8UvfSgZL/mjhEOvv2v/OEJMrybyYPD15jXvoCKR3Hz8e.', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, '2021-12-24 03:11:32', '2021-12-24 03:11:32'),
-(35, '01239999999', 'NONE', NULL, NULL, '$2y$10$deQ6ScJ8wO4vMp2D3mXqIe72Qzs31b0NlH/qEgFHFBW4QBM2RkPC.', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, '2021-12-24 04:45:31', '2021-12-24 04:45:31'),
-(36, 'demoio', 'NONE', NULL, 'Le Dai Cuong', '$2y$10$3m4Q8vyaQniI7FObcQLD/O.rir4M.VDgGgGpT0cX2M2.tnEwtrfF2', NULL, '0905361058', 0, 'Thôn Triêm Trung 1', 23, 23419, 2340, NULL, 1, NULL, NULL, NULL, 0, 0, '2021-12-24 13:14:46', '2021-12-29 04:00:21'),
-(49, NULL, '202112290001', NULL, 'Thinh nguyen', '$2y$10$IQiepErS5EYppyBIgo4fNOcqgIqK1FrIHlvDnoYop7QBMZE7yq/ai', NULL, '0123123123', 0, '123', 33, 33161, 3316, '12345', 1, NULL, '1640786286.png', '1640786286.png', 0, 0, '2021-12-29 13:58:06', '2021-12-31 09:59:37'),
-(50, NULL, '202112310001', NULL, 'Nguyễn Chính Hưng', '$2y$10$cksZM2chnksqCpgDVNQkK.KR4K4wkm5PpNUtTN1xAWUSDy5.XL9wC', NULL, '0811310806', 0, '28, đường số 27, phường Tân Quy', 70, 72070, 7200, '123123', 2, NULL, '1640945077.png', '1640945077.png', 0, 7990, '2021-12-31 10:04:37', '2022-01-05 15:09:09'),
-(51, NULL, '202201060001', NULL, 'testing final 123', '$2y$10$gVALh3jza9H8bpqkLAJAveip0QMgDZOvvYkBABs1ZngBMDEfuaoje', NULL, '01245695555', 0, '998 Quang Trung', 79, 79496, 7948, '1234', 2, NULL, '1641483133.png', '1641483133.png', 0, 0, '2022-01-06 15:32:13', '2022-01-06 15:32:13'),
-(53, NULL, '202201210001', NULL, 'Nguyễn Chính Hưng', '$2y$10$NjW/Hki8DqQy88g5QJukUuJ/Euu0S3O2yOEawxuiFZgpuKhKcQFKa', NULL, '123123123', 0, '28, đường số 27', 70, 75670, 7560, NULL, 1, NULL, '1642738545.png', '1642738545.png', 0, 0, '2022-01-21 04:15:45', '2022-01-21 04:15:45');
+(1, NULL, '202201170001', NULL, 'Thinh nguyen 10', '$2y$10$.9NDTNebxoOf5Hfayme5v.Tc5mjx0SA2Ee5eGzF8LeUrFBJouV1iy', NULL, '0123456789', 0, '998 Quang Trung', 70, 72370, 7220, '1234', 1, NULL, '1642392508.png', '1642392508.png', 1, 0, '2022-01-17 04:08:28', '2022-01-18 05:05:46'),
+(2, NULL, '202201170002', NULL, 'Testing', '$2y$10$MhpbMHV9YaRWUOsVU2Xz2u24fX1p/hqiB4Lslvhergn2VGgwdlpCa', NULL, '0987654321', 0, '998 Quang Trung', 80, 80400, 8040, '1234', 1, NULL, '1642395996.png', '1642395996.png', 0, 0, '2022-01-17 05:06:36', '2022-01-17 05:06:36'),
+(3, NULL, '202201250001', NULL, 'Nguyễn Chính Hưng', '$2y$10$DwNL2oudgnhm143dCYWng.2n5G5Y.mu/dkidGAka6KbtNZb1dHKcy', NULL, '0338927456', 0, '28, đường số 27', 70, 75670, 7560, 'Xá', 1, NULL, '1643103570.png', '1643103570.png', 0, 0, '2022-01-25 09:39:30', '2022-01-25 09:39:30'),
+(4, NULL, '202202140001', NULL, 'Trần Trường', '$2y$10$dsPZTWEd/8qL94toB9dHEuOdxPna7MprLo5OaAyxZWBv67VBpikGW', NULL, '0342909557', 0, '954, quang trung', 17, 17354, 1734, NULL, 1, NULL, '1644821517.jpg', '1644821517.jpg', 0, 0, '2022-02-14 06:51:57', '2022-02-14 06:51:57');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_info`
+-- Cấu trúc bảng cho bảng `user_info`
 --
 
 CREATE TABLE `user_info` (
   `id` int(11) NOT NULL,
   `fullname` varchar(255) NOT NULL,
-  `address_full` text,
+  `address_full` text DEFAULT NULL,
   `identity_number` varchar(255) NOT NULL,
   `identity_front` varchar(255) DEFAULT NULL,
   `identity_after` varchar(255) DEFAULT NULL,
@@ -2911,7 +3136,7 @@ CREATE TABLE `user_info` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ward`
+-- Cấu trúc bảng cho bảng `ward`
 --
 
 CREATE TABLE `ward` (
@@ -2924,7 +3149,7 @@ CREATE TABLE `ward` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ward`
+-- Đang đổ dữ liệu cho bảng `ward`
 --
 
 INSERT INTO `ward` (`id`, `maphuongxa`, `tenphuongxa`, `maquanhuyen`, `created_at`, `updated_at`) VALUES
@@ -14080,7 +14305,7 @@ INSERT INTO `ward` (`id`, `maphuongxa`, `tenphuongxa`, `maquanhuyen`, `created_a
 -- --------------------------------------------------------
 
 --
--- Table structure for table `warehouse`
+-- Cấu trúc bảng cho bảng `warehouse`
 --
 
 CREATE TABLE `warehouse` (
@@ -14091,12 +14316,12 @@ CREATE TABLE `warehouse` (
   `id_district` int(11) NOT NULL,
   `id_ward` int(11) NOT NULL,
   `address` text COLLATE utf8_unicode_ci NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `warehouse`
+-- Đang đổ dữ liệu cho bảng `warehouse`
 --
 
 INSERT INTO `warehouse` (`id`, `name`, `code`, `id_province`, `id_district`, `id_ward`, `address`, `updated_at`, `created_at`) VALUES
@@ -14109,7 +14334,7 @@ INSERT INTO `warehouse` (`id`, `name`, `code`, `id_province`, `id_district`, `id
 -- --------------------------------------------------------
 
 --
--- Table structure for table `warehouse_product`
+-- Cấu trúc bảng cho bảng `warehouse_product`
 --
 
 CREATE TABLE `warehouse_product` (
@@ -14117,12 +14342,12 @@ CREATE TABLE `warehouse_product` (
   `warehouse_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `warehouse_product`
+-- Đang đổ dữ liệu cho bảng `warehouse_product`
 --
 
 INSERT INTO `warehouse_product` (`id`, `warehouse_id`, `product_id`, `quantity`, `updated_at`, `created_at`) VALUES
@@ -14134,17 +14359,24 @@ INSERT INTO `warehouse_product` (`id`, `warehouse_id`, `product_id`, `quantity`,
 (6, 1, 13, 68, '2021-09-20 06:48:06', '2021-09-20 06:48:06');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `admins`
+-- Chỉ mục cho bảng `admins`
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `blogs`
+-- Chỉ mục cho bảng `banner`
+--
+ALTER TABLE `banner`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `type` (`type`);
+
+--
+-- Chỉ mục cho bảng `blogs`
 --
 ALTER TABLE `blogs`
   ADD PRIMARY KEY (`id`),
@@ -14152,34 +14384,34 @@ ALTER TABLE `blogs`
   ADD KEY `blog_category_fk` (`id_ofcategory`);
 
 --
--- Indexes for table `blog_category`
+-- Chỉ mục cho bảng `blog_category`
 --
 ALTER TABLE `blog_category`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `slug` (`slug`);
 
 --
--- Indexes for table `coupons`
+-- Chỉ mục cho bảng `coupons`
 --
 ALTER TABLE `coupons`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `code` (`code`);
 
 --
--- Indexes for table `coupon_promo`
+-- Chỉ mục cho bảng `coupon_promo`
 --
 ALTER TABLE `coupon_promo`
   ADD PRIMARY KEY (`id`),
   ADD KEY `coupon_promo_fk` (`id_ofcoupon`);
 
 --
--- Indexes for table `district`
+-- Chỉ mục cho bảng `district`
 --
 ALTER TABLE `district`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `info_company`
+-- Chỉ mục cho bảng `info_company`
 --
 ALTER TABLE `info_company`
   ADD PRIMARY KEY (`id`),
@@ -14187,78 +14419,86 @@ ALTER TABLE `info_company`
   ADD KEY `type` (`type`);
 
 --
--- Indexes for table `migrations`
+-- Chỉ mục cho bảng `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `model_has_permissions`
+-- Chỉ mục cho bảng `model_has_permissions`
 --
 ALTER TABLE `model_has_permissions`
   ADD PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
   ADD KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`);
 
 --
--- Indexes for table `model_has_roles`
+-- Chỉ mục cho bảng `model_has_roles`
 --
 ALTER TABLE `model_has_roles`
   ADD PRIMARY KEY (`role_id`,`model_id`,`model_type`),
   ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
 
 --
--- Indexes for table `orders`
+-- Chỉ mục cho bảng `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `order_address`
+-- Chỉ mục cho bảng `order_address`
 --
 ALTER TABLE `order_address`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_order_id_adress` (`id_order`);
 
 --
--- Indexes for table `order_info`
+-- Chỉ mục cho bảng `order_info`
 --
 ALTER TABLE `order_info`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_order_id_info` (`id_order`);
 
 --
--- Indexes for table `order_products`
+-- Chỉ mục cho bảng `order_payme`
+--
+ALTER TABLE `order_payme`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `transaction_partner_id` (`transaction_partner_id`),
+  ADD UNIQUE KEY `transaction_payme_id` (`transaction_payme_id`);
+
+--
+-- Chỉ mục cho bảng `order_products`
 --
 ALTER TABLE `order_products`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `order_stores`
+-- Chỉ mục cho bảng `order_stores`
 --
 ALTER TABLE `order_stores`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `order_vat`
+-- Chỉ mục cho bảng `order_vat`
 --
 ALTER TABLE `order_vat`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `payments`
+-- Chỉ mục cho bảng `payments`
 --
 ALTER TABLE `payments`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `permissions`
+-- Chỉ mục cho bảng `permissions`
 --
 ALTER TABLE `permissions`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`);
 
 --
--- Indexes for table `personal_access_tokens`
+-- Chỉ mục cho bảng `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
@@ -14266,7 +14506,31 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indexes for table `products`
+-- Chỉ mục cho bảng `point_c`
+--
+ALTER TABLE `point_c`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `point_history`
+--
+ALTER TABLE `point_history`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `point_m`
+--
+ALTER TABLE `point_m`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `point_m_history`
+--
+ALTER TABLE `point_m_history`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
@@ -14274,111 +14538,117 @@ ALTER TABLE `products`
   ADD KEY `product_category_fk` (`category_id`);
 
 --
--- Indexes for table `product_brand`
+-- Chỉ mục cho bảng `product_brand`
 --
 ALTER TABLE `product_brand`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `slug` (`slug`);
 
 --
--- Indexes for table `product_calculation_unit`
+-- Chỉ mục cho bảng `product_calculation_unit`
 --
 ALTER TABLE `product_calculation_unit`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `product_categories`
+-- Chỉ mục cho bảng `product_categories`
 --
 ALTER TABLE `product_categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `slug` (`slug`);
 
 --
--- Indexes for table `product_price`
+-- Chỉ mục cho bảng `product_price`
 --
 ALTER TABLE `product_price`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_product_price_fk` (`id_ofproduct`);
 
 --
--- Indexes for table `product_rating`
+-- Chỉ mục cho bảng `product_rating`
 --
 ALTER TABLE `product_rating`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `product_store`
+-- Chỉ mục cho bảng `product_store`
 --
 ALTER TABLE `product_store`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `province`
+-- Chỉ mục cho bảng `province`
 --
 ALTER TABLE `province`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `roles`
+-- Chỉ mục cho bảng `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`);
 
 --
--- Indexes for table `role_has_permissions`
+-- Chỉ mục cho bảng `role_has_permissions`
 --
 ALTER TABLE `role_has_permissions`
   ADD PRIMARY KEY (`permission_id`,`role_id`),
   ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
 
 --
--- Indexes for table `settings`
+-- Chỉ mục cho bảng `settings`
 --
 ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `key` (`key`);
 
 --
--- Indexes for table `stores`
+-- Chỉ mục cho bảng `setting_payment_payme`
+--
+ALTER TABLE `setting_payment_payme`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `stores`
 --
 ALTER TABLE `stores`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `slug` (`slug`);
 
 --
--- Indexes for table `store_address`
+-- Chỉ mục cho bảng `store_address`
 --
 ALTER TABLE `store_address`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `user_info`
+-- Chỉ mục cho bảng `user_info`
 --
 ALTER TABLE `user_info`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ward`
+-- Chỉ mục cho bảng `ward`
 --
 ALTER TABLE `ward`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `warehouse`
+-- Chỉ mục cho bảng `warehouse`
 --
 ALTER TABLE `warehouse`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `warehouse_product`
+-- Chỉ mục cho bảng `warehouse_product`
 --
 ALTER TABLE `warehouse_product`
   ADD PRIMARY KEY (`id`),
@@ -14386,261 +14656,303 @@ ALTER TABLE `warehouse_product`
   ADD KEY `warehouse_id_fk` (`warehouse_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `admins`
+-- AUTO_INCREMENT cho bảng `admins`
 --
 ALTER TABLE `admins`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `blogs`
+-- AUTO_INCREMENT cho bảng `banner`
+--
+ALTER TABLE `banner`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT cho bảng `blogs`
 --
 ALTER TABLE `blogs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `blog_category`
+-- AUTO_INCREMENT cho bảng `blog_category`
 --
 ALTER TABLE `blog_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `coupons`
+-- AUTO_INCREMENT cho bảng `coupons`
 --
 ALTER TABLE `coupons`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `coupon_promo`
+-- AUTO_INCREMENT cho bảng `coupon_promo`
 --
 ALTER TABLE `coupon_promo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `district`
+-- AUTO_INCREMENT cho bảng `district`
 --
 ALTER TABLE `district`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=709;
 
 --
--- AUTO_INCREMENT for table `info_company`
+-- AUTO_INCREMENT cho bảng `info_company`
 --
 ALTER TABLE `info_company`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `order_address`
+-- AUTO_INCREMENT cho bảng `order_address`
 --
 ALTER TABLE `order_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `order_info`
+-- AUTO_INCREMENT cho bảng `order_info`
 --
 ALTER TABLE `order_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `order_products`
+-- AUTO_INCREMENT cho bảng `order_payme`
+--
+ALTER TABLE `order_payme`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT cho bảng `order_products`
 --
 ALTER TABLE `order_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `order_stores`
+-- AUTO_INCREMENT cho bảng `order_stores`
 --
 ALTER TABLE `order_stores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `order_vat`
+-- AUTO_INCREMENT cho bảng `order_vat`
 --
 ALTER TABLE `order_vat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `payments`
+-- AUTO_INCREMENT cho bảng `payments`
 --
 ALTER TABLE `payments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `permissions`
+-- AUTO_INCREMENT cho bảng `permissions`
 --
 ALTER TABLE `permissions`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
--- AUTO_INCREMENT for table `personal_access_tokens`
+-- AUTO_INCREMENT cho bảng `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT cho bảng `point_c`
+--
+ALTER TABLE `point_c`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT cho bảng `point_history`
+--
+ALTER TABLE `point_history`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT cho bảng `point_m`
+--
+ALTER TABLE `point_m`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT cho bảng `point_m_history`
+--
+ALTER TABLE `point_m_history`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
--- AUTO_INCREMENT for table `product_brand`
+-- AUTO_INCREMENT cho bảng `product_brand`
 --
 ALTER TABLE `product_brand`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `product_calculation_unit`
+-- AUTO_INCREMENT cho bảng `product_calculation_unit`
 --
 ALTER TABLE `product_calculation_unit`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `product_categories`
+-- AUTO_INCREMENT cho bảng `product_categories`
 --
 ALTER TABLE `product_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1064;
 
 --
--- AUTO_INCREMENT for table `product_price`
+-- AUTO_INCREMENT cho bảng `product_price`
 --
 ALTER TABLE `product_price`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- AUTO_INCREMENT for table `product_rating`
+-- AUTO_INCREMENT cho bảng `product_rating`
 --
 ALTER TABLE `product_rating`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `product_store`
+-- AUTO_INCREMENT cho bảng `product_store`
 --
 ALTER TABLE `product_store`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `province`
+-- AUTO_INCREMENT cho bảng `province`
 --
 ALTER TABLE `province`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT for table `settings`
+-- AUTO_INCREMENT cho bảng `settings`
 --
 ALTER TABLE `settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `stores`
+-- AUTO_INCREMENT cho bảng `setting_payment_payme`
+--
+ALTER TABLE `setting_payment_payme`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `stores`
 --
 ALTER TABLE `stores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `store_address`
+-- AUTO_INCREMENT cho bảng `store_address`
 --
 ALTER TABLE `store_address`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `user_info`
+-- AUTO_INCREMENT cho bảng `user_info`
 --
 ALTER TABLE `user_info`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `ward`
+-- AUTO_INCREMENT cho bảng `ward`
 --
 ALTER TABLE `ward`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11140;
 
 --
--- AUTO_INCREMENT for table `warehouse`
+-- AUTO_INCREMENT cho bảng `warehouse`
 --
 ALTER TABLE `warehouse`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `warehouse_product`
+-- AUTO_INCREMENT cho bảng `warehouse_product`
 --
 ALTER TABLE `warehouse_product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `blogs`
+-- Các ràng buộc cho bảng `blogs`
 --
 ALTER TABLE `blogs`
   ADD CONSTRAINT `blog_category_fk` FOREIGN KEY (`id_ofcategory`) REFERENCES `blog_category` (`id`);
 
 --
--- Constraints for table `coupon_promo`
+-- Các ràng buộc cho bảng `coupon_promo`
 --
 ALTER TABLE `coupon_promo`
   ADD CONSTRAINT `coupon_promo_fk` FOREIGN KEY (`id_ofcoupon`) REFERENCES `coupons` (`id`);
 
 --
--- Constraints for table `model_has_permissions`
+-- Các ràng buộc cho bảng `model_has_permissions`
 --
 ALTER TABLE `model_has_permissions`
   ADD CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `model_has_roles`
+-- Các ràng buộc cho bảng `model_has_roles`
 --
 ALTER TABLE `model_has_roles`
   ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `order_address`
+-- Các ràng buộc cho bảng `order_address`
 --
 ALTER TABLE `order_address`
   ADD CONSTRAINT `fk_order_id_adress` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `order_info`
+-- Các ràng buộc cho bảng `order_info`
 --
 ALTER TABLE `order_info`
   ADD CONSTRAINT `fk_order_id_info` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `products`
+-- Các ràng buộc cho bảng `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `product_category_fk` FOREIGN KEY (`category_id`) REFERENCES `product_categories` (`id`);
 
 --
--- Constraints for table `role_has_permissions`
+-- Các ràng buộc cho bảng `role_has_permissions`
 --
 ALTER TABLE `role_has_permissions`
   ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,

@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/doitac.css') }}" type="text/css">
 @endpush
 
-    @section('content')
-
-    
+@section('content')
     <style type="text/css">
         .styled-table {
             border-collapse: collapse;
@@ -48,138 +46,167 @@
         .styled-table tbody tr.active-row {
             font-weight: bold;
             color: #11101d;
-        }    
+        }
 
         .table-sortable th {
-        cursor: pointer;
+            cursor: pointer;
         }
 
         .table-sortable .th-sort-asc::after {
-        content: "\25b4";
+            content: "\25b4";
         }
 
         .table-sortable .th-sort-desc::after {
-        content: "\25be";
+            content: "\25be";
         }
 
         .table-sortable .th-sort-asc::after,
         .table-sortable .th-sort-desc::after {
-        margin-left: 5px;
+            margin-left: 5px;
         }
 
         .table-sortable .th-sort-asc,
         .table-sortable .th-sort-desc {
-        background: rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.1);
         }
-    </style>
-<body>
 
-    <table class="styled-table table-sortable">
-        <thead>
-            <tr style="text-align:center">
-                <th>Mã khách hàng</th>
-                <th>Họ và tên</th>
-                <th>Số điện thoại</th>
-                <th>Định danh Khách Hàng</th>
-                <th>Số dư C</th>
-                <th>Thông tin chi tiết</th>
-                <th>Trạng thái KYC</th>
-                <th>Nâng cấp level Member</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($user as $k)
+    </style>
+
+    <body>
+
+        <table class="styled-table table-sortable">
+            <thead>
                 <tr style="text-align:center">
-                    <td>{{$k->code_customer}}</td>
-                    <td>{{$k->hoten}}</td>
-                    <td>{{$k->phone}}</td>
-                    <td>@if($k->level == 1)
-                            {{"Member Thân Thiết"}}
-                        @elseif($k->level == 2)
-                            {{"Member VIP"}}
-                        @else
-                            {{"Member Thuong"}}
-                        @endif
-                    </td>
-                    <td>
-                        {{DB::table('point_c')->where('user_id','=',$k->id)->value('point_c')}}
-                    </td>
-                    <td><a class="alert alert-primary" style="text-decoration: none" href="{{url('admin/danh-sach-user')}}/{{$k->id}}"> Kiểm tra</a></td>
-                    <td>
-                        @if($k->check_kyc == 0)
+                    <th>Mã khách hàng</th>
+                    <th>Họ và tên</th>
+                    <th>Số điện thoại</th>
+                    <th>Định danh Khách Hàng</th>
+                    <th>Giá trị C từ mua SP/tháng</th>
+                    <th>Số dư C</th>
+                    {{-- <th>Thông tin chi tiết</th> --}}
+                    {{-- <th>Trạng thái KYC</th> --}}
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($user as $k)
+                    <tr style="text-align:center">
+                        <td><a href="{{ url('admin/danh-sach-user') }}/{{ $k->id }}">{{ $k->code_customer }}</a>
+                        </td>
+                        <td>{{ $k->hoten }}</td>
+                        <td>{{ $k->phone }}</td>
+                        <td>
+                          {{formatLevel($k->level)}}
+                        </td>
+                        <td>
+                            {{ formatNumber($k->orders()->where('status', 4)->sum('c_point')) }}
+                        </td>
+                        <td>
+                            {{ formatNumber($k->point_c()->value('point_c')) }}
+                        </td>
+                        {{-- <td><a class="alert alert-primary" style="text-decoration: none"
+                                href="{{ url('admin/danh-sach-user') }}/{{ $k->id }}"> Kiểm tra</a></td> --}}
+                        {{-- <td>
+                        @if ($k->check_kyc == 0)
                             <p class="alert alert-warning m-0">Đang chờ xét</p>
                         @elseif($k->check_kyc == 1)
                             <p class="alert alert-success m-0">Đồng ý</p>
                         @else
                             <p class="alert alert-danger m-0">Từ chối</p>
                         @endif
-                    </td>
-                    <td>
-                        <form data-action="danh-sach-user/{{$k->id}}" method="POST" style="text-align: -webkit-center;">
-                        @csrf
+                    </td> --}}
+                        <td style="text-align: -webkit-center;">
+                            {{-- <form data-action="danh-sach-user/{{ $k->id }}" method="POST"
+                                style="text-align: -webkit-center;">
+                                @csrf --}}
 
-                        @if($k->tichluyC >= 5000000 && $k->level == 0)
-                                <a class="alert alert-warning m-0" style="color:black;text-decoration: none;" 
-                                href="nang-cap-user/{{$k->id}}"> 
-                                    Nâng cấp lên thân thiết
-                                </a>
-                        @elseif($k->tichluyC >= 30000000 && $k->level == 1)
-                                <a class="alert alert-warning m-0" style="color:black;text-decoration: none;" 
-                                href="nang-cap-user/{{$k->id}}"> 
-                                    Nâng cấp lên VIP
-                                </a>
-                        @elseif(($k->tichluyC >= 5000000 && $k->level == 1) || ($k->tichluyC >= 30000000 && $k->level == 2))
+                            {{-- @if ($k->tichluyC >= 5000000 && $k->level == 0)
+                                    <a class="alert alert-warning m-0" style="color:black;text-decoration: none;"
+                                        href="nang-cap-user/{{ $k->id }}">
+                                        Nâng cấp lên thân thiết
+                                    </a>
+                                @else --}}
+                            <div class="input-group" style="min-width: 108px;">
+                                    <span style=" max-width: 82px;min-width: 82px;" type="text"
+                                        class="form-control form-control-sm font-size-s text-white @if($k->status==1) active @else stop @endif text-center"
+                                        aria-label="Text input with dropdown button">@if($k->status==1) Hoạt động @else Ngừng @endif</span>
+                                    <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
+                                            aria-hidden="true"></i></button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a href="{{route('user.changeStatus', $k->id)}}">
 
-                        @endif
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</body>
+                                            <span class="dropdown-item changeStatus">
+                                                    @if($k->status == 0)
+                                                        Hoạt động
+                                                    @else
+                                                        Ngừng
+                                                    @endif
+                                               
+                                            </span>
+                                        </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('user.upgradeVip', $k->id)}}"> <span class="dropdown-item btn-delete">
+                                              Nâng cấp VIP
+                                            </span>
+                                        </a>
+                                        </li>
+                                    </ul>
+                            </div>
+                            {{-- elseif(($k->point_c()->value('point_c') >= 5000000 && $k->level == 1) || ($k->tichluyC >= 30000000 && $k->level == 2))
+                                @endif --}}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </body>
 
-    @endsection
+@endsection
 
 
 @push('scripts')
     <script src="{{ asset('js/admin/amcharts.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/admin/serial.js') }}" type="text/javascript"></script>
-<script>
-    function sortTableByColumn(table, column, asc = true) {
-    const dirModifier = asc ? 1 : -1;
-    const tBody = table.tBodies[0];
-    const rows = Array.from(tBody.querySelectorAll("tr"));
+    <script>
+        function sortTableByColumn(table, column, asc = true) {
+            const dirModifier = asc ? 1 : -1;
+            const tBody = table.tBodies[0];
+            const rows = Array.from(tBody.querySelectorAll("tr"));
 
-    // Sort each row
-    const sortedRows = rows.sort((a, b) => {
-        const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
-        const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+            // Sort each row
+            const sortedRows = rows.sort((a, b) => {
+                const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+                const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
 
-        return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
-    });
+                return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+            });
 
-    // Remove all existing TRs from the table
-    while (tBody.firstChild) {
-        tBody.removeChild(tBody.firstChild);
-    }
+            // Remove all existing TRs from the table
+            while (tBody.firstChild) {
+                tBody.removeChild(tBody.firstChild);
+            }
 
-    // Re-add the newly sorted rows
-    tBody.append(...sortedRows);
+            // Re-add the newly sorted rows
+            tBody.append(...sortedRows);
 
-    // Remember how the column is currently sorted
-    table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
-    table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
-    table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
-}
+            // Remember how the column is currently sorted
+            table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+            table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
+            table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
+        }
 
-document.querySelectorAll(".table-sortable th").forEach(headerCell => {
-    headerCell.addEventListener("click", () => {
-        const tableElement = headerCell.parentElement.parentElement.parentElement;
-        const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-        const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+        document.querySelectorAll(".table-sortable th").forEach(headerCell => {
+            headerCell.addEventListener("click", () => {
+                const tableElement = headerCell.parentElement.parentElement.parentElement;
+                const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children,
+                    headerCell);
+                const currentIsAscending = headerCell.classList.contains("th-sort-asc");
 
-        sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
-    });
-});
-</script>
+                sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+            });
+        });
+    </script>
 @endpush
