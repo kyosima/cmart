@@ -67,13 +67,46 @@ class ProductCategoryController extends Controller
             }
         }
         $categoryIds = $arrCatIds;
-        
-        $products = Product::whereIn('category_id', $categoryIds)
-        ->where('status', 1)
-        ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
-        ->orderBy('products.id', 'desc')
-        ->get();
 
+        if ($request->order != null || $request->order != '') {
+            $order = explode(' ', $request->order);
+            if ($order[0] == 'name') {
+                setlocale(LC_COLLATE, 'vi-VN.UTF8', 'vi.UTF8');
+                if ($order[1] == 'asc') {
+
+                    $products = Product::whereIn('category_id', $categoryIds)
+                        ->where('status', 1)
+                        ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                        ->orderBy('products.name', 'asc')
+                        ->get();
+                } else {
+                    $products = Product::whereIn('category_id', $categoryIds)
+                    ->where('status', 1)
+                    ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->orderBy('products.name', 'desc')
+                    ->get();                }
+            } else {
+                if ($order[1] == 'asc') {
+                    $products = Product::whereIn('category_id', $categoryIds)
+                    ->where('status', 1)
+                    ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->orderBy('products.name', 'asc')
+                    ->get();
+                } else {
+                    $products = Product::whereIn('category_id', $categoryIds)
+                    ->where('status', 1)
+                    ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->orderBy('products.name', 'desc')
+                    ->get();
+                }
+            }
+        }else{
+            $products = Product::whereIn('category_id', $categoryIds)
+                        ->where('status', 1)
+                        ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                        ->orderBy('products.id', 'desc')
+                        ->get();
+        }
         // LẤY RA BRAND ĐỂ SHOW KHÔNG BỊ TRÙNG LẶP 
         $brandIds = $products->pluck('brand')->toArray();
         $brands = array_unique($brandIds);
@@ -81,14 +114,14 @@ class ProductCategoryController extends Controller
         // ARRAY BRAND 
         // VỚI KEY = BRAND ID
         // VALUE = SỐ LƯỢNG SP THUỘC BRAND
-        $countBrand = array_count_values($brandIds);        
+        $countBrand = array_count_values($brandIds);
 
         $beginMinPrice = 0;
         $endMaxPrice = 0;
         $minPrice = 0;
         $maxPrice = 0;
 
-        if(count($products) > 0) {
+        if (count($products) > 0) {
             $minPrice = $products->sortBy('regular_price')->first()->regular_price;
             $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
         }
@@ -103,33 +136,17 @@ class ProductCategoryController extends Controller
                 return redirect()->route('proCat.index', $slug);
             }
             $products = Product::whereIn('category_id', $categoryIds)
-                    ->where('status', 1)
-                    ->whereIn('brand', $request->id_brand)
-                    ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct');
+                ->where('status', 1)
+                ->whereIn('brand', $request->id_brand)
+                ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct');
         }
         // SORT THEO ORDER
-        if ($request->order != null || $request->order != '') {
-            if ($order[0] == 'name') {
-                setlocale(LC_COLLATE, 'vi.utf8');
-                if ($order[1] == 'asc') {
-                    $products = $products->sortBy($order[0], SORT_LOCALE_STRING);
-                } else {
-                    $products = $products->sortByDesc($order[0], SORT_LOCALE_STRING);
-                }
-                setlocale(LC_COLLATE, 0);
-            } else {
-                if ($order[1] == 'asc') {
-                    $products = $products->sortBy($order[0]);
-                } else {
-                    $products = $products->sortByDesc($order[0]);
-                }
-            }
-        }
+
         // SORT THEO SALE
         else if ($request->sale == 2) {
             $products = $products->where('shock_price', '>', 0)
-            ->where('status', 1)
-            ->where('shock_price', '!=', null);
+                ->where('status', 1)
+                ->where('shock_price', '!=', null);
         }
 
         // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
@@ -156,35 +173,36 @@ class ProductCategoryController extends Controller
     public function showAll()
     {
         $categories = ProductCategory::where('category_parent', 0)
-        ->where('id', '!=', 1)
-        ->where('status', 1)
-        ->with(['childrenCategories.products', 'products'])
-        ->orderBy('priority')
-        ->get();
+            ->where('id', '!=', 1)
+            ->where('status', 1)
+            ->with(['childrenCategories.products', 'products'])
+            ->orderBy('priority')
+            ->get();
 
         $arrProducts = [];
-        foreach($categories as $proCat) {
+        foreach ($categories as $proCat) {
             $products = $proCat->products->where('status', 1)->merge($proCat->subproducts->where('status', 1))->sortByDesc('id');
             array_push($arrProducts, $products);
         }
         return view('proCat.allProCat', compact('categories', 'arrProducts'));
     }
 
-    public function getSearch(Request $request){
+    public function getSearch(Request $request)
+    {
         $keyword =  $request->keyword;
         $categories = ProductCategory::where('category_parent', 0)
             ->where('id', '!=', 1)
             ->with(['childrenCategories.products', 'products'])
             ->get();
-            $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->get();
+        $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->get();
 
         return view('proCat.search', compact('categories', 'products', 'keyword'));
     }
 
-    public function getSearchSuggest(Request $request){
+    public function getSearchSuggest(Request $request)
+    {
         $keyword =  $request->keyword;
         $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->get();
-        return view('proCat.search_suggest', [ 'products'=>$products])->render();
+        return view('proCat.search_suggest', ['products' => $products])->render();
     }
-
 }

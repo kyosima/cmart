@@ -3,7 +3,7 @@
 if (!function_exists('formatPrice')) {
     function formatPrice($price)
     {
-        return number_format($price, 0, '.', ',') . ' ₫';
+        return number_format($price, 0, ',', '.') . ' ₫';
     }
 }
 if (!function_exists('formatNumber')) {
@@ -66,7 +66,7 @@ if (!function_exists('formatPriceOfLevel')) {
 if (!function_exists('formatPriceOfLevel')) {
     function formatPriceOfLevel($product)
     {
-        return number_format(getPriceOfLevel($product), 0, '.', ',') . ' ₫';
+        return number_format(getPriceOfLevel($product), 0, ',', '.') . ' ₫';
     }
 }
 }

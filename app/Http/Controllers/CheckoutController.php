@@ -264,7 +264,6 @@ class CheckoutController extends Controller
             $order_store->shipping_weight = $store_shipping_weight;
             $order_store->shipping_type = $store_shipping_type;
             $order_store->shipping_total = $store_shipping_total;
-            $order_store->remaining_m_point = max($store_m - $store_shipping_total, 0);
             if (in_array(Auth::user()->level, [3, 4])) {
                 $store_c = 0;
                 $store_m = 0;
@@ -283,7 +282,6 @@ class CheckoutController extends Controller
             $total_c += $store_c;
             $total_m += $store_m;
             $total_vat_products += $vat_products;
-            $total_remaining_m_point += $order_store->remaining_m_point;
             $total_discount_products += $discount_products;
             $sub_total += $order_store->sub_total;
             $total += $order_store->total;
@@ -589,9 +587,16 @@ class CheckoutController extends Controller
             $order_store->total = $order_store->sub_total + $vat_services + $order_store->vat_products;
             $order_store->save();
         }
-        $order->total = $order->order_stores()->sum('total');
         $order->vat_services = $order->order_stores()->sum('vat_services');
         $order->payment_method = $payment_method->id;
+        $order->total_payment_services = max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0);
+        $order->remaining_m_point = max($order->m_point - $order->shipping_total-$order->vat_services, 0);
+
+        foreach ($order->order_stores()->get() as $order_store) {
+            $order_store->total = $order_store->sub_total - $order_store->discount_products + $order_store->vat_products + ($order->total_payment_services / $order->order_stores()->count());
+            $order_store->save();
+        }
+        $order->total = $order->order_stores()->sum('total');
         $order->save();
         $order_vat = $order->order_vat()->first();
         return view('checkout.payment_info', compact('order', 'user', 'order_vat'));
@@ -699,9 +704,6 @@ class CheckoutController extends Controller
         }
         Session::forget('store_ids');
         Session::forget('edit_order');
-
-        $order->status = 1;
-        $order->save();
     }
 
     public function getPaymentDeposit(Request $request)

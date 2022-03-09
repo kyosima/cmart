@@ -9,9 +9,9 @@
     <div class="wrapper bg-white p-4">
         <div class="portlet-body">
             <div class="d-flex justify-content-end align-items-center">
-                @if(auth()->guard('admin')->user()->can('Tạo trang đơn'))
+                {{-- @if(auth()->guard('admin')->user()->can('Tạo trang đơn'))
                 <a href="{{route('info-company.create')}}" class="btn btn-primary me-3"><i class="fa fa-plus"></i> Tạo trang</a>
-                @endif
+                @endif --}}
                 @if(auth()->guard('admin')->user()->can('Xem DS trang đơn'))
                 <a href="{{route('info-company.index')}}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i> DS Trang</a>
                 @endif

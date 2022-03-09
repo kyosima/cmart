@@ -39,29 +39,21 @@ class AdminOrderController extends Controller
     {
         $orders = Order::whereMonth('created_at', Carbon::today()->month)->orderBy('id', 'DESC')->with('order_info:id_order,note')->get();
         $orders_count = $orders->groupBy('status')->map(function ($row) {
-            // dd($row);
             return $row->count();
         });
-
-        //chuyển đổi trạng thái hoàn tiền thành đã hủy
-        $filtered = $orders_count->filter(function ($value, $key) {
-            return $key == 6;
-        });
-
-        if(count($filtered->all()) > 0){
-            $orders_count->prepend($filtered->all()[6], 5);
-        }
-
-        // $shipping_method_count = OrderStore::select('shipping_method')->get()->groupBy('shipping_method')->map(function ($row) {
-        //     return $row->count();
-        // });
 
         $shipping_method_count = OrderStore::whereMonth('created_at', Carbon::today()->month)->select('shipping_method')->get()->groupBy('shipping_method')->map(function ($row) {
             return $row->count();
         });
-
         $doanh_thu = Order::where('status', 4)->sum('total');
-        return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count'));
+        $order_done_month = Order::whereMonth('created_at', Carbon::today()->month)->where('status', 4)->count();
+        $order_cancel_month = Order::whereMonth('created_at', Carbon::today()->month)->where('status', 5)->count();
+        if ($request->status != null) {
+            $status = $request->status;
+            return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count', 'status', 'order_done_month', 'order_cancel_month'));
+        } else {
+            return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count', 'order_done_month', 'order_cancel_month'));
+        }
     }
 
     public function show(Request $request, Order $order)
@@ -94,9 +86,14 @@ class AdminOrderController extends Controller
         $product = Product::select('id', 'name')->get();
         return view('admin.order.order-new', compact('provinces', 'user', 'product'));
     }
+    public function viewCbill(Request $request)
+    {
+        $order = Order::whereOrderCode($request->order_code)->first();
+        return view('admin.order.c_bill_normal', compact('order'));
+    }
     public function viewPDF(Request $request)
     {
-      
+
 
         $order = Order::whereOrderCode($request->order_code)->first();
 
@@ -107,7 +104,7 @@ class AdminOrderController extends Controller
     public function downPDF(Request $request)
     {
         $order = Order::whereOrderCode($request->order_code)->first();
-        $pdf = PDF::loadView('admin.order.c_bill', $order); //load view page
+        $pdf = PDF::loadView('admin.order.c_bill', compact('order')); //load view page
         return $pdf->download('C-Bill-' . $order->order_code . '.pdf'); // download pdf file
     }
     public function store(Request $request)
@@ -191,24 +188,24 @@ class AdminOrderController extends Controller
     public function update(Request $request, Order $order)
     {
 
-        $this->proccessCpoint($order->user, $request->sel_status, $order->status, $order->c_point, $order);
+        // $this->proccessCpoint($order->user, $request->sel_status, $order->status, $order->c_point, $order);
         // if($request->sel_status == 4){
         //     $this->addC($order);
         // }
-        $order->status = $request->sel_status;
-        $order->created_at = $request->in_created_at;
-        $order->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
-        $order->save();
-        $order->order_address()->update([
-            'id_province' => $request->sel_province,
-            'id_district' => $request->sel_district,
-            'id_ward' => $request->sel_ward,
-            'address' => $request->address,
-            'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
-        ]);
+        // $order->status = $request->sel_status;
+        // $order->created_at = $request->in_created_at;
+        // $order->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+        // $order->save();
+        // $order->order_address()->update([
+        //     'id_province' => $request->sel_province,
+        //     'id_district' => $request->sel_district,
+        //     'id_ward' => $request->sel_ward,
+        //     'address' => $request->address,
+        //     'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
+        // ]);
         $order->order_info()->update([
-            'fullname' => $request->fullname,
-            'phone' => $request->phone,
+            // 'fullname' => $request->fullname,
+            // 'phone' => $request->phone,
             'note' => $request->note,
             'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
         ]);
@@ -246,10 +243,29 @@ class AdminOrderController extends Controller
 
         return response('Thành công', 200);
     }
+    public function changeStatusOrderStore(Request $request)
+    {
+        $order_store = OrderStore::whereId($request->order_id)->first();
+        $order = $order_store->order()->first();
 
+        $this->proccessCpoint($order->user, $request->status, $order_store->status, $order_store->c_point, $order_store);
+        $order_store->status = $request->status;
+
+        $order_store->save();
+
+
+        Session::flash('success', 'Thực hiện thành công');
+
+        return back();
+    }
     public function proccessCpoint($user, $request_status, $order_status, $order_cpoint, $order)
     {
         if ($request_status == 4 && $order_status != 4) {
+
+            $count_store = 0;
+            $time = (string)date('Y-m-d-H-i-s');
+            $count_store++;
+            $transaction_code = str_replace('-', '', $time) . '-' . '00' . $count_store;
             $point_c = $user->point_c()->first();
             $id_user_chuyen = User::where('id', '=', 1)->first()->id;
             $vi_user_chuyen = PointC::where('user_id', '=', $id_user_chuyen)->first();
@@ -258,7 +274,6 @@ class AdminOrderController extends Controller
             $lichsu_chuyen->point_past_nhan = $point_c->point_c;
             $lichsu_chuyen->point_present_nhan = $point_c->point_c + $order_cpoint;
             $lichsu_chuyen->makhachhang = $user->code_customer;
-            $transaction_code = time();
             $lichsu_chuyen->note = 'Tich luy C ' . $transaction_code;
             $lichsu_chuyen->magiaodich =  $transaction_code;
             $lichsu_chuyen->amount = $order_cpoint;
@@ -274,9 +289,8 @@ class AdminOrderController extends Controller
             $vi_user_chuyen->save();
             $point_c->save();
         } elseif ($request_status == 5 && $order_status != 5) {
-
             $user = User::whereCodeCustomer('202201170001')->first();
-            $user_receiver = User::whereId($order->user_id)->first();
+            $user_receiver = User::whereId($order->order()->value('user_id'))->first();
             $lichsu_chuyen = new PointCHistory;
             $point_c = $user->point_c()->first();
             $point_c_receiver = $user_receiver->point_c()->first();
@@ -299,18 +313,14 @@ class AdminOrderController extends Controller
 
             $point_c->point_c -= $order->total;
             $point_c->save();
-            foreach($order->order_stores()->get() as $order_store){
-                $store = $order_store->store()->first();
-                foreach($order_store->order_products()->get() as $order_product){
-                    if($order_product->sku != null){
-                        $store_product = $store->product_stores()->where('id_ofproduct', $order_product->id_product)->first();
-                        $store_product->soluong += $order_product->quantity;
-                        $store_product->save();
-                    }
-                 
+            $store = $order->store()->first();
+            foreach ($order->order_products()->get() as $order_product) {
+                if ($order_product->sku != null) {
+                    $store_product = $store->product_stores()->where('id_ofproduct', $order_product->id_product)->first();
+                    $store_product->soluong += $order_product->quantity;
+                    $store_product->save();
                 }
             }
-            
         } elseif ($request_status != 4 && $order_status == 4) {
             // $point_c = $user->point_c()->first();
             // $point_c->point_c-$order_cpoint;

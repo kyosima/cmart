@@ -9,6 +9,12 @@
 @endpush
 
 @section('content')
+    <style>
+        .dtsb-searchBuilder {
+            display: none;
+        }
+
+    </style>
     <style type="text/css">
         .styled-table {
             border-collapse: collapse;
@@ -73,95 +79,110 @@
     </style>
 
     <body>
+        <div class="container">
+            <div class="m-3">
+                <div class="wrapper bg-white p-4">
+                    <table id="users-table" class="table table-striped table-bordered">
+                        <thead class="bg-dark text-light">
+                            <tr style="text-align:center">
+                                <th>Mã khách hàng</th>
+                                <th>Họ và tên</th>
+                                <th>Số điện thoại</th>
+                                <th>Định danh Khách Hàng</th>
+                                <th>Giá trị C từ mua SP/tháng</th>
+                                <th>Số dư C</th>
+                                {{-- <th>Thông tin chi tiết</th> --}}
+                                {{-- <th>Trạng thái KYC</th> --}}
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($user as $k)
+                                <tr style="text-align:center">
+                                    <td><a
+                                            href="{{ url('admin/danh-sach-user') }}/{{ $k->id }}">{{ $k->code_customer }}</a>
+                                    </td>
+                                    <td>{{ $k->hoten }}</td>
+                                    <td>{{ $k->phone }}</td>
+                                    <td>
+                                        {{ formatLevel($k->level) }}
+                                    </td>
+                                    <td>
+                                        {{ formatNumber($k->orders()->where('status', 4)->sum('c_point')) }}
+                                    </td>
+                                    <td>
+                                        {{ formatNumber($k->point_c()->value('point_c')) }}
+                                    </td>
+                                    {{-- <td><a class="alert alert-primary" style="text-decoration: none"
+                                            href="{{ url('admin/danh-sach-user') }}/{{ $k->id }}"> Kiểm tra</a></td> --}}
+                                    {{-- <td>
+                                    @if ($k->check_kyc == 0)
+                                        <p class="alert alert-warning m-0">Đang chờ xét</p>
+                                    @elseif($k->check_kyc == 1)
+                                        <p class="alert alert-success m-0">Đồng ý</p>
+                                    @else
+                                        <p class="alert alert-danger m-0">Từ chối</p>
+                                    @endif
+                                </td> --}}
+                                    <td style="text-align: -webkit-center;">
+                                        {{-- <form data-action="danh-sach-user/{{ $k->id }}" method="POST"
+                                            style="text-align: -webkit-center;">
+                                            @csrf --}}
 
-        <table class="styled-table table-sortable">
-            <thead>
-                <tr style="text-align:center">
-                    <th>Mã khách hàng</th>
-                    <th>Họ và tên</th>
-                    <th>Số điện thoại</th>
-                    <th>Định danh Khách Hàng</th>
-                    <th>Giá trị C từ mua SP/tháng</th>
-                    <th>Số dư C</th>
-                    {{-- <th>Thông tin chi tiết</th> --}}
-                    {{-- <th>Trạng thái KYC</th> --}}
-                    <th>Trạng thái</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($user as $k)
-                    <tr style="text-align:center">
-                        <td><a href="{{ url('admin/danh-sach-user') }}/{{ $k->id }}">{{ $k->code_customer }}</a>
-                        </td>
-                        <td>{{ $k->hoten }}</td>
-                        <td>{{ $k->phone }}</td>
-                        <td>
-                          {{formatLevel($k->level)}}
-                        </td>
-                        <td>
-                            {{ formatNumber($k->orders()->where('status', 4)->sum('c_point')) }}
-                        </td>
-                        <td>
-                            {{ formatNumber($k->point_c()->value('point_c')) }}
-                        </td>
-                        {{-- <td><a class="alert alert-primary" style="text-decoration: none"
-                                href="{{ url('admin/danh-sach-user') }}/{{ $k->id }}"> Kiểm tra</a></td> --}}
-                        {{-- <td>
-                        @if ($k->check_kyc == 0)
-                            <p class="alert alert-warning m-0">Đang chờ xét</p>
-                        @elseif($k->check_kyc == 1)
-                            <p class="alert alert-success m-0">Đồng ý</p>
-                        @else
-                            <p class="alert alert-danger m-0">Từ chối</p>
-                        @endif
-                    </td> --}}
-                        <td style="text-align: -webkit-center;">
-                            {{-- <form data-action="danh-sach-user/{{ $k->id }}" method="POST"
-                                style="text-align: -webkit-center;">
-                                @csrf --}}
-
-                            {{-- @if ($k->tichluyC >= 5000000 && $k->level == 0)
-                                    <a class="alert alert-warning m-0" style="color:black;text-decoration: none;"
-                                        href="nang-cap-user/{{ $k->id }}">
-                                        Nâng cấp lên thân thiết
-                                    </a>
-                                @else --}}
-                            <div class="input-group" style="min-width: 108px;">
-                                    <span style=" max-width: 82px;min-width: 82px;" type="text"
-                                        class="form-control form-control-sm font-size-s text-white @if($k->status==1) active @else stop @endif text-center"
-                                        aria-label="Text input with dropdown button">@if($k->status==1) Hoạt động @else Ngừng @endif</span>
-                                    <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
-                                            aria-hidden="true"></i></button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a href="{{route('user.changeStatus', $k->id)}}">
-
-                                            <span class="dropdown-item changeStatus">
-                                                    @if($k->status == 0)
-                                                        Hoạt động
-                                                    @else
-                                                        Ngừng
-                                                    @endif
-                                               
+                                        {{-- @if ($k->tichluyC >= 5000000 && $k->level == 0)
+                                                <a class="alert alert-warning m-0" style="color:black;text-decoration: none;"
+                                                    href="nang-cap-user/{{ $k->id }}">
+                                                    Nâng cấp lên thân thiết
+                                                </a>
+                                            @else --}}
+                                        <div class="input-group" style="min-width: 108px;">
+                                            <span style=" max-width: 82px;min-width: 82px;" type="text"
+                                                class="form-control form-control-sm font-size-s text-white @if ($k->status == 1) active @else stop @endif text-center"
+                                                aria-label="Text input with dropdown button">
+                                                @if ($k->status == 1)
+                                                    Hoạt động
+                                                @else
+                                                    Ngừng
+                                                @endif
                                             </span>
-                                        </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{route('user.upgradeVip', $k->id)}}"> <span class="dropdown-item btn-delete">
-                                              Nâng cấp VIP
-                                            </span>
-                                        </a>
-                                        </li>
-                                    </ul>
-                            </div>
-                            {{-- elseif(($k->point_c()->value('point_c') >= 5000000 && $k->level == 1) || ($k->tichluyC >= 30000000 && $k->level == 2))
-                                @endif --}}
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+                                            <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
+                                                    aria-hidden="true"></i></button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li>
+                                                    <a href="{{ route('user.changeStatus', $k->id) }}">
+
+                                                        <span class="dropdown-item changeStatus">
+                                                            @if ($k->status == 0)
+                                                                Hoạt động
+                                                            @else
+                                                                Ngừng
+                                                            @endif
+
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('user.upgradeVip', $k->id) }}"> <span
+                                                            class="dropdown-item btn-delete">
+                                                            Nâng cấp VIP
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        {{-- elseif(($k->point_c()->value('point_c') >= 5000000 && $k->level == 1) || ($k->tichluyC >= 30000000 && $k->level == 2))
+                                            @endif --}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
     </body>
 
 @endsection
@@ -171,6 +192,48 @@
     <script src="{{ asset('js/admin/amcharts.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/admin/serial.js') }}" type="text/javascript"></script>
     <script>
+        $(document).ready(function() {
+
+            $('#users-table').DataTable({
+                responsive: true,
+                "order": [],
+                lengthMenu: [
+                    [25, 50, -1],
+                    [25, 50, "All"]
+                ],
+                columnDefs: [{
+                    targets: 0,
+                    orderable: false,
+                }, {
+
+                    targets: [0, 2, 3, 6],
+                    orderable: false,
+                }, ],
+
+                "language": {
+                    "emptyTable": "Không có dữ liệu nào !",
+                    "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",
+                    "infoEmpty": "Hiển thị 0 đến 0 trong số 0 mục nhập",
+                    "infoFiltered": "(Có _TOTAL_ kết quả được tìm thấy)",
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi",
+                    "search": "Tìm kiếm",
+                    "zeroRecords": "Không có bản ghi nào tìm thấy !",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    },
+                    "decimal": ",",
+                    "thousands": ".",
+                },
+                dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
         function sortTableByColumn(table, column, asc = true) {
             const dirModifier = asc ? 1 : -1;
             const tBody = table.tBodies[0];

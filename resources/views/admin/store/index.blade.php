@@ -159,8 +159,8 @@
                                             @csrf
                                             <input type="hidden" name="action" value="" id="input-action">
                                     @endif
-                                    <table id="warehouse_table" class="table table-hover align-middle">
-                                        <thead>
+                                    <table id="warehouse_table" class="table table-striped table-bordered align-middle">
+                                        <thead class="bg-dark text-light">
                                             <tr>
                                                 <th></th>
                                                 <th class="title">Tên cửa hàng</th>
@@ -227,16 +227,14 @@
 @endsection
 
 @push('scripts')
-
     <script>
         @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
             function multiDel() {
             confirm('Bạn chắc chắn muốn thực hiện tác vụ này?') == true && $('#myform').submit()
             }
         @endif
-
         $('#warehouse_table').DataTable({
-            ordering: false,
+            order: [],
             lengthMenu: [
                 [25, 50, -1],
                 [25, 50, "All"]
@@ -256,6 +254,10 @@
                         'selectRow': true,
                     }
                 },
+                {
+                    targets: [0,2,3,5],
+                    orderable: false,
+                }
             ],
             searchBuilder: {
                 conditions: {

@@ -272,10 +272,10 @@
                                     <option value="name desc">Z-A</option>
                                     <option value="regular_price asc">Giá tăng dần</option>
                                     <option value="regular_price desc">Giá giảm dần</option>
-                                    <option value="mpoint asc">M tăng dần</option>
+                                    {{-- <option value="mpoint asc">M tăng dần</option>
                                     <option value="mpoint desc">M giảm dần</option>
                                     <option value="cpoint asc">C tăng dần</option>
-                                    <option value="cpoint desc">C giảm dần</option>
+                                    <option value="cpoint desc">C giảm dần</option> --}}
                                 </select>
                             </div>
 
