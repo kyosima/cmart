@@ -41,16 +41,19 @@ class CheckoutController extends Controller
     }
     public function index()
     {
-        if (Session::has('order_code')) {
-            $order = Order::whereOrderCode(Session::get('order_code'))->first();
-            foreach ($order->order_stores()->get() as $order_store) {
-                foreach ($order_store->order_products()->get() as $order_product) {
-                    $order_product->delete();
+        $user = Auth::user();
+        $orders_not_payment = $user->orders()->where('is_payment',0)->get();
+        if (count($orders_not_payment) > 0) {
+            foreach($orders_not_payment as $order){
+                foreach($order->order_stores()->get() as $order_store){
+                    foreach($order_store->order_products()->get() as $order_product){
+                        $order_product->delete();
+                    }
+                    $order_store->delete();
+    
                 }
-                $order_store->delete();
-            }
-            $order->delete();
-            Session::forget('order_code');
+                $order->delete();
+            }            
         }
         if (Auth::check()) {
             $user = Auth::user();
@@ -339,7 +342,6 @@ class CheckoutController extends Controller
 
 
         $order->order_info()->save($order_info);
-        Session::put('order_code', $order->order_code);
 
         // Session::forget('store_ids');
         // Session::put('order_code', $order->order_code);
@@ -679,6 +681,8 @@ class CheckoutController extends Controller
 
                         if ($result->code == '105000') {
                             $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
+                            $this->processOrder($order);
+
                             return redirect($result->data->url);
                         } else {
                             return redirect()->route('paymentFail');
@@ -692,6 +696,8 @@ class CheckoutController extends Controller
 
                         if ($result->code == '105000') {
                             $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
+                            $this->processOrder($order);
+
                             return redirect($result->data->url);
                         } else {
                             return redirect()->route('paymentFail');
@@ -722,13 +728,13 @@ class CheckoutController extends Controller
 
             $order_store->save();
         }
+        $order->is_payment = 1;
+        $order->save();
         $store_ids = Session::get('store_ids');
-
         foreach (explode(",", $store_ids) as $store_id) {
             Cart::instance($store_id)->destroy();
         }
         Session::forget('store_ids');
-        Session::forget('order_code');
     }
 
     public function getPaymentDeposit(Request $request)

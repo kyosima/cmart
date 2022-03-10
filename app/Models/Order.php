@@ -52,7 +52,8 @@ class Order extends Model
 		'discount_products',
 		'total',
 		'status',
-		'user_id'
+		'user_id',
+		'is_payment'
 	];
 
 	public function order_address()

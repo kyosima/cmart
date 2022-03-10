@@ -10,6 +10,7 @@ use App\Models\Order;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -17,17 +18,19 @@ class CartController extends Controller
 
     public function index()
     {
-        if (Session::has('order_code')) {
-            $order = Order::whereOrderCode(Session::get('order_code'))->first();
-            foreach($order->order_stores()->get() as $order_store){
-                foreach($order_store->order_products()->get() as $order_product){
-                    $order_product->delete();
+        $user = Auth::user();
+        $orders_not_payment = $user->orders()->where('is_payment',0)->get();
+        if (count($orders_not_payment) > 0) {
+            foreach($orders_not_payment as $order){
+                foreach($order->order_stores()->get() as $order_store){
+                    foreach($order_store->order_products()->get() as $order_product){
+                        $order_product->delete();
+                    }
+                    $order_store->delete();
+    
                 }
-                $order_store->delete();
-
-            }
-            $order->delete();
-            Session::forget('order_code');
+                $order->delete();
+            }            
         }
         $stores = Store::get();
         Session::forget('store_ids');

@@ -370,6 +370,7 @@
                     },
                 }
             },
+            
             "language": {
                 "searchBuilder": {
                     "add": 'Tạo bộ lọc',

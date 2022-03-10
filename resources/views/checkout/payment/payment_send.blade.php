@@ -77,14 +77,14 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="row">
+                    <div class="row d-flex justify-content-center">
                         <div class="col-md-6 col-12">
-                            <a class="btn-back-cart"
+                            {{-- <a class="btn-back-cart"
                                 href="{{ route('checkout.getPaymentMethod', ['order_code' => $order->order_code]) }}">Quay
                                 lại trang trước</a>
 
                         </div>
-                        <div class="col-md-6 col-12">
+                        <div class="col-md-6 col-12"> --}}
                             <button class="btn-dathang" type="submit">Thanh toán</button>
                         </div>
                     </div>

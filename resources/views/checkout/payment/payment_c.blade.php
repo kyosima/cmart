@@ -53,7 +53,7 @@
             <div class="text-center check-ekyc">
                 <button class="btn btn-danger" type="submit">Bắt đầu duyệt EKYC</button>
             </div>
-            <div class="row d-flex justify-content-center">
+            {{-- <div class="row d-flex justify-content-center">
                 <div class="col-6">
                     <a class="btn-back-cart"
                         href="{{ route('checkout.getPaymentMethod', ['order_code' => $order->order_code]) }}">Quay lại trang
@@ -61,7 +61,7 @@
 
                 </div>
 
-            </div>
+            </div> --}}
         </form>
     </div>
 @endsection
