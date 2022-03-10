@@ -291,7 +291,7 @@
                                                         <img src="{{ asset($item->feature_img) }}" alt="">
                                                     </a>
                                                 </div>
-                                                @if ($item->shock_price != null || $item->shock_price != 0)
+                                                {{-- @if ($item->shock_price != null || $item->shock_price != 0)
                                                     @php
                                                         $percent = (1 - $item->shock_price / $item->regular_price) * 100;
                                                     @endphp
@@ -299,7 +299,7 @@
                                                         <img alt="" src="{{ asset('image/bg-sale.png') }}">
                                                         <span class="sale">-{{ round($percent) }}%</span>
                                                     </div>
-                                                @endif
+                                                @endif --}}
                                             </div>
                                             <div class="box-text col-lg-12 col-md-8 col-8">
                                                 <div class="title-wrapper">
