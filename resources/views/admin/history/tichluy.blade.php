@@ -58,10 +58,10 @@
                             <td>{{ date('d-m-Y H:i:s', strtotime($value->created_at)) }}</td>
                             <td>{{ $value->makhachhang }}</td>
                             <td>{{ $value->note }}</td>
-                            <td>{{ $value->point_past_chuyen }}</td>
-                            <td>{{ $value->amount }}</td>
+                            <td>{{ formatNumber($value->point_past_chuyen) }}</td>
+                            <td>{{ formatNumber($value->amount) }}</td>
 
-                            <td>{{ $value->point_present_chuyen }}</td>
+                            <td>{{ formatNumber($value->point_present_chuyen) }}</td>
 
                         </tr>
                     @endforeach
@@ -115,10 +115,28 @@
                     "thousands": ".",
                 },
                 dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ],
+                    buttons: [{
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        format: {
+                            body: function(data, row, column, node) {
+                                data = $('<td>' + data + '</td>').text();
+                                console.log();
+                             
+                                    return data.replace(/\./g, '');
+                                
+                            }
+                        }
+                    }
 
+                },
+                {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                 
+                }
+            ],
             });
 
 

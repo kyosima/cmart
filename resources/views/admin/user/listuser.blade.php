@@ -91,9 +91,10 @@
                                 <th>Định danh Khách Hàng</th>
                                 <th>Giá trị C từ mua SP/tháng</th>
                                 <th>Số dư C</th>
-                                {{-- <th>Thông tin chi tiết</th> --}}
-                                {{-- <th>Trạng thái KYC</th> --}}
+
                                 <th>Trạng thái</th>
+                                <th>Trạng thái</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -113,28 +114,9 @@
                                     <td>
                                         {{ formatNumber($k->point_c()->value('point_c')) }}
                                     </td>
-                                    {{-- <td><a class="alert alert-primary" style="text-decoration: none"
-                                            href="{{ url('admin/danh-sach-user') }}/{{ $k->id }}"> Kiểm tra</a></td> --}}
-                                    {{-- <td>
-                                    @if ($k->check_kyc == 0)
-                                        <p class="alert alert-warning m-0">Đang chờ xét</p>
-                                    @elseif($k->check_kyc == 1)
-                                        <p class="alert alert-success m-0">Đồng ý</p>
-                                    @else
-                                        <p class="alert alert-danger m-0">Từ chối</p>
-                                    @endif
-                                </td> --}}
-                                    <td style="text-align: -webkit-center;">
-                                        {{-- <form data-action="danh-sach-user/{{ $k->id }}" method="POST"
-                                            style="text-align: -webkit-center;">
-                                            @csrf --}}
 
-                                        {{-- @if ($k->tichluyC >= 5000000 && $k->level == 0)
-                                                <a class="alert alert-warning m-0" style="color:black;text-decoration: none;"
-                                                    href="nang-cap-user/{{ $k->id }}">
-                                                    Nâng cấp lên thân thiết
-                                                </a>
-                                            @else --}}
+                                    <td style="text-align: -webkit-center;">
+
                                         <div class="input-group" style="min-width: 108px;">
                                             <span style=" max-width: 82px;min-width: 82px;" type="text"
                                                 class="form-control form-control-sm font-size-s text-white @if ($k->status == 1) active @else stop @endif text-center"
@@ -173,6 +155,14 @@
                                         </div>
                                         {{-- elseif(($k->point_c()->value('point_c') >= 5000000 && $k->level == 1) || ($k->tichluyC >= 30000000 && $k->level == 2))
                                             @endif --}}
+                                    </td>
+                                    <td>
+                                        @if ($k->status == 0)
+                                            Hoạt động
+                                        @else
+                                            Ngừng
+                                        @endif
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -222,10 +212,14 @@
                     [25, 50, -1],
                     [25, 50, "All"]
                 ],
-                columnDefs: [ {
+                columnDefs: [{
 
-                    targets: [ 6],
+                    targets: [6],
                     orderable: false,
+                }, {
+
+                    targets: [7],
+                    visible: false,
                 }, ],
 
                 "language": {
@@ -246,9 +240,32 @@
                     "thousands": ".",
                 },
                 dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ]
+                buttons: [{
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns:[0,1,2,3,4,5,7],
+                            format: {
+                                body: function(data, row, column, node) {
+                                    data = $('<td>' + data + '</td>').text();
+                                    console.log();
+
+                                    return data.replace(/\./g, '');
+
+                                }
+                            }
+                        }
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns:[0,1,2,3,4,5,7],
+                        }
+
+                    }
+                ],
             });
         });
 

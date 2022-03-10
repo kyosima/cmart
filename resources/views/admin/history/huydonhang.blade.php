@@ -35,9 +35,9 @@
                             <td>{{ date('d-m-Y H:i:s', strtotime($value->created_at)) }}</td>
                             <td>{{ $value->makhachhang }}</td>
                             <td>{{ $value->note }}</td>
-                            <td>{{ $value->point_past_chuyen }}</td>
-                            <td>{{ $value->amount }}</td>
-                            <td>{{ $value->point_present_chuyen }}</td>
+                            <td>{{ formatNumber($value->point_past_chuyen) }}</td>
+                            <td>{{ formatNumber($value->amount) }}</td>
+                            <td>{{ formatNumber($value->point_present_chuyen) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -49,51 +49,70 @@
 
 
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-<script src="https://cdn.datatables.net/plug-ins/1.11.5/sorting/datetime-moment.js"></script>
-{{-- <script type="text/javascript" src="{{ asset('public/css/table/table.js') }}"></script> --}}
-<script>
-    $(document).ready(function() {
-        $.fn.dataTable.moment('HH:mm MMM D, YY');
-        $.fn.dataTable.moment('dddd, MMMM Do, YYYY');
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.11.5/sorting/datetime-moment.js"></script>
+    {{-- <script type="text/javascript" src="{{ asset('public/css/table/table.js') }}"></script> --}}
+    <script>
+        $(document).ready(function() {
+            $.fn.dataTable.moment('HH:mm MMM D, YY');
+            $.fn.dataTable.moment('dddd, MMMM Do, YYYY');
 
-        // $('#history-c').on('error.dt', function(e, settings, techNote, message) {
-        //     console.log('An error has been reported by DataTables: ', message);
-        // }).DataTable();
-        $('#hoanc').DataTable({
-            responsive: true,
-            "order": [],
-            lengthMenu: [
-                [25, 50, -1],
-                [25, 50, "All"]
-            ],
-            columnDefs: [{
-                targets: [2, 3, 4, 5],
-                orderable: false,
-            }, ],
+            // $('#history-c').on('error.dt', function(e, settings, techNote, message) {
+            //     console.log('An error has been reported by DataTables: ', message);
+            // }).DataTable();
+            $('#hoanc').DataTable({
+                responsive: true,
+                "order": [],
+                lengthMenu: [
+                    [25, 50, -1],
+                    [25, 50, "All"]
+                ],
+                columnDefs: [{
+                    targets: [2, 3, 4, 5],
+                    orderable: false,
+                }, ],
 
-            "language": {
-                "emptyTable": "Không có dữ liệu nào !",
-                "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",
-                "infoEmpty": "Hiển thị 0 đến 0 trong số 0 mục nhập",
-                "infoFiltered": "(Có _TOTAL_ kết quả được tìm thấy)",
-                "lengthMenu": "Hiển thị _MENU_ bản ghi",
-                "search": "Tìm kiếm",
-                "zeroRecords": "Không có bản ghi nào tìm thấy !",
-                "paginate": {
-                    "first": "First",
-                    "last": "Last",
-                    "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
-                    "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                "language": {
+                    "emptyTable": "Không có dữ liệu nào !",
+                    "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",
+                    "infoEmpty": "Hiển thị 0 đến 0 trong số 0 mục nhập",
+                    "infoFiltered": "(Có _TOTAL_ kết quả được tìm thấy)",
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi",
+                    "search": "Tìm kiếm",
+                    "zeroRecords": "Không có bản ghi nào tìm thấy !",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    },
+                    "decimal": ",",
+                    "thousands": ".",
                 },
-                "decimal": ",",
-                "thousands": ".",
-            },
-            dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
+                dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
+                buttons: [{
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            format: {
+                                body: function(data, row, column, node) {
+                                    data = $('<td>' + data + '</td>').text();
+                                    console.log();
+
+                                    return data.replace(/\./g, '');
+
+                                }
+                            }
+                        }
+
+                    },
+                    {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                 
+                }
+                ],
+            });
         });
-    });
-</script>
+    </script>
 @endpush

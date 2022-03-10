@@ -255,6 +255,8 @@
                                                                 <th class="title" style="width: 100px">Ghi chú</th>
                                                                 <th class="title" style="width:75px;">Chuyển tiếp
                                                                 </th>
+                                                                <th class="title" style="width:75px;">Trạng thái
+                                                                </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody style="color: #748092; font-size: 14px;" id="myTable">
@@ -400,6 +402,7 @@
                                                                                 @endif
                                                                             </div>
                                                                         </td>
+                                                                        <td>{!! orderStatus($order_store->status) !!}</td>
                                                                     </tr>
                                                                 @endforeach
                                                             @endforeach
@@ -443,7 +446,7 @@
                 ],
                 columnDefs: [{
 
-                    targets: [1, 7, 9, 10, 11, 16],
+                    targets: [1, 7, 9, 10, 11, 16, 20],
                     visible: false,
                 }, {
                     targets: [15, 18, 19],
@@ -471,24 +474,34 @@
                 buttons: [{
                         extend: 'excelHtml5',
                         exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+                                20
+                            ],
                             format: {
                                 body: function(data, row, column, node) {
                                     data = $('<td>' + data + '</td>').text();
                                     console.log();
-                                    if(column == 11){
-                                        console.log( data.replace('.', ','));
+                                    if (column == 11) {
 
-                                        return  data;
-                                    }else{
-                                        return  data.replace('.', '');
-
+                                        return data.replace(',', '.');
+                                    } else {
+                                        return data.replace(/\./g, '');
                                     }
                                 }
                             }
                         }
 
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+                                20
+                            ],
+                        },
                     }
-
                 ],
 
             });

@@ -46,8 +46,8 @@ class AdminOrderController extends Controller
             return $row->count();
         });
         $doanh_thu = Order::where('status', 4)->sum('total');
-        $order_done_month = Order::whereMonth('created_at', Carbon::today()->month)->where('status', 4)->count();
-        $order_cancel_month = Order::whereMonth('created_at', Carbon::today()->month)->where('status', 5)->count();
+        $order_done_month = OrderStore::whereMonth('created_at', Carbon::today()->month)->where('status', 4)->count();
+        $order_cancel_month = OrderStore::whereMonth('created_at', Carbon::today()->month)->where('status', 5)->count();
         if ($request->status != null) {
             $status = $request->status;
             return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count', 'status', 'order_done_month', 'order_cancel_month'));

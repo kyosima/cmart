@@ -89,7 +89,7 @@
                     </div>
                     @endif
                 </div>
-                @if (auth()->guard('admin')->user()->can('Xóa HTTT') && auth()->guard('admin')->user()->can('Chỉnh sửa HTTT'))
+                {{-- @if (auth()->guard('admin')->user()->can('Xóa HTTT') && auth()->guard('admin')->user()->can('Chỉnh sửa HTTT'))
                 <div>   
                     <div class="input-group action-multiple">
                         <select class="custom-select" name="action" required="">
@@ -105,7 +105,7 @@
                         </div>
                     </div>
                 </div>
-                @endif
+                @endif --}}
 
             </div>
             <div class="portlet-body">
@@ -115,8 +115,8 @@
                         @csrf
                         <input type="hidden" name="action" value="" id="input-action">
                     @endif
-                        <table id="table-calculation-unit" class="table table-hover table-main" width="100%">
-                            <thead>
+                        <table id="table-calculation-unit" class="table table-striped table-bordered" width="100%">
+                            <thead class="bg-dark text-light">
                                 <tr>
                                     <th></th>
                                     <th class="title-text" style="width: 100px">
@@ -346,6 +346,7 @@
             columnDefs: [
                 {
                     targets: 0,
+                    visible: false,
                     defaultContent: '',
                     'render': function(data, type, row, meta){
                         if(type === 'display'){

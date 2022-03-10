@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/quanlysanpham.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/admin/doitac.css') }}" type="text/css">
     <style>
-     
+
     </style>
 @endpush
 
@@ -370,7 +370,7 @@
                     },
                 }
             },
-            
+
             "language": {
                 "searchBuilder": {
                     "add": 'Tạo bộ lọc',
@@ -432,15 +432,34 @@
                 //     next: ">",
                 //     previous: "<"
                 // },
-              
+
             },
             // "language": {
-                
+
             // },
             dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
+            buttons: [{
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        format: {
+                            body: function(data, row, column, node) {
+                                data = $('<td>' + data + '</td>').text();
+                                console.log();
+
+                                return data.replace(/\./g, '');
+
+                            }
+                        }
+                    }
+
+                },
+                {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                 
+                }
+            ],
         });
     </script>
 

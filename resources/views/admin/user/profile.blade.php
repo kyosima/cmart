@@ -93,22 +93,24 @@
                             @endif
                         </div>
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
-                                                                                    <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
-                                                                                    <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
+                                                                                        <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
+                                                                                        <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
                         <div class="row">
                             <div class="col-4">
                                 <button class="alert alert-success m-0 text-center"
                                     style="width: 85%;border-radius: 40px; background: orangered; color: white;">Đơn hàng
-                                    hoàn thành: {{ $sodonhang }}</button>
+                                    hoàn thành:
+                                    {{ formatNumber($user->orders()->first()->order_stores()->where('status', 4)->count()) }}</button>
+
                             </div>
                             <!-- <div class="col-4">
-                                                                                        <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
-                                                                                        </div> -->
+                                                                                            <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
+                                                                                            </div> -->
                             <div class="col-4">
                                 <button class="alert alert-success m-0 text-center"
                                     style="width: 85%;border-radius: 40px; background: rgb(255, 0, 21); color: white;">
                                     Đơn hàng hủy:
-                                    {{ formatNumber($user->orders()->where('status', 5)->count()) }}</button>
+                                    {{ formatNumber($user->orders()->first()->order_stores()->where('status', 5)->count()) }}</button>
                             </div>
                             <div class="col-4">
                                 <button class="alert alert-warning m-0"
@@ -151,8 +153,8 @@
                                         <input type="phone" class="form-control mb-2" name="phone"
                                             placeholder="Nhập số điện thoại" value="{{ $user->phone }}">
                                         <!-- <span class="text-uppercase">Email</span>
-                                                                                                <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
-                                                                                                    value="{{ $user->email }}" readonly=""> -->
+                                                                                                    <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
+                                                                                                        value="{{ $user->email }}" readonly=""> -->
                                     </div>
 
                                     <div class="col-lg-4 text-start">
