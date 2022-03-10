@@ -67,7 +67,11 @@ class ProductCategoryController extends Controller
             }
         }
         $categoryIds = $arrCatIds;
-
+        $products = Product::whereIn('category_id', $categoryIds)
+        ->where('status', 1)
+        ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+        ->orderBy('products.id', 'desc')
+        ->get();
         if ($request->order != null || $request->order != '') {
             $order = explode(' ', $request->order);
             if ($order[0] == 'name') {
@@ -85,18 +89,46 @@ class ProductCategoryController extends Controller
                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                     ->orderBy('products.name', 'desc')
                     ->get();                }
-            } else {
+            } elseif($order[0] == 'regular_price') {
                 if ($order[1] == 'asc') {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
-                    ->orderBy('products.name', 'asc')
+                    ->orderBy('product_price.regular_price', 'asc')
                     ->get();
                 } else {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
-                    ->orderBy('products.name', 'desc')
+                    ->orderBy('product_price.regular_price', 'desc')
+                    ->get();
+                }
+            }elseif($order[0] == 'cpoint') {
+                if ($order[1] == 'asc') {
+                    $products = Product::whereIn('category_id', $categoryIds)
+                    ->where('status', 1)
+                    ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->orderBy('product_price.cpoint', 'asc')
+                    ->get();
+                } else {
+                    $products = Product::whereIn('category_id', $categoryIds)
+                    ->where('status', 1)
+                    ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->orderBy('product_price.cpoint', 'desc')
+                    ->get();
+                }
+            }elseif($order[0] == 'mpoint') {
+                if ($order[1] == 'asc') {
+                    $products = Product::whereIn('category_id', $categoryIds)
+                    ->where('status', 1)
+                    ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->orderBy('product_price.mpoint', 'asc')
+                    ->get();
+                } else {
+                    $products = Product::whereIn('category_id', $categoryIds)
+                    ->where('status', 1)
+                    ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->orderBy('product_price.mpoint', 'desc')
                     ->get();
                 }
             }
