@@ -167,21 +167,7 @@
                                             </div>
                                         </div>
                                         <div class="order-footer payment-store-footer">
-                                            @php
-                                                $addressController = new App\Http\Controllers\AddressController();
-                                                $store = $order_store->store()->first();
-                                                
-                                                $address1_province = $addressController->getProvinceDetail($store->id_province);
-                                                $address1_district = $addressController->getDistrictDetail($store->id_province, $store->id_district);
-                                                $address1_ward = $addressController->getWardDetail($store->id_district, $store->id_ward);
-                                                
-                                                $address2_province = $addressController->getProvinceDetail($order_address->id_province);
-                                                $address2_district = $addressController->getDistrictDetail($order_address->id_province, $order_address->id_district);
-                                                $address2_ward = $addressController->getWardDetail($order_address->id_district, $order_address->id_ward);
-                                                
-                                                $address1 = $store->address . ' ' . $address1_province->PROVINCE_NAME . ' ' . $address1_district->DISTRICT_NAME . ' ' . $address1_ward->WARDS_NAME;
-                                                $address2 = $order_address->address . ' ' . $address2_province->PROVINCE_NAME . ' ' . $address2_district->DISTRICT_NAME . ' ' . $address2_ward->WARDS_NAME;
-                                            @endphp
+
                                             <span class="text-danger"></span>
                                             <div class="d-md-flex justify-content-between">
                                                 <div class="text-center">
@@ -206,8 +192,8 @@
                                                     <p><b>Số Km</b></p>
                                                     <p><small style="visibility:hidden">(Chưa bao gồm thuế VAT
                                                             8%)</small></p>
-                                                    <p>{{ App\Http\Controllers\CheckoutController::getDistance($address1, $address2) }}
-                                                        km</p>
+                                                    <p>{{ $order_store->shipping_distance }} km</p>
+
                                                 </div>
                                                 <div class="text-center">
                                                     <p><b>Phí Vận chuyển</b></p>

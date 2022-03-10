@@ -262,10 +262,7 @@ class AdminOrderController extends Controller
     {
         if ($request_status == 4 && $order_status != 4) {
 
-            $count_store = 0;
-            $time = (string)date('Y-m-d-H-i-s');
-            $count_store++;
-            $transaction_code = str_replace('-', '', $time) . '-' . '00' . $count_store;
+            $transaction_code = $order->order_store_code;
             $point_c = $user->point_c()->first();
             $id_user_chuyen = User::where('id', '=', 1)->first()->id;
             $vi_user_chuyen = PointC::where('user_id', '=', $id_user_chuyen)->first();
@@ -298,7 +295,7 @@ class AdminOrderController extends Controller
             $lichsu_chuyen->point_past_nhan = $point_c_receiver->point_c;
             $lichsu_chuyen->point_present_nhan = $point_c_receiver->point_c + $order->total;
             $lichsu_chuyen->makhachhang = $user_receiver->code_customer;
-            $transaction_code = time();
+            $transaction_code = $order->order_store_code;
             $lichsu_chuyen->note = 'Hoan GD ' . $transaction_code;
             $lichsu_chuyen->magiaodich =  $transaction_code;
             $lichsu_chuyen->amount = $order->total;

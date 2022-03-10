@@ -181,7 +181,7 @@
                 <div class="col-12">
                     <div class="d-flex justify-content-between">
                         <a class="btn-back-cart"
-                            href="{{ route('checkout.edit', ['order_code' => $order->order_code]) }}">Quay lại trang
+                            href="{{ route('checkout.index') }}">Quay lại trang
                             trước</a>
                         <button class="btn-dathang" type="submit">Tổng kết đơn hàng</button>
                     </div>

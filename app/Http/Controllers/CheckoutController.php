@@ -41,8 +41,16 @@ class CheckoutController extends Controller
     }
     public function index()
     {
-        if (Session::has('edit_order')) {
-            return redirect()->route('checkout.getPaymentMethod', ['order_code' => Session::get('edit_order')]);
+        if (Session::has('order_code')) {
+            $order = Order::whereOrderCode(Session::get('order_code'))->first();
+            foreach ($order->order_stores()->get() as $order_store) {
+                foreach ($order_store->order_products()->get() as $order_product) {
+                    $order_product->delete();
+                }
+                $order_store->delete();
+            }
+            $order->delete();
+            Session::forget('order_code');
         }
         if (Auth::check()) {
             $user = Auth::user();
@@ -128,7 +136,6 @@ class CheckoutController extends Controller
             $order_address->id_district = $user->id_quanhuyen;
             $order_address->id_ward = $user->id_phuongxa;
             $order_address->address = $user->address;
-
         } else {
             $validation = $request->validate([
                 'fullname' => 'required',
@@ -177,9 +184,9 @@ class CheckoutController extends Controller
         $sub_total = 0;
         $total = 0;
         $time = (string)date('Y-m-d-H-i-s');
-        $order_code = str_replace('-', '', $time) ;
+        $order_code = str_replace('-', '', $time);
 
-        $order->order_code =$order_code;
+        $order->order_code = $order_code;
         $count_store = 0;
 
         foreach (explode(",", $store_ids) as $store_id) {
@@ -191,6 +198,21 @@ class CheckoutController extends Controller
                 'id_store' => $store_id,
 
             ]);
+            $store = Store::whereId($store_id)->first();
+            $addressController = new AddressController();
+            $address1_province = $addressController->getProvinceDetail($store->id_province);
+            $address1_district = $addressController->getDistrictDetail($store->id_province, $store->id_district);
+            $address1_ward = $addressController->getWardDetail($store->id_district, $store->id_ward);
+
+            $address2_province = $addressController->getProvinceDetail($order_address->id_province);
+            $address2_district = $addressController->getDistrictDetail($order_address->id_province, $order_address->id_district);
+            $address2_ward = $addressController->getWardDetail($order_address->id_district, $order_address->id_ward);
+
+            $address1 = $store->address . ' ' . $address1_province->PROVINCE_NAME . ' ' . $address1_district->DISTRICT_NAME . ' ' . $address1_ward->WARDS_NAME;
+            $address2 = $order_address->address . ' ' . $address2_province->PROVINCE_NAME . ' ' . $address2_district->DISTRICT_NAME . ' ' . $address2_ward->WARDS_NAME;
+            
+            $order_store->shipping_distance = $this->getDistance($address1, $address2);
+            
             $count_store++;
             $store_tax = 0;
             $store_shipping_total = 0;
@@ -198,6 +220,7 @@ class CheckoutController extends Controller
             $store_shipping_type = 0;
             $store_shipping_weight = 0;
             $store_c = 0;
+            $process_fee = 0;
             $store_m = 0;
             $vat_products = 0;
             $vat_services = 0;
@@ -207,6 +230,7 @@ class CheckoutController extends Controller
                 $store_tax += ($row->price * getTaxValue($price->tax)) * $row->qty;
                 $store_c += $price->cpoint * $row->qty;
                 $store_m += $price->mpoint * $row->qty;
+                $process_fee += $price->phi_xuly;
                 $store_shipping_method = $row->options->method_ship;
                 $store_shipping_type = $row->options->type_ship;
                 $store_shipping_weight += $this->getWeight($row->model, $row->qty);
@@ -260,6 +284,7 @@ class CheckoutController extends Controller
                 'm_point' => 0,
             ]);
             $order_store->tax = $store_tax;
+            $order_store->process_fee = $process_fee;
             $order_store->shipping_method = $store_shipping_method;
             $order_store->shipping_weight = $store_shipping_weight;
             $order_store->shipping_type = $store_shipping_type;
@@ -273,8 +298,8 @@ class CheckoutController extends Controller
             $order_store->m_point = $store_m;
             $order_store->vat_products = $vat_products;
             $order_store->sub_total = intval(str_replace(",", "", $cart->subtotal())) + 300;
-            $order_store->total = $order_store->sub_total + $vat_products + $vat_services+ $store_shipping_total;
-            $order_store_code = str_replace('-', '', $time) . '-' . '00'. $count_store;
+            $order_store->total = $order_store->sub_total + $vat_products + $vat_services + $store_shipping_total;
+            $order_store_code = str_replace('-', '', $time) . '-' . '00' . $count_store;
             $order_store->order_store_code = $order_store_code;
             $order_store->save();
             $total_tax += $store_tax;
@@ -312,9 +337,9 @@ class CheckoutController extends Controller
 
         $order->order_address()->save($order_address);
 
-       
+
         $order->order_info()->save($order_info);
-        Session::put('edit_order', $order->order_code);
+        Session::put('order_code', $order->order_code);
 
         // Session::forget('store_ids');
         // Session::put('order_code', $order->order_code);
@@ -451,7 +476,7 @@ class CheckoutController extends Controller
                         $store_shipping_total += $row->options->price_normal;
                         break;
                 }
-            
+
                 $vat_products += $row->price * getTaxValue($price->tax) * $row->qty;
                 if (in_array(Auth::user()->level, [3, 4])) {
                     $price->cpoint = 0;
@@ -545,7 +570,7 @@ class CheckoutController extends Controller
 
         // $order->order_address()->save($order_address);
         $order_address->save();
-        
+
         $order_info->save();
 
         // Session::forget('store_ids');
@@ -589,8 +614,8 @@ class CheckoutController extends Controller
         }
         $order->vat_services = $order->order_stores()->sum('vat_services');
         $order->payment_method = $payment_method->id;
-        $order->total_payment_services = max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0);
-        $order->remaining_m_point = max($order->m_point - $order->shipping_total-$order->vat_services, 0);
+        $order->total_payment_services = max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0);
+        $order->remaining_m_point = max($order->m_point - $order->shipping_total - $order->vat_services, 0);
 
         foreach ($order->order_stores()->get() as $order_store) {
             $order_store->total = $order_store->sub_total - $order_store->discount_products + $order_store->vat_products + ($order->total_payment_services / $order->order_stores()->count());
@@ -652,10 +677,10 @@ class CheckoutController extends Controller
                         $result = $paymentPaymeController->PaymentPayme($order, $pay_method = 'CREDITCARD');
                         $result = json_decode($result);
 
-                        if( $result->code == '105000'){
+                        if ($result->code == '105000') {
                             $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
                             return redirect($result->data->url);
-                        }else{
+                        } else {
                             return redirect()->route('paymentFail');
                         }
                         break;
@@ -665,10 +690,10 @@ class CheckoutController extends Controller
                         $result = $paymentPaymeController->PaymentPayme($order);
                         $result = json_decode($result);
 
-                        if( $result->code == '105000'){
+                        if ($result->code == '105000') {
                             $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
                             return redirect($result->data->url);
-                        }else{
+                        } else {
                             return redirect()->route('paymentFail');
                         }
                         break;
@@ -703,7 +728,7 @@ class CheckoutController extends Controller
             Cart::instance($store_id)->destroy();
         }
         Session::forget('store_ids');
-        Session::forget('edit_order');
+        Session::forget('order_code');
     }
 
     public function getPaymentDeposit(Request $request)
@@ -803,8 +828,7 @@ class CheckoutController extends Controller
                 return back()->with(['message' => 'Hệ thống không xác minh được danh tính. Vui lòng liên hệ Hotline 0899.663.883 để được hỗ trợ']);
                 break;
             case 2:
-                $time = (string)date('Y-m-d-H-i-s');
-                $transaction_code = str_replace('-', '', $time) ;
+                $transaction_code = $order->order_code;
                 $this->processOrder($order);
                 $user_receiver = User::whereCodeCustomer('202201170001')->first();
                 $lichsu_chuyen = new PointCHistory;
@@ -1239,7 +1263,7 @@ class CheckoutController extends Controller
     }
     public function getWeight($product, $quantity)
     {
-        $weight = round(max($product->weight / 1000, (($product->height * $product->width * $product->length) / 3000) )* 1000);
+        $weight = round(max($product->weight / 1000, (($product->height * $product->width * $product->length) / 3000)) * 1000);
         return $weight * $quantity;
     }
     public function getDistance($address1, $address2)

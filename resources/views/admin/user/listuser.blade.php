@@ -191,9 +191,30 @@
 @push('scripts')
     <script src="{{ asset('js/admin/amcharts.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/admin/serial.js') }}" type="text/javascript"></script>
-    <script>
-        $(document).ready(function() {
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/intl.js"></script>
 
+    <script>
+        if (window.Intl) {
+            $.fn.dataTable.ext.order.htmlIntl = function(locales, options) {
+                var collator = new Intl.Collator(locales, options);
+                var types = $.fn.dataTable.ext.type;
+
+                delete types.order['html-pre'];
+                types.order['html-asc'] = function(a, b) {
+                    a = a.replace(/<.*?>/g, '');
+                    b = b.replace(/<.*?>/g, '');
+                    return collator.compare(a, b);
+                };
+                types.order['html-desc'] = function(a, b) {
+                    a = a.replace(/<.*?>/g, '');
+                    b = b.replace(/<.*?>/g, '');
+                    return collator.compare(a, b) * -1;
+                };
+            };
+        }
+        $(document).ready(function() {
+            $.fn.dataTable.ext.order.intl('vi');
+            $.fn.dataTable.ext.order.htmlIntl('vi');
             $('#users-table').DataTable({
                 responsive: true,
                 "order": [],
@@ -201,12 +222,9 @@
                     [25, 50, -1],
                     [25, 50, "All"]
                 ],
-                columnDefs: [{
-                    targets: 0,
-                    orderable: false,
-                }, {
+                columnDefs: [ {
 
-                    targets: [0, 2, 3, 6],
+                    targets: [ 6],
                     orderable: false,
                 }, ],
 

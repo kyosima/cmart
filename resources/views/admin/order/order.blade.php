@@ -140,9 +140,9 @@
                                         <span class="caption-subject"><i class="fas fa-cart-plus"></i> DANH SÁCH ĐƠN
                                             HÀNG</span>
                                         {{-- <a class="btn btn_success" href="{{route('order.create')}}"><i class="fas fa-plus"></i> Thêm mới</a> --}}
-                                        <a href="{{ route('order.exports') }}" class="btn btn_success"><i
+                                        {{-- <a href="{{ route('order.exports') }}" class="btn btn_success"><i
                                                 class="far fa-file-excel"></i>
-                                            Xuất Excel</a>
+                                            Xuất Excel</a> --}}
                                     </p>
 
                                     <span>
@@ -237,13 +237,18 @@
                                                                         class="form-check" name="checkAll"
                                                                         type="checkbox">
                                                                 </th> --}}
+                                                                <th class="title">Mã khách hàng</th>
                                                                 <th class="title">Mã giao dịch</th>
                                                                 <th class="title">Cửa hàng</th>
                                                                 <th class="title" style="width: 50px">C</th>
                                                                 <th class="title" style="width: 50px">M</th>
                                                                 <th class="title">Giá trị SP</th>
                                                                 <th class="title">Giảm giá SP</th>
+                                                                <th class="title">VAT/sp</th>
                                                                 <th class="title">ĐVVC</th>
+                                                                <th class="title">Phí xử lý</th>
+                                                                <th class="title">TLVC</th>
+                                                                <th class="title">Số km</th>
                                                                 <th class="title">Phí VC</th>
                                                                 <th class="title" style="width: 100px">HTTT</th>
                                                                 <th class="title">Phí DVGTT</th>
@@ -267,7 +272,9 @@
                                                                 @endphp
                                                                 @foreach ($order_stores as $order_store)
                                                                     <tr>
-
+                                                                        <td>
+                                                                            {{ $order_store->order()->first()->user()->value('code_customer') }}
+                                                                        </td>
                                                                         <td><a target="_blank"
                                                                                 href="{{ route('order.viewCbill', ['order_code' => $order->order_code]) }}">{{ $order_store->order_store_code }}</a>
                                                                         </td>
@@ -281,8 +288,15 @@
                                                                         </td>
                                                                         <td>{{ formatNumber($order_store->discount_products) }}
                                                                         </td>
+                                                                        <td>{{ formatNumber($order_store->vat_products) }}
+                                                                        </td>
                                                                         <td> {{ formatMethod($order_store->shipping_method) }}
                                                                         </td>
+                                                                        <td> {{ formatNumber($order_store->process_fee) }}
+                                                                        </td>
+                                                                        <td> {{ formatNumber($order_store->shipping_weight) }}
+                                                                        </td>
+                                                                        <td> {{ $order_store->shipping_distance }} </td>
                                                                         <td>{{ formatNumber($order_store->shipping_total) }}
                                                                         </td>
                                                                         <td>{{ App\Models\PaymentMethod::whereId($order->payment_method)->value('name') }}
@@ -424,11 +438,11 @@
                     [25, 50, "All"]
                 ],
                 columnDefs: [{
-                    targets: 0,
-                    orderable: false,
-                }, {
 
-                    targets: [0, 1, 6, 8, 11, 12],
+                    targets: [0, 7,9,10,11],
+                    visible: false,
+                }, {
+                    targets: [15, 17],
                     orderable: false,
                 }, ],
 

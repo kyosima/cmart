@@ -161,18 +161,10 @@
                                                                 {{$item->name}}</a>
                                                         </h3>
                                                         <ul class="box-price">
-                                                            @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
+                                                       
                                                             <li class="price">
-                                                                <span>{{number_format($item->productPrice->shock_price)}}đ</span>
+                                                                <span>{{formatPriceOfLevel($item)}}</span>
                                                             </li>
-                                                            <li class="old-price">
-                                                                <span>{{number_format($item->productPrice->regular_price)}} đ</span>
-                                                            </li>
-                                                        @else
-                                                            <li class="price">
-                                                                <span>{{number_format($item->productPrice->shock_price)}}đ</span>
-                                                            </li>
-                                                        @endif
                                                         </ul>
                                                     </div>
                                                 </div>

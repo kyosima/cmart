@@ -9,6 +9,7 @@
         .dtsb-searchBuilder {
             display: none;
         }
+
     </style>
 @endpush
 
@@ -57,7 +58,7 @@
                                 <tr>
                                     <th class="title" style="width: 30px;"><input class="form-check"
                                             name="checkAll" type="checkbox"></th>
-                                    
+
                                     <th class="title-text title1">
                                         Tên trang</th>
                                     <th class="title-text title2">
@@ -120,18 +121,38 @@
     {{-- <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script> --}}
     <script type="text/javascript" src="{{ asset('js/admin/checklist.js') }}"></script>
-    <script src="https://cdn.datatables.net/plug-ins/1.11.5/sorting/intl.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/intl.js"></script>
 
     <script>
+        if (window.Intl) {
+            $.fn.dataTable.ext.order.htmlIntl = function(locales, options) {
+                var collator = new Intl.Collator(locales, options);
+                var types = $.fn.dataTable.ext.type;
+
+                delete types.order['html-pre'];
+                types.order['html-asc'] = function(a, b) {
+                    a = a.replace(/<.*?>/g, '');
+                    b = b.replace(/<.*?>/g, '');
+                    return collator.compare(a, b);
+                };
+                types.order['html-desc'] = function(a, b) {
+                    a = a.replace(/<.*?>/g, '');
+                    b = b.replace(/<.*?>/g, '');
+                    return collator.compare(a, b) * -1;
+                };
+            };
+        }
         $(document).ready(function() {
-            $.fn.dataTable.ext.order.intl( 'vi' ); 
+            $.fn.dataTable.ext.order.intl('vi');
+            $.fn.dataTable.ext.order.htmlIntl('vi');
             $('#tblInfoCompany').DataTable({
                 order: [],
 
                 columnDefs: [{
                         targets: [0, 2, 3],
                         orderable: false,
-                    }
+                    },
+            
 
                 ],
                 "language": {

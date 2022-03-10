@@ -82,7 +82,6 @@
 
     <script type="text/javascript" src="{{ asset('public/js/admin/header.js') }}"></script>
     <script type="text/javascript" src="{{ asset('public/js/admin/validate-form.js') }}"></script>
-    {{-- <script src="https://cdn.datatables.net/plug-ins/1.11.5/sorting/numeric-comma.js"></script> --}}
 </body>
 
 </html>

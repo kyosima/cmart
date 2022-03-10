@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\Ward;
+use App\Models\Order;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
@@ -16,8 +17,17 @@ class CartController extends Controller
 
     public function index()
     {
-        if(Session::has('edit_order')){
-            return redirect()->route('checkout.getPaymentMethod', ['order_code'=>Session::get('edit_order')]);
+        if (Session::has('order_code')) {
+            $order = Order::whereOrderCode(Session::get('order_code'))->first();
+            foreach($order->order_stores()->get() as $order_store){
+                foreach($order_store->order_products()->get() as $order_product){
+                    $order_product->delete();
+                }
+                $order_store->delete();
+
+            }
+            $order->delete();
+            Session::forget('order_code');
         }
         $stores = Store::get();
         Session::forget('store_ids');

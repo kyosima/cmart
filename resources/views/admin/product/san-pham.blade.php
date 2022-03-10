@@ -6,9 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/quanlysanpham.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/admin/doitac.css') }}" type="text/css">
     <style>
-        .dtsb-searchBuilder {
-            display: none;
-        }
+     
     </style>
 @endpush
 
@@ -339,13 +337,73 @@
                 //     // type: "formatted-num"
                 // },
                 {
-                    targets: [0, 1, 2,9, 10, 11],
+                    targets: [0, 1, 2, 9, 10, 11],
                     // searchable: false,
                     orderable: false,
                     // type: "formatted-num"
                 },
             ],
+            searchBuilder: {
+                conditions: {
+                    num: {
+                        '!between': null,
+                        'between': null,
+                        '!=': null,
+                        '<': null,
+                        '>': null,
+                        '<=': null,
+                        '>=': null,
+                        'null': null,
+                        '!null': null,
+                    },
+                    string: {
+                        '!=': null,
+                        '=': null,
+                        'null': null,
+                        '!null': null,
+                    },
+                    html: {
+                        '!=': null,
+                        'null': null,
+                        '!null': null,
+                        'contains': null,
+                    },
+                }
+            },
             "language": {
+                "searchBuilder": {
+                    "add": 'Tạo bộ lọc',
+                    "condition": 'Điều kiện',
+                    "clearAll": 'Reset',
+                    "deleteTitle": 'Delete',
+                    "data": 'Cột',
+                    "leftTitle": 'Left',
+                    "logicAnd": 'VÀ',
+                    "logicOr": 'HOẶC',
+                    "rightTitle": 'Right',
+                    "title": {
+                        "0": '',
+                        "_": 'Kết quả lọc (%d)'
+                    },
+                    "value": 'Giá trị',
+                    "valueJoiner": 'et',
+                    "conditions": {
+                        "number": {
+                            "equals": '=',
+                        },
+                        "string": {
+                            "contains": '=',
+                            "equals": '=',
+                            "startsWith": 'Bắt đầu bằng ký tự',
+                            "endsWith": 'Kết thúc bằng ký tự',
+                        },
+                        "html": {
+                            "equals": '=',
+                            "startsWith": '',
+                            "endsWith": '',
+                        },
+                    },
+                },
                 "emptyTable": "Không có dữ liệu nào !",
                 "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",
                 "infoEmpty": "Hiển thị 0 đến 0 trong số 0 mục nhập",
@@ -361,7 +419,23 @@
                 },
                 "decimal": ",",
                 "thousands": ".",
+                // search: "Tìm kiếm:",
+                // lengthMenu: "Hiển thị _MENU_ kết quả",
+                // info: "Hiển thị _START_ đến _END_ trong _TOTAL_ kết quả",
+                // infoEmpty: "Hiển thị 0 trên 0 trong 0 kết quả",
+                // zeroRecords: "Không tìm thấy",
+                // emptyTable: "Hiện tại chưa có dữ liệu",
+                // paginate: {
+                //     first: ">>",
+                //     last: "<<",
+                //     next: ">",
+                //     previous: "<"
+                // },
+              
             },
+            // "language": {
+                
+            // },
             dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'

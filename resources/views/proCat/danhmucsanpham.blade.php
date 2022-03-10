@@ -6,7 +6,6 @@
 
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
-
 @endpush
 
 
@@ -65,9 +64,9 @@
                     @endif
                 </div>
                 <!-- <ul class="text-carousel-indicators">
-                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                <li data-target="#myCarousel" data-slide-to="1"></li>
-                            </ul> -->
+                                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                                </ul> -->
             </div>
         </section>
     @endif
@@ -84,7 +83,6 @@
                     </div>
                 </div>
             </div>
-
         @else
             <!-- Trang sản phẩm -->
             <div class="category-page container">
@@ -119,7 +117,7 @@
                                                         <i class="fa fa-angle-down" aria-hidden="true"></i>
                                                     </button>
                                                     @include('proCat.danhmuc-sidebar', [
-                                                    'child_categories' => $item->childrenCategories,
+                                                        'child_categories' => $item->childrenCategories,
                                                     ])
                                                 </li>
                                             @else
@@ -195,9 +193,11 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="minprice" id="minprice" value="{{ $minPrice }}">
-                                    <input type="hidden" name="beginMinPrice" id="minprice1" @if ($beginMinPrice == 0) value="{{ $minPrice }}" @else value="{{ $beginMinPrice }}" @endif>
+                                    <input type="hidden" name="beginMinPrice" id="minprice1"
+                                        @if ($beginMinPrice == 0) value="{{ $minPrice }}" @else value="{{ $beginMinPrice }}" @endif>
                                     <input type="hidden" name="maxprice" id="maxprice" value="{{ $maxPrice }}">
-                                    <input type="hidden" name="endMaxPrice" id="maxprice1" @if ($endMaxPrice == 0) value="{{ $maxPrice }}" @else value="{{ $endMaxPrice }}" @endif>
+                                    <input type="hidden" name="endMaxPrice" id="maxprice1"
+                                        @if ($endMaxPrice == 0) value="{{ $maxPrice }}" @else value="{{ $endMaxPrice }}" @endif>
                                     <div class="widget-price">
                                         <div class="form-group trai">
                                             <p class="title-range">Tối thiểu</p>
@@ -266,7 +266,8 @@
                             <!-- Bộ lọc -->
                             <div class="filter-cate">
                                 <p class="d-lg-inline d-none">Sắp xếp theo:</p>
-                                <select id="filter-products" class="form-control form-control-sm ms-2 d-lg-inline" style="width: 200px">
+                                <select id="filter-products" class="form-control form-control-sm ms-2 d-lg-inline"
+                                    style="width: 200px">
                                     <option value="" selected>Mặc định</option>
                                     <option value="name asc">A-Z</option>
                                     <option value="name desc">Z-A</option>
@@ -307,21 +308,10 @@
                                                     </a>
                                                 </div>
                                                 <div class="price-wrapper">
-                                                    @if ($item->shock_price != null || $item->shock_price != 0)
-                                                        <span class="price">
-                                                            <span
-                                                                class="amount">{{ number_format($item->shock_price) }}đ</span>
-                                                        </span>
-                                                        <span class="price-old">
-                                                            <span
-                                                                class="amount">{{ number_format($item->regular_price) }}đ</span>
-                                                        </span>
-                                                    @else
-                                                        <span class="price">
-                                                            <span
-                                                                class="amount">{{ number_format($item->regular_price) }}đ</span>
-                                                        </span>
-                                                    @endif
+                                                    <span class="price">
+                                                        <span
+                                                            class="amount">{{ formatPriceOfLevel($item) }}</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -543,13 +533,11 @@
                 $("#order").val(orders);
                 // $(`li.li-filter-cate > a[href*="${orders}"]`).addClass('active')
                 $(`#filter-products > option[value*='${orders}']`).attr('selected', 'selected')
-            } 
-            else if (sales == '2') {
+            } else if (sales == '2') {
                 $("#sale").val(sales);
                 // $(`li.li-filter-cate > a[href*="${sales}"]`).addClass('active')
                 $(`#filter-products > option[value*='${sales}']`).attr('selected', 'selected')
-            } 
-            else {
+            } else {
                 // $('li.li-filter-cate > a.order-default').addClass('active')
                 $(`#filter-products > option[value='']`).attr('selected', 'selected')
             }
@@ -560,5 +548,4 @@
         var orders = urlSearchParams.get("order");
         var sales = urlSearchParams.get("sale");
     </script>
-
 @endpush
