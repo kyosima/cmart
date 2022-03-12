@@ -11,7 +11,7 @@ class EkycController extends Controller
     public function getVerifyAccount()
     {
         $user = Auth::user();
-        if($user->change_ekyc == 1){
+        if($user->change_ekyc == 1 || $user->is_ekyc  ==0){
             return view('ekyc.verify_account');
 
         }else{
@@ -73,7 +73,7 @@ class EkycController extends Controller
                         $user->avatar = $image_portrait;
                         $user->save();
 
-                        return back()->with(['message' => 'Tài khoản đã được xác minh thành công']);
+                        return redirect()->route('account')->with(['message' => 'Tài khoản đã được xác minh thành công']);
                         break;
                 }
             } else {
