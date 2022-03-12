@@ -42,18 +42,17 @@ class CheckoutController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $orders_not_payment = $user->orders()->where('is_payment',0)->get();
+        $orders_not_payment = $user->orders()->where('is_payment', 0)->get();
         if (count($orders_not_payment) > 0) {
-            foreach($orders_not_payment as $order){
-                foreach($order->order_stores()->get() as $order_store){
-                    foreach($order_store->order_products()->get() as $order_product){
+            foreach ($orders_not_payment as $order) {
+                foreach ($order->order_stores()->get() as $order_store) {
+                    foreach ($order_store->order_products()->get() as $order_product) {
                         $order_product->delete();
                     }
                     $order_store->delete();
-    
                 }
                 $order->delete();
-            }            
+            }
         }
         if (Auth::check()) {
             $user = Auth::user();
@@ -213,9 +212,9 @@ class CheckoutController extends Controller
 
             $address1 = $store->address . ' ' . $address1_province->PROVINCE_NAME . ' ' . $address1_district->DISTRICT_NAME . ' ' . $address1_ward->WARDS_NAME;
             $address2 = $order_address->address . ' ' . $address2_province->PROVINCE_NAME . ' ' . $address2_district->DISTRICT_NAME . ' ' . $address2_ward->WARDS_NAME;
-            
+
             $order_store->shipping_distance = $this->getDistance($address1, $address2);
-            
+
             $count_store++;
             $store_tax = 0;
             $store_shipping_total = 0;
@@ -602,6 +601,9 @@ class CheckoutController extends Controller
     public function getPayment(Request $request)
     {
         $user = Auth::user();
+        if (!$request->payment_method) {
+            return back()->with('message', 'Mời chọn hình thức thanh toán');
+        }
         $order = Order::whereOrderCode($request->order_code)->first();
         if ($order->status > 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
@@ -616,11 +618,12 @@ class CheckoutController extends Controller
         }
         $order->vat_services = $order->order_stores()->sum('vat_services');
         $order->payment_method = $payment_method->id;
-        $order->total_payment_services = max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0);
+        $order->total_payment_services = ceil(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0));
         $order->remaining_m_point = max($order->m_point - $order->shipping_total - $order->vat_services, 0);
 
         foreach ($order->order_stores()->get() as $order_store) {
             $order_store->total = $order_store->sub_total - $order_store->discount_products + $order_store->vat_products + ($order->total_payment_services / $order->order_stores()->count());
+            $order_store->discount_services = max(0, ($order_store->shipping_total * 108 / 100) + $order_store->vat_services - ($order->total_payment_services / $order->order_stores()->count()));
             $order_store->save();
         }
         $order->total = $order->order_stores()->sum('total');
@@ -741,7 +744,7 @@ class CheckoutController extends Controller
     {
 
         $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->status > 0) {
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $payment_method = PaymentMethod::whereId($request->payment_method)->first();
@@ -757,7 +760,7 @@ class CheckoutController extends Controller
             'payment_option.required' => "Mời chọn đơn vị thanh toán",
         ]);
         $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->status > 0) {
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $order->payment_method_option = $request->payment_option;
@@ -770,7 +773,7 @@ class CheckoutController extends Controller
 
         $order = Order::whereOrderCode($request->order_code)->first();
 
-        if ($order->status > 0) {
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $payment_method = PaymentMethod::whereId($request->payment_method)->first();
@@ -786,7 +789,7 @@ class CheckoutController extends Controller
             'payment_option.required' => "Mời chọn đơn vị thanh toán",
         ]);
         $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->status > 0) {
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $order->payment_method_option = $request->payment_option;
@@ -807,9 +810,14 @@ class CheckoutController extends Controller
     }
     public function getPaymentC(Request $request)
     {
+        $user = Auth::user();
+        $point_c = $user->point_c()->first();
         $order = Order::whereOrderCode($request->order_code)->first();
 
-        if ($order->status > 0) {
+        if ($point_c->point_c < $order->total) {
+            return redirect()->route('checkout.getPaymentMethod', ['order_code' => $order->order_code])->with(['message' => 'Hình thức thanh toán không khả dụng']);
+        }
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         return view('checkout.payment.payment_c', compact('order'));
@@ -820,7 +828,7 @@ class CheckoutController extends Controller
 
         $user = Auth::user();
         $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->status > 0) {
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $image_portrait = $request->image_portrait;
@@ -835,29 +843,36 @@ class CheckoutController extends Controller
                 break;
             case 2:
                 $transaction_code = $order->order_code;
-                $this->processOrder($order);
-                $user_receiver = User::whereCodeCustomer('202201170001')->first();
-                $lichsu_chuyen = new PointCHistory;
-                $point_c = $user->point_c()->first();
-                $point_c_receiver = $user_receiver->point_c()->first();
-                $lichsu_chuyen->point_c_idnhan = $user_receiver->id;
-                $lichsu_chuyen->point_past_nhan = $point_c_receiver->point_c;
-                $lichsu_chuyen->point_present_nhan = $point_c_receiver->point_c + $order->total;
-                $lichsu_chuyen->makhachhang = $user_receiver->code_customer;
-                $transaction_code = $transaction_code;
-                $lichsu_chuyen->note = 'Da thanh toan GD ' . $transaction_code;
-                $lichsu_chuyen->magiaodich =  $transaction_code;
-                $lichsu_chuyen->amount = $order->total;
-                $lichsu_chuyen->type = 4;
-                $lichsu_chuyen->point_c_idchuyen = $user->id;
-                $lichsu_chuyen->point_past_chuyen = $point_c->point_c;
-                $lichsu_chuyen->point_present_chuyen = $point_c->point_c - $order->total;
-                $lichsu_chuyen->makhachhang_chuyen = $user->code_customer;
-                $lichsu_chuyen->save();
-                $point_c->point_c -= $order->total;
-                $point_c->save();
-                $point_c_receiver->point_c += $order->total;
-                $point_c_receiver->save();
+                if ($order->is_payment == 0) {
+                    $user_receiver = User::whereCodeCustomer('202201170001')->first();
+                    $lichsu_chuyen = new PointCHistory;
+                    $point_c = $user->point_c()->first();
+                    $point_c_receiver = $user_receiver->point_c()->first();
+                    $lichsu_chuyen->point_c_idnhan = $user_receiver->id;
+                    $lichsu_chuyen->point_past_nhan = $point_c_receiver->point_c;
+                    $lichsu_chuyen->point_present_nhan = $point_c_receiver->point_c + $order->total;
+                    $lichsu_chuyen->makhachhang = $user_receiver->code_customer;
+                    $transaction_code = $transaction_code;
+                    $lichsu_chuyen->note = 'Da thanh toan GD ' . $transaction_code;
+                    $lichsu_chuyen->magiaodich =  $transaction_code;
+                    $lichsu_chuyen->amount = $order->total;
+                    $lichsu_chuyen->type = 4;
+                    $lichsu_chuyen->point_c_idchuyen = $user->id;
+                    $lichsu_chuyen->point_past_chuyen = $point_c->point_c;
+                    $lichsu_chuyen->point_present_chuyen = $point_c->point_c - $order->total;
+                    $lichsu_chuyen->makhachhang_chuyen = $user->code_customer;
+                    $lichsu_chuyen->save();
+                    $point_c->point_c -= $order->total;
+                    $point_c->save();
+                    $point_c_receiver->point_c += $order->total;
+                    $point_c_receiver->save();
+                    $this->processOrder($order);
+                    return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
+                } else {
+                    return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
+                }
+                break;
+            default:
                 return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
                 break;
         }
@@ -873,7 +888,7 @@ class CheckoutController extends Controller
     public function orderSuccess(Request $request)
     {
         $order = Order::whereOrderCode($request->order_code)->first();
-        if (!$request->order_code || $order == null) {
+        if (!$request->order_code || $order == null || $order->is_payment ==0) {
             return redirect('/');
         }
         // $order_info = $order->order_info()->first();

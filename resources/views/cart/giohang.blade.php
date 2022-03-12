@@ -105,7 +105,7 @@
                                                     <input type="number"
                                                         class="product-qty soluong form-control form-control-sm text-center"
                                                         value="{{ $row->qty }}" step="1" min="1" max="" name="qty"
-                                                        value="{{ $row->qty }}" data-rowid="{{ $row->rowId }}"
+                                                        data-rowid="{{ $row->rowId }}"
                                                         data-url="{{ route('cart.update') }}"
                                                         data-storeid="{{ $store->id }}" title="SL" size="3"
                                                         pattern="[0-9]*" inputmode="numeric">

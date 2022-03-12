@@ -97,6 +97,7 @@ Route::get('tim-kiem/goi-y', [ProductCategoryController::class, 'getSearchSugges
 
 Route::get('tai-khoan/xac-thuc', [EkycController::class, 'getVerifyAccount'])->name('ekyc.getVerify');
 Route::post('tai-khoan/xac-thuc', [EkycController::class, 'postVerifyAccount'])->name('ekyc.postVerify');
+Route::post('tai-khoan/yeu-cau-thay-doi-thong-tin', [EkycController::class, 'getRequestChangeEkyc'])->name('ekyc.change');
 
 //Route - Liên hệ
 Route::get('/lien-he', function () {

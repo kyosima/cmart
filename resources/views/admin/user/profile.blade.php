@@ -100,17 +100,17 @@
                                 <button class="alert alert-success m-0 text-center"
                                     style="width: 85%;border-radius: 40px; background: orangered; color: white;">Đơn hàng
                                     hoàn thành:
-                                    {{ formatNumber($user->orders()->first()->order_stores()->where('status', 4)->count()) }}</button>
+                                    {{ formatNumber($order_done) }}</button>
 
                             </div>
                             <!-- <div class="col-4">
-                                                                                            <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
+                                 z                                                           <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
                                                                                             </div> -->
                             <div class="col-4">
                                 <button class="alert alert-success m-0 text-center"
                                     style="width: 85%;border-radius: 40px; background: rgb(255, 0, 21); color: white;">
                                     Đơn hàng hủy:
-                                    {{ formatNumber($user->orders()->first()->order_stores()->where('status', 5)->count()) }}</button>
+                                    {{ formatNumber($order_cancel) }}</button>
                             </div>
                             <div class="col-4">
                                 <button class="alert alert-warning m-0"
@@ -234,17 +234,17 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <input type="text" class="form-control mb-2" name="address"
-                                                    placeholder="Nhập địa chỉ" value="{{ $user->address }}" readonly>
+                                                    placeholder="Nhập địa chỉ" value="{{ $user->address }}" required>
                                             </div>
                                             {{-- <div class="col-lg-3">
                                             <input type="text" class="form-control mb-2" name="duong" placeholder="Nhập tên đường"
                                             value="{{$user->duong}}">
                                         </div> --}}
                                             <div class="col-lg-4">
-                                                <select name="sel_province" class="form-control select2" disabled
-                                                    data-placeholder="---Chọn tỉnh thành---">
-                                                    <option value="{{ $user_province->PROVINCE_ID }}">
-                                                        {{ $user_province->PROVINCE_NAME }}
+                                                <select name="sel_province" class="form-control " 
+                                                    data-placeholder="---Chọn tỉnh thành---" required>
+                                                    <option value="{{$user_province->PROVINCE_ID}}" selected>
+                                                        {{$user_province->PROVINCE_NAME}}
                                                     </option>
                                                 </select>
                                                 {{-- @if ($user->id_tinhthanh == null)
@@ -273,8 +273,8 @@
 
                                             </div>
                                             <div class="col-lg-4">
-                                                <select name="sel_district" class="form-control select2" disabled
-                                                    data-placeholder="---Chọn quận huyện---">
+                                                <select name="sel_district" class="form-control " 
+                                                    data-placeholder="---Chọn quận huyện---" required>
                                                     <option value="{{ $user_district->DISTRICT_ID }}">
                                                         {{ $user_district->DISTRICT_NAME }}
                                                     </option>
@@ -295,9 +295,9 @@
                                                 @endif --}}
                                             </div>
                                             <div class="col-lg-4">
-                                                <select name="sel_district" class="form-control select2" disabled
+                                                <select name="sel_ward" class="form-control " 
                                                     data-placeholder="---Chọn phường xã---">
-                                                    <option value="{{ $user_ward->WARDS_ID }}">
+                                                    <option value="{{ $user_ward->WARDS_ID }}" required>
                                                         {{ $user_ward->WARDS_NAME }}
                                                     </option>
                                                 </select>
@@ -384,7 +384,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($user->orders()->latest()->get()
+                                                            @foreach ($user->orders()->whereIsPayment(1)->latest()->get()
         as $order)
                                                                 @foreach ($order->order_stores()->get() as $order_store)
                                                                     <tr style="text-align:center">
@@ -558,5 +558,5 @@
 @push('scripts')
     <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
     </script>
-    <script src="{{ asset('public/js/shipping.js') }}"></script>
+<script src="{{ asset('public/js/address.js') }}"></script>
 @endpush

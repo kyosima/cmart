@@ -40,7 +40,7 @@
 
                                     <input type="hidden" name="payment_method" value="{{ $payment_method->id }}" data-url="{{ route('payment.getInfo') }}">
                                     <div class="row" id="list-payment-method-options">
-                                        @foreach ($payment_method->options()->orderBy('id', 'asc')->get() as $payment_method_option)
+                                        @foreach ($payment_method->options()->whereStatus(1)->orderBy('id', 'asc')->get() as $payment_method_option)
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group text-center">
                                                     <input type="radio" class="form-control"

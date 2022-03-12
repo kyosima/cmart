@@ -38,7 +38,10 @@ camera_button.addEventListener('click', async function() {
 
 
 });
+$(document).ready(function() {
 
+    $('#start-camera').trigger('click');
+});
 click_button.addEventListener('click', function() {
 
 

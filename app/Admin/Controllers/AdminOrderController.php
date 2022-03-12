@@ -37,7 +37,7 @@ class AdminOrderController extends Controller
 
     public function index(Request $request)
     {
-        $orders = Order::whereMonth('created_at', Carbon::today()->month)->orderBy('id', 'DESC')->with('order_info:id_order,note')->get();
+        $orders = Order::whereIsPayment(1)->orderBy('id', 'DESC')->get();
         $orders_count = $orders->groupBy('status')->map(function ($row) {
             return $row->count();
         });
@@ -236,7 +236,7 @@ class AdminOrderController extends Controller
         $order->delete();
         Log::info('Admin ' . auth()->guard('admin')->user()->name . ' Xóa đơn hàng #' . $order->id, ['data' => $request->all()]);
 
-        if ($request->isMethod('get')) {
+        if ($request->isMethod('get')) { 
             Session::flash('success', 'Thực hiện thành công');
             return redirect()->route('order.index');
         }
@@ -247,7 +247,6 @@ class AdminOrderController extends Controller
     {
         $order_store = OrderStore::whereId($request->order_id)->first();
         $order = $order_store->order()->first();
-
         $this->proccessCpoint($order->user, $request->status, $order_store->status, $order_store->c_point, $order_store);
         $order_store->status = $request->status;
 

@@ -310,7 +310,7 @@
                                                 <div class="price-wrapper">
                                                     <span class="price">
                                                         <span
-                                                            class="amount">{{ formatPriceOfLevel($item) }}</span>
+                                                            class="amount">{{ formatPriceOfLevelCate($item) }}</span>
                                                     </span>
                                                 </div>
                                             </div>

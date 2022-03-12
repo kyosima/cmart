@@ -47,15 +47,23 @@ class CartController extends Controller
         $qty = $_POST['qty'];
         $store_id = $_POST['store_id'];
         $product = Product::whereId($product_id)->firstOrFail();
-        $stores = $product->stores()->get();
 
         $store = Store::whereId($store_id)->first();
         $store_product = $store->product_stores()->where('id_ofproduct', $product->id)->first();
-        if($qty > $store_product->soluong){
+        $cart = Cart::instance($store->id)->content();
+        $row = $cart->where('id', $product_id)->first();
+         if($row != null){
+            if(($qty +$row->qty) > $store_product->soluong){
+                return response()->json([
+                    0
+                ], 200);
+            }
+         }elseif($qty  > $store_product->soluong){
             return response()->json([
                 0
             ], 200);
         }
+      
         Cart::instance($store_id)->add(['id' => $product->id, 'name' => $product->name, 'price' => getPriceOfLevel($product), 'qty' => $qty, 'options' => [ 'method_ship' => 0, 'type_ship' => 0, 'price_normal' => 0, 'price_fast'=>0]])->associate('App\Models\Product');
         $stores = Store::get();
         $count_cart = 0;
@@ -72,13 +80,33 @@ class CartController extends Controller
         $rowId = $_POST['rowid'];
         $qty = $_POST['qty'];
         $storeid = $_POST['storeid'];
-        Cart::instance($storeid)->update($rowId, ['qty' => $qty]);
+        $row = Cart::instance($storeid)->get($rowId);
+
+        $product = Product::whereId($row->id)->firstOrFail();
+
+        $store = Store::whereId($storeid)->first();
+        $store_product = $store->product_stores()->where('id_ofproduct', $product->id)->first();
+
+        $error = 0;
+        if($qty > $store_product->soluong){
+            Cart::instance($storeid)->update($rowId, ['qty' => $store_product->soluong]);
+            $error = 1;
+        }else{
+            Cart::instance($storeid)->update($rowId, ['qty' => $qty]);
+        }
+     
+        $stores = Store::get();
+        $count_cart = 0;
+        foreach ($stores as $store) {
+            $count_cart += Cart::instance($store->id)->count();
+        }
         return response()->json([
             formatPrice(Cart::instance($storeid)->get($rowId)->price * $qty),
             // formatNumber(Cart::instance($storeid)->get($rowId)->model->product_price()->value('cpoint')),
             // formatNumber(Cart::instance($storeid)->get($rowId)->model->product_price()->value('mpoint')),
-
-
+            $count_cart,
+            $store_product->soluong,
+            $error,
         ], 200);
     }
     public function toCheckout(Request $request)
@@ -93,13 +121,21 @@ class CartController extends Controller
         $rowId = $_POST['rowid'];
         $storeid = $_POST['storeid'];
         Cart::instance($storeid)->remove($rowId);
+        $stores = Store::get();
+        $count_cart = 0;
+        foreach ($stores as $store) {
+            $count_cart += Cart::instance($store->id)->count();
+        }
         if(Cart::instance($storeid)->count() == 0 ){
             return response()->json([
-                0
+                0,
+                $count_cart
             ], 200);
         }else{
             return response()->json([
-                1
+                1,
+                $count_cart
+
             ], 200);
         }
        

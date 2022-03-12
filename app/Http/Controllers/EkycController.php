@@ -4,18 +4,49 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\RequestEkyc;
 class EkycController extends Controller
 {
     //
     public function getVerifyAccount()
     {
         $user = Auth::user();
-        return view('ekyc.verify_account');
+        if($user->change_ekyc == 1){
+            return view('ekyc.verify_account');
+
+        }else{
+            return redirect()->route('home');
+        }
+    }
+
+    public function getRequestChangeEkyc(Request $request){
+        if(Auth::check()){
+            $user = Auth::user();
+       
+            $check = $user->request_ekyc()->whereStatus(0)->count();
+            if($check==0){
+                RequestEkyc::create([
+                    'user_id' =>$user->id,
+                    'content'=> $request->content,
+                ]);
+                return back()->with('message', 'Yêu cầu thay đổi thông tin tài khoản thành công');
+            }else{
+                return back()->with('message', 'Bạn đã gửi yêu cầu thay đổi thông tin tài khoản, vui lòng đợi duyệt');
+            }
+          
+        }else{
+            return redirect()->route('home');
+        }
+
     }
 
     public function postVerifyAccount(Request $request)
     {
+        $user = Auth::user();
+        if($user->change_ekyc == 0){
+            return redirect()->route('home');
+
+        }
         $image_front = $request->image_front;
         $image_back = $request->image_back;
         $image_portrait = $request->image_portrait;
@@ -33,6 +64,7 @@ class EkycController extends Controller
                     case 2:
                         $user = Auth::user();
                         $user->is_ekyc = 1;
+                        $user->change_ekyc = 0;
                         $user->hoten = $result_recognition->name;
                         $user->cmnd = $result_recognition->id;
                         $user->type_cmnd = $request->type_cmnd;

@@ -99,6 +99,12 @@
                         </thead>
                         <tbody>
                             @foreach ($user as $k)
+                                @php
+                                    $id_vitien = App\Models\PointC::where('user_id', '=', $k->id)->value('id');
+                                    $pointc_recei_month = App\Models\PointCHistory::where('point_c_idnhan', '=', $id_vitien)
+                                        ->whereMonth('created_at', Carbon\Carbon::today()->month)
+                                        ->sum('amount');
+                                @endphp
                                 <tr style="text-align:center">
                                     <td><a
                                             href="{{ url('admin/danh-sach-user') }}/{{ $k->id }}">{{ $k->code_customer }}</a>
@@ -109,7 +115,7 @@
                                         {{ formatLevel($k->level) }}
                                     </td>
                                     <td>
-                                        {{ formatNumber($k->orders()->where('status', 4)->sum('c_point')) }}
+                                        {{ formatNumber($pointc_recei_month) }}
                                     </td>
                                     <td>
                                         {{ formatNumber($k->point_c()->value('point_c')) }}
@@ -119,12 +125,16 @@
 
                                         <div class="input-group" style="min-width: 108px;">
                                             <span style=" max-width: 82px;min-width: 82px;" type="text"
-                                                class="form-control form-control-sm font-size-s text-white @if ($k->status == 1) active @else stop @endif text-center"
+                                                class="form-control form-control-sm font-size-s text-white  @if ($pointc_recei_month < 3000000 || $k->level > 0) @if ($k->status == 1) active @else stop @endif @else bg-danger @endif text-center"
                                                 aria-label="Text input with dropdown button">
-                                                @if ($k->status == 1)
-                                                    Hoạt động
+                                                @if ($pointc_recei_month < 3000000 || $k->level > 0)
+                                                    @if ($k->status == 1)
+                                                        Hoạt động
+                                                    @else
+                                                        Ngừng
+                                                    @endif
                                                 @else
-                                                    Ngừng
+                                                <a href="{{ route('user.upgradeVip', $k->id) }}" class="text-light"> Nâng cấp V.I.P</a>
                                                 @endif
                                             </span>
                                             <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
@@ -243,7 +253,7 @@
                 buttons: [{
                         extend: 'excelHtml5',
                         exportOptions: {
-                            columns:[0,1,2,3,4,5,7],
+                            columns: [0, 1, 2, 3, 4, 5, 7],
                             format: {
                                 body: function(data, row, column, node) {
                                     data = $('<td>' + data + '</td>').text();
@@ -261,7 +271,7 @@
                         orientation: 'landscape',
                         pageSize: 'LEGAL',
                         exportOptions: {
-                            columns:[0,1,2,3,4,5,7],
+                            columns: [0, 1, 2, 3, 4, 5, 7],
                         }
 
                     }

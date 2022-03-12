@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'change_ekyc',
     ];
 
     /**
@@ -58,6 +59,9 @@ class User extends Authenticatable
     }
     public function historyCpoints() {
         return $this->hasMany(PointCHistory::class, 'point_c_idchuyen', 'id');
+    }
+    public function request_ekyc(){
+        return $this->hasMany(RequestEkyc::class, 'user_id', 'id');
     }
 
 	// public function orders()

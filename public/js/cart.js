@@ -20,6 +20,7 @@ $("#form-add-to-cart").submit(function(e) {
                 console.log(data);
             },
             success: function(response) {
+                console.log(response);
                 if (response[0] == 0) {
                     button = form.find('button');
                     button.css('font-size', '15px');
@@ -120,6 +121,12 @@ $('input[name=qty].product-qty').change(function() {
         },
         success: function(response) {
             input.closest('.cart_item').find('.cart_price_col span').text(response[0]);
+            $('.cart .number-cart .count-giohang').text(response[1]);
+            if (response[3] == 1) {
+                alert('Bạn đã mua vượt quá số lượng sản phẩm cho phép ở cửa hàng');
+                input.closest('.cart_item').find('.product-qty').val(response[2]);
+
+            }
             updateCheckout();
         }
     });
@@ -130,29 +137,30 @@ function removeRowCart(e) {
     var rowid = $(e).data('rowid');
     var storeid = $(e).data('storeid');
     var url = $(e).data('url');
-if (confirm("Xác nhận xóa sản phẩm khỏi giỏ hàng!") == true) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        type: 'POST',
-        url: url,
-        data: { rowid: rowid, storeid: storeid },
-        error: function(data) {
-            console.log(data);
-        },
-        success: function(response) {
-            e.closest('.cart_item').remove();
-            updateCheckout();
-            if(response[0] == 0){
-                $('#store-b-' + storeid).remove();
+    if (confirm("Xác nhận xóa sản phẩm khỏi giỏ hàng!") == true) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { rowid: rowid, storeid: storeid },
+            error: function(data) {
+                console.log(data);
+            },
+            success: function(response) {
+                e.closest('.cart_item').remove();
+                updateCheckout();
+                if (response[0] == 0) {
+                    $('#store-b-' + storeid).remove();
+
+                }
+                $('.cart .number-cart .count-giohang').text(response[1]);
 
             }
+        });
+    }
 
-        }
-    });
-}
-    
 }

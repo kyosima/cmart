@@ -241,17 +241,16 @@
                                                                 <th class="title" style="width: 50px">M</th>
                                                                 <th class="title">Giá trị SP</th>
                                                                 <th class="title">Giảm giá SP</th>
-                                                                <th class="title">VAT/sp</th>
                                                                 <th class="title">ĐVVC</th>
                                                                 <th class="title">Phí xử lý</th>
                                                                 <th class="title">TLVC</th>
                                                                 <th class="title">Số km</th>
                                                                 <th class="title">Phí VC</th>
                                                                 <th class="title" style="width: 100px">HTTT</th>
-                                                                <th class="title">Phí DV GTT</th>
+                                                                <th class="title">Phí DV GTGT</th>
                                                                 <th class="title">Giảm giá DV</th>
-                                                                <th class="title">VAT/dv</th>
-                                                                <th class="title">Giá trị giao dịch</th>
+                                                                <th class="title">Giá trị thanh toán</th>
+                                                                <th class="title">VAT/đh</th>
                                                                 <th class="title" style="width: 100px">Ghi chú</th>
                                                                 <th class="title" style="width:75px;">Chuyển tiếp
                                                                 </th>
@@ -291,8 +290,7 @@
                                                                         </td>
                                                                         <td>{{ formatNumber($order_store->discount_products) }}
                                                                         </td>
-                                                                        <td>{{ formatNumber($order_store->vat_products) }}
-                                                                        </td>
+
                                                                         <td> {{ formatMethod($order_store->shipping_method) }}
                                                                         </td>
                                                                         <td> {{ formatNumber($order_store->process_fee) }}
@@ -304,13 +302,14 @@
                                                                         </td>
                                                                         <td>{{ App\Models\PaymentMethod::whereId($order->payment_method)->value('name') }}
                                                                         </td>
-                                                                        <td>{{ formatNumber($order_store->total_payment_) }}
+
+                                                                        <td>{{ formatNumber($order_store->vat_services) }}
                                                                         </td>
                                                                         <td>{{ formatNumber($order_store->discount_services) }}
                                                                         </td>
-                                                                        <td>{{ formatNumber($order_store->total_payment_) }}
-                                                                        </td>
                                                                         <td>{{ formatNumber($order_store->total) }}
+                                                                        </td>
+                                                                        <td>{{ formatNumber($order_store->vat_products + $order->vat_services / $order->order_stores()->count()) }}
                                                                         </td>
                                                                         <td>
                                                                             <span
@@ -446,10 +445,10 @@
                 ],
                 columnDefs: [{
 
-                    targets: [1, 7, 9, 10, 11, 16, 20],
+                    targets: [1, 6, 8, 9, 10, 14, 19],
                     visible: false,
                 }, {
-                    targets: [15, 18, 19],
+                    targets: [6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19],
                     orderable: false,
                 }, ],
 
@@ -474,14 +473,12 @@
                 buttons: [{
                         extend: 'excelHtml5',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-                                20
-                            ],
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19],
                             format: {
                                 body: function(data, row, column, node) {
                                     data = $('<td>' + data + '</td>').text();
                                     console.log();
-                                    if (column == 11) {
+                                    if (column == 10) {
 
                                         return data.replace(',', '.');
                                     } else {
@@ -497,10 +494,9 @@
                         orientation: 'landscape',
                         pageSize: 'LEGAL',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-                                20
-                            ],
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19],
                         },
+                       
                     }
                 ],
 

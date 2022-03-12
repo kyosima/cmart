@@ -20,11 +20,11 @@
                     <h4 class="text-center">XÁC THỰC THANH TOÁN TIỀN TÍCH LŨY CÙNG C-MART</h4>
                 </div>
             </div>
-            <div class="row div col-12">
+            {{-- <div class="row div col-12">
                 @include('order_tracking.c_bill', [
                     'order' => $order,
                 ])
-            </div>
+            </div> --}}
 
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-6 col-md-6 col-12">
@@ -44,7 +44,6 @@
                     </div>
                     <div class="live_cam">
                         <hr>
-                        <label for="">Camera</label>
                         <video id="video" max-width="100%" autoplay></video>
                     </div>
                     <button id="start-camera" class="btn btn-primary w-100" type="button">Bắt đầu EKYC</button>

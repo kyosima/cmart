@@ -69,7 +69,7 @@ class ProductCategoryController extends Controller
         $categoryIds = $arrCatIds;
         $products = Product::whereIn('category_id', $categoryIds)
         ->where('status', 1)
-         // ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+         ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
         ->orderBy('products.id', 'desc')
         ->get();
         if ($request->order != null || $request->order != '') {
@@ -80,26 +80,26 @@ class ProductCategoryController extends Controller
 
                     $products = Product::whereIn('category_id', $categoryIds)
                         ->where('status', 1)
-                         // ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                         ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                         ->orderBy('products.name', 'asc')
                         ->get();
                 } else {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     // ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                     ->orderBy('products.name', 'desc')
                     ->get();                }
             } elseif($order[0] == 'regular_price') {
                 if ($order[1] == 'asc') {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                    //  // ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                     ->orderBy('product_price.regular_price', 'asc')
                     ->get();
                 } else {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     // ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                     ->orderBy('product_price.regular_price', 'desc')
                     ->get();
                 }
@@ -107,13 +107,13 @@ class ProductCategoryController extends Controller
                 if ($order[1] == 'asc') {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     // ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                     ->orderBy('product_price.cpoint', 'asc')
                     ->get();
                 } else {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     // ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                     ->orderBy('product_price.cpoint', 'desc')
                     ->get();
                 }
@@ -121,13 +121,13 @@ class ProductCategoryController extends Controller
                 if ($order[1] == 'asc') {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     // ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                     ->orderBy('product_price.mpoint', 'asc')
                     ->get();
                 } else {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     // ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                     ->orderBy('product_price.mpoint', 'desc')
                     ->get();
                 }
@@ -135,7 +135,7 @@ class ProductCategoryController extends Controller
         }else{
             $products = Product::whereIn('category_id', $categoryIds)
                         ->where('status', 1)
-                         // ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                         ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
                         ->orderBy('products.id', 'desc')
                         ->get();
         }
@@ -169,8 +169,8 @@ class ProductCategoryController extends Controller
             }
             $products = Product::whereIn('category_id', $categoryIds)
                 ->where('status', 1)
-                ->whereIn('brand', $request->id_brand)->get();
-                 // ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct');
+                ->whereIn('brand', $request->id_brand)
+                 ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')->get();
         }
         // SORT THEO ORDER
 

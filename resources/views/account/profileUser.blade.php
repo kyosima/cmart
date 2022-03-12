@@ -54,77 +54,122 @@
     </style>
 
     <div class="container">
+        @if (Session::has('message'))
+            <p class="alert alert-danger text-center">{{ Session::get('message') }}</p>
+        @endif
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-8 mx-auto">
                 <h2 class="h3 mb-4 page-title"></h2>
                 <div class="my-4">
+
+                    <div class="row mt-5 align-items-center">
+                        <div class="col-md-3 text-center mb-5">
+                            <div class="avatar avatar-xl">
+                                @if ($profileUser->avatar != null)
+                                    <img for="img_avatar" src="{{ $profileUser->avatar }}" width="150px" height="150px" />
+                                    <input type="file" class="form-control" name="avatar" id="img_avatar"
+                                        style="display: none">
+                                    {{-- <label for="img_avatar" class="btn btn-primary profile-button mt-2">Ảnh chân dung</label> --}}
+                                @else
+                                    <img for="img_avatar" class="rounded-circle mt-3" width="150px"
+                                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                                    <input type="file" class="form-control" name="avatar" id="img_avatar"
+                                        style="display: none">
+                                    {{-- <label for="img_avatar" class="btn btn-primary profile-button mt-2">Ảnh chân dung</label> --}}
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row align-items-center">
+                                <div class="col-md-7">
+                                    <h4 class="mb-1">Mã Khách Hàng:
+                                        <strong>{{ $profileUser->code_customer }}</strong>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-12">
+                                    <p class="text-muted">
+                                        Định danh Khách hàng:
+                                        @if ($profileUser->level == 1)
+                                            Khách hàng VIP
+                                        @elseif($profileUser->level == 2)
+                                            Cộng tác viên
+                                        @elseif($profileUser->level == 3)
+                                            Purchasing
+                                        @elseif($profileUser->level == 4)
+                                            Khách hàng thương mại
+                                        @else
+                                            Khách hàng thân thiết
+                                        @endif
+                                    </p>
+                                    <!--<div class="">Tích lũy: {{ $profileUser->tichluyC }} point</div>-->
+                                    <div class="text-justify ">
+                                        <ul class="m-0 pl-0">
+                                            <li class="">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc
+                                                bảo mật thông tin là điều vô cùng nghiêm túc,
+                                                và chúng tôi thực hiện vô cùng nghiêm ngặt.
+                                            </li>
+                                            <li class="">Các thông tin chỉ dùng để hướng đến sự chuyên
+                                                nghiệp, tiện lợi hơn trong phục vụ Khách Hàng,
+                                                tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết.
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col">
+
+                                </div>
+                            </div>
+                            @if ($profileUser->change_ekyc == 1)
+                                <a href="{{ route('ekyc.getVerify') }}" class="w-100 btn btn-success">Thực hiện thay
+                                    đổi thông tin bằng EKYC</a>
+                            @else
+                                @if ($check == 0)
+                                    <button class="w-100 btn btn-info" data-toggle="modal"
+                                        data-target="#modalrequestekyc">Gửi yêu cầu thay đổi thông tin</button>
+
+                                    <div class="modal fade" id="modalrequestekyc" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <form action="{{ route('ekyc.change') }}" method="post">
+                                                    @csrf
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Gửu yêu cầu
+                                                            thay đổi thông tin tài khoản</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="reason">Nhập lý do vì sao bạn muốn thay đổi thông
+                                                                tin tài khoản</label>
+                                                            <textarea class="w-100" name="content" id="reason"
+                                                                cols="30" rows="10"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Hủy</button>
+                                                        <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <button class="btn btn-warning w-100" type="button">Đã gửi yêu cầu thay đổi thông
+                                        tin</button>
+                                @endif
+                            @endif
+                        </div>
+                    </div>
                     <form action="{{ url('thong-tin-tai-khoan') }}" method="POST" role="form"
                         enctype="multipart/form-data">
                         @csrf
-                        <div class="row mt-5 align-items-center">
-                            <div class="col-md-3 text-center mb-5">
-                                <div class="avatar avatar-xl">
-                                    @if ($profileUser->avatar != null)
-                                        <img for="img_avatar" src="{{ $profileUser->avatar }}" width="150px"
-                                            height="150px" />
-                                        <input type="file" class="form-control" name="avatar" id="img_avatar"
-                                            style="display: none">
-                                        {{-- <label for="img_avatar" class="btn btn-primary profile-button mt-2">Ảnh chân dung</label> --}}
-                                    @else
-                                        <img for="img_avatar" class="rounded-circle mt-3" width="150px"
-                                            src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                                        <input type="file" class="form-control" name="avatar" id="img_avatar"
-                                            style="display: none">
-                                        {{-- <label for="img_avatar" class="btn btn-primary profile-button mt-2">Ảnh chân dung</label> --}}
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="row align-items-center">
-                                    <div class="col-md-7">
-                                        <h4 class="mb-1">Mã Khách Hàng:
-                                            <strong>{{ $profileUser->code_customer }}</strong>
-                                        </h4>
-                                    </div>
-                                </div>
-                                <div class="row mb-4">
-                                    <div class="col-md-12">
-                                        <p class="text-muted">
-                                            Định danh Khách hàng:
-                                            @if ($profileUser->level == 1)
-                                                Khách hàng VIP
-                                            @elseif($profileUser->level == 2)
-                                                Cộng tác viên
-                                            @elseif($profileUser->level == 3)
-                                                Purchasing
-                                            @elseif($profileUser->level == 4)
-                                                Khách hàng thương mại
-                                            @else
-                                                Khách hàng thân thiết
-                                            @endif
-                                        </p>
-                                        <!--<div class="">Tích lũy: {{ $profileUser->tichluyC }} point</div>-->
-                                        <div class="text-justify ">
-                                            <ul class="m-0 pl-0">
-                                                <li class="">Xin Quý Khách Hàng tin tưởng rằng C-Mart xem việc
-                                                    bảo mật thông tin là điều vô cùng nghiêm túc,
-                                                    và chúng tôi thực hiện vô cùng nghiêm ngặt.
-                                                </li>
-                                                <li class="">Các thông tin chỉ dùng để hướng đến sự chuyên
-                                                    nghiệp, tiện lợi hơn trong phục vụ Khách Hàng,
-                                                    tạo sự kết nối thoải mái, hào hứng và tuyệt vời hơn bao giờ hết.
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-
-                                    </div>
-                                </div>
-                                <a href="{{route('ekyc.getVerify')}}" class="w-100 btn btn-info">Xác minh lại thông tin</a>
-
-                            </div>
-                        </div>
                         <hr class="my-4" />
                         <div class="form-row">
                             <div class="form-group col-md-12">
@@ -223,7 +268,7 @@
 
                             <div class=" col-sm-10">
                                 <input type="text" name="address" class="form-control"
-                                    value="{{ $profileUser->address }}" placeholder="Địa chỉ chi tiết" readonly>
+                                    value="{{ $profileUser->address }}" placeholder="Địa chỉ chi tiết" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -235,8 +280,12 @@
                             <label for="" class="col-sm-2 col-form-label">Cấp Tỉnh</label>
 
                             <div class="col-sm-10">
-                                <input type="text" name="address" class="form-control"
-                                    value="{{ $user_province->PROVINCE_NAME }}" placeholder="Địa chỉ chi tiết" readonly>
+                                <select name="sel_province" class="form-control " data-placeholder="---Chọn tỉnh thành---"
+                                    required>
+                                    <option value="{{ $user_province->PROVINCE_ID }}" selected>
+                                        {{ $user_province->PROVINCE_NAME }}
+                                    </option>
+                                </select>
 
                             </div>
                         </div>
@@ -244,17 +293,24 @@
                             <label for="" class="col-sm-2 col-form-label">Cấp Huyện</label>
 
                             <div class="col-sm-10">
-                                <input type="text" name="address" class="form-control"
-                                    value="{{ $user_district->DISTRICT_NAME }}" placeholder="Địa chỉ chi tiết" readonly>
+                                <select name="sel_district" class="form-control " data-placeholder="---Chọn quận huyện---"
+                                    required>
+                                    <option value="{{ $user_district->DISTRICT_ID }}">
+                                        {{ $user_district->DISTRICT_NAME }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label">Cấp Xã</label>
 
                             <div class=" col-sm-10">
-                                <input type="text" name="address" class="form-control"
-                                    value="{{ $user_ward->WARDS_NAME }}" placeholder="Địa chỉ chi tiết" readonly>
-
+                                <select name="sel_ward" class="form-control " data-placeholder="---Chọn phường xã---"
+                                    required>
+                                    <option value="{{ $user_ward->WARDS_ID }}">
+                                        {{ $user_ward->WARDS_NAME }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <hr class="my-4" />
@@ -299,7 +355,7 @@
 @push('scripts')
     <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
     </script>
-    <script src="{{ asset('public/js/shipping.js') }}"></script>
+    <script src="{{ asset('public/js/address.js') }}"></script>
 
     <script>
         window.addEventListener("load", function() {

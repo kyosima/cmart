@@ -47,6 +47,9 @@
                     @if (auth()->guard('admin')->user()->can('Xem HTTT'))
                         <a href="{{ route('payment.index') }}">Hình thức thanh toán</a>
                     @endif
+                    @if (auth()->guard('admin')->user()->can('Quản lý đơn vị thanh toán'))
+                        <a href="{{ route('paymentmethod.index') }}">Đơn vị thanh toán</a>
+                    @endif
                 </span>
             </li>
         @endif
@@ -63,29 +66,36 @@
                 <span class="links_name w-100 align-items-center d-flex">Khách hàng <i
                         class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
-            @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
             <span class="dropdown-content">
-                <a href="{{url('admin/danh-sach-user')}}">Danh sách khách hàng</a>
+                @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
+                    <a href="{{ url('admin/danh-sach-user') }}">Danh sách khách hàng</a>
+                @endif
+
+                @if (auth()->guard('admin')->user()->can('Quản lý yêu cầu thay đổi thông tin tài khoản khách hàng'))
+                    <a href="{{ route('ekyc.index') }}">Danh sách yêu cầu thay đổi thông tin tài khoản</a>
+                @endif
             </span>
-            @endif
-         </li>
-         <li class="dropdown" >
+
+
+        </li>
+        <li class="dropdown">
             <a href="#" class="dropbtn">
-            <i class="fas fa-history"></i>
-             <span class="links_name w-100 align-items-center d-flex">Tiền tích lũy C <i class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
+                <i class="fas fa-history"></i>
+                <span class="links_name w-100 align-items-center d-flex">Tiền tích lũy C <i
+                        class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
-            <span class="dropdown-content" style="top: -90px;">
-                <a href="{{route('tongdiemuser')}}">Tài khoản C / HSKH</a>
-                <a href="{{route('chuyendiem')}}">Chuyển C</a>
-                <a href="{{route('napC')}}">Tài khoản C / C-Mart</a>
-                <a href="{{route('lichsunhanC')}}">Lịch sử nhận C</a>
-                <a href="{{route('lichsuchuyenkhoan')}}">Lịch sử chuyển khoản C</a>
-                <a href="{{route('lichsutichluy')}}">Lịch sử thanh toán tích luỹ C</a>
-                <a href="{{route('lichsutietkiem')}}">Lịch sử thanh toán tiết kiệm C</a>
-                <a href="{{route('lichsudiemm')}}">Lịch sử thanh toán tích luỹ M</a>
-                <a href="{{route('lichsudonhanghuy')}}">Lịch sử hoàn đơn hàng huỷ</a>
-            </span>
+                <span class="dropdown-content" style="top: -90px;">
+                    <a href="{{ route('tongdiemuser') }}">Tài khoản C / HSKH</a>
+                    <a href="{{ route('chuyendiem') }}">Chuyển C</a>
+                    <a href="{{ route('napC') }}">Tài khoản C / C-Mart</a>
+                    <a href="{{ route('lichsunhanC') }}">Lịch sử nhận C</a>
+                    <a href="{{ route('lichsuchuyenkhoan') }}">Lịch sử chuyển khoản C</a>
+                    <a href="{{ route('lichsutichluy') }}">Lịch sử thanh toán tích luỹ C</a>
+                    <a href="{{ route('lichsutietkiem') }}">Lịch sử thanh toán tiết kiệm C</a>
+                    <a href="{{ route('lichsudiemm') }}">Lịch sử thanh toán tích luỹ M</a>
+                    <a href="{{ route('lichsudonhanghuy') }}">Lịch sử hoàn đơn hàng huỷ</a>
+                </span>
             @endif
         </li>
         @role('Boss', 'admin')
