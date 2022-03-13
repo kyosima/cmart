@@ -24,3 +24,26 @@
 .order-footer .d-md-flex >div{
     padding-bottom: 20px ;
 }
+table {
+    table-layout: auto;
+    table-layout: fixed;
+
+}
+table td{
+    word-break: break-word;
+}
+table thead th:nth-child(2){
+    width: 20%;
+}
+table thead th:nth-child(1){
+    width: 10%;
+}
+table thead th:last-child{
+    width: 5%;
+}
+table thead th:nth-child(9){
+    width: 5%;
+}
+table td{
+    padding: 10px 2px;
+}

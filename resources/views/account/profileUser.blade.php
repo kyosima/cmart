@@ -268,7 +268,7 @@
 
                             <div class=" col-sm-10">
                                 <input type="text" name="address" class="form-control"
-                                    value="{{ $profileUser->address }}" placeholder="Địa chỉ chi tiết" required>
+                                    value="{{ $profileUser->address }}" placeholder="Địa chỉ chi tiết" required readonly>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -281,7 +281,7 @@
 
                             <div class="col-sm-10">
                                 <select name="sel_province" class="form-control " data-placeholder="---Chọn tỉnh thành---"
-                                    required>
+                                    required disabled>
                                     <option value="{{ $user_province->PROVINCE_ID }}" selected>
                                         {{ $user_province->PROVINCE_NAME }}
                                     </option>
@@ -294,7 +294,7 @@
 
                             <div class="col-sm-10">
                                 <select name="sel_district" class="form-control " data-placeholder="---Chọn quận huyện---"
-                                    required>
+                                    required disabled>
                                     <option value="{{ $user_district->DISTRICT_ID }}">
                                         {{ $user_district->DISTRICT_NAME }}
                                     </option>
@@ -306,7 +306,7 @@
 
                             <div class=" col-sm-10">
                                 <select name="sel_ward" class="form-control " data-placeholder="---Chọn phường xã---"
-                                    required>
+                                    required disabled>
                                     <option value="{{ $user_ward->WARDS_ID }}">
                                         {{ $user_ward->WARDS_NAME }}
                                     </option>

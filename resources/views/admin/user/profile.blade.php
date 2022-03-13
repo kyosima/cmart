@@ -145,13 +145,13 @@
                                         <div class="form-group">
                                             <span class="text-uppercase">Họ và tên</span>
                                             <input type="name" class="form-control mb-2" name="hoten"
-                                                placeholder="Nhập tên người dùng" value="{{ $user->hoten }}">
+                                                placeholder="Nhập tên người dùng" value="{{ $user->hoten }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 text-start">
                                         <span class="text-uppercase">Số điện thoại</span>
                                         <input type="phone" class="form-control mb-2" name="phone"
-                                            placeholder="Nhập số điện thoại" value="{{ $user->phone }}">
+                                            placeholder="Nhập số điện thoại" value="{{ $user->phone }}" readonly>
                                         <!-- <span class="text-uppercase">Email</span>
                                                                                                     <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
                                                                                                         value="{{ $user->email }}" readonly=""> -->

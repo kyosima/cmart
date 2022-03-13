@@ -27,6 +27,7 @@
         .dtsb-searchBuilder {
             display: none;
         }
+        
 
     </style>
     {{-- <script>
@@ -309,7 +310,7 @@
                                                                         </td>
                                                                         <td>{{ formatNumber($order_store->total) }}
                                                                         </td>
-                                                                        <td>{{ formatNumber($order_store->vat_products + $order->vat_services / $order->order_stores()->count()) }}
+                                                                        <td>{{ formatNumber($order_store->vat_products + ($order->vat_services / $order->order_stores()->count())) }}
                                                                         </td>
                                                                         <td>
                                                                             <span

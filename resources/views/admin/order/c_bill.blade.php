@@ -9,6 +9,36 @@
         font-size: 12px;
     }
 
+    table {
+        table-layout: auto;
+        table-layout: fixed;
+
+    }
+
+    table td {
+        word-break: break-word;
+    }
+
+    table thead th:nth-child(2) {
+        width: 20%;
+    }
+
+    table thead th:nth-child(1) {
+        width: 10%;
+    }
+
+    table thead th:last-child {
+        width: 5%;
+    }
+
+    table thead th:nth-child(9) {
+        width: 5%;
+    }
+
+    table td {
+        padding: 10px 2px;
+    }
+
     .text-cap {
         text-transform: capitalize;
     }
@@ -93,7 +123,7 @@
     }
 
     .order-sign table td {
-        padding-bottom:185px;
+        padding-bottom: 185px;
     }
 
     .text-justify {
@@ -117,17 +147,17 @@
                         <p class="font-20 text-center  text-bold text-up">
                             C-MART
                         </p>
-                            @php
-                                $user = $order->user()->first();
-                                $order_address = $order->order_address()->first();
-                                $order_info = $order->order_info()->first();
-                                $order_products = $order->order_products()->get();
-                                $addressController = new App\Http\Controllers\AddressController();
-                                $order_province = $addressController->getProvinceDetail($order_address->id_province);
-                                $order_district = $addressController->getDistrictDetail($order_address->id_province, $order_address->id_district);
-                                $order_ward = $addressController->getWardDetail($order_address->id_district, $order_address->id_ward);
-                                $order_vat = $order->order_vat()->first();
-                            @endphp
+                        @php
+                            $user = $order->user()->first();
+                            $order_address = $order->order_address()->first();
+                            $order_info = $order->order_info()->first();
+                            $order_products = $order->order_products()->get();
+                            $addressController = new App\Http\Controllers\AddressController();
+                            $order_province = $addressController->getProvinceDetail($order_address->id_province);
+                            $order_district = $addressController->getDistrictDetail($order_address->id_province, $order_address->id_district);
+                            $order_ward = $addressController->getWardDetail($order_address->id_district, $order_address->id_ward);
+                            $order_vat = $order->order_vat()->first();
+                        @endphp
                         <p class="text-center font-italic">“Tất cả trong Một”</p>
                         <p class="text-center">
                             ○○○○○○○○○○○○○○○○○○○○○○○
@@ -184,7 +214,7 @@
                                                 {{ $order_store->store()->value('name') }}</h5>
                                             <h5> {{ formatMethod($order_store->shipping_method) }}
 
-                                                {{formatType($order_store->shipping_type)}}
+                                                {{ formatType($order_store->shipping_type) }}
                                             </h5>
                                         </div>
                                         <div class="order-head">
@@ -215,19 +245,21 @@
                                                                 <tr>
                                                                     <td>{{ $order_product->sku }}</td>
                                                                     <td>{{ $order_product->name }}</td>
-                                                                    <td>{{ formatNumber($order_product->c_point) }}</td>
-                                                                    <td>{{ formatNumber($order_product->m_point) }}</td>
+                                                                    <td>{{ formatNumber($order_product->c_point) }}
+                                                                    </td>
+                                                                    <td>{{ formatNumber($order_product->m_point) }}
+                                                                    </td>
                                                                     <td>{{ formatPrice($order_product->price) }}</td>
                                                                     <td>{{ formatPrice($order_product->discount) }}
                                                                     </td>
                                                                     <td>
                                                                         @if ($order_product->product()->first() != null)
-                                                                        {{ formatTax($order_product->product()->first()->productPrice()->value('tax'))}}
-                                                                    @endif
+                                                                            {{ formatTax($order_product->product()->first()->productPrice()->value('tax')) }}
+                                                                        @endif
                                                                     </td>
                                                                     <td>
                                                                         @if ($order_product->product()->first() != null)
-                                                                            {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly')) }}
+                                                                            {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly')* $order_product->quantity) }}
                                                                         @endif
                                                                     </td>
                                                                     <td>{{ $order_product->weight }}g</td>
@@ -267,7 +299,7 @@
                                             </div>
                                         </div>
                                         <div class="order-footer payment-store-footer">
-                                          
+
                                             <span class="text-danger"></span>
                                             <div class="d-md-flex justify-content-between">
 
@@ -300,7 +332,7 @@
                                                             <p><b>Số Km</b></p>
                                                             <p><small class="font-italic"
                                                                     style="visibility: hidden;"> s</small></p>
-                                                                    <p>{{$order_store->shipping_distance}} km</p>
+                                                            <p>{{ $order_store->shipping_distance }} km</p>
 
                                                         </td>
                                                         <td>
@@ -400,10 +432,12 @@
                                 </li>
                                 <li>Số dư M còn lại: <b>{{ formatNumber($order->remaining_m_point) }}</b></li>
                                 <li>Thuế GTGT Sản phẩm: <b>{{ formatPrice($order->vat_products) }}</b></li>
-                                <li>Thuế GTGT Dịch vụ: <b>{{ formatPrice((max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) - (max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08)) }}</b></li>
+                                <li>Thuế GTGT Dịch vụ:
+                                    <b>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) -max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08) }}</b>
+                                </li>
                                 <li>Tổng Thuế GTGT:
-                                    <b>{{ formatPrice($order->vat_products + (max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) - (max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08)) }}</b>
-                                    </li>
+                                    <b>{{ formatPrice($order->vat_products +max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) -max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08) }}</b>
+                                </li>
                                 <li>Hình thức thanh toán:
                                     <b>{{ App\Models\PaymentMethod::whereId($order->payment_method)->value('name') }}</b>
                                 </li>

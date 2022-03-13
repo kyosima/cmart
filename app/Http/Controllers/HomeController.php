@@ -328,10 +328,10 @@ class HomeController extends Controller
         $user = Auth::user();
         // $user->hoten = $request->hoten;
         // $user->cmnd = $request->cmnd;
-        $user->address = $request->address;
-        $user->id_phuongxa = $request->sel_ward;
-        $user->id_quanhuyen = $request->sel_district;
-        $user->id_tinhthanh = $request->sel_province;
+        // $user->address = $request->address;
+        // $user->id_phuongxa = $request->sel_ward;
+        // $user->id_quanhuyen = $request->sel_district;
+        // $user->id_tinhthanh = $request->sel_province;
         // $user->type_cmnd = $request->type_cmnd;
         // $user->duong = $request->duong;
 

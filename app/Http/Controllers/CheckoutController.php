@@ -290,7 +290,7 @@ class CheckoutController extends Controller
             $order_store->shipping_method = $store_shipping_method;
             $order_store->shipping_weight = $store_shipping_weight;
             $order_store->shipping_type = $store_shipping_type;
-            $order_store->shipping_total = $store_shipping_total;
+            $order_store->shipping_total = ceil($store_shipping_total);
             if (in_array(Auth::user()->level, [3, 4])) {
                 $store_c = 0;
                 $store_m = 0;
@@ -305,13 +305,13 @@ class CheckoutController extends Controller
             $order_store->order_store_code = $order_store_code;
             $order_store->save();
             $total_tax += $store_tax;
-            $total_shipping += $store_shipping_total;
+            $total_shipping += ceil($store_shipping_total);
             $total_c += $store_c;
             $total_m += $store_m;
             $total_vat_products += $vat_products;
             $total_discount_products += $discount_products;
             $sub_total += $order_store->sub_total;
-            $total += $order_store->total;
+            $total += ceil($order_store->total);
             // Cart::instance($store_id)->destroy();
         }
 
@@ -623,7 +623,7 @@ class CheckoutController extends Controller
 
         foreach ($order->order_stores()->get() as $order_store) {
             $order_store->total = $order_store->sub_total - $order_store->discount_products + $order_store->vat_products + ($order->total_payment_services / $order->order_stores()->count());
-            $order_store->discount_services = max(0, ($order_store->shipping_total * 108 / 100) + $order_store->vat_services - ($order->total_payment_services / $order->order_stores()->count()));
+            $order_store->discount_services =  ($order_store->shipping_total * 108 / 100) + $order_store->vat_services - ($order->total_payment_services / $order->order_stores()->count()) <0 ?($order_store->shipping_total * 108 / 100)+ $order_store->vat_services : $order->total_payment_services / $order->order_stores()->count();
             $order_store->save();
         }
         $order->total = $order->order_stores()->sum('total');
@@ -1024,31 +1024,31 @@ class CheckoutController extends Controller
         $ship = 0;
         switch (true) {
             case in_array($weight, range(0, 2599)):
-                $ship += 6500 + (4.01 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (4.01 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(2600, 3000)):
-                $ship += 6500 + (3.01 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (3.01 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(3001, 29000)):
-                $ship += 6500 + (3.64 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (3.64 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(29001, 49999)):
-                $ship += 6500 + (3.7 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (3.7 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(50000, 99999)):
-                $ship += 6500 + (3.45 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (3.45 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(100000, 199999)):
-                $ship += 6500 + (2.55 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (2.55 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(200000, 499999)):
-                $ship += 6500 + (1.62 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (1.62 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(500000, 1000000)):
-                $ship += 6500 + (1.11 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (1.11 * $weight + (1000 * ceil($weight / 500)));
                 break;
             default:
-                $ship += 6500 + (1 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (1 * $weight + (1000 * ceil($weight / 500)));
                 break;
         }
         $ship = $process_fee +  round(max(10000, $ship));
@@ -1093,6 +1093,7 @@ class CheckoutController extends Controller
                     } else {
                         $ship +=  28704;
                         $ship_fast += 35649;
+                        $ship_fast = $process_fee;
                     }
                 }
                 break;
@@ -1284,7 +1285,7 @@ class CheckoutController extends Controller
     }
     public function getWeight($product, $quantity)
     {
-        $weight = round(max($product->weight / 1000, (($product->height * $product->width * $product->length) / 3000)) * 1000);
+        $weight = ceil(max($product->weight / 1000, (($product->height * $product->width * $product->length) / 3000)) * 1000);
         return $weight * $quantity;
     }
     public function getDistance($address1, $address2)

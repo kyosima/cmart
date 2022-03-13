@@ -122,7 +122,7 @@
                                                                     </td>
                                                                     <td>
                                                                         @if ($order_product->product()->first() != null)
-                                                                            {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly')) }}
+                                                                            {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly') * $order_product->quantity) }}
                                                                         @endif
                                                                     </td>
                                                                     <td>{{ $order_product->weight }}g</td>
@@ -162,7 +162,7 @@
                                             </div>
                                         </div>
                                         <div class="order-footer payment-store-footer">
-                                    
+
                                             <span class="text-danger"></span>
                                             <div class="d-md-flex justify-content-between">
                                                 <div class="text-center">
@@ -187,7 +187,7 @@
                                                     <p><b>Số Km</b></p>
                                                     <p><small style="visibility:hidden">(Chưa bao gồm thuế VAT
                                                             8%)</small></p>
-                                                    <p>{{$order_store->shipping_distance}} km</p>
+                                                    <p>{{ $order_store->shipping_distance }} km</p>
                                                 </div>
                                                 <div class="text-center">
                                                     <p><b>Phí Vận chuyển</b></p>

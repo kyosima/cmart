@@ -127,7 +127,7 @@
                                                                     </td>
                                                                     <td>
                                                                         @if ($order_product->product()->first() != null)
-                                                                            {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly')) }}
+                                                                            {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly') * $order_product->quantity) }}
                                                                         @endif
                                                                     </td>
                                                                     <td>{{ $order_product->weight }}g</td>

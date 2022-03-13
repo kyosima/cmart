@@ -62,7 +62,7 @@
                             <td>{{ $value->note }}</td>
                             <td>{{ formatNumber($value->point_past_nhan) }}</td>
                             <td>{{ formatNumber($value->amount) }}</td>
-                            <td>{{formatNumber( $value->point_present_nhan) }}</td>
+                            <td>{{formatNumber( $value->point_past_nhan+$value->amount) }}</td>
                         </tr>
                     @endforeach
                 </tbody>

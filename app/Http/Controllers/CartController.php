@@ -18,20 +18,23 @@ class CartController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
-        $orders_not_payment = $user->orders()->where('is_payment',0)->get();
-        if (count($orders_not_payment) > 0) {
-            foreach($orders_not_payment as $order){
-                foreach($order->order_stores()->get() as $order_store){
-                    foreach($order_store->order_products()->get() as $order_product){
-                        $order_product->delete();
+        if(Auth::check()){
+            $user = Auth::user();
+            $orders_not_payment = $user->orders()->where('is_payment',0)->get();
+            if (count($orders_not_payment) > 0) {
+                foreach($orders_not_payment as $order){
+                    foreach($order->order_stores()->get() as $order_store){
+                        foreach($order_store->order_products()->get() as $order_product){
+                            $order_product->delete();
+                        }
+                        $order_store->delete();
+        
                     }
-                    $order_store->delete();
-    
-                }
-                $order->delete();
-            }            
+                    $order->delete();
+                }            
+            }
         }
+     
         $stores = Store::get();
         Session::forget('store_ids');
         $count_cart = 0;
