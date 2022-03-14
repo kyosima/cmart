@@ -34,9 +34,9 @@
                             </div>
                             <div class="form-group">
                                 <select name="method" class="form-control" required>
-                                    <option value="1">Chuyển nhanh</option>
+                                    <option value="1">Chuyển khoản nhận ngay</option>
                                     <option value="2">Phong tỏa</option>
-                                    <option value="3">Hoàn tiền GD</option>
+                                    <option value="3">Hoàn ĐH hủy</option>
                                 </select>
                             </div>
                             <div class="form-group method2">

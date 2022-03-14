@@ -978,14 +978,16 @@ class CheckoutController extends Controller
                     $weight += $this->getWeight($row->model, $row->qty);
                     $cart->update($row->rowId, ['options' => ['method_ship' => 2, 'type_ship' => 1, 'price_normal' => 0, 'price_fast' => 0]]);
                 }
-                $ship_temp = $this->getVShip($process_fee, $this->getWeight($row->model, $row->qty), $data['province'], $store->province()->value('matinhthanh'));
+                $ship_temp = $this->getVShip($process_fee, $this->getWeight($row->model, $row->qty), $data['province'], $store->id_province);
                 $ship_arr[0] += $ship_temp[0];
                 $ship_arr[1] += $ship_temp[1];
                 $row = $cart->content()->first();
                 $cart->update($row->rowId, ['options' => ['method_ship' => 2, 'type_ship' => 1, 'price_normal' => $ship_temp[0], 'price_fast' => $ship_temp[1]]]);
                 $store_ships['store' . $store_id]['name'] = 'store' . $store_id;
                 $store_ships['store' . $store_id]['id'] = $store_id;
-                $store_ships['store' . $store_id]['weight'] = $weight;
+                $store_ships['store' . $store_id]['weight'] =$weight;
+                $store_ships['store' . $store_id]['weight1'] =$this->getProvinceArea($store->id_province);
+
                 $store_ships['store' . $store_id]['ship_total']['ship'] = array('value' => $ship_arr[0], 'text' => formatPrice($ship_arr[0]));
                 $store_ships['store' . $store_id]['ship_total']['ship_fast'] = array('value' => $ship_arr[1], 'text' => formatPrice($ship_arr[1]));
                 $store_ships['store' . $store_id]['method'] = 2;
@@ -1060,8 +1062,7 @@ class CheckoutController extends Controller
                 break;
         }
         $ship = $process_fee +  round(max(10000, $ship));
-        $distance = max(round($distance, 1), 3);
-        $ship_fast = $process_fee + 6500 + (5000 * $distance) + (1 * $weight) + (1000 * ceil($weight / 500));
+        $ship_fast = $process_fee + 6500 + (5000 * $distance) + (1 * $weight) + (1000 *ceil($weight / 500));
         // $ship = $process_fee + 3000 + (4 * $weight) + max(3000, (1500 * round($weight / 500)));
         // $ship_fast = $process_fee + max(20000, 3000 + (3600 * $distance) + $weight) + max(3000, (1500 * round($weight / 500)));
         return array(round($ship), round($ship_fast));
@@ -1120,15 +1121,15 @@ class CheckoutController extends Controller
                 break;
             case in_array($weight, range(501, 29500)):
                 if ($province_customer == $province_store) {
-                    $ship += 15278 + (2315 * ceil($weight / 500));
-                    $ship_fast += 20371 + (2315 * ceil($weight / 500));
+                    $ship += 15278 + (2315 * ceil(($weight-500) / 500));
+                    $ship_fast += 20371 + (2315 * ceil(($weight-500) / 500));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 27778 + (2963 * ceil($weight / 500));
-                        $ship_fast += 27778 + (2963 * ceil($weight / 500));
+                        $ship += 27778 + (2963 * ceil(($weight-500) / 500));
+                        $ship_fast += 27778 + (2963 * ceil(($weight-500) / 500));
                     } else {
-                        $ship +=  29630 + (4167 * ceil($weight / 500));
-                        $ship_fast += 45371 + (11575 * ceil($weight / 500));
+                        $ship +=  29630 + (4167 * ceil(($weight-500) / 500));
+                        $ship_fast += 45371 + (11575 * ceil(($weight-500) / 500));
                     }
                 }
                 break;
@@ -1154,102 +1155,102 @@ class CheckoutController extends Controller
                 break;
             case in_array($weight, range(30000, 99999)):
                 if ($province_customer == $province_store) {
-                    $ship += 128704  + (3704 * ceil($weight / 30000));
-                    $ship_fast += 128704   + (3704 * ceil($weight / 30000));
+                    $ship += 128704  + (3704 * ceil(($weight-500) / 30000));
+                    $ship_fast += 128704   + (3704 * ceil(($weight-500) / 30000));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 138889 + (3704 * ceil($weight / 30000));
-                        $ship_fast += 193519  + (4630 * ceil($weight / 30000));
+                        $ship += 138889 + (3704 * ceil(($weight-500) / 30000));
+                        $ship_fast += 193519  + (4630 * ceil(($weight-500) / 30000));
                     } elseif (
                         in_array($this->getProvinceArea($province_customer), [0, 2])
                         && in_array($this->getProvinceArea($province_store), [0, 2])
                     ) {
-                        $ship += 216667 + (6482 * ceil($weight / 30000));
-                        $ship_fast += 693519 + (23149 * ceil($weight / 30000));
+                        $ship += 216667 + (6482 * ceil(($weight-500) / 30000));
+                        $ship_fast += 693519 + (23149 * ceil(($weight-500) / 30000));
                     } else {
-                        $ship += 164815 + (4630 * ceil($weight / 30000));
-                        $ship_fast += 693519 + (16667 * ceil($weight / 30000));
+                        $ship += 164815 + (4630 * ceil(($weight-500) / 30000));
+                        $ship_fast += 693519 + (16667 * ceil(($weight-500) / 30000));
                     }
                 }
                 break;
 
             case in_array($weight, range(100000, 199999)):
                 if ($province_customer == $province_store) {
-                    $ship += 387984  + (2593 * ceil($weight / 100000));
-                    $ship_fast += 387984 + (2593 * ceil($weight / 30000));
+                    $ship += 387984  + (2593 * ceil(($weight-500) / 100000));
+                    $ship_fast += 387984 + (2593 * ceil(($weight-500) / 30000));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 398169 + (3519 * ceil($weight / 100000));
-                        $ship_fast += 517619 + (3704 * ceil($weight / 30000));
+                        $ship += 398169 + (3519 * ceil(($weight-500) / 100000));
+                        $ship_fast += 517619 + (3704 * ceil(($weight-500) / 30000));
                     } elseif (
                         in_array($this->getProvinceArea($province_customer), [0, 2])
                         && in_array($this->getProvinceArea($province_store), [0, 2])
                     ) {
-                        $ship += 670407 + (5186 * ceil($weight / 100000));
-                        $ship_fast += 2313949 + (22686 * ceil($weight / 30000));
+                        $ship += 670407 + (5186 * ceil(($weight-500) / 100000));
+                        $ship_fast += 2313949 + (22686 * ceil(($weight-500) / 30000));
                     } else {
-                        $ship += 488915 + (4538 * ceil($weight / 100000));
-                        $ship_fast += 1860209 + (16204 * ceil($weight / 30000));
+                        $ship += 488915 + (4538 * ceil(($weight-500) / 100000));
+                        $ship_fast += 1860209 + (16204 * ceil(($weight-500) / 30000));
                     }
                 }
                 break;
             case in_array($weight, range(200000, 499999)):
                 if ($province_customer == $province_store) {
-                    $ship += 647284  + (2130 * ceil($weight / 200000));
-                    $ship_fast += 647284 + (2130 * ceil($weight / 30000));
+                    $ship += 647284  + (2130 * ceil(($weight-500) / 200000));
+                    $ship_fast += 647284 + (2130 * ceil(($weight-500) / 30000));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 750069 + (3056 * ceil($weight / 200000));
-                        $ship_fast += 888019 + (3519 * ceil($weight / 30000));
+                        $ship += 750069 + (3056 * ceil(($weight-500) / 200000));
+                        $ship_fast += 888019 + (3519 * ceil(($weight-500) / 30000));
                     } elseif (
                         in_array($this->getProvinceArea($province_customer), [0, 2])
                         && in_array($this->getProvinceArea($province_store), [0, 2])
                     ) {
-                        $ship += 1189007 + (4630 * ceil($weight / 200000));
-                        $ship_fast += 4582549 + (22038 * ceil($weight / 30000));
+                        $ship += 1189007 + (4630 * ceil(($weight-500) / 200000));
+                        $ship_fast += 4582549 + (22038 * ceil(($weight-500) / 30000));
                     } else {
-                        $ship += 942715  + (4167 * ceil($weight / 200000));
-                        $ship_fast += 3480609 + (15741 * ceil($weight / 30000));
+                        $ship += 942715  + (4167 * ceil(($weight-500) / 200000));
+                        $ship_fast += 3480609 + (15741 * ceil(($weight-500) / 30000));
                     }
                 }
                 break;
             case in_array($weight, range(500000, 999999)):
                 if ($province_customer == $province_store) {
-                    $ship += 1286284  + (1852 * ceil($weight / 500000));
-                    $ship_fast += 1286284 + (1852 * ceil($weight / 30000));
+                    $ship += 1286284  + (1852 * ceil(($weight-500) / 500000));
+                    $ship_fast += 1286284 + (1852 * ceil(($weight-500) / 30000));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 1666869 + (2778 * ceil($weight / 200000));
-                        $ship_fast += 1943719 + (3334 * ceil($weight / 30000));
+                        $ship += 1666869 + (2778 * ceil(($weight-500) / 200000));
+                        $ship_fast += 1943719 + (3334 * ceil(($weight-500) / 30000));
                     } elseif (
                         in_array($this->getProvinceArea($province_customer), [0, 2])
                         && in_array($this->getProvinceArea($province_store), [0, 2])
                     ) {
-                        $ship += 2578007 + (4352 * ceil($weight / 200000));
-                        $ship_fast += 11193949 + (21297 * ceil($weight / 30000));
+                        $ship += 2578007 + (4352 * ceil(($weight-500)/ 200000));
+                        $ship_fast += 11193949 + (21297 * ceil(($weight-500) / 30000));
                     } else {
-                        $ship +=  2192815  + (3704 * ceil($weight / 200000));
-                        $ship_fast += 8202909 + (15278 * ceil($weight / 30000));
+                        $ship +=  2192815  + (3704 * ceil(($weight-500) / 200000));
+                        $ship_fast += 8202909 + (15278 * ceil(($weight-500) / 30000));
                     }
                 }
                 break;
             default:
                 if ($province_customer == $province_store) {
-                    $ship += 2212284  + (1667 * ceil($weight / 1000000));
-                    $ship_fast += 2212284 + (1667 * ceil($weight / 30000));
+                    $ship += 2212284  + (1667 * ceil(($weight-500) / 1000000));
+                    $ship_fast += 2212284 + (1667 * ceil(($weight-500) / 30000));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 3055869 + (2593 * ceil($weight / 1000000));
-                        $ship_fast += 3610719 + (3149 * ceil($weight / 30000));
+                        $ship += 3055869 + (2593 * ceil(($weight-500) / 1000000));
+                        $ship_fast += 3610719 + (3149 * ceil(($weight-500) / 30000));
                     } elseif (
                         in_array($this->getProvinceArea($province_customer), [0, 2])
                         && in_array($this->getProvinceArea($province_store), [0, 2])
                     ) {
-                        $ship += 4430007 + (3519 * ceil($weight / 1000000));
-                        $ship_fast += 21842449 + (20834 * ceil($weight / 30000));
+                        $ship += 4430007 + (3519 * ceil(($weight-500) / 1000000));
+                        $ship_fast += 21842449 + (20834 * ceil(($weight-500) / 30000));
                     } else {
-                        $ship +=  4368815  + (3704 * ceil($weight / 1000000));
-                        $ship_fast += 15841909 + (15000 * ceil($weight / 30000));
+                        $ship +=  4368815  + (3704 * ceil(($weight-500) / 1000000));
+                        $ship_fast += 15841909 + (15000 * ceil(($weight-500) / 30000));
                     }
                 }
                 break;
