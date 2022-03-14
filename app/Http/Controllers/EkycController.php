@@ -51,8 +51,12 @@ class EkycController extends Controller
         $image_back = $request->image_back;
         $image_portrait = $request->image_portrait;
         $result_recognition = json_decode($this->postRecognition($image_front));
+
         if ($result_recognition->result_code == 200) {
-            if (count($result_recognition->warning) <2) {
+            if (count($result_recognition->warning) == 0 ||((count($result_recognition->warning) == 1) && (in_array('anh_giay_to_khong_chup_truc_tiep', $result_recognition->warning)))) {
+                if($result_recognition->id_confidence < 0.7){
+                    return back()->with('message' , 'Số CMND, CCCD không hợp lệ');
+                }
                 $result_verify =  json_decode($this->postVerification($image_front, $image_portrait));
                 switch ($result_verify->verify_result) {
                     case 0:

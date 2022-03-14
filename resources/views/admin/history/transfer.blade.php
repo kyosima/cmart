@@ -16,23 +16,6 @@
 
     <div class="m-3">
         <div class="wrapper bg-white p-4">
-            {{-- <div class="row">
-
-                <div class="col-md-6 col-12 px-3">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="search_makhachhang" onkeyup="search_makhachhang()"
-                            placeholder="Nhập mã khách hàng tìm kiếm">
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-6"><a href="{{ asset('admin/lichsuchuyenkhoan/download/pdf') }}"
-                                class="btn btn-primary text-white" style="width: 100%">Xuất PDF</a></div>
-                        <div class="col-6"><a href="{{ asset('admin/lichsuchuyenkhoan/download/xlsx') }}"
-                                class="btn btn-primary text-white" style="width: 100%">Xuất Excel</a></div>
-                    </div>
-                </div>
-            </div> --}}
 
             <table class="table table-striped table-bordered" id="chuyenkhoanc">
                 <thead class="bg-dark text-light">
@@ -43,18 +26,28 @@
                         <th>Số dư ban đầu</th>
                         <th>Giá trị giao dịch</th>
                         <th>Số dư cuối</th>
+                        <th>Trạng thái</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($listHistory as $value)
+                    @foreach ($histories as $history)
                         <tr style="text-align:center">
-                            <td>{{ date('d-m-Y H:i:s', strtotime($value->created_at)) }}</td>
-                            <td>{{ $value->makhachhang }}</td>
-                            <td>{{ $value->note }}</td>
-                            <td>{{ formatNumber($value->point_past_chuyen) }}</td>
-                            <td>{{ formatNumber($value->amount) }}</td>
-                            <td>{{ formatNumber($value->point_present_chuyen) }}</td>
+                            <td>{{ date('d-m-Y H:i:s', strtotime($history->created_at)) }}</td>
+                            <td>{{ $history->user()->value('code_customer') }}</td>
+                            <td>{{ $history->content }}</td>
+                            <td>{{ formatNumber($history->old_balance) }}</td>
+                            <td>{{ formatNumber($history->amount) }}</td>
+                            <td>{{ formatNumber($history->old_balance - $history->amount) }}</td>
+                            <td>
+                                @if ($history->method == 1)
+                                    Thành công
+                                @elseif($history->method = 2)
+                                    Bị phong tỏa đến {{ date('d-m-Y H:i:s', strtotime($history->time)) }}
+                                @else
+                                    Thành công
+                                @endif
+                            </td>
 
                         </tr>
                     @endforeach

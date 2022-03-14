@@ -24,6 +24,7 @@ use App\Admin\Controllers\AdminBannerController;
 use App\Admin\Controllers\AdminEkycController;
 use App\Admin\Controllers\AdminStoreController;
 use App\Admin\Controllers\PaymentMethodController;
+use App\Admin\Controllers\AdminPointController;
 
 Route::group(['middleware' => ['admin']], function () {
     // Route::resource('permissions', AdminPermissionsController::class);
@@ -298,6 +299,18 @@ Route::group(['middleware' => ['admin']], function () {
     });
 
     // Route::get('/nganh-nhom-hang/test/{id}/{status}/{levelChange}', [AdminProductCategoryController::class, 'recursive'])->name('nganh-nhom-hang.recursive');
+    //HistoryPoint
+
+    Route::group(['prefix'=>'diem-tich-luy','middleware' => ['permission:Xem lịch sử điểm,admin']], function () {
+        Route::get('lich-su-nhan-diem', [AdminPointController::class, 'getHistoryReceiverC'])->name('point.historyReceiver');
+        Route::get('lich-su-tich-luy', [AdminPointController::class, 'getAccumulationC'])->name('point.historyAccumulation');
+        Route::get('chuyen-khoan', [AdminPointController::class, 'getTransfer'])->name('point.Transfer');
+        Route::post('chuyen-khoan', [AdminPointController::class, 'postTransfer'])->name('point.postTransfer');
+        Route::get('lich-su-chuyen-khoan', [AdminPointController::class, 'getHistoryTransfer'])->name('point.historyTransfer');
+        Route::get('lich-su-hoan-don-hang-huy', [AdminPointController::class, 'getHistoryRefund'])->name('point.historyRefund');
+
+    });
+  
 
     // BLOG
     // được phép xem bài viết

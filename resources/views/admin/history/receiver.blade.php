@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Lịch sử hoàn đơn hàng huỷ')
+@section('title', 'Lịch sử nhận C')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/amcharts.css') }}" type="text/css">
@@ -15,10 +15,35 @@
 
 @section('content')
 
-
     <div class="m-3">
         <div class="wrapper bg-white p-4">
-            <table class="table table-striped table-bordered" id="hoanc">
+            {{-- <div class="row mb-4">
+
+                <div class="col-md-6 col-12 px-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="search_makhachhang" onkeyup="search_makhachhang()"
+                            placeholder="Nhập mã khách hàng tìm kiếm">
+                    </div>
+                </div>
+                <div class="col-6">
+
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="{{ asset('admin/lichsutietkiem/download/pdf') }}" class="btn btn-primary text-white"
+                                style="width: 100%">
+                                Xuất PDF</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{{ asset('admin/lichsutietkiem/download/xlsx') }}" class="btn btn-primary text-white"
+                                style="width: 100%">
+                                Xuất Excel</a>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+
+
+            <table class="table table-striped table-bordered" id="nhanc">
                 <thead class="bg-dark text-light">
                     <tr style="text-align:center">
                         <th>Thời gian giao dịch</th>
@@ -30,21 +55,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($listHistory as $value)
+                    @foreach ($histories as $history)
                         <tr style="text-align:center">
-                            <td>{{ date('d-m-Y H:i:s', strtotime($value->created_at)) }}</td>
-                            <td>{{ $value->makhachhang }}</td>
-                            <td>{{ $value->note }}</td>
-                            <td>{{ formatNumber($value->point_past_chuyen) }}</td>
-                            <td>{{ formatNumber($value->amount) }}</td>
-                            <td>{{ formatNumber($value->point_present_chuyen) }}</td>
+                            <td>{{ date('d-m-Y H:i:s', strtotime($history->created_at)) }}</td>
+                            <td>{{ $history->user()->value('code_customer') }}</td>
+                            <td>{{ $history->content }}</td>
+                            <td>{{ formatNumber($history->old_balance) }}</td>
+                            <td>{{ formatNumber($history->amount) }}</td>
+                            <td>{{ formatNumber($history->old_balance + $history->amount) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
 @endsection
 
 
@@ -60,7 +84,7 @@
             // $('#history-c').on('error.dt', function(e, settings, techNote, message) {
             //     console.log('An error has been reported by DataTables: ', message);
             // }).DataTable();
-            $('#hoanc').DataTable({
+            $('#nhanc').DataTable({
                 responsive: true,
                 "order": [],
                 lengthMenu: [
@@ -106,13 +130,16 @@
 
                     },
                     {
-                    extend: 'pdfHtml5',
-                    orientation: 'landscape',
-                    pageSize: 'LEGAL',
-                 
-                }
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+
+                    }
                 ],
+
             });
+
+
         });
     </script>
 @endpush

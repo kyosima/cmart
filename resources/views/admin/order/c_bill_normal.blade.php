@@ -127,7 +127,7 @@
                                                                     </td>
                                                                     <td>
                                                                         @if ($order_product->product()->first() != null)
-                                                                            {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly') * $order_product->quantity) }}
+                                                                        {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly') ) }}
                                                                         @endif
                                                                     </td>
                                                                     <td>{{ $order_product->weight }}g</td>
@@ -269,15 +269,15 @@
                                 <li>Tổng Phí DV GTGT: <b>{{ formatPrice($order->vat_services) }}</b></li>
                                 <li>Tổng chiết khấu M: <b>{{ formatPrice($order->m_point) }}</b></li>
                                 <li>Giá trị thanh toán Dịch vụ <b>= Số M cần tìm thêm để miễn phí dịch vụ</b>:
-                                    <b>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) }}</b>
+                                    <b>{{ formatPrice($order->total_payment_services) }}</b>
                                 </li>
                                 <li>Số dư M còn lại: <b>{{ formatNumber($order->remaining_m_point) }}</b></li>
                                 <li>Thuế GTGT Sản phẩm: <b>{{ formatPrice($order->vat_products) }}</b></li>
                                 <li>Thuế GTGT Dịch vụ:
-                                    <b>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) -max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08) }}</b>
+                                    <b>{{ formatPrice($order->tax_services) }}</b>
                                 </li>
                                 <li>Tổng Thuế GTGT:
-                                    <b>{{ formatPrice($order->vat_products +max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) -max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08) }}</b>
+                                    <b>{{ formatPrice($order->total_tax_services) }}</b>
                                 </li>
                                 <li>Hình thức thanh toán:
                                     <b>{{ App\Models\PaymentMethod::whereId($order->payment_method)->value('name') }}</b>

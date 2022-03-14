@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CPointHistory;
 use App\Models\PointC;
+use App\Models\StatisticalC;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,6 +20,12 @@ class CPointController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function postStatisticalC($total){
+        StatisticalC::create([
+            'total' => $total,
+        ]);
+    }
     public function index()
     {
         // $data = Order::orderBy('created_at', 'desc')->where('orders.user_id','=',auth()->user()->id)->get();

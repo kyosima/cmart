@@ -130,7 +130,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->hoten = $request->hoten;
         $user->level = $request->level;
-        // $user->phone = $request->phone;
+        $user->phone = $request->phone;
         $user->address = $request->address;
         // $user->check_kyc = $request->check_kyc;
         // $user->type_cmnd = $request->type_cmnd;

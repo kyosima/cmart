@@ -46,6 +46,8 @@ class Order extends Model
 		'shipping_total',
 		'c_point',
 		'm_point',
+		'tax_services',
+		'total_tax_services',
 		'tax',
 		'sub_total',
 		'vat_products',

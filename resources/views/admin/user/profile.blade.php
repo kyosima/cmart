@@ -151,7 +151,7 @@
                                     <div class="col-lg-4 text-start">
                                         <span class="text-uppercase">Số điện thoại</span>
                                         <input type="phone" class="form-control mb-2" name="phone"
-                                            placeholder="Nhập số điện thoại" value="{{ $user->phone }}" readonly>
+                                            placeholder="Nhập số điện thoại" value="{{ $user->phone }}" >
                                         <!-- <span class="text-uppercase">Email</span>
                                                                                                     <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
                                                                                                         value="{{ $user->email }}" readonly=""> -->

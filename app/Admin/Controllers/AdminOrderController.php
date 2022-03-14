@@ -23,6 +23,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\PaymentPaymeController;
 use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\HistoryPointController;
 
 use App\Models\PointCHistory;
 use App\Models\PointMHistory;
@@ -259,56 +260,13 @@ class AdminOrderController extends Controller
     }
     public function proccessCpoint($user, $request_status, $order_status, $order_cpoint, $order)
     {
+        $transaction_code = $order->order_store_code;
         if ($request_status == 4 && $order_status != 4) {
-
-            $transaction_code = $order->order_store_code;
-            $point_c = $user->point_c()->first();
-            $id_user_chuyen = User::where('id', '=', 1)->first()->id;
-            $vi_user_chuyen = PointC::where('user_id', '=', $id_user_chuyen)->first();
-            $lichsu_chuyen = new PointCHistory;
-            $lichsu_chuyen->point_c_idnhan = $user->id;
-            $lichsu_chuyen->point_past_nhan = $point_c->point_c;
-            $lichsu_chuyen->point_present_nhan = $point_c->point_c + $order_cpoint;
-            $lichsu_chuyen->makhachhang = $user->code_customer;
-            $lichsu_chuyen->note = 'Tich luy C ' . $transaction_code;
-            $lichsu_chuyen->magiaodich =  $transaction_code;
-            $lichsu_chuyen->amount = $order_cpoint;
-            $lichsu_chuyen->type = 1;
-            $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
-            $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
-            $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $order_cpoint;
-            $lichsu_chuyen->makhachhang_chuyen = 202201170001;
-            $lichsu_chuyen->save();
-
-            $point_c->point_c = $point_c->point_c + $order_cpoint;
-            $vi_user_chuyen->point_c = $vi_user_chuyen->point_c - $order_cpoint;
-            $vi_user_chuyen->save();
-            $point_c->save();
+            $historyPointController = new HistoryPointController();
+            $historyPointController->createHistory($user, $order->c_point, 3, 1, $transaction_code, null, null);
         } elseif ($request_status == 5 && $order_status != 5) {
-            $user = User::whereCodeCustomer('202201170001')->first();
-            $user_receiver = User::whereId($order->order()->value('user_id'))->first();
-            $lichsu_chuyen = new PointCHistory;
-            $point_c = $user->point_c()->first();
-            $point_c_receiver = $user_receiver->point_c()->first();
-            $lichsu_chuyen->point_c_idnhan = $user_receiver->id;
-            $lichsu_chuyen->point_past_nhan = $point_c_receiver->point_c;
-            $lichsu_chuyen->point_present_nhan = $point_c_receiver->point_c + $order->total;
-            $lichsu_chuyen->makhachhang = $user_receiver->code_customer;
-            $transaction_code = $order->order_store_code;
-            $lichsu_chuyen->note = 'Hoan GD ' . $transaction_code;
-            $lichsu_chuyen->magiaodich =  $transaction_code;
-            $lichsu_chuyen->amount = $order->total;
-            $lichsu_chuyen->type = 5;
-            $lichsu_chuyen->point_c_idchuyen = $user->id;
-            $lichsu_chuyen->point_past_chuyen = $point_c->point_c;
-            $lichsu_chuyen->point_present_chuyen = $point_c->point_c - $order->total;
-            $lichsu_chuyen->makhachhang_chuyen = $user->code_customer;
-            $lichsu_chuyen->save();
-            $point_c_receiver->point_c += $order->total;
-            $point_c_receiver->save();
-
-            $point_c->point_c -= $order->total;
-            $point_c->save();
+            // $historyPointController = new HistoryPointController();
+            // $historyPointController->createHistory($user, $order->total, 6, 0, $transaction_code);
             $store = $order->store()->first();
             foreach ($order->order_products()->get() as $order_product) {
                 if ($order_product->sku != null) {
