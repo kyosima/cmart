@@ -34,7 +34,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/nang-cap-user/{id}', [UserController::class, 'postDanhsach']);
 
     Route::group(['prefix' => 'danh-sach-user'], function () {
-        Route::get('{id}', [UserController::class, 'getEdit']);
+        Route::get('{id}', [UserController::class, 'getEdit'])->name('user.detail');
         Route::post('{id}', [UserController::class, 'postEdit']);
     });
     Route::group(['prefix' => 'don-hang'], function () {
@@ -308,6 +308,8 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('chuyen-khoan', [AdminPointController::class, 'postTransfer'])->name('point.postTransfer');
         Route::get('lich-su-chuyen-khoan', [AdminPointController::class, 'getHistoryTransfer'])->name('point.historyTransfer');
         Route::get('lich-su-hoan-don-hang-huy', [AdminPointController::class, 'getHistoryRefund'])->name('point.historyRefund');
+        Route::get('thong-ke', [AdminPointController::class, 'getStatistical'])->name('point.getStatistical');
+        Route::get('thanh-toan-tiet-kiem', [AdminPointController::class, 'getHistorySaving'])->name('point.getHistorySaving');
 
     });
   

@@ -12,6 +12,16 @@ class AdminPointController extends Controller
 {
     //
 
+    public function getStatistical(Request $request){
+        $users = User::orderBy('id', 'asc')->get();
+        return view('admin.point.statistical', compact('users'));
+    }
+
+    public function getHistorySaving(Request $request){
+        $histories = HistoryPoint::whereType(4)->latest()->get();
+        return view('admin.history.saving', compact('histories'));
+    }
+
     public function getTransfer(Request $request)
     {
         $cmart = User::whereId(1)->first();

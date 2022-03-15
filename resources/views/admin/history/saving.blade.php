@@ -52,14 +52,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($listHistory as $value)
+                    @foreach ($histories as $history)
                         <tr style="text-align:center">
-                            <td>{{ date('d-m-Y H:i:s', strtotime($value->created_at)) }}</td>
-                            <td>{{ $value->makhachhang_chuyen }}</td>
-                            <td>{{ $value->note }}</td>
-                            <td>{{ formatNumber($value->point_past_chuyen) }}</td>
-                            <td>{{ formatNumber($value->amount) }}</td>
-                            <td>{{ formatNumber($value->point_present_chuyen) }}</td>
+                            <td>{{ date('d-m-Y H:i:s', strtotime($history->created_at)) }}</td>
+                            <td>{{ $history->user()->value('code_customer') }}</td>
+                            <td>{{ $history->content }}</td>
+                            <td>{{ formatNumber($history->old_balance) }}</td>
+                            <td>{{ formatNumber($history->amount) }}</td>
+                            <td>{{ formatNumber($history->old_balance + $history->amount) }}</td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -11,10 +11,9 @@ class HistoryPointController extends Controller
 {
     /* 1: nhận c 
      * 2: chuyển khoản c
-     * 3: thanh toán tích lũy c
+     * 3: thanh toán tích lũy c 1: nhanh 2 giam 3 hoandonhuy
      * 4: thanh toán tiết kiệm c
      * 5: thanh toán tích lũy m
-     * 6: hoàn đơn hàng hủy
      */
 
     public function createHistory($user, $amount, $type, $status, $code, $method, $time)
@@ -62,8 +61,13 @@ class HistoryPointController extends Controller
                 break;
             case 3:
                 $cmart_wallet->point_c -= $amount;
-                $user_wallet->point_c += $amount;         
+                $user_wallet->point_c += $amount;
                 $history->content = 'Tich luy C ' . $code;
+                break;
+            case 4:
+                $cmart_wallet->point_c -= $amount;
+                $user_wallet->point_c += $amount;
+                $history->content = 'Tiet kiem ngay '. Date('d/m/Y') .' tu TK '. $user->code_customer;
                 break;
             case 6:
                 $cmart_wallet->point_c -= $amount;

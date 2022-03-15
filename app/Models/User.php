@@ -64,6 +64,14 @@ class User extends Authenticatable
         return $this->hasMany(RequestEkyc::class, 'user_id', 'id');
     }
 
+    public function getHistory(){
+        return $this->hasMany(HistoryPoint::class, 'user_id', 'id');
+    }
+
+    public function getRememberC(){
+        return $this->hasMany(RememberC::class, 'user_id', 'id');
+    }
+
 	// public function orders()
 	// {
 	// 	return $this->belongsToMany(Order::class, 'order_products', 'id_order', 'id_product')

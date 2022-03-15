@@ -86,13 +86,13 @@
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
                 <span class="dropdown-content" style="top: -90px;">
-                    <a href="{{ route('tongdiemuser') }}">Tài khoản C / HSKH</a>
+                    <a href="{{ route('point.getStatistical') }}">Tài khoản C / HSKH</a>
                     <a href="{{ route('point.Transfer') }}">Chuyển C</a>
                     <a href="{{ route('napC') }}">Tài khoản C / C-Mart</a>
                     <a href="{{ route('point.historyReceiver') }}">Lịch sử nhận C</a>
                     <a href="{{ route('point.historyTransfer') }}">Lịch sử chuyển khoản C</a>
                     <a href="{{ route('point.historyAccumulation') }}">Lịch sử thanh toán tích luỹ C</a>
-                    <a href="{{ route('lichsutietkiem') }}">Lịch sử thanh toán tiết kiệm C</a>
+                    <a href="{{ route('point.getHistorySaving') }}">Lịch sử thanh toán tiết kiệm C</a>
                     <a href="{{ route('lichsudiemm') }}">Lịch sử thanh toán tích luỹ M</a>
                     <a href="{{ route('point.historyRefund') }}">Lịch sử hoàn đơn hàng huỷ</a>
                 </span>
