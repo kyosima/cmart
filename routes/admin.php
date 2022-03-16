@@ -310,6 +310,9 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('lich-su-hoan-don-hang-huy', [AdminPointController::class, 'getHistoryRefund'])->name('point.historyRefund');
         Route::get('thong-ke', [AdminPointController::class, 'getStatistical'])->name('point.getStatistical');
         Route::get('thanh-toan-tiet-kiem', [AdminPointController::class, 'getHistorySaving'])->name('point.getHistorySaving');
+        Route::get('lich-su-tich-luy-m', [AdminPointController::class, 'getHistoryAccumulationM'])->name('point.historyAccumulationM');
+        Route::get('tai-khoan-cmart', [AdminPointController::class, 'getStatisticalAccount'])->name('point.account');
+        Route::post('nap-c', [AdminPointController::class, 'postDeposit'])->name('point.deposit');
 
     });
   

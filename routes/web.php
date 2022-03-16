@@ -78,6 +78,8 @@ Route::prefix('dat-hang')->group(function () {
     Route::get('cal-ship-cmart', [CheckoutController::class, 'calCmartShip'])->name('checkout.calCmartShip');
     Route::get('update-type-ship', [CheckoutController::class, 'updateTypeShip'])->name('checkout.updateTypeShip');
     Route::get('show-policy', [CheckoutController::class, 'showPolicy'])->name('showPolicy');
+    Route::get('khong-thanh-cong', [CheckoutController::class, 'showFail'])->name('checkout.fail');
+
 });
 Route::prefix('dat-hang/thanh-toan')->group(function () {
     Route::get('tien-tich-luy', [CheckoutController::class, 'getPaymentC'])->name('payment.C');

@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="text-center check-ekyc">
-                <button class="btn btn-danger" type="submit">Bắt đầu duyệt EKYC</button>
+                <button class="btn btn-danger" type="submit" onClick="this.style.display='none';">Bắt đầu duyệt EKYC</button>
             </div>
             {{-- <div class="row d-flex justify-content-center">
                 <div class="col-6">

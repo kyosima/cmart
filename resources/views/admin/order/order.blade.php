@@ -310,7 +310,7 @@
                                                                         </td>
                                                                         <td>{{ formatNumber($order_store->total) }}
                                                                         </td>
-                                                                        <td>{{ formatNumber(ceil($order_store->vat_products + ($order->tax_services / $order->order_stores()->count()))) }}
+                                                                        <td>{{ formatNumber(round($order_store->vat_products + ($order->tax_services / $order->order_stores()->count()))) }}
                                                                         </td>
                                                                         <td>
                                                                             <span

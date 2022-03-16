@@ -40,12 +40,10 @@
                             <td>{{ formatNumber($history->amount) }}</td>
                             <td>{{ formatNumber($history->old_balance - $history->amount) }}</td>
                             <td>
-                                @if ($history->method == 1)
-                                    Thành công
-                                @elseif($history->method = 2)
+                                @if ($history->status == 0)
                                     Bị phong tỏa đến {{ date('d-m-Y H:i:s', strtotime($history->time)) }}
                                 @else
-                                    Thành công
+                                    Khả dụng
                                 @endif
                             </td>
 

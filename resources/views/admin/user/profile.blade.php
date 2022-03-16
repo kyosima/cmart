@@ -4,77 +4,19 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/profile.css') }}" type="text/css">
-@endpush
-
-@section('content')
-    <style type="text/css">
-        .styled-table {
-            border-collapse: collapse;
-            font-size: 0.9em;
-            font-family: sans-serif;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-            width: 100%;
-        }
-
-        .styled-table thead tr {
-            background-color: #11101d;
-            color: #ffffff;
-            text-align: left;
-        }
-
-        .styled-table th,
-        .styled-table td {
-            padding: 12px 15px;
-        }
-
-        tbody tr:nth-child(even) td {}
-
-        .styled-table tbody tr {
-            border-bottom: 1px solid #11101d;
-        }
-
-        .styled-table tbody tr:nth-of-type(even) {}
-
-        .styled-table tbody tr:last-of-type {
-            border-bottom: 2px solid #11101d;
-        }
-
-        .styled-table tbody tr.active-row {
-            font-weight: bold;
-            color: #11101d;
-        }
-
-        .styled-table td,
-        .styled-table th {
-            text-align: center;
-        }
-
-        .table-sortable th {
-            cursor: pointer;
-        }
-
-        .table-sortable .th-sort-asc::after {
-            content: "\25b4";
-        }
-
-        .table-sortable .th-sort-desc::after {
-            content: "\25be";
-        }
-
-        .table-sortable .th-sort-asc::after,
-        .table-sortable .th-sort-desc::after {
-            margin-left: 5px;
-        }
-
-        .table-sortable .th-sort-asc,
-        .table-sortable .th-sort-desc {
-            background: rgba(0, 0, 0, 0.1);
+    <style>
+        .dtsb-searchBuilder {
+            display: none;
         }
 
     </style>
+@endpush
+
+@section('content')
+
     <div class="m-3">
-        <div class="wrapper bg-white p-4">
-            <div class="wrapper">
+        <div class="wrapper-top bg-white p-4">
+            <div class="wrapper-top">
                 <div class="profile-card js-profile-card">
                     <div class="profile-card__img">
                         @if ($user->avatar != null)
@@ -93,8 +35,8 @@
                             @endif
                         </div>
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
-                                                                                        <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
-                                                                                        <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
+                                                                                                    <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
+                                                                                                    <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
                         <div class="row">
                             <div class="col-4">
                                 <button class="alert alert-success m-0 text-center"
@@ -104,8 +46,8 @@
 
                             </div>
                             <!-- <div class="col-4">
-                                 z                                                           <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
-                                                                                            </div> -->
+                                             z                                                           <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
+                                                                                                        </div> -->
                             <div class="col-4">
                                 <button class="alert alert-success m-0 text-center"
                                     style="width: 85%;border-radius: 40px; background: rgb(255, 0, 21); color: white;">
@@ -151,10 +93,10 @@
                                     <div class="col-lg-4 text-start">
                                         <span class="text-uppercase">Số điện thoại</span>
                                         <input type="phone" class="form-control mb-2" name="phone"
-                                            placeholder="Nhập số điện thoại" value="{{ $user->phone }}" >
+                                            placeholder="Nhập số điện thoại" value="{{ $user->phone }}">
                                         <!-- <span class="text-uppercase">Email</span>
-                                                                                                    <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
-                                                                                                        value="{{ $user->email }}" readonly=""> -->
+                                                                                                                <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
+                                                                                                                    value="{{ $user->email }}" readonly=""> -->
                                     </div>
 
                                     <div class="col-lg-4 text-start">
@@ -241,10 +183,10 @@
                                             value="{{$user->duong}}">
                                         </div> --}}
                                             <div class="col-lg-4">
-                                                <select name="sel_province" class="form-control " 
+                                                <select name="sel_province" class="form-control "
                                                     data-placeholder="---Chọn tỉnh thành---" required>
-                                                    <option value="{{$user_province->PROVINCE_ID}}" selected>
-                                                        {{$user_province->PROVINCE_NAME}}
+                                                    <option value="{{ $user_province->PROVINCE_ID }}" selected>
+                                                        {{ $user_province->PROVINCE_NAME }}
                                                     </option>
                                                 </select>
                                                 {{-- @if ($user->id_tinhthanh == null)
@@ -273,7 +215,7 @@
 
                                             </div>
                                             <div class="col-lg-4">
-                                                <select name="sel_district" class="form-control " 
+                                                <select name="sel_district" class="form-control "
                                                     data-placeholder="---Chọn quận huyện---" required>
                                                     <option value="{{ $user_district->DISTRICT_ID }}">
                                                         {{ $user_district->DISTRICT_NAME }}
@@ -295,7 +237,7 @@
                                                 @endif --}}
                                             </div>
                                             <div class="col-lg-4">
-                                                <select name="sel_ward" class="form-control " 
+                                                <select name="sel_ward" class="form-control "
                                                     data-placeholder="---Chọn phường xã---">
                                                     <option value="{{ $user_ward->WARDS_ID }}" required>
                                                         {{ $user_ward->WARDS_NAME }}
@@ -372,13 +314,12 @@
                                                                 <b>{{ formatNumber($user->orders()->where('status', 5)->count()) }}</b></span>
                                                         </div>
                                                     </div> --}}
-                                                    <table class="styled-table table-sortable">
-                                                        <thead>
+                                                    <table id="order" class="table table-striped table-bordered">
+                                                        <thead class="bg-dark text-light">
                                                             <tr>
                                                                 <th>Mã giao dịch</th>
                                                                 <th>Trạng thái</th>
                                                                 <th>Chi tiết đơn hàng</th>
-                                                                <th></th>
 
                                                                 <!-- <th>Chi tiết đơn hàng</th> -->
                                                             </tr>
@@ -393,7 +334,6 @@
                                                                         <td><a target="_blank"
                                                                                 href="{{ route('order.viewCbill', ['order_code' => $order->order_code]) }}"
                                                                                 class="btn btn-info">Chi tiết</a></td>
-                                                                        <td></td>
                                                                     </tr>
                                                                 @endforeach
                                                             @endforeach
@@ -405,10 +345,23 @@
                                             <div class="row mb-3">
 
                                                 <div class="col-lg-12">
-                                                    <h3 class="text-uppercase text-center">- Lịch sử chuyển khoản C -
+                                                    <h3 class="text-uppercase text-center">- Lịch sử sử dụng C -
                                                     </h3>
-                                                    <table class="styled-table table-sortable">
-                                                        <thead>
+                                                    <div class="row pb-1">
+                                                        <div class="col-6">
+                                                            <a class="btn text-white" style="width: 100%;background-color: #00e6f8;">
+                                                                Tổng C: {{ formatNumber($user->point_c()->value('point_c') + $user->getHistory()->whereStatus(0)->sum('amount')) }}
+                                                            </a>
+                                                        </div>
+                                    
+                                                        <div class="col-6">
+                                                            <a class="btn text-white" style="width: 100%;background-color: #00e6f8;">
+                                                                Số C khả dụng: {{ $user->point_c()->value('point_c') }}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <table id="history-c" class="table table-striped table-bordered">
+                                                        <thead class="bg-dark text-light text-center">
                                                             <tr>
                                                                 <th>Thời gian giao dịch</th>
                                                                 <th>Mã giao dịch</th>
@@ -417,29 +370,48 @@
                                                                 <th>Tăng</th>
                                                                 <th>Giảm</th>
                                                                 <th>Số dư cuối</th>
+                                                                <th>Trạng thái</th>
                                                                 <!-- <th>Chi tiết đơn hàng</th> -->
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($lichsuchuyen as $value)
+                                                            @foreach ($user->getHistory()->latest()->get()
+        as $history)
                                                                 <tr style="text-align:center">
-                                                                    <td>{{ $value->created_at }}</td>
-                                                                    <td>{{ $value->magiaodich }}</td>
-                                                                    <td>{{ $value->note }}</td>
-                                                                    <td>{{ formatNumber($value->point_past_chuyen) }}
+                                                                    <td>{{ date('d-m-Y H:i:s', strtotime($history->created_at)) }}
+                                                                    </td>
+                                                                    <td>{{ $history->code }}</td>
+                                                                    <td>{{ $history->content }}</td>
+                                                                    <td>{{ formatNumber($history->user_old_balance) }}
                                                                     </td>
                                                                     <td>
-                                                                        @if ($value->point_past_chuyen < $value->point_present_chuyen)
-                                                                            {{ formatNumber($value->amount) }}
+                                                                        @if ($history->type == 1)
+                                                                            0
+                                                                        @else
+                                                                            {{ formatNumber($history->amount) }}
                                                                         @endif
                                                                     </td>
                                                                     <td>
-                                                                        @if ($value->point_past_chuyen > $value->point_present_chuyen)
-                                                                            {{ formatNumber($value->amount) }}
+                                                                        @if ($history->type == 1)
+                                                                            {{ formatNumber($history->amount) }}
+                                                                        @else
+                                                                            0
                                                                         @endif
                                                                     </td>
 
-                                                                    <td>{{ formatNumber($value->point_present_chuyen) }}
+                                                                    <td>
+                                                                        @if ($history->type == 1)
+                                                                            {{ formatNumber($history->user_old_balance - $history->amount) }}
+                                                                        @else
+                                                                            {{ formatNumber($history->user_old_balance + $history->amount) }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($history->status == 1)
+                                                                            Khả dụng
+                                                                        @else
+                                                                            Phỏng tỏa đến {{date('d/m/Y H:i:s', strtotime($history->time))}}
+                                                                        @endif
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -449,38 +421,6 @@
                                                 </div>
                                             </div>
                                             {{-- <div class="row mb-3 pt-3">
-                                                <div class="col-lg-12">
-                                                    <h3 class="text-uppercase text-center">- Lịch sử nhận C -
-                                                    </h3>
-                                                    <table class="styled-table table-sortable">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Thời gian</th>
-                                                                <th>Mã khách hàng chuyển</th>
-                                                                <th>Số dư đầu</th>
-                                                                <th>Số dư cuối</th>
-                                                                <th>Giá trị chuyển khoản</th>
-                                                                <th>Nội dung</th>
-                                                                <!-- <th>Chi tiết đơn hàng</th> -->
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($lichsunhan as $value)
-                                                                <tr style="text-align:center">
-                                                                    <td>{{ $value->created_at }}</td>
-                                                                    <td>{{ $value->makhachhang_chuyen }}</td>
-                                                                    <td>{{ $value->point_past_chuyen }}</td>
-                                                                    <td>{{ $value->point_present_chuyen }}</td>
-                                                                    <td>{{ $value->amount }}</td>
-                                                                    <td>{{ $value->note }}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                            <!-- and so on... -->
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div> --}}
-                                            <div class="row mb-3 pt-3">
                                                 <div class="col-lg-12">
                                                     <h3 class="text-uppercase text-center">- Lịch sử nhận C -
                                                     </h3>
@@ -533,7 +473,7 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                         </div>
                                         <div class="text-center ">
@@ -556,7 +496,124 @@
 @endsection
 
 @push('scripts')
-    <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
+    <script src="{{ asset('public/js/address.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.11.5/sorting/datetime-moment.js"></script>
+    {{-- <script type="text/javascript" src="{{ asset('public/css/table/table.js') }}"></script> --}}
+    <script>
+        $(document).ready(function() {
+            $.fn.dataTable.moment('HH:mm MMM D, YY');
+            $.fn.dataTable.moment('dddd, MMMM Do, YYYY');
+
+            // $('#history-c').on('error.dt', function(e, settings, techNote, message) {
+            //     console.log('An error has been reported by DataTables: ', message);
+            // }).DataTable();
+            $('#history-c').DataTable({
+                responsive: true,
+                "order": [],
+                lengthMenu: [
+                    [5, 25, 50, -1],
+                    [5, 25, 50, "All"]
+                ],
+
+
+                "language": {
+                    "emptyTable": "Không có dữ liệu nào !",
+                    "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",
+                    "infoEmpty": "Hiển thị 0 đến 0 trong số 0 mục nhập",
+                    "infoFiltered": "(Có _TOTAL_ kết quả được tìm thấy)",
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi",
+                    "search": "Tìm kiếm",
+                    "zeroRecords": "Không có bản ghi nào tìm thấy !",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    },
+                    "decimal": ",",
+                    "thousands": ".",
+                },
+                dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
+                buttons: [{
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            format: {
+                                body: function(data, row, column, node) {
+                                    data = $('<td>' + data + '</td>').text();
+                                    console.log();
+
+                                    return data.replace(/\./g, '');
+
+                                }
+                            }
+                        }
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+
+                    }
+                ],
+            });
+        });
+        $(document).ready(function() {
+
+            $('#order').DataTable({
+                responsive: true,
+                "order": [],
+                lengthMenu: [
+                    [5, 25, 50, -1],
+                    [5, 25, 50, "All"]
+                ],
+
+                columnDefs: [{
+                    targets: [2],
+                    orderable: false,
+                }, ],
+                "language": {
+                    "emptyTable": "Không có dữ liệu nào !",
+                    "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",
+                    "infoEmpty": "Hiển thị 0 đến 0 trong số 0 mục nhập",
+                    "infoFiltered": "(Có _TOTAL_ kết quả được tìm thấy)",
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi",
+                    "search": "Tìm kiếm",
+                    "zeroRecords": "Không có bản ghi nào tìm thấy !",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    },
+                    "decimal": ",",
+                    "thousands": ".",
+                },
+                dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
+                buttons: [{
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            format: {
+                                body: function(data, row, column, node) {
+                                    data = $('<td>' + data + '</td>').text();
+                                    console.log();
+
+                                    return data.replace(/\./g, '');
+
+                                }
+                            }
+                        }
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+
+                    }
+                ],
+            });
+        });
     </script>
-<script src="{{ asset('public/js/address.js') }}"></script>
 @endpush

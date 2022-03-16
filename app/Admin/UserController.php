@@ -93,9 +93,7 @@ class UserController extends Controller
         $pointC = PointC::where('user_id','=',$user->id)->value('point_c');
         $code_customer = $user->code_customer;
         $id_vitien = PointC::where('user_id','=',$user->id)->value('id');
-        $lichsuchuyen = PointCHistory::where('point_c_idchuyen','=',$id_vitien)->get();
-        $lichsunhan = PointCHistory::where('point_c_idnhan','=',$id_vitien)->get();
-        
+           
         $date = $user->updated_at->addMonth('1');
         $addDate = Carbon::now();
         $order_month = $user->orders()->whereMonth('created_at', Carbon::today()->month)->get();
@@ -113,7 +111,6 @@ class UserController extends Controller
             $order_cancel += $order->order_stores()->where('status', 4)->count();
 
         }
-        $history_chuyen = PointCHistory::where('point_c_idchuyen','=',$user->id)->where('type','=',1)->get();
 
         $addressController = new AddressController();
 
@@ -122,7 +119,7 @@ class UserController extends Controller
         $user_ward = $addressController->getWardDetail($user->id_quanhuyen,$user->id_phuongxa);
 
         return view('admin.user.profile',['user_province','user_district', 'user_ward','user'=>$user,'province'=>$province,
-         'district'=>$district, 'ward'=>$ward,'pointC'=>$pointC, 'lichsunhan'=>$lichsunhan, 'lichsuchuyen'=>$lichsuchuyen]
+         'district'=>$district, 'ward'=>$ward,'pointC'=>$pointC]
          ,compact('orders','order_done','order_cancel', 'order_done_month', 'order_cancel_month','sodonhang','date','addDate','user_province', 'user_district', 'user_ward'));
     }
 

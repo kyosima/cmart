@@ -264,6 +264,9 @@ class AdminOrderController extends Controller
         if ($request_status == 4 && $order_status != 4) {
             $historyPointController = new HistoryPointController();
             $historyPointController->createHistory($user, $order->c_point, 3, 1, $transaction_code, null, null);
+            if($order->remaining_m_point > 0){
+                $historyPointController->createHistory($user, $order->remaining_m_point, 5, 0, $transaction_code, null, null);
+            }
         } elseif ($request_status == 5 && $order_status != 5) {
             // $historyPointController = new HistoryPointController();
             // $historyPointController->createHistory($user, $order->total, 6, 0, $transaction_code);

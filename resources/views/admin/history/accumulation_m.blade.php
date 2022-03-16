@@ -26,17 +26,26 @@
                         <th>Số dư ban đầu </th>
                         <th>Giá trị giao dịch</th>
                         <th>Số dư cuối</th>
+                        <th>Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($listHistory as $value)
+                    @foreach ($histories as $history)
                         <tr style="text-align:center">
-                            <td>{{ date('d-m-Y H:i:s', strtotime($value->created_at)) }}</td>
-                            <td>{{ $value->makhachhang }}</td>
-                            <td>{{ $value->note }}</td>
-                            <td>{{ formatNumber($value->point_past_chuyen) }}</td>
-                            <td>{{ formatNumber($value->amount) }}</td>
-                            <td>{{formatNumber( $value->point_present_chuyen) }}</td>
+                            <td>{{ date('d-m-Y H:i:s', strtotime($history->created_at)) }}</td>
+                            <td>{{ $history->user()->value('code_customer') }}</td>
+                            <td>{{ $history->content }}</td>
+                            <td>{{ formatNumber($history->old_balance) }}</td>
+                            <td>{{ formatNumber($history->amount) }}</td>
+                            <td>{{ formatNumber($history->old_balance - $history->amount) }}</td>
+                            <td>
+                                @if ($history->status == 0)
+                                    Bị phong tỏa đến {{ date('d-m-Y H:i:s', strtotime($history->time)) }}
+                                @else
+                                    Khả dụng
+                                @endif
+                            </td>
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -48,6 +57,7 @@
 
 
 @push('scripts')
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.11.5/sorting/datetime-moment.js"></script>
     {{-- <script type="text/javascript" src="{{ asset('public/css/table/table.js') }}"></script> --}}
@@ -67,7 +77,7 @@
                     [25, 50, "All"]
                 ],
                 columnDefs: [{
-                    targets: [2, 3, 4, 5],
+                    targets: [2, 3, 4, 5, 6],
                     orderable: false,
                 }, ],
 
@@ -89,28 +99,28 @@
                     "thousands": ".",
                 },
                 dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-                    buttons: [{
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        format: {
-                            body: function(data, row, column, node) {
-                                data = $('<td>' + data + '</td>').text();
-                                console.log();
-                             
+                buttons: [{
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            format: {
+                                body: function(data, row, column, node) {
+                                    data = $('<td>' + data + '</td>').text();
+                                    console.log();
+
                                     return data.replace(/\./g, '');
-                                
+
+                                }
                             }
                         }
-                    }
 
-                },
-                {
-                    extend: 'pdfHtml5',
-                    orientation: 'landscape',
-                    pageSize: 'LEGAL',
-                 
-                }
-            ],
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+
+                    }
+                ],
             });
         });
     </script>

@@ -37,8 +37,6 @@
                             $increa_transfer = $user
                                 ->getHistory()
                                 ->whereType(2)
-                                ->whereIn('method', [1, 2])
-                                ->whereStatus(1)
                                 ->sum('amount');
                             $avg_point = $user->point_c()->value('point_c');
                             if (
@@ -63,22 +61,31 @@
                                 ->whereType(3)
                                 ->whereStatus(1)
                                 ->sum('amount');
+                            $increa_saving = $user
+                                ->getHistory()
+                                ->whereType(4)
+                                ->whereStatus(1)
+                                ->sum('amount');
+                            $increa_accumulation_m = $user
+                                ->getHistory()
+                                ->whereType(5)
+                                ->sum('amount');
                             $increa_cancel_order = $user
                                 ->getHistory()
                                 ->whereType(2)
                                 ->whereMethod(3)
                                 ->whereStatus(1)
                                 ->sum('amount');
-                            $sum_increa = $increa_transfer + $increa_accumulation + $increa_cancel_order;
+                            $sum_increa = $increa_transfer + $increa_accumulation + $increa_accumulation_m + $increa_saving + $increa_cancel_order;
                         @endphp
                         <tr>
                             <td><a href="{{ route('user.detail', $user->id) }}">{{ $user->code_customer }}</a></td>
                             <td>{{ $user->point_c()->value('point_c') }}</td>
                             <td>{{ formatNumber($avg_point) }}</td>
                             <td>{{ formatNumber($increa_transfer) }}</td>
-                            <td></td>
+                            <td>{{ formatNumber($increa_saving) }}</td>
                             <td>{{ formatNumber($increa_accumulation) }}</td>
-                            <td></td>
+                            <td>{{ formatNumber($increa_accumulation_m) }}</td>
                             <td>{{ formatNumber($increa_cancel_order) }}</td>
                             <td>{{ formatNumber($sum_increa) }}</td>
                             <td></td>

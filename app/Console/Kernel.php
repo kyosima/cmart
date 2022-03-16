@@ -25,9 +25,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
         $schedule->command('command:postRememberC')->hourlyAt(0);
         $schedule->command('command:calculatedSavingC')->hourlyAt(5);
+        $schedule->command('command:calculatedAccumulationM')->dailyAt('23:59');
+        $schedule->command('command:calculatedTransfer')->everyMinute();
+
     }
 
     /**
