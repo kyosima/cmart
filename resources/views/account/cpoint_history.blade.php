@@ -89,7 +89,7 @@
 
                     <div class="col-6">
                         <a class="btn text-white" style="width: 100%;background-color: #00e6f8;">
-                            Số C khả dụng: {{ $user->point_c()->value('point_c') }}
+                            Số C khả dụng: {{formatNumber( $user->point_c()->value('point_c')) }}
                         </a>
                     </div>
                 </div>

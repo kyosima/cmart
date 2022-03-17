@@ -345,7 +345,7 @@
                                             <div class="row mb-3">
 
                                                 <div class="col-lg-12">
-                                                    <h3 class="text-uppercase text-center">- Lịch sử sử dụng C -
+                                                    <h3 class="text-uppercase text-center">- Tài Khoản Tiền Tích Lũy -
                                                     </h3>
                                                     <div class="row pb-1">
                                                         <div class="col-6">
@@ -356,7 +356,7 @@
                                     
                                                         <div class="col-6">
                                                             <a class="btn text-white" style="width: 100%;background-color: #00e6f8;">
-                                                                Số C khả dụng: {{ $user->point_c()->value('point_c') }}
+                                                                Số C khả dụng: {{ formatNumber($user->point_c()->value('point_c')) }}
                                                             </a>
                                                         </div>
                                                     </div>
