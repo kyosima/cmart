@@ -80,7 +80,7 @@
                         @endphp
                         <tr>
                             <td><a href="{{ route('user.detail', $user->id) }}">{{ $user->code_customer }}</a></td>
-                            <td>{{ $user->point_c()->value('point_c') }}</td>
+                            <td>{{ formatNumber($user->point_c()->value('point_c')) }}</td>
                             <td>{{ formatNumber($avg_point) }}</td>
                             <td>{{ formatNumber($increa_transfer) }}</td>
                             <td>{{ formatNumber($increa_saving) }}</td>

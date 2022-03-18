@@ -15,6 +15,7 @@ use App\Http\Controllers\InfoCompanyController;
 use App\Http\Controllers\CPointController;
 use App\Http\Controllers\EkycController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\PaymentPaymeController;
 use Psy\VersionUpdater\Checker;
@@ -148,6 +149,12 @@ Route::prefix('lay-dia-chi')->group(function () {
     Route::get('thong-tin-tinh', [AddressController::class, 'getProvinceDetail']);
     Route::get('thong-tin-huyen', [AddressController::class, 'getDistrictDetail']);
     Route::get('thong-tin-xa', [AddressController::class, 'getWardDetail']);
+
+});
+
+Route::prefix('thong-bao')->group(function () {
+    Route::get('', [NoticeController::class, 'index'])->name('noticeuser.index');
+    Route::get('{slug}', [NoticeController::class, 'getNotice'])->name('noticeuser.getNotice');
 
 });
 

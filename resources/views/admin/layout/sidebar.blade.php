@@ -21,6 +21,23 @@
                 </a>
             </li>
         @endif
+        @if (auth()->guard('admin')->user()->can('Quản lý thông báo'))
+
+        <li class="dropdown">
+            <a href="#" class="dropbtn">
+                <i class="fa fa-bell" aria-hidden="true"></i>
+                <span class="links_name w-100 align-items-center d-flex">Thông báo<i
+                        class="fa fa-speaker float-end" aria-hidden="true"></i></span>
+            </a>
+            <span class="dropdown-content">
+                    <a href="{{ route('notice.index') }}">Danh sách thông báo</a>
+
+                    <a href="{{ route('notice.create') }}">Tạo thông bao</a>
+            </span>
+
+
+        </li>
+        @endif
         @if (auth()->guard('admin')->user()->can('Xem cửa hàng'))
             <li class="dropdown">
                 <a href="{{ route('store.index') }}" class="dropbtn">

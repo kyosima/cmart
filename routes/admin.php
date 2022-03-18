@@ -22,6 +22,7 @@ use App\Admin\Controllers\InfoCompanyController;
 use App\Admin\Controllers\PaymentController;
 use App\Admin\Controllers\AdminBannerController;
 use App\Admin\Controllers\AdminEkycController;
+use App\Admin\controllers\AdminNoticeController;
 use App\Admin\Controllers\AdminStoreController;
 use App\Admin\Controllers\PaymentMethodController;
 use App\Admin\Controllers\AdminPointController;
@@ -315,7 +316,16 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('nap-c', [AdminPointController::class, 'postDeposit'])->name('point.deposit');
 
     });
-  
+    Route::group(['prefix'=>'thong-bao','middleware' => ['permission:Quản lý thông báo,admin']], function () {
+        Route::get('/', [AdminNoticeController::class, 'index'])->name('notice.index');
+        Route::get('tao-thong-bao', [AdminNoticeController::class, 'create'])->name('notice.create');
+        Route::post('tao-thong-bao', [AdminNoticeController::class, 'store'])->name('notice.store');
+        Route::get('tim-khach-hang', [AdminNoticeController::class, 'getUsers'])->name('notice.getUsers');
+        Route::get('sua-thong-bao/{id}', [AdminNoticeController::class, 'edit'])->name('notice.edit');
+        Route::post('sua-thong-bao/{id}', [AdminNoticeController::class, 'update'])->name('notice.update');
+        Route::get('doi-trang-thai/{id}', [AdminNoticeController::class, 'changeStatus'])->name('notice.changeStatus');
+        Route::get('xoa/{id}', [AdminNoticeController::class, 'destroy'])->name('notice.destroy');
+    });
 
     // BLOG
     // được phép xem bài viết
