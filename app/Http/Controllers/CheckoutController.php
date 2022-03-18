@@ -579,7 +579,7 @@ class CheckoutController extends Controller
         if ($order->status > 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
-        $payment_method = PaymentMethod::whereId($request->payment_method)->first();
+        $payment_method = PaymentMethod::whereId($order->payment_method)->first();
         foreach ($order->order_stores()->get() as $order_store) {
             $vat_services = 0;
             $vat_services = $payment_method->fee * ($order_store->sub_total + $order_store->vat_products - $order_store->discount_products + max($order_store->shipping_total - $order_store->m_point, 0) * 1.08);
