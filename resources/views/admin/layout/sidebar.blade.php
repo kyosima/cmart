@@ -32,7 +32,7 @@
             <span class="dropdown-content">
                     <a href="{{ route('notice.index') }}">Danh sách thông báo</a>
 
-                    <a href="{{ route('notice.create') }}">Tạo thông bao</a>
+                    <a href="{{ route('notice.create') }}">Tạo thông báo</a>
             </span>
 
 

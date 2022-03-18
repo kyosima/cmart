@@ -22,7 +22,7 @@ use App\Admin\Controllers\InfoCompanyController;
 use App\Admin\Controllers\PaymentController;
 use App\Admin\Controllers\AdminBannerController;
 use App\Admin\Controllers\AdminEkycController;
-use App\Admin\controllers\AdminNoticeController;
+use App\Admin\Controllers\AdminNoticeController;
 use App\Admin\Controllers\AdminStoreController;
 use App\Admin\Controllers\PaymentMethodController;
 use App\Admin\Controllers\AdminPointController;
@@ -209,7 +209,8 @@ Route::group(['middleware' => ['admin']], function () {
     });
     // được phép thêm mã ưu đãi
     Route::group(['middleware' => ['permission:Thêm mã ưu đãi,admin']], function () {
-        Route::post('/coupon', [AdminCouponController::class, 'store'])->name('coupon.store');
+        Route::get('/coupon/create', [AdminCouponController::class, 'create'])->name('coupon.create');
+        Route::post('/coupon/create', [AdminCouponController::class, 'store'])->name('coupon.store');
     });
     // được phép chỉnh sửa mã ưu đãi
     Route::group(['middleware' => ['permission:Chỉnh sửa mã ưu đãi,admin']], function () {
@@ -224,8 +225,13 @@ Route::group(['middleware' => ['admin']], function () {
     Route::group(['middleware' => ['permission:Thêm mã ưu đãi|Chỉnh sửa mã ưu đãi,admin']], function () {
         Route::get('/coupon/searchProduct', [AdminCouponController::class, 'getProduct'])->name('coupon.getProduct');
         Route::get('/coupon/searchProCat', [AdminCouponController::class, 'getProCat'])->name('coupon.getProCat');
+        Route::get('/coupon/searchCustomer', [AdminCouponController::class, 'getCustomer'])->name('coupon.searchCustomer');
         Route::get('/coupon/select-product', [AdminCouponController::class, 'selectProduct'])->name('coupon.selectProduct');
         Route::get('/coupon/select-procat', [AdminCouponController::class, 'selectProCat'])->name('coupon.selectProCat');
+        Route::get('/coupon/select-customer', [AdminCouponController::class, 'selectCustomer'])->name('coupon.selectCustomer');
+        Route::get('/coupon/select-target', [AdminCouponController::class, 'selectTarget'])->name('coupon.selectTarget');
+        Route::get('/coupon/input-level', [AdminCouponController::class, 'inputLevel'])->name('coupon.inputLevel');
+
     });
 
     Route::group(['middleware' => ['permission:Xóa mã ưu đãi|Chỉnh sửa mã ưu đãi,admin']], function () {
