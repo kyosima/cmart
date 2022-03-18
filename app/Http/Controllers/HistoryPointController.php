@@ -83,7 +83,7 @@ class HistoryPointController extends Controller
                 break;
             case 5: 
                 $cmart_wallet->point_c -= $amount;
-                $history->content = 'Tich luy M '.$code;
+                $history->content = 'Quy doi M '.$code;
                 $today = date('Y-m-d 23:59:00');
                 $history->time = date('Y-m-d H:i:s', strtotime('+30 day', strtotime($today)));
                 $history->status = 0;

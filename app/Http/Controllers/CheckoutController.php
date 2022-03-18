@@ -216,6 +216,7 @@ class CheckoutController extends Controller
             $count_store++;
             $store_tax = 0;
             $store_shipping_total = 0;
+          
             $store_shipping_method = 0;
             $store_shipping_type = 0;
             $store_shipping_weight = 0;
@@ -293,7 +294,8 @@ class CheckoutController extends Controller
                 $store_c = 0;
                 $store_m = 0;
             }
-
+            $order_store->remaining_m_point = max($store_m - $store_shipping_total, 0);
+          
             $order_store->c_point = $store_c;
             $order_store->m_point = $store_m;
             $order_store->vat_products = $vat_products;
@@ -611,18 +613,18 @@ class CheckoutController extends Controller
             $vat_services = 0;
             $vat_services = round($payment_method->fee * ($order_store->sub_total + $order_store->vat_products - $order_store->discount_products + max($order_store->shipping_total - $order_store->m_point, 0) * 1.08));
             $order_store->vat_services = $vat_services;
-            $order_store->total = $order_store->sub_total + $vat_services + $order_store->vat_products;
+            $order_store->total = round($order_store->sub_total + $vat_services + $order_store->vat_products);
             $order_store->save();
         }
         $order->vat_services = $order->order_stores()->sum('vat_services') + $payment_method->tax;
         $order->payment_method = $payment_method->id;
         $order->total_payment_services = round(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0));
         $order->remaining_m_point = max($order->m_point - $order->shipping_total - $order->vat_services, 0);
-        $order->tax_services = max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) - max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) / 1.08;
-        $order->total_tax_services = $order->vat_products + max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) - max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) / 1.08;
+        $order->tax_services =round(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) - max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) / 1.08);
+        $order->total_tax_services = $order->vat_products + $order->tax_services;
         foreach ($order->order_stores()->get() as $order_store) {
-            $order_store->total = $order_store->sub_total - $order_store->discount_products + $order_store->vat_products + ($order->total_payment_services / $order->order_stores()->count());
-            $order_store->discount_services =  ($order_store->shipping_total * 108 / 100) + $order_store->vat_services - ($order->total_payment_services / $order->order_stores()->count()) < 0 ? ($order_store->shipping_total * 108 / 100) + $order_store->vat_services : $order->total_payment_services / $order->order_stores()->count();
+            $order_store->total = round($order_store->sub_total - $order_store->discount_products + $order_store->vat_products + ($order->total_payment_services / $order->order_stores()->count()));
+            $order_store->discount_services = round( ($order_store->shipping_total * 108 / 100) + $order_store->vat_services - ($order->total_payment_services / $order->order_stores()->count()) < 0 ? ($order_store->shipping_total * 108 / 100) + $order_store->vat_services : $order->total_payment_services / $order->order_stores()->count());
             $order_store->save();
         }
         $order->total = $order->order_stores()->sum('total');
@@ -719,14 +721,17 @@ class CheckoutController extends Controller
     public function processOrder($order)
     {
         $user = Auth::user();
+        $order_status = true;
         foreach ($order->order_stores()->get() as $order_store) {
             if (($order_store->shipping_method == 0) || ($order_store->shipping_method == 1)) {
                 $order_store->shipping_code = $order_store->order_store_code;
+                $order_store->save();
             } else {
                 $viettelPostController = new ViettelPostController();
                 $result_vt = $viettelPostController->createOrder($order_store);
                 if ($result_vt['status'] == 200) {
                     $order_store->shipping_code = $result_vt['data']['ORDER_NUMBER'];
+                    $order_store->save();
                 } else {
                     foreach ($order->order_stores()->get() as $order_store) {
                         foreach ($order_store->order_products()->get() as $order_product) {
@@ -735,18 +740,13 @@ class CheckoutController extends Controller
                         $order_store->delete();
                     }
                     $order->delete();
-
-                    $store_ids = Session::get('store_ids');
-                    foreach (explode(",", $store_ids) as $store_id) {
-                        Cart::instance($store_id)->destroy();
-                    }
-                    Session::forget('store_ids');
-                    return redirect()->route('checkout.fail');
+                    $order_status = false;
+                   
                 }
             }
         }
-
-        if ($order->payment_method == 1) {
+        if($order_status){
+            if ($order->payment_method == 1) {
                 DB::transaction(function () use ($order, $user) {
                     try {
                         $transaction_code = $order->order_code;
@@ -760,15 +760,18 @@ class CheckoutController extends Controller
                         return redirect()->back()->withErrors(['error' => $th->getMessage()]);
                     }
                 });
-            
+            }
+            $order->is_payment = 1;
+            $order->save();
+            $store_ids = Session::get('store_ids');
+            foreach (explode(",", $store_ids) as $store_id) {
+                Cart::instance($store_id)->destroy();
+            }
+            Session::forget('store_ids');
+        }else{
+            return redirect()->route('home');
         }
-        $order->is_payment = 1;
-        $order->save();
-        $store_ids = Session::get('store_ids');
-        foreach (explode(",", $store_ids) as $store_id) {
-            Cart::instance($store_id)->destroy();
-        }
-        Session::forget('store_ids');
+      
     }
 
     public function getPaymentDeposit(Request $request)

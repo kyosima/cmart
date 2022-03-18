@@ -141,7 +141,7 @@ if (!function_exists('formatPriceOfLevelCate')) {
         return number_format(getPriceOfLevelCate($item), 0, ',', '.') . ' ₫';
     }
 }
-    
+
 if (!function_exists('getPriceOfLevelCate')) {
     function getPriceOfLevelCate($item)
     {
