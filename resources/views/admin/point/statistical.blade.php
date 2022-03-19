@@ -76,6 +76,10 @@
                                 ->whereMethod(3)
                                 ->whereStatus(1)
                                 ->sum('amount');
+                            $decrea_payment_c = $user
+                                ->getHistory()
+                                ->whereType(1)
+                                ->sum('amount');
                             $sum_increa = $increa_transfer + $increa_accumulation + $increa_accumulation_m + $increa_saving + $increa_cancel_order;
                         @endphp
                         <tr>
@@ -88,7 +92,7 @@
                             <td>{{ formatNumber($increa_accumulation_m) }}</td>
                             <td>{{ formatNumber($increa_cancel_order) }}</td>
                             <td>{{ formatNumber($sum_increa) }}</td>
-                            <td></td>
+                            <td>{{ formatNumber($decrea_payment_c) }}</td>
 
                         </tr>
                     @endforeach

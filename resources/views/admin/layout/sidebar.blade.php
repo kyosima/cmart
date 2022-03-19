@@ -85,7 +85,7 @@
                         class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
             </a>
             @if (auth()->guard('admin')->user()->can('Xem DS trang đơn'))
-                <span class="dropdown-content" style="top: -90px;">
+                <span class="dropdown-content" style="top: -170px;">
                     <a href="{{ route('point.getStatistical') }}">Tài khoản C / HSKH</a>
                     <a href="{{ route('point.Transfer') }}">Chuyển C</a>
                     <a href="{{ route('point.account') }}">Tài khoản C / C-Mart</a>

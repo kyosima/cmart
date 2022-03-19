@@ -68,7 +68,7 @@ class AdminPointController extends Controller
     }
     public function getStatistical(Request $request)
     {
-        $users = User::orderBy('id', 'asc')->get();
+        $users = User::where('id', '!=',1)->orderBy('id', 'asc')->get();
         return view('admin.point.statistical', compact('users'));
     }
 
