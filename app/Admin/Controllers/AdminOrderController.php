@@ -261,16 +261,25 @@ class AdminOrderController extends Controller
     public function proccessCpoint($user, $request_status, $order_status, $order_cpoint, $order)
     {
         $transaction_code = $order->order_store_code;
+        $historyPointController = new HistoryPointController();
         if ($request_status == 4 && $order_status != 4) {
-            $historyPointController = new HistoryPointController();
             $historyPointController->createHistory($user, $order->c_point, 3, 1, $transaction_code, null, null);
-            if($order->remaining_m_point > 0){
-                $historyPointController->createHistory($user, $order->remaining_m_point, 5, 0, $transaction_code, null, null);
+            $order_main = $order->order()->first();
+            if($order_main->remaining_m_point > 0){
+                if($order_main->order_stores()->whereIn('status',[4,5])->count() +1 == $order_main->order_stores()->count()){
+                    $historyPointController->createHistory($user, $order_main->remaining_m_point, 5, 0, $order_main->order_code, null, null);
+                }
             }
         } elseif ($request_status == 5 && $order_status != 5) {
             // $historyPointController = new HistoryPointController();
             // $historyPointController->createHistory($user, $order->total, 6, 0, $transaction_code);
             $store = $order->store()->first();
+            $order_main = $order->order()->first();
+            if($order_main->remaining_m_point > 0){
+                if($order_main->order_stores()->whereIn('status',[4,5])->count() +1 == $order_main->order_stores()->count()){
+                    $historyPointController->createHistory($user, $order_main->remaining_m_point, 5, 0, $order_main->order_code, null, null);
+                }
+            }
             foreach ($order->order_products()->get() as $order_product) {
                 if ($order_product->sku != null) {
                     $store_product = $store->product_stores()->where('id_ofproduct', $order_product->id_product)->first();

@@ -9,108 +9,6 @@
 
 @section('content')
 
-    @if (auth()->guard('admin')->user()->can('Thêm mã ưu đãi'))
-        <!-- Modal -->
-        <div class="modal fade" id="brand_create" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"><i class="fas fa-copyright"></i> Thông tin voucher/coupon</h4>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" id="formCreateBrand" action="{{ route('coupon.store') }}" role="form"
-                            method="POST">
-                            @csrf
-                            <div class="form-body">
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Mã ưu đãi<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="couponCode" class="form-control" required
-                                            value="{{ old('couponCode') }}">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Tên ưu đãi<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="couponName" class="form-control" required
-                                            value="{{ old('couponName') }}">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2 couponType">
-                                    <label class="col-md-3 control-label">Loại ưu đãi<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <select class="form-control" name="couponType" id="couponType">
-                                            <option value="0">Giảm giá cho toàn bộ giỏ hàng</option>
-                                            <option value="1">Giảm giá theo sản phẩm</option>
-                                            <option value="2">Giảm giá theo danh mục sản phẩm</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Giảm giá theo<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <div class="mt-radio-inline pb-0">
-                                            <label class="mt-radio blue mt-radio-outline">
-                                                <input type="radio" name="discountType" value="value" checked="">
-                                                Giá cố định
-                                            </label>
-                                            <label class="mt-radio blue mt-radio-outline">
-                                                <input type="radio" name="discountType" value="percent">
-                                                Phần trăm
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Mức ưu đãi<span class="required"
-                                        aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <input type="number" class="form-control" name="discount" value="{{ old('discount') }}">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Ngày bắt đầu<span class="required"
-                                        aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="from" name="startTime" required>
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Ngày kết thúc<span class="required"
-                                        aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="to" name="endTime" required>
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Mô tả</label>
-                                    <div class="col-md-9">
-                                        <textarea class="form-control" name="couponDescription" rows="3"
-                                            value="{{ old('couponDescription') }}"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-dark" data-dismiss="modal">Hủy</button>
-                                <button type="submit" class="btn btn-info btn-submit-unit">Lưu</button>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- END MODAL -->
-    @else
-        <div class="modal fade" id="brand_create" tabindex="-1" aria-hidden="true">
-        </div>
-    @endif
-
     <div class="m-3">
         <div class="wrapper bg-white p-4">
             @if (session('success'))
@@ -130,7 +28,7 @@
                     </div>
                     @if (auth()->guard('admin')->user()->can('Thêm mã ưu đãi'))
                         <div class="ps-4">
-                            <a href="#brand_create" data-toggle="modal" class="btn btn-add"><i
+                            <a href="{{route('coupon.create')}}" class="btn btn-add"><i
                                     class="fa fa-plus"></i>
                                 Thêm mới </a>
                         </div>
@@ -174,9 +72,7 @@
                                 <th class="title-text title2">
                                     Loại ưu đãi
                                 </th>
-                                <th class="title-text title3">
-                                    Mức ưu đãi
-                                </th>
+                             
                                 <th class="title-text title4">
                                     Mô tả</th>
                                 <th class="title-text title5">
@@ -411,36 +307,27 @@
                         }
                     }
                 },
+          
                 {
                     targets: 4,
-                    render: function(data, type, row) {
-                        if (row.promo.is_percent == 1) {
-                            return `${row.promo.value_discount}%`
-                        } else {
-                            return `${new Intl.NumberFormat('vi-VN').format(row.promo.value_discount)}`
-                        }
-                    }
-                },
-                {
-                    targets: 5,
                     data: 'description'
                 },
                 {
-                    targets: 6,
+                    targets: 5,
                     render: function(data, type, row) {
                         return `${row.start_date.split('-').reverse().join('/')} - ${row.end_date.split('-').reverse().join('/')}`
                     }
                 },
                 @if(auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
                 {
-                    targets: 7,
+                    targets: 6,
                     render: function(data, type, row){
                         return `<span class="btn btn-danger item-delete" data-unitid="${row.id}" onclick="return confirm('Bạn có chắc muốn xóa');"><i class="fa fa-trash"></i></span>`
                     }
                 },
                 @else 
                 {
-                    targets: 7,
+                    targets: 6,
                     render: function(data, type, row) {
                         return ``;
                     }

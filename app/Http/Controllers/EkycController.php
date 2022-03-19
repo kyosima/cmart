@@ -51,10 +51,11 @@ class EkycController extends Controller
         $image_back = $request->image_back;
         $image_portrait = $request->image_portrait;
         $result_recognition = json_decode($this->postRecognition($image_front));
-
-        if ($result_recognition->result_code == 200) {
-            if (count($result_recognition->warning) == 0 ||((count($result_recognition->warning) == 1) && (in_array('anh_giay_to_khong_chup_truc_tiep', $result_recognition->warning)))) {
-                if($result_recognition->id_confidence < 0.7){
+        $result_recognition_back = json_decode($this->postRecognition($image_back));
+        if (($result_recognition->result_code == 200) && ($result_recognition_back->result_code == 200)) {
+            if ((count($result_recognition->warning) == 0 ||((count($result_recognition->warning) == 1) && (in_array('anh_giay_to_khong_chup_truc_tiep', $result_recognition->warning)))) 
+            && (count($result_recognition_back->warning) == 0 ||((count($result_recognition_back->warning) == 1) && (in_array('anh_giay_to_khong_chup_truc_tiep', $result_recognition_back->warning))))){
+                if($result_recognition->list_confidences->id_confidence < 0.7){
                     return back()->with('message' , 'Số CMND, CCCD không hợp lệ');
                 }
                 $result_verify =  json_decode($this->postVerification($image_front, $image_portrait));
@@ -81,29 +82,65 @@ class EkycController extends Controller
                         break;
                 }
             } else {
-                foreach ($result_recognition->warning as $warning) {
-                    switch ($warning) {
-                        case 'giay_to_co_do_phan_giai_thap':
-                            return back()->with('message' , 'Giấy tờ có độ phân giải thấp');
-                        case 'giay_to_bi_mo':
-                            return back()->with('message' , 'Giấy tờ có bị mờ');
-                        case 'giay_to_bi_choi_sang':
-                            return back()->with('message' ,'Giấy tờ bị chói sáng');
-                        case 'chung_minh_nhan_dan_bi_mat_goc':
-                            return back()->with('message' , 'Chứng minh nhân dân bị mất góc');
-                        case 'thong_tin_bi_che_khuat':
-                            return back()->with('message' ,'Thông tin giấy tờ bị che khuất');
-                        case 'giay_to_qua_han':
-                            return back()->with('message', 'Giấy tờ tùy thân bị hết hạn');
-                        case 'so_cmnd_cmnd_khong_hop_le':
-                            return back()->with('message','Số CMND, CCCD không hợp lệ');
-                        case 'anh_giay_to_la_anh_photo':
-                            return back()->with('message', 'Ảnh giấy tờ là ảnh photo');
+                $message_error = '';
+                if (count($result_recognition->warning) == 0 ||((count($result_recognition->warning) == 1) && (in_array('anh_giay_to_khong_chup_truc_tiep', $result_recognition->warning))) ){
+                }else{
+                    $message_error .= 'Lỗi mặt trước giấy tờ tùy thân: ';
+                    foreach ($result_recognition->warning as $warning) {
+                        switch ($warning) {
+                            case 'giay_to_co_do_phan_giai_thap':
+                                $message_error .= 'Giấy tờ có độ phân giải thấp, ';
+                            case 'giay_to_bi_mo':
+                                $message_error .= 'Giấy tờ có bị mờ, ';
+                            case 'giay_to_bi_choi_sang':
+                                $message_error .= 'Giấy tờ bị chói sáng, ';
+                            case 'chung_minh_nhan_dan_bi_mat_goc':
+                                $message_error .= 'Chứng minh nhân dân bị mất góc, ';
+                            case 'thong_tin_bi_che_khuat':
+                                $message_error .= 'Thông tin giấy tờ bị che khuất, ';
+                            case 'giay_to_qua_han':
+                                $message_error .= 'Giấy tờ tùy thân bị hết hạn, ';
+                            case 'so_cmnd_cmnd_khong_hop_le':
+                                $message_error .= 'Số CMND, CCCD không hợp lệ, ';
+                            case 'anh_giay_to_la_anh_photo':
+                                $message_error .= 'Ảnh giấy tờ là ảnh photo, ';
+                        }
                     }
+                
                 }
+                if (count($result_recognition_back->warning) == 0 ||((count($result_recognition_back->warning) == 1) && (in_array('anh_giay_to_khong_chup_truc_tiep', $result_recognition_back->warning))) ){
+                }else{
+                    $message_error .= ' Lỗi mặt sau giấy tờ tùy thân: ';
+                    foreach ($result_recognition_back->warning as $warning) {
+                        switch ($warning) {
+                            case 'giay_to_co_do_phan_giai_thap':
+                                $message_error .= 'Giấy tờ có độ phân giải thấp, ';
+                            case 'giay_to_bi_mo':
+                                $message_error .= 'Giấy tờ có bị mờ, ';
+                            case 'giay_to_bi_choi_sang':
+                                $message_error .= 'Giấy tờ bị chói sáng, ';
+                            case 'chung_minh_nhan_dan_bi_mat_goc':
+                                $message_error .= 'Chứng minh nhân dân bị mất góc, ';
+                            case 'thong_tin_bi_che_khuat':
+                                $message_error .= 'Thông tin giấy tờ bị che khuất, ';
+                            case 'giay_to_qua_han':
+                                $message_error .= 'Giấy tờ tùy thân bị hết hạn, ';
+                            case 'so_cmnd_cmnd_khong_hop_le':
+                                $message_error .= 'Số CMND, CCCD không hợp lệ, ';
+                            case 'anh_giay_to_la_anh_photo':
+                                $message_error .= 'Ảnh giấy tờ là ảnh photo, ';
+                        }
+                    }
+                
+                }
+                return back()->with(['message' => $message_error]);
+
+            
             }
         } else {
-            return back()->with(['message' => $result_recognition->result_message]);
+            return back()->with(['message' => 'Giấy tờ không xác định hoặc không hỗ trợ']);
+            // return back()->with(['message' => $result_recognition->result_message]);
+
         }
     }
 

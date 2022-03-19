@@ -85,7 +85,7 @@
                                                                 href="{{ url('/lich-su-tien-tich-luy') }}">Tài khoản
                                                                 C</a>
                                                             <a class="dropdown-item text-dark"
-                                                                href="">Thông báo</a>
+                                                                href="{{route('noticeuser.index')}}">Thông báo <sup class="text-danger font-weight-bold">{{ Auth::user()->notices()->whereIsRead(0)->count() }} </span></a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item text-danger"
                                                                 href="{{ route('logoutuser') }}">Đăng

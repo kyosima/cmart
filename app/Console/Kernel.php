@@ -25,10 +25,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('command:postRememberC')->hourlyAt(0);
-        $schedule->command('command:calculatedSavingC')->hourlyAt(5);
-        $schedule->command('command:calculatedAccumulationM')->dailyAt('23:59');
-        $schedule->command('command:calculatedTransfer')->everyMinute();
+        $schedule->command('command:postRememberC')->hourlyAt(0)->runInBackground();;
+        $schedule->command('command:calculatedSavingC')->hourlyAt(5)->runInBackground();;
+        $schedule->command('command:calculatedAccumulationM')->dailyAt('23:59')->runInBackground();;
+        $schedule->command('command:calculatedTransfer')->everyMinute()->runInBackground();;
 
     }
 

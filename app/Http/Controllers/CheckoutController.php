@@ -44,6 +44,15 @@ class CheckoutController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $stores = Store::get();
+        foreach ($stores as $store) {
+            if(Cart::instance($store->id)->count()> 0){
+                $cart = Cart::instance($store->id);
+                foreach($cart->content() as $row){
+                    $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
+                }
+            }
+        }
         $orders_not_payment = $user->orders()->where('is_payment', 0)->get();
         if (count($orders_not_payment) > 0) {
             foreach ($orders_not_payment as $order) {

@@ -11,7 +11,6 @@ class CouponPromo extends Model
 
     protected $table = 'coupon_promo';
 
-    public $timestamps = false;
 
     protected $guarded = [];
 }

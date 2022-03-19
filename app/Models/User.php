@@ -83,4 +83,7 @@ class User extends Authenticatable
 	// {
 	// 	return $this->hasMany(CPointHistory::class, 'user_id', 'id');
 	// }
+    public function notices(){
+        return $this->belongsToMany(Notice::class, 'user_notice', 'user_id', 'notice_id')->withPivot(['is_read']);
+    }
 }

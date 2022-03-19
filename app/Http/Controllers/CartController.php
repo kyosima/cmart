@@ -40,6 +40,12 @@ class CartController extends Controller
         $count_cart = 0;
         foreach ($stores as $store) {
             $count_cart += Cart::instance($store->id)->count();
+            if(Cart::instance($store->id)->count()> 0){
+                $cart = Cart::instance($store->id);
+                foreach($cart->content() as $row){
+                    $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
+                }
+            }
         }
         return view('cart.giohang', compact('stores', 'count_cart'));
     }
@@ -67,7 +73,7 @@ class CartController extends Controller
             ], 200);
         }
       
-        Cart::instance($store_id)->add(['id' => $product->id, 'name' => $product->name, 'price' => getPriceOfLevel($product), 'qty' => $qty, 'options' => [ 'method_ship' => 0, 'type_ship' => 0, 'price_normal' => 0, 'price_fast'=>0]])->associate('App\Models\Product');
+        Cart::instance($store_id)->add(['id' => $product->id, 'name' => $product->name, 'price' =>  getPriceOfLevel($product), 'qty' => $qty, 'options' => [ 'method_ship' => 0, 'type_ship' => 0, 'price_normal' => 0, 'price_fast'=>0]])->associate('App\Models\Product');
         $stores = Store::get();
         $count_cart = 0;
         foreach ($stores as $store) {
