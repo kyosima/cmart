@@ -59,7 +59,7 @@
                             <td>{{ $history->content }}</td>
                             <td>{{ formatNumber($history->old_balance) }}</td>
                             <td>{{ formatNumber($history->amount) }}</td>
-                            <td>{{ formatNumber($history->old_balance + $history->amount) }}</td>
+                            <td>{{ formatNumber($history->old_balance - $history->amount) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
