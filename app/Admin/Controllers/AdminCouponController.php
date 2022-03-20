@@ -105,18 +105,11 @@ class AdminCouponController extends Controller
         if($request->type == 0){
             if($request->target == 0){
                 $request->validate([
-                    'level_1' => 'required',
-                    'level_2' => 'required',
-                    'level_3' => 'required',
-                    'level_4' => 'required',
-                    'level_5' => 'required',
+                    'id_levels' => 'required',
 
                 ],[
-                    'level_1.required' => 'Mức ưu đãi Khách hàng thân thiết không được để trống',
-                    'level_2.required' => 'Mức ưu đãi Khách hàng V.I.P không được để trống',
-                    'level_3.required' => 'Mức ưu đãi Cộng tác viên không được để trống',
-                    'level_4.required' => 'Mức ưu đãi Purchasing không được để trống',
-                    'level_5.required' => 'Mức ưu đãi Khách hàng thương mại không được để trống',
+                    'level_1.id_levels' => 'Danh sách định danh khách hàng không được để trống',
+                 
                 ]);
                 $coupon = Coupon::create([
                     'name' => $request->name,
@@ -131,12 +124,8 @@ class AdminCouponController extends Controller
                     'is_percent' => $request->is_percent,
                 ]);
                 $coupon_promo->target = $request->target;
-
-                $coupon_promo->level_1 = $request->level_1;
-                $coupon_promo->level_2 = $request->level_2;
-                $coupon_promo->level_3 = $request->level_3;
-                $coupon_promo->level_4 = $request->level_4;
-                $coupon_promo->level_5 = $request->level_5;
+                $coupon_promo->id_levels =  implode(",", $request->id_levels);
+             
             }else{
                 $request->validate([
                     'id_customers' => 'required',
@@ -209,6 +198,8 @@ class AdminCouponController extends Controller
         }
         $coupon->min = $request->min;
         $coupon->max = $request->max;
+        $coupon_promo->value_discount = $request->value_discount;
+
         $coupon->save();
         $coupon_promo->save();
         return redirect()->route('coupon.edit', $coupon->id)->with('message', 'Tạo mã ưu đãi thành công');
@@ -249,24 +240,14 @@ class AdminCouponController extends Controller
             $coupon_promo->target = $request->target;
             if($request->target == 0){
                 $request->validate([
-                    'level_1' => 'required',
-                    'level_2' => 'required',
-                    'level_3' => 'required',
-                    'level_4' => 'required',
-                    'level_5' => 'required',
+                    'id_levels' => 'required',
 
                 ],[
-                    'level_1.required' => 'Mức ưu đãi Khách hàng thân thiết không được để trống',
-                    'level_2.required' => 'Mức ưu đãi Khách hàng V.I.P không được để trống',
-                    'level_3.required' => 'Mức ưu đãi Cộng tác viên không được để trống',
-                    'level_4.required' => 'Mức ưu đãi Purchasing không được để trống',
-                    'level_5.required' => 'Mức ưu đãi Khách hàng thương mại không được để trống',
+                    'level_1.id_levels' => 'Danh sách định danh khách hàng không được để trống',
+                 
                 ]);
-                $coupon_promo->level_1 = $request->level_1;
-                $coupon_promo->level_2 = $request->level_2;
-                $coupon_promo->level_3 = $request->level_3;
-                $coupon_promo->level_4 = $request->level_4;
-                $coupon_promo->level_5 = $request->level_5;
+                $coupon_promo->target = $request->target;
+                $coupon_promo->id_levels =  implode(",", $request->id_levels);
             }else{
                 $request->validate([
                     'id_customers' => 'required',
@@ -302,6 +283,8 @@ class AdminCouponController extends Controller
         }
         $coupon->min = $request->min;
         $coupon->max = $request->max;
+        $coupon_promo->value_discount = $request->value_discount;
+
         $coupon->save();
         $coupon_promo->save();
         return redirect()->back()->with('message', 'Chỉnh sửa mã ưu đãi thành công');

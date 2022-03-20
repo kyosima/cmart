@@ -71,11 +71,9 @@
                                 <th>Phạm vi kết hợp</th>
                                 <th> Phạm vi ưu đãi
                                 </th>
-                                <th> Giảm giá theo</th>
                                 <th> Mức ưu đãi</th>
                                 <th> Ngày bắt đầu</th>
                                 <th> Ngày kết thúc</th>
-                                <th>Mô tả</th>
                             </tr>
                         </thead>
                         <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
@@ -278,15 +276,15 @@
                         render: function(data, type, row) {
                             if (row.type == 0) {
                                 if (row.target == 0) {
-                                    return 'Giảm giá theo định danh KH'
+                                    return 'Giảm giá theo định danh KH với điều kiện Tổng GTSP lớn hơn ' + `${new Intl.NumberFormat('vi-VN').format(row.min )}`
 
                                 } else {
-                                    return 'Giảm giá theo mã KH';
+                                    return 'Giảm giá theo mã KH với điều kiện Tổng GTSP lớn hơn ' + `${new Intl.NumberFormat('vi-VN').format(row.min) }`
                                 }
                             } else if (row.type == 1) {
-                                return 'Giảm giá theo sản phẩm'
+                                return 'Giảm giá theo sản phẩm với điều kiện Tổng GTSP lớn hơn ' + `${new Intl.NumberFormat('vi-VN').format(row.min )}`
                             } else {
-                                return 'Giảm giá theo danh mục sản phẩm'
+                                return 'Giảm giá theo danh mục sản phẩm với điều kiện Tổng GTSP lớn hơn ' + `${new Intl.NumberFormat('vi-VN').format(row.min )}`
                             }
                         }
                     },
@@ -303,44 +301,30 @@
                             }
                         }
                     },
+                   
                     {
                         targets: 4,
                         render: function(data, type, row) {
                             if (row.promo.is_percent == 1) {
-                                return `Phần trăm`
-                            } else {
-                                return `Số tiền`
-                            }
+                            return `${row.promo.value_discount}%`
+                        } else {
+                            return `${new Intl.NumberFormat('vi-VN').format(row.promo.value_discount)}`
+                        }
                         }
                     },
                     {
                         targets: 5,
                         render: function(data, type, row) {
-                            return `${row.value_discount}`
+                            return `${row.start_date.split('-').reverse().join('/')}`
                         }
                     },
                     {
                         targets: 6,
                         render: function(data, type, row) {
-                            return `${row.start_date.split('-').reverse().join('/')}`
-                        }
-                    },
-                    {
-                        targets: 7,
-                        render: function(data, type, row) {
                             return `${row.end_date.split('-').reverse().join('/')}`
                         }
                     },
-                    {
-                        targets: 8,
-                        render: function(data, type, row) {
-                            if (row.description) {
-                                return `${row.description}`
-                            } else {
-                                return ``;
-                            }
-                        }
-                    },
+                  
 
                 ]
             });

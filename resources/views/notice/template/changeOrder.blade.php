@@ -29,4 +29,8 @@
             0899.663.883 và khẩn trương xác minh, phản hồi đến Quý Khách Hàng
         </p>
     @break
+    @case(5)
+    <p>Đơn hàng  {{ $order->order_store_code }}  của Quý Khách Hàng vừa bị hủy. Chi tiết liên hệ Hotline 0899.663.883
+    </p>
+@break
 @endswitch

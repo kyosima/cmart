@@ -126,6 +126,11 @@ class UserController extends Controller
 
     public function postEdit(Request $request, $id) {
         $user = User::find($id);
+        if($user->hoten != $request->hoten || $user->phone != $request->phone || $user->address != $request->address || $user->id_tinhthanh != $request->sel_province){
+            $noticeController = new NoticeController();
+            $noticeController->createNotice(2,$user);
+        }
+     
         $user->hoten = $request->hoten;
         if($user->level != $request->level){
             $user->level = $request->level;
@@ -140,8 +145,7 @@ class UserController extends Controller
         $user->id_quanhuyen = $request->sel_district;
         $user->id_phuongxa = $request->sel_ward;
         $user->duong = $request->duong;
-        $noticeController = new NoticeController();
-        $noticeController->createNotice(2,$user);
+       
         $user->save();
         return back();
     }

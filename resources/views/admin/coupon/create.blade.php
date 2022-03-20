@@ -91,49 +91,46 @@
                                                     name="target" value="1">Theo mã khách hàng</label>
                                         </div>
                                     </div>
-                                    <div class="form-group d-flex mb-2 div-target-value">
-                                        <label class="col-md-3 control-label">Mức ưu đãi<span class="required"
-                                                aria-required="true">(*)</span></label>
-                                        <div class="col-md-9">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <label for="">
+                                    <div class=" div-target-value">
+                                        <div class="form-group d-flex mb-2">
+                                            <label class="col-md-3 control-label">Chọn định danh khách hàng<span
+                                                    class="required" aria-required="true">(*)</span></label>
+                                            <div class="col-md-9">
+                                                <select name="id_levels[]" id="select-level" class="form-control" multiple
+                                                    required>
+                                                    <option value="0">
                                                         Khách hàng thân thiết
-                                                    </label>
-                                                    <input type="number" class="form-control" name="level_1">
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="">
+                                                    </option>
+                                                    <option value="1">
                                                         Khách hàng V.I.P
-                                                    </label>
-                                                    <input type="number" class="form-control" name="level_2">
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="">
+                                                    </option>
+                                                    <option value="2">
                                                         Cộng tác viên
-                                                    </label>
-                                                    <input type="number" class="form-control" name="level_3">
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="">
+                                                    </option>
+                                                    <option value="3">
                                                         Purchasing
-                                                    </label>
-                                                    <input type="number" class="form-control" name="level_4">
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="">
+                                                    </option>
+                                                    <option value="4">
                                                         Khách hàng thương mại
-                                                    </label>
-                                                    <input type="number" class="form-control" name="level_5">
-                                                </div>
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group d-flex mb-2">
+                                            <label class="col-md-3 control-label">Mức ưu đãi<span class="required"
+                                                    aria-required="true">(*)</span></label>
+                                            <div class="col-md-9">
+                                                <input type="number" class="form-control" name="value_discount" value=""
+                                                    required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Điều kiện ưu đãi</label>
+                                    <label class="col-md-3 control-label">Điều kiện GTSP</label>
                                     <div class="col-md-9">
-                                        <input type="text" name="min" placeholder="Giá trị đơn hàng tối thiểu"
+                                        <input type="text" name="min" placeholder="Giá trị Sản phẩm tối thiểu"
                                             class="form-control" value="">
                                     </div>
                                 </div>
@@ -257,6 +254,13 @@
     </script>
 
     <script>
+        $('#select-level').select2({
+            width: '100%',
+            multiple: true,
+            minimumInputLength: 3,
+            placeholder: 'Tìm kiếm định danh...',
+
+        });
         $('#select-product').select2({
             width: '100%',
             multiple: true,
@@ -475,7 +479,13 @@
                     },
                     success: function(response) {
                         $('.div-select-target').after(response.html)
+                        $('#select-level').select2({
+                            width: '100%',
+                            multiple: true,
+                            minimumInputLength: 3,
+                            placeholder: 'Tìm kiếm định danh...',
 
+                        });
                         $('form button[type=submit]').prop('disabled', false);
 
                     }

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\PointC;
 use App\Models\RememberC;
 use App\Http\Controllers\HistoryPointController;
+use Carbon\Carbon;
 
 class calculatedSavingC extends Command
 {
@@ -46,7 +47,7 @@ class calculatedSavingC extends Command
         foreach ($users as $user) {
             $sum_rememberCs = $user->getRememberC()->whereStatus(0)->sum('balance');
             $count_rememberCs = $user->getRememberC()->whereStatus(0)->count();
-            $saving = round($sum_rememberCs / $count_rememberCs * 1 / 100);
+            $saving = round(($sum_rememberCs / $count_rememberCs * 1 / 100)/Carbon::now()->daysInMonth);
             $historyPointController->createHistory($user, $saving, 4, 1, null, null, null);
             $user->getRememberC()->whereStatus(0)->update(['status'=>1]);
         }

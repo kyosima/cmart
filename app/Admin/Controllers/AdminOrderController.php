@@ -283,6 +283,7 @@ class AdminOrderController extends Controller
                     $historyPointController->createHistory($user, $order_main->remaining_m_point, 5, 0, $order_main->order_code, null, null);
                 }
             }
+          
             foreach ($order->order_products()->get() as $order_product) {
                 if ($order_product->sku != null) {
                     $store_product = $store->product_stores()->where('id_ofproduct', $order_product->id_product)->first();

@@ -22,6 +22,24 @@ class AdminPointController extends Controller
         $cmart_wallet->save();
         return back()->with('message', 'Nạp C thành công');
     }
+    public function getRememberC(Request $request){
+        if ($request->has('time_start') && $request->has('time_end')) {
+            $time_start = $request->time_start;
+            $time_end = $request->time_end;
+            if ($time_start == null) {
+                $time_start = date('2000-01-01 00:00:00');
+            }
+            if ($time_end == null) {
+                $time_end = date('Y-m-d H:i:s');
+            }
+            $users = User::where('id', '!=', 1)->orderBy('id', 'asc')->get();
+            return view('admin.point.rememberc', compact('users', 'time_start', 'time_end'));
+        }else{
+            
+            return view('admin.point.rememberc', compact('users'));
+
+        }
+    }
     public function getStatisticalAccount(Request $request)
     {
         $cmart =  User::whereId(1)->first();

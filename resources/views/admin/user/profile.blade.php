@@ -37,29 +37,7 @@
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
                                                                                                     <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
                                                                                                     <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
-                        <div class="row">
-                            <div class="col-4">
-                                <button class="alert alert-success m-0 text-center"
-                                    style="width: 85%;border-radius: 40px; background: orangered; color: white;">Đơn hàng
-                                    hoàn thành:
-                                    {{ formatNumber($order_done) }}</button>
-
-                            </div>
-                            <!-- <div class="col-4">
-                                             z                                                           <button class="alert alert-danger m-0" style="width: 85%;border-radius: 40px; background: turquoise; color: white;">Số dư M: 0</button>
-                                                                                                        </div> -->
-                            <div class="col-4">
-                                <button class="alert alert-success m-0 text-center"
-                                    style="width: 85%;border-radius: 40px; background: rgb(255, 0, 21); color: white;">
-                                    Đơn hàng hủy:
-                                    {{ formatNumber($order_cancel) }}</button>
-                            </div>
-                            <div class="col-4">
-                                <button class="alert alert-warning m-0"
-                                    style="width: 85%;border-radius: 40px; background: darkblue; color: white;">Số dư C:
-                                    {{ formatNumber($pointC) }}</button>
-                            </div>
-                        </div>
+                    
                         <div class="row d-flex justify-content-around">
                             <div class="col-md-4 col-12">
                                 <button class="alert alert-success m-0 text-center"
@@ -535,27 +513,7 @@
                     "thousands": ".",
                 },
                 dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-                buttons: [{
-                        extend: 'excelHtml5',
-                        exportOptions: {
-                            format: {
-                                body: function(data, row, column, node) {
-                                    data = $('<td>' + data + '</td>').text();
-                                    console.log();
-
-                                    return data.replace(/\./g, '');
-
-                                }
-                            }
-                        }
-
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL',
-
-                    }
+                    buttons: [
                 ],
             });
         });
@@ -591,27 +549,7 @@
                     "thousands": ".",
                 },
                 dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-                buttons: [{
-                        extend: 'excelHtml5',
-                        exportOptions: {
-                            format: {
-                                body: function(data, row, column, node) {
-                                    data = $('<td>' + data + '</td>').text();
-                                    console.log();
-
-                                    return data.replace(/\./g, '');
-
-                                }
-                            }
-                        }
-
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL',
-
-                    }
+                buttons: [
                 ],
             });
         });

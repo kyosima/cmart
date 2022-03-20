@@ -322,6 +322,8 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('lich-su-tich-luy-m', [AdminPointController::class, 'getHistoryAccumulationM'])->name('point.historyAccumulationM');
         Route::get('tai-khoan-cmart', [AdminPointController::class, 'getStatisticalAccount'])->name('point.account');
         Route::post('nap-c', [AdminPointController::class, 'postDeposit'])->name('point.deposit');
+        Route::get('thong-ke-so-du-c', [AdminPointController::class, 'getRememberC'])->name('point.getRememberC');
+
 
     });
     Route::group(['prefix'=>'thong-bao','middleware' => ['permission:Quản lý thông báo,admin']], function () {
