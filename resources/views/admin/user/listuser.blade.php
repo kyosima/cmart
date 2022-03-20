@@ -250,31 +250,7 @@
                     "thousands": ".",
                 },
                 dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-                buttons: [{
-                        extend: 'excelHtml5',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 7],
-                            format: {
-                                body: function(data, row, column, node) {
-                                    data = $('<td>' + data + '</td>').text();
-                                    console.log();
-
-                                    return data.replace(/\./g, '');
-
-                                }
-                            }
-                        }
-
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 7],
-                        }
-
-                    }
+                buttons: [
                 ],
             });
         });

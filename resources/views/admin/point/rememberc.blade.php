@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="text-center">
-                        THỐNG KÊ SỐ DƯ C CỦA KHÁCH HÀNG TỪNG THỜI ĐIỂM
+                        THỐNG KÊ SỐ DƯ C KHẢ DỤNG CỦA KHÁCH HÀNG TỪNG THỜI ĐIỂM
                     </h4>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                         <thead class="bg-dark text-light">
                             <tr style="text-align:center">
                                 <th>Mã khách hàng</th>
-                                @foreach ($users[0]->getRememberC()->where('created_at', '>', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<', date('Y-m-d H:i:s', strtotime($time_end)))->latest()->get() as $remember)
+                                @foreach ($users[0]->getRememberC()->where('created_at', '>', date('Y-m-d H:00:00', strtotime($time_start)))->where('created_at', '<', date('Y-m-d H:59:00', strtotime($time_end)))->latest()->get() as $remember)
                                     <th>{{ date('Y-m-d H:i:s', strtotime($remember->created_at)) }}</th>
                                 @endforeach
                             </tr>
@@ -77,7 +77,7 @@
                             @foreach ($users as $user)
                                 <tr style="text-align:center">
                                     <td>{{ $user->code_customer }}</td>
-                                    @foreach($user->getRememberC()->where('created_at', '>', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<', date('Y-m-d H:i:s', strtotime($time_end)))->latest()->get() as $remember)
+                                    @foreach($user->getRememberC()->where('created_at', '>', date('Y-m-d H:00:00', strtotime($time_start)))->where('created_at', '<', date('Y-m-d H:59:00', strtotime($time_end)))->latest()->get() as $remember)
                                         <td>{{ formatNumber($remember->balance) }}</td>
                                     @endforeach
                                 </tr>
