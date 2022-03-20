@@ -37,13 +37,20 @@
             <hr>
             <div class="portlet-body">
                 @if (auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
-                    <form action="{{route('coupon.store')}}" method="post">
+                    <form action="{{ route('coupon.store') }}" method="post">
                         @csrf
                 @endif
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-md-6">
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Đơn vị cung cấp<span class="required"
+                                            aria-required="true">(*)</span></label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="supplier" class="form-control" required value="">
+                                    </div>
+                                </div>
                                 <div class="form-group d-flex mb-2">
                                     <label class="col-md-3 control-label">Mã ưu đãi<span class="required"
                                             aria-required="true">(*)</span></label>
@@ -59,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group d-flex mb-2 couponType">
-                                    <label class="col-md-3 control-label">Loại ưu đãi<span class="required"
+                                    <label class="col-md-3 control-label">Phạm vi ưu đãi<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="type" id="couponType">
@@ -124,6 +131,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Điều kiện ưu đãi</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="min" placeholder="Giá trị đơn hàng tối thiểu"
+                                            class="form-control" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Giảm giá tối đa</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="max" placeholder="Giảm giá tối đa" class="form-control"
+                                            value="">
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
                                     <label class="col-md-3 control-label">Giảm giá theo<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
@@ -143,6 +164,21 @@
                             </div>
 
                             <div class="col-md-6">
+                                <div class="block-coupon">
+                                    <div class="form-group d-flex mb-2 div-select-connect">
+                                        <label class="col-md-3 control-label">Chọn phạm vi kết hợp<span
+                                                class="required" aria-required="true">(*)</span></label>
+                                        <div class="col-md-9">
+                                            <label for="connect0" class="mr-2 w-100"><input type="radio" id="connect0"
+                                                    name="connect" value="0" checked>Không áp dụng đồng thời với các CTSK
+                                                khác</label>
+                                            <label for="connect1" class="mr-2 w-100"><input type="radio" id="connect1"
+                                                    name="connect" value="1">Áp dụng đồng thời với mọi CTSK</label>
+                                            <label for="connect2" class="mr-2 w-100"><input type="radio" id="connect2"
+                                                    name="connect" value="2">Áp dụng với CTSK cụ thể</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group d-flex mb-2">
                                     <label class="col-md-3 control-label">Ngày bắt đầu<span class="required"
                                             aria-required="true">(*)</span></label>
@@ -247,6 +283,40 @@
             templateResult: formatRepoSelection,
             templateSelection: formatRepoSelection
         })
+        $('#select-coupon').select2({
+            width: '100%',
+            multiple: true,
+            minimumInputLength: 3,
+            dataType: 'json',
+            ajax: {
+                delay: 350,
+                url: `{{ route('coupon.getCoupon') }}`,
+                dataType: 'json',
+                data: function(params) {
+                    var query = {
+                        search: params.term,
+                    }
+                    return query;
+                },
+                processResults: function(data) {
+                    return {
+                        results: data.data
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Tìm kiếm ưu đãi...',
+            templateResult: formatRepoCouponSelection,
+            templateSelection: formatRepoCouponSelection
+        })
+
+        function formatRepoCouponSelection(repo) {
+            if (repo.text) {
+                return repo.text
+            } else {
+                return `${repo.name} (#${repo.code})`;
+            }
+        }
 
         $('#select-procat').select2({
             width: '100%',
@@ -319,6 +389,70 @@
     </script>
     {{-- ajax show product and product category --}}
     <script>
+        $(document).on('change', 'input[name="connect"]', function() {
+            console.log($(this).val());
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('.div-select-coupon').remove()
+            if ($(this).val() == 2) {
+
+                $.ajax({
+                    type: "GET",
+                    url: `{{ route('coupon.selectCoupon') }}`,
+                    data: {
+                        id: $(this).val()
+                    },
+                    dataType: "json",
+                    beforeSend: function() {
+                        $('form button[type=submit]').attr('disabled', 'disabled');
+                    },
+                    success: function(response) {
+                        $('.div-select-connect').after(response.html)
+                        $('#select-coupon').select2({
+                            width: '100%',
+                            multiple: true,
+                            minimumInputLength: 3,
+                            dataType: 'json',
+                            ajax: {
+                                delay: 350,
+                                url: `{{ route('coupon.getCoupon') }}`,
+                                dataType: 'json',
+                                data: function(params) {
+                                    var query = {
+                                        search: params.term,
+                                    }
+                                    return query;
+                                },
+                                processResults: function(data) {
+                                    return {
+                                        results: data.data
+                                    };
+                                },
+                                cache: true
+                            },
+                            placeholder: 'Tìm kiếm ưu đãi...',
+                            templateResult: formatRepoSelection,
+                            templateSelection: formatRepoSelection
+                        })
+
+                        function formatRepoSelection(repo) {
+                            if (repo.text) {
+                                return repo.text
+                            } else {
+                                return `${repo.name} (#${repo.code})`;
+                            }
+                        }
+                        $('form button[type=submit]').prop('disabled', false);
+
+                    }
+                });
+            }
+
+
+        });
         $(document).on('change', 'input[name="target"]', function() {
             console.log($(this).val());
             $.ajaxSetup({

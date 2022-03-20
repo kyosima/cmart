@@ -23,7 +23,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\PaymentPaymeController;
 use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\AddressController;
-use App\Http\Controllers\HistoryPointController;
+use App\Http\Controllers\HistoryPointController; 
+use App\Http\Controllers\NoticeController; 
 
 use App\Models\PointCHistory;
 use App\Models\PointMHistory;
@@ -250,7 +251,9 @@ class AdminOrderController extends Controller
         $order = $order_store->order()->first();
         $this->proccessCpoint($order->user, $request->status, $order_store->status, $order_store->c_point, $order_store);
         $order_store->status = $request->status;
-
+        $noticeController = new NoticeController();
+        $user = $order_store->order()->first()->user()->first();
+        $noticeController->createNotice(4,$user, null,$order_store);
         $order_store->save();
 
 

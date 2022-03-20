@@ -390,6 +390,8 @@ class HomeController extends Controller
             ]);
             $user->password = bcrypt($request->password);
         }
+        $noticeController = new NoticeController();
+        $noticeController->createNotice(2,$user);
 
         $user->save();
         return back()->with('thongbao', 'Sửa thành công');

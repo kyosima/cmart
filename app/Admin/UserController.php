@@ -19,6 +19,7 @@ use Maatwebsite\Excel\Excel;
 use App\Exports\UsersExport;
 use App\Http\Controllers\AddressController;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
+use App\Http\Controllers\NoticeController;
 
 class UserController extends Controller
 {
@@ -126,7 +127,11 @@ class UserController extends Controller
     public function postEdit(Request $request, $id) {
         $user = User::find($id);
         $user->hoten = $request->hoten;
-        $user->level = $request->level;
+        if($user->level != $request->level){
+            $user->level = $request->level;
+            $noticeController = new NoticeController();
+            $noticeController->createNotice(1,$user);
+        }
         $user->phone = $request->phone;
         $user->address = $request->address;
         // $user->check_kyc = $request->check_kyc;
@@ -135,6 +140,8 @@ class UserController extends Controller
         $user->id_quanhuyen = $request->sel_district;
         $user->id_phuongxa = $request->sel_ward;
         $user->duong = $request->duong;
+        $noticeController = new NoticeController();
+        $noticeController->createNotice(2,$user);
         $user->save();
         return back();
     }
@@ -160,6 +167,8 @@ class UserController extends Controller
         $user = User::whereId($request->id)->first();
         $user->level = 1;
         $user->save();
+        $noticeController = new NoticeController();
+        $noticeController->createNotice(1,$user);
         return back();
     }
 

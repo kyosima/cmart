@@ -37,14 +37,21 @@
             <hr>
             <div class="portlet-body">
                 @if (auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
-                <form action="{{ route('coupon.update', $coupon->id) }}" method="post">
-                    @csrf
-                    @method('PUT')
+                    <form action="{{ route('coupon.update', $coupon->id) }}" method="post">
+                        @csrf
+                        @method('PUT')
                 @endif
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-md-6">
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Đơn vị cung cấp<span class="required"
+                                            aria-required="true">(*)</span></label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="supplier" class="form-control" required value="{{$coupon->supplier}}">
+                                    </div>
+                                </div>
                                 <div class="form-group d-flex mb-2">
                                     <label class="col-md-3 control-label">Mã ưu đãi<span class="required"
                                             aria-required="true">(*)</span></label>
@@ -62,7 +69,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group d-flex mb-2 couponType">
-                                    <label class="col-md-3 control-label">Loại ưu đãi<span class="required"
+                                    <label class="col-md-3 control-label">Phạm vi ưu đãi<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="type" id="couponType">
@@ -217,10 +224,25 @@
                                                     aria-required="true">(*)</span></label>
                                             <div class="col-md-9">
                                                 <input type="number" class="form-control" name="value_discount"
-                                                value="{{ $coupon->promo->value_discount }}" required>                                            </div>
+                                                    value="{{ $coupon->promo->value_discount }}" required>
+                                            </div>
                                         </div>
                                     </div>
                                 @endif
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Điều kiện ưu đãi</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="min" value="{{ $coupon->min }}"
+                                            placeholder="Giá trị đơn hàng tối thiểu" class="form-control" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Giảm giá tối đa</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="max" value="{{ $coupon->max }}"
+                                            placeholder="Giảm giá tối đa" class="form-control" value="">
+                                    </div>
+                                </div>
                                 <div class="form-group d-flex mb-2">
                                     <label class="col-md-3 control-label">Giảm giá theo<span class="required"
                                             aria-required="true">(*)</span></label>
@@ -243,6 +265,43 @@
                             </div>
 
                             <div class="col-md-6">
+                                <div class="block-coupon">
+                                    <div class="form-group d-flex mb-2 div-select-connect">
+                                        <label class="col-md-3 control-label">Chọn phạm vi kết hợp<span
+                                                class="required" aria-required="true">(*)</span></label>
+                                        <div class="col-md-9">
+                                            <label for="connect0" class="mr-2 w-100"><input type="radio" id="connect0"
+                                                    name="connect" value="0" {{ $coupon->connect == 0 ? 'checked' : '' }}
+                                                    checked>Không áp dụng đồng thời với các CTSK
+                                                khác</label>
+                                            <label for="connect1" class="mr-2 w-100"><input type="radio" id="connect1"
+                                                    name="connect" value="1"
+                                                    {{ $coupon->connect == 1 ? 'checked' : '' }}>Áp dụng đồng thời với
+                                                mọi CTSK</label>
+                                            <label for="connect2" class="mr-2 w-100"><input type="radio" id="connect2"
+                                                    name="connect" value="2"
+                                                    {{ $coupon->connect == 2 ? 'checked' : '' }}>Áp dụng với CTSK cụ
+                                                thể</label>
+                                        </div>
+                                    </div>
+                                    @if ($coupon->connect == 2)
+                                        <div class="form-group d-flex mb-2 div-select-coupon">
+                                            <label class="col-md-3 control-label">Chọn CTSK<span class="required"
+                                                    aria-required="true">(*)</span></label>
+                                            <div class="col-md-9">
+                                                <select name="id_coupons[]" id="select-coupon" class="form-control"
+                                                    multiple required>
+                                                    @if (count($arr_coupons) > 0)
+                                                        @foreach ($arr_coupons as $value)
+                                                            <option value="{{ $value->id }}" selected>
+                                                                {{ $value->name }} (#{{ $value->code }})</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
                                 <div class="form-group d-flex mb-2">
                                     <label class="col-md-3 control-label">Ngày bắt đầu<span class="required"
                                             aria-required="true">(*)</span></label>
@@ -272,18 +331,18 @@
                     </div>
                     <div class="col-sm-12">
                         <button type="submit" class="btn btn-info">Cập nhật</button>
-                    
+
                     </div>
                     @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
-                   
-                @endif
+                    @endif
 
                 </div>
                 </form>
-                <form action="{{ route('coupon.delete', ['id'=>$coupon->id]) }}" method="post">
+                <form action="{{ route('coupon.delete', ['id' => $coupon->id]) }}" method="post">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa?')">Xóa voucher/coupon</button>
+                    <button class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa?')">Xóa
+                        voucher/coupon</button>
                 </form>
             </div>
         </div>
@@ -332,6 +391,40 @@
     </script>
 
     <script>
+        $('#select-coupon').select2({
+            width: '100%',
+            multiple: true,
+            minimumInputLength: 3,
+            dataType: 'json',
+            ajax: {
+                delay: 350,
+                url: `{{ route('coupon.getCoupon') }}`,
+                dataType: 'json',
+                data: function(params) {
+                    var query = {
+                        search: params.term,
+                    }
+                    return query;
+                },
+                processResults: function(data) {
+                    return {
+                        results: data.data
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Tìm kiếm ưu đãi...',
+            templateResult: formatRepoCouponSelection,
+            templateSelection: formatRepoCouponSelection
+        });
+
+        function formatRepoCouponSelection(repo) {
+            if (repo.text) {
+                return repo.text
+            } else {
+                return `${repo.name} (#${repo.code})`;
+            }
+        }
         $('#select-product').select2({
             width: '100%',
             multiple: true,
@@ -430,6 +523,70 @@
     </script>
     {{-- ajax show product and product category --}}
     <script>
+        $(document).on('change', 'input[name="connect"]', function() {
+            console.log($(this).val());
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('.div-select-coupon').remove()
+            if ($(this).val() == 2) {
+
+                $.ajax({
+                    type: "GET",
+                    url: `{{ route('coupon.selectCoupon') }}`,
+                    data: {
+                        id: $(this).val()
+                    },
+                    dataType: "json",
+                    beforeSend: function() {
+                        $('form button[type=submit]').attr('disabled', 'disabled');
+                    },
+                    success: function(response) {
+                        $('.div-select-connect').after(response.html)
+                        $('#select-coupon').select2({
+                            width: '100%',
+                            multiple: true,
+                            minimumInputLength: 3,
+                            dataType: 'json',
+                            ajax: {
+                                delay: 350,
+                                url: `{{ route('coupon.getCoupon') }}`,
+                                dataType: 'json',
+                                data: function(params) {
+                                    var query = {
+                                        search: params.term,
+                                    }
+                                    return query;
+                                },
+                                processResults: function(data) {
+                                    return {
+                                        results: data.data
+                                    };
+                                },
+                                cache: true
+                            },
+                            placeholder: 'Tìm kiếm ưu đãi...',
+                            templateResult: formatRepoCouponSelection,
+                            templateSelection: formatRepoCouponSelection
+                        })
+
+                        function formatRepoCouponSelection(repo) {
+                            if (repo.text) {
+                                return repo.text
+                            } else {
+                                return `${repo.name} (#${repo.code})`;
+                            }
+                        }
+                        $('form button[type=submit]').prop('disabled', false);
+
+                    }
+                });
+            }
+
+
+        });
         $(document).on('change', 'input[name="target"]', function() {
             console.log($(this).val());
             $.ajaxSetup({

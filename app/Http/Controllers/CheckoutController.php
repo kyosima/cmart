@@ -756,22 +756,27 @@ class CheckoutController extends Controller
         }
         if($order_status){
             if ($order->payment_method == 1) {
-                DB::transaction(function () use ($order, $user) {
-                    try {
+                // DB::transaction(function () use ($order, $user) {
+                //     try {
                         $transaction_code = $order->order_code;
                         $historyPointController = new HistoryPointController();
                         $historyPointController->createHistory($user, $order->total, 1, 1, $transaction_code, null, null);
                         $order->is_payment = 1;
                         $order->save();
                     
-                    } catch (\Throwable $th) {
-                        throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
-                        return redirect()->back()->withErrors(['error' => $th->getMessage()]);
-                    }
-                });
+                //     } catch (\Throwable $th) {
+                //         throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
+                //         return redirect()->back()->withErrors(['error' => $th->getMessage()]);
+                //     }
+                // });
             }
             $order->is_payment = 1;
             $order->save();
+            $noticeController = new NoticeController();
+            $user = $order->user()->first();
+            foreach($order->order_stores()->get() as $order_store){
+                $noticeController->createNotice(4,$user, null,$order_store);
+            }
             $store_ids = Session::get('store_ids');
             foreach (explode(",", $store_ids) as $store_id) {
                 Cart::instance($store_id)->destroy();
@@ -913,6 +918,7 @@ class CheckoutController extends Controller
         // $order_info = $order->order_info()->first();
         // $order_address = $order->order_address()->first();
         // $order_stores = $order->order_stores()->get();
+      
         return view('checkout.thanhcong', compact('order'));
     }
     public function showFail()

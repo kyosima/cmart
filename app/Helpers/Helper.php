@@ -44,6 +44,23 @@ if (!function_exists('formatType')) {
         }
     }
 }
+if (!function_exists('formatTypeCoupon')) {
+    function formatTypeCoupon($coupon)
+    {
+        switch ($coupon->type) {
+            case 0:
+                if($coupon->target == 0){
+                    return 'Giảm giá theo định danh KH';
+                }else{
+                    return 'Giảm giá theo mã KH';
+                }
+            case 1:
+                return 'Giảm giá theo sản phẩm';
+            case 2:
+                return 'Giảm giá theo danh mục sản phẩm';
+        }
+    }
+}
 if (!function_exists('formatLevel')) {
     function formatLevel($type)
     {

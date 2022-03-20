@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\HistoryPoint;
 use App\Models\User;
 use Aws\History;
+use App\Http\Controllers\NoticeController;
 
 class HistoryPointController extends Controller
 {
@@ -95,6 +96,8 @@ class HistoryPointController extends Controller
                 break;
         }
         $history->save();
+        $noticeController = new NoticeController();
+        $noticeController->createNotice(3,$user, $history);
         $user_wallet->save();
         $cmart_wallet->save();
     }

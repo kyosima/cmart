@@ -25,7 +25,7 @@
 
                             <div class="notice-title">
                                 <h4 class="text-center text-uppercase">{{ $notice->title }}</h4>
-                                <p><small>Đăng bởi: @if($notice->author ==0) Admin @else Hệ thống @endif - {{ date('d/m/Y H:i:s', strtotime($notice->create_at)) }}</small></p>
+                                <p><small>Đăng bởi: @if($notice->author ==0) Admin @else Hệ thống @endif - {{ date('d/m/Y H:i:s', strtotime($notice->created_at)) }}</small></p>
                             </div>
                             <div class="notice-content text-justify">
                                 {!! $notice->content !!}

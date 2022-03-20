@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 use App\Admin\Traits\ajaxCustomerTrait;
+use App\Admin\Traits\ajaxCouponTrait;
 
 use App\Admin\Traits\ajaxProductTrait;
 use App\Http\Controllers\Controller;
@@ -14,11 +15,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use PHPUnit\Framework\Constraint\Count;
 
 class AdminCouponController extends Controller
 {
     use ajaxProductTrait;
     use ajaxCustomerTrait;
+    use ajaxCouponTrait;
     public function index()
     {
         // $coupons = Coupon::with('promo')->get();
@@ -50,25 +53,31 @@ class AdminCouponController extends Controller
         $id = $request->id;
         $coupon = Coupon::where('id', $id)->with('promo')->first();
         $arr = [];
+        $arr_coupons = [];
+        if ($coupon->connect == 2) {
+            $arr_coupons = explode(',', $coupon->id_coupons);
+            $arr_coupons = Coupon::whereIn('id', $arr_coupons)->get();
+        }
         if ( $coupon->type == 0) {
             if($coupon->promo->target == 0){
-                return view('admin.coupon.edit', compact('coupon'));
+                return view('admin.coupon.edit', compact('coupon', 'arr_coupons'));
             }else{
                 $arr = explode(',', $coupon->promo->id_customers);
                 $arr = User::whereIn('id', $arr)->get();
-                return view('admin.coupon.edit', compact('coupon', 'arr'));
+                return view('admin.coupon.edit', compact('coupon', 'arr', 'arr_coupons'));
             }
         }
         elseif ($coupon->type == 1) {
             $arr = explode(',', $coupon->promo->id_products);
             $arr = Product::whereIn('id', $arr)->get();
-            return view('admin.coupon.edit', compact('coupon', 'arr'));
+            return view('admin.coupon.edit', compact('coupon', 'arr','arr_coupons'));
         }
         else if ($coupon->type ==2) {
             $arr = explode(',', $coupon->promo->id_procats);
             $arr = ProductCategory::whereIn('id', $arr)->get();
-            return view('admin.coupon.edit', compact('coupon', 'arr'));
+            return view('admin.coupon.edit', compact('coupon', 'arr', 'arr_coupons'));
         }
+     
     }
 
     public function store(Request $request)
@@ -80,16 +89,19 @@ class AdminCouponController extends Controller
         }
         $request->validate([
             'name' => 'required',
+            'supplier' => 'required',
             'code' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
         ],[
             'name.required' => 'Tên ưu đãi không được để trống',
+            'supllier.required' => 'Đơn vị cung cấp không được để trống',
             'code.required|unique' => 'Mã ưu đãi không được để trống',
             'start_date.required' => 'Thời gian bắt đầu ưu đãi không được để trống',
             'end_date.required' => 'Thời gian kết thúc ưu đãi không đước để trống',
         ]);
-        
+        $coupon = new Coupon;
+        $coupon_promo = new CouponPromo();
         if($request->type == 0){
             if($request->target == 0){
                 $request->validate([
@@ -190,6 +202,14 @@ class AdminCouponController extends Controller
             $coupon_promo->id_procats = implode(",", $request->id_procats);
             $coupon_promo->value_discount = $request->value_discount;
         }
+        $coupon->supplier = $request->supplier;
+        $coupon->connect = $request->connect;
+        if($request->connect == 2){
+            $coupon->id_coupons = implode(",", $request->id_coupons);
+        }
+        $coupon->min = $request->min;
+        $coupon->max = $request->max;
+        $coupon->save();
         $coupon_promo->save();
         return redirect()->route('coupon.edit', $coupon->id)->with('message', 'Tạo mã ưu đãi thành công');
         
@@ -203,11 +223,13 @@ class AdminCouponController extends Controller
         }
         $request->validate([
             'name' => 'required',
+            'supplier' => 'required',
             'code' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
         ],[
             'name.required' => 'Tên ưu đãi không được để trống',
+            'supllier.required' => 'Đơn vị cung cấp không được để trống',
             'code.required|unique' => 'Mã ưu đãi không được để trống',
             'start_date.required' => 'Thời gian bắt đầu ưu đãi không được để trống',
             'end_date.required' => 'Thời gian kết thúc ưu đãi không đước để trống',
@@ -273,6 +295,14 @@ class AdminCouponController extends Controller
             $coupon_promo->id_procats = implode(",", $request->id_procats);
             $coupon_promo->value_discount = $request->value_discount;
         }
+        $coupon->supplier = $request->supplier;
+        $coupon->connect = $request->connect;
+        if($request->connect == 2){
+            $coupon->id_coupons = implode(",", $request->id_coupons);
+        }
+        $coupon->min = $request->min;
+        $coupon->max = $request->max;
+        $coupon->save();
         $coupon_promo->save();
         return redirect()->back()->with('message', 'Chỉnh sửa mã ưu đãi thành công');
         
@@ -391,6 +421,20 @@ class AdminCouponController extends Controller
         ]);
     }
 
+    public function getCoupon(Request $request)
+    {
+        return response()->json([
+            'code' => 200,
+            'data' => $this->ajaxGetCoupon($request->search)
+        ]);
+    }
+    public function selectCoupon()
+    {
+        $returnHTML = view('admin.coupon.selectCoupon')->render();
+        return response()->json([
+            'html' => $returnHTML
+        ], 200);
+    }
     public function selectProduct()
     {
         $returnHTML = view('admin.coupon.selectProduct')->render();

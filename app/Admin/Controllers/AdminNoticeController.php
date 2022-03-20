@@ -50,6 +50,7 @@ class AdminNoticeController extends Controller
             'slug' => Str::slug($request->title).date('d-m-Y-H-i-s'),
             'short_content' => $request->short_content,
             'content'=>$request->content,
+            'method' => 1,
             'status' => $request->status,
         ]);
         if($request->target == 0 ){

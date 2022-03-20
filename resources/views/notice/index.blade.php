@@ -21,14 +21,27 @@
                 <div class="row">
                     <div class="col-12">
                         @foreach ($notices as $notice)
-                            <a href="{{route('noticeuser.getNotice', $notice->slug)}}">
-                                <div class="alert  p-2 text-dark @if($notice->getOriginal('pivot_is_read') == 0) alert-secondary @else alert-light @endif">
-                                    <p class="d-flex justify-content-between"><b>{{ $notice->title }}</b>
-                                        <small>{{ date('d-m-Y H:i:s') }}</small>
-                                    </p>
-                                    <p><small>{{ $notice->short_content }}</small></p>
-                                </div>
-                            </a>
+                            @if ($notice->method == 0)
+                                <a href="{{ route('noticeuser.getNotice', $notice->slug) }}">
+                                    <div
+                                        class="alert  p-2 text-dark @if ($notice->getOriginal('pivot_is_read') == 0) alert-secondary @else alert-light @endif">
+                                        <p class="d-flex justify-content-between"><b>{{ $notice->title }}</b>
+                                            <small>{{ date('d-m-Y H:i:s', strtotime($notice->created_at)) }}</small>
+                                        </p>
+                                        <p><small>{!! $notice->short_content !!}</small></p>
+                                    </div>
+                                </a>
+                            @else
+                                <a href="{{ route('noticeuser.getNotice', $notice->slug) }}">
+                                    <div
+                                        class="alert  p-2 text-dark @if ($notice->getOriginal('pivot_is_read') == 0) alert-secondary @else alert-light @endif">
+                                        <p class="d-flex justify-content-between"><b>{{ $notice->title }}</b>
+                                            <small>{{ date('d-m-Y H:i:s', strtotime($notice->created_at)) }}</small>
+                                        </p>
+                                        <p><small>{{ $notice->short_content }}</small></p>
+                                    </div>
+                                </a>
+                            @endif
                         @endforeach
                     </div>
                 </div>
