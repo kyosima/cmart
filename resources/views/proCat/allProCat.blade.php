@@ -1,13 +1,12 @@
 @extends('layout.master')
 
 @push('css')
-<link rel="stylesheet" href="{{ asset('public/css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/danhmucsanpham.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/pagination.css') }}">
 
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
-
 @endpush
 
 
@@ -63,30 +62,35 @@
                         <div class="">
                             <div id="category_search" class="widget-product-categories">
                                 <ul class="check-side category-menu">
-                                    @foreach ($categories as $item)
-                                    @if (count($item->childrenCategories) > 0)
-                                        <li class="menu-item menu-item-has-children py-1 has-child menu-border">
-                                            @if ($item->linkToCategory != null)
-                                                <a href="{{route('proCat.index', $item->linkToCategory->slug)}}">{{ $item->name }}</a>
-                                            @else
-                                                <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
-                                            @endif
-                                            <button class="toggle">
-                                                <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                            </button>
-                                            @include('proCat.danhmuc-sidebar', [
+                                    @foreach ($categories_root as $item)
+                                        @if (count($item->childrenCategories) > 0)
+                                            <li class="menu-item menu-item-has-children py-1 has-child menu-border">
+                                                @if ($item->linkToCategory != null)
+                                                    <a
+                                                        href="{{ route('proCat.index', $item->linkToCategory->slug) }}">{{ $item->name }}</a>
+                                                @else
+                                                    <a
+                                                        href="{{ route('proCat.index', $item->slug) }}">{{ $item->name }}</a>
+                                                @endif
+                                                <button class="toggle" data-id="{{ $item->id }}" data-url="{{route('proCat.getCatChild')}}"
+                                                    onclick="getCategoryChild(this)">
+                                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                                </button>
+                                                {{-- @include('proCat.danhmuc-sidebar', [
                                                 'child_categories' => $item->childrenCategories,
-                                            ])
-                                        </li>
-                                    @else
-                                        <li class="menu-item menu-border py-1">
-                                            @if ($item->linkToCategory != null)
-                                                <a href="{{route('proCat.index', $item->linkToCategory->slug)}}">{{ $item->name }}</a>
-                                            @else
-                                                <a href="{{route('proCat.index', $item->slug)}}">{{ $item->name }}</a>
-                                            @endif
-                                        </li>
-                                    @endif
+                                            ]) --}}
+                                            </li>
+                                        @else
+                                            <li class="menu-item menu-border py-1">
+                                                @if ($item->linkToCategory != null)
+                                                    <a
+                                                        href="{{ route('proCat.index', $item->linkToCategory->slug) }}">{{ $item->name }}</a>
+                                                @else
+                                                    <a
+                                                        href="{{ route('proCat.index', $item->slug) }}">{{ $item->name }}</a>
+                                                @endif
+                                            </li>
+                                        @endif
                                     @endforeach
                                 </ul>
                                 {{-- @foreach ($categories as $item)
@@ -105,16 +109,16 @@
                 <div class="shop-container col-lg-9 col-md-12 col-sm-12">
                     <div class="shop-container-inner">
                         @foreach ($categories as $key => $proCat)
-                            
                             {{-- BANNER --}}
                             @if ($proCat->feature_img != null)
-                            <div class="banner row">
-                                <div class="col-12">
-                                    <a href="{{route('proCat.index', $proCat->slug)}}" class="box-big-img" title="{{$proCat->name}}">
-                                        <img src="{{$proCat->feature_img}}" alt="{{$proCat->name}}">
-                                    </a>
+                                <div class="banner row">
+                                    <div class="col-12">
+                                        <a href="{{ route('proCat.index', $proCat->slug) }}" class="box-big-img"
+                                            title="{{ $proCat->name }}">
+                                            <img src="{{ $proCat->feature_img }}" alt="{{ $proCat->name }}">
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
                             @endif
                             <div class="row d-flex align-items-center">
                                 <div class="col col-12">
@@ -122,12 +126,13 @@
                                         <p class="section-title section-title-normal">
                                             <b></b>
                                             <span class="section-title-main" style="color:rgb(54, 53, 51); ">
-                                                <a href="{{route('proCat.index', $proCat->slug)}}">
-                                                    {{$proCat->name}}
+                                                <a href="{{ route('proCat.index', $proCat->slug) }}">
+                                                    {{ $proCat->name }}
                                                 </a>
                                             </span>
                                             <b></b>
-                                            <a href="{{route('proCat.index', $proCat->slug)}}" class="view-more text-dark text-right">
+                                            <a href="{{ route('proCat.index', $proCat->slug) }}"
+                                                class="view-more text-dark text-right">
                                                 Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                             </a>
                                         </p>
@@ -142,28 +147,32 @@
                                             <div class="sp">
                                                 <div class="box3item">
                                                     <div class="box-img">
-                                                        <a href="{{route('san-pham.show', $item->slug)}}" title="{{$item->name}}" tabindex="0">
-                                                            <img src="{{asset($item->feature_img)}}" alt="{{$item->name}}">
+                                                        <a href="{{ route('san-pham.show', $item->slug) }}"
+                                                            title="{{ $item->name }}" tabindex="0">
+                                                            <img src="{{ asset($item->feature_img) }}"
+                                                                alt="{{ $item->name }}">
                                                         </a>
                                                         @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
                                                             @php
-                                                                $percent = (1 - ($item->productPrice->shock_price/$item->productPrice->regular_price))*100;
+                                                                $percent = (1 - $item->productPrice->shock_price / $item->productPrice->regular_price) * 100;
                                                             @endphp
                                                             <div class="block-sale">
-                                                                <img alt="{{$item->slug}}" src="{{ asset('public/image/bg-sale.png') }}">
-                                                                <span class="sale">-{{round($percent)}}%</span>
+                                                                <img alt="{{ $item->slug }}"
+                                                                    src="{{ asset('public/image/bg-sale.png') }}">
+                                                                <span class="sale">-{{ round($percent) }}%</span>
                                                             </div>
                                                         @endif
                                                     </div>
                                                     <div class="detail">
                                                         <h3 class="title">
-                                                            <a href="{{route('san-pham.show', $item->slug)}}" title="{{$item->name}}" tabindex="0">
-                                                                {{$item->name}}</a>
+                                                            <a href="{{ route('san-pham.show', $item->slug) }}"
+                                                                title="{{ $item->name }}" tabindex="0">
+                                                                {{ $item->name }}</a>
                                                         </h3>
                                                         <ul class="box-price">
-                                                       
+
                                                             <li class="price">
-                                                                <span>{{formatPriceOfLevel($item)}}</span>
+                                                                <span>{{ formatPriceOfLevel($item) }}</span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -194,6 +203,7 @@
             document.getElementById("shopsidebar").style.zIndex = "0";
             document.body.style.overflow = "auto";
         }
+
         function searchText(id) {
             var input, filter, li, a, i, txtValue;
             input = $('#input_' + id);
@@ -208,82 +218,90 @@
                     li[i].getElementsByTagName("a")[0].style.display = "none";
                 }
             }
-            if(filter == '') {
-                $('.sub-menu').css({"display": "none", "padding-left": "15px", 'border-left':'1px solid #ddd', 'margin':'0 0 10px 3px'});
-                $('.toggle').css('display','inline-block');
+            if (filter == '') {
+                $('.sub-menu').css({
+                    "display": "none",
+                    "padding-left": "15px",
+                    'border-left': '1px solid #ddd',
+                    'margin': '0 0 10px 3px'
+                });
+                $('.toggle').css('display', 'inline-block');
                 $('li.menu-item').addClass('py-1 menu-border');
             } else {
-                $('.toggle').css('display','none');
-                $('.sub-menu').css({"display": "block", "padding-left": "0", 'border':'0', 'margin':'0'});
+                $('.toggle').css('display', 'none');
+                $('.sub-menu').css({
+                    "display": "block",
+                    "padding-left": "0",
+                    'border': '0',
+                    'margin': '0'
+                });
                 $('li.menu-item').removeClass('py-1 menu-border');
             }
         }
     </script>
 
-<script type='text/javascript'>
-    $(document).ready(function() {
+    <script type='text/javascript'>
+        $(document).ready(function() {
 
-        $(document).on("click", "button.toggle", function(){
-            if(!$(this).parent().hasClass('active')) {
-                $(this).parent().addClass('active');
-                $(this).find('i').removeClass('fa-angle-down')
-                $(this).find('i').addClass('fa-angle-up')
-            } else {
-                $(this).parent().removeClass('active');
-                $(this).find('i').removeClass('fa-angle-up')
-                $(this).find('i').addClass('fa-angle-down')
-            }
-        })
-
-        $('.items').slick({
-            infinite: true,
-            slidesToShow: 5,
-            slidesToScroll: 3,
-            responsive: [
-                {
-                breakpoint: 1024, 
-                    settings: {
-                        slidesToShow: 5,
-                        slidesToScroll: 3,
-                        infinite: true
-                    }
-                },
-                {
-                breakpoint: 600,
-                    settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                    }
+            $(document).on("click", "button.toggle", function() {
+                if (!$(this).parent().hasClass('active')) {
+                    $(this).parent().addClass('active');
+                    $(this).find('i').removeClass('fa-angle-down')
+                    $(this).find('i').addClass('fa-angle-up')
+                } else {
+                    $(this).parent().removeClass('active');
+                    $(this).find('i').removeClass('fa-angle-up')
+                    $(this).find('i').addClass('fa-angle-down')
                 }
-            ]
-        });
-        $('.items-brand').slick({
-            infinite: true,
-            slidesToShow: 6,
-            slidesToScroll: 1,
+            })
+
+            $('.items').slick({
+                infinite: true,
+                slidesToShow: 5,
+                slidesToScroll: 3,
+                responsive: [{
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 5,
+                            slidesToScroll: 3,
+                            infinite: true
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+            $('.items-brand').slick({
+                infinite: true,
+                slidesToShow: 6,
+                slidesToScroll: 1,
 
 
-            responsive: [{
-                breakpoint: 1024,
-                settings: {
-                    speed: 1000,
-                    autoplay: true,
-                    autoplaySpeed: 2000,
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    infinite: true,
-                    dots: true
-                }
-            }]
+                responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        speed: 1000,
+                        autoplay: true,
+                        autoplaySpeed: 2000,
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        infinite: true,
+                        dots: true
+                    }
+                }]
+            });
+            $('.items-blog').slick({
+                infinite: true,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+            });
         });
-        $('.items-blog').slick({
-            infinite: true,
-            slidesToShow: 4,
-            slidesToScroll: 1,
-        });
-    });
     </script>
 
     {{-- <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script> --}}
-
 @endpush

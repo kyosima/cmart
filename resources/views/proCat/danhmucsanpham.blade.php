@@ -64,9 +64,9 @@
                     @endif
                 </div>
                 <!-- <ul class="text-carousel-indicators">
-                                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                                </ul> -->
+                                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                                    </ul> -->
             </div>
         </section>
     @endif
@@ -113,12 +113,14 @@
                                                         <a
                                                             href="{{ route('proCat.index', $item->slug) }}">{{ $item->name }}</a>
                                                     @endif
-                                                    <button class="toggle">
+                                                    <button class="toggle" data-id="{{ $item->id }}"
+                                                        data-url="{{ route('proCat.getCatChild') }}"
+                                                        onclick="getCategoryChild(this)">
                                                         <i class="fa fa-angle-down" aria-hidden="true"></i>
                                                     </button>
-                                                    @include('proCat.danhmuc-sidebar', [
-                                                        'child_categories' => $item->childrenCategories,
-                                                    ])
+                                                    {{-- @include('proCat.danhmuc-sidebar', [
+                                            'child_categories' => $item->childrenCategories,
+                                        ]) --}}
                                                 </li>
                                             @else
                                                 <li class="menu-item menu-border py-1">
@@ -222,7 +224,7 @@
 
                             <!-- thương hiệu -->
                             <aside class="widget thuonghieu">
-                                <h3 class="widget-title">Thương hiệu</h3>
+                                <h3 class="widget-title">Cửa hàng</h3>
                                 <div class="widget-search">
                                     <input autocomplete="off" id="input_brand_search" type="text"
                                         class="form-control input_search" placeholder="Tìm kiếm..."
@@ -233,13 +235,16 @@
                                 </div>
                                 <div class="scrollbar">
                                     <div id="brand_search" class="widget-product-categories">
-                                        @foreach ($brands as $item)
+                                        @foreach ($stores_id as $id)
+                                            @php 
+                                                $store = App\Models\Store::whereId($id)->first();
+                                            @endphp
                                             <div class="check-side">
                                                 <label class="check-custom">
-                                                    {{ $item }}
-                                                    <span class="count-item"> ({{ $countBrand[$item] }})</span>
-                                                    <input name="id_brand[]" class="submit_click" type="checkbox"
-                                                        value="{{ $item }}">
+                                                    {{ $store->name }}
+                                                    {{-- <span class="count-item"> ({{ $countBrand[$item] }})</span> --}}
+                                                    <input name="id_stores[]" class="submit_click" type="checkbox"
+                                                        value="{{ $store->id }}">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -346,6 +351,7 @@
 
 @push('scripts')
     {{-- <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script> --}}
+    <script src="{{ asset('public/js/category.js') }}"></script>
 
     <script type='text/javascript'>
         function openSidebar() {

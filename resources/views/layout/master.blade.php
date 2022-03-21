@@ -52,6 +52,7 @@
     <script src="{{ asset('public/js/cart.js') }}"></script>
     <script src="{{ asset('public/js/boostrap/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('public/js/search.js') }}"></script>
+    <script src="{{ asset('public/js/category.js') }}"></script>
 
 </body>
 

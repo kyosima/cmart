@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 class ProductCategoryController extends Controller
 {
@@ -157,31 +158,6 @@ class ProductCategoryController extends Controller
             $minPrice = $products->sortBy('regular_price')->first()->regular_price;
             $maxPrice = $products->sortByDesc('regular_price')->first()->regular_price;
         }
-
-        // KIỂM TRA XEM CÓ FILTER THEO BRAND KH
-        if (isset($request->id_brand) && !in_array(null, $request->id_brand)) {
-            // LẤY RA BRAND ĐỂ SO SÁNH
-            $brandIds = Product::whereIn('category_id', $categoryIds)->pluck('brand')->toArray();
-
-            // KIỂM TRA XEM BRAND TRONG REQUEST CÓ NẰM TRONG ARRAY BRAND HIỆN TẠI
-            if (count(array_intersect($request->id_brand, $brandIds)) == 0) {
-                return redirect()->route('proCat.index', $slug);
-            }
-            $products = Product::whereIn('category_id', $categoryIds)
-                ->where('status', 1)
-                ->whereIn('brand', $request->id_brand)
-                 ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')->get();
-        }
-        // SORT THEO ORDER
-
-        // SORT THEO SALE
-        else if ($request->sale == 2) {
-            $products = $products->where('shock_price', '>', 0)
-                ->where('status', 1)
-                ->where('shock_price', '!=', null);
-        }
-
-        // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
         if (isset($request->beginMinPrice) && isset($request->endMaxPrice)) {
             if (
                 $request->beginMinPrice != '' && $request->endMaxPrice != '' &&
@@ -194,16 +170,54 @@ class ProductCategoryController extends Controller
                 return redirect()->route('proCat.index', $slug);
             }
         }
+        // KIỂM TRA XEM CÓ FILTER THEO BRAND KH
+        if (isset($request->id_stores) && !in_array(null, $request->id_stores)) {
+            // LẤY RA BRAND ĐỂ SO SÁNH
+            $temp_pr =  new Product();
+            foreach($products as $product){
+                $stores_id = $product->store_products()->pluck('id_ofstore')->toArray();
+                if(count(array_intersect($stores_id, $request->id_stores))>0){
+                    $temp_pr->collect((object)$product);
+                }
+            }
+            $products = $temp_pr;
+
+            // // KIỂM TRA XEM BRAND TRONG REQUEST CÓ NẰM TRONG ARRAY BRAND HIỆN TẠI
+            // if (count(array_intersect($request->id_brand, $brandIds)) == 0) {
+            //     return redirect()->route('proCat.index', $slug);
+            // }
+            // $products = Product::whereIn('category_id', $categoryIds)
+            //     ->where('status', 1)
+            //     ->whereIn('brand', $request->id_brand)
+            //      ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')->get();
+        }
+        // SORT THEO ORDER
+
+        // SORT THEO SALE
+        // else if ($request->sale == 2) {
+        //     $products = $products->where('shock_price', '>', 0)
+        //         ->where('status', 1)
+        //         ->where('shock_price', '!=', null);
+        // }
+
+        // KIỂM TRA XEM KHOẢNG GIÁ KHÁCH HÀNG CHỌN CÓ ĐÚNG ĐỊNH DẠNG?
+        
 
         // add class active vào nút "mặc định" trên thanh sắp xếp
         $isDefault = $request->query();
         $products = $products->paginate(16);
-
-        return view('proCat.danhmucsanpham', compact('proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory', 'minPrice', 'maxPrice', 'beginMinPrice', 'endMaxPrice', 'isDefault'));
+        $stores_id = [];
+        foreach($products as $product){
+            $stores_id = array_merge($stores_id ,$product->store_products()->pluck('id_ofstore')->toArray());
+        }
+        $stores_id = array_unique($stores_id);
+        return view('proCat.danhmucsanpham', compact('stores_id','proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory', 'minPrice', 'maxPrice', 'beginMinPrice', 'endMaxPrice', 'isDefault'));
     }
 
     public function showAll()
     {
+
+        $categories_root = ProductCategory::whereCategoryParent(0)->whereStatus(1)->orderBy('priority')->get();
         $categories = ProductCategory::where('category_parent', 0)
             ->where('id', '!=', 1)
             ->where('status', 1)
@@ -216,7 +230,7 @@ class ProductCategoryController extends Controller
             $products = $proCat->products->where('status', 1)->merge($proCat->subproducts->where('status', 1))->sortByDesc('id');
             array_push($arrProducts, $products);
         }
-        return view('proCat.allProCat', compact('categories', 'arrProducts'));
+        return view('proCat.allProCat', compact('categories', 'arrProducts', 'categories_root'));
     }
 
     public function getSearch(Request $request)
@@ -236,5 +250,19 @@ class ProductCategoryController extends Controller
         $keyword =  $request->keyword;
         $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->get();
         return view('proCat.search_suggest', ['products' => $products])->render();
+    }
+
+    public function getMenuCategoryChild(Request $request){
+        $category = ProductCategory::whereId($request->id_cat)->first();
+        $child_categories = $category->childrenCategoriesOnly()->get();
+        $html = view('proCat.sidebar.menu_child', ['child_categories'=>$child_categories]);
+        return $html;
+    }
+    
+    public function getMenuCategoryChildMobile(Request $request){
+        $category = ProductCategory::whereId($request->id_cat)->first();
+        $child_categories = $category->childrenCategoriesOnly()->get();
+        $html = view('layout.menu_child', ['child_categories'=>$child_categories, 'category'=>$category]);
+        return $html;
     }
 }

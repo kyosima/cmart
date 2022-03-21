@@ -324,7 +324,7 @@
                 </li>
             </ul>
             <div class="tab-content">
-                {{-- <div role="tabpanel" class="tab-pane active" id="list">
+                <div role="tabpanel" class="tab-pane active" id="list">
                     <div class="box-tab">
                         <div class="menu-mobile">
                             @php
@@ -347,18 +347,16 @@
                                         <li>
                                             <button class="title collapsed" type="button" data-toggle="collapse"
                                                 data-target="#collapse-{{ $item->id }}" aria-expanded="false"
-                                                aria-controls="collapse-{{ $item->id }}">
+                                                aria-controls="collapse-{{ $item->id }}"
+                                                data-id="{{ $item->id }}" data-url="{{route('proCat.getCatChildMobile')}}"
+                                                    onclick="getCategoryChildMobile(this)">
                                                 <a href="{{ route('proCat.index', $item->slug) }}"
                                                     title="{{ $item->name }}">{{ $item->name }}</a>
                                                 <span class="expand-menu">
                                                     <i class="fas fas-custom fa-angle-right"></i>
                                                 </span>
                                             </button>
-
-                                            <ul id="collapse-{{ $item->id }}" class="collapse sub-nav">
-                                                @foreach ($item->childrenCategories as $children)
-                                                    @include('layout.mobilemenu', ['children' => $children])
-                                                @endforeach
+                                            <ul id="collapse-{{$item->id}}" class="collapse sub-nav">
                                             </ul>
                                         </li>
                                     </div>
@@ -366,7 +364,7 @@
                             @endforeach
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <div role="tabpanel" class="tab-pane " id="acc">
                     <div class="box-item">
                         <ul>

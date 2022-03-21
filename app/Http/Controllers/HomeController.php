@@ -19,6 +19,7 @@ use App\Models\PointM;
 use App\Models\PointCHistory;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\EkycController;
+use App\Http\Controllers\NoticeController;
 
 use Illuminate\Support\Facades\Session;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;

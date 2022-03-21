@@ -692,7 +692,13 @@
                     },
                     success: function(response) {
                         $('.couponType').after(response.html)
+                        $('#select-level').select2({
+                            width: '100%',
+                            multiple: true,
+                            minimumInputLength: 3,
+                            placeholder: 'Tìm kiếm định danh...',
 
+                        });
                         $('form button[type=submit]').prop('disabled', false);
 
                     }

@@ -68,8 +68,7 @@
 
                                 <th> Mã ưu đãi</th>
                                 <th>Đơn vị cung cấp</th>
-                                <th>Phạm vi kết hợp</th>
-                                <th> Phạm vi ưu đãi
+                         
                                 </th>
                                 <th> Mức ưu đãi</th>
                                 <th> Ngày bắt đầu</th>
@@ -271,55 +270,27 @@
                             return `${row.supplier}`
                         }
                     },
-                    {
-                        targets: 2,
-                        render: function(data, type, row) {
-                            if (row.type == 0) {
-                                if (row.target == 0) {
-                                    return 'Giảm giá theo định danh KH với điều kiện Tổng GTSP lớn hơn ' + `${new Intl.NumberFormat('vi-VN').format(row.min )}`
-
-                                } else {
-                                    return 'Giảm giá theo mã KH với điều kiện Tổng GTSP lớn hơn ' + `${new Intl.NumberFormat('vi-VN').format(row.min) }`
-                                }
-                            } else if (row.type == 1) {
-                                return 'Giảm giá theo sản phẩm với điều kiện Tổng GTSP lớn hơn ' + `${new Intl.NumberFormat('vi-VN').format(row.min )}`
-                            } else {
-                                return 'Giảm giá theo danh mục sản phẩm với điều kiện Tổng GTSP lớn hơn ' + `${new Intl.NumberFormat('vi-VN').format(row.min )}`
-                            }
-                        }
-                    },
-
-                    {
-                        targets: 3,
-                        render: function(data, row) {
-                            if (row.connect == 0) {
-                                return 'Không áp dụng đồng thời với các CTSK khác';
-                            } else if (row.connect == 1) {
-                                return 'Áp dụng đồng thời với mọi CTSK'
-                            } else {
-                                return 'Áp dụng với các CTSK cụ thể'
-                            }
-                        }
-                    },
+             
+             
                    
                     {
-                        targets: 4,
+                        targets: 2,
                         render: function(data, type, row) {
                             if (row.promo.is_percent == 1) {
                             return `${row.promo.value_discount}%`
                         } else {
-                            return `${new Intl.NumberFormat('vi-VN').format(row.promo.value_discount)}`
+                            return `${new Intl.NumberFormat('vi-VN').format(row.promo.value_discount)}đ`
                         }
                         }
                     },
                     {
-                        targets: 5,
+                        targets: 3,
                         render: function(data, type, row) {
                             return `${row.start_date.split('-').reverse().join('/')}`
                         }
                     },
                     {
-                        targets: 6,
+                        targets: 4,
                         render: function(data, type, row) {
                             return `${row.end_date.split('-').reverse().join('/')}`
                         }

@@ -15,11 +15,13 @@ use App\Http\Controllers\InfoCompanyController;
 use App\Http\Controllers\CPointController;
 use App\Http\Controllers\EkycController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\EkycVNPTController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\PaymentPaymeController;
 use Psy\VersionUpdater\Checker;
 use App\Http\Controllers\SendEmailController;
+use App\Models\ProductCategory;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +39,9 @@ use App\Http\Controllers\SendEmailController;
 Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'showAll'])->name('proCat.showAll');
 Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
 Route::get('/thuong-hieu/{slug}', [ProductBrandController::class, 'index'])->name('proBrand.index');
+Route::get('/lay-danh-muc-con', [ProductCategoryController::class, 'getMenuCategoryChild'])->name('proCat.getCatChild');
+Route::get('/lay-danh-muc-con-mobile', [ProductCategoryController::class, 'getMenuCategoryChildMobile'])->name('proCat.getCatChildMobile');
+
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
 
@@ -101,6 +106,10 @@ Route::get('tim-kiem/goi-y', [ProductCategoryController::class, 'getSearchSugges
 Route::get('tai-khoan/xac-thuc', [EkycController::class, 'getVerifyAccount'])->name('ekyc.getVerify');
 Route::post('tai-khoan/xac-thuc', [EkycController::class, 'postVerifyAccount'])->name('ekyc.postVerify');
 Route::post('tai-khoan/yeu-cau-thay-doi-thong-tin', [EkycController::class, 'getRequestChangeEkyc'])->name('ekyc.change');
+
+Route::prefix('tai-khoan')->group(function () {
+    Route::get('ekyc', [EkycVNPTController::class, 'index'])->name('vnpt.index');
+});
 
 //Route - Liên hệ
 Route::get('/lien-he', function () {
