@@ -19,6 +19,7 @@ use App\Models\PointM;
 use App\Models\PointCHistory;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\EkycController;
+use App\Http\Controllers\NoticeController;
 
 use Illuminate\Support\Facades\Session;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
@@ -31,12 +32,11 @@ class HomeController extends Controller
             ->where('id', '!=', 1)
             ->with(['childrenCategories.products', 'products'])
             ->get();
-            if (Auth::check()) {
-                if (Auth::user()->is_ekyc == 0) {
-                    return redirect()->route('ekyc.getVerify');
-                }
-
+        if (Auth::check()) {
+            if (Auth::user()->is_ekyc == 0) {
+                return redirect()->route('ekyc.getVerify');
             }
+        }
         return view('home', compact('categories'));
     }
 
@@ -114,13 +114,11 @@ class HomeController extends Controller
 
                     $value->save();
                 }
-              
             }
             if (Auth::check()) {
                 if (Auth::user()->is_ekyc == 0) {
                     return redirect()->route('ekyc.getVerify');
                 }
-
             }
             return redirect('/');
         } else {
@@ -142,9 +140,8 @@ class HomeController extends Controller
             if ($user->cmnd == $number_id) {
                 Session::put('phone_reset_password', $user->phone);
                 return redirect()->route('getResetPassword');
-            }else{
+            } else {
                 return redirect('tai-khoan')->with('thongbao', 'Thông tin hồ sơ không khớp, vui lòng thử lại');
-
             }
         } else {
             return redirect('tai-khoan')->with('thongbao', 'Hồ sơ Khách Hàng không tồn tại');
@@ -319,8 +316,9 @@ class HomeController extends Controller
             $user_province = $addressController->getProvinceDetail($user->id_tinhthanh);
             $user_district = $addressController->getDistrictDetail($user->id_tinhthanh, $user->id_quanhuyen);
             $user_ward = $addressController->getWardDetail($user->id_quanhuyen, $user->id_phuongxa);
+            $check = $user->request_ekyc()->whereStatus(0)->count();
 
-            return view('account.profileUser', ['profileUser' => $user])->with(compact('user_province', 'user_district', 'user_ward'));
+            return view('account.profileUser', ['profileUser' => $user])->with(compact('check', 'user_province', 'user_district', 'user_ward'));
         } else {
             return redirect('tai-khoan')->with('thongbao', 'Bạn chưa đăng nhập!');
         }
@@ -393,6 +391,8 @@ class HomeController extends Controller
             ]);
             $user->password = bcrypt($request->password);
         }
+        $noticeController = new NoticeController();
+        $noticeController->createNotice(2,$user);
 
         $user->save();
         return back()->with('thongbao', 'Sửa thành công');
@@ -422,9 +422,9 @@ class HomeController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $orders = $user->orders()->latest()->get();
+            $orders = $user->orders()->whereIsPayment(1)->latest()->get();
             $orders_month = $user->orders()->whereMonth('created_at', Carbon::today()->month)->orderBy('id', 'DESC')->get();
-            return view('account.lichsu', compact('orders','orders_month'));
+            return view('account.lichsu', compact('orders', 'orders_month'));
         } else {
             return redirect('tai-khoan')->with('thongbao', 'Bạn chưa đăng nhập!');
         }

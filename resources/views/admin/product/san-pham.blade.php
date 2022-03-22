@@ -5,7 +5,9 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/quanlysanpham.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/admin/doitac.css') }}" type="text/css">
+    <style>
 
+    </style>
 @endpush
 
 @section('content')
@@ -28,7 +30,7 @@
                 </div>
 
                 {{-- @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') &&
-        auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+    auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
                     <div>
                         <div class="input-group action-multiple">
                             <select class="custom-select" name="action" required="">
@@ -50,18 +52,15 @@
             <div class="portlet-body">
                 <div class="pt-3" style="overflow-x: auto;">
                     @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') &&
-        auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+    auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
                         <form id="myform" action="{{ route('san-pham.multiChange') }}" method="post">
                             @csrf
                             <input type="hidden" name="action" value="" id="input-action">
                     @endif
-                    <table id="table-product" class="table table-hover table-main" width="100%">
-                        <thead class="thead1" style="vertical-align: middle;">
+                    <table id="table-product" class="table table-bordered table-striped table-main" width="100%">
+                        <thead class="thead1 bg-dark text-light" style="vertical-align: middle;">
                             <tr>
-                                <th></th>
-                                <th class="title-text">
-                                    Hình ảnh
-                                </th>
+
                                 <th class="title-text" style="width: 12%">
                                     Mã SP
                                 </th>
@@ -100,7 +99,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody style="color: #748092; font-size: 14px; vertical-align: middle;">
+                        <tbody style=" font-size: 14px; vertical-align: middle;">
                             {{-- @foreach ($products as $item)
                                 <tr>
                                     <td></td>
@@ -141,7 +140,7 @@
                         </tbody>
                     </table>
                     @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') &&
-        auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+    auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
                         </form>
                     @endif
                 </div>
@@ -154,6 +153,7 @@
 @endsection
 
 @push('scripts')
+    {{-- <script src="https://cdn.datatables.net/plug-ins/1.11.5/sorting/formatted-numbers.js"></script> --}}
 
     <script>
         function multiDel() {
@@ -178,133 +178,141 @@
             }
         );
 
+        function formatNum(num, separator, fraction) {
+            var str = num.toLocaleString('en-US');
+            str = str.replace(/\./, fraction);
+            str = str.replace(/,/g, separator);
+            return str;
+        }
+
         $('#table-product').DataTable({
-            "order": [[ 3, "desc" ]],
-            serverSide: true,
+
+            order: [],
             responsive: true,
-            ordering: true,
             lengthMenu: [
                 [25, 50, -1],
                 [25, 50, "All"]
             ],
             ajax: "{{ route('san-pham.indexDatatable') }}",
-            columnDefs: [
-                {
+
+            columnDefs: [{
                     targets: 0,
-                    orderable: false,
-                    searchable: false,
-                    visible: false,
-                    defaultContent: '',
-                    'render': function(data, type, row, meta) {
-                        if (type === 'display') {
-                            data =
-                                `<input type="checkbox" class="dt-checkboxes" name="id[]" value="${row.id}">`;
-                        }
-                        return data;
-                    },
-                    'checkboxes': true
-                },
-                {
-                    targets: 1,
-                    visible: false,
-                    searchable: false,
-                    orderable: false,
-                    render: function(data, type, row) {
-                        return `<img src="${row.feature_img}" width="70" height="60" alt="">`
-                    }
-                },
-                {
-                    targets: 2,
-                    orderable: false,
                     render: function(data, type, row) {
                         return `${row.sku}`
                     }
                 },
                 {
-                    targets: 3,
+                    targets: 1,
                     type: "html",
                     @if (auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
                         render: function(data, type, row) {
-                            return `<a style="text-decoration: none;"
-                                href="${window.location.href}/edit/${row.id}">${row.name}</a>`
+                        return `<a style="text-decoration: none;" href="${window.location.href}/edit/${row.id}">${row.name}</a>`
                         }
                     @else
                         render: function(data, type, row) {
-                            return `${row.name}`
+                        return `${row.name}`
                         }
                     @endif
                 },
                 {
-                    targets: 4,
+                    targets: 2,
+
                     render: function(data, type, row) {
-                        if(row.product_price.tax == 'KKK' || row.product_price.tax == 'KTT' ){
+                        if (row.product_price.tax == 'KKK' || row.product_price.tax == 'KTT') {
                             return `${row.product_price.tax}`
 
-                        }else{
+                        } else {
                             return `${row.product_price.tax*100}%`
 
                         }
                     }
                 },
                 {
+                    targets: 3,
+                    render: function(data, type, row) {
+
+                        // return new Intl.NumberFormat('vi-VN', {
+                        //     style: 'currency',
+                        //     currency: 'VND'
+                        // }).format(row.product_price.price);
+                        return formatNum(row.product_price.price, '.', ',');
+                    }
+                },
+                {
+                    targets: 4,
+                    render: function(data, type, row) {
+                        // return new Intl.NumberFormat('vi-VN', {
+                        //     style: 'currency',
+                        //     currency: 'VND'
+                        // }).format(row.product_price.regular_price)
+                        return formatNum(row.product_price.regular_price, '.', ',');
+
+                    }
+                },
+                {
                     targets: 5,
                     render: function(data, type, row) {
-                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.price)
+                        // return new Intl.NumberFormat('vi-VN', {
+                        //     style: 'currency',
+                        //     currency: 'VND'
+                        // }).format(row.product_price.shock_price)
+                        return formatNum(row.product_price.shock_price, '.', ',');
+
                     }
                 },
                 {
                     targets: 6,
                     render: function(data, type, row) {
-                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.regular_price)
+                        // return new Intl.NumberFormat('vi-VN', {
+                        //     style: 'currency',
+                        //     currency: 'VND'
+                        // }).format(row.product_price.wholesale_price)
+                        return formatNum(row.product_price.wholesale_price, '.', ',');
+
                     }
                 },
                 {
                     targets: 7,
                     render: function(data, type, row) {
-                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.shock_price)
+                        if (row.product_price.cpoint == null) {
+                            return `0`
+                        }
+                        return formatNum(row.product_price.cpoint, '.', ',');
+
                     }
                 },
                 {
                     targets: 8,
                     render: function(data, type, row) {
-                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.wholesale_price)
+                        if (row.product_price.mpoint == null) {
+                            return `0`
+                        }
+                        return formatNum(row.product_price.mpoint, '.', ',');
                     }
                 },
                 {
                     targets: 9,
                     render: function(data, type, row) {
-                        if (row.product_price.cpoint == null) {
+                        if (row.product_price.phi_xuly == null) {
                             return `0`
                         }
-                        return `${row.product_price.cpoint}`
+                        // return new Intl.NumberFormat('vi-VN', {
+                        //     style: 'currency',
+                        //     currency: 'VND'
+                        // }).format(row.product_price.phi_xuly)
+                        return formatNum(row.product_price.phi_xuly, '.', ',');
+
                     }
                 },
                 {
                     targets: 10,
                     render: function(data, type, row) {
-                        if (row.product_price.mpoint == null) {
-                            return `0`
-                        }
-                        return `${row.product_price.mpoint}`
-                    }
-                },
-                {
-                    targets: 11,
-                    render: function(data, type, row) {
-                        if (row.product_price.phi_xuly == null) {
-                            return `0`
-                        }
-                        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'}).format(row.product_price.phi_xuly)
-                    }
-                },
-                {
-                    targets: 12,
-                    render: function(data, type, row) {
                         return `${(Math.max(row.weight/1000, ((row.height*row.width*row.length)/3000))*1000).toFixed(0)}`
                     }
                 },
                 {
-                    targets: 13,
+                    targets: 11,
+                    type: 'html',
                     render: function(data, type, row) {
                         if (row.status == 1) {
                             return `<div class="input-group">
@@ -322,11 +330,17 @@
                     }
                 },
 
+                // {
+                //     targets: [3, 4, 5, 6, 7, 8, 9, 10],
+                //     // searchable: false,
+                //     orderable: true,
+                //     // type: "formatted-num"
+                // },
                 {
-                    targets: [3, 4, 5, 6, 7, 8, 9, 10, 11],
-                    searchable: false,
+                    targets: [0, 1, 2, 9, 10, 11],
+                    // searchable: false,
                     orderable: false,
-                    type: "formatted-num"
+                    // type: "formatted-num"
                 },
             ],
             searchBuilder: {
@@ -356,56 +370,96 @@
                     },
                 }
             },
-            language: {
-                searchBuilder: {
-                    add: 'Tạo bộ lọc',
-                    condition: 'Điều kiện',
-                    clearAll: 'Reset',
-                    deleteTitle: 'Delete',
-                    data: 'Cột',
-                    leftTitle: 'Left',
-                    logicAnd: 'VÀ',
-                    logicOr: 'HOẶC',
-                    rightTitle: 'Right',
-                    title: {
-                        0: '',
-                        _: 'Kết quả lọc (%d)'
+
+            "language": {
+                "searchBuilder": {
+                    "add": 'Tạo bộ lọc',
+                    "condition": 'Điều kiện',
+                    "clearAll": 'Reset',
+                    "deleteTitle": 'Delete',
+                    "data": 'Cột',
+                    "leftTitle": 'Left',
+                    "logicAnd": 'VÀ',
+                    "logicOr": 'HOẶC',
+                    "rightTitle": 'Right',
+                    "title": {
+                        "0": '',
+                        "_": 'Kết quả lọc (%d)'
                     },
-                    value: 'Giá trị',
-                    valueJoiner: 'et',
-                    conditions: {
-                        number: {
-                            equals: '=',
+                    "value": 'Giá trị',
+                    "valueJoiner": 'et',
+                    "conditions": {
+                        "number": {
+                            "equals": '=',
                         },
-                        string: {
-                            contains: '=',
-                            startsWith: 'Bắt đầu bằng ký tự',
-                            endsWith: 'Kết thúc bằng ký tự',
+                        "string": {
+                            "contains": '=',
+                            "equals": '=',
+                            "startsWith": 'Bắt đầu bằng ký tự',
+                            "endsWith": 'Kết thúc bằng ký tự',
                         },
-                        html: {
-                            equals: '=',
-                            startsWith: '',
-                            endsWith: '',
+                        "html": {
+                            "equals": '=',
+                            "startsWith": '',
+                            "endsWith": '',
                         },
                     },
                 },
-                search: "Tìm kiếm:",
-                lengthMenu: "Hiển thị _MENU_ kết quả",
-                info: "Hiển thị _START_ đến _END_ trong _TOTAL_ kết quả",
-                infoEmpty: "Hiển thị 0 trên 0 trong 0 kết quả",
-                zeroRecords: "Không tìm thấy",
-                emptyTable: "Hiện tại chưa có dữ liệu",
-                paginate: {
-                    first: ">>",
-                    last: "<<",
-                    next: ">",
-                    previous: "<"
+                "emptyTable": "Không có dữ liệu nào !",
+                "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",
+                "infoEmpty": "Hiển thị 0 đến 0 trong số 0 mục nhập",
+                "infoFiltered": "(Có _TOTAL_ kết quả được tìm thấy)",
+                "lengthMenu": "Hiển thị _MENU_ bản ghi",
+                "search": "Tìm kiếm",
+                "zeroRecords": "Không có bản ghi nào tìm thấy !",
+                "paginate": {
+                    "first": "First",
+                    "last": "Last",
+                    "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                    "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
                 },
+                "decimal": ",",
+                "thousands": ".",
+                // search: "Tìm kiếm:",
+                // lengthMenu: "Hiển thị _MENU_ kết quả",
+                // info: "Hiển thị _START_ đến _END_ trong _TOTAL_ kết quả",
+                // infoEmpty: "Hiển thị 0 trên 0 trong 0 kết quả",
+                // zeroRecords: "Không tìm thấy",
+                // emptyTable: "Hiện tại chưa có dữ liệu",
+                // paginate: {
+                //     first: ">>",
+                //     last: "<<",
+                //     next: ">",
+                //     previous: "<"
+                // },
+
             },
+            // "language": {
+
+            // },
             dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
+            buttons: [{
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        format: {
+                            body: function(data, row, column, node) {
+                                data = $('<td>' + data + '</td>').text();
+                                console.log();
+
+                                return data.replace(/\./g, '');
+
+                            }
+                        }
+                    }
+
+                },
+                {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                 
+                }
+            ],
         });
     </script>
 

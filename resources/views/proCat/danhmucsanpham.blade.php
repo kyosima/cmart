@@ -6,7 +6,6 @@
 
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
-
 @endpush
 
 
@@ -65,9 +64,9 @@
                     @endif
                 </div>
                 <!-- <ul class="text-carousel-indicators">
-                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                <li data-target="#myCarousel" data-slide-to="1"></li>
-                            </ul> -->
+                                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                                    </ul> -->
             </div>
         </section>
     @endif
@@ -84,7 +83,6 @@
                     </div>
                 </div>
             </div>
-
         @else
             <!-- Trang sản phẩm -->
             <div class="category-page container">
@@ -115,12 +113,14 @@
                                                         <a
                                                             href="{{ route('proCat.index', $item->slug) }}">{{ $item->name }}</a>
                                                     @endif
-                                                    <button class="toggle">
+                                                    <button class="toggle" data-id="{{ $item->id }}"
+                                                        data-url="{{ route('proCat.getCatChild') }}"
+                                                        onclick="getCategoryChild(this)">
                                                         <i class="fa fa-angle-down" aria-hidden="true"></i>
                                                     </button>
-                                                    @include('proCat.danhmuc-sidebar', [
-                                                    'child_categories' => $item->childrenCategories,
-                                                    ])
+                                                    {{-- @include('proCat.danhmuc-sidebar', [
+                                            'child_categories' => $item->childrenCategories,
+                                        ]) --}}
                                                 </li>
                                             @else
                                                 <li class="menu-item menu-border py-1">
@@ -195,9 +195,11 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="minprice" id="minprice" value="{{ $minPrice }}">
-                                    <input type="hidden" name="beginMinPrice" id="minprice1" @if ($beginMinPrice == 0) value="{{ $minPrice }}" @else value="{{ $beginMinPrice }}" @endif>
+                                    <input type="hidden" name="beginMinPrice" id="minprice1"
+                                        @if ($beginMinPrice == 0) value="{{ $minPrice }}" @else value="{{ $beginMinPrice }}" @endif>
                                     <input type="hidden" name="maxprice" id="maxprice" value="{{ $maxPrice }}">
-                                    <input type="hidden" name="endMaxPrice" id="maxprice1" @if ($endMaxPrice == 0) value="{{ $maxPrice }}" @else value="{{ $endMaxPrice }}" @endif>
+                                    <input type="hidden" name="endMaxPrice" id="maxprice1"
+                                        @if ($endMaxPrice == 0) value="{{ $maxPrice }}" @else value="{{ $endMaxPrice }}" @endif>
                                     <div class="widget-price">
                                         <div class="form-group trai">
                                             <p class="title-range">Tối thiểu</p>
@@ -222,7 +224,7 @@
 
                             <!-- thương hiệu -->
                             <aside class="widget thuonghieu">
-                                <h3 class="widget-title">Thương hiệu</h3>
+                                <h3 class="widget-title">Cửa hàng</h3>
                                 <div class="widget-search">
                                     <input autocomplete="off" id="input_brand_search" type="text"
                                         class="form-control input_search" placeholder="Tìm kiếm..."
@@ -233,13 +235,16 @@
                                 </div>
                                 <div class="scrollbar">
                                     <div id="brand_search" class="widget-product-categories">
-                                        @foreach ($brands as $item)
+                                        @foreach ($stores_id as $id)
+                                            @php 
+                                                $store = App\Models\Store::whereId($id)->first();
+                                            @endphp
                                             <div class="check-side">
                                                 <label class="check-custom">
-                                                    {{ $item }}
-                                                    <span class="count-item"> ({{ $countBrand[$item] }})</span>
-                                                    <input name="id_brand[]" class="submit_click" type="checkbox"
-                                                        value="{{ $item }}">
+                                                    {{ $store->name }}
+                                                    {{-- <span class="count-item"> ({{ $countBrand[$item] }})</span> --}}
+                                                    <input name="id_stores[]" class="submit_click" type="checkbox"
+                                                        value="{{ $store->id }}">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -266,15 +271,16 @@
                             <!-- Bộ lọc -->
                             <div class="filter-cate">
                                 <p class="d-lg-inline d-none">Sắp xếp theo:</p>
-                                <select id="filter-products" class="form-control form-control-sm ms-2 d-lg-inline" style="width: 200px">
+                                <select id="filter-products" class="form-control form-control-sm ms-2 d-lg-inline"
+                                    style="width: 200px">
                                     <option value="" selected>Mặc định</option>
                                     <option value="name asc">A-Z</option>
                                     <option value="name desc">Z-A</option>
                                     <option value="regular_price asc">Giá tăng dần</option>
                                     <option value="regular_price desc">Giá giảm dần</option>
-                                    <option value="mpoint asc">M tăng dần</option>
+                                    {{-- <option value="mpoint asc">M tăng dần</option> --}}
                                     <option value="mpoint desc">M giảm dần</option>
-                                    <option value="cpoint asc">C tăng dần</option>
+                                    {{-- <option value="cpoint asc">C tăng dần</option> --}}
                                     <option value="cpoint desc">C giảm dần</option>
                                 </select>
                             </div>
@@ -290,7 +296,7 @@
                                                         <img src="{{ asset($item->feature_img) }}" alt="">
                                                     </a>
                                                 </div>
-                                                @if ($item->shock_price != null || $item->shock_price != 0)
+                                                {{-- @if ($item->shock_price != null || $item->shock_price != 0)
                                                     @php
                                                         $percent = (1 - $item->shock_price / $item->regular_price) * 100;
                                                     @endphp
@@ -298,7 +304,7 @@
                                                         <img alt="" src="{{ asset('image/bg-sale.png') }}">
                                                         <span class="sale">-{{ round($percent) }}%</span>
                                                     </div>
-                                                @endif
+                                                @endif --}}
                                             </div>
                                             <div class="box-text col-lg-12 col-md-8 col-8">
                                                 <div class="title-wrapper">
@@ -307,21 +313,10 @@
                                                     </a>
                                                 </div>
                                                 <div class="price-wrapper">
-                                                    @if ($item->shock_price != null || $item->shock_price != 0)
-                                                        <span class="price">
-                                                            <span
-                                                                class="amount">{{ number_format($item->shock_price) }}đ</span>
-                                                        </span>
-                                                        <span class="price-old">
-                                                            <span
-                                                                class="amount">{{ number_format($item->regular_price) }}đ</span>
-                                                        </span>
-                                                    @else
-                                                        <span class="price">
-                                                            <span
-                                                                class="amount">{{ number_format($item->regular_price) }}đ</span>
-                                                        </span>
-                                                    @endif
+                                                    <span class="price">
+                                                        <span
+                                                            class="amount">{{ formatPriceOfLevelCate($item) }}</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -356,6 +351,7 @@
 
 @push('scripts')
     {{-- <script src="{{ asset('public/js/danhmucsanpham.js') }}"></script> --}}
+    <script src="{{ asset('public/js/category.js') }}"></script>
 
     <script type='text/javascript'>
         function openSidebar() {
@@ -543,13 +539,11 @@
                 $("#order").val(orders);
                 // $(`li.li-filter-cate > a[href*="${orders}"]`).addClass('active')
                 $(`#filter-products > option[value*='${orders}']`).attr('selected', 'selected')
-            } 
-            else if (sales == '2') {
+            } else if (sales == '2') {
                 $("#sale").val(sales);
                 // $(`li.li-filter-cate > a[href*="${sales}"]`).addClass('active')
                 $(`#filter-products > option[value*='${sales}']`).attr('selected', 'selected')
-            } 
-            else {
+            } else {
                 // $('li.li-filter-cate > a.order-default').addClass('active')
                 $(`#filter-products > option[value='']`).attr('selected', 'selected')
             }
@@ -560,5 +554,4 @@
         var orders = urlSearchParams.get("order");
         var sales = urlSearchParams.get("sale");
     </script>
-
 @endpush

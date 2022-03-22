@@ -46,13 +46,16 @@ class Order extends Model
 		'shipping_total',
 		'c_point',
 		'm_point',
+		'tax_services',
+		'total_tax_services',
 		'tax',
 		'sub_total',
 		'vat_products',
 		'discount_products',
 		'total',
 		'status',
-		'user_id'
+		'user_id',
+		'is_payment'
 	];
 
 	public function order_address()

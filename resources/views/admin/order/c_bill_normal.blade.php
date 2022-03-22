@@ -127,7 +127,7 @@
                                                                     </td>
                                                                     <td>
                                                                         @if ($order_product->product()->first() != null)
-                                                                            {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly')) }}
+                                                                        {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly') ) }}
                                                                         @endif
                                                                     </td>
                                                                     <td>{{ $order_product->weight }}g</td>
@@ -167,21 +167,7 @@
                                             </div>
                                         </div>
                                         <div class="order-footer payment-store-footer">
-                                            @php
-                                                $addressController = new App\Http\Controllers\AddressController();
-                                                $store = $order_store->store()->first();
-                                                
-                                                $address1_province = $addressController->getProvinceDetail($store->id_province);
-                                                $address1_district = $addressController->getDistrictDetail($store->id_province, $store->id_district);
-                                                $address1_ward = $addressController->getWardDetail($store->id_district, $store->id_ward);
-                                                
-                                                $address2_province = $addressController->getProvinceDetail($order_address->id_province);
-                                                $address2_district = $addressController->getDistrictDetail($order_address->id_province, $order_address->id_district);
-                                                $address2_ward = $addressController->getWardDetail($order_address->id_district, $order_address->id_ward);
-                                                
-                                                $address1 = $store->address . ' ' . $address1_province->PROVINCE_NAME . ' ' . $address1_district->DISTRICT_NAME . ' ' . $address1_ward->WARDS_NAME;
-                                                $address2 = $order_address->address . ' ' . $address2_province->PROVINCE_NAME . ' ' . $address2_district->DISTRICT_NAME . ' ' . $address2_ward->WARDS_NAME;
-                                            @endphp
+
                                             <span class="text-danger"></span>
                                             <div class="d-md-flex justify-content-between">
                                                 <div class="text-center">
@@ -206,8 +192,8 @@
                                                     <p><b>Số Km</b></p>
                                                     <p><small style="visibility:hidden">(Chưa bao gồm thuế VAT
                                                             8%)</small></p>
-                                                    <p>{{ App\Http\Controllers\CheckoutController::getDistance($address1, $address2) }}
-                                                        km</p>
+                                                    <p>{{ $order_store->shipping_distance }} km</p>
+
                                                 </div>
                                                 <div class="text-center">
                                                     <p><b>Phí Vận chuyển</b></p>
@@ -283,15 +269,15 @@
                                 <li>Tổng Phí DV GTGT: <b>{{ formatPrice($order->vat_services) }}</b></li>
                                 <li>Tổng chiết khấu M: <b>{{ formatPrice($order->m_point) }}</b></li>
                                 <li>Giá trị thanh toán Dịch vụ <b>= Số M cần tìm thêm để miễn phí dịch vụ</b>:
-                                    <b>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) }}</b>
+                                    <b>{{ formatPrice($order->total_payment_services) }}</b>
                                 </li>
                                 <li>Số dư M còn lại: <b>{{ formatNumber($order->remaining_m_point) }}</b></li>
                                 <li>Thuế GTGT Sản phẩm: <b>{{ formatPrice($order->vat_products) }}</b></li>
                                 <li>Thuế GTGT Dịch vụ:
-                                    <b>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) -max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08) }}</b>
+                                    <b>{{ formatPrice($order->tax_services) }}</b>
                                 </li>
                                 <li>Tổng Thuế GTGT:
-                                    <b>{{ formatPrice($order->vat_products +max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) -max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0) /1.08) }}</b>
+                                    <b>{{ formatPrice($order->total_tax_services) }}</b>
                                 </li>
                                 <li>Hình thức thanh toán:
                                     <b>{{ App\Models\PaymentMethod::whereId($order->payment_method)->value('name') }}</b>

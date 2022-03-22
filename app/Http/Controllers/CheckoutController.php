@@ -23,6 +23,7 @@ use App\Models\OrderPayme;
 use App\Models\OrderStore;
 use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\EkycController;
+use App\Http\Controllers\HistoryPointController;
 
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\PaymentPaymeController;
 use App\Models\PaymentMethodOption;
+use Aws\History;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 class CheckoutController extends Controller
@@ -41,8 +43,27 @@ class CheckoutController extends Controller
     }
     public function index()
     {
-        if (Session::has('edit_order')) {
-            return redirect()->route('checkout.getPaymentMethod', ['order_code' => Session::get('edit_order')]);
+        $user = Auth::user();
+        $stores = Store::get();
+        foreach ($stores as $store) {
+            if(Cart::instance($store->id)->count()> 0){
+                $cart = Cart::instance($store->id);
+                foreach($cart->content() as $row){
+                    $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
+                }
+            }
+        }
+        $orders_not_payment = $user->orders()->where('is_payment', 0)->get();
+        if (count($orders_not_payment) > 0) {
+            foreach ($orders_not_payment as $order) {
+                foreach ($order->order_stores()->get() as $order_store) {
+                    foreach ($order_store->order_products()->get() as $order_product) {
+                        $order_product->delete();
+                    }
+                    $order_store->delete();
+                }
+                $order->delete();
+            }
         }
         if (Auth::check()) {
             $user = Auth::user();
@@ -128,7 +149,6 @@ class CheckoutController extends Controller
             $order_address->id_district = $user->id_quanhuyen;
             $order_address->id_ward = $user->id_phuongxa;
             $order_address->address = $user->address;
-
         } else {
             $validation = $request->validate([
                 'fullname' => 'required',
@@ -155,10 +175,6 @@ class CheckoutController extends Controller
             $order_address->id_ward = $request->sel_ward;
             $order_address->address = $request->address;
         }
-
-
-
-
         $viettelPostController = new ViettelPostController();
         $store_address = $request->input('store_address');
         $show_vat = $request->input('show_vat');
@@ -177,9 +193,9 @@ class CheckoutController extends Controller
         $sub_total = 0;
         $total = 0;
         $time = (string)date('Y-m-d-H-i-s');
-        $order_code = str_replace('-', '', $time) ;
+        $order_code = str_replace('-', '', $time);
 
-        $order->order_code =$order_code;
+        $order->order_code = $order_code;
         $count_store = 0;
 
         foreach (explode(",", $store_ids) as $store_id) {
@@ -191,13 +207,30 @@ class CheckoutController extends Controller
                 'id_store' => $store_id,
 
             ]);
+            $store = Store::whereId($store_id)->first();
+            $addressController = new AddressController();
+            $address1_province = $addressController->getProvinceDetail($store->id_province);
+            $address1_district = $addressController->getDistrictDetail($store->id_province, $store->id_district);
+            $address1_ward = $addressController->getWardDetail($store->id_district, $store->id_ward);
+
+            $address2_province = $addressController->getProvinceDetail($order_address->id_province);
+            $address2_district = $addressController->getDistrictDetail($order_address->id_province, $order_address->id_district);
+            $address2_ward = $addressController->getWardDetail($order_address->id_district, $order_address->id_ward);
+
+            $address1 = $store->address . ' ' . $address1_province->PROVINCE_NAME . ' ' . $address1_district->DISTRICT_NAME . ' ' . $address1_ward->WARDS_NAME;
+            $address2 = $order_address->address . ' ' . $address2_province->PROVINCE_NAME . ' ' . $address2_district->DISTRICT_NAME . ' ' . $address2_ward->WARDS_NAME;
+
+            $order_store->shipping_distance = $this->getDistance($address1, $address2);
+
             $count_store++;
             $store_tax = 0;
             $store_shipping_total = 0;
+          
             $store_shipping_method = 0;
             $store_shipping_type = 0;
             $store_shipping_weight = 0;
             $store_c = 0;
+            $process_fee = 0;
             $store_m = 0;
             $vat_products = 0;
             $vat_services = 0;
@@ -207,6 +240,7 @@ class CheckoutController extends Controller
                 $store_tax += ($row->price * getTaxValue($price->tax)) * $row->qty;
                 $store_c += $price->cpoint * $row->qty;
                 $store_m += $price->mpoint * $row->qty;
+                $process_fee += $price->phi_xuly * $row->qty;
                 $store_shipping_method = $row->options->method_ship;
                 $store_shipping_type = $row->options->type_ship;
                 $store_shipping_weight += $this->getWeight($row->model, $row->qty);
@@ -260,33 +294,33 @@ class CheckoutController extends Controller
                 'm_point' => 0,
             ]);
             $order_store->tax = $store_tax;
+            $order_store->process_fee = $process_fee;
             $order_store->shipping_method = $store_shipping_method;
             $order_store->shipping_weight = $store_shipping_weight;
             $order_store->shipping_type = $store_shipping_type;
-            $order_store->shipping_total = $store_shipping_total;
-            $order_store->remaining_m_point = max($store_m - $store_shipping_total, 0);
+            $order_store->shipping_total = ceil($store_shipping_total);
             if (in_array(Auth::user()->level, [3, 4])) {
                 $store_c = 0;
                 $store_m = 0;
             }
-
+            $order_store->remaining_m_point = max($store_m - $store_shipping_total, 0);
+          
             $order_store->c_point = $store_c;
             $order_store->m_point = $store_m;
             $order_store->vat_products = $vat_products;
             $order_store->sub_total = intval(str_replace(",", "", $cart->subtotal())) + 300;
-            $order_store->total = $order_store->sub_total + $vat_products + $vat_services+ $store_shipping_total;
-            $order_store_code = str_replace('-', '', $time) . '-' . '00'. $count_store;
+            $order_store->total = $order_store->sub_total + $vat_products + $vat_services + $store_shipping_total;
+            $order_store_code = str_replace('-', '', $time) . '-' . '00' . $count_store;
             $order_store->order_store_code = $order_store_code;
             $order_store->save();
             $total_tax += $store_tax;
-            $total_shipping += $store_shipping_total;
+            $total_shipping += round($store_shipping_total);
             $total_c += $store_c;
             $total_m += $store_m;
             $total_vat_products += $vat_products;
-            $total_remaining_m_point += $order_store->remaining_m_point;
             $total_discount_products += $discount_products;
             $sub_total += $order_store->sub_total;
-            $total += $order_store->total;
+            $total += ceil($order_store->total);
             // Cart::instance($store_id)->destroy();
         }
 
@@ -314,9 +348,8 @@ class CheckoutController extends Controller
 
         $order->order_address()->save($order_address);
 
-       
+
         $order->order_info()->save($order_info);
-        Session::put('edit_order', $order->order_code);
 
         // Session::forget('store_ids');
         // Session::put('order_code', $order->order_code);
@@ -453,7 +486,7 @@ class CheckoutController extends Controller
                         $store_shipping_total += $row->options->price_normal;
                         break;
                 }
-            
+
                 $vat_products += $row->price * getTaxValue($price->tax) * $row->qty;
                 if (in_array(Auth::user()->level, [3, 4])) {
                     $price->cpoint = 0;
@@ -547,7 +580,7 @@ class CheckoutController extends Controller
 
         // $order->order_address()->save($order_address);
         $order_address->save();
-        
+
         $order_info->save();
 
         // Session::forget('store_ids');
@@ -577,6 +610,9 @@ class CheckoutController extends Controller
     public function getPayment(Request $request)
     {
         $user = Auth::user();
+        if (!$request->payment_method) {
+            return back()->with('message', 'Mời chọn hình thức thanh toán');
+        }
         $order = Order::whereOrderCode($request->order_code)->first();
         if ($order->status > 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
@@ -584,14 +620,23 @@ class CheckoutController extends Controller
         $payment_method = PaymentMethod::whereId($order->payment_method)->first();
         foreach ($order->order_stores()->get() as $order_store) {
             $vat_services = 0;
-            $vat_services = $payment_method->fee * ($order_store->sub_total + $order_store->vat_products - $order_store->discount_products + max($order_store->shipping_total - $order_store->m_point, 0) * 1.08);
+            $vat_services = round($payment_method->fee * ($order_store->sub_total + $order_store->vat_products - $order_store->discount_products + max($order_store->shipping_total - $order_store->m_point, 0) * 1.08));
             $order_store->vat_services = $vat_services;
-            $order_store->total = $order_store->sub_total + $vat_services + $order_store->vat_products;
+            $order_store->total = round($order_store->sub_total + $vat_services + $order_store->vat_products);
+            $order_store->save();
+        }
+        $order->vat_services = $order->order_stores()->sum('vat_services') + $payment_method->tax;
+        $order->payment_method = $payment_method->id;
+        $order->total_payment_services = round(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0));
+        $order->remaining_m_point = max($order->m_point - $order->shipping_total - $order->vat_services, 0);
+        $order->tax_services =round(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) - max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) / 1.08);
+        $order->total_tax_services = $order->vat_products + $order->tax_services;
+        foreach ($order->order_stores()->get() as $order_store) {
+            $order_store->total = round($order_store->sub_total - $order_store->discount_products + $order_store->vat_products + ($order->total_payment_services / $order->order_stores()->count()));
+            $order_store->discount_services = round( ($order_store->shipping_total * 108 / 100) + $order_store->vat_services - ($order->total_payment_services / $order->order_stores()->count()) < 0 ? ($order_store->shipping_total * 108 / 100) + $order_store->vat_services : $order->total_payment_services / $order->order_stores()->count());
             $order_store->save();
         }
         $order->total = $order->order_stores()->sum('total');
-        $order->vat_services = $order->order_stores()->sum('vat_services');
-        $order->payment_method = $payment_method->id;
         $order->save();
         $order_vat = $order->order_vat()->first();
         return view('checkout.payment_info', compact('order', 'user', 'order_vat'));
@@ -647,10 +692,12 @@ class CheckoutController extends Controller
                         $result = $paymentPaymeController->PaymentPayme($order, $pay_method = 'CREDITCARD');
                         $result = json_decode($result);
 
-                        if( $result->code == '105000'){
+                        if ($result->code == '105000') {
                             $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
+                            $this->processOrder($order);
+
                             return redirect($result->data->url);
-                        }else{
+                        } else {
                             return redirect()->route('paymentFail');
                         }
                         break;
@@ -660,10 +707,12 @@ class CheckoutController extends Controller
                         $result = $paymentPaymeController->PaymentPayme($order);
                         $result = json_decode($result);
 
-                        if( $result->code == '105000'){
+                        if ($result->code == '105000') {
                             $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
+                            $this->processOrder($order);
+
                             return redirect($result->data->url);
-                        }else{
+                        } else {
                             return redirect()->route('paymentFail');
                         }
                         break;
@@ -680,35 +729,70 @@ class CheckoutController extends Controller
 
     public function processOrder($order)
     {
+        $user = Auth::user();
+        $order_status = true;
         foreach ($order->order_stores()->get() as $order_store) {
             if (($order_store->shipping_method == 0) || ($order_store->shipping_method == 1)) {
                 $order_store->shipping_code = $order_store->order_store_code;
+                $order_store->save();
             } else {
                 $viettelPostController = new ViettelPostController();
-
                 $result_vt = $viettelPostController->createOrder($order_store);
-                $order_store->shipping_code = $result_vt['data']['ORDER_NUMBER'];
+                if ($result_vt['status'] == 200) {
+                    $order_store->shipping_code = $result_vt['data']['ORDER_NUMBER'];
+                    $order_store->save();
+                } else {
+                    foreach ($order->order_stores()->get() as $order_store) {
+                        foreach ($order_store->order_products()->get() as $order_product) {
+                            $order_product->delete();
+                        }
+                        $order_store->delete();
+                    }
+                    $order->delete();
+                    $order_status = false;
+                   
+                }
             }
-
-            $order_store->save();
         }
-        $store_ids = Session::get('store_ids');
-
-        foreach (explode(",", $store_ids) as $store_id) {
-            Cart::instance($store_id)->destroy();
+        if($order_status){
+            if ($order->payment_method == 1) {
+                // DB::transaction(function () use ($order, $user) {
+                //     try {
+                        $transaction_code = $order->order_code;
+                        $historyPointController = new HistoryPointController();
+                        $historyPointController->createHistory($user, $order->total, 1, 1, $transaction_code, null, null);
+                        $order->is_payment = 1;
+                        $order->save();
+                    
+                //     } catch (\Throwable $th) {
+                //         throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
+                //         return redirect()->back()->withErrors(['error' => $th->getMessage()]);
+                //     }
+                // });
+            }
+            $order->is_payment = 1;
+            $order->save();
+            $noticeController = new NoticeController();
+            $user = $order->user()->first();
+            foreach($order->order_stores()->get() as $order_store){
+                $noticeController->createNotice(4,$user, null,$order_store);
+            }
+            $store_ids = Session::get('store_ids');
+            foreach (explode(",", $store_ids) as $store_id) {
+                Cart::instance($store_id)->destroy();
+            }
+            Session::forget('store_ids');
+        }else{
+            return redirect()->route('home');
         }
-        Session::forget('store_ids');
-        Session::forget('edit_order');
-
-        $order->status = 1;
-        $order->save();
+      
     }
 
     public function getPaymentDeposit(Request $request)
     {
 
         $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->status > 0) {
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $payment_method = PaymentMethod::whereId($request->payment_method)->first();
@@ -724,7 +808,7 @@ class CheckoutController extends Controller
             'payment_option.required' => "Mời chọn đơn vị thanh toán",
         ]);
         $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->status > 0) {
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $order->payment_method_option = $request->payment_option;
@@ -737,7 +821,7 @@ class CheckoutController extends Controller
 
         $order = Order::whereOrderCode($request->order_code)->first();
 
-        if ($order->status > 0) {
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $payment_method = PaymentMethod::whereId($request->payment_method)->first();
@@ -753,7 +837,7 @@ class CheckoutController extends Controller
             'payment_option.required' => "Mời chọn đơn vị thanh toán",
         ]);
         $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->status > 0) {
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $order->payment_method_option = $request->payment_option;
@@ -774,9 +858,14 @@ class CheckoutController extends Controller
     }
     public function getPaymentC(Request $request)
     {
+        $user = Auth::user();
+        $point_c = $user->point_c()->first();
         $order = Order::whereOrderCode($request->order_code)->first();
 
-        if ($order->status > 0) {
+        if ($point_c->point_c < $order->total) {
+            return redirect()->route('checkout.getPaymentMethod', ['order_code' => $order->order_code])->with(['message' => 'Hình thức thanh toán không khả dụng']);
+        }
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         return view('checkout.payment.payment_c', compact('order'));
@@ -787,7 +876,7 @@ class CheckoutController extends Controller
 
         $user = Auth::user();
         $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->status > 0) {
+        if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $image_portrait = $request->image_portrait;
@@ -801,31 +890,13 @@ class CheckoutController extends Controller
                 return back()->with(['message' => 'Hệ thống không xác minh được danh tính. Vui lòng liên hệ Hotline 0899.663.883 để được hỗ trợ']);
                 break;
             case 2:
-                $time = (string)date('Y-m-d-H-i-s');
-                $transaction_code = str_replace('-', '', $time) ;
+                $order->is_payment = 1;
+                $order->save();
                 $this->processOrder($order);
-                $user_receiver = User::whereCodeCustomer('202201170001')->first();
-                $lichsu_chuyen = new PointCHistory;
-                $point_c = $user->point_c()->first();
-                $point_c_receiver = $user_receiver->point_c()->first();
-                $lichsu_chuyen->point_c_idnhan = $user_receiver->id;
-                $lichsu_chuyen->point_past_nhan = $point_c_receiver->point_c;
-                $lichsu_chuyen->point_present_nhan = $point_c_receiver->point_c + $order->total;
-                $lichsu_chuyen->makhachhang = $user_receiver->code_customer;
-                $transaction_code = $transaction_code;
-                $lichsu_chuyen->note = 'Da thanh toan GD ' . $transaction_code;
-                $lichsu_chuyen->magiaodich =  $transaction_code;
-                $lichsu_chuyen->amount = $order->total;
-                $lichsu_chuyen->type = 4;
-                $lichsu_chuyen->point_c_idchuyen = $user->id;
-                $lichsu_chuyen->point_past_chuyen = $point_c->point_c;
-                $lichsu_chuyen->point_present_chuyen = $point_c->point_c - $order->total;
-                $lichsu_chuyen->makhachhang_chuyen = $user->code_customer;
-                $lichsu_chuyen->save();
-                $point_c->point_c -= $order->total;
-                $point_c->save();
-                $point_c_receiver->point_c += $order->total;
-                $point_c_receiver->save();
+                return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
+
+                break;
+            default:
                 return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
                 break;
         }
@@ -841,13 +912,18 @@ class CheckoutController extends Controller
     public function orderSuccess(Request $request)
     {
         $order = Order::whereOrderCode($request->order_code)->first();
-        if (!$request->order_code || $order == null) {
+        if (!$request->order_code || $order == null || $order->is_payment == 0) {
             return redirect('/');
         }
         // $order_info = $order->order_info()->first();
         // $order_address = $order->order_address()->first();
         // $order_stores = $order->order_stores()->get();
+      
         return view('checkout.thanhcong', compact('order'));
+    }
+    public function showFail()
+    {
+        return view('checkout.order_fail');
     }
 
     public function updateTypeShip(Request $request)
@@ -897,16 +973,19 @@ class CheckoutController extends Controller
                 $distance =  $this->getDistance($address1, $address2);
                 $ship_arr = array(0, 0);
                 $weight = 0;
-
+                $process_fee = 0;
                 foreach ($cart->content() as $row) {
                     $price = $row->model->productPrice()->first();
-                    $process_fee = $row->qty * $price->phi_xuly;
-                    $ship_temp = $this->getCShip($process_fee, $this->getWeight($row->model, $row->qty), $distance);
-                    $ship_arr[0] += $ship_temp[0];
-                    $ship_arr[1] += $ship_temp[1];
+                    $process_fee += $row->qty * $price->phi_xuly;
+                    $cart->update($row->rowId, ['options' => ['method_ship' => 1, 'type_ship' => 1, 'price_normal' => 0, 'price_fast' => 0]]);
                     $weight += $this->getWeight($row->model, $row->qty);
-                    $cart->update($row->rowId, ['options' => ['method_ship' => 1, 'type_ship' => 1, 'price_normal' => $ship_temp[0], 'price_fast' => $ship_temp[1]]]);
                 }
+                $ship_temp = $this->getCShip($process_fee, $weight, $distance);
+                $ship_arr[0] += $ship_temp[0];
+                $ship_arr[1] += $ship_temp[1];
+                $row = $cart->content()->first();
+                $cart->update($row->rowId, ['options' => ['method_ship' => 1, 'type_ship' => 1, 'price_normal' => $ship_temp[0], 'price_fast' => $ship_temp[1]]]);
+
                 $store_ships['store' . $store_id]['name'] = 'store' . $store_id;
                 $store_ships['store' . $store_id]['id'] = $store_id;
                 $store_ships['store' . $store_id]['distance'] = $distance;
@@ -919,18 +998,23 @@ class CheckoutController extends Controller
             } else {
                 $ship_arr = array(0, 0);
                 $weight = 0;
+                $process_fee = 0;
                 foreach ($cart->content() as $row) {
                     $price = $row->model->productPrice()->first();
-                    $process_fee = $row->qty * $price->phi_xuly;
-                    $ship_temp = $this->getVShip($process_fee, $this->getWeight($row->model, $row->qty), $data['province'], $store->province()->value('matinhthanh'));
-                    $ship_arr[0] += $ship_temp[0];
-                    $ship_arr[1] += $ship_temp[1];
+                    $process_fee += $row->qty * $price->phi_xuly;
                     $weight += $this->getWeight($row->model, $row->qty);
-                    $cart->update($row->rowId, ['options' => ['method_ship' => 2, 'type_ship' => 1, 'price_normal' => $ship_temp[0], 'price_fast' => $ship_temp[1]]]);
+                    $cart->update($row->rowId, ['options' => ['method_ship' => 2, 'type_ship' => 1, 'price_normal' => 0, 'price_fast' => 0]]);
                 }
+                $ship_temp = $this->getVShip($process_fee, $this->getWeight($row->model, $row->qty), $data['province'], $store->id_province);
+                $ship_arr[0] += $ship_temp[0];
+                $ship_arr[1] += $ship_temp[1];
+                $row = $cart->content()->first();
+                $cart->update($row->rowId, ['options' => ['method_ship' => 2, 'type_ship' => 1, 'price_normal' => $ship_temp[0], 'price_fast' => $ship_temp[1]]]);
                 $store_ships['store' . $store_id]['name'] = 'store' . $store_id;
                 $store_ships['store' . $store_id]['id'] = $store_id;
                 $store_ships['store' . $store_id]['weight'] = $weight;
+                $store_ships['store' . $store_id]['address'] = $this->getProvinceArea($store->id_province);
+
                 $store_ships['store' . $store_id]['ship_total']['ship'] = array('value' => $ship_arr[0], 'text' => formatPrice($ship_arr[0]));
                 $store_ships['store' . $store_id]['ship_total']['ship_fast'] = array('value' => $ship_arr[1], 'text' => formatPrice($ship_arr[1]));
                 $store_ships['store' . $store_id]['method'] = 2;
@@ -969,7 +1053,7 @@ class CheckoutController extends Controller
         } else {
             $ship = $process_fee + (max(0, (3500 + (1000 * ceil($weight / 500)))));
         }
-        return $ship;
+        return round($ship);
     }
 
     public function getCShip($process_fee, $weight, $distance)
@@ -977,36 +1061,35 @@ class CheckoutController extends Controller
         $ship = 0;
         switch (true) {
             case in_array($weight, range(0, 2599)):
-                $ship += 6500 + (4.01 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (4.01 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(2600, 3000)):
-                $ship += 6500 + (3.01 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (3.01 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(3001, 29000)):
-                $ship += 6500 + (3.64 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (3.64 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(29001, 49999)):
-                $ship += 6500 + (3.7 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (3.7 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(50000, 99999)):
-                $ship += 6500 + (3.45 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (3.45 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(100000, 199999)):
-                $ship += 6500 + (2.55 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (2.55 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(200000, 499999)):
-                $ship += 6500 + (1.62 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (1.62 * $weight + (1000 * ceil($weight / 500)));
                 break;
             case in_array($weight, range(500000, 1000000)):
-                $ship += 6500 + (1.11 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (1.11 * $weight + (1000 * ceil($weight / 500)));
                 break;
             default:
-                $ship += 6500 + (1 * $weight + (1000 * round($weight / 500)));
+                $ship += 6500 + (1 * $weight + (1000 * ceil($weight / 500)));
                 break;
         }
         $ship = $process_fee +  round(max(10000, $ship));
-        $distance = max(round($distance, 1), 3);
-        $ship_fast = $process_fee + 6500 + (5000 * $distance) + (1 * $weight) + (1000 * round($weight / 500));
+        $ship_fast = $process_fee + 6500 + (5000 * $distance) + (1 * $weight) + (1000 * ceil($weight / 500));
         // $ship = $process_fee + 3000 + (4 * $weight) + max(3000, (1500 * round($weight / 500)));
         // $ship_fast = $process_fee + max(20000, 3000 + (3600 * $distance) + $weight) + max(3000, (1500 * round($weight / 500)));
         return array(round($ship), round($ship_fast));
@@ -1065,15 +1148,15 @@ class CheckoutController extends Controller
                 break;
             case in_array($weight, range(501, 29500)):
                 if ($province_customer == $province_store) {
-                    $ship += 15278 + (2315 * floor($weight / 500));
-                    $ship_fast += 20371 + (2315 * floor($weight / 500));
+                    $ship += 15278 + (2315 * ceil(($weight - 500) / 500));
+                    $ship_fast += 20371 + (2315 * ceil(($weight - 500) / 500));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 27778 + (2963 * floor($weight / 500));
-                        $ship_fast += 27778 + (2963 * floor($weight / 500));
+                        $ship += 27778 + (2963 * ceil(($weight - 500) / 500));
+                        $ship_fast += 27778 + (2963 * ceil(($weight - 500) / 500));
                     } else {
-                        $ship +=  29630 + (4167 * floor($weight / 500));
-                        $ship_fast += 45371 + (11575 * floor($weight / 500));
+                        $ship +=  29630 + (4167 * ceil(($weight - 500) / 500));
+                        $ship_fast += 45371 + (11575 * ceil(($weight - 500) / 500));
                     }
                 }
                 break;
@@ -1099,102 +1182,102 @@ class CheckoutController extends Controller
                 break;
             case in_array($weight, range(30000, 99999)):
                 if ($province_customer == $province_store) {
-                    $ship += 128704  + (3704 * floor($weight / 30000));
-                    $ship_fast += 128704   + (3704 * floor($weight / 30000));
+                    $ship += 128704  + (3704 * ceil(($weight - 30000) / 1000));
+                    $ship_fast += 128704   + (3704 * ceil(($weight - 30000) / 1000));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 138889 + (3704 * floor($weight / 30000));
-                        $ship_fast += 193519  + (4630 * floor($weight / 30000));
+                        $ship += 138889 + (3704 * ceil(($weight - 30000) / 1000));
+                        $ship_fast += 193519  + (4630 * ceil(($weight - 30000) / 1000));
                     } elseif (
                         in_array($this->getProvinceArea($province_customer), [0, 2])
                         && in_array($this->getProvinceArea($province_store), [0, 2])
                     ) {
-                        $ship += 216667 + (6482 * floor($weight / 30000));
-                        $ship_fast += 693519 + (23149 * floor($weight / 30000));
+                        $ship += 216667 + (6482 * ceil(($weight - 30000) / 1000));
+                        $ship_fast += 693519 + (23149 * ceil(($weight - 30000) / 1000));
                     } else {
-                        $ship += 164815 + (4630 * floor($weight / 30000));
-                        $ship_fast += 693519 + (16667 * floor($weight / 30000));
+                        $ship += 164815 + (4630 * ceil(($weight - 30000) / 1000));
+                        $ship_fast += 693519 + (16667 * ceil(($weight - 30000) / 1000));
                     }
                 }
                 break;
 
             case in_array($weight, range(100000, 199999)):
                 if ($province_customer == $province_store) {
-                    $ship += 387984  + (2593 * floor($weight / 100000));
-                    $ship_fast += 387984 + (2593 * floor($weight / 30000));
+                    $ship += 387984  + (2593 * ceil(($weight - 100000) / 1000));
+                    $ship_fast += 387984 + (2593 * ceil(($weight - 100000) / 1000));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 398169 + (3519 * floor($weight / 100000));
-                        $ship_fast += 517619 + (3704 * floor($weight / 30000));
+                        $ship += 398169 + (3519 * ceil(($weight - 100000) / 1000));
+                        $ship_fast += 517619 + (3704 * ceil(($weight - 100000) / 1000));
                     } elseif (
                         in_array($this->getProvinceArea($province_customer), [0, 2])
                         && in_array($this->getProvinceArea($province_store), [0, 2])
                     ) {
-                        $ship += 670407 + (5186 * floor($weight / 100000));
-                        $ship_fast += 2313949 + (22686 * floor($weight / 30000));
+                        $ship += 670407 + (5186 * ceil(($weight - 100000) / 1000));
+                        $ship_fast += 2313949 + (22686 * ceil(($weight - 100000) / 1000));
                     } else {
-                        $ship += 488915 + (4538 * floor($weight / 100000));
-                        $ship_fast += 1860209 + (16204 * floor($weight / 30000));
+                        $ship += 488915 + (4538 * ceil(($weight - 100000) / 1000));
+                        $ship_fast += 1860209 + (16204 * ceil(($weight - 100000) / 1000));
                     }
                 }
                 break;
             case in_array($weight, range(200000, 499999)):
                 if ($province_customer == $province_store) {
-                    $ship += 647284  + (2130 * floor($weight / 200000));
-                    $ship_fast += 647284 + (2130 * floor($weight / 30000));
+                    $ship += 647284  + (2130 * ceil(($weight - 200000) / 1000));
+                    $ship_fast += 647284 + (2130 * ceil(($weight - 200000) / 1000));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 750069 + (3056 * floor($weight / 200000));
-                        $ship_fast += 888019 + (3519 * floor($weight / 30000));
+                        $ship += 750069 + (3056 * ceil(($weight - 200000) / 1000));
+                        $ship_fast += 888019 + (3519 * ceil(($weight - 200000) / 1000));
                     } elseif (
                         in_array($this->getProvinceArea($province_customer), [0, 2])
                         && in_array($this->getProvinceArea($province_store), [0, 2])
                     ) {
-                        $ship += 1189007 + (4630 * floor($weight / 200000));
-                        $ship_fast += 4582549 + (22038 * floor($weight / 30000));
+                        $ship += 1189007 + (4630 * ceil(($weight - 200000) / 1000));
+                        $ship_fast += 4582549 + (22038 * ceil(($weight - 200000) / 1000));
                     } else {
-                        $ship += 942715  + (4167 * floor($weight / 200000));
-                        $ship_fast += 3480609 + (15741 * floor($weight / 30000));
+                        $ship += 942715  + (4167 * ceil(($weight - 200000) / 1000));
+                        $ship_fast += 3480609 + (15741 * ceil(($weight - 200000) / 1000));
                     }
                 }
                 break;
             case in_array($weight, range(500000, 999999)):
                 if ($province_customer == $province_store) {
-                    $ship += 1286284  + (1852 * floor($weight / 500000));
-                    $ship_fast += 1286284 + (1852 * floor($weight / 30000));
+                    $ship += 1286284  + (1852 * ceil(($weight - 500000) / 1000));
+                    $ship_fast += 1286284 + (1852 * ceil(($weight - 500000) / 1000));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 1666869 + (2778 * floor($weight / 200000));
-                        $ship_fast += 1943719 + (3334 * floor($weight / 30000));
+                        $ship += 1666869 + (2778 * ceil(($weight - 500000) / 1000));
+                        $ship_fast += 1943719 + (3334 * ceil(($weight - 500000) / 1000));
                     } elseif (
                         in_array($this->getProvinceArea($province_customer), [0, 2])
                         && in_array($this->getProvinceArea($province_store), [0, 2])
                     ) {
-                        $ship += 2578007 + (4352 * floor($weight / 200000));
-                        $ship_fast += 11193949 + (21297 * floor($weight / 30000));
+                        $ship += 2578007 + (4352 * ceil(($weight - 500000) / 1000));
+                        $ship_fast += 11193949 + (21297 * ceil(($weight - 500000) / 1000));
                     } else {
-                        $ship +=  2192815  + (3704 * floor($weight / 200000));
-                        $ship_fast += 8202909 + (15278 * floor($weight / 30000));
+                        $ship +=  2192815  + (3704 * ceil(($weight - 500000) / 1000));
+                        $ship_fast += 8202909 + (15278 * ceil(($weight - 500000) / 1000));
                     }
                 }
                 break;
             default:
                 if ($province_customer == $province_store) {
-                    $ship += 2212284  + (1667 * floor($weight / 1000000));
-                    $ship_fast += 2212284 + (1667 * floor($weight / 30000));
+                    $ship += 2212284  + (1667 * ceil(($weight - 1000000) / 1000));
+                    $ship_fast += 2212284 + (1667 * ceil(($weight - 1000000) / 1000));
                 } else {
                     if ($this->getProvinceArea($province_customer) == $this->getProvinceArea($province_store)) {
-                        $ship += 3055869 + (2593 * floor($weight / 1000000));
-                        $ship_fast += 3610719 + (3149 * floor($weight / 30000));
+                        $ship += 3055869 + (2593 * ceil(($weight - 1000000) / 1000));
+                        $ship_fast += 3610719 + (3149 * ceil(($weight - 1000000) / 1000));
                     } elseif (
                         in_array($this->getProvinceArea($province_customer), [0, 2])
                         && in_array($this->getProvinceArea($province_store), [0, 2])
                     ) {
-                        $ship += 4430007 + (3519 * floor($weight / 1000000));
-                        $ship_fast += 21842449 + (20834 * floor($weight / 30000));
+                        $ship += 4430007 + (3519 * ceil(($weight - 1000000) / 1000));
+                        $ship_fast += 21842449 + (20834 * ceil(($weight - 1000000) / 1000));
                     } else {
-                        $ship +=  4368815  + (3704 * floor($weight / 1000000));
-                        $ship_fast += 15841909 + (15000 * floor($weight / 30000));
+                        $ship +=  4368815  + (3704 * ceil(($weight - 1000000) / 1000));
+                        $ship_fast += 15841909 + (15000 * ceil(($weight - 1000000) / 1000));
                     }
                 }
                 break;
@@ -1237,7 +1320,7 @@ class CheckoutController extends Controller
     }
     public function getWeight($product, $quantity)
     {
-        $weight = round(max($product->weight / 1000, (($product->height * $product->width * $product->length) / 3000) )* 1000);
+        $weight = ceil(max($product->weight / 1000, (($product->height * $product->width * $product->length) / 3000)) * 1000);
         return $weight * $quantity;
     }
     public function getDistance($address1, $address2)

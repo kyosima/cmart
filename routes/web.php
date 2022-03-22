@@ -15,10 +15,13 @@ use App\Http\Controllers\InfoCompanyController;
 use App\Http\Controllers\CPointController;
 use App\Http\Controllers\EkycController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\EkycVNPTController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\PaymentPaymeController;
 use Psy\VersionUpdater\Checker;
 use App\Http\Controllers\SendEmailController;
+use App\Models\ProductCategory;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +39,9 @@ use App\Http\Controllers\SendEmailController;
 Route::get('/danh-muc-san-pham', [ProductCategoryController::class, 'showAll'])->name('proCat.showAll');
 Route::get('/danh-muc-san-pham/{slug}', [ProductCategoryController::class, 'index'])->name('proCat.index');
 Route::get('/thuong-hieu/{slug}', [ProductBrandController::class, 'index'])->name('proBrand.index');
+Route::get('/lay-danh-muc-con', [ProductCategoryController::class, 'getMenuCategoryChild'])->name('proCat.getCatChild');
+Route::get('/lay-danh-muc-con-mobile', [ProductCategoryController::class, 'getMenuCategoryChildMobile'])->name('proCat.getCatChildMobile');
+
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
 
@@ -78,6 +84,8 @@ Route::prefix('dat-hang')->group(function () {
     Route::get('cal-ship-cmart', [CheckoutController::class, 'calCmartShip'])->name('checkout.calCmartShip');
     Route::get('update-type-ship', [CheckoutController::class, 'updateTypeShip'])->name('checkout.updateTypeShip');
     Route::get('show-policy', [CheckoutController::class, 'showPolicy'])->name('showPolicy');
+    Route::get('khong-thanh-cong', [CheckoutController::class, 'showFail'])->name('checkout.fail');
+
 });
 Route::prefix('dat-hang/thanh-toan')->group(function () {
     Route::get('tien-tich-luy', [CheckoutController::class, 'getPaymentC'])->name('payment.C');
@@ -97,6 +105,11 @@ Route::get('tim-kiem/goi-y', [ProductCategoryController::class, 'getSearchSugges
 
 Route::get('tai-khoan/xac-thuc', [EkycController::class, 'getVerifyAccount'])->name('ekyc.getVerify');
 Route::post('tai-khoan/xac-thuc', [EkycController::class, 'postVerifyAccount'])->name('ekyc.postVerify');
+Route::post('tai-khoan/yeu-cau-thay-doi-thong-tin', [EkycController::class, 'getRequestChangeEkyc'])->name('ekyc.change');
+
+Route::prefix('tai-khoan')->group(function () {
+    Route::get('ekyc', [EkycVNPTController::class, 'index'])->name('vnpt.index');
+});
 
 //Route - Liên hệ
 Route::get('/lien-he', function () {
@@ -145,6 +158,12 @@ Route::prefix('lay-dia-chi')->group(function () {
     Route::get('thong-tin-tinh', [AddressController::class, 'getProvinceDetail']);
     Route::get('thong-tin-huyen', [AddressController::class, 'getDistrictDetail']);
     Route::get('thong-tin-xa', [AddressController::class, 'getWardDetail']);
+
+});
+
+Route::prefix('thong-bao')->group(function () {
+    Route::get('', [NoticeController::class, 'index'])->name('noticeuser.index');
+    Route::get('{slug}', [NoticeController::class, 'getNotice'])->name('noticeuser.getNotice');
 
 });
 

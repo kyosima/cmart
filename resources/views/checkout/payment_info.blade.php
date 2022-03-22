@@ -155,7 +155,7 @@
                             <div class="text-center">
                                 <p>Giá trị thanh toán Dịch vụ</p>
                                 <p><small>(Đã bao gồm thuế VAT 8%)<br><b>= Số M cần tìm thêm để miễn phí dịch vụ</b></small></p>
-                                <p>{{ formatPrice(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 +($order->vat_services - max($order->m_point - $order->shipping_total, 0)),0)) }}
+                                <p>{{ formatPrice($order->total_payment_services) }}
                                 </p>
                             </div>
                         </div>

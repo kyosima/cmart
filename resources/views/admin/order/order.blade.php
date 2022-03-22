@@ -4,12 +4,6 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/select2.css') }}" type="text/css">
     <style>
-        div.table-responsive>div.dataTables_wrapper>div.row:first-child,
-        .fillorder input {
-            display: none;
-
-        }
-
         .fillorder a {
             border: 1px solid #ddd;
             padding: 10px 20px;
@@ -29,6 +23,11 @@
             -webkit-line-clamp: 5;
             word-break: break-word;
         }
+
+        .dtsb-searchBuilder {
+            display: none;
+        }
+        
 
     </style>
     {{-- <script>
@@ -142,9 +141,9 @@
                                         <span class="caption-subject"><i class="fas fa-cart-plus"></i> DANH SÁCH ĐƠN
                                             HÀNG</span>
                                         {{-- <a class="btn btn_success" href="{{route('order.create')}}"><i class="fas fa-plus"></i> Thêm mới</a> --}}
-                                        <a href="{{ route('order.exports') }}" class="btn btn_success"><i
+                                        {{-- <a href="{{ route('order.exports') }}" class="btn btn_success"><i
                                                 class="far fa-file-excel"></i>
-                                            Xuất Excel</a>
+                                            Xuất Excel</a> --}}
                                     </p>
 
                                     <span>
@@ -159,12 +158,11 @@
                                 <div class="collapse show" id="collapseExample">
                                     <form action="{{ route('order.multiple') }}" method="post">
                                         @csrf
-                                        <div class="row align-items-center mb-3">
+                                        {{-- <div class="row align-items-center mb-3">
                                             <div class="col-sm-9">
                                                 <div class="input-group action-multiple" style="display:none">
                                                     <select class="custom-select" name="action" required>
                                                         <option value="">Chọn hành động</option>
-                                                        {{-- <option value="delete">Xóa</option> --}}
                                                         <optgroup label="Trạng thái">
                                                             <option value="0">Đã đặt hàng</option>
                                                             <option value="1">Đã xác nhận thanh toán</option>
@@ -189,9 +187,9 @@
                                                         đ</span>
                                                 </button>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12" style="overflow-x: auto;">
+                                        </div> --}}
+                                        <div class="row ">
+                                            <div class="col-sm-12 mb-2" style="overflow-x: auto;">
                                                 @if (isset($status))
                                                     <div class="d-flex justify-content-between fillorder">
                                                         <a
@@ -232,27 +230,32 @@
                                             <div class="col-sm-12" style="">
                                                 <div class="table-responsive">
 
-                                                    <table id="" class="table table-striped table-hover align-middle">
-                                                        <thead>
+                                                    <table id="orders-table"
+                                                        class="table table-bordered table-striped align-middle">
+                                                        <thead class="bg-dark text-light">
                                                             <tr>
-                                                                <th class="title" style="width: 30px;"><input
-                                                                        class="form-check" name="checkAll"
-                                                                        type="checkbox">
-                                                                </th>
+
                                                                 <th class="title">Mã giao dịch</th>
+                                                                <th class="title">Mã khách hàng</th>
                                                                 <th class="title">Cửa hàng</th>
                                                                 <th class="title" style="width: 50px">C</th>
                                                                 <th class="title" style="width: 50px">M</th>
                                                                 <th class="title">Giá trị SP</th>
                                                                 <th class="title">Giảm giá SP</th>
                                                                 <th class="title">ĐVVC</th>
+                                                                <th class="title">Phí xử lý</th>
+                                                                <th class="title">TLVC</th>
+                                                                <th class="title">Số km</th>
                                                                 <th class="title">Phí VC</th>
                                                                 <th class="title" style="width: 100px">HTTT</th>
-                                                                <th class="title">Phí DVGTT</th>
+                                                                <th class="title">Phí DV GTGT</th>
                                                                 <th class="title">Giảm giá DV</th>
-                                                                {{-- <th class="title">Trạng thái</th> --}}
+                                                                <th class="title">Giá trị thanh toán</th>
+                                                                <th class="title">VAT/đh</th>
                                                                 <th class="title" style="width: 100px">Ghi chú</th>
                                                                 <th class="title" style="width:75px;">Chuyển tiếp
+                                                                </th>
+                                                                <th class="title" style="width:75px;">Trạng thái
                                                                 </th>
                                                             </tr>
                                                         </thead>
@@ -270,10 +273,12 @@
                                                                 @endphp
                                                                 @foreach ($order_stores as $order_store)
                                                                     <tr>
-                                                                        <td><input type="checkbox" name="id[]"
-                                                                                value="{{ $order->id }}"></td>
+
                                                                         <td><a target="_blank"
                                                                                 href="{{ route('order.viewCbill', ['order_code' => $order->order_code]) }}">{{ $order_store->order_store_code }}</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            {{ $order_store->order()->first()->user()->value('code_customer') }}
                                                                         </td>
                                                                         <td>{{ $order_store->store()->value('name') }}
                                                                         </td>
@@ -281,21 +286,32 @@
                                                                         </td>
                                                                         <td>{{ formatNumber($order_store->m_point) }}
                                                                         </td>
-                                                                        <td>{{ formatPrice($order_store->sub_total) }}
+                                                                        <td>{{ formatNumber($order_store->sub_total) }}
                                                                         </td>
-                                                                        <td>{{ formatPrice($order_store->discount_products) }}
                                                                         </td>
+                                                                        <td>{{ formatNumber($order_store->discount_products) }}
+                                                                        </td>
+
                                                                         <td> {{ formatMethod($order_store->shipping_method) }}
                                                                         </td>
-                                                                        <td>{{ formatPrice($order_store->shipping_total) }}
+                                                                        <td> {{ formatNumber($order_store->process_fee) }}
+                                                                        </td>
+                                                                        <td> {{ formatNumber($order_store->shipping_weight) }}
+                                                                        </td>
+                                                                        <td> {{ $order_store->shipping_distance }} </td>
+                                                                        <td>{{ formatNumber($order_store->shipping_total) }}
                                                                         </td>
                                                                         <td>{{ App\Models\PaymentMethod::whereId($order->payment_method)->value('name') }}
                                                                         </td>
-                                                                        <td>{{ formatPrice($order_store->vat_services) }}
+
+                                                                        <td>{{ formatNumber($order_store->vat_services) }}
                                                                         </td>
-                                                                        <td>{{ formatPrice($order_store->discount_services) }}
+                                                                        <td>{{ formatNumber($order_store->discount_services) }}
                                                                         </td>
-                                                                        {{-- <td>{!! orderStatus($order_store->status) !!}</td> --}}
+                                                                        <td>{{ formatNumber($order_store->total) }}
+                                                                        </td>
+                                                                        <td>{{ formatNumber(round($order_store->vat_products + ($order->tax_services / $order->order_stores()->count()))) }}
+                                                                        </td>
                                                                         <td>
                                                                             <span
                                                                                 class="order-note">{{ optional($order->order_info)->note }}
@@ -386,6 +402,7 @@
                                                                                 @endif
                                                                             </div>
                                                                         </td>
+                                                                        <td>{!! orderStatus($order_store->status) !!}</td>
                                                                     </tr>
                                                                 @endforeach
                                                             @endforeach
@@ -408,8 +425,8 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script> --}}
     <script src="{{ asset('/public/js/chart.js/Chart.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/admin/ajax-form.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/admin/select2.js') }}"></script>
@@ -420,11 +437,22 @@
     <script>
         $(document).ready(function() {
 
-            $('#tblOrder').DataTable({
+            $('#orders-table').DataTable({
+                responsive: true,
+                "order": [],
+                lengthMenu: [
+                    [5, 25, 50, -1],
+                    [5, 25, 50, "All"]
+                ],
                 columnDefs: [{
+
+                    targets: [1, 6, 8, 9, 10, 14, 19],
+                    visible: false,
+                }, {
+                    targets: [6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19],
                     orderable: false,
-                    targets: [0, 9]
-                }],
+                }, ],
+
                 "language": {
                     "emptyTable": "Không có dữ liệu nào !",
                     "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",
@@ -438,17 +466,56 @@
                         "last": "Last",
                         "next": '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
                         "previous": '<i class="fa fa-angle-double-left" aria-hidden="true"></i>'
+                    },
+                    "decimal": ",",
+                    "thousands": ".",
+                },
+                dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
+                buttons: [{
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19],
+                            format: {
+                                body: function(data, row, column, node) {
+                                    data = $('<td>' + data + '</td>').text();
+                                    console.log();
+                                    if (column == 10) {
+
+                                        return data.replace(',', '.');
+                                    } else {
+                                        return data.replace(/\./g, '');
+                                    }
+                                }
+                            }
+                        }
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19],
+                        },
+                       
                     }
-                }
+                ],
+
             });
+
         });
         // Set new default font family and font color to mimic Bootstrap's default styling
         Chart.defaults.global.defaultFontFamily = 'Nunito',
             '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-        Chart.defaults.global.defaultFontColor = '#858796';
-        var array = ['Đã đặt hàng', 'Đã xác nhận thanh toán', 'Đang xử lý', 'Đang vận chuyển', 'Hoàn thành', 'Đã hủy'];
-        var data = ['{{ $orders_count[0] ?? 0 }}', '{{ $orders_count[1] ?? 0 }}', '{{ $orders_count[2] ?? 0 }}',
-            '{{ $orders_count[3] ?? 0 }}', '{{ $orders_count[4] ?? 0 }}', '{{ $orders_count[5] ?? 0 }}'
+        Chart
+            .defaults.global.defaultFontColor = '#858796';
+        var array = ['Đã đặt hàng', 'Đã xác nhận thanh toán', 'Đang xử lý', 'Đang vận chuyển', 'Hoàn thành',
+            'Đã hủy'
+        ];
+        var data = ['{{ $orders_count[0] ?? 0 }}', '{{ $orders_count[1] ?? 0 }}',
+            '{{ $orders_count[2] ?? 0 }}',
+            '{{ $orders_count[3] ?? 0 }}', '{{ $orders_count[4] ?? 0 }}',
+            '{{ $orders_count[5] ?? 0 }}'
         ];
         // Pie Chart Example
         var ctx = document.getElementById("myPieChart");
@@ -458,8 +525,11 @@
                 labels: array,
                 datasets: [{
                     data: data,
-                    backgroundColor: ['#0d6efd', '#6c757d', '#ffc107', '#0dcaf0', '#198754', '#dc3545'],
-                    hoverBackgroundColor: ['#0d6efd', '#6c757d', '#ffc107', '#0dcaf0', '#198754',
+                    backgroundColor: ['#0d6efd', '#6c757d', '#ffc107', '#0dcaf0', '#198754',
+                        '#dc3545'
+                    ],
+                    hoverBackgroundColor: ['#0d6efd', '#6c757d', '#ffc107', '#0dcaf0',
+                        '#198754',
                         '#dc3545'
                     ],
                     hoverBorderColor: "rgba(234, 236, 244, 1)",

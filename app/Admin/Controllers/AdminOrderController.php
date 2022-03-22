@@ -23,6 +23,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\PaymentPaymeController;
 use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\HistoryPointController; 
+use App\Http\Controllers\NoticeController; 
 
 use App\Models\PointCHistory;
 use App\Models\PointMHistory;
@@ -37,39 +39,22 @@ class AdminOrderController extends Controller
 
     public function index(Request $request)
     {
-        $orders = Order::whereMonth('created_at', Carbon::today()->month)->orderBy('id', 'DESC')->with('order_info:id_order,note')->get();
+        $orders = Order::whereIsPayment(1)->orderBy('id', 'DESC')->get();
         $orders_count = $orders->groupBy('status')->map(function ($row) {
-            // dd($row);
             return $row->count();
         });
-
-        //chuyển đổi trạng thái hoàn tiền thành đã hủy
-        $filtered = $orders_count->filter(function ($value, $key) {
-            return $key == 6;
-        });
-
-        if(count($filtered->all()) > 0){
-            $orders_count->prepend($filtered->all()[6], 5);
-        }
-
-        // $shipping_method_count = OrderStore::select('shipping_method')->get()->groupBy('shipping_method')->map(function ($row) {
-        //     return $row->count();
-        // });
 
         $shipping_method_count = OrderStore::whereMonth('created_at', Carbon::today()->month)->select('shipping_method')->get()->groupBy('shipping_method')->map(function ($row) {
             return $row->count();
         });
-
         $doanh_thu = Order::where('status', 4)->sum('total');
-        $order_done_month = Order::whereMonth('created_at', Carbon::today()->month)->where('status', 4)->count();
-        $order_cancel_month = Order::whereMonth('created_at', Carbon::today()->month)->where('status', 5)->count();
-        if($request->status != null){
+        $order_done_month = OrderStore::whereMonth('created_at', Carbon::today()->month)->where('status', 4)->count();
+        $order_cancel_month = OrderStore::whereMonth('created_at', Carbon::today()->month)->where('status', 5)->count();
+        if ($request->status != null) {
             $status = $request->status;
             return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count', 'status', 'order_done_month', 'order_cancel_month'));
-
-        }else{
+        } else {
             return view('admin.order.order', compact('orders', 'doanh_thu', 'orders_count', 'shipping_method_count', 'order_done_month', 'order_cancel_month'));
-
         }
     }
 
@@ -103,13 +88,14 @@ class AdminOrderController extends Controller
         $product = Product::select('id', 'name')->get();
         return view('admin.order.order-new', compact('provinces', 'user', 'product'));
     }
-    public function viewCbill(Request $request){
+    public function viewCbill(Request $request)
+    {
         $order = Order::whereOrderCode($request->order_code)->first();
         return view('admin.order.c_bill_normal', compact('order'));
     }
     public function viewPDF(Request $request)
     {
-      
+
 
         $order = Order::whereOrderCode($request->order_code)->first();
 
@@ -252,95 +238,59 @@ class AdminOrderController extends Controller
         $order->delete();
         Log::info('Admin ' . auth()->guard('admin')->user()->name . ' Xóa đơn hàng #' . $order->id, ['data' => $request->all()]);
 
-        if ($request->isMethod('get')) {
+        if ($request->isMethod('get')) { 
             Session::flash('success', 'Thực hiện thành công');
             return redirect()->route('order.index');
         }
 
         return response('Thành công', 200);
     }
-    public function changeStatusOrderStore(Request $request){
+    public function changeStatusOrderStore(Request $request)
+    {
         $order_store = OrderStore::whereId($request->order_id)->first();
         $order = $order_store->order()->first();
-
         $this->proccessCpoint($order->user, $request->status, $order_store->status, $order_store->c_point, $order_store);
         $order_store->status = $request->status;
-
+        $noticeController = new NoticeController();
+        $user = $order_store->order()->first()->user()->first();
+        $noticeController->createNotice(4,$user, null,$order_store);
         $order_store->save();
 
 
         Session::flash('success', 'Thực hiện thành công');
-        
-        return back();
 
+        return back();
     }
     public function proccessCpoint($user, $request_status, $order_status, $order_cpoint, $order)
     {
+        $transaction_code = $order->order_store_code;
+        $historyPointController = new HistoryPointController();
         if ($request_status == 4 && $order_status != 4) {
-
-            $count_store = 0;
-                $time = (string)date('Y-m-d-H-i-s');
-                $count_store++;
-                $transaction_code = str_replace('-', '', $time) . '-' . '00'. $count_store;
-                $point_c = $user->point_c()->first();
-                $id_user_chuyen = User::where('id', '=', 1)->first()->id;
-                $vi_user_chuyen = PointC::where('user_id', '=', $id_user_chuyen)->first();
-                $lichsu_chuyen = new PointCHistory;
-                $lichsu_chuyen->point_c_idnhan = $user->id;
-                $lichsu_chuyen->point_past_nhan = $point_c->point_c;
-                $lichsu_chuyen->point_present_nhan = $point_c->point_c + $order_cpoint;
-                $lichsu_chuyen->makhachhang = $user->code_customer;
-                $lichsu_chuyen->note = 'Tich luy C ' . $transaction_code;
-                $lichsu_chuyen->magiaodich =  $transaction_code;
-                $lichsu_chuyen->amount = $order_cpoint;
-                $lichsu_chuyen->type = 1;
-                $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
-                $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
-                $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $order_cpoint;
-                $lichsu_chuyen->makhachhang_chuyen = 202201170001;
-                $lichsu_chuyen->save();
-    
-                $point_c->point_c = $point_c->point_c + $order_cpoint;
-                $vi_user_chuyen->point_c = $vi_user_chuyen->point_c - $order_cpoint;
-                $vi_user_chuyen->save();
-                $point_c->save();
-           
-        } elseif ($request_status == 5 && $order_status != 5) {
-            $user = User::whereCodeCustomer('202201170001')->first();
-            $user_receiver = User::whereId($order->order()->value('user_id'))->first();
-            $lichsu_chuyen = new PointCHistory;
-            $point_c = $user->point_c()->first();
-            $point_c_receiver = $user_receiver->point_c()->first();
-            $lichsu_chuyen->point_c_idnhan = $user_receiver->id;
-            $lichsu_chuyen->point_past_nhan = $point_c_receiver->point_c;
-            $lichsu_chuyen->point_present_nhan = $point_c_receiver->point_c + $order->total;
-            $lichsu_chuyen->makhachhang = $user_receiver->code_customer;
-            $transaction_code = time();
-            $lichsu_chuyen->note = 'Hoan GD ' . $transaction_code;
-            $lichsu_chuyen->magiaodich =  $transaction_code;
-            $lichsu_chuyen->amount = $order->total;
-            $lichsu_chuyen->type = 5;
-            $lichsu_chuyen->point_c_idchuyen = $user->id;
-            $lichsu_chuyen->point_past_chuyen = $point_c->point_c;
-            $lichsu_chuyen->point_present_chuyen = $point_c->point_c - $order->total;
-            $lichsu_chuyen->makhachhang_chuyen = $user->code_customer;
-            $lichsu_chuyen->save();
-            $point_c_receiver->point_c += $order->total;
-            $point_c_receiver->save();
-
-            $point_c->point_c -= $order->total;
-            $point_c->save();
-                $store = $order->store()->first();
-                foreach($order->order_products()->get() as $order_product){
-                    if($order_product->sku != null){
-                        $store_product = $store->product_stores()->where('id_ofproduct', $order_product->id_product)->first();
-                        $store_product->soluong += $order_product->quantity;
-                        $store_product->save();
-                    }
-                 
+            $historyPointController->createHistory($user, $order->c_point, 3, 1, $transaction_code, null, null);
+            $order_main = $order->order()->first();
+            if($order_main->remaining_m_point > 0){
+                if($order_main->order_stores()->whereIn('status',[4,5])->count() +1 == $order_main->order_stores()->count()){
+                    $historyPointController->createHistory($user, $order_main->remaining_m_point, 5, 0, $order_main->order_code, null, null);
                 }
-            
-            
+            }
+        } elseif ($request_status == 5 && $order_status != 5) {
+            // $historyPointController = new HistoryPointController();
+            // $historyPointController->createHistory($user, $order->total, 6, 0, $transaction_code);
+            $store = $order->store()->first();
+            $order_main = $order->order()->first();
+            if($order_main->remaining_m_point > 0){
+                if($order_main->order_stores()->whereIn('status',[4,5])->count() +1 == $order_main->order_stores()->count()){
+                    $historyPointController->createHistory($user, $order_main->remaining_m_point, 5, 0, $order_main->order_code, null, null);
+                }
+            }
+          
+            foreach ($order->order_products()->get() as $order_product) {
+                if ($order_product->sku != null) {
+                    $store_product = $store->product_stores()->where('id_ofproduct', $order_product->id_product)->first();
+                    $store_product->soluong += $order_product->quantity;
+                    $store_product->save();
+                }
+            }
         } elseif ($request_status != 4 && $order_status == 4) {
             // $point_c = $user->point_c()->first();
             // $point_c->point_c-$order_cpoint;

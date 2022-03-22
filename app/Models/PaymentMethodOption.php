@@ -10,5 +10,8 @@ class PaymentMethodOption extends Model
     use HasFactory;
     protected $table = 'payment_method_options';
     protected $guarded = [];
-    
+
+    public function payment_method(){
+        return $this->belongsTo(PaymentMethod::class, 'payment_method_id', 'id');
+    }
 }

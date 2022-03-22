@@ -55,7 +55,10 @@ class OrderProduct extends Model
 	{
 		return $this->belongsTo(Order::class, 'id_order');
 	}
-
+	public function order_store()
+	{
+		return $this->belongsTo(OrderStỏe::class, 'id_order_store');
+	}
 	public function product()
 	{
 		return $this->belongsTo(Product::class, 'id_product');

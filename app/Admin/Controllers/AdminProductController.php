@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use App\Models\PaymentMethod;
 use DataTables;
 
 class AdminProductController extends Controller
@@ -37,7 +38,7 @@ class AdminProductController extends Controller
         $products = Product::all();
         $calculationUnits = CalculationUnit::all();
         $brands = Brand::all();
-        $payments = Payment::all();
+        $payments = PaymentMethod::all();
 
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang tạo mới sản phẩm';
         Log::info($message);
@@ -145,7 +146,7 @@ class AdminProductController extends Controller
                                 ->get();
         $calculationUnits = CalculationUnit::all();
         $brands = Brand::all();
-        $payments = Payment::all();
+        $payments = PaymentMethod::all();
 
         $upsells = [];
         if ($product->upsell != null) {

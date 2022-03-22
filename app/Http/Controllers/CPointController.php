@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CPointHistory;
 use App\Models\PointC;
+use App\Models\StatisticalC;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,22 +20,17 @@ class CPointController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function postStatisticalC($total){
+        StatisticalC::create([
+            'total' => $total,
+        ]);
+    }
     public function index()
     {
         // $data = Order::orderBy('created_at', 'desc')->where('orders.user_id','=',auth()->user()->id)->get();
-        $data = DB::table('users')->join('orders', 'orders.user_id', '=', 'users.id')->where('orders.user_id','=',auth()->user()->id)->select('orders.*')->latest()->get();
         $user = Auth::user();
-        $pointC = PointC::where('user_id',$user->id)->first();
-        $tietkiem = PointCHistory::where('type',3)->where('point_c_idnhan','=',auth()->user()->id)->latest()->get();
-        $hoandonhuy = PointCHistory::where('type',4)->where('point_c_idnhan','=',auth()->user()->id)->latest()->get();
-        $history = PointCHistory::where('point_c_idchuyen', $pointC->id)->orWhere('point_c_idnhan', $pointC->id)->latest()->get();
-        return view('account.cpoint_history',[
-            'user'=>$user,
-            'pointC'=>$pointC,
-            'history'=>$history,
-            'tietkiem'=>$tietkiem,
-            'hoandonhuy'=>$hoandonhuy,
-        ]);
+        return view('account.cpoint_history', compact('user'));
     }
 
     public function chuyenkhoanC() {

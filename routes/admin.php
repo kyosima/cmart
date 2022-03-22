@@ -21,61 +21,64 @@ use App\Admin\PointHistoryController;
 use App\Admin\Controllers\InfoCompanyController;
 use App\Admin\Controllers\PaymentController;
 use App\Admin\Controllers\AdminBannerController;
+use App\Admin\Controllers\AdminEkycController;
+use App\Admin\Controllers\AdminNoticeController;
 use App\Admin\Controllers\AdminStoreController;
+use App\Admin\Controllers\PaymentMethodController;
+use App\Admin\Controllers\AdminPointController;
 
 Route::group(['middleware' => ['admin']], function () {
     // Route::resource('permissions', AdminPermissionsController::class);
-    Route::get('danh-sach-user',[UserController::class, 'getDanhsach']);
+    Route::get('danh-sach-user', [UserController::class, 'getDanhsach']);
     Route::get('doi-trang-thai-user/{id}', [UserController::class, 'changeStatusUser'])->name('user.changeStatus');
     Route::get('/nang-cap-vip/{id}', [UserController::class, 'upgrageVipUser'])->name('user.upgradeVip');
-    Route::get('/nang-cap-user/{id}',[UserController::class, 'postDanhsach']);
-    
-    Route::group(['prefix'=>'danh-sach-user'], function() {
-        Route::get('{id}',[UserController::class, 'getEdit']);
-        Route::post('{id}',[UserController::class, 'postEdit']);
+    Route::get('/nang-cap-user/{id}', [UserController::class, 'postDanhsach']);
+
+    Route::group(['prefix' => 'danh-sach-user'], function () {
+        Route::get('{id}', [UserController::class, 'getEdit'])->name('user.detail');
+        Route::post('{id}', [UserController::class, 'postEdit']);
     });
     Route::group(['prefix' => 'don-hang'], function () {
         Route::get('xem-c-bill', [AdminOrderController::class, 'viewCbill'])->name('order.viewCbill');
         Route::get('down-c-bill', [AdminOrderController::class, 'downPDF'])->name('order.downPDF');
-
     });
-    Route::get('/export',[UserController::class, 'export']);
+    Route::get('/export', [UserController::class, 'export']);
 
-    Route::get('lichsunhanC',[PointHistoryController::class, 'lichsunhanC'])->name('lichsunhanC');
+    Route::get('lichsunhanC', [PointHistoryController::class, 'lichsunhanC'])->name('lichsunhanC');
     Route::get('lichsunhanC/download', [PointHistoryController::class, 'dowLichsunhanC']);
 
-    Route::get('lichsuchuyenkhoan',[PointHistoryController::class, 'chuyenkhoan'])->name('lichsuchuyenkhoan');
+    Route::get('lichsuchuyenkhoan', [PointHistoryController::class, 'chuyenkhoan'])->name('lichsuchuyenkhoan');
     Route::get('lichsuchuyenkhoan/download/{type}', [PointHistoryController::class, 'dowChuyenKhoan']);
 
-    Route::get('lichsutietkiem',[PointHistoryController::class, 'tietkiem'])->name('lichsutietkiem');
+    Route::get('lichsutietkiem', [PointHistoryController::class, 'tietkiem'])->name('lichsutietkiem');
     Route::get('lichsutietkiem/download/{type}', [PointHistoryController::class, 'dowTietKiem']);
 
-    Route::get('lichsutichluy',[PointHistoryController::class, 'tichluy'])->name('lichsutichluy');
+    Route::get('lichsutichluy', [PointHistoryController::class, 'tichluy'])->name('lichsutichluy');
     Route::get('lichsutichluy/download/{type}', [PointHistoryController::class, 'dowTichLuy']);
-    
-    Route::get('lichsudonhanghuy',[PointHistoryController::class, 'huydonhang'])->name('lichsudonhanghuy');
+
+    Route::get('lichsudonhanghuy', [PointHistoryController::class, 'huydonhang'])->name('lichsudonhanghuy');
     Route::get('lichsudonhanghuy/download/{type}', [PointHistoryController::class, 'dowDonHangHuy']);
-    
-    Route::get('lichsudiemm',[PointHistoryController::class, 'lichsudiemM'])->name('lichsudiemm');
+
+    Route::get('lichsudiemm', [PointHistoryController::class, 'lichsudiemM'])->name('lichsudiemm');
 
     //Danh sach vi diem
-    Route::get('tongdiemuser',[PointHistoryController::class, 'tongdiem'])->name('tongdiemuser');
-    Route::get('tongdiemuser/download/{type}',[PointHistoryController::class, 'dowTongdiem']);
+    Route::get('tongdiemuser', [PointHistoryController::class, 'tongdiem'])->name('tongdiemuser');
+    Route::get('tongdiemuser/download/{type}', [PointHistoryController::class, 'dowTongdiem']);
 
-    Route::get('chuyendiem',[PointHistoryController::class, 'chuyendiem'])->name('chuyendiem');
-    Route::post('chuyendiem',[PointHistoryController::class, 'postChuyendiem'])->name('postChuyendiem');
+    Route::get('chuyendiem', [PointHistoryController::class, 'chuyendiem'])->name('chuyendiem');
+    Route::post('chuyendiem', [PointHistoryController::class, 'postChuyendiem'])->name('postChuyendiem');
 
-    Route::get('napdiem',[PointHistoryController::class, 'napC'])->name('napC');
-    Route::post('napdiem',[PointHistoryController::class, 'postNapC'])->name('postNapC');
-    Route::get('tinhDiemNap',[PointHistoryController::class, 'tinhDiemNap'])->name('tinhDiemNap');
-    
-    
-    Route::get('test',[PointHistoryController::class, 'test'])->name('test');
+    Route::get('napdiem', [PointHistoryController::class, 'napC'])->name('napC');
+    Route::post('napdiem', [PointHistoryController::class, 'postNapC'])->name('postNapC');
+    Route::get('tinhDiemNap', [PointHistoryController::class, 'tinhDiemNap'])->name('tinhDiemNap');
+
+
+    Route::get('test', [PointHistoryController::class, 'test'])->name('test');
     // Route::get('',[UserController::class,'postDanhsach']);
 
     Route::get('logout', [AdminHomeController::class, 'logout'])->name('logout');
 
-    Route::get('/', [AdminHomeController::class,'dashboard'])->name('admin.index');
+    Route::get('/', [AdminHomeController::class, 'dashboard'])->name('admin.index');
     //quản lý admins
 
     //đơn hàng
@@ -104,9 +107,9 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('hoan-tien-don-hang', [AdminOrderController::class, 'orderRefund'])->name('admin.order.refund')->middleware('permission:Xem DS đơn hàng,admin');
 
     // xóa đơn Hàng
-    Route::match(['delete', 'get'],'xoa-don-hang/{order:id}', [AdminOrderController::class, 'delete'])->name('order.delete')->middleware('permission:Xóa đơn hàng,admin');
+    Route::match(['delete', 'get'], 'xoa-don-hang/{order:id}', [AdminOrderController::class, 'delete'])->name('order.delete')->middleware('permission:Xóa đơn hàng,admin');
 
-    Route::post('xu-ly-nhieu-don-hang', [AdminOrderController::class,'multiple'])->name('order.multiple');
+    Route::post('xu-ly-nhieu-don-hang', [AdminOrderController::class, 'multiple'])->name('order.multiple');
 
     //Load ajax adrress
     Route::get('lay-quan-huyen-theo-tinh-thanh', [AdminOrderController::class, 'districtOfProvince']);
@@ -118,7 +121,7 @@ Route::group(['middleware' => ['admin']], function () {
 
         //danh sách
         Route::get('/', [AdminInfoCompanyController::class, 'index'])->name('info-company.index')->middleware('permission:Xem DS trang đơn,admin');
-        
+
         //tạo
         Route::get('create', [AdminInfoCompanyController::class, 'create'])->name('info-company.create')->middleware('permission:Tạo trang đơn,admin');
         Route::post('store', [AdminInfoCompanyController::class, 'store'])->name('info-company.store')->middleware('permission:Tạo trang đơn,admin');
@@ -129,7 +132,7 @@ Route::group(['middleware' => ['admin']], function () {
 
         //xóa
         Route::match(['delete', 'get'], 'delete/{info_company:id}', [AdminInfoCompanyController::class, 'delete'])->name('info-company.delete')->middleware('permission:Xóa trang đơn,admin');
-        Route::post('xu-ly-nhieu', [AdminInfoCompanyController::class,'multiple'])->name('info-company.multiple');
+        Route::post('xu-ly-nhieu', [AdminInfoCompanyController::class, 'multiple'])->name('info-company.multiple');
     });
 
     //banner
@@ -142,16 +145,15 @@ Route::group(['middleware' => ['admin']], function () {
         Route::put('update', [AdminBannerController::class, 'update'])->name('admin.banner.update')->middleware('permission:Cập nhật trang đơn,admin');
         Route::delete('delete/{Banner:id}', [AdminBannerController::class, 'delete'])->name('admin.banner.delete');
     });
-    
+
     Route::group(['middleware' => ['role:Boss,admin']], function () {
         //
         Route::resource('roles', AdminRolesController::class);
         Route::resource('permissions', AdminPermissionsController::class);
         Route::resource('manager-admin', AdminManagerAdminController::class);
-        Route::post('xu-ly-nhieu-role', [AdminRolesController::class,'multiple'])->name('roles.multiple');
-        Route::post('xu-ly-nhieu-permission', [AdminPermissionsController::class,'multiple'])->name('permissions.multiple');
-        Route::post('xu-ly-nhieu-admin', [AdminManagerAdminController::class,'multiple'])->name('manager-admin.multiple');
-        
+        Route::post('xu-ly-nhieu-role', [AdminRolesController::class, 'multiple'])->name('roles.multiple');
+        Route::post('xu-ly-nhieu-permission', [AdminPermissionsController::class, 'multiple'])->name('permissions.multiple');
+        Route::post('xu-ly-nhieu-admin', [AdminManagerAdminController::class, 'multiple'])->name('manager-admin.multiple');
     });
 
     Route::group(['middleware' => ['role:Boss|Manager,admin']], function () {
@@ -163,14 +165,13 @@ Route::group(['middleware' => ['admin']], function () {
 
         //setting
         Route::post('setting', [AdminSettingController::class, 'store'])->name('post.setting');
-
     });
 
     // CỬA HÀNG
     Route::group(['middleware' => ['permission:Xem cửa hàng,admin']], function () {
         Route::get('/cua-hang', [AdminStoreController::class, 'index'])->name('store.index');
     });
-    
+
     Route::group(['middleware' => ['permission:Thêm cửa hàng,admin']], function () {
         Route::post('/cua-hang', [AdminStoreController::class, 'store'])->name('store.store');
     });
@@ -208,7 +209,8 @@ Route::group(['middleware' => ['admin']], function () {
     });
     // được phép thêm mã ưu đãi
     Route::group(['middleware' => ['permission:Thêm mã ưu đãi,admin']], function () {
-        Route::post('/coupon', [AdminCouponController::class, 'store'])->name('coupon.store');
+        Route::get('/coupon/create', [AdminCouponController::class, 'create'])->name('coupon.create');
+        Route::post('/coupon/create', [AdminCouponController::class, 'store'])->name('coupon.store');
     });
     // được phép chỉnh sửa mã ưu đãi
     Route::group(['middleware' => ['permission:Chỉnh sửa mã ưu đãi,admin']], function () {
@@ -223,15 +225,22 @@ Route::group(['middleware' => ['admin']], function () {
     Route::group(['middleware' => ['permission:Thêm mã ưu đãi|Chỉnh sửa mã ưu đãi,admin']], function () {
         Route::get('/coupon/searchProduct', [AdminCouponController::class, 'getProduct'])->name('coupon.getProduct');
         Route::get('/coupon/searchProCat', [AdminCouponController::class, 'getProCat'])->name('coupon.getProCat');
+        Route::get('/coupon/searchCustomer', [AdminCouponController::class, 'getCustomer'])->name('coupon.searchCustomer');
+        Route::get('/coupon/searchCoupon', [AdminCouponController::class, 'getCoupon'])->name('coupon.getCoupon');
         Route::get('/coupon/select-product', [AdminCouponController::class, 'selectProduct'])->name('coupon.selectProduct');
         Route::get('/coupon/select-procat', [AdminCouponController::class, 'selectProCat'])->name('coupon.selectProCat');
+        Route::get('/coupon/select-customer', [AdminCouponController::class, 'selectCustomer'])->name('coupon.selectCustomer');
+        Route::get('/coupon/select-target', [AdminCouponController::class, 'selectTarget'])->name('coupon.selectTarget');
+        Route::get('/coupon/select-coupon', [AdminCouponController::class, 'selectCoupon'])->name('coupon.selectCoupon');
+        Route::get('/coupon/input-level', [AdminCouponController::class, 'inputLevel'])->name('coupon.inputLevel');
+
     });
 
     Route::group(['middleware' => ['permission:Xóa mã ưu đãi|Chỉnh sửa mã ưu đãi,admin']], function () {
         Route::post('/coupon/multiple-change', [AdminCouponController::class, 'multiChange'])->name('coupon.multiChange');
     });
     // Route::delete('/coupon/{id}', [AdminCouponController::class, 'deleteForm'])->name('coupon.deleteForm');
-    
+
     // PRODUCT
     // được phép xem sản phẩm
     Route::group(['middleware' => ['permission:Xem sản phẩm,admin']], function () {
@@ -287,7 +296,6 @@ Route::group(['middleware' => ['admin']], function () {
         Route::put('/nganh-nhom-hang/update-model/{id}', [AdminProductCategoryController::class, 'modelUpdate'])->name('nganh-nhom-hang.modelUpdate');
         Route::put('/nganh-nhom-hang/{id}', [AdminProductCategoryController::class, 'updateStatus'])->name('nganh-nhom-hang.updateStatus');
         Route::get('/nganh-nhom-hang/select-procat', [AdminProductCategoryController::class, 'getProCat'])->name('nganh-nhom-hang.getProCat');
-        
     });
 
     // được phép XÓA danh mục sản phẩm
@@ -300,6 +308,34 @@ Route::group(['middleware' => ['admin']], function () {
     });
 
     // Route::get('/nganh-nhom-hang/test/{id}/{status}/{levelChange}', [AdminProductCategoryController::class, 'recursive'])->name('nganh-nhom-hang.recursive');
+    //HistoryPoint
+
+    Route::group(['prefix'=>'diem-tich-luy','middleware' => ['permission:Xem lịch sử điểm,admin']], function () {
+        Route::get('lich-su-nhan-diem', [AdminPointController::class, 'getHistoryReceiverC'])->name('point.historyReceiver');
+        Route::get('lich-su-tich-luy', [AdminPointController::class, 'getAccumulationC'])->name('point.historyAccumulation');
+        Route::get('chuyen-khoan', [AdminPointController::class, 'getTransfer'])->name('point.Transfer');
+        Route::post('chuyen-khoan', [AdminPointController::class, 'postTransfer'])->name('point.postTransfer');
+        Route::get('lich-su-chuyen-khoan', [AdminPointController::class, 'getHistoryTransfer'])->name('point.historyTransfer');
+        Route::get('lich-su-hoan-don-hang-huy', [AdminPointController::class, 'getHistoryRefund'])->name('point.historyRefund');
+        Route::get('thong-ke', [AdminPointController::class, 'getStatistical'])->name('point.getStatistical');
+        Route::get('thanh-toan-tiet-kiem', [AdminPointController::class, 'getHistorySaving'])->name('point.getHistorySaving');
+        Route::get('lich-su-tich-luy-m', [AdminPointController::class, 'getHistoryAccumulationM'])->name('point.historyAccumulationM');
+        Route::get('tai-khoan-cmart', [AdminPointController::class, 'getStatisticalAccount'])->name('point.account');
+        Route::post('nap-c', [AdminPointController::class, 'postDeposit'])->name('point.deposit');
+        Route::get('thong-ke-so-du-c', [AdminPointController::class, 'getRememberC'])->name('point.getRememberC');
+
+
+    });
+    Route::group(['prefix'=>'thong-bao','middleware' => ['permission:Quản lý thông báo,admin']], function () {
+        Route::get('/', [AdminNoticeController::class, 'index'])->name('notice.index');
+        Route::get('tao-thong-bao', [AdminNoticeController::class, 'create'])->name('notice.create');
+        Route::post('tao-thong-bao', [AdminNoticeController::class, 'store'])->name('notice.store');
+        Route::get('tim-khach-hang', [AdminNoticeController::class, 'getUsers'])->name('notice.getUsers');
+        Route::get('sua-thong-bao/{id}', [AdminNoticeController::class, 'edit'])->name('notice.edit');
+        Route::post('sua-thong-bao/{id}', [AdminNoticeController::class, 'update'])->name('notice.update');
+        Route::get('doi-trang-thai/{id}', [AdminNoticeController::class, 'changeStatus'])->name('notice.changeStatus');
+        Route::get('xoa/{id}', [AdminNoticeController::class, 'destroy'])->name('notice.destroy');
+    });
 
     // BLOG
     // được phép xem bài viết
@@ -348,10 +384,14 @@ Route::group(['middleware' => ['admin']], function () {
     Route::group(['middleware' => ['permission:Xóa danh mục bài viết,admin']], function () {
         Route::delete('/chuyen-muc-bai-viet', [BlogCategoryController::class, 'destroy'])->name('chuyenmuc-baiviet.delete');
         Route::delete('/chuyen-muc-bai-viet/multiple-delete', [BlogCategoryController::class, 'multipleDestory'])->name('chuyenmuc-baiviet.multipleDestory');
-
     });
 
-    
+    Route::group(['middleware' => ['permission:Quản lý yêu cầu thay đổi thông tin tài khoản khách hàng,admin']], function(){
+        Route::get('/quan-ly-yeu-cau-thay-doi-thong-tin', [AdminEkycController::class, 'index'])->name('ekyc.index');
+        Route::get('/quan-ly-yeu-cau-thay-doi-thong-tin/duyet', [AdminEkycController::class, 'changeStatus'])->name('ekyc.changeStatus');
+    });
+
+
     // ĐƠN VỊ TÍNH
     // được phép xem đơn vị tính
     Route::group(['middleware' => ['permission:Xem đơn vị tính,admin']], function () {
@@ -387,6 +427,8 @@ Route::group(['middleware' => ['admin']], function () {
     Route::group(['middleware' => ['permission:Thêm HTTT,admin']], function () {
         Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
     });
+
+
     // được phép chỉnh sửa HTTT
     Route::group(['middleware' => ['permission:Chỉnh sửa HTTT,admin']], function () {
         Route::get('/payment/modal-edit', [PaymentController::class, 'modalEdit'])->name('payment.modalEdit');
@@ -401,6 +443,17 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::group(['middleware' => ['permission:Xóa HTTT|Chỉnh sửa HTTT,admin']], function () {
         Route::post('/payment/multiple-change', [PaymentController::class, 'multiChange'])->name('payment.multiChange');
+    });
+    // được phép thêm, xóa, sửa hình thức thanh toán cho đơn hàng
+    Route::group(['middleware' => ['permission:Quản lý đơn vị thanh toán,admin']], function () {
+        Route::get('/hinh-thuc-thanh-toan-don-hang', [PaymentMethodController::class, 'index'])->name('paymentmethod.index');
+        Route::get('/hinh-thuc-thanh-toan-don-hang/getDatatable', [PaymentMethodController::class, 'indexDatatable'])->name('paymentmethod.indexDatatable');
+        Route::post('/hinh-thuc-thanh-toan-don-hang', [PaymentMethodController::class, 'store'])->name('paymentmethod.store');
+        Route::get('/hinh-thuc-thanh-toan-don-hang/modal-edit', [PaymentMethodController::class, 'modalEdit'])->name('paymentmethod.modalEdit');
+        Route::post('/hinh-thuc-thanh-toan-don-hang/update', [PaymentMethodController::class, 'update'])->name('paymentmethod.update');
+        Route::put('/hinh-thuc-thanh-toan-don-hang/update-status', [PaymentMethodController::class, 'updateStatus'])->name('paymentmethod.updateStatus');
+        Route::delete('/hinh-thuc-thanh-toan-don-hang/delete', [PaymentMethodController::class, 'destroy'])->name('paymentmethod.delete');
+
     });
 
     // BRAND
@@ -444,14 +497,13 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/get-location', [WarehouseController::class, 'getLocation'])->name('warehouse.getLocation');
     Route::get('/get-warehouse', [WarehouseController::class, 'getWarehouse'])->name('warehouse.getWarehouse');
     Route::get('/ton-kho-dai-ly/modal-edit', [WarehouseController::class, 'modalEdit'])->name('warehouse.modalEdit');
-    
 });
 
 
 
 
-Route::get('/login', [AdminHomeController::class,'login'])->name('get.admin.login');
-Route::post('/login', [AdminHomeController::class,'postLogin'])->name('admin.login');
+Route::get('/login', [AdminHomeController::class, 'login'])->name('get.admin.login');
+Route::post('/login', [AdminHomeController::class, 'postLogin'])->name('admin.login');
 
 // Route::get('/don-hang', function () {
 //     return view('admin.don-hang');
@@ -475,5 +527,3 @@ Route::post('/login', [AdminHomeController::class,'postLogin'])->name('admin.log
 // Route::get('/ton-kho', function () {
 //     return view('admin.ton-kho');
 // });
-
-

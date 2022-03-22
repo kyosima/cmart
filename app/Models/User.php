@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'change_ekyc',
     ];
 
     /**
@@ -59,6 +60,17 @@ class User extends Authenticatable
     public function historyCpoints() {
         return $this->hasMany(PointCHistory::class, 'point_c_idchuyen', 'id');
     }
+    public function request_ekyc(){
+        return $this->hasMany(RequestEkyc::class, 'user_id', 'id');
+    }
+
+    public function getHistory(){
+        return $this->hasMany(HistoryPoint::class, 'user_id', 'id');
+    }
+
+    public function getRememberC(){
+        return $this->hasMany(RememberC::class, 'user_id', 'id');
+    }
 
 	// public function orders()
 	// {
@@ -71,4 +83,7 @@ class User extends Authenticatable
 	// {
 	// 	return $this->hasMany(CPointHistory::class, 'user_id', 'id');
 	// }
+    public function notices(){
+        return $this->belongsToMany(Notice::class, 'user_notice', 'user_id', 'notice_id')->withPivot(['is_read']);
+    }
 }

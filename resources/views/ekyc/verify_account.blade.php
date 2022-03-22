@@ -8,15 +8,15 @@
 
 @section('content')
     <div class="container">
-        @if (Session::has('message'))
-            <p class="alert alert-danger text-center">{{ Session::get('message') }}</p>
-        @endif
+        
         <form action="{{ route('ekyc.postVerify') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-12">
                     <h4 class="text-center">XÁC THỰC HỒ SƠ KHÁCH HÀNG</h4>
-
+                    @if (Session::has('message'))
+                    <p class="alert alert-danger text-center">{{ Session::get('message') }}</p>
+                @endif
                 </div>
                 <div class="col-lg-12 col-md-12 col-12">
 

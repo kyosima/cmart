@@ -9,6 +9,7 @@
 @endpush
 
 @section('content')
+
 <div class="container pt-4 pb-4">
     <div class="row pb-3">
         <div class="col-12">

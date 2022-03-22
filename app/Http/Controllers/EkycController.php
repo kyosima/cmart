@@ -4,35 +4,72 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\RequestEkyc;
 class EkycController extends Controller
 {
     //
     public function getVerifyAccount()
     {
         $user = Auth::user();
-        return view('ekyc.verify_account');
+        if($user->change_ekyc == 1 || $user->is_ekyc  ==0){
+            return view('ekyc.verify_account');
+
+        }else{
+            return redirect()->route('home');
+        }
+    }
+
+    public function getRequestChangeEkyc(Request $request){
+        if(Auth::check()){
+            $user = Auth::user();
+       
+            $check = $user->request_ekyc()->whereStatus(0)->count();
+            if($check==0){
+                RequestEkyc::create([
+                    'user_id' =>$user->id,
+                    'content'=> $request->content,
+                ]);
+                return back()->with('message', 'Yêu cầu thay đổi thông tin tài khoản thành công');
+            }else{
+                return back()->with('message', 'Bạn đã gửi yêu cầu thay đổi thông tin tài khoản, vui lòng đợi duyệt');
+            }
+          
+        }else{
+            return redirect()->route('home');
+        }
+
     }
 
     public function postVerifyAccount(Request $request)
     {
+        $user = Auth::user();
+        // if($user->change_ekyc == 0){
+        //     return redirect()->route('home');
+
+        // }
         $image_front = $request->image_front;
         $image_back = $request->image_back;
         $image_portrait = $request->image_portrait;
         $result_recognition = json_decode($this->postRecognition($image_front));
-        if ($result_recognition->result_code == 200) {
-            if (count($result_recognition->warning) <2) {
+        $result_recognition_back = json_decode($this->postRecognition($image_back));
+        if (($result_recognition->result_code == 200) && ($result_recognition_back->result_code == 200)) {
+            if ((count($result_recognition->warning) == 0 ||((count($result_recognition->warning) == 1) && (in_array('anh_giay_to_khong_chup_truc_tiep', $result_recognition->warning)))) 
+            && (count($result_recognition_back->warning) == 0 ||((count($result_recognition_back->warning) == 1) && (in_array('anh_giay_to_khong_chup_truc_tiep', $result_recognition_back->warning))))){
+                if($result_recognition->list_confidences->id_confidence < 0.7){
+                    return back()->with('message' , 'Số CMND, CCCD không hợp lệ');
+                }
                 $result_verify =  json_decode($this->postVerification($image_front, $image_portrait));
                 switch ($result_verify->verify_result) {
                     case 0:
-                        return back()->with(['message' => 'Hệ thống đối chiếu thông tin không khớp. Quý Khách Hàng vui lòng thực hiện lại']);
+                        return back()->with('message' ,'Hệ thống đối chiếu thông tin không khớp. Quý Khách Hàng vui lòng thực hiện lại');
                         break;
                     case 1:
-                        return back()->with(['message' => 'Hệ thống đối chiếu thông tin không khớp. Quý Khách Hàng vui lòng thực hiện lại']);
+                        return back()->with('message' , 'Hệ thống đối chiếu thông tin không khớp. Quý Khách Hàng vui lòng thực hiện lại');
                         break;
                     case 2:
                         $user = Auth::user();
                         $user->is_ekyc = 1;
+                        $user->change_ekyc = 0;
                         $user->hoten = $result_recognition->name;
                         $user->cmnd = $result_recognition->id;
                         $user->type_cmnd = $request->type_cmnd;
@@ -41,33 +78,69 @@ class EkycController extends Controller
                         $user->avatar = $image_portrait;
                         $user->save();
 
-                        return back()->with(['message' => 'Tài khoản đã được xác minh thành công']);
+                        return redirect()->route('account')->with('message' , 'Tài khoản đã được xác minh thành công');
                         break;
                 }
             } else {
-                foreach ($result_recognition->warning as $warning) {
-                    switch ($warning) {
-                        case 'giay_to_co_do_phan_giai_thap':
-                            return back()->with(['message' => 'Giấy tờ có độ phân giải thấp']);
-                        case 'giay_to_bi_mo':
-                            return back()->with(['message' => 'Giấy tờ có bị mờ']);
-                        case 'giay_to_bi_choi_sang':
-                            return back()->with(['message' => 'Giấy tờ bị chói sáng']);
-                        case 'chung_minh_nhan_dan_bi_mat_goc':
-                            return back()->with(['message' => 'Chứng minh nhân dân bị mất góc']);
-                        case 'thong_tin_bi_che_khuat':
-                            return back()->with(['message' => 'Thông tin giấy tờ bị che khuất']);
-                        case 'giay_to_qua_han':
-                            return back()->with(['message' => 'Giấy tờ tùy thân bị hết hạn']);
-                        case 'so_cmnd_cmnd_khong_hop_le':
-                            return back()->with(['message' => 'Số CMND, CCCD không hợp lệ']);
-                        case 'anh_giay_to_la_anh_photo':
-                            return back()->with(['message' => 'Ảnh giấy tờ là ảnh photo']);
+                $message_error = '';
+                if (count($result_recognition->warning) == 0 ||((count($result_recognition->warning) == 1) && (in_array('anh_giay_to_khong_chup_truc_tiep', $result_recognition->warning))) ){
+                }else{
+                    $message_error .= 'Lỗi mặt trước giấy tờ tùy thân: ';
+                    foreach ($result_recognition->warning as $warning) {
+                        switch ($warning) {
+                            case 'giay_to_co_do_phan_giai_thap':
+                                $message_error .= 'Giấy tờ có độ phân giải thấp, ';
+                            case 'giay_to_bi_mo':
+                                $message_error .= 'Giấy tờ có bị mờ, ';
+                            case 'giay_to_bi_choi_sang':
+                                $message_error .= 'Giấy tờ bị chói sáng, ';
+                            case 'chung_minh_nhan_dan_bi_mat_goc':
+                                $message_error .= 'Chứng minh nhân dân bị mất góc, ';
+                            case 'thong_tin_bi_che_khuat':
+                                $message_error .= 'Thông tin giấy tờ bị che khuất, ';
+                            case 'giay_to_qua_han':
+                                $message_error .= 'Giấy tờ tùy thân bị hết hạn, ';
+                            case 'so_cmnd_cmnd_khong_hop_le':
+                                $message_error .= 'Số CMND, CCCD không hợp lệ, ';
+                            case 'anh_giay_to_la_anh_photo':
+                                $message_error .= 'Ảnh giấy tờ là ảnh photo, ';
+                        }
                     }
+                
                 }
+                if (count($result_recognition_back->warning) == 0 ||((count($result_recognition_back->warning) == 1) && (in_array('anh_giay_to_khong_chup_truc_tiep', $result_recognition_back->warning))) ){
+                }else{
+                    $message_error .= ' Lỗi mặt sau giấy tờ tùy thân: ';
+                    foreach ($result_recognition_back->warning as $warning) {
+                        switch ($warning) {
+                            case 'giay_to_co_do_phan_giai_thap':
+                                $message_error .= 'Giấy tờ có độ phân giải thấp, ';
+                            case 'giay_to_bi_mo':
+                                $message_error .= 'Giấy tờ có bị mờ, ';
+                            case 'giay_to_bi_choi_sang':
+                                $message_error .= 'Giấy tờ bị chói sáng, ';
+                            case 'chung_minh_nhan_dan_bi_mat_goc':
+                                $message_error .= 'Chứng minh nhân dân bị mất góc, ';
+                            case 'thong_tin_bi_che_khuat':
+                                $message_error .= 'Thông tin giấy tờ bị che khuất, ';
+                            case 'giay_to_qua_han':
+                                $message_error .= 'Giấy tờ tùy thân bị hết hạn, ';
+                            case 'so_cmnd_cmnd_khong_hop_le':
+                                $message_error .= 'Số CMND, CCCD không hợp lệ, ';
+                            case 'anh_giay_to_la_anh_photo':
+                                $message_error .= 'Ảnh giấy tờ là ảnh photo, ';
+                        }
+                    }
+                
+                }
+                return back()->with(['message' => $message_error]);
+
+            
             }
         } else {
-            return back()->with(['message' => $result_recognition->result_message]);
+            return back()->with(['message' => 'Giấy tờ không xác định hoặc không hỗ trợ']);
+            // return back()->with(['message' => $result_recognition->result_message]);
+
         }
     }
 

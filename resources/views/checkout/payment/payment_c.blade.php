@@ -20,11 +20,11 @@
                     <h4 class="text-center">XÁC THỰC THANH TOÁN TIỀN TÍCH LŨY CÙNG C-MART</h4>
                 </div>
             </div>
-            <div class="row div col-12">
+            {{-- <div class="row div col-12">
                 @include('order_tracking.c_bill', [
                     'order' => $order,
                 ])
-            </div>
+            </div> --}}
 
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-6 col-md-6 col-12">
@@ -44,16 +44,15 @@
                     </div>
                     <div class="live_cam">
                         <hr>
-                        <label for="">Camera</label>
                         <video id="video" max-width="100%" autoplay></video>
                     </div>
                     <button id="start-camera" class="btn btn-primary w-100" type="button">Bắt đầu EKYC</button>
                 </div>
             </div>
             <div class="text-center check-ekyc">
-                <button class="btn btn-danger" type="submit">Bắt đầu duyệt EKYC</button>
+                <button class="btn btn-danger" type="submit" onClick="this.style.display='none';">Bắt đầu duyệt EKYC</button>
             </div>
-            <div class="row d-flex justify-content-center">
+            {{-- <div class="row d-flex justify-content-center">
                 <div class="col-6">
                     <a class="btn-back-cart"
                         href="{{ route('checkout.getPaymentMethod', ['order_code' => $order->order_code]) }}">Quay lại trang
@@ -61,7 +60,7 @@
 
                 </div>
 
-            </div>
+            </div> --}}
         </form>
     </div>
 @endsection

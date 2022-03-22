@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -11,7 +12,7 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $calculationUnit = Payment::all();
+        $calculationUnit = PaymentMethod::all();
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang quản lý hình thức thanh toán';
         Log::info($message);
         return view('admin.payment.index', compact('calculationUnit'));
@@ -19,7 +20,7 @@ class PaymentController extends Controller
 
     public function indexDatatable()
     {
-        $units = Payment::all();
+        $units = PaymentMethod::all();
         if($units) {
             return response()->json([
                 'message' => "Success!",
@@ -105,7 +106,7 @@ class PaymentController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $payment = Payment::where('id', $request->id)->update([
+        $payment = PaymentMethod::where('id', $request->id)->update([
             'status' => $request->status
         ]);
 

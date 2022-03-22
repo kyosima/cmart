@@ -40,7 +40,7 @@
 
                                     <input type="hidden" name="payment_method" value="{{ $payment_method->id }}" data-url="{{ route('payment.getInfo') }}">
                                     <div class="row" id="list-payment-method-options">
-                                        @foreach ($payment_method->options()->orderBy('id', 'asc')->get() as $payment_method_option)
+                                        @foreach ($payment_method->options()->whereStatus(1)->orderBy('id', 'asc')->get() as $payment_method_option)
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group text-center">
                                                     <input type="radio" class="form-control"
@@ -74,14 +74,14 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="row">
+                    <div class="row d-flex justify-content-center">
                         <div class="col-md-6 col-12">
-                            <a class="btn-back-cart"
+                            {{-- <a class="btn-back-cart"
                                 href="{{ route('checkout.getPaymentMethod', ['order_code' => $order->order_code]) }}">Quay
                                 lại trang trước</a>
 
                         </div>
-                        <div class="col-md-6 col-12">
+                        <div class="col-md-6 col-12"> --}}
                             <button class="btn-dathang" type="submit">Thanh toán</button>
                         </div>
                     </div>
