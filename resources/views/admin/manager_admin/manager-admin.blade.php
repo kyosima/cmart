@@ -37,6 +37,16 @@
                             </div>
                         </div>
                         <div class="mb-3">
+                            <label for="adminDVCQ" class="form-label">Đơn vị chủ quản</label>
+                            <input type="text" class="form-control" name="DVCQ" id="adminDVCQ" placeholder="Đơn vị chủ quản" value="{{old('DVCQ')}}" required>
+                            <div class="invalid-feedback">
+                                Vui lòng nhập đơn vị chủ quản
+                            </div>
+                            <div class="valid-feedback">
+                                Hợp lệ!
+                            </div>
+                        </div>
+                        <div class="mb-3">
                             <label for="adminPassword" class="form-label">Mật khẩu</label>
                             <input type="password" class="form-control" name="in_password" id="adminPassword" placeholder="Mật khẩu" required >
                             <div class="invalid-feedback">
@@ -57,10 +67,10 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="selRole" class="form-label">Vai trò</label>
-                            <select class="form-select select2" id="selRole" name="sel_role[]" size="5" multiple>
+                            <label for="selPermission" class="form-label">Vai trò</label>
+                            <select class="form-select select2" id="selPermission" name="sel_permission[]" size="5" multiple>
                                 <option value="">Vui lòng chọn</option>
-                                @foreach($roles as $value)
+                                @foreach($permissions as $value)
                                     <option value="{{$value->name}}">{{$value->name}}</option>
                                 @endforeach
                             </select>

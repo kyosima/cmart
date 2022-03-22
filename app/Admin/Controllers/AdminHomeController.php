@@ -37,7 +37,7 @@ class AdminHomeController extends Controller
         return redirect()->route('get.admin.login');
     }
     public function postLogin(Request $request){
-        if(Auth::guard('admin')->attempt(['name' => $request->in_name, 'password' => $request->in_password])){
+        if(Auth::guard('admin')->attempt($request->only('email','password'))){
             $user = User::all();
             foreach ($user->where('id','!=',1) as $us) {
                 $datePoint = $us->created_at->addMonth('1')->startOfDay();

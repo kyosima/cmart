@@ -26,8 +26,8 @@ class AdminManagerAdminController extends Controller
         //
         $admins = Admin::with('roles')->get();
         // return $admins;
-        $roles = Role::all();
-        return view('admin.manager_admin.manager-admin', compact('admins', 'roles'));
+        $permissions = Permission::all();
+        return view('admin.manager_admin.manager-admin', compact('admins', 'permissions'));
     }
 
     /**
@@ -72,9 +72,10 @@ class AdminManagerAdminController extends Controller
         $admin = Admin::create([
             'name' => $request->in_name,
             'email' => $request->in_email,
+            'DVCQ' => $request->DVCQ,
             'password' => bcrypt($request->in_password)
         ]);
-        $admin->assignRole($request->sel_role);
+        $admin->givePermissionTo($request->sel_permission);
         $role_name = $request->sel_role;
         $type = 'admin';
         $html = view('admin.template-render.render', compact('admin', 'type', 'role_name'))->render();
