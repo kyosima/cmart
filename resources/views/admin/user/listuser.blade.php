@@ -82,122 +82,125 @@
         <div class="container">
             <div class="m-3">
                 <div class="wrapper bg-white p-4">
-                    <table id="users-table" class="table table-striped table-bordered">
-                        <thead class="bg-dark text-light">
-                            <tr style="text-align:center">
-                                <th>Mã khách hàng</th>
-                                <th>Họ và tên</th>
-                                <th>Số điện thoại</th>
-                                <th>Định danh Khách Hàng</th>
-                                <th>Giá trị C từ mua SP/tháng</th>
-                                <th>Số dư C</th>
-
-                                <th>Trạng thái</th>
-                                <th>Trạng thái</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($user as $k)
-                                @php
-                                    $id_vitien = App\Models\PointC::where('user_id', '=', $k->id)->value('id');
-                                    $pointc_recei_month = App\Models\PointCHistory::where('point_c_idnhan', '=', $id_vitien)
-                                        ->whereMonth('created_at', Carbon\Carbon::today()->month)
-                                        ->sum('amount');
-                                @endphp
+                    <div class="table-responsive">
+                        <table id="users-table" class="table table-striped table-bordered">
+                            <thead class="bg-dark text-light">
                                 <tr style="text-align:center">
-                                    <td>
-                                    @if (auth()->guard('admin')->user()->can('Sửa+ẩn KH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))    
-                                        <a
-                                            href="{{ url('admin/danh-sach-user') }}/{{ $k->id }}">{{ $k->code_customer }}</a>
-                                    @else
-                                        {{ $k->code_customer }}
-                                    @endif
-                                    </td>
-                                    <td>{{ $k->hoten }}</td>
-                                    <td>{{ $k->phone }}</td>
-                                    <td>
-                                        {{ formatLevel($k->level) }}
-                                    </td>
-                                    <td>
-                                        {{ formatNumber($pointc_recei_month) }}
-                                    </td>
-                                    <td>
-                                        {{ formatNumber($k->point_c()->value('point_c')) }}
-                                    </td>
+                                    <th>Mã khách hàng</th>
+                                    <th>Họ và tên</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Định danh Khách Hàng</th>
+                                    <th>Giá trị C từ mua SP/tháng</th>
+                                    <th>Số dư C</th>
 
-                                    <td style="text-align: -webkit-center;">
+                                    <th>Trạng thái</th>
+                                    <th>Trạng thái</th>
 
-                                        <div class="input-group" style="min-width: 108px;">
-                                            <span style=" max-width: 82px;min-width: 82px;" type="text"
-                                                class="form-control form-control-sm font-size-s text-white  @if ($pointc_recei_month < 3000000 || $k->level > 0) @if ($k->status == 1) active @else stop @endif @else bg-danger @endif text-center"
-                                                aria-label="Text input with dropdown button">
-                                                @if ($pointc_recei_month < 3000000 || $k->level > 0)
-                                                    @if ($k->status == 1)
-                                                        Hoạt động
-                                                    @else
-                                                        Ngừng
-                                                    @endif
-                                                @else
-                                                <a href="{{ route('user.upgradeVip', $k->id) }}" class="text-light"> Nâng cấp V.I.P</a>
-                                                @endif
-                                            </span>
-                                            <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
-                                                    aria-hidden="true"></i></button>
-                                                     
-                                                    <ul class="dropdown-menu dropdown-menu-end">
-                                                    @if (auth()->guard('admin')->user()->can('Sửa+ẩn KH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
-                                                <li>
-                                                    <a href="{{ route('user.changeStatus', $k->id) }}">
-
-                                                        <span class="dropdown-item changeStatus">
-                                                            @if ($k->status == 0)
-                                                                Hoạt động
-                                                            @else
-                                                                Ngừng
-                                                            @endif
-
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                @endif
-                                                @if (auth()->guard('admin')->user()->can('Sửa+ẩn KH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))) 
-                                                <li>
-                                                    <a href="{{ route('user.upgradeVip', $k->id) }}"> <span
-                                                            class="dropdown-item btn-delete">
-                                                            Nâng cấp VIP
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                @endif
-                                            </ul>
-                                        </div>
-                                        {{-- elseif(($k->point_c()->value('point_c') >= 5000000 && $k->level == 1) || ($k->tichluyC >= 30000000 && $k->level == 2))
-                                            @endif --}}
-                                    </td>
-                                    <td>
-                                        @if ($k->status == 0)
-                                            Hoạt động
-                                        @else
-                                            Ngừng
-                                        @endif
-
-                                    </td>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($user as $k)
+                                    @php
+                                        $id_vitien = App\Models\PointC::where('user_id', '=', $k->id)->value('id');
+                                        $pointc_recei_month = App\Models\PointCHistory::where('point_c_idnhan', '=', $id_vitien)
+                                            ->whereMonth('created_at', Carbon\Carbon::today()->month)
+                                            ->sum('amount');
+                                    @endphp
+                                    <tr style="text-align:center">
+                                        <td>
+                                            @if (auth()->guard('admin')->user()->can('Sửa+ẩn KH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                <a
+                                                    href="{{ url('admin/danh-sach-user') }}/{{ $k->id }}">{{ $k->code_customer }}</a>
+                                            @else
+                                                {{ $k->code_customer }}
+                                            @endif
+                                        </td>
+                                        <td>{{ $k->hoten }}</td>
+                                        <td>{{ $k->phone }}</td>
+                                        <td>
+                                            {{ formatLevel($k->level) }}
+                                        </td>
+                                        <td>
+                                            {{ formatNumber($pointc_recei_month) }}
+                                        </td>
+                                        <td>
+                                            {{ formatNumber($k->point_c()->value('point_c')) }}
+                                        </td>
+
+                                        <td style="text-align: -webkit-center;">
+
+                                            <div class="input-group" style="min-width: 108px;">
+                                                <span style=" max-width: 82px;min-width: 82px;" type="text"
+                                                    class="form-control form-control-sm font-size-s text-white  @if ($pointc_recei_month < 3000000 || $k->level > 0) @if ($k->status == 1) active @else stop @endif
+@else
+bg-danger @endif text-center"
+                                                    aria-label="Text input with dropdown button">
+                                                    @if ($pointc_recei_month < 3000000 || $k->level > 0)
+                                                        @if ($k->status == 1)
+                                                            Hoạt động
+                                                        @else
+                                                            Ngừng
+                                                        @endif
+                                                    @else
+                                                        <a href="{{ route('user.upgradeVip', $k->id) }}"
+                                                            class="text-light"> Nâng cấp V.I.P</a>
+                                                    @endif
+                                                </span>
+                                                <button class="btn bg-status-drop border-0 text-white py-0 px-2"
+                                                    type="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                        class="fa fa-angle-down" aria-hidden="true"></i></button>
+
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    @if (auth()->guard('admin')->user()->can('Sửa+ẩn KH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                        <li>
+                                                            <a href="{{ route('user.changeStatus', $k->id) }}">
+
+                                                                <span class="dropdown-item changeStatus">
+                                                                    @if ($k->status == 0)
+                                                                        Hoạt động
+                                                                    @else
+                                                                        Ngừng
+                                                                    @endif
+
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                    @if (auth()->guard('admin')->user()->can('Sửa+ẩn KH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                        <li>
+                                                            <a href="{{ route('user.upgradeVip', $k->id) }}"> <span
+                                                                    class="dropdown-item btn-delete">
+                                                                    Nâng cấp VIP
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                            {{-- elseif(($k->point_c()->value('point_c') >= 5000000 && $k->level == 1) || ($k->tichluyC >= 30000000 && $k->level == 2))
+                                            @endif --}}
+                                        </td>
+                                        <td>
+                                            @if ($k->status == 0)
+                                                Hoạt động
+                                            @else
+                                                Ngừng
+                                            @endif
+
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-
-
     </body>
-
 @endsection
-
-
 @push('scripts')
     <script src="{{ asset('js/admin/amcharts.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/admin/serial.js') }}" type="text/javascript"></script>
@@ -260,8 +263,7 @@
                     "thousands": ".",
                 },
                 dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-                buttons: [
-                ],
+                buttons: [],
             });
         });
 

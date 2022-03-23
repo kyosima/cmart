@@ -36,7 +36,7 @@
                     </div> -->
                     <div class="input-group mb-3">
                         <span class="input-group-text w-input-group" id="basic-addon1"><i class="fa fa-user-o"></i></span>
-                        <input type="text" class="form-control" name="email" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" name="email" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text w-input-group" id="basic-addon1"><i class="fa fa-unlock-alt"></i></span>
