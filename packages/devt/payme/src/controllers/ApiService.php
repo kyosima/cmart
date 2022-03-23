@@ -59,10 +59,9 @@ class ApiService
       ])->post($this->domain, [
         'x-api-message' => $xApiMessage
       ]);
-  
+      // return $response;
       $result = json_decode($response, true);
-  
-      if(count($result) > 1){
+      if(!$result || count($result) > 1){
           $array = array(
             'code' => 1071997,
             'message' => 'Thực hiện không thành công' 

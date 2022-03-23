@@ -55,7 +55,7 @@ class AdminPermissionsController extends Controller
         }
         $permission = Permission::create(['guard_name' => 'admin', 'name' => $request->in_name]);
 
-        $roles = Permission::where('name', 'All Permissions')->first()->roles;
+        $roles = Permission::where('name', config('custom-config.name-all-permission'))->first()->roles;
         foreach ($roles as $value){
             $value->givePermissionTo($permission);
         }

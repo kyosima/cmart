@@ -29,14 +29,15 @@ use App\Admin\Controllers\AdminPointController;
 
 Route::group(['middleware' => ['admin']], function () {
     // Route::resource('permissions', AdminPermissionsController::class);
-    Route::get('danh-sach-user', [UserController::class, 'getDanhsach']);
+    
     Route::get('doi-trang-thai-user/{id}', [UserController::class, 'changeStatusUser'])->name('user.changeStatus');
-    Route::get('/nang-cap-vip/{id}', [UserController::class, 'upgrageVipUser'])->name('user.upgradeVip');
-    Route::get('/nang-cap-user/{id}', [UserController::class, 'postDanhsach']);
+    Route::get('/nang-cap-vip/{id}', [UserController::class, 'upgrageVipUser'])->name('user.upgradeVip')->middleware('permission:Sửa+ẩn KH|'.config('custom-config.name-all-permission').',admin');
+    Route::get('/nang-cap-user/{id}', [UserController::class, 'postDanhsach'])->middleware('permission:Sửa+ẩn KH|'.config('custom-config.name-all-permission').',admin');
 
-    Route::group(['prefix' => 'danh-sach-user'], function () {
+    Route::group(['prefix' => 'danh-sach-user', 'middleware' => ['permission:Truy cập mục KH|'.config('custom-config.name-all-permission').',admin']], function () {
+        Route::get('/', [UserController::class, 'getDanhsach']);
         Route::get('{id}', [UserController::class, 'getEdit'])->name('user.detail');
-        Route::post('{id}', [UserController::class, 'postEdit']);
+        Route::post('{id}', [UserController::class, 'postEdit'])->middleware('permission:Sửa+ẩn KH|'.config('custom-config.name-all-permission').',admin');
     });
     Route::group(['prefix' => 'don-hang'], function () {
         Route::get('xem-c-bill', [AdminOrderController::class, 'viewCbill'])->name('order.viewCbill');
@@ -84,8 +85,8 @@ Route::group(['middleware' => ['admin']], function () {
 
     //đơn hàng
     // xem ds đơn Hàng
-    Route::get('don-hang', [AdminOrderController::class, 'index'])->name('order.index')->middleware('permission:Xem DS đơn hàng,admin');
-    Route::get('don-hang/change-status-order-store', [AdminOrderController::class, 'changeStatusOrderStore'])->name('order.changeStatus')->middleware('permission:Chuyển trạng thái đơn hàng,admin');
+    Route::get('don-hang', [AdminOrderController::class, 'index'])->name('order.index')->middleware('permission:Truy cập mục Đơn hàng|'.config('custom-config.name-all-permission').',admin');
+    Route::get('don-hang/change-status-order-store', [AdminOrderController::class, 'changeStatusOrderStore'])->name('order.changeStatus')->middleware('permission:Chuyển trạng thái đơn hàng|'.config('custom-config.name-all-permission').',admin');
 
     // tạo đơn Hàng
     Route::get('lay-khach-hang', [AdminOrderController::class, 'getCustomer'])->middleware('permission:Xem DS đơn hàng,admin');
@@ -101,7 +102,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('xuat-excel-tat-ca-don-hang', [AdminOrderController::class, 'export'])->name('order.exports')->middleware('permission:Xem DS đơn hàng,admin');
 
     // Xem đơn Hàng
-    Route::get('chi-tiet-don-hang/{order:id}', [AdminOrderController::class, 'show'])->name('order.show')->middleware('permission:Xem đơn hàng,admin');
+    Route::get('chi-tiet-don-hang/{order:id}', [AdminOrderController::class, 'show'])->name('order.show')->middleware('permission:Chỉnh sửa Ghi chú đơn hàng|'.config('custom-config.name-all-permission').',admin');
     // sửa đơn Hàng
     Route::put('cap-nhat-don-hang/{order:id}', [AdminOrderController::class, 'update'])->name('order.update')->middleware('permission:Cập nhật đơn hàng,admin');
 
@@ -118,36 +119,36 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('lay-phuong-xa-theo-quan-huyen', [AdminOrderController::class, 'wardOfDistrict']);
 
     // thông tin cty
-    Route::group(['prefix' => 'info-company'], function () {
+    Route::group(['prefix' => 'info-company', 'middleware' => ['permission:Truy cập+tạo+sửa+xóa+ẩn mục Trang|'.config('custom-config.name-all-permission').',admin']], function () {
 
         //danh sách
-        Route::get('/', [AdminInfoCompanyController::class, 'index'])->name('info-company.index')->middleware('permission:Xem DS trang đơn,admin');
+        Route::get('/', [AdminInfoCompanyController::class, 'index'])->name('info-company.index');
 
         //tạo
-        Route::get('create', [AdminInfoCompanyController::class, 'create'])->name('info-company.create')->middleware('permission:Tạo trang đơn,admin');
-        Route::post('store', [AdminInfoCompanyController::class, 'store'])->name('info-company.store')->middleware('permission:Tạo trang đơn,admin');
+        Route::get('create', [AdminInfoCompanyController::class, 'create'])->name('info-company.create');
+        Route::post('store', [AdminInfoCompanyController::class, 'store'])->name('info-company.store');
 
         //sửa
-        Route::get('edit/{info_company:id}', [AdminInfoCompanyController::class, 'edit'])->name('info-company.edit')->middleware('permission:Xem trang đơn,admin');
-        Route::put('update/{info_company:id}', [AdminInfoCompanyController::class, 'update'])->name('info-company.update')->middleware('permission:Cập nhật trang đơn,admin');
+        Route::get('edit/{info_company:id}', [AdminInfoCompanyController::class, 'edit'])->name('info-company.edit');
+        Route::put('update/{info_company:id}', [AdminInfoCompanyController::class, 'update'])->name('info-company.update');
 
         //xóa
-        Route::match(['delete', 'get'], 'delete/{info_company:id}', [AdminInfoCompanyController::class, 'delete'])->name('info-company.delete')->middleware('permission:Xóa trang đơn,admin');
+        Route::match(['delete', 'get'], 'delete/{info_company:id}', [AdminInfoCompanyController::class, 'delete'])->name('info-company.delete');
         Route::post('xu-ly-nhieu', [AdminInfoCompanyController::class, 'multiple'])->name('info-company.multiple');
     });
 
     //banner
-    Route::group(['prefix' => 'banner'], function () {
+    Route::group(['prefix' => 'banner', 'middleware' => ['permission:Truy cập+tạo+sửa+xóa+ẩn mục Banner|'.config('custom-config.name-all-permission').',admin']], function () {
         //danh sách
-        Route::get('/', [AdminBannerController::class, 'index'])->name('admin.banner.index')->middleware('permission:Xem DS trang đơn,admin');
-        Route::post('store', [AdminBannerController::class, 'store'])->name('admin.banner.store')->middleware('permission:Tạo trang đơn,admin');
+        Route::get('/', [AdminBannerController::class, 'index'])->name('admin.banner.index');
+        Route::post('store', [AdminBannerController::class, 'store'])->name('admin.banner.store');
         //sửa
-        Route::get('edit/{type}', [AdminBannerController::class, 'edit'])->name('admin.banner.edit')->middleware('permission:Xem trang đơn,admin');
-        Route::put('update', [AdminBannerController::class, 'update'])->name('admin.banner.update')->middleware('permission:Cập nhật trang đơn,admin');
+        Route::get('edit/{type}', [AdminBannerController::class, 'edit'])->name('admin.banner.edit');
+        Route::put('update', [AdminBannerController::class, 'update'])->name('admin.banner.update');
         Route::delete('delete/{Banner:id}', [AdminBannerController::class, 'delete'])->name('admin.banner.delete');
     });
 
-    Route::group(['middleware' => ['role:Boss,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục Admin|'.config('custom-config.name-all-permission').',admin']], function () {
         //
         Route::resource('roles', AdminRolesController::class);
         Route::resource('permissions', AdminPermissionsController::class);
@@ -157,7 +158,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('xu-ly-nhieu-admin', [AdminManagerAdminController::class, 'multiple'])->name('manager-admin.multiple');
     });
 
-    Route::group(['middleware' => ['role:Boss|Manager,admin']], function () {
+    Route::group(['middleware' => ['permission:'.config('custom-config.name-all-permission').',admin']], function () {
         //setting
         Route::get('setting', [AdminSettingController::class, 'index'])->name('setting.index');
 
@@ -169,28 +170,28 @@ Route::group(['middleware' => ['admin']], function () {
     });
 
     // CỬA HÀNG
-    Route::group(['middleware' => ['permission:Xem cửa hàng,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập CH|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/cua-hang', [AdminStoreController::class, 'index'])->name('store.index');
     });
 
-    Route::group(['middleware' => ['permission:Thêm cửa hàng,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::post('/cua-hang', [AdminStoreController::class, 'store'])->name('store.store');
     });
-
-    Route::group(['middleware' => ['permission:Chỉnh sửa cửa hàng,admin']], function () {
+    
+    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|Chỉnh sửa Tồn kho cho CH chỉ định|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::put('/cua-hang/{id}', [AdminStoreController::class, 'update'])->name('store.update');
     });
 
-    Route::group(['middleware' => ['permission:Thêm cửa hàng|Chỉnh sửa cửa hàng,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|Chỉnh sửa cửa hàng,admin']], function () {
         Route::get('/cua-hang/get-location', [AdminStoreController::class, 'getLocation'])->name('store.getLocation');
         Route::get('/cua-hang/list-owners', [AdminStoreController::class, 'getListOwner'])->name('store.getListOwner');
     });
 
-    Route::group(['middleware' => ['permission:Chỉnh sửa sản phẩm cửa hàng,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|Chỉnh sửa Tồn kho cho CH chỉ định|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::post('/cua-hang/them-san-pham', [AdminStoreController::class, 'storeProduct'])->name('store.storeProduct');
         Route::delete('/cua-hang/san-pham/{id_store}/{id_product}', [AdminStoreController::class, 'deleteProductStore'])->name('store.deleteProductStore');
     });
-    Route::group(['middleware' => ['permission:Chỉnh sửa sản phẩm cửa hàng|Chỉnh sửa cửa hàng,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|Chỉnh sửa Tồn kho cho CH chỉ định|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/cua-hang/edit/{slug}/{id}', [AdminStoreController::class, 'edit'])->name('store.edit');
         Route::get('/cua-hang/searchProduct', [AdminStoreController::class, 'getProduct'])->name('store.getProduct');
         Route::get('/cua-hang/list-product', [AdminStoreController::class, 'getListProduct'])->name('store.getListProduct');
@@ -198,7 +199,7 @@ Route::group(['middleware' => ['admin']], function () {
 
     });
 
-    Route::group(['middleware' => ['permission:Xóa cửa hàng,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::post('/cua-hang/multiple-change', [AdminStoreController::class, 'multiChange'])->name('store.multiChange');
         Route::delete('/cua-hang/{id}', [AdminStoreController::class, 'delete'])->name('store.delete');
     });
@@ -206,26 +207,26 @@ Route::group(['middleware' => ['admin']], function () {
 
     // COUPON
     // được phép xem mã ưu đãi
-    Route::group(['middleware' => ['permission:Xem mã ưu đãi,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục Ưu đãi|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/coupon', [AdminCouponController::class, 'index'])->name('coupon.index');
         Route::get('/coupon/getDatatable', [AdminCouponController::class, 'indexDatatable'])->name('coupon.indexDatatable');
     });
     // được phép thêm mã ưu đãi
-    Route::group(['middleware' => ['permission:Thêm mã ưu đãi,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+sửa Ưu đãi|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/coupon/create', [AdminCouponController::class, 'create'])->name('coupon.create');
         Route::post('/coupon/create', [AdminCouponController::class, 'store'])->name('coupon.store');
     });
     // được phép chỉnh sửa mã ưu đãi
-    Route::group(['middleware' => ['permission:Chỉnh sửa mã ưu đãi,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+sửa Ưu đãi|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/coupon/edit/{id?}', [AdminCouponController::class, 'edit'])->name('coupon.edit');
         Route::put('/coupon/{id}', [AdminCouponController::class, 'update'])->name('coupon.update');
     });
     // được phép XÓA mã ưu đãi
-    Route::group(['middleware' => ['permission:Xóa mã ưu đãi,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+sửa Ưu đãi|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::delete('/coupon', [AdminCouponController::class, 'delete'])->name('coupon.delete');
         Route::delete('/coupon/multiple-delete', [AdminCouponController::class, 'multipleDestory'])->name('coupon.multipleDestroy');
     });
-    Route::group(['middleware' => ['permission:Thêm mã ưu đãi|Chỉnh sửa mã ưu đãi,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+sửa Ưu đãi|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/coupon/searchProduct', [AdminCouponController::class, 'getProduct'])->name('coupon.getProduct');
         Route::get('/coupon/searchProCat', [AdminCouponController::class, 'getProCat'])->name('coupon.getProCat');
         Route::get('/coupon/searchCustomer', [AdminCouponController::class, 'getCustomer'])->name('coupon.searchCustomer');
@@ -239,60 +240,60 @@ Route::group(['middleware' => ['admin']], function () {
 
     });
 
-    Route::group(['middleware' => ['permission:Xóa mã ưu đãi|Chỉnh sửa mã ưu đãi,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+sửa Ưu đãi|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::post('/coupon/multiple-change', [AdminCouponController::class, 'multiChange'])->name('coupon.multiChange');
     });
     // Route::delete('/coupon/{id}', [AdminCouponController::class, 'deleteForm'])->name('coupon.deleteForm');
 
     // PRODUCT
     // được phép xem sản phẩm
-    Route::group(['middleware' => ['permission:Xem sản phẩm,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục TTSP|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/san-pham', [AdminProductController::class, 'index'])->name('san-pham.index');
         Route::get('/san-pham/getDatatable', [AdminProductController::class, 'indexDatatable'])->name('san-pham.indexDatatable');
     });
 
     // được phép thêm sản phẩm
-    Route::group(['middleware' => ['permission:Thêm sản phẩm,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+sửa+xóa SP|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/tao-san-pham', [AdminProductController::class, 'create'])->name('san-pham.create');
         Route::post('/san-pham', [AdminProductController::class, 'store'])->name('san-pham.store');
     });
 
     // được phép chỉnh sửa sản phẩm
-    Route::group(['middleware' => ['permission:Chỉnh sửa sản phẩm,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+sửa+xóa SP|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/san-pham/edit/{id}', [AdminProductController::class, 'edit'])->name('san-pham.edit');
         Route::put('/san-pham/update/{id}', [AdminProductController::class, 'update'])->name('san-pham.update');
     });
 
     // được phép XÓA sản phẩm
-    Route::group(['middleware' => ['permission:Xóa sản phẩm,admin']], function () {
+    Route::group(['middleware' => ['permission:Tạo+sửa+xóa SP|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::delete('/san-pham/delete/{id}', [AdminProductController::class, 'destroy'])->name('san-pham.delete');
     });
 
-    Route::group(['middleware' => ['permission:Thêm sản phẩm|Chỉnh sửa sản phẩm,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục TTSP|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/san-pham/searchProduct', [AdminProductController::class, 'getProduct'])->name('san-pham.getProduct');
         Route::get('/san-pham/searchProductCategory', [AdminProductController::class, 'getProCat'])->name('san-pham.getProCat');
     });
 
-    Route::group(['middleware' => ['permission:Xóa sản phẩm|Chỉnh sửa sản phẩm,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục TTSP|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::post('/san-pham/multiple-change', [AdminProductController::class, 'multiChange'])->name('san-pham.multiChange');
     });
 
 
     // PRODUCT CATEGORIES
     // được phép xem danh mục sản phẩm
-    Route::group(['middleware' => ['permission:Xem danh mục sản phẩm,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/nganh-nhom-hang', [AdminProductCategoryController::class, 'index'])->name('nganh-nhom-hang.index');
         Route::get('/nganh-nhom-hang/show-child/{parentId}/level/{level}', [AdminProductCategoryController::class, 'showChild'])->name('nganh-nhom-hang.showChild');
     });
 
     // được phép thêm danh mục sản phẩm
-    Route::group(['middleware' => ['permission:Thêm danh mục sản phẩm,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::post('/nganh-nhom-hang', [AdminProductCategoryController::class, 'store'])->name('nganh-nhom-hang.store');
         Route::get('/nganh-nhom-hang/get-category', [AdminProductCategoryController::class, 'getCategory'])->name('nganh-nhom-hang.getCategory');
     });
 
     // được phép chỉnh sửa danh mục sản phẩm
-    Route::group(['middleware' => ['permission:Chỉnh sửa danh mục sản phẩm,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/nganh-nhom-hang/edit/{id}', [AdminProductCategoryController::class, 'edit'])->name('nganh-nhom-hang.edit');
         Route::get('/nganh-nhom-hang/modal-edit', [AdminProductCategoryController::class, 'modalEdit'])->name('nganh-nhom-hang.modalEdit');
         Route::put('/nganh-nhom-hang/update/{id}', [AdminProductCategoryController::class, 'update'])->name('nganh-nhom-hang.update');
@@ -302,29 +303,29 @@ Route::group(['middleware' => ['admin']], function () {
     });
 
     // được phép XÓA danh mục sản phẩm
-    Route::group(['middleware' => ['permission:Xóa danh mục sản phẩm,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::delete('/nganh-nhom-hang/delete/{id}', [AdminProductCategoryController::class, 'destroy'])->name('nganh-nhom-hang.delete');
     });
 
-    Route::group(['middleware' => ['permission:Xóa danh mục sản phẩm|Chỉnh sửa danh mục sản phẩm,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::post('/nganh-nhom-hang/multiple-change', [AdminProductCategoryController::class, 'multiChange'])->name('nganh-nhom-hang.multiChange');
     });
 
     // Route::get('/nganh-nhom-hang/test/{id}/{status}/{levelChange}', [AdminProductCategoryController::class, 'recursive'])->name('nganh-nhom-hang.recursive');
     //HistoryPoint
 
-    Route::group(['prefix'=>'diem-tich-luy','middleware' => ['permission:Xem lịch sử điểm,admin']], function () {
+    Route::group(['prefix'=>'diem-tich-luy','middleware' => ['permission:Truy cập mục TTL|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('lich-su-nhan-diem', [AdminPointController::class, 'getHistoryReceiverC'])->name('point.historyReceiver');
         Route::get('lich-su-tich-luy', [AdminPointController::class, 'getAccumulationC'])->name('point.historyAccumulation');
-        Route::get('chuyen-khoan', [AdminPointController::class, 'getTransfer'])->name('point.Transfer');
-        Route::post('chuyen-khoan', [AdminPointController::class, 'postTransfer'])->name('point.postTransfer');
+        Route::get('chuyen-khoan', [AdminPointController::class, 'getTransfer'])->name('point.Transfer')->middleware('permission:Chuyển C từ TK C-Mart|'.config('custom-config.name-all-permission').',admin');
+        Route::post('chuyen-khoan', [AdminPointController::class, 'postTransfer'])->name('point.postTransfer')->middleware('permission:Chuyển C từ TK C-Mart|'.config('custom-config.name-all-permission').',admin');
         Route::get('lich-su-chuyen-khoan', [AdminPointController::class, 'getHistoryTransfer'])->name('point.historyTransfer');
         Route::get('lich-su-hoan-don-hang-huy', [AdminPointController::class, 'getHistoryRefund'])->name('point.historyRefund');
         Route::get('thong-ke', [AdminPointController::class, 'getStatistical'])->name('point.getStatistical');
         Route::get('thanh-toan-tiet-kiem', [AdminPointController::class, 'getHistorySaving'])->name('point.getHistorySaving');
         Route::get('lich-su-tich-luy-m', [AdminPointController::class, 'getHistoryAccumulationM'])->name('point.historyAccumulationM');
         Route::get('tai-khoan-cmart', [AdminPointController::class, 'getStatisticalAccount'])->name('point.account');
-        Route::post('nap-c', [AdminPointController::class, 'postDeposit'])->name('point.deposit');
+        Route::post('nap-c', [AdminPointController::class, 'postDeposit'])->name('point.deposit')->middleware('permission:Nạp thêm C vào tk C-Mart|'.config('custom-config.name-all-permission').',admin');
         Route::get('thong-ke-so-du-c', [AdminPointController::class, 'getRememberC'])->name('point.getRememberC');
 
 
@@ -422,33 +423,33 @@ Route::group(['middleware' => ['admin']], function () {
 
     // HÌNH THỨC THANH TOÁN
     // được phép xem HTTT
-    Route::group(['middleware' => ['permission:Xem HTTT,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục HTTT + ẩn|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
         Route::get('/payment/getDatatable', [PaymentController::class, 'indexDatatable'])->name('payment.indexDatatable');
     });
     // được phép thêm HTTT
-    Route::group(['middleware' => ['permission:Thêm HTTT,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục HTTT + ẩn|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
     });
 
 
     // được phép chỉnh sửa HTTT
-    Route::group(['middleware' => ['permission:Chỉnh sửa HTTT,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục HTTT + ẩn|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/payment/modal-edit', [PaymentController::class, 'modalEdit'])->name('payment.modalEdit');
         Route::put('/payment/update', [PaymentController::class, 'update'])->name('payment.update');
         Route::put('/payment/update-status', [PaymentController::class, 'updateStatus'])->name('payment.updateStatus');
     });
     // được phép XÓA HTTT
-    Route::group(['middleware' => ['permission:Xóa HTTT,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục HTTT + ẩn|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::delete('/payment/delete', [PaymentController::class, 'destroy'])->name('payment.delete');
         Route::delete('/payment/multiple-delete', [PaymentController::class, 'multipleDestroy'])->name('payment.multipleDestroy');
     });
 
-    Route::group(['middleware' => ['permission:Xóa HTTT|Chỉnh sửa HTTT,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục HTTT + ẩn|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::post('/payment/multiple-change', [PaymentController::class, 'multiChange'])->name('payment.multiChange');
     });
     // được phép thêm, xóa, sửa hình thức thanh toán cho đơn hàng
-    Route::group(['middleware' => ['permission:Quản lý đơn vị thanh toán,admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục HTTT + ẩn|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/hinh-thuc-thanh-toan-don-hang', [PaymentMethodController::class, 'index'])->name('paymentmethod.index');
         Route::get('/hinh-thuc-thanh-toan-don-hang/getDatatable', [PaymentMethodController::class, 'indexDatatable'])->name('paymentmethod.indexDatatable');
         Route::post('/hinh-thuc-thanh-toan-don-hang', [PaymentMethodController::class, 'store'])->name('paymentmethod.store');

@@ -106,8 +106,13 @@
                                         ->sum('amount');
                                 @endphp
                                 <tr style="text-align:center">
-                                    <td><a
+                                    <td>
+                                    @if (auth()->guard('admin')->user()->can('Sửa+ẩn KH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))    
+                                        <a
                                             href="{{ url('admin/danh-sach-user') }}/{{ $k->id }}">{{ $k->code_customer }}</a>
+                                    @else
+                                        {{ $k->code_customer }}
+                                    @endif
                                     </td>
                                     <td>{{ $k->hoten }}</td>
                                     <td>{{ $k->phone }}</td>
@@ -140,7 +145,9 @@
                                             <button class="btn bg-status-drop border-0 text-white py-0 px-2" type="button"
                                                 data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-angle-down"
                                                     aria-hidden="true"></i></button>
-                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                     
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                    @if (auth()->guard('admin')->user()->can('Sửa+ẩn KH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                 <li>
                                                     <a href="{{ route('user.changeStatus', $k->id) }}">
 
@@ -154,6 +161,8 @@
                                                         </span>
                                                     </a>
                                                 </li>
+                                                @endif
+                                                @if (auth()->guard('admin')->user()->can('Sửa+ẩn KH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))) 
                                                 <li>
                                                     <a href="{{ route('user.upgradeVip', $k->id) }}"> <span
                                                             class="dropdown-item btn-delete">
@@ -161,6 +170,7 @@
                                                         </span>
                                                     </a>
                                                 </li>
+                                                @endif
                                             </ul>
                                         </div>
                                         {{-- elseif(($k->point_c()->value('point_c') >= 5000000 && $k->level == 1) || ($k->tichluyC >= 30000000 && $k->level == 2))

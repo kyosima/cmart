@@ -348,7 +348,7 @@
                                                                             <span
                                                                                 class="order-note">{{ optional($order->order_info)->note }}
                                                                             </span>
-                                                                            @if (auth()->guard('admin')->user()->can('Xem đơn hàng'))
+                                                                            @if (auth()->guard('admin')->user()->can('Chỉnh sửa Ghi chú đơn hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                                                 <a href="{{ route('order.show', ['order' => $order->id]) }}"
                                                                                     target="_blank"
                                                                                     class="text-danger"><i
@@ -373,7 +373,7 @@
                                                                                     aria-expanded="false"><i
                                                                                         class="fa fa-angle-down text-primary"
                                                                                         aria-hidden="true"></i></button>
-                                                                                @if (auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng'))
+                                                                                        @if (auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                                                     <ul
                                                                                         class="dropdown-menu dropdown-menu-end">
                                                                                         <li>

@@ -96,10 +96,10 @@
                     <div class="caption">
                         <i class="fa fa-anchor icon-drec" aria-hidden="true"></i>
                         <span class="caption-subject text-uppercase">
-                            DANH SÁCH HÌNH THỨC THANH TOÁN </span>
+                            DANH SÁCH HÌNH THỨC THANH TOÁN</span>
                         <span class="caption-helper"></span>
                     </div>
-                    @if (auth()->guard('admin')->user()->can('Thêm HTTT'))
+                    @if (auth()->guard('admin')->user()->can('Truy cập mục HTTT + ẩn') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))
                         <div class="ps-4">
                             <a href="#payment_option_create" data-toggle="modal" class="btn btn-add"><i
                                     class="fa fa-plus"></i>

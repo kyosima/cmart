@@ -138,8 +138,10 @@ $(document).on('click', '.ajax-get-admin', function(e){
 });
 
 $(document).on('click', '.ajax-edit', function(e){
+    $("#offcanvas_edit").find('input[name="in_fullname_edit"]').val($(this).data('fullname'));
     $("#offcanvas_edit").find('input[name="in_name_edit"]').val($(this).data('name'));
     $("#offcanvas_edit").find('input[name="in_id_edit"]').val($(this).data('id'));
+    $("#offcanvas_edit").find('input[name="DVCQ"]').val($(this).data('dvcq'));
     bsOffcanvas.show();
 });
 

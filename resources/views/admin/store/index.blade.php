@@ -14,7 +14,7 @@
             display: none;
         }
     </style>
-    @if (auth()->guard('admin')->user()->can('Thêm cửa hàng'))
+    @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
         <!-- Modal TẠO CỬA HÀNG MỚI -->
         <div class="modal fade" id="warehouse_create" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -128,7 +128,7 @@
                                         DANH SÁCH CỬA HÀNG </span>
                                     <span class="caption-helper"></span>
                                 </div>
-                                @if (auth()->guard('admin')->user()->can('Thêm cửa hàng'))
+                                @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                     <div class="ps-4">
                                         <a href="#warehouse_create" data-toggle="modal" class="btn btn-add"><i
                                                 class="fa fa-plus"></i>
@@ -163,35 +163,38 @@
                                                     <tr>
                                                         <td></td>
                                                         <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->owner->name }} ({{ $item->owner->email }})</td>
-                                                        {{-- <td>{{ $item->address .', P.' .$item->ward->tenphuongxa .', Q.' .$item->district->tenquanhuyen .', ' .$item->province->tentinhthanh }}
+                                                        <td>{{ optional($item->owner)->fullname }} ({{ optional($item->owner)->email }})</td>
+                                                        {{-- <td>{{ $item->address .', P.' .optional($item->ward)->tenphuongxa .', Q.' .optional($item->district)->tenquanhuyen .', ' .optional($item->province)->tentinhthanh }}
                                                         </td> --}}
                                                         <td>{{ $item->products()->count() }}</td>
                                                         <td>{{ $item->product_stores()->sum('soluong') }}</td>
                                                         <td>
+                                                        @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                             <a class="btn modal-edit-unit"
                                                                 href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
                                                                 <i class="fas fa-pen"></i>
                                                             </a>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @else
-                                                    @if ($item->owner->id == $admin->id)
+                                                    @if (optional($item->owner)->id == $admin->id)
                                                         <tr>
-                                                            <td></td>
+                                                            
                                                             <td>{{ $item->id }}</td>
                                                             <td>{{ $item->name }}</td>
-                                                            <td>{{ $item->owner->name }} ({{ $item->owner->email }})
+                                                            <td>{{ optional($item->owner)->fullname }} ({{ optional($item->owner)->email }})
                                                             </td>
-                                                            <td>{{ $item->address .', P.' .$item->ward->tenphuongxa .', Q.' .$item->district->tenquanhuyen .', ' .$item->province->tentinhthanh }}
+                                                            <td>{{ $item->address .', P.' .optional($item->ward)->tenphuongxa .', Q.' .optional($item->district)->tenquanhuyen .', ' .optional($item->province)->tentinhthanh }}
                                                             </td>
                                                             <td>{{ $item->products()->count() }}</td>
-                                                            <td></td>
                                                             <td>
+                                                            @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                                 <a class="btn modal-edit-unit"
                                                                     href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
                                                                     <i class="fas fa-pen"></i>
                                                                 </a>
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                     @endif

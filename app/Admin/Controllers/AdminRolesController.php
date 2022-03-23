@@ -21,7 +21,8 @@ class AdminRolesController extends Controller
     public function index()
     {
         $roles = Role::with('permissions')->get();
-        $permissions = Permission::select('name', 'id')->whereNotIn('name', ['All Permissions'])->get();
+        $permissions = Permission::select('name', 'id')->get();
+        // dd($permissions);
         return view('admin.manager_admin.roles', compact('roles', 'permissions'));
     }
 
@@ -59,7 +60,7 @@ class AdminRolesController extends Controller
         $permission = Permission::whereIn('id', $request->sel_permission)->get();
 
         foreach ($request->sel_permission as $value){
-            if($value == 'All Permissions'){
+            if($value == config('custom-config.name-all-permission')){
                 $permission = Permission::all();
                 break;
             }
@@ -94,12 +95,12 @@ class AdminRolesController extends Controller
         
         $type = 'Permissions Role';
 
-        if($role->hasPermissionTo('All Permissions')){
-            $permissions = Permission::whereNotIn('name', ['All Permissions'])->get();
+        if($role->hasPermissionTo(config('custom-config.name-all-permission'))){
+            $permissions = Permission::whereNotIn('name', [config('custom-config.name-all-permission')])->get();
             $type = 'All Permissions';
             return view('admin.template-render.render', compact('permissions','type'))->render();
         }
-        $permissions = Permission::whereNotIn('name', ['All Permissions'])->with('roles')->get();
+        $permissions = Permission::whereNotIn('name', [config('custom-config.name-all-permission')])->with('roles')->get();
         return view('admin.template-render.render', compact('permissions', 'type', 'role'))->render(); 
     }
 
@@ -128,7 +129,7 @@ class AdminRolesController extends Controller
         $permission = Permission::whereIn('id', $request->sel_permission_edit)->get();
 
         foreach ($request->sel_permission_edit as $value){
-            if($value == 'All Permissions'){
+            if($value == config('custom-config.name-all-permission')){
                 $permission = Permission::all();
                 break;
             }
