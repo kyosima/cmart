@@ -27,13 +27,11 @@
                                 DANH SÁCH TRANG </span>
                             <span class="caption-helper"></span>
                         </div>
-                        @if (auth()->guard('admin')->user()->can('Tạo trang đơn'))
                             <div class="ps-5">
                                 <a href="{{ route('info-company.create') }}" class="btn btn-add"><i
                                         class="fa fa-plus"></i>
                                     Tạo Trang </a>
                             </div>
-                        @endif
                     </div>
                     <div>
                         <div class="input-group action-multiple" style="display:none">
@@ -75,14 +73,10 @@
                                     <tr>
                                         <td><input type="checkbox" name="id[]" value="{{ $item->id }}"></td>
                                         <td>
-                                            @if (auth()->guard('admin')->user()->can('Xem trang đơn'))
                                                 <a class="text-decoration-none"
                                                     href="{{ route('info-company.edit', ['info_company' => $item->id]) }}">
                                                     {{ $item->name }}
                                                 </a>
-                                            @else
-                                                {{ $item->name }}
-                                            @endif
                                         </td>
                                         <td>{{ typeInfoCompany($item->type) }}</td>
 

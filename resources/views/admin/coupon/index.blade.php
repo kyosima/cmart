@@ -26,7 +26,7 @@
                             DANH SÁCH CÁC VOUCHER/COUPON </span>
                         <span class="caption-helper"></span>
                     </div>
-                    @if (auth()->guard('admin')->user()->can('Thêm mã ưu đãi'))
+                    @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <div class="ps-4">
                             <a href="{{ route('coupon.create') }}" class="btn btn-add"><i class="fa fa-plus"></i>
                                 Thêm mới </a>
@@ -56,8 +56,7 @@
             <hr>
             <div class="portlet-body">
                 <div class="pt-3" style="overflow-x: auto;">
-                    @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi') &&
-    auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
+                @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <form id="myform" action="{{ route('coupon.multiChange') }}" method="post">
                             @csrf
                             <input type="hidden" name="action" value="" id="input-action">
@@ -79,8 +78,7 @@
 
                         </tbody>
                     </table>
-                    @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi') &&
-    auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
+                    @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         </form>
                     @endif
                 </div>
@@ -107,7 +105,7 @@
                 $('#input-action').val($(this).val())
             });
 
-            @if (auth()->guard('admin')->user()->can('Thêm mã ưu đãi'))
+            @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                 // CREATE NEW CALCULATION UNIT
                 $("#formCreateBrand").submit(function (e) {
                 e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -151,7 +149,7 @@
                 });
             @endif
 
-            @if (auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
+            @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                 // UPDATE
                 $(document).on("submit", '#formUpdateUnit', function (e) {
                 e.preventDefault();
@@ -196,7 +194,7 @@
                 });
             @endif
 
-            @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
+            @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                 // DELETE
                 $(document).on('click', '.item-delete', function () {
                 var id = $(this).data('unitid')
@@ -258,8 +256,12 @@
                         targets: 0,
                         data: 'code',
                         render: function(data, type, row) {
-                            return `<a style="text-decoration: none; cursor: pointer;" 
-                        href="{{ route('coupon.edit') }}/${row.id}">${row.code}</a>`
+                            @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                return `<a style="text-decoration: none; cursor: pointer;" 
+                            href="{{ route('coupon.edit') }}/${row.id}">${row.code}</a>`;
+                            @else
+                                return row.code;
+                            @endif
                         }
                     },
 

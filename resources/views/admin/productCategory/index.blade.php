@@ -8,7 +8,7 @@
 @endpush
 
 @section('content')
-    @if (auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
+@if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
         <!-- Modal -->
         <div class="modal fade" id="product_category_create" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -103,7 +103,7 @@
                             DANH MỤC SẢN PHẨM </span>
                         <span class="caption-helper"></span>
                     </div>
-                    @if (auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
+                    @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <div class="ps-4">
                             <a href="#product_category_create" data-toggle="modal" class="btn btn-add"><i
                                     class="fa fa-plus"></i>
@@ -135,8 +135,7 @@
             <hr>
             <div class="portlet-body">
                 <div class="pt-3" style="overflow-x: auto;">
-                    @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm') &&
-    auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <form id="myform" action="{{ route('nganh-nhom-hang.multiChange') }}" method="post">
                             @csrf
                             <input type="hidden" name="action" value="" id="input-action">
@@ -193,14 +192,14 @@
                                                             class="fa fa-angle-down" aria-hidden="true"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                         <li>
-                                                            @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                                                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                                 <span data-value="0" data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" class="dropdown-item changeStatus">
                                                                     Ngừng
                                                                 </span>
                                                             @endif
                                                         </li>
                                                         <li>
-                                                            @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+                                                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                                 <span
                                                                     onclick="return confirm('Bạn có chắc muốn xóa');"
                                                                     data-url="{{ route('nganh-nhom-hang.delete', $category->id) }}"
@@ -219,14 +218,14 @@
                                                             class="fa fa-angle-down" aria-hidden="true"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                         <li>
-                                                            @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                                                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                                 <span data-value="1" data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" class="dropdown-item changeStatus">
                                                                     Hoạt động
                                                                 </span>
                                                             @endif
                                                         </li>
                                                         <li>
-                                                            @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+                                                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                                 <span
                                                                     onclick="return confirm('Bạn có chắc muốn xóa');"
                                                                     data-url="{{ route('nganh-nhom-hang.delete', $category->id) }}"
@@ -247,7 +246,7 @@
                                     </td>
                                     {{-- <td>
                                         @if ($category->slug != 'uncategorized' &&
-    auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                                        auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                             <a style="text-decoration: none; cursor: pointer;"
                                                 class="btn btn-warning modal-edit-proCat"
                                                 data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
@@ -259,8 +258,7 @@
                         </tbody>
                     </table>
 
-                    @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm') &&
-    auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                    @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         </form>
                     @endif
                 </div>

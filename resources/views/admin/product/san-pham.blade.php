@@ -21,7 +21,7 @@
                             SẢN PHẨM </span>
                         <span class="caption-helper"></span>
                     </div>
-                    @if (auth()->guard('admin')->user()->can('Thêm sản phẩm'))
+                    @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa SP') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <div class="ps-4">
                             <a href="{{ route('san-pham.create') }}" class="btn btn-add"><i class="fa fa-plus"></i>
                                 Thêm mới </a>
@@ -29,8 +29,7 @@
                     @endif
                 </div>
 
-                {{-- @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') &&
-    auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+                {{-- @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa SP'))
                     <div>
                         <div class="input-group action-multiple">
                             <select class="custom-select" name="action" required="">
@@ -51,8 +50,7 @@
             </div>
             <div class="portlet-body">
                 <div class="pt-3" style="overflow-x: auto;">
-                    @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') &&
-    auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+                    @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa SP') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <form id="myform" action="{{ route('san-pham.multiChange') }}" method="post">
                             @csrf
                             <input type="hidden" name="action" value="" id="input-action">
@@ -107,7 +105,7 @@
                                     <td><img src="{{ $item->feature_img }}" width="70" height="60" alt=""></td>
                                     <td>{{ $item->sku }}</td>
                                     <td>
-                                        @if (auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+                                    @if (auth()->guard('admin')->user()->can('Chỉnh sửa Sản phẩm') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                             <a style="text-decoration: none;"
                                                 href="{{ route('san-pham.edit', $item->id) }}">{{ $item->name }}</a>
                                         @else
@@ -139,8 +137,7 @@
                             @endforeach --}}
                         </tbody>
                     </table>
-                    @if (auth()->guard('admin')->user()->can('Xóa sản phẩm') &&
-    auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+                    @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa SP') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         </form>
                     @endif
                 </div>
@@ -204,7 +201,7 @@
                 {
                     targets: 1,
                     type: "html",
-                    @if (auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm'))
+                    @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa SP') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         render: function(data, type, row) {
                         return `<a style="text-decoration: none;" href="${window.location.href}/edit/${row.id}">${row.name}</a>`
                         }

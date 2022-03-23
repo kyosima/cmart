@@ -46,14 +46,23 @@
     @endforeach
 @endif
 
+@if($type == 'adminPermission')
+    <option value="">Vui lòng chon</option>
+    @foreach($permissions as $value)
+        <option value="{{$value}}" {{ checkAdminHasPermissionTo($admin, $value) }}>{{$value}}</option>
+    @endforeach
+@endif
+
 @if($type == 'admin')
 <tr class="replaywith-{{$admin->id}}">
-    <td>{{$admin->name}}</td>
+    <td><input type="checkbox" name="id[]" value="{{ $admin->id }}"></td>
+    <td>{{$admin->fullname}}</td>
     <td>{{$admin->email}}</td>
-    <td>{!! showRolesOfAdmin($role_name) !!}</td>
+    <td>{{$admin->DVCQ}}</td>
+    <td>{!! showAdminWithPermission($admin->permissions) !!}</td>
     <td>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-warning ajax-edit ajax-get-admin" data-id="{{$admin->id}}" data-name="{{$admin->name}}" data-email="{{$admin->email}}" data-url="{{route('manager-admin.edit', $admin->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-warning ajax-edit ajax-get-admin" data-id="{{$admin->id}}" data-fullname="{{$admin->fullname}}" data-DVCQ="{{$admin->DVCQ}}" data-url="{{route('manager-admin.edit', $admin->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
             <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('manager-admin.destroy', $admin->id)}}"><i class="fa fa-trash"></i></button>
         </div>
     </td> 

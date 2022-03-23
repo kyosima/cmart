@@ -29,6 +29,7 @@
                     </button>
                 </div>
             </div>
+            @if (auth()->guard('admin')->user()->can('Nạp thêm C vào tk C-Mart') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
             <div class="row my-2">
                 <div class="col-12 text-center">
                     <button type="button" class="btn btn-info text-light" data-toggle="modal" data-target="#depositC">
@@ -74,6 +75,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="row">
                 <div class="col-12">
                     <h4 class="text-center">

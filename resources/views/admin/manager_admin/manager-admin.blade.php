@@ -13,12 +13,14 @@
     <div class="team m-3">
         <div class="team_container py-3 px-4">
             <div class="row">
+            @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                 <div class="col-xs-12 col-md-3">
+                
                     <form data-action="{{route('manager-admin.store')}}" class="g-3 needs-validation ajax-form-post" method="post" novalidate>
                         @csrf
                         <div class="mb-3">
-                            <label for="adminName" class="form-label">Tên</label>
-                            <input type="text" class="form-control" name="in_name" id="adminName" placeholder="Tên" required>
+                            <label for="adminName" class="form-label">Họ tên</label>
+                            <input type="text" class="form-control" name="fullname" id="adminName" placeholder="Tên" required>
                             <div class="invalid-feedback">
                                 Vui lòng nhập tên
                             </div>
@@ -67,7 +69,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="selPermission" class="form-label">Vai trò</label>
+                            <label for="selPermission" class="form-label">Quyền</label>
                             <select class="form-select select2" id="selPermission" name="sel_permission[]" size="5" multiple>
                                 <option value="">Vui lòng chọn</option>
                                 @foreach($permissions as $value)
@@ -80,8 +82,10 @@
                         </div>
                         
                     </form>
+                    
                 </div>
-                <div class="col-xs-12 col-md-9">
+                @endif
+                <div class="col-xs-12 @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))) col-md-9 @else col-md-12 @endif">
                     <form action="{{ route('manager-admin.multiple') }}" method="post">
                         @csrf
                         <div class="input-group action-multiple" style="display:none">
@@ -98,26 +102,36 @@
                             <table class="table table-hover" id="tblAdmin" class="display" style="width:100%">
                                 <thead class="table__daily">
                                     <tr>
+                                    @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                         <th class="title" style="width: 30px;"><input class="form-check" name="checkAll" type="checkbox"></th>
-                                        <th scope="col">Tên</th>
+                                        @endif
+                                        <th scope="col">Họ tên</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Vai trò</th>
+                                        <th scope="col">DVCQ</th>
+                                        <th scope="col">Quyền</th>
+                                        @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                         <th scope="col">Thao tác</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody class="font-size-1">
                                     @foreach ($admins as $value)
                                     <tr class="replaywith-{{$value->id}}">
+                                    @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                         <td><input type="checkbox" name="id[]" value="{{ $value->id }}"></td>
-                                        <td>{{$value->name}}</td>
+                                        @endif
+                                        <td>{{$value->fullname}}</td>
                                         <td>{{$value->email}}</td>
-                                        <td>{!! showAdminWithRoles($value->roles) !!}</td>
+                                        <td>{{$value->DVCQ}}</td>
+                                        <td>{!! showAdminWithPermission($value->permissions) !!}</td>
+                                        @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                <button type="button" class="btn btn-warning ajax-edit ajax-get-admin" data-id="{{$value->id}}" data-name="{{$value->name}}" data-email="{{$value->email}}" data-url="{{route('manager-admin.edit', $value->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                                <button type="button" class="btn btn-warning ajax-edit ajax-get-admin" data-id="{{$value->id}}" data-fullname="{{$value->fullname}}" data-dvcq="{{$value->DVCQ}}" data-url="{{route('manager-admin.edit', $value->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                                 <button type="button" class="btn btn-danger ajax-delete" data-url="{{route('manager-admin.destroy', $value->id)}}"><i class="fa fa-trash"></i></button>
                                             </div>
                                         </td> 
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -141,20 +155,20 @@
                 @method("PUT")
                 @csrf
                 <div class="mb-3">
-                    <label for="adminNameEdit" class="form-label">Tên</label>
-                    <input type="text" class="form-control" name="in_name_edit" id="adminNameEdit" placeholder="Tên" value="" required>
+                    <label for="adminNameEdit" class="form-label">Họ tên</label>
+                    <input type="text" class="form-control" name="in_fullname_edit" id="adminNameEdit" placeholder="Họ tên" value="" required>
                     <div class="invalid-feedback">
-                        Vùi lòng nhập tên
+                        Vùi lòng nhập họ tên
                     </div>
                     <div class="valid-feedback">
                         Hợp lệ!
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="adminEmailEdit" class="form-label">Email</label>
-                    <input type="email" class="form-control" name="in_email_edit" id="adminEmailEdit" placeholder="Email" value="" required>
+                    <label for="adminEmailEdit" class="form-label">Đơn vị chủ quản</label>
+                    <input type="text" class="form-control" name="DVCQ" id="adminEmailEdit" placeholder="Đơn vị chủ quản" value="" required>
                     <div class="invalid-feedback">
-                        Vui lòng nhập email
+                        Vui lòng nhập DVCQ
                     </div>
                     <div class="valid-feedback">
                         Hợp lệ!
@@ -181,8 +195,8 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="selRoleEdit" class="form-label">Vai trò</label>
-                    <select class="form-select select2 clear-option" id="selRoleEdit" name="sel_role_edit[]" size="5" multiple>
+                    <label for="selRoleEdit" class="form-label">Quyền</label>
+                    <select class="form-select select2 clear-option" id="selRoleEdit" name="sel_permission_edit[]" size="5" multiple>
                         
                     </select>
                 </div>

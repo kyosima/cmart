@@ -12,9 +12,7 @@
                 {{-- @if(auth()->guard('admin')->user()->can('Tạo trang đơn'))
                 <a href="{{route('info-company.create')}}" class="btn btn-primary me-3"><i class="fa fa-plus"></i> Tạo trang</a>
                 @endif --}}
-                @if(auth()->guard('admin')->user()->can('Xem DS trang đơn'))
                 <a href="{{route('info-company.index')}}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i> DS Trang</a>
-                @endif
             </div>
             <form action="{{ route('info-company.update', $info_company->id) }}" class="needs-validation" method="post" novalidate>
                 @csrf
@@ -67,12 +65,8 @@
                     <textarea class="form-control" id="description" name="description" rows="3">{{ $info_company->content }}</textarea>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                    @if(auth()->guard('admin')->user()->can('Cập nhật trang đơn'))
                     <button type="submit" class="btn btn-info">Cập nhật</button>
-                    @endif
-                    @if(auth()->guard('admin')->user()->can('Xóa đơn hàng'))
                     <a href="{{route('info-company.delete', $info_company->id)}}" class="btn btn-danger" onclick="return confirm('Do you want to delete this ?')">Xóa</a>
-                    @endif
                 </div>
             </form>
         </div>

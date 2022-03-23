@@ -212,6 +212,12 @@ if (!function_exists('helper')) {
             return 'selected';
         }
     }
+    function checkAdminHasPermissionTo($admin, $PermissionName)
+    {
+        if ($admin->hasPermissionTo($PermissionName)) {
+            return 'selected';
+        }
+    }
     function showRolesOfAdmin($data)
     {
         $str = '';
@@ -222,6 +228,14 @@ if (!function_exists('helper')) {
     }
 
     function showAdminWithRoles($data)
+    {
+        $str = '';
+        foreach ($data as $value) {
+            $str .= '<span class="badge bg-primary me-1">' . $value->name . '</span>';
+        }
+        return $str;
+    }
+    function showAdminWithPermission($data)
     {
         $str = '';
         foreach ($data as $value) {

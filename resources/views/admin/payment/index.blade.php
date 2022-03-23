@@ -78,7 +78,7 @@
                     <div class="caption">
                         <i class="fa fa-anchor icon-drec" aria-hidden="true"></i>
                         <span class="caption-subject text-uppercase">
-                            DANH SÁCH HÌNH THỨC THANH TOÁN </span>
+                            DANH SÁCH HÌNH THỨC THANH TOÁN</span>
                         <span class="caption-helper"></span>
                     </div>
                     {{-- @if (auth()->guard('admin')->user()->can('Thêm HTTT'))

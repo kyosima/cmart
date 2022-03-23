@@ -39,5 +39,6 @@ return [
     ],
     'shipping_type_name' => [
         'Cmart', 'Tiêu chuẩn', 'Hỏa tốc'
-    ]
+    ],
+    'name-all-permission' => 'Tất cả quyền'
 ];
