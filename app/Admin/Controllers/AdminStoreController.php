@@ -120,12 +120,9 @@ class AdminStoreController extends Controller
         });
     }
 
-    public function edit($slug, $id)
+    public function edit(Request $request,$slug, $id)
     {
         $store = Store::where('slug', $slug)->where('id', $id)->firstorfail();
-        $cities = Province::all();
-        $districts = District::where('matinhthanh', $store->id_province)->get();
-        $wards = Ward::where('maquanhuyen', $store->id_district)->get();
         $products = $store->products; // lấy theo relationship
         $addressController = new AddressController();
 
@@ -134,8 +131,30 @@ class AdminStoreController extends Controller
         $store_district = $addressController->getDistrictDetail($store->id_province,$store->id_district);
         $store_ward = $addressController->getWardDetail($store->id_district,$store->id_ward);
         $message = 'User: '. $admin->name . ' truy cập trang chỉnh sửa cửa hàng ' . $store->name;
+        if ($request->has('time_start') && $request->has('time_end') ) {
+            $time_start = $request->time_start;
+            $time_end = $request->time_end;
+            $order_stores_confirm = $store->order_stores()->whereStatus(0)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_payment = $store->order_stores()->whereStatus(1)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_process = $store->order_stores()->whereStatus(2)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_ship = $store->order_stores()->whereStatus(3)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_success = $store->order_stores()->whereStatus(4)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_cancel = $store->order_stores()->whereStatus(5)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+
+        }else{
+            $time_start = null;
+            $time_end = null;
+            $order_stores_confirm = $store->order_stores()->whereStatus(0)->get();
+            $order_stores_payment = $store->order_stores()->whereStatus(1)->get();
+            $order_stores_process = $store->order_stores()->whereStatus(2)->get();
+            $order_stores_ship = $store->order_stores()->whereStatus(3)->get();
+            $order_stores_success = $store->order_stores()->whereStatus(4)->get();
+            $order_stores_cancel = $store->order_stores()->whereStatus(5)->get();
+
+        }
+         
         Log::info($message);
-        return view('admin.store.edit', compact('cities', 'store', 'districts', 'wards', 'products', 'admin', 'store_province', 'store_district', 'store_ward'));
+        return view('admin.store.edit', compact('time_start', 'time_end','order_stores_cancel','order_stores_success','order_stores_ship','order_stores_process','order_stores_payment','order_stores_confirm', 'store',  'products', 'admin', 'store_province', 'store_district', 'store_ward'));
     }
 
     public function storeProduct(Request $request)
@@ -242,5 +261,10 @@ class AdminStoreController extends Controller
         return response()->json([
             'html' => $returnHTML
         ], 200);
+    }
+
+    public function getStatistical(Request $request, $id){
+      
+
     }
 }

@@ -2,9 +2,6 @@
 
 @section('title', 'Xác thực thông tin tài khoản')
 @push('css')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
-    <script id="oval_custom" src="https://ekyc-web.icenter.ai/lib/VNPTBrowserSDKApp.js"></script>
-    <script src="https://ekyc-web.icenter.ai/lib/jsQR.js"></script>
 @endpush
 
 
@@ -19,10 +16,13 @@
 @endsection
 
 @push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
+    <script id="oval_custom" src="https://ekyc-web.icenter.ai/lib/VNPTBrowserSDKApp.js"></script>
+    <script src="https://ekyc-web.icenter.ai/lib/jsQR.js"></script>
     <script>
         let vnpt_ekyc_sdk = document.createElement('script');
         vnpt_ekyc_sdk.id = 'vnpt_ekyc_sdk';
-        vnpt_ekyc_sdk.src = "./ekyc-web-sdk-2.1.0.js";
+        vnpt_ekyc_sdk.src = "{{ asset('public/sdk_ekyc/ekyc-web-sdk-2.1.0.js') }}";
         vnpt_ekyc_sdk.async = true;
         vnpt_ekyc_sdk.defe = true;
         document.head.appendChild(vnpt_ekyc_sdk);
@@ -30,22 +30,23 @@
         let vnpt_ekyc_styles = document.createElement('link');
         vnpt_ekyc_styles.id = 'vnpt_ekyc_styles';
         vnpt_ekyc_styles.rel = 'stylesheet';
-        vnpt_ekyc_styles.href = "./ekyc-web-sdk-2.1.0.css";
+        vnpt_ekyc_styles.href = "{{ asset('public/sdk_ekyc/ekyc-web-sdk-2.1.0.css') }}";
         vnpt_ekyc_styles.async = true;
         vnpt_ekyc_styles.defe = true;
         document.head.appendChild(vnpt_ekyc_styles);
-        var token = ""
+        var token =
+            "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MTFhYjBhZi1hYTRiLTExZWMtODUwNS1kZjM5YzQwYTFkYWQiLCJhdWQiOlsicmVzdHNlcnZpY2UiXSwidXNlcl9uYW1lIjoibGVkYWljdW9uZy5pbmZvQHlhaG9vLmNvbSIsInNjb3BlIjpbInJlYWQiXSwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3QiLCJuYW1lIjoibGVkYWljdW9uZy5pbmZvQHlhaG9vLmNvbSIsInV1aWRfYWNjb3VudCI6IjQxMWFiMGFmLWFhNGItMTFlYy04NTA1LWRmMzljNDBhMWRhZCIsImF1dGhvcml0aWVzIjpbIlVTRVIiXSwianRpIjoiMWJmNmIzZWQtZmFjNy00OGQ4LWFhNWYtZGE0NDMwMTRmNzY3IiwiY2xpZW50X2lkIjoiYWRtaW5hcHAifQ.sThvSigNURHq3QujPf0xtTZ6MgETmbeOQbekYxyvWclgdOlBb3NcPS5Xf2_SlYqQ0aiTk_aaRnjLUeQ6i1AdBy7XMlimCj9DvCI6ftESrOgnR8zFP4RLoEuyPwNtHTqQXD1l14MCI_-h0d8r8A4VtcBlAEdkEy3oKQJCuF7hf0pOTEfBJM9f_B0mzPXdlViJwZOZ_8w0DQ8NOc4f6oUvEeMdsqPn5-3XQTJiQVPwyK_XRZ3poRU8Nq3R-VeV7TlQ1YwEwEMYgg8LRjUMy6OY-m-VIewjnhqqtL9jLDvtykeJKz1VxbNeGja78wi0QGWgbAtXQRILMuXx2KnjxeFnrw"
 
         vnpt_ekyc_sdk.onload = async function() {
             await FaceVNPTBrowserSDK.init();
             var initObj = {
                 BACKEND_URL: "",
-                TOKEN_KEY: "+==",
-                TOKEN_ID: "b85b",
-                AUTHORIZION: ".--PdxRkzOsleZHEyqc2ezc-ssrQZyms1GfQ",
-                ENABLE_GGCAPCHAR: true,
+                TOKEN_KEY: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKvpC/bOCT4EA13XYIpzuoC9Mcc4+g9zuCBzN5wCB0HWL4zXZQ28SttsPsF5EY+PM98sY7f3OBXBVb8UIm0Wm0cCAwEAAQ==",
+                TOKEN_ID: "dad9ed74-f469-6463-e053-62199f0ab597",
+                AUTHORIZION: token,
+                ENABLE_GGCAPCHAR: false,
                 PARRENT_ID: "ekyc_sdk_intergrated",
-                FLOW_TYPE: "FACE", // DOCUMENT, FACE
+                FLOW_TYPE: "DOCUMENT", // DOCUMENT, FACE
                 SHOW_RESULT: true,
                 SHOW_HELP: true,
                 SHOW_TRADEMARK: false,

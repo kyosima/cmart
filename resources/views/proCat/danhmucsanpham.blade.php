@@ -266,7 +266,7 @@
                         <div class="shop-container-inner">
                             <!-- TITLE -->
                             <h2 class="title-filter d-none d-lg-block">{{ $proCat->name }}
-                                <span>(tổng cộng {{ $products->total() }} sản phẩm)</span>
+                                <span>(tổng cộng {{ count($products) }} sản phẩm)</span>
                             </h2>
                             <!-- Bộ lọc -->
                             <div class="filter-cate">
@@ -550,7 +550,7 @@
         });
 
         const urlSearchParams = new URLSearchParams(window.location.search);
-        var brand = urlSearchParams.getAll("id_brand[]");
+        var brand = urlSearchParams.getAll("id_stores[]");
         var orders = urlSearchParams.get("order");
         var sales = urlSearchParams.get("sale");
     </script>

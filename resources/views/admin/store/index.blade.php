@@ -13,7 +13,6 @@
         div.dtsb-searchBuilder div.dtsb-group {
             display: none;
         }
-
     </style>
     @if (auth()->guard('admin')->user()->can('Thêm cửa hàng'))
         <!-- Modal TẠO CỬA HÀNG MỚI -->
@@ -137,19 +136,6 @@
                                     </div>
                                 @endif
                             </div>
-                            {{-- @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
-                            <div>
-                                <div class="input-group action-multiple">
-                                    <select class="custom-select" name="action" required="">
-                                        <option value="">Chọn hành động</option>
-                                        <option value="delete">Xóa</option>
-                                                                          </select>
-                                    <div class="input-group-append">
-                                        <a href="javascript:multiDel()" class="btn btn-outline-secondary">Áp dụng</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endif --}}
                         </div>
                         <div class="collapse show" id="collapseExample">
                             <div class="row">

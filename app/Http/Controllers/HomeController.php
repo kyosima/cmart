@@ -20,6 +20,7 @@ use App\Models\PointCHistory;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\EkycController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\HistoryPointController;
 
 use Illuminate\Support\Facades\Session;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
@@ -28,6 +29,7 @@ class HomeController extends Controller
 {
     public function home()
     {
+    
         $categories = ProductCategory::where('category_parent', 0)
             ->where('id', '!=', 1)
             ->with(['childrenCategories.products', 'products'])

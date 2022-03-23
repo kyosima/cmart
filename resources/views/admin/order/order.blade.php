@@ -67,7 +67,7 @@
                                 </span>
                             </div>
                             <div class="collapse show" id="collapseExample1">
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-sm-6">
                                         <div class="chart-pie pt-4 pb-2">
                                             <canvas id="myPieChart"></canvas>
@@ -108,6 +108,38 @@
                                                 <i class="fas fa-circle text-warning"></i> Viettel Post
                                             </span>
                                         </div>
+                                    </div>
+                                </div> --}}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p><b>Thống kê đơn hàng </b></p>
+                                        <form action="{{ route('order.getStatistical') }}" method="get">
+                                            <div class="row my-2">
+                                                
+                                                <div class="col-md-5 col-12">
+                                                    <label for="">
+                                                        Chọn thời gian bắt đầu
+                                                    </label>
+                                                    <input type="datetime-local" class="form-control" name="time_start"
+                                                        @if (isset($time_start)) value="{{ $time_start }}" @endif required>
+                                                </div>
+                                                <div class="col-md-5 col-12">
+                                                    <label for="">
+                                                        Chọn thời gian kết thúc
+                                                    </label>
+                                                    <input type="datetime-local" class="form-control" name="time_end"
+                                                        @if (isset($time_end)) value="{{ $time_end }}" @endif required>
+                                                </div>
+                                                <div class=" col-md-2 col-6">
+                                                    <label for="">
+                                                    </label>
+                                                    <button class="btn btn-primary w-100" type="submit">
+                                                        Lọc
+                                                    </button>
+                                                </div>
+                                              
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="row">

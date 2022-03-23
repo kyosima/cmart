@@ -627,6 +627,7 @@ class CheckoutController extends Controller
         }
         $order->vat_services = $order->order_stores()->sum('vat_services') + $payment_method->tax;
         $order->payment_method = $payment_method->id;
+        $order->order_stores()->update(['payment_method'=>$payment_method->id]);
         $order->total_payment_services = round(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0));
         $order->remaining_m_point = max($order->m_point - $order->shipping_total - $order->vat_services, 0);
         $order->tax_services =round(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) - max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) / 1.08);
@@ -812,6 +813,8 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $order->payment_method_option = $request->payment_option;
+        $order->order_stores()->update(['payment_method_option'=>$request->payment_option]);
+
         $order->save();
         $this->processOrder($order);
         return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
@@ -841,6 +844,8 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $order->payment_method_option = $request->payment_option;
+        $order->order_stores()->update(['payment_method_option'=>$request->payment_option]);
+
         $order->save();
         $this->processOrder($order);
         return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);

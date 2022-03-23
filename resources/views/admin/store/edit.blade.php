@@ -7,6 +7,75 @@
 @endpush
 
 @section('content')
+    <div class="m-3">
+        <div class="wrappr bg-white p-4">
+            <div class="row">
+                <div class="col-12">
+                    <p><b>Thống kê đơn hàng của cửa hàng </b></p>
+                    <form action="" method="get">
+                        <div class="row my-2">
+                            
+                            <div class="col-md-5 col-12">
+                                <label for="">
+                                    Chọn thời gian bắt đầu
+                                </label>
+                                <input type="datetime-local" class="form-control" name="time_start"
+                                    @if (isset($time_start)) value="{{ $time_start }}" @endif required>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <label for="">
+                                    Chọn thời gian kết thúc
+                                </label>
+                                <input type="datetime-local" class="form-control" name="time_end"
+                                    @if (isset($time_end)) value="{{ $time_end }}" @endif required>
+                            </div>
+                            <div class=" col-md-2 col-6">
+                                <label for="">
+                                </label>
+                                <button class="btn btn-primary w-100" type="submit">
+                                    Lọc
+                                </button>
+                            </div>
+                          
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" id="">
+                            <thead class="bg-dark text-light">
+                                <tr style="text-align:center">
+                                    <th>Số ĐH Đã đặt hàng</th>
+                                    <th>Số ĐH Đã thanh toán</th>
+                                    <th>Số ĐH Đang xử lý</th>
+                                    <th>Số ĐH Đang vận chuyển</th>
+                                    <th>Số ĐH Hoàn thành</th>
+                                    <th>Số ĐH Hủy</th>
+                                    <th>Tổng giá trị Sản phẩm ĐH hoàn thành</th>
+                                    <th>Tổng VAT Sản phẩm H hoàn thành</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="text-align:center">
+                                    <td>{{ formatNumber(count($order_stores_confirm)) }}</td>
+                                    <td>{{ formatNumber(count($order_stores_payment)) }}</td>
+                                    <td>{{ formatNumber(count($order_stores_process)) }}</td>
+                                    <td>{{ formatNumber(count($order_stores_ship)) }}</td>
+                                    <td>{{ formatNumber(count($order_stores_success)) }}</td>
+                                    <td>{{ formatNumber(count($order_stores_cancel)) }}</td>
+                                    <td>{{ formatNumber($order_stores_success->sum('total')) }}</td>
+                                    <td>{{ formatNumber($order_stores_success->sum('vat_products')) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="m-3" id="store-main" data-storeid="{{$store->id}}">
         <div class="wrapper bg-white p-4">
             @if (session('success'))
@@ -55,7 +124,6 @@
                                                 >
                                         </div>
                                     </div>
-
                                     <div class="form-group d-flex mb-2">
                                         <label class="col-md-3 control-label">Admin CH<span class="required"
                                                 aria-required="true">(*)</span></label>
@@ -99,17 +167,7 @@
                                                 <option value="{{$store_province->PROVINCE_ID}}" selected>
                                                     {{$store_province->PROVINCE_NAME}}
                                                 </option>
-                                                {{-- @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
-                                                    <option value="{{$store->id_province}}" selected>
-                                                        {{$store->id_province}} - {{$store->province->tentinhthanh}}
-                                                    </option>
-                                                @else
-                                                    <option></option>
-                                                    @foreach ($cities as $city)
-                                                        <option value="{{ $city->matinhthanh }}" {{ $city->matinhthanh == $store->id_province ? 'selected' : '' }} >{{ $city->matinhthanh }} -
-                                                            {{ $city->tentinhthanh }}</option>
-                                                    @endforeach
-                                                @endif --}}
+                           
                                             </select>
                                         </div>
                                     </div>
@@ -124,21 +182,7 @@
                                                 <option value="{{$store_district->DISTRICT_ID}}" selected>
                                                     {{$store_district->DISTRICT_NAME}}
                                                 </option>
-                                                {{-- @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
-                                                    <option value="{{$store->id_district}}" selected>
-                                                        {{$store->id_district}} - {{$store->district->tenquanhuyen}}
-                                                    </option>
-                                                @else
-                                                    @foreach ($districts as $district)
-                                                        <option value="{{$district->maquanhuyen}}"
-                                                            @if ($district->maquanhuyen == $store->id_district)
-                                                                selected
-                                                            @endif
-                                                        >
-                                                            {{$district->maquanhuyen}} - {{$district->tenquanhuyen}}
-                                                        </option>
-                                                    @endforeach
-                                                @endif --}}
+                    
                                             </select>
                                         </div>
                                     </div>
@@ -153,21 +197,7 @@
                                                 <option value="{{$store_ward->WARDS_ID}}" selected>
                                                     {{$store_ward->WARDS_NAME}}
                                                 </option>
-                                                {{-- @if (!auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
-                                                    <option value="{{$store->id_ward}}" selected>
-                                                        {{$store->id_ward}} - {{$store->ward->tenphuongxa}}
-                                                    </option>
-                                                @else
-                                                    @foreach ($wards as $ward)
-                                                        <option value="{{$ward->maphuongxa}}"
-                                                            @if ($ward->maphuongxa == $store->id_ward)
-                                                                selected
-                                                            @endif
-                                                        >
-                                                            {{$ward->maphuongxa}} - {{$ward->tenphuongxa}}
-                                                        </option>
-                                                    @endforeach
-                                                @endif --}}
+                                           
                                             </select>
                                         </div>
                                     </div>

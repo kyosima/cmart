@@ -41,6 +41,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::group(['prefix' => 'don-hang'], function () {
         Route::get('xem-c-bill', [AdminOrderController::class, 'viewCbill'])->name('order.viewCbill');
         Route::get('down-c-bill', [AdminOrderController::class, 'downPDF'])->name('order.downPDF');
+        Route::get('thong-ke', [AdminOrderController::class, 'getStatistical'])->name('order.getStatistical');
     });
     Route::get('/export', [UserController::class, 'export']);
 
@@ -193,6 +194,8 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('/cua-hang/edit/{slug}/{id}', [AdminStoreController::class, 'edit'])->name('store.edit');
         Route::get('/cua-hang/searchProduct', [AdminStoreController::class, 'getProduct'])->name('store.getProduct');
         Route::get('/cua-hang/list-product', [AdminStoreController::class, 'getListProduct'])->name('store.getListProduct');
+        Route::get('/cua-hang/thong-ke/{id}', [AdminStoreController::class, 'getStatistical'])->name('store.getStatistical');
+
     });
 
     Route::group(['middleware' => ['permission:Xóa cửa hàng,admin']], function () {
