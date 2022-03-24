@@ -3,8 +3,10 @@
         <div class="row h-100" style="margin:0px">
             <div class="col-12">
                 <div class="campaign-info">
+                    @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                     <button type="button" class="btn btn-danger remvovecp" onclick="removeCampaignDetail(this)"
                         data-value="{{ $product->id }}">X</button>
+                    @endif
                     <input type="hidden" name="id_ofstore" value="{{ $store->id }}" />
                     <input type="hidden" id="id" name="id_ofproduct" value="{{ $product->id }}" class="form-control id">
 

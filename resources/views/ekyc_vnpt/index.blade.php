@@ -3,8 +3,6 @@
 @section('title', 'Xác thực thông tin tài khoản')
 @push('css')
 @endpush
-
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -22,7 +20,7 @@
     <script>
         let vnpt_ekyc_sdk = document.createElement('script');
         vnpt_ekyc_sdk.id = 'vnpt_ekyc_sdk';
-        vnpt_ekyc_sdk.src = "{{ asset('public/sdk_ekyc/ekyc-web-sdk-2.1.0.js') }}";
+        vnpt_ekyc_sdk.src = "{{ asset('public/sdk_ekyc/ekyc-web-sdk-1.0.3.js') }}";
         vnpt_ekyc_sdk.async = true;
         vnpt_ekyc_sdk.defe = true;
         document.head.appendChild(vnpt_ekyc_sdk);
@@ -30,19 +28,19 @@
         let vnpt_ekyc_styles = document.createElement('link');
         vnpt_ekyc_styles.id = 'vnpt_ekyc_styles';
         vnpt_ekyc_styles.rel = 'stylesheet';
-        vnpt_ekyc_styles.href = "{{ asset('public/sdk_ekyc/ekyc-web-sdk-2.1.0.css') }}";
+        vnpt_ekyc_styles.href = "{{ asset('public/sdk_ekyc/ekyc-web-sdk-1.0.3.css') }}";
         vnpt_ekyc_styles.async = true;
         vnpt_ekyc_styles.defe = true;
         document.head.appendChild(vnpt_ekyc_styles);
         var token =
-            "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MTFhYjBhZi1hYTRiLTExZWMtODUwNS1kZjM5YzQwYTFkYWQiLCJhdWQiOlsicmVzdHNlcnZpY2UiXSwidXNlcl9uYW1lIjoibGVkYWljdW9uZy5pbmZvQHlhaG9vLmNvbSIsInNjb3BlIjpbInJlYWQiXSwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3QiLCJuYW1lIjoibGVkYWljdW9uZy5pbmZvQHlhaG9vLmNvbSIsInV1aWRfYWNjb3VudCI6IjQxMWFiMGFmLWFhNGItMTFlYy04NTA1LWRmMzljNDBhMWRhZCIsImF1dGhvcml0aWVzIjpbIlVTRVIiXSwianRpIjoiMWJmNmIzZWQtZmFjNy00OGQ4LWFhNWYtZGE0NDMwMTRmNzY3IiwiY2xpZW50X2lkIjoiYWRtaW5hcHAifQ.sThvSigNURHq3QujPf0xtTZ6MgETmbeOQbekYxyvWclgdOlBb3NcPS5Xf2_SlYqQ0aiTk_aaRnjLUeQ6i1AdBy7XMlimCj9DvCI6ftESrOgnR8zFP4RLoEuyPwNtHTqQXD1l14MCI_-h0d8r8A4VtcBlAEdkEy3oKQJCuF7hf0pOTEfBJM9f_B0mzPXdlViJwZOZ_8w0DQ8NOc4f6oUvEeMdsqPn5-3XQTJiQVPwyK_XRZ3poRU8Nq3R-VeV7TlQ1YwEwEMYgg8LRjUMy6OY-m-VIewjnhqqtL9jLDvtykeJKz1VxbNeGja78wi0QGWgbAtXQRILMuXx2KnjxeFnrw"
+            "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYWYwYTEzZS1kOTNjLTg5ZWEtZTA1My02YzFiOWYwYTNjOWYiLCJhdWQiOlsicmVzdHNlcnZpY2UiXSwidXNlcl9uYW1lIjoia2lyYWJib3l0dEBnbWFpbC5jb20iLCJzY29wZSI6WyJyZWFkIl0sImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0IiwibmFtZSI6ImtpcmFiYm95dHRAZ21haWwuY29tIiwidXVpZF9hY2NvdW50IjoiZGFmMGExM2UtZDkzYy04OWVhLWUwNTMtNmMxYjlmMGEzYzlmIiwiYXV0aG9yaXRpZXMiOlsiVVNFUiJdLCJqdGkiOiJjNTM1MDM1NC01MTM3LTQ2MzgtYWJiYi1hMzc5ZDk2OWU5M2QiLCJjbGllbnRfaWQiOiJhZG1pbmFwcCJ9.IXe7bvqdfTL8z6zRUwn62xSrDjshe4Czwn1BpxjrWvzSS_3etu3EpWmno2Znw9JxKWmiPr8jc9f2TkaIzYxR0RkNs7oXI3FWAku9EPBbzJ2az9YdoBXJTrWLL_G7GYXmZ3lv72krZ8O9cIEY5GhEB3anJGKkeJqh16OPf0MQh2T8Kw_QCt2TB4R9ZIvkrcps7iodV7XFTQ0q5RxvR4JH8GcyOVCWh80c8ExvdJ2ANQMUFvcWPFKGjFUoz8kDRrjnYL2YZc1SowMHg6GFYnAz87ru7bvDl_d8LKqABlk9jPU7vxSOkcfthXDujkRvoOrT475RYxheVjoPndQE6STJJw"
 
         vnpt_ekyc_sdk.onload = async function() {
             await FaceVNPTBrowserSDK.init();
             var initObj = {
                 BACKEND_URL: "",
-                TOKEN_KEY: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKvpC/bOCT4EA13XYIpzuoC9Mcc4+g9zuCBzN5wCB0HWL4zXZQ28SttsPsF5EY+PM98sY7f3OBXBVb8UIm0Wm0cCAwEAAQ==",
-                TOKEN_ID: "dad9ed74-f469-6463-e053-62199f0ab597",
+                TOKEN_KEY: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKCIgQdDzGiEHLfNYAAlAV0l37EyoZhl6Pe+aqSyMmo/rYbT6vHcJ0QzpPo6s1f1sbK2mPdgu0DMsnvF8WCxF/0CAwEAAQ==",
+                TOKEN_ID: "daf0bb6e-a545-ae1c-e053-6c1b9f0a0f2b",
                 AUTHORIZION: token,
                 ENABLE_GGCAPCHAR: false,
                 PARRENT_ID: "ekyc_sdk_intergrated",

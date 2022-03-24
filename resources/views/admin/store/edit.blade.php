@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title', 'Chỉnh sửa cửa hàng')
+@section('title', 'Tạo+xóa+sửa CH')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/admin/quanlysanpham.css') }}" type="text/css">
@@ -99,13 +99,13 @@
                     <div class="caption">
                         <i class="fa fa-product-hunt icon-drec" aria-hidden="true"></i>
                         <span class="caption-subject bold uppercase">
-                            Chỉnh sửa cửa hàng</span>
+                            Tạo+xóa+sửa CH</span>
                     </div>
                 </div>
             </div>
             <hr>
             <div class="portlet-body">
-                @if (auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
+                @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH'))
                 <form action="{{ route('store.update', $store->id) }}" method="post">
                     @csrf
                     @method('PUT')
@@ -120,7 +120,7 @@
                                         <div class="col-md-9">
                                             <input type="text" name="store_name" class="form-control" required
                                                 value="{{ old('store_name', $store->name) }}" 
-                                                {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'readonly' }}
+                                                {{ auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))? '' : 'readonly' }}
                                                 >
                                         </div>
                                     </div>
@@ -129,7 +129,7 @@
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
                                             <select class="form-control select-owner" id="select-owner" name="id_owner"
-                                            {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
+                                            {{ auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH')|| auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')) ? '' : 'disabled' }}
                                             >
                                                 @if (old('id_owner'))
                                                     @php
@@ -137,7 +137,7 @@
                                                     @endphp
                                                     <option value="{{ old('id_owner') }}" selected="selected">{{ $owner->name }} ({{$owner->email}})</option>
                                                 @else
-                                                    <option value="{{ $store->owner->id }}"> {{$store->owner->name}} ({{$store->owner->email}}) </option>
+                                                    <option value="{{ $store->owner->id }}"> {{$store->owner->fullname}} ({{$store->owner->email}}) </option>
                                                 @endif
                                             </select>
                                         </div>
@@ -149,7 +149,7 @@
                                         <div class="col-md-9">
                                             <input type="text" name="store_address" class="form-control" required
                                                 value="{{ old('store_address', $store->address) }}"
-                                                {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'readonly' }}
+                                                {{ auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH')|| auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')) ? '' : 'readonly' }}
                                                 >
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@
                                         <div class="col-md-9">
                                             <select class="form-control" id="selectCity" name="sel_province" data-type="city"
                                                 data-placeholder="Chọn tỉnh/thành"
-                                                {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
+                                                {{ auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH')|| auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')) ? '' : 'disabled' }}
                                                 >
                                                 <option value="{{$store_province->PROVINCE_ID}}" selected>
                                                     {{$store_province->PROVINCE_NAME}}
@@ -177,7 +177,7 @@
                                         <div class="col-md-9">
                                             <select class="form-control" id="selectDistrict" name="sel_district"
                                                 data-type="district" data-placeholder="Chọn quận/huyện"
-                                                {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
+                                                {{ auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH')|| auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')) ? '' : 'disabled' }}
                                                 >
                                                 <option value="{{$store_district->DISTRICT_ID}}" selected>
                                                     {{$store_district->DISTRICT_NAME}}
@@ -192,7 +192,7 @@
                                         <div class="col-md-9">
                                             <select id="selectWard" name="sel_ward" data-type="ward"
                                                 data-placeholder="Chọn phường/xã" class="form-control"
-                                                {{ auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng') ? '' : 'disabled' }}
+                                                {{ auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH')|| auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')) ? '' : 'disabled' }}
                                                 >
                                                 <option value="{{$store_ward->WARDS_ID}}" selected>
                                                     {{$store_ward->WARDS_NAME}}
@@ -234,7 +234,7 @@
                                 </div>
                             </div>
                         </div>
-                @if (auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
+                @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH')|| auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <div class="col-sm-12">
                             <button type="submit" class="btn btn-info">Cập nhật cửa hàng</button>
                         </div>
@@ -242,7 +242,7 @@
                 </form>
                 @endif
 
-                @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
+                @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                     <form action="{{ route('store.delete', $store->id) }}" method="post">
                         @csrf
                         @method('DELETE')
@@ -263,7 +263,7 @@
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             }
         });
-    // @if (auth()->guard('admin')->user()->can('Chỉnh sửa cửa hàng'))
+    // @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH'))
     //     $(document).ready(function() {
     //         $("form").validate({
     //             rules: {
@@ -345,7 +345,7 @@
     // @endif
     </script>
 
-@if (auth()->guard('admin')->user()->can('Chỉnh sửa sản phẩm cửa hàng'))
+@if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
     <script>
         $('#select-product').select2({
             width: '100%',
@@ -456,7 +456,7 @@
             if (repo.text) {
             return repo.text
             } else {
-                return `${repo.name} (#${repo.email})`;
+                return `${repo.fullname} (#${repo.email})`;
             }
         }
 

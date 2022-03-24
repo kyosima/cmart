@@ -665,7 +665,19 @@ class CheckoutController extends Controller
                 $check_shipping_method = false;
             }
         }
+
         return view('checkout.payment_method', compact('order', 'user', 'point_c', 'check_shipping_method', 'payment_methods'));
+    }
+    public function getPaymentMethodAccept($order){
+        $payment_method_avai = [];
+        foreach ($order->order_stores()->get() as $order_store) {
+            foreach($order_store->order_producst()->get() as $order_product){
+                $product = $order_product->product()->first();
+                $payment_method_product = explode(',',$product->payments);
+                $payment_method_avai = array_merge($payment_method_avai, $payment_method_product);
+            }
+        }
+        $payment_method_avai = array_unique($payment_method_avai);
     }
     public function postPayment(Request $request)
     {
@@ -845,7 +857,6 @@ class CheckoutController extends Controller
         }
         $order->payment_method_option = $request->payment_option;
         $order->order_stores()->update(['payment_method_option'=>$request->payment_option]);
-
         $order->save();
         $this->processOrder($order);
         return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);

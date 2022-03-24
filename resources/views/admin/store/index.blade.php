@@ -148,7 +148,6 @@
                                     <table id="warehouse_table" class="table table-striped table-bordered align-middle">
                                         <thead class="bg-dark text-light">
                                             <tr>
-                                                <th></th>
                                                 <th class="title">Tên cửa hàng</th>
                                                 <th class="title">Admin CH</th>
                                                 {{-- <th class="title">Địa chỉ</th> --}}
@@ -159,9 +158,8 @@
                                         </thead>
                                         <tbody style="color: #748092; font-size: 14px;">
                                             @foreach ($stores as $item)
-                                                @if ($admin->name == 'admin')
+                                            @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                     <tr>
-                                                        <td></td>
                                                         <td>{{ $item->name }}</td>
                                                         <td>{{ optional($item->owner)->fullname }} ({{ optional($item->owner)->email }})</td>
                                                         {{-- <td>{{ $item->address .', P.' .optional($item->ward)->tenphuongxa .', Q.' .optional($item->district)->tenquanhuyen .', ' .optional($item->province)->tentinhthanh }}
@@ -176,12 +174,11 @@
                                                             </a>
                                                             @endif
                                                         </td>
-                                                    </tr>
+                                                    </tr>   
                                                 @else
                                                     @if (optional($item->owner)->id == $admin->id)
                                                         <tr>
                                                             
-                                                            <td>{{ $item->id }}</td>
                                                             <td>{{ $item->name }}</td>
                                                             <td>{{ optional($item->owner)->fullname }} ({{ optional($item->owner)->email }})
                                                             </td>
@@ -228,23 +225,9 @@
                 [25, 50, -1],
                 [25, 50, "All"]
             ],
-            columnDefs: [{
-                    targets: 0,
-                    visible: false,
-                    defaultContent: '',
-                    'render': function(data, type, row, meta) {
-                        if (type === 'display') {
-                            data =
-                                `<input type="checkbox" class="dt-checkboxes" name="id[]" value="${row[1]}">`;
-                        }
-                        return data;
-                    },
-                    'checkboxes': {
-                        'selectRow': true,
-                    }
-                },
+            columnDefs: [
                 {
-                    targets: [0,2,3,5],
+                    targets: [1,2,4],
                     orderable: false,
                 }
             ],

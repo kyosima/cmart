@@ -245,7 +245,7 @@ class AdminStoreController extends Controller
 
     public function getListOwner(Request $request)
     {
-        $owners = Admin::where('name', 'LIKE', '%'.$request->search.'%')->limit(25)->get();
+        $owners = Admin::where('name', 'LIKE', '%'.$request->search.'%')->orWhere('email', 'LIKE', '%'.$request->search.'%' )->limit(25)->get();
         return response()->json([
             'code' => 200,
             'data' => $owners

@@ -55,7 +55,6 @@
 
 @if($type == 'admin')
 <tr class="replaywith-{{$admin->id}}">
-    <td><input type="checkbox" name="id[]" value="{{ $admin->id }}"></td>
     <td>{{$admin->fullname}}</td>
     <td>{{$admin->email}}</td>
     <td>{{$admin->DVCQ}}</td>
