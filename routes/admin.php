@@ -22,6 +22,7 @@ use App\Admin\Controllers\InfoCompanyController;
 use App\Admin\Controllers\PaymentController;
 use App\Admin\Controllers\AdminBannerController;
 use App\Admin\Controllers\AdminEkycController;
+use App\Admin\Controllers\AdminLogController;
 use App\Admin\Controllers\AdminNoticeController;
 use App\Admin\Controllers\AdminStoreController;
 use App\Admin\Controllers\PaymentMethodController;
@@ -63,6 +64,10 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('lichsudiemm', [PointHistoryController::class, 'lichsudiemM'])->name('lichsudiemm');
 
+    //Danh sách lịch sử thao tác
+    Route::group(['middleware' => ['permission:|'.config('custom-config.name-all-permission').',admin']], function () {
+        Route::get('/lich-su-thao-tac-he-thong', [AdminLogController::class, 'index'])->name('log');
+    });
     //Danh sach vi diem
     Route::get('tongdiemuser', [PointHistoryController::class, 'tongdiem'])->name('tongdiemuser');
     Route::get('tongdiemuser/download/{type}', [PointHistoryController::class, 'dowTongdiem']);
@@ -170,7 +175,7 @@ Route::group(['middleware' => ['admin']], function () {
     });
 
     // CỬA HÀNG
-    Route::group(['middleware' => ['permission:Truy cập CH|'.config('custom-config.name-all-permission').',admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập CH|Tạo+xóa+sửa CH|Chỉnh sửa Tồn kho cho CH chỉ định|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/cua-hang', [AdminStoreController::class, 'index'])->name('store.index');
     });
 
@@ -223,7 +228,7 @@ Route::group(['middleware' => ['admin']], function () {
     });
     // được phép XÓA mã ưu đãi
     Route::group(['middleware' => ['permission:Tạo+sửa Ưu đãi|'.config('custom-config.name-all-permission').',admin']], function () {
-        Route::delete('/coupon', [AdminCouponController::class, 'delete'])->name('coupon.delete');
+        Route::delete('/coupon/delete/{id}', [AdminCouponController::class, 'delete'])->name('coupon.delete');
         Route::delete('/coupon/multiple-delete', [AdminCouponController::class, 'multipleDestory'])->name('coupon.multipleDestroy');
     });
     Route::group(['middleware' => ['permission:Tạo+sửa Ưu đãi|'.config('custom-config.name-all-permission').',admin']], function () {

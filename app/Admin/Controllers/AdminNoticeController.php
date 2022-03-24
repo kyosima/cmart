@@ -10,10 +10,17 @@ use App\Models\User;
 use App\Models\UserNotice;
 use Illuminate\Support\Str;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
+use App\Admin\Controllers\AdminLogController; 
 
 class AdminNoticeController extends Controller
 {
     //
+    public $logController;
+
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     use ajaxCustomerTrait;
 
     public function index(){
@@ -68,13 +75,16 @@ class AdminNoticeController extends Controller
                 ]);
             }
         }
-      
+        $admin = auth()->guard('admin')->user();
+
+        $this->logController->createLog($admin, 'Thông báo', 'Tạo', 'thông báo '.$notice->title, route('notice.edit', $notice->id));
         return redirect()->route('notice.edit', $notice->id)->with('message', 'Tạo thông báo thành công');
     }
 
     public function edit(Request $request){
         $notice = Notice::whereId($request->id)->first();
         $customers = $notice->users()->get();
+        
         return view('admin.notice.edit',compact('notice', 'customers') );
     }
 
@@ -121,7 +131,10 @@ class AdminNoticeController extends Controller
                 ]);
             }
         }
-      
+        $admin = auth()->guard('admin')->user();
+
+        $this->logController->createLog($admin, 'Thông báo', 'Sửa', 'thông báo '.$notice->title, route('notice.edit', $notice->id));
+
         return redirect()->route('notice.edit', $notice->id)->with('message', 'Cập nhật thông báo thành công');
     }
 
@@ -136,13 +149,23 @@ class AdminNoticeController extends Controller
 
     public function changeStatus(Request $request){
         $notice = Notice::whereId($request->id)->first();
+        $admin = auth()->guard('admin')->user();
+
         if($notice->status == 1){
-            $notice->status = 0;
+            $notice->status = 0; 
+            $this->logController->createLog($admin, 'Thông báo', 'Ẩn', 'thông báo '.$notice->title, route('notice.edit', $notice->id));
+    
         }else{
             $notice->status = 1;
+            $this->logController->createLog($admin, 'Thông báo', 'Hiện', 'thông báo '.$notice->title, route('notice.edit', $notice->id));
+
         }
 
         $notice->save();
+        $admin = auth()->guard('admin')->user();
+
+        $this->logController->createLog($admin, 'Thông báo', 'Sửa', 'thông báo '.$notice->title, route('notice.edit', $notice->id));
+
         return back();
     }
 
@@ -150,6 +173,10 @@ class AdminNoticeController extends Controller
         $notice = Notice::whereId($request->id)->first();
         $notice->getUserNotices()->delete();
         $notice->delete();
+        $admin = auth()->guard('admin')->user();
+
+        $this->logController->createLog($admin, 'Thông báo', 'Xóa', 'thông báo '.$notice->title);
+
         return redirect()->route('notice.index');
     }
 

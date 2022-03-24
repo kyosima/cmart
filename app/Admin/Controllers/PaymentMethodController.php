@@ -7,9 +7,15 @@ use App\Models\PaymentMethod;
 use App\Models\PaymentMethodOption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Admin\Controllers\AdminLogController; 
 
 class PaymentMethodController extends Controller
-{
+{  
+    public $logController;
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function index()
     {
         $payment_method_options = PaymentMethodOption::all();
@@ -68,9 +74,10 @@ class PaymentMethodController extends Controller
         }
 
         if ($option) {
-            $message = 'User: ' . auth()->guard('admin')->user()->name . ' thực hiện tạo mới thông tin đơn vị thanh toán ' . $option->name;
-            Log::info($message);
-
+            
+            $admin = auth('admin')->user();
+            $this->logController->createLog($admin, 'Đơn vị thanh toán', 'Tạo', 'đơn vị thanh toán '.$option->name);
+            
             return response()->json([
                 'message' => "Success",
                 'code' => 200,
@@ -100,6 +107,9 @@ class PaymentMethodController extends Controller
                 $option->qr_image = 'public/images/qr_code/'.$filename;
             }
             $option->save();
+            $admin = auth('admin')->user();
+            $this->logController->createLog($admin, 'Đơn vị thanh toán', 'Sửa', 'đơn vị thanh toán '.$option->name);
+            
 
         } else {
             $option = false;
@@ -126,6 +136,16 @@ class PaymentMethodController extends Controller
         $option = PaymentMethodOption::where('id', $request->id)->update([
             'status' => $request->status
         ]);
+        if($request->status ==0){
+            $status_text = 'Ngừng';
+        }else{
+            $status_text = 'Hoạt động';
+        }
+        $option = PaymentMethodOption::where('id', $request->id)->first();
+
+        $admin = auth('admin')->user();
+        $this->logController->createLog($admin, 'Đơn vị thanh toán', 'Thay đổi', 'trạng thái đơn vị thanh toán '.$option->name .' thành '.$status_text);
+        
 
         if ($option) {
             return response()->json([
@@ -144,6 +164,9 @@ class PaymentMethodController extends Controller
     {
         $c = PaymentMethodOption::findOrFail($request->id);
         $option = PaymentMethodOption::destroy($request->id);
+        $admin = auth('admin')->user();
+        $this->logController->createLog($admin, 'Đơn vị thanh toán', 'Xóa', 'đơn vị thanh toán '.$c->name);
+        
         if ($option) {
             $message = 'User: ' . auth()->guard('admin')->user()->name . ' thực hiện xóa đơn vị thanh toán ' . $c->name;
             Log::info($message);

@@ -18,18 +18,26 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Http\Controllers\AddressController;
+use App\Admin\Controllers\AdminLogController; 
 
 
 class AdminStoreController extends Controller
 {
     use ajaxGetLocation, ajaxProductTrait;
+    public $logController;
 
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function index()
     {
         $cities = Province::all();
         $stores = Store::all();
         $admin = auth('admin')->user();
         return view('admin.store.index', compact('cities', 'stores', 'admin'));
+     
+
     }
 
     public function store(Request $request)
@@ -66,8 +74,9 @@ class AdminStoreController extends Controller
                     'id_ward' => $request->sel_ward,
                 ]);
 
-                $message = 'User: '. auth('admin')->user()->name . ' thực hiện tạo mới cửa hàng ' . $request->name;
-                Log::info($message);
+                $admin = auth('admin')->user();
+
+                $this->logController->createLog($admin, 'Cửa hàng', 'Tạo', 'cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
 
                 return redirect()->route('store.index')->with('success', 'Tạo cửa hàng thành công');
             } catch (\Throwable $th) {
@@ -110,8 +119,11 @@ class AdminStoreController extends Controller
                     'id_ward' => $request->sel_ward,
                 ]);
 
-                $message = 'User: '. auth('admin')->user()->name . ' thực hiện chỉnh sửa cửa hàng ' . $request->name;
-                Log::info($message);
+                $store = Store::where('id', $id)->first();
+                $admin = auth('admin')->user();
+
+                $this->logController->createLog($admin, 'Cửa hàng', 'Sửa', 'cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+
 
                 return redirect()->route('store.edit', ['slug' => $slug, 'id' => $id])->with('success', 'Cập nhật cửa hàng thành công');
             } catch (\Throwable $th) {
@@ -163,9 +175,9 @@ class AdminStoreController extends Controller
             'quantity' => 'min:0|required',
             'for_user' => 'required',
         ],
-    [
-        'quantity.min:0'=>'Số lượng tồn kho lớn hơn 0'
-    ]);
+        [
+            'quantity.min:0'=>'Số lượng tồn kho lớn hơn 0'
+        ]);
     
         if($validator->fails()){
             return response()->json([
@@ -182,8 +194,10 @@ class AdminStoreController extends Controller
 
         $store = Store::findOrFail($request->id_ofstore);
         $product = Product::findOrFail($request->id_ofproduct);
-        $message = 'User: '. auth('admin')->user()->name . ' thực hiện thêm sản phẩm ' . $product->name . ' vào cửa hàng ' . $store->name;
-        Log::info($message);
+        $admin = auth('admin')->user();
+
+        $this->logController->createLog($admin, 'Cửa hàng', 'Thêm/Sửa', 'sản phẩm '. $product->name .' vào cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+
         return response()->json([$product->name] ,200);
     }
 
@@ -194,8 +208,10 @@ class AdminStoreController extends Controller
         Store::destroy($id);
         DB::table('product_store')->where('id_ofstore', $id)->delete();
 
-        $message = 'User: '. auth('admin')->user()->name . ' thực hiện xóa cửa hàng ' . $store->name;
-        Log::info($message);
+        $admin = auth('admin')->user();
+
+        $this->logController->createLog($admin, 'Cửa hàng', 'Xóa', 'cửa hàng '.$store->name );
+
         return redirect()->route('store.index');
     }
 
@@ -226,8 +242,10 @@ class AdminStoreController extends Controller
         DB::table('product_store')->where('id_ofproduct', $id_product)
             ->where('id_ofstore', $id_store)->delete();   
 
-        $message = 'User: '. auth('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name . ' khỏi cửa hàng ' . $store->name;
-        Log::info($message);
+        $admin = auth('admin')->user();
+
+        $this->logController->createLog($admin, 'Cửa hàng', 'Xóa', 'sản phẩm '. $product->name .' khỏi cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+
         return response()->json([$product->name] ,200);
     }
 

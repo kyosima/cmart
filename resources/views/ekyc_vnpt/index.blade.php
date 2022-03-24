@@ -119,7 +119,7 @@
             ekycsdk.init(initObj, (res) => {
                 //do some thing
                 console.log('res', res)
-                ekycsdk.viewResult(res.type_document, res)
+                // ekycsdk.viewResult(res.type_document, res)
 
             });
 

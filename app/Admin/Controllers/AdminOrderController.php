@@ -25,6 +25,7 @@ use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\HistoryPointController; 
 use App\Http\Controllers\NoticeController; 
+use App\Admin\Controllers\AdminLogController; 
 
 use App\Models\PointCHistory;
 use App\Models\PointMHistory;
@@ -37,6 +38,12 @@ class AdminOrderController extends Controller
 {
     //
 
+    public $logController;
+
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function index(Request $request)
     {
         $orders = Order::whereIsPayment(1)->orderBy('id', 'DESC')->get();
@@ -255,8 +262,8 @@ class AdminOrderController extends Controller
         $user = $order_store->order()->first()->user()->first();
         $noticeController->createNotice(4,$user, null,$order_store);
         $order_store->save();
-
-
+        $admin = auth()->guard('admin')->user();
+        $this->logController->createLog($admin, 'Đơn hàng', 'Thay đổi', 'trạng thái đơn hàng '.$order_store->order_store_code.' thành '.orderStatusSimple($request->status), route('order.viewCbill', ['order_code'=>$order->order_code]));
         Session::flash('success', 'Thực hiện thành công');
 
         return back();
@@ -313,7 +320,6 @@ class AdminOrderController extends Controller
             Session::flash('success', 'Thực hiện thành công');
         } else {
             foreach ($order as $value) {
-                $this->proccessCpoint($value->user, $request->action, $value->status, $value->c_point);
             }
             Order::whereIn('id', $request->id)->update(['status' => $request->action]);
             Session::flash('success', 'Thực hiện thành công');

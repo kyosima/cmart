@@ -63,13 +63,9 @@
                                     <label class="col-md-3 control-label">Cấp tỉnh:<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
-                                        <select class="js-location" id="selectCity" name="id_province" data-type="city"
+                                        <select class="js-location" id="selectCity" name="sel_province" data-type="city"
                                             data-placeholder="Chọn tỉnh/thành">
-                                            <option></option>
-                                            @foreach ($cities as $city)
-                                                <option value="{{ $city->matinhthanh }}">{{ $city->matinhthanh }} -
-                                                    {{ $city->tentinhthanh }}</option>
-                                            @endforeach
+                                           
                                         </select>
                                     </div>
                                 </div>
@@ -77,9 +73,8 @@
                                     <label class="col-md-3 control-label">Cấp huyện:<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
-                                        <select class="js-location" id="selectDistrict" name="id_district"
+                                        <select class="js-location" id="selectDistrict" name="sel_district"
                                             data-type="district" data-placeholder="Chọn quận/huyện">
-                                            <option></option>
                                         </select>
                                     </div>
                                 </div>
@@ -87,9 +82,8 @@
                                     <label class="col-md-3 control-label">Cấp xã:<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
-                                        <select id="selectWard" name="id_ward" data-type="ward"
+                                        <select id="selectWard" name="sel_ward" data-type="ward"
                                             data-placeholder="Chọn phường/xã">
-                                            <option></option>
                                         </select>
                                     </div>
                                 </div>
@@ -158,7 +152,25 @@
                                         </thead>
                                         <tbody style="color: #748092; font-size: 14px;">
                                             @foreach ($stores as $item)
-                                            @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                        @if (optional($item->owner)->id == $admin->id && auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                            <tr>
+                                                
+                                                <td>{{ $item->name }}</td>
+                                                <td>{{ optional($item->owner)->fullname }} ({{ optional($item->owner)->email }})
+                                                </td>
+                                                <td>{{ $item->address .', P.' .optional($item->ward)->tenphuongxa .', Q.' .optional($item->district)->tenquanhuyen .', ' .optional($item->province)->tentinhthanh }}
+                                                </td>
+                                                <td>{{ $item->products()->count() }}</td>
+                                                <td>
+                                                @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                    <a class="btn modal-edit-unit"
+                                                        href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @elseif (auth()->guard('admin')->user()->can('Truy cập CH') || auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                     <tr>
                                                         <td>{{ $item->name }}</td>
                                                         <td>{{ optional($item->owner)->fullname }} ({{ optional($item->owner)->email }})</td>
@@ -167,7 +179,7 @@
                                                         <td>{{ $item->products()->count() }}</td>
                                                         <td>{{ $item->product_stores()->sum('soluong') }}</td>
                                                         <td>
-                                                        @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                        @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH')  || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                             <a class="btn modal-edit-unit"
                                                                 href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
                                                                 <i class="fas fa-pen"></i>
@@ -175,26 +187,7 @@
                                                             @endif
                                                         </td>
                                                     </tr>   
-                                                @else
-                                                    @if (optional($item->owner)->id == $admin->id)
-                                                        <tr>
-                                                            
-                                                            <td>{{ $item->name }}</td>
-                                                            <td>{{ optional($item->owner)->fullname }} ({{ optional($item->owner)->email }})
-                                                            </td>
-                                                            <td>{{ $item->address .', P.' .optional($item->ward)->tenphuongxa .', Q.' .optional($item->district)->tenquanhuyen .', ' .optional($item->province)->tentinhthanh }}
-                                                            </td>
-                                                            <td>{{ $item->products()->count() }}</td>
-                                                            <td>
-                                                            @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
-                                                                <a class="btn modal-edit-unit"
-                                                                    href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
-                                                                    <i class="fas fa-pen"></i>
-                                                                </a>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                    @endif
+                                                   
                                                 @endif
                                             @endforeach
                                         </tbody>
@@ -213,6 +206,8 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('public/js/address.js') }}"></script>
+
     <script>
         @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
             function multiDel() {
@@ -434,7 +429,7 @@
                 if (repo.text) {
                 return repo.text
                 } else {
-                return `${repo.name} (#${repo.email})`;
+                return `${repo.fullname} (#${repo.email})`;
                 }
                 }
             @endif

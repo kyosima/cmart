@@ -16,11 +16,17 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Models\PaymentMethod;
 use DataTables;
+use App\Admin\Controllers\AdminLogController; 
 
 class AdminProductController extends Controller
 {
     use ajaxProductTrait;
+    public $logController;
 
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function index()
     {
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
@@ -128,6 +134,10 @@ class AdminProductController extends Controller
 
                 $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới sản phẩm ' . $product->name;
                 Log::info($message);
+                $admin = auth('admin')->user();
+
+                $this->logController->createLog($admin, 'Sản phẩm', 'Tạo', 'sản phẩm '.$product->name, route('san-pham.edit',$product->id ));
+
 
                 return redirect()->route('san-pham.edit', $product->id)->with('success', 'Cập nhật sản phẩm thành công');
             } catch (\Throwable $th) {
@@ -242,8 +252,11 @@ class AdminProductController extends Controller
                     'tax' => $request->tax,
                 ]);
 
-                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật sản phẩm ' . $request->product_name;
-                Log::info($message);
+                $admin = auth('admin')->user();
+                $product = Product::where('id', $id)->first();
+                $this->logController->createLog($admin, 'Sản phẩm', 'Sửa', 'sản phẩm '.$product->name, route('san-pham.edit',$product->id ));
+
+
 
                 return redirect()->route('san-pham.edit', $id)->with('success', 'Cập nhật sản phẩm thành công');
             } catch (\Throwable $th) {
@@ -258,8 +271,9 @@ class AdminProductController extends Controller
         $product = Product::findOrFail($id);
         Product::destroy($id);
 
-        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name;
-        Log::info($message);
+        $admin = auth('admin')->user();
+        $this->logController->createLog($admin, 'Sản phẩm', 'Xóa', 'sản phẩm '.$product->name);
+
 
         return redirect()->route('san-pham.index');
     }

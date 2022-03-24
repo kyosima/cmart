@@ -9,11 +9,17 @@ use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use App\Admin\Controllers\AdminLogController; 
 
 class AdminProductCategoryController extends Controller
 {
     use ajaxProductTrait;
+    public $logController;
 
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function showChild($parentId, $level)
     {
         $categories = ProductCategory::where('category_parent', $parentId)
@@ -81,8 +87,10 @@ class AdminProductCategoryController extends Controller
                 'link_to_category' => $request->linkProCat,
                 'priority' => $request->proCatPriority,
             ]);
-            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới danh mục sản phẩm '. $proCat->name;
-            Log::info($message);
+            $admin = auth('admin')->user();
+
+            $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Tạo', 'ngành/nhóm hàng '.$proCat->name, route('nganh-nhom-hang.edit',$proCat->id));
+
         } else {
             $catPar = ProductCategory::where('id', $request->proCatParent)->first();
             if ($catPar) {
@@ -96,10 +104,14 @@ class AdminProductCategoryController extends Controller
                     'priority' => $request->proCatPriority,
                 ]);
 
-                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới danh mục sản phẩm '. $proCat->name;
-                Log::info($message);
+              
             }
+            $admin = auth('admin')->user();
+
+            $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Tạo', 'ngành/nhóm hàng '.$proCat->name, route('nganh-nhom-hang.edit',$proCat->id));
+
         }
+        
         return back()->with('success','Tạo mới thành công danh mục sản phẩm');;
     }
 
@@ -134,8 +146,10 @@ class AdminProductCategoryController extends Controller
                 'link_to_category' => $request->linkProCat,
                 'priority' => $request->proCatPriority,
             ]);
-            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục sản phẩm '. $request->proCatName;
-            Log::info($message);
+            $admin = auth('admin')->user();
+
+            $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Sửa', 'ngành/nhóm hàng '.$request->proCatName, route('nganh-nhom-hang.edit',$id));
+
             $this->recursive($id, 0, 1);
         } else {
             $catPar = ProductCategory::where('id', $request->proCatParent)->first();
@@ -153,8 +167,10 @@ class AdminProductCategoryController extends Controller
                     'link_to_category' => $request->linkProCat,
                     'priority' => $request->proCatPriority,
                 ]);
-                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục sản phẩm '. $request->proCatName;
-                Log::info($message);
+                $admin = auth('admin')->user();
+
+                $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Tạo', 'ngành/nhóm hàng '.$request->proCatName, route('nganh-nhom-hang.edit',$id));
+    
                 $this->recursive($id, 1, 0);
             }
         }
@@ -267,8 +283,10 @@ class AdminProductCategoryController extends Controller
             $proCat = ProductCategory::findOrFail($id);
             ProductCategory::destroy($id);
 
-            $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật danh mục sản phẩm '. $proCat->name;
-            Log::info($message);
+            $admin = auth('admin')->user();
+
+            $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'xóa', 'ngành/nhóm hàng '.$proCat->name);
+
         }
     }
 
@@ -334,10 +352,19 @@ class AdminProductCategoryController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        ProductCategory::where('id', $id)->update([
+         ProductCategory::where('id', $id)->update([
             'status' => $request->unitStatus
         ]);
-    }
+        $admin = auth('admin')->user();
+        if($request->unitStatus ==0){
+            $status_text = 'Ngừng';
+        }else{
+            $status_text = 'Hoạt động';
+        }$proCat = ProductCategory::where('id', $id)->first();
+
+        $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Thay đổi', 'trạng thái ngành/nhóm hàng '.$proCat->name .' thành '.$status_text, route('nganh-nhom-hang.edit',$proCat->id));
+        
+    }   
 
     public function getProCat(Request $request)
     {

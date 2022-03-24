@@ -613,11 +613,20 @@ class CheckoutController extends Controller
         if (!$request->payment_method) {
             return back()->with('message', 'Mời chọn hình thức thanh toán');
         }
+
         $order = Order::whereOrderCode($request->order_code)->first();
+      
         if ($order->status > 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $payment_method = PaymentMethod::whereId($request->payment_method)->first();
+        $payment_method_avai = $this->getPaymentMethodAccept($order);
+        $point_c = $user->point_c()->first();
+
+        if (($payment_method->id == 1 && $point_c->point_c < $order->total) ||($payment_method->status == 0) || (!in_array($payment_method->id, $payment_method_avai))){
+            return back()->with('message', 'Hình thức thanh toán không khả dụng cho đơn hàng của bạn, mời chọn lại hình thức thanh toán khác');
+
+        }
         foreach ($order->order_stores()->get() as $order_store) {
             $vat_services = 0;
             $vat_services = round($payment_method->fee * ($order_store->sub_total + $order_store->vat_products - $order_store->discount_products + max($order_store->shipping_total - $order_store->m_point, 0) * 1.08));
@@ -665,19 +674,23 @@ class CheckoutController extends Controller
                 $check_shipping_method = false;
             }
         }
-
-        return view('checkout.payment_method', compact('order', 'user', 'point_c', 'check_shipping_method', 'payment_methods'));
+        $payment_method_avai = $this->getPaymentMethodAccept($order);
+        return view('checkout.payment_method', compact('payment_method_avai','order', 'user', 'point_c', 'check_shipping_method', 'payment_methods'));
     }
     public function getPaymentMethodAccept($order){
-        $payment_method_avai = [];
+        $payment_method_avai = range(1,PaymentMethod::count());
         foreach ($order->order_stores()->get() as $order_store) {
-            foreach($order_store->order_producst()->get() as $order_product){
+            foreach($order_store->order_products()->get() as $order_product){
                 $product = $order_product->product()->first();
-                $payment_method_product = explode(',',$product->payments);
-                $payment_method_avai = array_merge($payment_method_avai, $payment_method_product);
+                if($product){
+                    $payment_method_product = explode(',',$product->payments);
+                    $payment_method_avai = array_intersect($payment_method_avai, $payment_method_product);
+                }
+
             }
         }
         $payment_method_avai = array_unique($payment_method_avai);
+        return $payment_method_avai;
     }
     public function postPayment(Request $request)
     {
