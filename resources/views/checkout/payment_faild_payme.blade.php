@@ -13,7 +13,7 @@
                 <div class="card-body text-center">
                     <p class="text-danger">Có lỗi xảy ra trong quá trình thanh toán. 
                         @if(session()->has('order_code'))
-                        Vui lòng <a href="{{ route('checkout.getPayment', ['order_code' => session()->get('order_code')]) }}" class="text-primary">kiểm tra đơn hàng</a> để lấy lại đường dẫn thanh toán.
+                        Vui lòng <a href="{{ route('checkout.getPayment', ['order_code' => session()->get('order_code')['code'], 'payment_method' => session()->get('order_code')['payment_method']]) }}" class="text-primary">kiểm tra đơn hàng</a> để lấy lại đường dẫn thanh toán.
                         @endif
                     </p>
                     <a href="{{ route('home') }}" class="btn btn-primary">Quay lại trang chủ</a>

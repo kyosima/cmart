@@ -687,7 +687,7 @@ class CheckoutController extends Controller
                         return redirect()->route('payment.Send', ['order_code' => $order->order_code, 'payment_method' => $payment_method->id]);
                         break;
                     case 5 || 6:
-                        Session::put('order_code', $order->order_code);
+                        Session::put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
                         $paymentPaymeController = new PaymentPaymeController();
                         $result = $paymentPaymeController->PaymentPayme($order, $pay_method = 'CREDITCARD');
                         $result = json_decode($result);
@@ -702,7 +702,7 @@ class CheckoutController extends Controller
                         }
                         break;
                     case 9:
-                        Session::put('order_code', $order->order_code);
+                        Session::put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
                         $paymentPaymeController = new PaymentPaymeController();
                         $result = $paymentPaymeController->PaymentPayme($order);
                         $result = json_decode($result);
