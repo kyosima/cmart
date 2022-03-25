@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\Rule;
+use App\Admin\Controllers\AdminLogController; 
 
 
 class AdminManagerAdminController extends Controller
@@ -21,6 +22,11 @@ class AdminManagerAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $logController;
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function index()
     {
         //
@@ -79,6 +85,9 @@ class AdminManagerAdminController extends Controller
         $permission_name = $request->sel_permission;
         $type = 'admin';
         $html = view('admin.template-render.render', compact('admin', 'type', 'permission_name'))->render();
+        $ad = auth('admin')->user();
+        $this->logController->createLog($ad, 'Quản lý Admin', 'Tạo', ' tài khoản admin, email: '.$request->in_email. ' ,Họ tên: '.$request->fullname);
+      
         return $html;
     }
 
@@ -143,10 +152,14 @@ class AdminManagerAdminController extends Controller
         }
 
         $admin->save();
+        $admin = Admin::find($request->in_id_edit);
+
         $admin->syncPermissions($request->sel_permission_edit);
         $permission_name = $request->sel_permission_edit;
         $type = 'admin';
         $html = view('admin.template-render.render', compact('admin', 'type', 'permission_name'))->render();
+        $ad = auth('admin')->user();
+        $this->logController->createLog($ad, 'Quản lý Admin', 'Sửa', ' tài khoản admin, email: '.$admin->email. ' ,Họ tên: '.$admin->fullname);
         return $html;
     }
 
@@ -158,7 +171,10 @@ class AdminManagerAdminController extends Controller
      */
     public function destroy($id)
     {
+        $admin =Admin::find($id);
         Admin::find($id)->delete();
+        $ad = auth('admin')->user();
+        $this->logController->createLog($ad, 'Quản lý Admin', 'Xoá', ' tài khoản admin, email: '.$admin->email. ' ,Họ tên: '.$admin->fullname);
         return response('Thành công', 200);
     }
 

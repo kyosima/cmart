@@ -32,7 +32,7 @@ use App\Models\PointMHistory;
 use App\Models\PointC;
 use App\Models\PointM;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 class AdminOrderController extends Controller
 {
@@ -99,6 +99,15 @@ class AdminOrderController extends Controller
     {
         $order = Order::whereOrderCode($request->order_code)->first();
         return view('admin.order.c_bill_normal', compact('order'));
+    }
+    public function viewCbillSign(Request $request)
+    {
+        $order = Order::whereOrderCode($request->order_code)->first();
+        // $url =asset('public/c_bill/'.$order->c_bill);
+        return response()->file(
+            public_path('c_bill/'.$order->c_bill)
+        );
+        // return redirect($url);
     }
     public function viewPDF(Request $request)
     {
@@ -267,6 +276,40 @@ class AdminOrderController extends Controller
         Session::flash('success', 'Thực hiện thành công');
 
         return back();
+    }
+    public function changeStatusOrderStoreWithBill(Request $request){
+        $this->validate($request, [
+            'order_id' => 'required',
+            'status' => 'required',
+            'c_bill' => 'required',
+        ], [
+            'order_id.required' => 'Không tìm thấy đơn hàng',
+            'status.required' => 'Chọn trạng thái',
+            'c_bill.required'=> 'File C-Bill không được để trống'
+        ]);
+        if ($request->hasFile('c_bill')) {
+            $order_store = OrderStore::whereId($request->order_id)->first();
+            $order = $order_store->order()->first();
+
+            $c_bill = $request->c_bill;
+            $c_bill_name = $order->order_code.'-'.time() . '.' . $c_bill->getClientOriginalExtension();
+            $destinationPath = public_path('/c_bill');
+            $c_bill->move($destinationPath, $c_bill_name);
+            $order->c_bill = $c_bill_name;
+            $this->proccessCpoint($order->user, $request->status, $order_store->status, $order_store->c_point, $order_store);
+            $order_store->status = $request->status;
+            $noticeController = new NoticeController();
+            $user = $order_store->order()->first()->user()->first();
+            $noticeController->createNotice(4,$user, null,$order_store);
+            $order_store->save();
+            $order->save();
+            $admin = auth()->guard('admin')->user();
+            $this->logController->createLog($admin, 'Đơn hàng', 'Thay đổi', 'trạng thái đơn hàng '.$order_store->order_store_code.' thành '.orderStatusSimple($request->status), route('order.viewCbill', ['order_code'=>$order->order_code]));
+            return back()->with('message', 'Thay đổi trạng thái đơn hàng thành công');
+
+        }else{
+            return back()->with('message', 'File C-Bill không được để trống');
+        }
     }
     public function proccessCpoint($user, $request_status, $order_status, $order_cpoint, $order)
     {

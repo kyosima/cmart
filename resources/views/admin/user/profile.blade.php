@@ -35,9 +35,9 @@
                             @endif
                         </div>
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
-                                                                                                    <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
-                                                                                                    <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
-                    
+                                                                                                                <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
+                                                                                                                <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
+
                         <div class="row d-flex justify-content-around">
                             <div class="col-md-4 col-12">
                                 <button class="alert alert-success m-0 text-center"
@@ -73,8 +73,8 @@
                                         <input type="phone" class="form-control mb-2" name="phone"
                                             placeholder="Nhập số điện thoại" value="{{ $user->phone }}">
                                         <!-- <span class="text-uppercase">Email</span>
-                                                                                                                <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
-                                                                                                                    value="{{ $user->email }}" readonly=""> -->
+                                                                                                                            <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
+                                                                                                                                value="{{ $user->email }}" readonly=""> -->
                                     </div>
 
                                     <div class="col-lg-4 text-start">
@@ -309,9 +309,20 @@
                                                                     <tr style="text-align:center">
                                                                         <td>{{ $order_store->order_store_code }}</td>
                                                                         <td>{!! orderStatus($order_store->status) !!}</td>
-                                                                        <td><a target="_blank"
-                                                                                href="{{ route('order.viewCbill', ['order_code' => $order->order_code]) }}"
-                                                                                class="btn btn-info">Chi tiết</a></td>
+                                                                        <td>
+                                                                            @if ($order->c_bill == null)
+                                                                                <a target="_blank"
+                                                                                    href="{{ route('order.viewCbill', ['order_code' => $order->order_code]) }}"
+                                                                                    class="btn btn-info">Chi tiết</a>
+                                                                            @else
+                                                                                <a target="_blank"
+                                                                                    href="{{ route('order.viewCbillSign', ['order_code' => $order->order_code]) }}"
+                                                                                    class="btn btn-info">Chi tiết</a>
+                                                                            @endif
+
+                                                                        </td>
+                                                                        </td>
+
                                                                     </tr>
                                                                 @endforeach
                                                             @endforeach
@@ -327,14 +338,18 @@
                                                     </h3>
                                                     <div class="row pb-1">
                                                         <div class="col-6">
-                                                            <a class="btn text-white" style="width: 100%;background-color: #00e6f8;">
-                                                                Tổng C: {{ formatNumber($user->point_c()->value('point_c') + $user->getHistory()->whereStatus(0)->sum('amount')) }}
+                                                            <a class="btn text-white"
+                                                                style="width: 100%;background-color: #00e6f8;">
+                                                                Tổng C:
+                                                                {{ formatNumber($user->point_c()->value('point_c') +$user->getHistory()->whereStatus(0)->sum('amount')) }}
                                                             </a>
                                                         </div>
-                                    
+
                                                         <div class="col-6">
-                                                            <a class="btn text-white" style="width: 100%;background-color: #00e6f8;">
-                                                                Số C khả dụng: {{ formatNumber($user->point_c()->value('point_c')) }}
+                                                            <a class="btn text-white"
+                                                                style="width: 100%;background-color: #00e6f8;">
+                                                                Số C khả dụng:
+                                                                {{ formatNumber($user->point_c()->value('point_c')) }}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -388,7 +403,8 @@
                                                                         @if ($history->status == 1)
                                                                             Khả dụng
                                                                         @else
-                                                                            Phỏng tỏa đến {{date('d/m/Y H:i:s', strtotime($history->time))}}
+                                                                            Phỏng tỏa đến
+                                                                            {{ date('d/m/Y H:i:s', strtotime($history->time)) }}
                                                                         @endif
                                                                     </td>
                                                                 </tr>
@@ -513,8 +529,7 @@
                     "thousands": ".",
                 },
                 dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-                    buttons: [
-                ],
+                buttons: [],
             });
         });
         $(document).ready(function() {
@@ -549,8 +564,7 @@
                     "thousands": ".",
                 },
                 dom: '<Q><"wrapper d-flex justify-content-between mb-3"lf><"custom-export-button"B>tip',
-                buttons: [
-                ],
+                buttons: [],
             });
         });
     </script>

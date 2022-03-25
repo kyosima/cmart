@@ -20,9 +20,15 @@ use App\Exports\UsersExport;
 use App\Http\Controllers\AddressController;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 use App\Http\Controllers\NoticeController;
+use App\Admin\Controllers\AdminLogController; 
 
 class UserController extends Controller
 {
+    public $logController;
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function getDanhSach() {
         $user = User::all();
         // foreach ($user as $us) {
@@ -129,6 +135,9 @@ class UserController extends Controller
         if($user->hoten != $request->hoten || $user->phone != $request->phone || $user->address != $request->address || $user->id_tinhthanh != $request->sel_province){
             $noticeController = new NoticeController();
             $noticeController->createNotice(2,$user);
+            $admin = auth('admin')->user();
+            $this->logController->createLog($admin, 'Khách hàng', 'Chỉnh sửa', 'khách hàng '.$user->hoten, route('user.detail', $user->id));
+          
         }
      
         $user->hoten = $request->hoten;
@@ -136,6 +145,9 @@ class UserController extends Controller
             $user->level = $request->level;
             $noticeController = new NoticeController();
             $noticeController->createNotice(1,$user);
+            $admin = auth('admin')->user();
+            $this->logController->createLog($admin, 'Khách hàng', 'Thay đổi', 'định danh khách hàng '.$user->hoten.' thành '.formatLevel($request->level), route('user.detail', $user->id));
+           
         }
         $user->phone = $request->phone;
         $user->address = $request->address;
@@ -147,7 +159,7 @@ class UserController extends Controller
         $user->duong = $request->duong;
        
         $user->save();
-        return back();
+         return back();
     }
 
     public function nangcap(Request $request){
@@ -160,10 +172,16 @@ class UserController extends Controller
         if($user->status == 1){
             $user->status = 0;
             $user->save();
+            $admin = auth('admin')->user();
+            $this->logController->createLog($admin, 'Khách hàng', 'Thay đổi', 'trạng thái khách hàng '.$user->hoten.' thành Ngừng', route('user.detail', $user->id));
+    
         }else{
             $user->status = 1;
             $user->save();
+            $admin = auth('admin')->user();
+            $this->logController->createLog($admin, 'Khách hàng', 'Thay đổi', 'trạng thái khách hàng '.$user->hoten.' thành Hoạt động', route('user.detail', $user->id));
         }
+        
         return back();
     }
 
@@ -171,6 +189,9 @@ class UserController extends Controller
         $user = User::whereId($request->id)->first();
         $user->level = 1;
         $user->save();
+        $admin = auth('admin')->user();
+        $this->logController->createLog($admin, 'Khách hàng', 'Thay đổi', 'định danh khách hàng '.$user->hoten.' thành '.formatLevel($user->level), route('user.detail', $user->id));
+       
         $noticeController = new NoticeController();
         $noticeController->createNotice(1,$user);
         return back();

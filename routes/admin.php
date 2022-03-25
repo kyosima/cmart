@@ -41,7 +41,8 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('{id}', [UserController::class, 'postEdit'])->middleware('permission:Sửa+ẩn KH|'.config('custom-config.name-all-permission').',admin');
     });
     Route::group(['prefix' => 'don-hang'], function () {
-        Route::get('xem-c-bill', [AdminOrderController::class, 'viewCbill'])->name('order.viewCbill');
+        Route::get('xem-c-bill', [AdminOrderController::class, 'viewCbill'])->name('order.viewCbill')->middleware('permission:Truy cập mục Đơn hàng|'.config('custom-config.name-all-permission').',admin');;
+        Route::get('xem-c-bill-sign', [AdminOrderController::class, 'viewCbillSign'])->name('order.viewCbillSign');
         Route::get('down-c-bill', [AdminOrderController::class, 'downPDF'])->name('order.downPDF');
         Route::get('thong-ke', [AdminOrderController::class, 'getStatistical'])->name('order.getStatistical');
     });
@@ -92,6 +93,7 @@ Route::group(['middleware' => ['admin']], function () {
     // xem ds đơn Hàng
     Route::get('don-hang', [AdminOrderController::class, 'index'])->name('order.index')->middleware('permission:Truy cập mục Đơn hàng|'.config('custom-config.name-all-permission').',admin');
     Route::get('don-hang/change-status-order-store', [AdminOrderController::class, 'changeStatusOrderStore'])->name('order.changeStatus')->middleware('permission:Chuyển trạng thái đơn hàng|'.config('custom-config.name-all-permission').',admin');
+    Route::post('don-hang/change-status-order-store-bill', [AdminOrderController::class, 'changeStatusOrderStoreWithBill'])->name('order.changeStatusWithBill')->middleware('permission:Chuyển trạng thái đơn hàng|'.config('custom-config.name-all-permission').',admin');
 
     // tạo đơn Hàng
     Route::get('lay-khach-hang', [AdminOrderController::class, 'getCustomer'])->middleware('permission:Xem DS đơn hàng,admin');

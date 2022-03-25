@@ -59,7 +59,6 @@ class AdminStoreController extends Controller
             'sel_ward.required' => 'Địa chỉ cửa hàng không được để trống',
         ]);
 
-
         return DB::transaction(function () use ($request) {
             try {
                 $slug = Str::slug($request->store_name, '-');
@@ -68,7 +67,7 @@ class AdminStoreController extends Controller
                     'name' => $request->store_name,
                     'slug' => $slug,
                     'address' => $request->store_address,
-                    'id_owner' => $request->id_owner,
+                    'id_owner' => implode(',',$request->id_owner),
                     'id_province' => $request->sel_province,
                     'id_district' => $request->sel_district,
                     'id_ward' => $request->sel_ward,
@@ -113,7 +112,7 @@ class AdminStoreController extends Controller
                     'name' => $request->store_name,
                     'slug' => $slug,
                     'address' => $request->store_address,
-                    'id_owner' => $request->id_owner,
+                    'id_owner' => implode(',',$request->id_owner),
                     'id_province' => $request->sel_province,
                     'id_district' => $request->sel_district,
                     'id_ward' => $request->sel_ward,

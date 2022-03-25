@@ -168,11 +168,11 @@
                 </span>
             </li>
         @endif
-        @if (auth()->guard('admin')->user()->can('') ||
+        @if (auth()->guard('admin')->user()->can('Truy cập lịch sử thao tác hệ thống') ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
             <li class="dropdown">
                 <a href="{{ route('log') }}" class="dropbtn">
-                    <i class="fas fa-cog"></i>
+                    <i class="fa fa-clock-o"></i>
                     <span class="links_name">Lịch sử thao tác hệ thống</span>
                 </a>
             </li>

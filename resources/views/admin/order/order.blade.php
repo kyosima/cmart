@@ -27,7 +27,6 @@
         .dtsb-searchBuilder {
             display: none;
         }
-        
 
     </style>
     {{-- <script>
@@ -115,20 +114,22 @@
                                         <p><b>Thống kê đơn hàng </b></p>
                                         <form action="{{ route('order.getStatistical') }}" method="get">
                                             <div class="row my-2">
-                                                
+
                                                 <div class="col-md-5 col-12">
                                                     <label for="">
                                                         Chọn thời gian bắt đầu
                                                     </label>
                                                     <input type="datetime-local" class="form-control" name="time_start"
-                                                        @if (isset($time_start)) value="{{ $time_start }}" @endif required>
+                                                        @if (isset($time_start)) value="{{ $time_start }}" @endif
+                                                        required>
                                                 </div>
                                                 <div class="col-md-5 col-12">
                                                     <label for="">
                                                         Chọn thời gian kết thúc
                                                     </label>
                                                     <input type="datetime-local" class="form-control" name="time_end"
-                                                        @if (isset($time_end)) value="{{ $time_end }}" @endif required>
+                                                        @if (isset($time_end)) value="{{ $time_end }}" @endif
+                                                        required>
                                                 </div>
                                                 <div class=" col-md-2 col-6">
                                                     <label for="">
@@ -137,7 +138,7 @@
                                                         Lọc
                                                     </button>
                                                 </div>
-                                              
+
                                             </div>
                                         </form>
                                     </div>
@@ -164,6 +165,23 @@
                             </div>
                         </div>
                     </div>
+                    @if (session('message'))
+                    <div class="portlet-status mb-2">
+                        <div class="caption bg-success p-3">
+                            <span
+                                class="caption-subject bold uppercase text-light">{{ session('message') }}</span>
+                        </div>
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                     <div class="card">
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
@@ -177,7 +195,7 @@
                                                 class="far fa-file-excel"></i>
                                             Xuất Excel</a> --}}
                                     </p>
-
+                                  
                                     <span>
                                         <span data-bs-toggle="collapse" href="#collapseExample" role="button"
                                             aria-expanded="false" aria-controls="collapseExample">
@@ -342,13 +360,14 @@
                                                                         </td>
                                                                         <td>{{ formatNumber($order_store->total) }}
                                                                         </td>
-                                                                        <td>{{ formatNumber(round($order_store->vat_products + ($order->tax_services / $order->order_stores()->count()))) }}
+                                                                        <td>{{ formatNumber(round($order_store->vat_products + $order->tax_services / $order->order_stores()->count())) }}
                                                                         </td>
                                                                         <td>
                                                                             <span
                                                                                 class="order-note">{{ optional($order->order_info)->note }}
                                                                             </span>
-                                                                            @if (auth()->guard('admin')->user()->can('Chỉnh sửa Ghi chú đơn hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                                            @if (auth()->guard('admin')->user()->can('Chỉnh sửa Ghi chú đơn hàng') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                                                 <a href="{{ route('order.show', ['order' => $order->id]) }}"
                                                                                     target="_blank"
                                                                                     class="text-danger"><i
@@ -373,62 +392,71 @@
                                                                                     aria-expanded="false"><i
                                                                                         class="fa fa-angle-down text-primary"
                                                                                         aria-hidden="true"></i></button>
-                                                                                        @if (auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                                                @if (auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                                                     <ul
                                                                                         class="dropdown-menu dropdown-menu-end">
                                                                                         <li>
-                                                                                            <a
-                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 0]) }}">
-                                                                                                <span
-                                                                                                    class="dropdown-item changeStatus">
-                                                                                                    Đã đặt hàng
-                                                                                                </span>
-                                                                                            </a>
+                                                                                            <p>
+                                                                                                <a
+                                                                                                    href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 0]) }}">
+                                                                                                    <span
+                                                                                                        class="dropdown-item changeStatus">
+                                                                                                        Đã đặt hàng
+                                                                                                    </span>
+                                                                                                </a>
+                                                                                            </p>
                                                                                         </li>
                                                                                         <li>
-                                                                                            <a
-                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 1]) }}">
+                                                                                            <p data-id="{{ $order_store->id }}"
+                                                                                                data-status="1"
+                                                                                                onclick="getModalStatus(this)">
                                                                                                 <span
                                                                                                     class="dropdown-item changeStatus">
                                                                                                     Đã xác nhận thanh toán
                                                                                                 </span>
-                                                                                            </a>
+                                                                                            </p>
                                                                                         </li>
                                                                                         <li>
-                                                                                            <a
-                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 2]) }}">
+                                                                                            <p data-id="{{ $order_store->id }}"
+                                                                                                data-status="2"
+                                                                                                onclick="getModalStatus(this)">
                                                                                                 <span
                                                                                                     class="dropdown-item changeStatus">
                                                                                                     Đang xử lý
                                                                                                 </span>
-                                                                                            </a>
+                                                                                            </p>
                                                                                         </li>
                                                                                         <li>
-                                                                                            <a
-                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 3]) }}">
+                                                                                            <p data-id="{{ $order_store->id }}"
+                                                                                                data-status="3"
+                                                                                                onclick="getModalStatus(this)">
                                                                                                 <span
                                                                                                     class="dropdown-item changeStatus">
                                                                                                     Đang vận chuyển
                                                                                                 </span>
-                                                                                            </a>
+                                                                                            </p>
                                                                                         </li>
                                                                                         <li>
-                                                                                            <a
-                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 4]) }}">
+                                                                                            <p data-id="{{ $order_store->id }}"
+                                                                                                data-status="4"
+                                                                                                onclick="getModalStatus(this)">
                                                                                                 <span
                                                                                                     class="dropdown-item changeStatus">
                                                                                                     Hoàn thành
                                                                                                 </span>
-                                                                                            </a>
+                                                                                            </p>
                                                                                         </li>
                                                                                         <li>
-                                                                                            <a
-                                                                                                href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 5]) }}">
-                                                                                                <span
-                                                                                                    class="dropdown-item changeStatus">
-                                                                                                    Đã hủy
-                                                                                                </span>
-                                                                                            </a>
+                                                                                            <p>
+                                                                                                <a
+                                                                                                    href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 5]) }}">
+                                                                                                    <span
+                                                                                                        class="dropdown-item changeStatus">
+                                                                                                        Đã hủy
+                                                                                                    </span>
+                                                                                                </a>
+                                                                                            </p>
                                                                                         </li>
                                                                                     </ul>
                                                                                 @endif
@@ -454,6 +482,42 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal-status" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form id="form-status" class="form" action="{{ route('order.changeStatusWithBill') }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Chuyển trạng thái đơn hàng</h5>
+                        <button type="button" class="btn btn-secondary close close-modal" data-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <span>Trạng thái: <b class="status-text"></b></span>
+                        </div>
+                        <input type="hidden" name="order_id">
+                        <input type="hidden" name="status">
+                        <div class="form-group">
+                            <label for="">Chọn C-bill cho trạng thái</label>
+                            <input type="file" class="form-control" name="c_bill" required accept="application/pdf">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Đóng</button>
+                        <button class="btn btn-primary" type="submit">Xác nhận</button>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
 @endsection
 
 @push('scripts')
@@ -464,9 +528,45 @@
     <script type="text/javascript" src="{{ asset('js/admin/select2.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/admin/order.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/admin/checklist.js') }}"></script>
+
+
     <!-- format language -->
 
     <script>
+        function getModalStatus(e) {
+            order_id = $(e).data('id');
+            status = $(e).data('status');
+            $('#form-status input[name="order_id"]').val(order_id);
+            $('#form-status input[name="status"]').val(status);
+            if (status == 1) {
+                $('#form-status .status-text').text('Đã xác nhận thanh toán');
+            } else if (status == 2) {
+                $('#form-status .status-text').text('Đang xử lý');
+            } else if (status == 3) {
+                $('#form-status .status-text').text('Đang vận chuyển');
+            } else if (status == 4) {
+                $('#form-status .status-text').text('Hoàn thành');
+            }
+            $('#modal-status').modal('show');
+        }
+        $('#modal-status .close-modal').click(function() {
+            $('#modal-status').modal('hide');
+
+        });
+        // $('#form-status').on('submmit', function(e) {
+        //     e.preventDefault();
+        //     $.ajax({
+        //         type: "POST",
+        //         url: $(this).attr('action'),
+        //         data: $(this).serialize(),
+        //         success: function(response) {
+        //             console.log(response);
+        //         },error: function(data){
+        //             console.log(data);
+        //         }
+        //     });
+        // });
+
         $(document).ready(function() {
 
             $('#orders-table').DataTable({
@@ -506,7 +606,9 @@
                 buttons: [{
                         extend: 'excelHtml5',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19],
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+                                19
+                            ],
                             format: {
                                 body: function(data, row, column, node) {
                                     data = $('<td>' + data + '</td>').text();
@@ -527,9 +629,11 @@
                         orientation: 'landscape',
                         pageSize: 'LEGAL',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19],
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+                                19
+                            ],
                         },
-                       
+
                     }
                 ],
 

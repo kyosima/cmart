@@ -232,10 +232,18 @@
     <!-- format language -->
     <script>
         $(document).ready(function() {
+            
             $('#tblAdmin').DataTable({
+                @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+
+                columnDefs: [
+                    { orderable: false, targets: [ 3,4] }
+                ],
+                @else
                 columnDefs: [
                     { orderable: false, targets: [ 3] }
                 ],
+                @endif
                 "language": {
                     "emptyTable": "Không có dữ liệu nào !",
                     "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",

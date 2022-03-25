@@ -13,8 +13,10 @@
         div.dtsb-searchBuilder div.dtsb-group {
             display: none;
         }
+
     </style>
-    @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+    @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
         <!-- Modal TẠO CỬA HÀNG MỚI -->
         <div class="modal fade" id="warehouse_create" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -40,14 +42,9 @@
                                     <label class="col-md-3 control-label">Admin:<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
-                                        <select class="form-control select-owner" id="select-owner" name="id_owner">
-                                            @if (old('id_owner'))
-                                                @php
-                                                    $owner = App\Models\Admin::findOrFail(old('id_owner'));
-                                                @endphp
-                                                <option value="{{ old('id_owner') }}" selected="selected">
-                                                    {{ $owner->name }} ({{ $owner->email }})</option>
-                                            @endif
+                                        <select multiple class="form-control select-owner" id="select-owner"
+                                            name="id_owner[]">
+
                                         </select>
                                     </div>
                                 </div>
@@ -65,7 +62,7 @@
                                     <div class="col-md-9">
                                         <select class="js-location" id="selectCity" name="sel_province" data-type="city"
                                             data-placeholder="Chọn tỉnh/thành">
-                                           
+
                                         </select>
                                     </div>
                                 </div>
@@ -122,7 +119,8 @@
                                         DANH SÁCH CỬA HÀNG </span>
                                     <span class="caption-helper"></span>
                                 </div>
-                                @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                     <div class="ps-4">
                                         <a href="#warehouse_create" data-toggle="modal" class="btn btn-add"><i
                                                 class="fa fa-plus"></i>
@@ -152,42 +150,67 @@
                                         </thead>
                                         <tbody style="color: #748092; font-size: 14px;">
                                             @foreach ($stores as $item)
-                                        @if (optional($item->owner)->id == $admin->id && auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
-                                            <tr>
-                                                
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ optional($item->owner)->fullname }} ({{ optional($item->owner)->email }})
-                                                </td>
-                                                <td>{{ $item->address .', P.' .optional($item->ward)->tenphuongxa .', Q.' .optional($item->district)->tenquanhuyen .', ' .optional($item->province)->tentinhthanh }}
-                                                </td>
-                                                <td>{{ $item->products()->count() }}</td>
-                                                <td>
-                                                @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
-                                                    <a class="btn modal-edit-unit"
-                                                        href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
-                                                        <i class="fas fa-pen"></i>
-                                                    </a>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @elseif (auth()->guard('admin')->user()->can('Truy cập CH') || auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                {{-- @php
+                                                    $addressController = new App\Http\Controllers\AddressController();
+                                                    $store_province = $addressController->getProvinceDetail($item->id_province);
+                                                    $store_district = $addressController->getDistrictDetail($item->id_province, $item->id_district);
+                                                    $store_ward = $addressController->getWardDetail($item->id_district, $item->id_ward);
+                                                @endphp --}}
+                                                @if ((in_array($admin->id, explode(',', $item->id_owner)) &&
+    auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định')) )
                                                     <tr>
+
                                                         <td>{{ $item->name }}</td>
-                                                        <td>{{ optional($item->owner)->fullname }} ({{ optional($item->owner)->email }})</td>
-                                                        {{-- <td>{{ $item->address .', P.' .optional($item->ward)->tenphuongxa .', Q.' .optional($item->district)->tenquanhuyen .', ' .optional($item->province)->tentinhthanh }}
+                                                        <td>
+                                                            @foreach (explode(',', $item->id_owner) as $id)
+                                                                @php
+                                                                    $owner = App\Models\Admin::whereId($id)->first();
+                                                                @endphp
+                                                                <p>{{ $owner->fullname }}
+                                                                    ({{ $owner->email }})
+                                                                </p>
+                                                            @endforeach
+                                                        </td>
+                                                        {{-- <td>{{ $item->address .', ' .$store_ward->WARDS_NAME .',' .$store_district->DISTRICT_NAME .', ' .$store_province->PROVINCE_NAME }}
                                                         </td> --}}
                                                         <td>{{ $item->products()->count() }}</td>
                                                         <td>{{ $item->product_stores()->sum('soluong') }}</td>
+
                                                         <td>
-                                                        @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH')  || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                           
                                                             <a class="btn modal-edit-unit"
                                                                 href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
                                                                 <i class="fas fa-pen"></i>
                                                             </a>
+                                                        </td>
+                                                    </tr>
+                                                @elseif (auth()->guard('admin')->user()->can('Truy cập CH') ||
+    auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                    <tr>
+                                                        <td>{{ $item->name }}</td>
+                                                        <td> @foreach (explode(',', $item->id_owner) as $id)
+                                                            @php
+                                                                $owner = App\Models\Admin::whereId($id)->first();
+                                                            @endphp
+                                                            <p>{{ $owner->fullname }}
+                                                                ({{ $owner->email }})
+                                                            </p>
+                                                        @endforeach</td>
+                                                        {{-- <td>{{ $item->address .', ' .$store_ward->WARDS_NAME .',' .$store_district->DISTRICT_NAME .', ' .$store_province->PROVINCE_NAME }} --}}
+
+                                                        <td>{{ $item->products()->count() }}</td>
+                                                        <td>{{ $item->product_stores()->sum('soluong') }}</td>
+                                                        <td>
+                                                            @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                                <a class="btn modal-edit-unit"
+                                                                    href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
+                                                                    <i class="fas fa-pen"></i>
+                                                                </a>
                                                             @endif
                                                         </td>
-                                                    </tr>   
-                                                   
+                                                    </tr>
                                                 @endif
                                             @endforeach
                                         </tbody>
@@ -206,7 +229,7 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('public/js/address.js') }}"></script>
+    <script src="{{ asset('public/js/address.js') }}"></script>
 
     <script>
         @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
@@ -220,12 +243,10 @@
                 [25, 50, -1],
                 [25, 50, "All"]
             ],
-            columnDefs: [
-                {
-                    targets: [1,2,4],
-                    orderable: false,
-                }
-            ],
+            columnDefs: [{
+                targets: [1, 2, 4],
+                orderable: false,
+            }],
             searchBuilder: {
                 conditions: {
                     num: {
@@ -399,7 +420,7 @@
             
                 $('#select-owner').select2({
                 width: '100%',
-                allowClear: true,
+                multiple: true,
                 dropdownParent: $('#warehouse_create'),
                 minimumInputLength: 3,
                 dataType: 'json',
