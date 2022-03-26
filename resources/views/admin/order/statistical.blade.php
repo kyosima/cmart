@@ -153,7 +153,7 @@
                                         <td>{{ formatNumber($arr_order_stores[$i]->where('shipping_method','2')->sum('shipping_total')) }}</td>
                                         <td>{{ formatNumber($arr_order_stores[$i]->sum('vat_services')) }}</td>
                                         <td>{{ formatNumber($arr_order_stores[$i]->sum('discount_services')) }}</td>
-                                        <td></td>
+                                        <td>{{ formatNumber($arr_order_stores[$i]->sum('vat')) }}</td>
                                         <td>{{ formatNumber($arr_order_stores[$i]->where('payment_method','1')->sum('total')) }}</td>
                                         <td>{{ formatNumber($arr_order_stores[$i]->where('payment_method','2')->sum('total')) }}</td>
                                         <td>{{ formatNumber($arr_order_stores[$i]->where('payment_method','3')->sum('total')) }}</td>

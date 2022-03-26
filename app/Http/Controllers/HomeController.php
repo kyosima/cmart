@@ -75,53 +75,17 @@ class HomeController extends Controller
         ]);
 
         if (Auth::attempt(['phone' => $request->phone, 'password' => $request->password])) {
-            $us = User::where('phone', '=', $request->phone)->first();
-            $datePoint = $us->created_at->addMonth('1');
-            $user = User::all();
-            foreach ($user->where('id', '!=', 1) as $value) {
-                $datePoint = $value->created_at->addMonth('1')->startOfDay();
-                if (Carbon::now() >= $datePoint) {
-                    $value->created_at = $value->created_at->addMonth('1')->startOfDay();
-                    $notelichsu = Carbon::parse($value->created_at)->format('Y-m-d');
-
-                    $pointC = PointC::where('user_id', '=', $value->id)->first();
-                    $amount = round($pointC->point_c * 0.01, 0);
-                    $pointTietKiem = $pointC->point_c + $amount;
-
-                    $id_user_chuyen = User::where('id', '=', 1)->first()->id;
-                    $vi_user_chuyen = PointC::where('user_id', '=', $id_user_chuyen)->first();
-                    // luu lich su 
-
-                    $lichsu_chuyen = new PointCHistory;
-                    $lichsu_chuyen->point_c_idnhan = $value->id;
-                    $lichsu_chuyen->point_past_nhan = $pointC->point_c;
-                    $lichsu_chuyen->point_present_nhan = $pointTietKiem;
-                    $lichsu_chuyen->makhachhang = $value->code_customer;
-                    $lichsu_chuyen->note = 'Tiết kiệm ngày ' . $notelichsu . ' từ TK ' . $value->code_customer;
-                    $lichsu_chuyen->amount = $amount;
-                    $lichsu_chuyen->type = 3;
-                    $lichsu_chuyen->magiaodich = time();
-                    $lichsu_chuyen->created_at = $value->created_at->startOfDay();
-
-                    $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
-                    $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
-                    $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $amount;
-                    $lichsu_chuyen->makhachhang_chuyen = 202201170001;
-                    $lichsu_chuyen->save();
-
-                    $pointC->point_c = $pointTietKiem;
-                    $vi_user_chuyen->point_c -= $amount;
-                    $vi_user_chuyen->save();
-                    $pointC->save();
-
-                    $value->save();
-                }
+          
+            $user = Auth::user();
+            if($user->status == 0){
+               return redirect()->route('logoutuser')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
             }
             if (Auth::check()) {
                 if (Auth::user()->is_ekyc == 0) {
                     return redirect()->route('ekyc.getVerify');
                 }
             }
+            
             return redirect('/');
         } else {
             return redirect('tai-khoan')->with('thongbao', 'Hồ sơ Khách Hàng không tồn tại');

@@ -644,6 +644,7 @@ class CheckoutController extends Controller
         foreach ($order->order_stores()->get() as $order_store) {
             $order_store->total = round($order_store->sub_total - $order_store->discount_products + $order_store->vat_products + ($order->total_payment_services / $order->order_stores()->count()));
             $order_store->discount_services = round( ($order_store->shipping_total * 108 / 100) + $order_store->vat_services - ($order->total_payment_services / $order->order_stores()->count()) < 0 ? ($order_store->shipping_total * 108 / 100) + $order_store->vat_services : $order->total_payment_services / $order->order_stores()->count());
+            $order_store->vat = round($order_store->vat_products + $order->tax_services / $order->order_stores()->count());
             $order_store->save();
         }
         $order->total = $order->order_stores()->sum('total');

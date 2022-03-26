@@ -194,7 +194,7 @@
                                 <div class="form-group d-flex mb-2">
                                     <label class="col-md-3 control-label">Mô tả</label>
                                     <div class="col-md-9">
-                                        <textarea class="form-control" name="description" rows="3"></textarea>
+                                        <textarea class="form-control" name="description" rows="3" placeholder="Mời nhập văn bản phê duyệt và thông tin mô tả chi tiết"></textarea>
                                     </div>
                                 </div>
                             </div>

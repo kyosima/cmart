@@ -228,7 +228,7 @@
     <script type="text/javascript" src="{{ asset('js/admin/ajax-form.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/admin/checklist.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/admin/checklist.js') }}"></script>
     <!-- format language -->
     <script>
         $(document).ready(function() {

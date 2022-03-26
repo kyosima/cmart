@@ -23,7 +23,6 @@
             </li>
         @endif
         @if (auth()->guard('admin')->user()->can('Quản lý thông báo'))
-
             <li class="dropdown">
                 <a href="#" class="dropbtn">
                     <i class="fa fa-bell" aria-hidden="true"></i>
@@ -40,8 +39,8 @@
             </li>
         @endif
         @if (auth()->guard('admin')->user()->can('Truy cập CH') ||
-        auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') ||
-        auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||
+    auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') ||
+    auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
             <li class="dropdown">
                 <a href="{{ route('store.index') }}" class="dropbtn">
@@ -86,7 +85,7 @@
             <li class="dropdown">
                 <a href="{{ route('coupon.index') }}" class="dropbtn">
                     <i class="fa fa-tag"></i>
-                    <span class="links_name w-100 align-items-center d-flex">Ưu đãi</span>
+                    <span class="links_name w-100 align-items-center d-flex">Quản lý mã ưu đãi</span>
                 </a>
 
             </li>
@@ -176,26 +175,31 @@
                     <span class="links_name">Lịch sử thao tác hệ thống</span>
                 </a>
             </li>
-            @endif
-            @if (auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
-                <li class="dropdown">
-                    <a href="{{ route('setting.index') }}" class="dropbtn">
-                        <i class="fas fa-cog"></i>
-                        <span class="links_name">Cài đặt</span>
-                    </a>
-                </li>
-            @endif
-            <li class="profile">
-                <div class="profile-details">
-                    <img src="https://ict-imgs.vgcloud.vn/2020/09/01/19/huong-dan-tao-facebook-avatar.jpg"
-                        alt="profileImg">
-                    <div class="name_job">
-                        <div class="name">{{ auth()->guard('admin')->user()->fullname }}</div>
-                        <div class="job">Admin</div>
-                    </div>
-                </div>
-                <i class='bx bx-log-out' id="log_out" data-bs-toggle="modal" data-bs-target="#modalLogout"></i>
+        @endif
+        @if (auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+            <li class="dropdown">
+                <a href="{{ route('setting.index') }}" class="dropbtn">
+                    <i class="fas fa-cog"></i>
+                    <span class="links_name">Cài đặt</span>
+                </a>
             </li>
+        @endif
+        <li class="dropdown">
+            <a href="{{ route('admin.getChangePassword') }}" class="dropbtn">
+                <i class="fa fa-lock"></i>
+                <span class="links_name">Đổi mật khẩu</span>
+            </a>
+        </li>
+        <li class="profile">
+            <div class="profile-details">
+
+                <div class="name_job">
+                    <div class="name">{{ auth()->guard('admin')->user()->fullname }}</div>
+                    <div class="job">Admin</div>
+                </div>
+            </div>
+            <i class='fa fa-power-off' id="log_out" data-bs-toggle="modal" data-bs-target="#modalLogout"></i>
+        </li>
     </ul>
 </div>
 <div id="modalLogout" class="modal" tabindex="-1">

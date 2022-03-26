@@ -85,7 +85,8 @@ Route::group(['middleware' => ['admin']], function () {
     // Route::get('',[UserController::class,'postDanhsach']);
 
     Route::get('logout', [AdminHomeController::class, 'logout'])->name('logout');
-
+    Route::get('doi-mat-khau', [AdminHomeController::class, 'getChangePassword'])->name('admin.getChangePassword');
+    Route::post('doi-mat-khau', [AdminHomeController::class, 'postChangePassword'])->name('admin.postChangePassword');
     Route::get('/', [AdminHomeController::class, 'dashboard'])->name('admin.index');
     //quản lý admins
 
@@ -164,6 +165,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('xu-ly-nhieu-permission', [AdminPermissionsController::class, 'multiple'])->name('permissions.multiple');
         Route::post('xu-ly-nhieu-admin', [AdminManagerAdminController::class, 'multiple'])->name('manager-admin.multiple');
     });
+
 
     Route::group(['middleware' => ['permission:'.config('custom-config.name-all-permission').',admin']], function () {
         //setting

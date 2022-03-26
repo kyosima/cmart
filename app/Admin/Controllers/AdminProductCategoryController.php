@@ -360,7 +360,8 @@ class AdminProductCategoryController extends Controller
             $status_text = 'Ngừng';
         }else{
             $status_text = 'Hoạt động';
-        }$proCat = ProductCategory::where('id', $id)->first();
+        }
+        $proCat = ProductCategory::where('id', $id)->first();
 
         $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Thay đổi', 'trạng thái ngành/nhóm hàng '.$proCat->name .' thành '.$status_text, route('nganh-nhom-hang.edit',$proCat->id));
         
