@@ -44,6 +44,10 @@ class CheckoutController extends Controller
     public function index()
     {
         $user = Auth::user();
+        if($user->status == 0){
+            Auth::logout();
+           return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
+        }
         $stores = Store::get();
         foreach ($stores as $store) {
             if(Cart::instance($store->id)->count()> 0){

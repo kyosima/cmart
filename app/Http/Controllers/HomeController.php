@@ -39,6 +39,14 @@ class HomeController extends Controller
                 return redirect()->route('ekyc.getVerify');
             }
         }
+        if(Auth::check()){
+            $user = Auth::user();
+            if($user->status == 0){
+                Auth::logout();
+               return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
+            }
+        }
+     
         return view('home', compact('categories'));
     }
 
@@ -78,7 +86,8 @@ class HomeController extends Controller
           
             $user = Auth::user();
             if($user->status == 0){
-               return redirect()->route('logoutuser')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
+                Auth::logout();
+               return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
             }
             if (Auth::check()) {
                 if (Auth::user()->is_ekyc == 0) {

@@ -175,6 +175,10 @@
                     </div>
                 </div>
                 <div class="mb-3">
+                    <label for="checkchangepass" class="form-label"><input type="checkbox" class="" name="is_changepass" value="1" id="checkchangepass"  >
+                        Đổi mật khẩu</label>
+                </div>
+                <div class="mb-3">
                     <label for="adminNewPassword" class="form-label">Mật khẩu mới</label>
                     <input type="password" class="form-control" name="in_new_password" id="adminNewPassword" placeholder="Mật khẩu mới" >
                     <div class="invalid-feedback">

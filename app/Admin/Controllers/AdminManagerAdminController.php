@@ -57,7 +57,7 @@ class AdminManagerAdminController extends Controller
         $validator = Validator::make($request->all(), [
             'fullname' => 'required|min:3|unique:App\Models\Admin,name',
             'in_email' => 'required|min:3|email|unique:App\Models\Admin,email',
-            'in_password' => 'required|min:3',
+            'in_password' => 'required|min:8',
             'in_confirm_password' => 'same:in_password',
             'sel_permission' => 'required'
         ], [
@@ -65,7 +65,7 @@ class AdminManagerAdminController extends Controller
             'fullname.min' => 'Ít nhất 3 ký tự',
             'in_email.min' => 'Ít nhất 3 ký tự',
             'in_email.unique' => 'Email này đã tồn tại',
-            'in_password.min' => 'Ít nhất 3 ký tự',
+            'in_password.min' => 'Mật khẩu Ít nhất 8 ký tự',
             'in_confirm_password.same' => 'Mật khẩu không khớp',
             'sel_permission.required' => 'Vui lòng chọn vai trò'
         ]);
@@ -126,18 +126,31 @@ class AdminManagerAdminController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $validator = Validator::make($request->all(), [
-            'in_fullname_edit' => ['required', 'min:3'],
-            'in_confirm_new_password' => 'same:in_new_password',
-            'sel_permission_edit' => 'required'
-        ], [
-            'in_name.min' => 'Ít nhất 3 ký tự',
-            'in_email.min' => 'Ít nhất 3 ký tự',
-            'in_email.unique' => 'Email này đã tồn tại',
-            'in_password.min' => 'Ít nhất 3 ký tự',
-            'in_confirm_password.same' => 'Mật khẩu không khớp',
-            'sel_role_edit.required' => 'Vui lòng chọn vai trò'
-        ]);
+        if($request->is_changepass == 1){
+            $validator = Validator::make($request->all(), [
+                'in_fullname_edit' => ['required', 'min:3'],
+                'in_confirm_new_password' => 'same:in_new_password',
+                'sel_permission_edit' => 'required'
+            ], [
+                'in_name.min' => 'Ít nhất 3 ký tự',
+                'in_email.min' => 'Ít nhất 3 ký tự',
+                'in_email.unique' => 'Email này đã tồn tại',
+                'in_password.min' => 'Mật khẩu Ít nhất 8 ký tự',
+                'in_confirm_password.same' => 'Mật khẩu không khớp',
+                'sel_role_edit.required' => 'Vui lòng chọn vai trò'
+            ]);
+        }else{
+            $validator = Validator::make($request->all(), [
+                'in_fullname_edit' => ['required', 'min:3'],
+                'sel_permission_edit' => 'required'
+            ], [
+                'in_name.min' => 'Ít nhất 3 ký tự',
+                'in_email.min' => 'Ít nhất 3 ký tự',
+                'in_email.unique' => 'Email này đã tồn tại',
+                'sel_role_edit.required' => 'Vui lòng chọn vai trò'
+            ]);
+        }
+        
         if($validator->fails()){
             return response($validator->errors(), 400);
         }
@@ -147,9 +160,12 @@ class AdminManagerAdminController extends Controller
         $admin = Admin::find($request->in_id_edit);
         $admin->fullname = $request->in_fullname_edit;
         $admin->DVCQ = $request->DVCQ;
-        if ($request->in_new_password != null) {
-            $admin->password = bcrypt($request->in_new_password);
+        if($request->is_changepass == 1){
+            if ($request->in_new_password != null) {
+                $admin->password = bcrypt($request->in_new_password);
+            }
         }
+   
 
         $admin->save();
         $admin = Admin::find($request->in_id_edit);

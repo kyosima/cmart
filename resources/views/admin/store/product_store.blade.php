@@ -20,7 +20,13 @@
                             <div class="form-group">
                                 <label class="col-md-12 control-label text-left">Tồn kho:</label>
                                 <div class="col-md-12">
+                                    @if ( 
+                                    auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định')|| auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))) 
                                     <input type="number" min="0" name="quantity" value="{{$product->getOriginal('pivot_soluong') ?? 1}}" class="form-control">
+                                    @else
+                                    <input type="number" min="0" name="quantity" value="{{$product->getOriginal('pivot_soluong') ?? 1}}" class="form-control" readonly>
+
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -28,6 +34,7 @@
                             <div class="form-group">
                                 <label class="col-md-12 control-label text-left">Hiển thị cho:</label>
                                 <div class="col-md-12">
+                                    
                                     <select name="for_user[]" class="form-control for_user" multiple data-placeholder="Chọn level">
                                         @if ($product->getOriginal('pivot_for_user'))
                                             <?php $arr = explode(',', $product->getOriginal('pivot_for_user')); ?>

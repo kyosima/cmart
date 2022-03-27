@@ -406,12 +406,12 @@ class AdminOrderController extends Controller
         if ($request->has('time_start') && $request->has('time_end') ) {
             $time_start = $request->time_start;
             $time_end = $request->time_end;
-            $order_stores_confirm = OrderStore::whereStatus(0)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
-            $order_stores_payment = OrderStore::whereStatus(1)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
-            $order_stores_process =OrderStore::whereStatus(2)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
-            $order_stores_ship = OrderStore::whereStatus(3)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
-            $order_stores_success = OrderStore::whereStatus(4)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
-            $order_stores_cancel = OrderStore::whereStatus(5)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_confirm = OrderStore::whereStatus(0)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_payment = OrderStore::whereStatus(1)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_process =OrderStore::whereStatus(2)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_ship = OrderStore::whereStatus(3)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_success = OrderStore::whereStatus(4)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_cancel = OrderStore::whereStatus(5)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
         }else{
             $time_start = null;
             $time_end = null;

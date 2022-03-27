@@ -54,6 +54,9 @@ class InfoCompanyController extends Controller
     public function show($slug)
     {
         $page = InfoCompany::where('slug', $slug)->first();
+        if($page->status == 0){
+            return redirect()->route('home');
+        }
         return view('policy.page_single', compact('page'));
     }
 

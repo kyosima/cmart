@@ -20,6 +20,10 @@ class CartController extends Controller
     {
         if(Auth::check()){
             $user = Auth::user();
+            if($user->status == 0){
+                Auth::logout();
+               return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
+            }
             $orders_not_payment = $user->orders()->where('is_payment',0)->get();
             if (count($orders_not_payment) > 0) {
                 foreach($orders_not_payment as $order){

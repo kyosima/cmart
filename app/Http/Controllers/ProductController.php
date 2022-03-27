@@ -67,7 +67,9 @@ class ProductController extends Controller
             //
             $user = Auth::user();
             $product = Product::whereSlug($slug)->firstorfail();
-
+            if( $product->status == 0){
+                return redirect()->route('home');
+            }
             SEOMeta::setTitle($product->name);
             SEOMeta::addMeta('robots', 'noindex, nofollow');
             SEOMeta::addMeta('name', $product->name, 'itemprop');

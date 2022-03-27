@@ -91,6 +91,7 @@
             </li>
         @endif
         @if (auth()->guard('admin')->user()->can('Truy cập mục KH') ||
+    auth()->guard('admin')->user()->can('Quản lý yêu cầu thay đổi thông tin tài khoản khách hàng') ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
             <li class="dropdown">
                 <a href="#" class="dropbtn">
@@ -98,10 +99,19 @@
                     <span class="links_name w-100 align-items-center d-flex">Khách hàng <i
                             class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
                 </a>
+
                 <span class="dropdown-content">
-                    <a href="{{ url('admin/danh-sach-user') }}">Danh sách khách hàng</a>
-                    <a href="{{ route('ekyc.index') }}">Danh sách yêu cầu thay đổi thông tin tài khoản</a>
+                    @if (auth()->guard('admin')->user()->can('Truy cập mục KH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                        <a href="{{ url('admin/danh-sach-user') }}">Danh sách khách hàng</a>
+                    @endif
+                    @if (auth()->guard('admin')->user()->can('Quản lý yêu cầu thay đổi thông tin tài khoản khách hàng') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                        <a href="{{ route('ekyc.index') }}">Danh sách yêu cầu thay đổi thông tin tài khoản</a>
+                    @endif
+
                 </span>
+
 
 
             </li>
@@ -131,6 +141,7 @@
             </li>
         @endif
         @if (auth()->guard('admin')->user()->can('Truy cập mục Admin') ||
+    auth()->guard('admin')->user()->can('Truy cập lịch sử thao tác hệ thống') ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
             <li class="dropdown">
                 <a href="#" class="dropbtn">
@@ -140,8 +151,16 @@
                 </a>
                 <span class="dropdown-content">
                     {{-- <a href="{{ route('roles.index') }}">Vai trò</a> --}}
-                    <a href="{{ route('permissions.index') }}">Quyền</a>
-                    <a href="{{ route('manager-admin.index') }}">DS Admin</a>
+                    @if (auth()->guard('admin')->user()->can('Truy cập mục Admin') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                        <a href="{{ route('permissions.index') }}">Quyền</a>
+                        <a href="{{ route('manager-admin.index') }}">DS Admin</a>
+                    @endif
+                    @if (auth()->guard('admin')->user()->can('Truy cập lịch sử thao tác hệ thống') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                        <a href="{{ route('log') }}">Lịch sử thao tác hệ thống</a>
+                    @endif
+
                     <!-- <a href="{{ URL::to('/admin/log-viewer/logs') }}">Theo dõi Admin</a> -->
                 </span>
             </li>
@@ -167,15 +186,8 @@
                 </span>
             </li>
         @endif
-        @if (auth()->guard('admin')->user()->can('Truy cập lịch sử thao tác hệ thống') ||
-    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
-            <li class="dropdown">
-                <a href="{{ route('log') }}" class="dropbtn">
-                    <i class="fa fa-clock-o"></i>
-                    <span class="links_name">Lịch sử thao tác hệ thống</span>
-                </a>
-            </li>
-        @endif
+
+
         @if (auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
             <li class="dropdown">
                 <a href="{{ route('setting.index') }}" class="dropbtn">

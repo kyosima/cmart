@@ -238,12 +238,19 @@
                                                 <select class="form-control selectpicker" name="tax"
                                                     required data-placeholder="Chọn thuế suất">
                                                     <option></option>
-                                                    <option value="0" {{ old("tax") == 0 && old("tax") != null ? "selected":"" }}>0%</option>
-                                                    <option value="KKK" {{ old("tax") == 0 ? "selected":"" }}>KKK</option>
-                                                    <option value="KTT" {{ old("tax") == 0 ? "selected":"" }}>KTT</option>
+                                                    @if (old("tax") != null)
+                                                        <option value="KKK" {{ old("tax") == 'KKK' ? "selected":"" }}>KKK</option>
+                                                        <option value="KTT" {{ old("tax") == 'KTT' ? "selected":"" }}>KTT</option>
+                                                        <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
+                                                        <option value="0.05" {{ old("tax") == 0.08 ? "selected":"" }}>8%</option>
+                                                        <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
+                                                    @else
+                                                    <option value="KKK" {{ old("tax") == 'KKK' ? "selected":"" }}>KKK</option>
+                                                    <option value="KTT" {{ old("tax") == 'KTT' ? "selected":"" }}>KTT</option>
                                                     <option value="0.05" {{ old("tax") == 0.05 ? "selected":"" }}>5%</option>
                                                     <option value="0.08" {{ old("tax") == 0.08 ? "selected":"" }}>8%</option>
                                                     <option value="0.1" {{ old("tax") == 0.1 ? "selected":"" }}>10%</option>
+                                                    @endif
                                                 </select>
                                             </div>
                                         </div>
