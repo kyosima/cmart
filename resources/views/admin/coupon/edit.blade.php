@@ -36,7 +36,7 @@
             </div>
             <hr>
             <div class="portlet-body">
-                @if (auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
+                @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi'))
                     <form action="{{ route('coupon.update', $coupon->id) }}" method="post">
                         @csrf
                         @method('PUT')
@@ -325,17 +325,11 @@
                         <button type="submit" class="btn btn-info">Cập nhật</button>
 
                     </div>
-                    @if (auth()->guard('admin')->user()->can('Xóa mã ưu đãi'))
-                    @endif
+                  
 
                 </div>
                 </form>
-                <form action="{{ route('coupon.delete', ['id' => $coupon->id]) }}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa?')">Xóa
-                        voucher/coupon</button>
-                </form>
+              
             </div>
         </div>
     </div>

@@ -36,7 +36,7 @@
             </div>
             <hr>
             <div class="portlet-body">
-                @if (auth()->guard('admin')->user()->can('Chỉnh sửa mã ưu đãi'))
+                @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi'))
                     <form action="{{ route('coupon.store') }}" method="post">
                         @csrf
                 @endif

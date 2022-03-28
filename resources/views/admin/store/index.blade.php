@@ -371,7 +371,7 @@
                 }
             });
 
-            @if (auth()->guard('admin')->user()->can('Thêm cửa hàng'))
+            @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH'))
                 $('.js-location').change(function(e) {
                 e.preventDefault();
                 let route = '{{ route('store.getLocation') }}';

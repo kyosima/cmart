@@ -35,7 +35,7 @@
                                 <label class="col-md-12 control-label text-left">Hiển thị cho:</label>
                                 <div class="col-md-12">
                                     
-                                    <select name="for_user[]" class="form-control for_user" multiple data-placeholder="Chọn level">
+                                    <select name="for_user[]" class="form-control for_user" multiple data-placeholder="Chọn level" {{ auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))? '': 'disabled' }}>
                                         @if ($product->getOriginal('pivot_for_user'))
                                             <?php $arr = explode(',', $product->getOriginal('pivot_for_user')); ?>
                                             <option value="0" {{in_array("0", $arr) ? 'selected' : ''}}>Khách hàng thân thiết</option>

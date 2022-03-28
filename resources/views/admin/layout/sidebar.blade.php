@@ -117,6 +117,7 @@
             </li>
         @endif
         @if (auth()->guard('admin')->user()->can('Truy cập mục TTL') ||
+    auth()->guard('admin')->user()->can('Truy cập mục chuyển C') ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
             <li class="dropdown">
                 <a href="#" class="dropbtn">
@@ -125,18 +126,24 @@
                             class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
                 </a>
                 <span class="dropdown-content" style="top: -170px;">
-                    <a href="{{ route('point.getStatistical') }}">Tài khoản C / HSKH</a>
-                    @if (auth()->guard('admin')->user()->can('Chuyển C từ TK C-Mart') ||
+                    @if (auth()->guard('admin')->user()->can('Truy cập mục TTL') ||(auth()->guard('admin')->user()->can('Truy cập mục chuyển C')) ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                        <a href="{{ route('point.getStatistical') }}">Tài khoản C / HSKH</a>
+                    @endif
+                    @if (auth()->guard('admin')->user()->can('Truy cập mục chuyển C') ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <a href="{{ route('point.Transfer') }}">Chuyển C</a>
                     @endif
-                    <a href="{{ route('point.account') }}">Tài khoản C / C-Mart</a>
-                    <a href="{{ route('point.historyReceiver') }}">Lịch sử nhận C</a>
-                    <a href="{{ route('point.historyTransfer') }}">Lịch sử chuyển khoản C</a>
-                    <a href="{{ route('point.historyAccumulation') }}">Lịch sử thanh toán tích luỹ C</a>
-                    <a href="{{ route('point.getHistorySaving') }}">Lịch sử thanh toán tiết kiệm C</a>
-                    <a href="{{ route('point.historyAccumulationM') }}">Lịch sử thanh toán tích luỹ M</a>
-                    <a href="{{ route('point.historyRefund') }}">Lịch sử hoàn đơn hàng huỷ</a>
+                    @if (auth()->guard('admin')->user()->can('Truy cập mục TTL') ||(auth()->guard('admin')->user()->can('Truy cập mục chuyển C')) ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                        <a href="{{ route('point.account') }}">Tài khoản C / C-Mart</a>
+                        <a href="{{ route('point.historyReceiver') }}">Lịch sử nhận C</a>
+                        <a href="{{ route('point.historyTransfer') }}">Lịch sử chuyển khoản C</a>
+                        <a href="{{ route('point.historyAccumulation') }}">Lịch sử thanh toán tích luỹ C</a>
+                        <a href="{{ route('point.getHistorySaving') }}">Lịch sử thanh toán tiết kiệm C</a>
+                        <a href="{{ route('point.historyAccumulationM') }}">Lịch sử thanh toán tích luỹ M</a>
+                        <a href="{{ route('point.historyRefund') }}">Lịch sử hoàn đơn hàng huỷ</a>
+                    @endif
                 </span>
             </li>
         @endif

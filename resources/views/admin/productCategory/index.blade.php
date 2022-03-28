@@ -170,7 +170,7 @@
                                     </td>
                                     <td>
                                         @if ($category->slug != 'uncategorized' &&
-    auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+    auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                                             <a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
                                                 href="{{ route('nganh-nhom-hang.edit', $category->id) }}">{{ $category->name }}</a>
                                             @if (count($category->childrenCategoriesOnly) > 0)
@@ -439,7 +439,7 @@
         });
     </script>
 
-    @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+    @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
         <script type="text/javascript" src="{{ asset('/js/admin/adminProductCategory.js') }}"></script>
     @endif
 

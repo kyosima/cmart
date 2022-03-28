@@ -169,32 +169,35 @@
 
                             <div class="col-md-12">
                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="is_ecard"><input type="checkbox" name="is_ecard" id="is_ecard" value="1"> Sản phẩm E-Card</label>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-md-12 control-label text-left">Giá Nhập<span
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
-                                                <input type="text" class="form-control number-separator-4" required
+                                                <input type="text" class="form-control number-separator-4" 
                                                     value="{{ old('product_price') }}">
-                                                <input type="hidden" id="product_price" required name="product_price" value="{{ old('product_price') }}">
+                                                <input type="hidden" id="product_price"  name="product_price" value="{{ old('product_price') }}">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-12 control-label text-left">Giá Bán Lẻ<span
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
-                                                <input type="text" class="form-control number-separator" required
+                                                <input type="text" class="form-control number-separator" 
                                                     value="{{ old('product_regular_price') }}">
-                                                <input type="hidden" id="product_regular_price" required name="product_regular_price" value="{{ old('product_regular_price') }}">
+                                                <input type="hidden" id="product_regular_price"  name="product_regular_price" value="{{ old('product_regular_price') }}">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-12 control-label text-left">Giá Shock<span
                                                 class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
-                                                <input type="text" required class="form-control number-separator-1" 
+                                                <input type="text"  class="form-control number-separator-1" 
                                                     value="{{ old('product_shock_price') }}">
-                                                <input type="hidden" id="product_shock_price" required name="product_shock_price" value="{{ old('product_shock_price') }}">
+                                                <input type="hidden" id="product_shock_price"  name="product_shock_price" value="{{ old('product_shock_price') }}">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -202,8 +205,8 @@
                                                     class="required" aria-required="true">(*)</span>:</label>
                                             <div class="col-md-12">
                                                 <input type="text" class="form-control number-separator-2"
-                                                required value="{{ old('product_wholesale_price') }}">
-                                                <input type="hidden" id="product_wholesale_price" required name="product_wholesale_price" value="{{ old('product_shock_price') }}">
+                                                 value="{{ old('product_wholesale_price') }}">
+                                                <input type="hidden" id="product_wholesale_price"  name="product_wholesale_price" value="{{ old('product_shock_price') }}">
                                             </div>
                                         </div>
                                     </div>

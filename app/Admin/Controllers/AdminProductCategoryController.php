@@ -271,8 +271,9 @@ class AdminProductCategoryController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
+        
         if($id == 1) {
             // Không được xóa Uncategorized
             return redirect()->route('nganh-nhom-hang.index');
@@ -287,6 +288,10 @@ class AdminProductCategoryController extends Controller
 
             $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'xóa', 'ngành/nhóm hàng '.$proCat->name);
 
+        }
+        if($request->ajax()){
+        }else{
+            return redirect()->route('nganh-nhom-hang.index');
         }
     }
 

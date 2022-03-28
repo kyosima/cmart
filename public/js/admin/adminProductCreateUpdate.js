@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     $("form").validate({
         ignore: [],
         rules: {
@@ -89,6 +89,29 @@ $(document).ready(function () {
             product_shock_price: "Không được để trống",
             payments: "Không được để trống",
             tax: "Không được để trống"
+        }
+    });
+    $('input[name="is_ecard"]').on('change', function() {
+        if ($('input[name="is_ecard"]').is(':checked')) {
+            $('input[name="product_price"]').rules('remove', 'required');
+            $('input[name="product_regular_price"]').rules('remove', 'required');
+            $('input[name="product_wholesale_price"]').rules('remove', 'required');
+            $('input[name="product_shock_price"]').rules('remove', 'required');
+
+        } else {
+            $('input[name="product_price"]').rules('add', {
+                required: true
+            });
+            $('input[name="product_regular_price"]').rules('add', {
+                required: true
+            });
+            $('input[name="product_wholesale_price"]').rules('add', {
+                required: true
+            });
+            $('input[name="product_shock_price"]').rules('add', {
+                required: true
+            });
+
         }
     });
 });

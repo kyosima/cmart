@@ -163,7 +163,11 @@
                                         
 
                                         <div class="all-price">
+                                            @if($product->is_ecard == 0)
                                             <p class="new-price">{{ formatPriceOfLevel($product) }}</p>
+                                            @else
+                                            <input type="number" placeholder="Mời nhập giá bạn muốn mua" value="" name="price" class="form-control">
+                                            @endif
                                             {{-- @if ($product->shock_price != null || $product->shock_price != 0)
                                             <p class="new-price">{{ formatPrice($product->shock_price) }}</p>
                                             <p class="old-price">{{ formatPrice($product->regular_price) }}</p>

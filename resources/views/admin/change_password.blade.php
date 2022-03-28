@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" name="new_password"
-                                placeholder="Mời nhập mật khẩu mới trên 8 ký tự" minlength="8" required>
+                                placeholder="Mời nhập mật khẩu mới từ 8 ký tự" minlength="8" required>
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" name="re_password" id=""
