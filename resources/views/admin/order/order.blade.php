@@ -27,6 +27,13 @@
             .dtsb-searchBuilder {
                 display: none;
             }
+            .btn-status-order .btn{
+                align-items: center;
+    display: flex;
+            }
+            .btn-status-order span{
+                font-size: 13px;
+            }
 
         </style>
         {{-- <script>
@@ -394,7 +401,57 @@
                                                                             </td>
 
                                                                             <td>
-                                                                                <div class="input-group"
+                                                                                <div class="btn-group btn-status-order" role="group"
+                                                                                    aria-label="Basic example">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-light">{!! orderStatus($order_store->status) !!}</button>
+                                                                                    @if ((auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng từ DDH sang DXNTT') ||
+                                                                                    (auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))) &&
+                                                                                        $order_store->status == 0)
+                                                                                        <button type="button"
+                                                                                            class="btn btn-info"
+                                                                                            data-id="{{ $order_store->id }}"
+                                                                                            data-status="1"
+                                                                                            onclick="getModalStatus(this)"><i
+                                                                                                class='fas fa-angle-double-right'></i></button>
+                                                                                    @elseif((auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng từ DXNTT sang DXL') ||
+                                                                                    (auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))) &&
+                                                                                        $order_store->status == 1)
+                                                                                        <button type="button"
+                                                                                            class="btn btn-info"
+                                                                                            data-id="{{ $order_store->id }}"
+                                                                                            data-status="2"
+                                                                                            onclick="getModalStatus(this)"><i
+                                                                                                class='fas fa-angle-double-right'></i></button>
+                                                                                    @elseif((auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng từ DXL sang DVC') ||
+                                                                                        (auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))) &&
+                                                                                            $order_store->status == 2)
+                                                                                            <button type="button"
+                                                                                                class="btn btn-info"
+                                                                                                data-id="{{ $order_store->id }}"
+                                                                                                data-status="3"
+                                                                                                onclick="getModalStatus(this)"><i
+                                                                                                    class='fas fa-angle-double-right'></i></button>
+                                                                                    @elseif((auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng từ DVC sang HT') ||
+                                                                                    (auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))) &&
+                                                                                        $order_store->status == 3)
+                                                                                        <button type="button"
+                                                                                            class="btn btn-info"
+                                                                                            data-id="{{ $order_store->id }}"
+                                                                                            data-status="4"
+                                                                                            onclick="getModalStatus(this)"><i
+                                                                                                class='fas fa-angle-double-right'></i></button>
+                                                                                    @endif
+                                                                                    @if ((auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng sang Hủy	') ||
+                                                                                    (auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))))
+                                                                                    && $order_store->status != 5)
+                                                                                        <a 
+                                                                                            class="btn btn-danger"
+                                                                                            href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 5]) }}"><i
+                                                                                                class='fa fa-times-circle'></i></a>
+                                                                                    @endif
+                                                                                </div>
+                                                                                {{-- <div class="input-group"
                                                                                     style="min-width: 108px;">
                                                                                     <span
                                                                                         style=" max-width: 82px;min-width: 82px;"
@@ -411,13 +468,10 @@
                                                                                             class="fa fa-angle-down text-primary"
                                                                                             aria-hidden="true"></i></button>
                                                                                     @if (auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng: Tài Vụ') ||
-    auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng: DVT') ||
-    auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng: Kho') ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                                                         <ul
                                                                                             class="dropdown-menu dropdown-menu-end">
-                                                                                            @if ((auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng: Tài Vụ') ||
-    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))) && ($order_store->status < 2))
+
                                                                                             <li>
                                                                                                 <p>
                                                                                                     <a
@@ -440,57 +494,52 @@
                                                                                                     </span>
                                                                                                 </p>
                                                                                             </li>
-                                                                                            @endif
-                                                                                            @if ((auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng: Kho') ||
-    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))) && ($order_store->status > 0) &&  ($order_store->status < 4) )
-                                                                                                <li>
-                                                                                                    <p data-id="{{ $order_store->id }}"
-                                                                                                        data-status="2"
-                                                                                                        onclick="getModalStatus(this)">
+
+                                                                                            <li>
+                                                                                                <p data-id="{{ $order_store->id }}"
+                                                                                                    data-status="2"
+                                                                                                    onclick="getModalStatus(this)">
+                                                                                                    <span
+                                                                                                        class="dropdown-item changeStatus">
+                                                                                                        Đang xử lý
+                                                                                                    </span>
+                                                                                                </p>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <p data-id="{{ $order_store->id }}"
+                                                                                                    data-status="3"
+                                                                                                    onclick="getModalStatus(this)">
+                                                                                                    <span
+                                                                                                        class="dropdown-item changeStatus">
+                                                                                                        Đang vận chuyển
+                                                                                                    </span>
+                                                                                                </p>
+                                                                                            </li>
+
+                                                                                            <li>
+                                                                                                <p data-id="{{ $order_store->id }}"
+                                                                                                    data-status="4"
+                                                                                                    onclick="getModalStatus(this)">
+                                                                                                    <span
+                                                                                                        class="dropdown-item changeStatus">
+                                                                                                        Hoàn thành
+                                                                                                    </span>
+                                                                                                </p>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <p>
+                                                                                                    <a
+                                                                                                        href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 5]) }}">
                                                                                                         <span
                                                                                                             class="dropdown-item changeStatus">
-                                                                                                            Đang xử lý
+                                                                                                            Đã hủy
                                                                                                         </span>
-                                                                                                    </p>
-                                                                                                </li>
-                                                                                                <li>
-                                                                                                    <p data-id="{{ $order_store->id }}"
-                                                                                                        data-status="3"
-                                                                                                        onclick="getModalStatus(this)">
-                                                                                                        <span
-                                                                                                            class="dropdown-item changeStatus">
-                                                                                                            Đang vận chuyển
-                                                                                                        </span>
-                                                                                                    </p>
-                                                                                                </li>
-                                                                                            @endif
-                                                                                            @if ((auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng: DVT') ||
-    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))) && ($order_store->status >=3))
-                                                                                                <li>
-                                                                                                    <p data-id="{{ $order_store->id }}"
-                                                                                                        data-status="4"
-                                                                                                        onclick="getModalStatus(this)">
-                                                                                                        <span
-                                                                                                            class="dropdown-item changeStatus">
-                                                                                                            Hoàn thành
-                                                                                                        </span>
-                                                                                                    </p>
-                                                                                                </li>
-                                                                                                <li>
-                                                                                                    <p>
-                                                                                                        <a
-                                                                                                            href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 5]) }}">
-                                                                                                            <span
-                                                                                                                class="dropdown-item changeStatus">
-                                                                                                                Đã hủy
-                                                                                                            </span>
-                                                                                                        </a>
-                                                                                                    </p>
-                                                                                                </li>
-                                                                                            @endif
+                                                                                                    </a>
+                                                                                                </p>
+                                                                                            </li>
                                                                                         </ul>
                                                                                     @endif
-                                                                                </div>
+                                                                                </div> --}}
                                                                             </td>
                                                                             <td>{!! orderStatus($order_store->status) !!}</td>
                                                                         </tr>
