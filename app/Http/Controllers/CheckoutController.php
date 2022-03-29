@@ -687,6 +687,7 @@ class CheckoutController extends Controller
                         return redirect()->route('payment.Send', ['order_code' => $order->order_code, 'payment_method' => $payment_method->id]);
                         break;
                     case 5 || 6:
+                    return back()->with('warning', 'Phương thức thanh toán tạm thời không hỗ trợ');
                         Session::put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
                         $paymentPaymeController = new PaymentPaymeController();
                         $result = $paymentPaymeController->PaymentPayme($order, $pay_method = 'CREDITCARD');
