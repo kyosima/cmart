@@ -313,7 +313,7 @@
                 dom: '<"wrapper d-flex justify-content-between mb-3"lf>tip',
             });
 
-            $(window).on('load', function() {
+            $(document).ready(function() {
                 $('#formCreateProductCategory select.proCatType').select2({
                     allowClear: true,
                     width: '100%',

@@ -227,6 +227,8 @@ class AdminOrderController extends Controller
             'note' => $request->note,
             'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
         ]);
+            $admin = auth()->guard('admin')->user();
+        $this->logController->createLog($admin, 'Đơn hàng', 'Sửa', 'ghi chú đơn hàng '.$order->order_code.' thành:" '.$request->note.'"', route('order.viewCbill', ['order_code'=>$order->order_code]));
         Log::info('Admin ' . auth()->guard('admin')->user()->name . ' cập nhật đơn hàng #' . $order->id, ['data' => $request->all()]);
         Session::flash('success', 'Sửa đơn hàng thành công');
         return back();

@@ -33,14 +33,14 @@
         vnpt_ekyc_styles.defe = true;
         document.head.appendChild(vnpt_ekyc_styles);
         var token =
-            "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYWYwYTEzZS1kOTNjLTg5ZWEtZTA1My02YzFiOWYwYTNjOWYiLCJhdWQiOlsicmVzdHNlcnZpY2UiXSwidXNlcl9uYW1lIjoia2lyYWJib3l0dEBnbWFpbC5jb20iLCJzY29wZSI6WyJyZWFkIl0sImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0IiwibmFtZSI6ImtpcmFiYm95dHRAZ21haWwuY29tIiwidXVpZF9hY2NvdW50IjoiZGFmMGExM2UtZDkzYy04OWVhLWUwNTMtNmMxYjlmMGEzYzlmIiwiYXV0aG9yaXRpZXMiOlsiVVNFUiJdLCJqdGkiOiJjNTM1MDM1NC01MTM3LTQ2MzgtYWJiYi1hMzc5ZDk2OWU5M2QiLCJjbGllbnRfaWQiOiJhZG1pbmFwcCJ9.IXe7bvqdfTL8z6zRUwn62xSrDjshe4Czwn1BpxjrWvzSS_3etu3EpWmno2Znw9JxKWmiPr8jc9f2TkaIzYxR0RkNs7oXI3FWAku9EPBbzJ2az9YdoBXJTrWLL_G7GYXmZ3lv72krZ8O9cIEY5GhEB3anJGKkeJqh16OPf0MQh2T8Kw_QCt2TB4R9ZIvkrcps7iodV7XFTQ0q5RxvR4JH8GcyOVCWh80c8ExvdJ2ANQMUFvcWPFKGjFUoz8kDRrjnYL2YZc1SowMHg6GFYnAz87ru7bvDl_d8LKqABlk9jPU7vxSOkcfthXDujkRvoOrT475RYxheVjoPndQE6STJJw"
+            "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYjRhZmZlZC1hNjY5LTIyMmMtZTA1My02MjE5OWYwYTA4NDUiLCJhdWQiOlsicmVzdHNlcnZpY2UiXSwidXNlcl9uYW1lIjoiY2VudGVyQGNtLmNvbS52biIsInNjb3BlIjpbInJlYWQiXSwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3QiLCJuYW1lIjoiY2VudGVyQGNtLmNvbS52biIsInV1aWRfYWNjb3VudCI6ImRiNGFmZmVkLWE2NjktMjIyYy1lMDUzLTYyMTk5ZjBhMDg0NSIsImF1dGhvcml0aWVzIjpbIlVTRVIiXSwianRpIjoiNDM4YjA4NzAtZGEyOS00N2Y5LWE2MTMtMWQ2NTc4ZDkwMThkIiwiY2xpZW50X2lkIjoiYWRtaW5hcHAifQ.nWAdTNsFw3M75GNym0RomSRcZfWT9v3ZnDmrvgTbiQZW6iOorJMOgAj6bBF8Fnmrnb3k_5yv0dlmqp4eUAOBeggh7EQVyhWi6MHFqEvyNdnyOZg7FexIzl9ZVH9qtXBnDnQbSSBLq2X1QzB_FalELLZ0aRk7D583K2S2RiDoZrmuwIxCU-2Vrz4qDiDs497Hg9S8jEX0WfvV41tKL9O1UAbcJjHB1amFnio3HPQdpW6Tsoux_n8Mxq9EwLtyXVqWpOJmghX9uZAQg9ZSHDwTLRNizChf0x6C_VRIvHkfh9CgOTk-eYGw0XLKsmw3JATcoQnG0WRbHb6-5Kr1MdyhBQ"
 
         vnpt_ekyc_sdk.onload = async function() {
             await FaceVNPTBrowserSDK.init();
             var initObj = {
                 BACKEND_URL: "",
-                TOKEN_KEY: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKCIgQdDzGiEHLfNYAAlAV0l37EyoZhl6Pe+aqSyMmo/rYbT6vHcJ0QzpPo6s1f1sbK2mPdgu0DMsnvF8WCxF/0CAwEAAQ==",
-                TOKEN_ID: "daf0bb6e-a545-ae1c-e053-6c1b9f0a0f2b",
+                TOKEN_KEY: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIJarNFosfnLKj1bkEs4J9E9QVEbnp4l797pLXizJymZiKock67sn54MyPH+js56ANZCp9pU/ftCr035Ei2T5icCAwEAAQ==",
+                TOKEN_ID: "db4b010e-bf87-7ab5-e053-62199f0a7ee7",
                 AUTHORIZION: token,
                 ENABLE_GGCAPCHAR: false,
                 PARRENT_ID: "ekyc_sdk_intergrated",

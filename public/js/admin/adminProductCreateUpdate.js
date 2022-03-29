@@ -32,6 +32,7 @@ $(document).ready(function() {
                 min: 0,
                 number: true,
             },
+
             product_height: {
                 min: 0,
                 number: true,

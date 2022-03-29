@@ -273,7 +273,9 @@ class AdminStoreController extends Controller
     {
         $store = Store::findOrFail($request->store_id);
         $product = Product::findOrFail($request->product_id);
-        $returnHTML = view('admin.store.product_store', compact('store', 'product'))->render();
+        $admin = auth('admin')->user();
+
+        $returnHTML = view('admin.store.product_store', compact('store', 'product','admin'))->render();
 
         return response()->json([
             'html' => $returnHTML

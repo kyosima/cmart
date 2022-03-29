@@ -20,8 +20,8 @@
                             <div class="form-group">
                                 <label class="col-md-12 control-label text-left">Tồn kho:</label>
                                 <div class="col-md-12">
-                                    @if ( 
-                                    auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định')|| auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))) 
+                                    @if (in_array($admin->id, explode(',', $store->id_owner))&&
+                                    (auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định')|| auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))) 
                                     <input type="number" min="0" name="quantity" value="{{$product->getOriginal('pivot_soluong') ?? 1}}" class="form-control">
                                     @else
                                     <input type="number" min="0" name="quantity" value="{{$product->getOriginal('pivot_soluong') ?? 1}}" class="form-control" readonly>

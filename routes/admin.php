@@ -149,11 +149,14 @@ Route::group(['middleware' => ['admin']], function () {
     Route::group(['prefix' => 'banner', 'middleware' => ['permission:Truy cập+tạo+sửa+xóa+ẩn mục Banner|'.config('custom-config.name-all-permission').',admin']], function () {
         //danh sách
         Route::get('/', [AdminBannerController::class, 'index'])->name('admin.banner.index');
+        Route::get('/create', [AdminBannerController::class, 'create'])->name('admin.banner.create');
         Route::post('store', [AdminBannerController::class, 'store'])->name('admin.banner.store');
         //sửa
-        Route::get('edit/{type}', [AdminBannerController::class, 'edit'])->name('admin.banner.edit');
+        Route::get('edit/{id}', [AdminBannerController::class, 'edit'])->name('admin.banner.edit');
         Route::put('update', [AdminBannerController::class, 'update'])->name('admin.banner.update');
-        Route::delete('delete/{Banner:id}', [AdminBannerController::class, 'delete'])->name('admin.banner.delete');
+        Route::get('delete/{id}', [AdminBannerController::class, 'delete'])->name('admin.banner.delete');
+        Route::get('changeStatus/{id}', [AdminBannerController::class, 'changeStatus'])->name('admin.banner.changeStatus');
+
     });
 
     Route::group(['middleware' => ['permission:Truy cập mục Admin|'.config('custom-config.name-all-permission').',admin']], function () {

@@ -231,6 +231,7 @@
                                             @include('admin.store.product_store', [
                                                 'product' => $product,
                                                 'store' => $store,
+                                                'admin' => $admin,
                                             ])
                                         @endforeach
                                     @endif
