@@ -61,7 +61,7 @@
                             @foreach ($banners as $banner)
                                 <tr>
                                     <td>{{ $banner->getLocation()->value('name') }}</td>
-                                    <td>{{ $banner->code }}</td>
+                                    <td><a href="{{route('admin.banner.edit', $banner->id)}}">{{ $banner->code }}</a></td>
                                     <td>{{ $banner->unit_name }}</td>
                                     <td>{{ date('d/m/Y', strtotime($banner->expire_date)) }}</td>
                                     <td><a href="{{route('admin.banner.edit', $banner->id)}}"> <img src="{{ asset($banner->file) }}" alt="" width="100px" height="50px"></a></td>

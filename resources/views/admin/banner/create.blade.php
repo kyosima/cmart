@@ -12,7 +12,8 @@
         .image_link i {
             position: absolute;
         }
-        .form-group{
+
+        .form-group {
             padding: 10px 0px;
         }
 
@@ -33,27 +34,28 @@
                 </div> --}}
             </div>
             @if (session('message'))
-            <div class="portlet-status mb-2">
-                <div class="caption bg-success p-3">
-                    <span class="caption-subject bold uppercase text-light">{{ session('message') }}</span>
+                <div class="portlet-status mb-2">
+                    <div class="caption bg-success p-3">
+                        <span class="caption-subject bold uppercase text-light">{{ session('message') }}</span>
+                    </div>
                 </div>
-            </div>
-        @endif
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="portlet-body">
                 <form id="formBanner" action="{{ route('admin.banner.store') }}" method="post">
                     @csrf
                     <div class="form-group">
                         <input type="hidden" name="file">
-                        <img id="preview-banner" src="{{asset('public/image/banner/banner-default.png')}}" class="w-100" alt="">
+                        <img id="preview-banner" src="{{ asset('public/image/banner/banner-default.png') }}"
+                            class="w-100" alt="">
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-12">
@@ -62,7 +64,7 @@
                                 <select name="id_location" id="" class="form-control" required>
                                     <option value="">Mời nhập trang hiển thị</option>
                                     @foreach ($locations as $location)
-                                        <option value="{{$location->id}}">{{$location->name}}</option>
+                                        <option value="{{ $location->id }}">{{ $location->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -70,19 +72,31 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="">Đơn vị sử dụng <sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" name="unit_name" placeholder="Mời nhập đơn vị sử dụng" required>
+                                <input type="text" class="form-control" name="unit_name"
+                                    placeholder="Mời nhập đơn vị sử dụng" required>
                             </div>
                         </div>
-                        <div class="col-md-6 col-12">
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="">Vị trí <sup class="text-danger">*</sup></label>
+                                <select name="position" id="" class="form-control" required>
+                                    <option value="">Chọn vị trí</option>
+                                    <option value="0">Slider</option>
+                                    <option value="1">Bên trái trang</option>
+                                    <option value="2">Bên phải trang</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="">Hạn sử dụng <sup class="text-danger">*</sup></label>
                                 <input type="date" class="form-control" name="expire_date" required>
                             </div>
                         </div>
-                        <div class="col-md-6 col-12">
+                        <div class="col-md-4 col-12">
                             <div class="form-group">
-                                <label for="">Liên kết <sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" name="link" required>
+                                <label for="">Liên kết </label>
+                                <input type="text" class="form-control" name="link">
                             </div>
                         </div>
                     </div>

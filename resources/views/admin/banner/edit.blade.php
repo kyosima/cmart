@@ -73,14 +73,25 @@
                                     placeholder="Mời nhập đơn vị sử dụng" required>
                             </div>
                         </div>
-                        <div class="col-md-6 col-12">
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="">Vị trí <sup class="text-danger">*</sup></label>
+                                <select name="position" id="" class="form-control" required>
+                                    <option value="">Chọn vị trí</option>
+                                    <option value="0"  {{ 0 == $banner->position ? 'selected' : '' }}>Slider</option>
+                                    <option value="1"  {{ 1 == $banner->position ? 'selected' : '' }}>Bên trái trang</option>
+                                    <option value="2"  {{ 2 == $banner->position ? 'selected' : '' }}>Bên phải trang</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="">Hạn sử dụng <sup class="text-danger">*</sup></label>
                                 <input type="date" class="form-control" name="expire_date"
                                     value="{{ $banner->expire_date }}" required>
                             </div>
                         </div>
-                        <div class="col-md-6 col-12">
+                        <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="">Liên kết <sup class="text-danger">*</sup></label>
                                 <input type="text" class="form-control" name="link" value="{{ $banner->link }}" required>

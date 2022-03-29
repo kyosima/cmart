@@ -41,6 +41,7 @@ class AdminBannerController extends Controller
         ]);
 		$banner = Banner::create([
 			'id_location'=> $request->id_location,
+			'position' => $request->position,
 			'unit_name' => $request->unit_name,
 			'expire_date' => $request->expire_date,
 			'file' => $request->file,
@@ -78,6 +79,7 @@ class AdminBannerController extends Controller
 
 		$banner->update([
 			'id_location'=> $request->id_location,
+			'position' => $request->position,
 			'unit_name' => $request->unit_name,
 			'expire_date' => $request->expire_date,
 			'file' => $request->file,
