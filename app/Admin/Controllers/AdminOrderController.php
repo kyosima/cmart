@@ -337,6 +337,7 @@ class AdminOrderController extends Controller
             foreach ($order->order_products()->get() as $order_product) {
                 if ($order_product->sku != null) {
                     $store_product = $store->product_stores()->where('id_ofproduct', $order_product->id_product)->first();
+
                     $store_product->soluong += $order_product->quantity;
                     $store_product->save();
                 }

@@ -442,11 +442,11 @@
                                                                                             onclick="getModalStatus(this)"><i
                                                                                                 class='fas fa-angle-double-right'></i></button>
                                                                                     @endif
-                                                                                    @if ((auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng sang Hủy	') ||
+                                                                                    @if ((auth()->guard('admin')->user()->can('Chuyển trạng thái đơn hàng sang Hủy') ||
                                                                                     (auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))))
                                                                                     && $order_store->status != 5)
                                                                                         <a 
-                                                                                            class="btn btn-danger"
+                                                                                            class="btn btn-danger" onclick="return confirm('Xác nhận hủy đơn hàng {{$order_store->order_store_code}}?')"
                                                                                             href="{{ route('order.changeStatus', ['order_id' => $order_store->id, 'status' => 5]) }}"><i
                                                                                                 class='fa fa-times-circle'></i></a>
                                                                                     @endif

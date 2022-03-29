@@ -296,7 +296,11 @@
                             //     style: 'currency',
                             //     currency: 'VND'
                             // }).format(row.product_price.price);
-                            return formatNum(row.product_price.price, '.', ',');
+                            if(row.product_price.price != null){
+                                return formatNum(row.product_price.price, '.', ',');
+                            }else{
+                                return `0`;
+                            }
                         }
                     },
                     {
@@ -306,8 +310,11 @@
                             //     style: 'currency',
                             //     currency: 'VND'
                             // }).format(row.product_price.regular_price)
-                            return formatNum(row.product_price.regular_price, '.', ',');
-
+                            if(row.product_price.price != null){
+                                return formatNum(row.product_price.regular_price, '.', ',');
+                            }else{
+                                return `0`;
+                            }
                         }
                     },
                     {
@@ -317,8 +324,11 @@
                             //     style: 'currency',
                             //     currency: 'VND'
                             // }).format(row.product_price.shock_price)
-                            return formatNum(row.product_price.shock_price, '.', ',');
-
+                            if(row.product_price.price != null){
+                                return formatNum(row.product_price.shock_price, '.', ',');
+                            }else{
+                                return `0`;
+                            }
                         }
                     },
                     {
@@ -328,8 +338,11 @@
                             //     style: 'currency',
                             //     currency: 'VND'
                             // }).format(row.product_price.wholesale_price)
-                            return formatNum(row.product_price.wholesale_price, '.', ',');
-
+                            if(row.product_price.price != null){
+                                return formatNum(row.product_price.wholesale_price, '.', ',');
+                            }else{
+                                return `0`;
+                            }
                         }
                     },
                     {

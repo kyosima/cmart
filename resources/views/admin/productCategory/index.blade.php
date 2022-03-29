@@ -403,7 +403,7 @@
             })
 
             // DELETE
-            @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+            @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                 $(document).on('click', '.btn-delete', function () {
                 var url = $(this).data('url')
                 $.ajaxSetup({

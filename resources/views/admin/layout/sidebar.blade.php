@@ -118,6 +118,7 @@
         @endif
         @if (auth()->guard('admin')->user()->can('Truy cập mục TTL') ||
     auth()->guard('admin')->user()->can('Truy cập mục chuyển C') ||
+    auth()->guard('admin')->user()->can('Nạp thêm C vào tk C-Mart') ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
             <li class="dropdown">
                 <a href="#" class="dropbtn">
@@ -126,7 +127,7 @@
                             class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
                 </a>
                 <span class="dropdown-content" style="top: -170px;">
-                    @if (auth()->guard('admin')->user()->can('Truy cập mục TTL') ||(auth()->guard('admin')->user()->can('Truy cập mục chuyển C')) ||
+                    @if (auth()->guard('admin')->user()->can('Truy cập mục TTL') ||(auth()->guard('admin')->user()->can('Nạp thêm C vào tk C-Mart')) ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <a href="{{ route('point.getStatistical') }}">Tài khoản C / HSKH</a>
                     @endif
@@ -134,7 +135,7 @@
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <a href="{{ route('point.Transfer') }}">Chuyển C</a>
                     @endif
-                    @if (auth()->guard('admin')->user()->can('Truy cập mục TTL') ||(auth()->guard('admin')->user()->can('Truy cập mục chuyển C')) ||
+                    @if (auth()->guard('admin')->user()->can('Truy cập mục TTL') ||(auth()->guard('admin')->user()->can('Nạp thêm C vào tk C-Mart')) ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <a href="{{ route('point.account') }}">Tài khoản C / C-Mart</a>
                         <a href="{{ route('point.historyReceiver') }}">Lịch sử nhận C</a>

@@ -1,4 +1,11 @@
 $(document).ready(function() {
+    if ($('input[name="is_ecard"]').is(':checked')) {
+        $('input[name="product_price"]').rules('remove', 'required');
+        $('input[name="product_regular_price"]').rules('remove', 'required');
+        $('input[name="product_wholesale_price"]').rules('remove', 'required');
+        $('input[name="product_shock_price"]').rules('remove', 'required');
+
+    }
     $("form").validate({
         ignore: [],
         rules: {

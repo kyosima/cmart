@@ -49,11 +49,15 @@ class CheckoutController extends Controller
            return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
         }
         $stores = Store::get();
+      
         foreach ($stores as $store) {
             if(Cart::instance($store->id)->count()> 0){
                 $cart = Cart::instance($store->id);
                 foreach($cart->content() as $row){
-                    $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
+                    if($row->model->is_ecard == 0){
+                        $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
+
+                    }
                 }
             }
         }
@@ -257,7 +261,6 @@ class CheckoutController extends Controller
                         break;
                 }
                 $vat_products += $row->price * getTaxValue($price->tax) * $row->qty;
-
                 if (in_array(Auth::user()->level, [3, 4])) {
                     $price->cpoint = 0;
                     $price->mpoint = 0;
