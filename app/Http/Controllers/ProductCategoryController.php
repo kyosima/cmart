@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
-
+use Illuminate\Pagination\Paginator;
 class ProductCategoryController extends Controller
 {
     //
@@ -73,6 +73,11 @@ class ProductCategoryController extends Controller
          ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
         ->orderBy('products.id', 'desc')
         ->get();
+        $stores_id = [];
+        foreach($products as $product){
+            $stores_id = array_merge($stores_id ,$product->store_products()->pluck('id_ofstore')->toArray());
+        }
+        $stores_id = array_unique($stores_id);
         if ($request->order != null || $request->order != '') {
             $order = explode(' ', $request->order);
             if ($order[0] == 'name') {
@@ -173,11 +178,11 @@ class ProductCategoryController extends Controller
         // KIỂM TRA XEM CÓ FILTER THEO BRAND KH
         if (isset($request->id_stores) && !in_array(null, $request->id_stores)) {
             // LẤY RA BRAND ĐỂ SO SÁNH
-            $temp_pr =  new Product();
+            $temp_pr =  [];
             foreach($products as $product){
-                $stores_id = $product->store_products()->pluck('id_ofstore')->toArray();
-                if(count(array_intersect($stores_id, $request->id_stores))>0){
-                    $temp_pr->collect((object)$product);
+                $stores_id_temp = $product->store_products()->pluck('id_ofstore')->toArray();
+                if(count(array_intersect($stores_id_temp, $request->id_stores))>0){
+                    $temp_pr []= $product;
                 }
             }
             $products = $temp_pr;
@@ -205,12 +210,8 @@ class ProductCategoryController extends Controller
 
         // add class active vào nút "mặc định" trên thanh sắp xếp
         $isDefault = $request->query();
-        $products = $products->paginate(16);
-        $stores_id = [];
-        foreach($products as $product){
-            $stores_id = array_merge($stores_id ,$product->store_products()->pluck('id_ofstore')->toArray());
-        }
-        $stores_id = array_unique($stores_id);
+        $products = new Paginator($products, 16);
+
         return view('proCat.danhmucsanpham', compact('stores_id','proCat', 'products', 'brands', 'slug', 'countBrand', 'subcategory', 'minPrice', 'maxPrice', 'beginMinPrice', 'endMaxPrice', 'isDefault'));
     }
 
@@ -240,7 +241,7 @@ class ProductCategoryController extends Controller
             ->where('id', '!=', 1)
             ->with(['childrenCategories.products', 'products'])
             ->get();
-        $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->get();
+        $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->whereStatus(1)->get();
 
         return view('proCat.search', compact('categories', 'products', 'keyword'));
     }
@@ -248,7 +249,7 @@ class ProductCategoryController extends Controller
     public function getSearchSuggest(Request $request)
     {
         $keyword =  $request->keyword;
-        $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->get();
+        $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->whereStatus(1)->get();
         return view('proCat.search_suggest', ['products' => $products])->render();
     }
 

@@ -7,15 +7,20 @@ use App\Models\Payment;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Admin\Controllers\AdminLogController; 
 
 class PaymentController extends Controller
 {
+    public $logController;
+
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function index()
     {
         $calculationUnit = PaymentMethod::all();
-        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang quản lý hình thức thanh toán';
-        Log::info($message);
-        return view('admin.payment.index', compact('calculationUnit'));
+            return view('admin.payment.index', compact('calculationUnit'));
     }
 
     public function indexDatatable()
@@ -109,7 +114,15 @@ class PaymentController extends Controller
         $payment = PaymentMethod::where('id', $request->id)->update([
             'status' => $request->status
         ]);
-
+        if($request->status ==0){
+            $status_text = 'Ngừng';
+        }else{
+            $status_text = 'Hoạt động';
+        }
+        $admin = auth('admin')->user();
+        $payment = PaymentMethod::where('id', $request->id)->first();
+        $this->logController->createLog($admin, 'Hình thức thanh toán', 'Thay đổi', 'trạng thái hình thức thanh toán '.$payment->name .' thành '.$status_text);
+        
         if($payment){
             return response()->json([
                 'message' => "Success",

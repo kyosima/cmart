@@ -10,16 +10,24 @@ use App\Http\Controllers\HistoryPointController;
 use App\Models\RememberC;
 use Aws\History;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
+use App\Admin\Controllers\AdminLogController; 
 
 class AdminPointController extends Controller
 {
     //
-
+    public $logController;
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function postDeposit(Request $request){
         $cmart =  User::whereId(1)->first();
         $cmart_wallet = $cmart->point_c()->first();
         $cmart_wallet->point_c += $request->amount;
         $cmart_wallet->save();
+        $admin = auth('admin')->user();
+        $this->logController->createLog($admin, 'Tiền tích lũy', 'Nạp C', ' vào tài khoản C-Mart, giá trị giao dịch '.formatNumber($request->amount));
+      
         return back()->with('message', 'Nạp C thành công');
     }
     public function getRememberC(Request $request){
@@ -119,6 +127,18 @@ class AdminPointController extends Controller
         $user_wallet = $user->point_c()->first();
         $historyPointController = new HistoryPointController();
         $historyPointController->createHistory($user, $request->amount, 2, null, $request->content, $request->method, $request->time);
+        $admin = auth('admin')->user();
+        if($request->method == 0){
+            $this->logController->createLog($admin, 'Tiền tích lũy', 'Chuyển khoản nhận ngay', ' vào tài khoản khách hàng có mã khách hàng '.$user->code_customer.', giá trị giao dịch '.formatNumber($request->amount));
+
+        }elseif($request->method == 1){
+            $this->logController->createLog($admin, 'Tiền tích lũy', 'Chuyển khoản phong tỏa', ' vào tài khoản khách hàng có mã khách hàng '.$user->code_customer.', giá trị giao dịch '.formatNumber($request->amount));
+
+        }else{
+            $this->logController->createLog($admin, 'Tiền tích lũy', 'Chuyển khoản hoàn đơn hàng hủy', ' vào tài khoản khách hàng có mã khách hàng '.$user->code_customer.', giá trị giao dịch '.formatNumber($request->amount));
+
+        }
+      
         return back()->with('message', 'Chuyển khoản thành công');
     }
     public function getHistoryReceiverC(Request $request)

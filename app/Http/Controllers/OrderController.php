@@ -86,8 +86,14 @@ class OrderController extends Controller
     }
     public function getCbill(Request $request){
         $order = Order::whereOrderCode($request->order_code)->first();
+        if($order->c_bill == null){
+            return view('order_tracking.c_bill_master', ['order' => $order]);
 
-        return view('order_tracking.c_bill_master', ['order' => $order]);
+        }else{
+            return response()->file(
+                public_path('c_bill/'.$order->c_bill)
+            );
+        }
     }
     public function viewPdf(Request $request)
     {

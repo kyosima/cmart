@@ -15,7 +15,8 @@
         }
 
     </style>
-    @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+    @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
         <!-- Modal TẠO CỬA HÀNG MỚI -->
         <div class="modal fade" id="warehouse_create" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -41,14 +42,9 @@
                                     <label class="col-md-3 control-label">Admin:<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
-                                        <select class="form-control select-owner" id="select-owner" name="id_owner">
-                                            @if (old('id_owner'))
-                                                @php
-                                                    $owner = App\Models\Admin::findOrFail(old('id_owner'));
-                                                @endphp
-                                                <option value="{{ old('id_owner') }}" selected="selected">
-                                                    {{ $owner->name }} ({{ $owner->email }})</option>
-                                            @endif
+                                        <select multiple class="form-control select-owner" id="select-owner"
+                                            name="id_owner[]">
+
                                         </select>
                                     </div>
                                 </div>
@@ -64,13 +60,9 @@
                                     <label class="col-md-3 control-label">Cấp tỉnh:<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
-                                        <select class="js-location" id="selectCity" name="id_province" data-type="city"
+                                        <select class="js-location" id="selectCity" name="sel_province" data-type="city"
                                             data-placeholder="Chọn tỉnh/thành">
-                                            <option></option>
-                                            @foreach ($cities as $city)
-                                                <option value="{{ $city->matinhthanh }}">{{ $city->matinhthanh }} -
-                                                    {{ $city->tentinhthanh }}</option>
-                                            @endforeach
+
                                         </select>
                                     </div>
                                 </div>
@@ -78,9 +70,8 @@
                                     <label class="col-md-3 control-label">Cấp huyện:<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
-                                        <select class="js-location" id="selectDistrict" name="id_district"
+                                        <select class="js-location" id="selectDistrict" name="sel_district"
                                             data-type="district" data-placeholder="Chọn quận/huyện">
-                                            <option></option>
                                         </select>
                                     </div>
                                 </div>
@@ -88,9 +79,8 @@
                                     <label class="col-md-3 control-label">Cấp xã:<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
-                                        <select id="selectWard" name="id_ward" data-type="ward"
+                                        <select id="selectWard" name="sel_ward" data-type="ward"
                                             data-placeholder="Chọn phường/xã">
-                                            <option></option>
                                         </select>
                                     </div>
                                 </div>
@@ -129,7 +119,8 @@
                                         DANH SÁCH CỬA HÀNG </span>
                                     <span class="caption-helper"></span>
                                 </div>
-                                @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                     <div class="ps-4">
                                         <a href="#warehouse_create" data-toggle="modal" class="btn btn-add"><i
                                                 class="fa fa-plus"></i>
@@ -137,19 +128,6 @@
                                     </div>
                                 @endif
                             </div>
-                            {{-- @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
-                            <div>
-                                <div class="input-group action-multiple">
-                                    <select class="custom-select" name="action" required="">
-                                        <option value="">Chọn hành động</option>
-                                        <option value="delete">Xóa</option>
-                                                                          </select>
-                                    <div class="input-group-append">
-                                        <a href="javascript:multiDel()" class="btn btn-outline-secondary">Áp dụng</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endif --}}
                         </div>
                         <div class="collapse show" id="collapseExample">
                             <div class="row">
@@ -162,7 +140,6 @@
                                     <table id="warehouse_table" class="table table-striped table-bordered align-middle">
                                         <thead class="bg-dark text-light">
                                             <tr>
-                                                <th></th>
                                                 <th class="title">Tên cửa hàng</th>
                                                 <th class="title">Admin CH</th>
                                                 {{-- <th class="title">Địa chỉ</th> --}}
@@ -173,45 +150,67 @@
                                         </thead>
                                         <tbody style="color: #748092; font-size: 14px;">
                                             @foreach ($stores as $item)
-                                                @if ($admin->name == 'admin')
+                                                {{-- @php
+                                                    $addressController = new App\Http\Controllers\AddressController();
+                                                    $store_province = $addressController->getProvinceDetail($item->id_province);
+                                                    $store_district = $addressController->getDistrictDetail($item->id_province, $item->id_district);
+                                                    $store_ward = $addressController->getWardDetail($item->id_district, $item->id_ward);
+                                                @endphp --}}
+                                                @if ((in_array($admin->id, explode(',', $item->id_owner)) &&
+    auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định')) )
                                                     <tr>
-                                                        <td></td>
+
                                                         <td>{{ $item->name }}</td>
-                                                        <td>{{ optional($item->owner)->fullname }} ({{ optional($item->owner)->email }})</td>
-                                                        {{-- <td>{{ $item->address .', P.' .optional($item->ward)->tenphuongxa .', Q.' .optional($item->district)->tenquanhuyen .', ' .optional($item->province)->tentinhthanh }}
+                                                        <td>
+                                                            @foreach (explode(',', $item->id_owner) as $id)
+                                                                @php
+                                                                    $owner = App\Models\Admin::whereId($id)->first();
+                                                                @endphp
+                                                                <p>{{ $owner->fullname }}
+                                                                    ({{ $owner->email }})
+                                                                </p>
+                                                            @endforeach
+                                                        </td>
+                                                        {{-- <td>{{ $item->address .', ' .$store_ward->WARDS_NAME .',' .$store_district->DISTRICT_NAME .', ' .$store_province->PROVINCE_NAME }}
                                                         </td> --}}
                                                         <td>{{ $item->products()->count() }}</td>
                                                         <td>{{ $item->product_stores()->sum('soluong') }}</td>
+
                                                         <td>
-                                                        @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                           
                                                             <a class="btn modal-edit-unit"
                                                                 href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
                                                                 <i class="fas fa-pen"></i>
                                                             </a>
-                                                            @endif
                                                         </td>
                                                     </tr>
-                                                @else
-                                                    @if (optional($item->owner)->id == $admin->id)
-                                                        <tr>
-                                                            
-                                                            <td>{{ $item->id }}</td>
-                                                            <td>{{ $item->name }}</td>
-                                                            <td>{{ optional($item->owner)->fullname }} ({{ optional($item->owner)->email }})
-                                                            </td>
-                                                            <td>{{ $item->address .', P.' .optional($item->ward)->tenphuongxa .', Q.' .optional($item->district)->tenquanhuyen .', ' .optional($item->province)->tentinhthanh }}
-                                                            </td>
-                                                            <td>{{ $item->products()->count() }}</td>
-                                                            <td>
-                                                            @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                @elseif (auth()->guard('admin')->user()->can('Truy cập CH') ||
+    auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                    <tr>
+                                                        <td>{{ $item->name }}</td>
+                                                        <td> @foreach (explode(',', $item->id_owner) as $id)
+                                                            @php
+                                                                $owner = App\Models\Admin::whereId($id)->first();
+                                                            @endphp
+                                                            <p>{{ $owner->fullname }}
+                                                                ({{ $owner->email }})
+                                                            </p>
+                                                        @endforeach</td>
+                                                        {{-- <td>{{ $item->address .', ' .$store_ward->WARDS_NAME .',' .$store_district->DISTRICT_NAME .', ' .$store_province->PROVINCE_NAME }} --}}
+
+                                                        <td>{{ $item->products()->count() }}</td>
+                                                        <td>{{ $item->product_stores()->sum('soluong') }}</td>
+                                                        <td>
+                                                            @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                                                 <a class="btn modal-edit-unit"
                                                                     href="{{ route('store.edit', ['slug' => $item->slug, 'id' => $item->id]) }}">
                                                                     <i class="fas fa-pen"></i>
                                                                 </a>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                    @endif
+                                                            @endif
+                                                        </td>
+                                                    </tr>
                                                 @endif
                                             @endforeach
                                         </tbody>
@@ -230,6 +229,8 @@
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('public/js/address.js') }}"></script>
+
     <script>
         @if (auth()->guard('admin')->user()->can('Xóa cửa hàng'))
             function multiDel() {
@@ -243,25 +244,9 @@
                 [25, 50, "All"]
             ],
             columnDefs: [{
-                    targets: 0,
-                    visible: false,
-                    defaultContent: '',
-                    'render': function(data, type, row, meta) {
-                        if (type === 'display') {
-                            data =
-                                `<input type="checkbox" class="dt-checkboxes" name="id[]" value="${row[1]}">`;
-                        }
-                        return data;
-                    },
-                    'checkboxes': {
-                        'selectRow': true,
-                    }
-                },
-                {
-                    targets: [0,2,3,5],
-                    orderable: false,
-                }
-            ],
+                targets: [1, 2, 4],
+                orderable: false,
+            }],
             searchBuilder: {
                 conditions: {
                     num: {
@@ -386,7 +371,7 @@
                 }
             });
 
-            @if (auth()->guard('admin')->user()->can('Thêm cửa hàng'))
+            @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH'))
                 $('.js-location').change(function(e) {
                 e.preventDefault();
                 let route = '{{ route('store.getLocation') }}';
@@ -435,7 +420,7 @@
             
                 $('#select-owner').select2({
                 width: '100%',
-                allowClear: true,
+                multiple: true,
                 dropdownParent: $('#warehouse_create'),
                 minimumInputLength: 3,
                 dataType: 'json',
@@ -465,7 +450,7 @@
                 if (repo.text) {
                 return repo.text
                 } else {
-                return `${repo.name} (#${repo.email})`;
+                return `${repo.fullname} (#${repo.email})`;
                 }
                 }
             @endif

@@ -8,7 +8,8 @@
 @endpush
 
 @section('content')
-@if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+    @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
         <!-- Modal -->
         <div class="modal fade" id="product_category_create" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -103,7 +104,8 @@
                             DANH MỤC SẢN PHẨM </span>
                         <span class="caption-helper"></span>
                     </div>
-                    @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                    @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <div class="ps-4">
                             <a href="#product_category_create" data-toggle="modal" class="btn btn-add"><i
                                     class="fa fa-plus"></i>
@@ -135,7 +137,8 @@
             <hr>
             <div class="portlet-body">
                 <div class="pt-3" style="overflow-x: auto;">
-                @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                    @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <form id="myform" action="{{ route('nganh-nhom-hang.multiChange') }}" method="post">
                             @csrf
                             <input type="hidden" name="action" value="" id="input-action">
@@ -167,7 +170,7 @@
                                     </td>
                                     <td>
                                         @if ($category->slug != 'uncategorized' &&
-    auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+    auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                                             <a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
                                                 href="{{ route('nganh-nhom-hang.edit', $category->id) }}">{{ $category->name }}</a>
                                             @if (count($category->childrenCategoriesOnly) > 0)
@@ -192,16 +195,19 @@
                                                             class="fa fa-angle-down" aria-hidden="true"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                         <li>
-                                                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
-                                                                <span data-value="0" data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" class="dropdown-item changeStatus">
+                                                            @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                                <span data-value="0"
+                                                                    data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}"
+                                                                    class="dropdown-item changeStatus">
                                                                     Ngừng
                                                                 </span>
                                                             @endif
                                                         </li>
                                                         <li>
-                                                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
-                                                                <span
-                                                                    onclick="return confirm('Bạn có chắc muốn xóa');"
+                                                            @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                                <span onclick="return confirm('Bạn có chắc muốn xóa');"
                                                                     data-url="{{ route('nganh-nhom-hang.delete', $category->id) }}"
                                                                     class="dropdown-item btn-delete">
                                                                     Xóa
@@ -218,16 +224,19 @@
                                                             class="fa fa-angle-down" aria-hidden="true"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                         <li>
-                                                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
-                                                                <span data-value="1" data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" class="dropdown-item changeStatus">
+                                                            @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                                <span data-value="1"
+                                                                    data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}"
+                                                                    class="dropdown-item changeStatus">
                                                                     Hoạt động
                                                                 </span>
                                                             @endif
                                                         </li>
                                                         <li>
-                                                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
-                                                                <span
-                                                                    onclick="return confirm('Bạn có chắc muốn xóa');"
+                                                            @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                                                <span onclick="return confirm('Bạn có chắc muốn xóa');"
                                                                     data-url="{{ route('nganh-nhom-hang.delete', $category->id) }}"
                                                                     class="dropdown-item btn-delete">
                                                                     Xóa
@@ -245,8 +254,9 @@
                                         </span>
                                     </td>
                                     {{-- <td>
-                                        @if ($category->slug != 'uncategorized' &&
-                                        auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                        @if (($category->slug != 'uncategorized' &&
+        auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng')) ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                             <a style="text-decoration: none; cursor: pointer;"
                                                 class="btn btn-warning modal-edit-proCat"
                                                 data-route="{{ route('nganh-nhom-hang.modalEdit') }}"
@@ -258,7 +268,8 @@
                         </tbody>
                     </table>
 
-                    @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                    @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng') ||
+    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         </form>
                     @endif
                 </div>
@@ -295,11 +306,10 @@
                     [50, -1],
                     [50, "All"]
                 ],
-                columnDefs: [
-                    {
-                        targets: 0,
-                        visible: false,
-                    },{
+                columnDefs: [{
+                    targets: 0,
+                    visible: false,
+                }, {
                     targets: 1,
                     "width": "50%",
                 }],
@@ -320,7 +330,7 @@
                 dom: '<"wrapper d-flex justify-content-between mb-3"lf>tip',
             });
 
-            $(window).on('load', function() {
+            $(document).ready(function() {
                 $('#formCreateProductCategory select.proCatType').select2({
                     allowClear: true,
                     width: '100%',
@@ -393,7 +403,7 @@
             })
 
             // DELETE
-            @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+            @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                 $(document).on('click', '.btn-delete', function () {
                 var url = $(this).data('url')
                 $.ajaxSetup({
@@ -429,7 +439,7 @@
         });
     </script>
 
-    @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+    @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
         <script type="text/javascript" src="{{ asset('/js/admin/adminProductCategory.js') }}"></script>
     @endif
 

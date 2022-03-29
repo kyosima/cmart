@@ -18,18 +18,26 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Http\Controllers\AddressController;
+use App\Admin\Controllers\AdminLogController; 
 
 
 class AdminStoreController extends Controller
 {
     use ajaxGetLocation, ajaxProductTrait;
+    public $logController;
 
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function index()
     {
         $cities = Province::all();
         $stores = Store::all();
         $admin = auth('admin')->user();
         return view('admin.store.index', compact('cities', 'stores', 'admin'));
+     
+
     }
 
     public function store(Request $request)
@@ -51,7 +59,6 @@ class AdminStoreController extends Controller
             'sel_ward.required' => 'Địa chỉ cửa hàng không được để trống',
         ]);
 
-
         return DB::transaction(function () use ($request) {
             try {
                 $slug = Str::slug($request->store_name, '-');
@@ -60,14 +67,15 @@ class AdminStoreController extends Controller
                     'name' => $request->store_name,
                     'slug' => $slug,
                     'address' => $request->store_address,
-                    'id_owner' => $request->id_owner,
+                    'id_owner' => implode(',',$request->id_owner),
                     'id_province' => $request->sel_province,
                     'id_district' => $request->sel_district,
                     'id_ward' => $request->sel_ward,
                 ]);
 
-                $message = 'User: '. auth('admin')->user()->name . ' thực hiện tạo mới cửa hàng ' . $request->name;
-                Log::info($message);
+                $admin = auth('admin')->user();
+
+                $this->logController->createLog($admin, 'Cửa hàng', 'Tạo', 'cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
 
                 return redirect()->route('store.index')->with('success', 'Tạo cửa hàng thành công');
             } catch (\Throwable $th) {
@@ -104,14 +112,17 @@ class AdminStoreController extends Controller
                     'name' => $request->store_name,
                     'slug' => $slug,
                     'address' => $request->store_address,
-                    'id_owner' => $request->id_owner,
+                    'id_owner' => implode(',',$request->id_owner),
                     'id_province' => $request->sel_province,
                     'id_district' => $request->sel_district,
                     'id_ward' => $request->sel_ward,
                 ]);
 
-                $message = 'User: '. auth('admin')->user()->name . ' thực hiện chỉnh sửa cửa hàng ' . $request->name;
-                Log::info($message);
+                $store = Store::where('id', $id)->first();
+                $admin = auth('admin')->user();
+
+                $this->logController->createLog($admin, 'Cửa hàng', 'Sửa', 'cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+
 
                 return redirect()->route('store.edit', ['slug' => $slug, 'id' => $id])->with('success', 'Cập nhật cửa hàng thành công');
             } catch (\Throwable $th) {
@@ -120,12 +131,9 @@ class AdminStoreController extends Controller
         });
     }
 
-    public function edit($slug, $id)
+    public function edit(Request $request,$slug, $id)
     {
         $store = Store::where('slug', $slug)->where('id', $id)->firstorfail();
-        $cities = Province::all();
-        $districts = District::where('matinhthanh', $store->id_province)->get();
-        $wards = Ward::where('maquanhuyen', $store->id_district)->get();
         $products = $store->products; // lấy theo relationship
         $addressController = new AddressController();
 
@@ -134,8 +142,30 @@ class AdminStoreController extends Controller
         $store_district = $addressController->getDistrictDetail($store->id_province,$store->id_district);
         $store_ward = $addressController->getWardDetail($store->id_district,$store->id_ward);
         $message = 'User: '. $admin->name . ' truy cập trang chỉnh sửa cửa hàng ' . $store->name;
+        if ($request->has('time_start') && $request->has('time_end') ) {
+            $time_start = $request->time_start;
+            $time_end = $request->time_end;
+            $order_stores_confirm = $store->order_stores()->whereStatus(0)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_payment = $store->order_stores()->whereStatus(1)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_process = $store->order_stores()->whereStatus(2)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_ship = $store->order_stores()->whereStatus(3)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_success = $store->order_stores()->whereStatus(4)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_cancel = $store->order_stores()->whereStatus(5)->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+
+        }else{
+            $time_start = null;
+            $time_end = null;
+            $order_stores_confirm = $store->order_stores()->whereStatus(0)->get();
+            $order_stores_payment = $store->order_stores()->whereStatus(1)->get();
+            $order_stores_process = $store->order_stores()->whereStatus(2)->get();
+            $order_stores_ship = $store->order_stores()->whereStatus(3)->get();
+            $order_stores_success = $store->order_stores()->whereStatus(4)->get();
+            $order_stores_cancel = $store->order_stores()->whereStatus(5)->get();
+
+        }
+         
         Log::info($message);
-        return view('admin.store.edit', compact('cities', 'store', 'districts', 'wards', 'products', 'admin', 'store_province', 'store_district', 'store_ward'));
+        return view('admin.store.edit', compact('time_start', 'time_end','order_stores_cancel','order_stores_success','order_stores_ship','order_stores_process','order_stores_payment','order_stores_confirm', 'store',  'products', 'admin', 'store_province', 'store_district', 'store_ward'));
     }
 
     public function storeProduct(Request $request)
@@ -144,9 +174,9 @@ class AdminStoreController extends Controller
             'quantity' => 'min:0|required',
             'for_user' => 'required',
         ],
-    [
-        'quantity.min:0'=>'Số lượng tồn kho lớn hơn 0'
-    ]);
+        [
+            'quantity.min:0'=>'Số lượng tồn kho lớn hơn 0'
+        ]);
     
         if($validator->fails()){
             return response()->json([
@@ -163,8 +193,10 @@ class AdminStoreController extends Controller
 
         $store = Store::findOrFail($request->id_ofstore);
         $product = Product::findOrFail($request->id_ofproduct);
-        $message = 'User: '. auth('admin')->user()->name . ' thực hiện thêm sản phẩm ' . $product->name . ' vào cửa hàng ' . $store->name;
-        Log::info($message);
+        $admin = auth('admin')->user();
+
+        $this->logController->createLog($admin, 'Cửa hàng', 'Thêm/Sửa', 'sản phẩm '. $product->name .' vào cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+
         return response()->json([$product->name] ,200);
     }
 
@@ -175,8 +207,10 @@ class AdminStoreController extends Controller
         Store::destroy($id);
         DB::table('product_store')->where('id_ofstore', $id)->delete();
 
-        $message = 'User: '. auth('admin')->user()->name . ' thực hiện xóa cửa hàng ' . $store->name;
-        Log::info($message);
+        $admin = auth('admin')->user();
+
+        $this->logController->createLog($admin, 'Cửa hàng', 'Xóa', 'cửa hàng '.$store->name );
+
         return redirect()->route('store.index');
     }
 
@@ -207,8 +241,10 @@ class AdminStoreController extends Controller
         DB::table('product_store')->where('id_ofproduct', $id_product)
             ->where('id_ofstore', $id_store)->delete();   
 
-        $message = 'User: '. auth('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name . ' khỏi cửa hàng ' . $store->name;
-        Log::info($message);
+        $admin = auth('admin')->user();
+
+        $this->logController->createLog($admin, 'Cửa hàng', 'Xóa', 'sản phẩm '. $product->name .' khỏi cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+
         return response()->json([$product->name] ,200);
     }
 
@@ -226,7 +262,7 @@ class AdminStoreController extends Controller
 
     public function getListOwner(Request $request)
     {
-        $owners = Admin::where('name', 'LIKE', '%'.$request->search.'%')->limit(25)->get();
+        $owners = Admin::where('name', 'LIKE', '%'.$request->search.'%')->orWhere('email', 'LIKE', '%'.$request->search.'%' )->limit(25)->get();
         return response()->json([
             'code' => 200,
             'data' => $owners
@@ -237,10 +273,17 @@ class AdminStoreController extends Controller
     {
         $store = Store::findOrFail($request->store_id);
         $product = Product::findOrFail($request->product_id);
-        $returnHTML = view('admin.store.product_store', compact('store', 'product'))->render();
+        $admin = auth('admin')->user();
+
+        $returnHTML = view('admin.store.product_store', compact('store', 'product','admin'))->render();
 
         return response()->json([
             'html' => $returnHTML
         ], 200);
+    }
+
+    public function getStatistical(Request $request, $id){
+      
+
     }
 }

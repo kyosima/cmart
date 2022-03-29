@@ -189,8 +189,8 @@
                                         <ul class="dropdown-navcmart dvcmart">
                                             @php
                                                 $pages = App\Models\InfoCompany::whereType('service')
-                                                    ->orderBy('sort', 'asc')
-                                                    ->get();
+                                                ->orderBy('sort', 'asc')->whereStatus(1)
+                                                ->get();
                                             @endphp
                                             @foreach ($pages as $page)
                                                 <li><a rel="nofollow"
@@ -212,7 +212,7 @@
                                         <ul class="dropdown-navcmart">
                                             @php
                                                 $pages = App\Models\InfoCompany::whereType('policy')
-                                                    ->orderBy('sort', 'asc')
+                                                    ->orderBy('sort', 'asc')->whereStatus(1)
                                                     ->get();
                                             @endphp
                                             @foreach ($pages as $page)

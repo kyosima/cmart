@@ -28,7 +28,7 @@ class NoticeController extends Controller
             case 1:
                 $notice = Notice::create([
                     'title' => 'Hệ thống',
-                    'slug' => 'thay-doi-dinh-danh-khach-hang'.date('d-m-Y-H-i-s'),
+                    'slug' => 'thay-doi-dinh-danh-khach-hang'.date('d-m-Y-H-i-s').'id-'.$user->id,
                     'short_content' => view('notice.template.changeLevel', ['user'=>$user])->render(),
                     'content' => view('notice.template.changeLevel', ['user'=>$user])->render(),
                     'target' => 1,
@@ -45,7 +45,7 @@ class NoticeController extends Controller
             case 2:
                 $notice = Notice::create([
                     'title' => 'Hệ thống',
-                    'slug' => 'thay-doi-thong-tin'.date('d-m-Y-H-i-s'),
+                    'slug' => 'thay-doi-thong-tin-'.date('d-m-Y-H-i-s').'id-'.$user->id,
                     'short_content' => view('notice.template.changeInfo')->render(),
                     'content' => view('notice.template.changeInfo')->render(),
                     'target' => 1,
@@ -62,7 +62,7 @@ class NoticeController extends Controller
             case 3:
                 $notice = Notice::create([
                     'title' => 'Hệ thống',
-                    'slug' => 'thay-doi-so-du-tien-tich-luy'.date('d-m-Y-H-i-s'),
+                    'slug' => 'thay-doi-so-du-tien-tich-luy'.date('d-m-Y-H-i-s').'id-'.$user->id,
                     'short_content' => view('notice.template.changePoint', ['history'=>$history])->render(),
                     'content' => view('notice.template.changePoint', ['history'=>$history])->render(),
                     'target' => 1,
@@ -79,7 +79,7 @@ class NoticeController extends Controller
             case 4:
                 $notice = Notice::create([
                     'title' => 'Hệ thống',
-                    'slug' => 'thay-doi-trang-thai-don-hang'.date('d-m-Y-H-i-s'),
+                    'slug' => 'thay-doi-trang-thai-don-hang'.date('d-m-Y-H-i-s').'id-'.$user->id,
                     'short_content' => view('notice.template.changeOrder', ['order'=>$order])->render(),
                     'content' => view('notice.template.changeOrder', ['order'=>$order])->render(),
                     'target' => 1,

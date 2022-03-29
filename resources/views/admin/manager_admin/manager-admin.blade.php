@@ -88,7 +88,7 @@
                 <div class="col-xs-12 @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))) col-md-9 @else col-md-12 @endif">
                     <form action="{{ route('manager-admin.multiple') }}" method="post">
                         @csrf
-                        <div class="input-group action-multiple" style="display:none">
+                        {{-- <div class="input-group action-multiple" style="display:none">
                             <select class="custom-select" name="action" required >
                                 <option value="">Chọn hành động</option>
                                 <option value="delete">Xóa</option>
@@ -96,15 +96,15 @@
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="submit">Áp dụng</button>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- table -->
                         <div class="table__container mt-2">
-                            <table class="table table-hover" id="tblAdmin" class="display" style="width:100%">
-                                <thead class="table__daily">
+                            <table class="table table-striped table-bordered" id="tblAdmin" class="display" style="width:100%">
+                                <thead class="bg-dark text-light">
                                     <tr>
-                                    @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                    {{-- @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                         <th class="title" style="width: 30px;"><input class="form-check" name="checkAll" type="checkbox"></th>
-                                        @endif
+                                        @endif --}}
                                         <th scope="col">Họ tên</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">DVCQ</th>
@@ -117,9 +117,9 @@
                                 <tbody class="font-size-1">
                                     @foreach ($admins as $value)
                                     <tr class="replaywith-{{$value->id}}">
-                                    @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+                                    {{-- @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                                         <td><input type="checkbox" name="id[]" value="{{ $value->id }}"></td>
-                                        @endif
+                                        @endif --}}
                                         <td>{{$value->fullname}}</td>
                                         <td>{{$value->email}}</td>
                                         <td>{{$value->DVCQ}}</td>
@@ -175,6 +175,10 @@
                     </div>
                 </div>
                 <div class="mb-3">
+                    <label for="checkchangepass" class="form-label"><input type="checkbox" class="" name="is_changepass" value="1" id="checkchangepass"  >
+                        Đổi mật khẩu</label>
+                </div>
+                <div class="mb-3">
                     <label for="adminNewPassword" class="form-label">Mật khẩu mới</label>
                     <input type="password" class="form-control" name="in_new_password" id="adminNewPassword" placeholder="Mật khẩu mới" >
                     <div class="invalid-feedback">
@@ -228,14 +232,22 @@
     <script type="text/javascript" src="{{ asset('js/admin/ajax-form.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/admin/checklist.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/js/admin/checklist.js') }}"></script>
     <!-- format language -->
     <script>
         $(document).ready(function() {
+            
             $('#tblAdmin').DataTable({
+                @if (auth()->guard('admin')->user()->can('Tạo+sửa+xóa Admin') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+
                 columnDefs: [
-                    { orderable: false, targets: [0, 4] }
+                    { orderable: false, targets: [ 3,4] }
                 ],
+                @else
+                columnDefs: [
+                    { orderable: false, targets: [ 3] }
+                ],
+                @endif
                 "language": {
                     "emptyTable": "Không có dữ liệu nào !",
                     "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mục nhập",

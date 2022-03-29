@@ -32,9 +32,8 @@
                                             <div class="form-group d-flex justify-content-start align-items-center ">
                                                 <input type="radio" id="pay{{ $payment_method->id }}"
                                                     name="payment_method" value="{{ $payment_method->id }}"
-                                                    @if ($payment_method->id == 1 && $point_c->point_c < $order->total) disabled @endif
-                                                    @if ($payment_method->status == 0) disabled @endif
-                                                    @if ($payment_method->id == 3) checked @endif>
+                                                    @if (($payment_method->id == 1 && $point_c->point_c < $order->total) ||($payment_method->status == 0) || (!in_array($payment_method->id, $payment_method_avai))) disabled @endif
+                                                  >
                                                 <label for="pay{{ $payment_method->id }}">{{ $payment_method->name }}
                                                    
                                                 </label>
@@ -87,7 +86,7 @@
                                             <div class="form-group d-flex justify-content-start align-items-center ">
                                                 <input type="radio" id="pay{{ $payment_method->id }}"
                                                     name="payment_method" value="{{ $payment_method->id }}"
-                                                    @if (!$check_shipping_method) disabled @endif>
+                                                    @if ((!$check_shipping_method)||($payment_method->status == 0) || (!in_array($payment_method->id, $payment_method_avai))) disabled @endif>
                                                 <label
                                                     for="pay{{ $payment_method->id }}">{{ $payment_method->name }}</label>
                                             </div>

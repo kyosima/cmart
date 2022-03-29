@@ -3,8 +3,10 @@
         <div class="row h-100" style="margin:0px">
             <div class="col-12">
                 <div class="campaign-info">
+                    @if (auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                     <button type="button" class="btn btn-danger remvovecp" onclick="removeCampaignDetail(this)"
                         data-value="{{ $product->id }}">X</button>
+                    @endif
                     <input type="hidden" name="id_ofstore" value="{{ $store->id }}" />
                     <input type="hidden" id="id" name="id_ofproduct" value="{{ $product->id }}" class="form-control id">
 
@@ -18,7 +20,13 @@
                             <div class="form-group">
                                 <label class="col-md-12 control-label text-left">Tồn kho:</label>
                                 <div class="col-md-12">
+                                    @if (in_array($admin->id, explode(',', $store->id_owner))&&
+                                    (auth()->guard('admin')->user()->can('Chỉnh sửa Tồn kho cho CH chỉ định')|| auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))) 
                                     <input type="number" min="0" name="quantity" value="{{$product->getOriginal('pivot_soluong') ?? 1}}" class="form-control">
+                                    @else
+                                    <input type="number" min="0" name="quantity" value="{{$product->getOriginal('pivot_soluong') ?? 1}}" class="form-control" readonly>
+
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -26,7 +34,8 @@
                             <div class="form-group">
                                 <label class="col-md-12 control-label text-left">Hiển thị cho:</label>
                                 <div class="col-md-12">
-                                    <select name="for_user[]" class="form-control for_user" multiple data-placeholder="Chọn level">
+                                    
+                                    <select name="for_user[]" class="form-control for_user" multiple data-placeholder="Chọn level" {{ auth()->guard('admin')->user()->can('Tạo+xóa+sửa CH') ||auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))? '': 'disabled' }}>
                                         @if ($product->getOriginal('pivot_for_user'))
                                             <?php $arr = explode(',', $product->getOriginal('pivot_for_user')); ?>
                                             <option value="0" {{in_array("0", $arr) ? 'selected' : ''}}>Khách hàng thân thiết</option>

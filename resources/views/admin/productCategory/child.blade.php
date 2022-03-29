@@ -6,7 +6,7 @@
         @endif    
     </td>
     <td>
-        @if (auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
+        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
             <a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
                 href="{{ route('nganh-nhom-hang.edit', $category->id) }}">{{ $prefix }}
                 {{ $category->name }}</a>
@@ -25,14 +25,14 @@
                     aria-expanded="false"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                             <span data-value="0" data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" class="dropdown-item changeStatus">
                                 Ngừng
                             </span>
                         @endif
                     </li>
                     <li>
-                        @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                             <span
                                 onclick="return confirm('Bạn có chắc muốn xóa');"
                                 data-url="{{ route('nganh-nhom-hang.delete', $category->id) }}"
@@ -50,14 +50,14 @@
                     aria-expanded="false"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                             <span data-value="1" data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" class="dropdown-item changeStatus">
                                 Hoạt động
                             </span>
                         @endif
                     </li>
                     <li>
-                        @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                             <span
                                 onclick="return confirm('Bạn có chắc muốn xóa');"
                                 data-url="{{ route('nganh-nhom-hang.delete', $category->id) }}"
@@ -76,7 +76,7 @@
         </span>
     </td>
     <td>
-        @if ($category->slug != 'uncategorized' && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+        @if ($category->slug != 'uncategorized' && auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
             <a style="text-decoration: none; cursor: pointer;" class="btn btn-warning modal-edit-proCat"
                 data-route="{{ route('nganh-nhom-hang.modalEdit') }}" data-unitid="{{ $category->id }}"><i
                     class="fa fa-pencil"></i></a>
@@ -95,7 +95,7 @@
         @endif    
     </td>
     <td>
-        @if (auth()->guard('admin')->user()->can('Thêm danh mục sản phẩm'))
+        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
             <a style="text-decoration: none; cursor: pointer;" class="modal-edit-proCat"
                 href="{{ route('nganh-nhom-hang.edit', $category->id) }}">{{ $prefix }}
                 {{ $category->name }}</a>
@@ -114,14 +114,14 @@
                     aria-expanded="false"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                             <span data-value="0" data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" class="dropdown-item changeStatus">
                                 Ngừng
                             </span>
                         @endif
                     </li>
                     <li>
-                        @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                             <span
                                 onclick="return confirm('Bạn có chắc muốn xóa');"
                                 data-url="{{ route('nganh-nhom-hang.delete', $category->id) }}"
@@ -139,14 +139,14 @@
                     aria-expanded="false"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        @if (auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                             <span data-value="1" data-url="{{ route('nganh-nhom-hang.updateStatus', $category->id) }}" class="dropdown-item changeStatus">
                                 Hoạt động
                             </span>
                         @endif
                     </li>
                     <li>
-                        @if (auth()->guard('admin')->user()->can('Xóa danh mục sản phẩm'))
+                        @if (auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
                             <span
                                 onclick="return confirm('Bạn có chắc muốn xóa');"
                                 data-url="{{ route('nganh-nhom-hang.delete', $category->id) }}"
@@ -165,7 +165,7 @@
         </span>
     </td>
     <td>
-        @if ($category->slug != 'uncategorized' && auth()->guard('admin')->user()->can('Chỉnh sửa danh mục sản phẩm'))
+        @if ($category->slug != 'uncategorized' && auth()->guard('admin')->user()->can('Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng'))
             <a style="text-decoration: none; cursor: pointer;" class="btn btn-warning modal-edit-proCat"
                 data-route="{{ route('nganh-nhom-hang.modalEdit') }}" data-unitid="{{ $category->id }}"><i
                     class="fa fa-pencil"></i></a>

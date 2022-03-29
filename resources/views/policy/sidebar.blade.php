@@ -1,5 +1,5 @@
     @php
-        $pages = App\Models\InfoCompany::get();
+        $pages = App\Models\InfoCompany::whereStatus(1)->get();
     @endphp
     <ul>
         <li class="{{ url()->current() == route('theo-doi-don-hang.index') ? 'active' : '' }}">

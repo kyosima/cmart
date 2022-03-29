@@ -44,12 +44,20 @@ class CheckoutController extends Controller
     public function index()
     {
         $user = Auth::user();
+        if($user->status == 0){
+            Auth::logout();
+           return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
+        }
         $stores = Store::get();
+      
         foreach ($stores as $store) {
             if(Cart::instance($store->id)->count()> 0){
                 $cart = Cart::instance($store->id);
                 foreach($cart->content() as $row){
-                    $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
+                    if($row->model->is_ecard == 0){
+                        $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
+
+                    }
                 }
             }
         }
@@ -253,7 +261,6 @@ class CheckoutController extends Controller
                         break;
                 }
                 $vat_products += $row->price * getTaxValue($price->tax) * $row->qty;
-
                 if (in_array(Auth::user()->level, [3, 4])) {
                     $price->cpoint = 0;
                     $price->mpoint = 0;
@@ -613,11 +620,20 @@ class CheckoutController extends Controller
         if (!$request->payment_method) {
             return back()->with('message', 'Mời chọn hình thức thanh toán');
         }
+
         $order = Order::whereOrderCode($request->order_code)->first();
+      
         if ($order->status > 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $payment_method = PaymentMethod::whereId($request->payment_method)->first();
+        $payment_method_avai = $this->getPaymentMethodAccept($order);
+        $point_c = $user->point_c()->first();
+
+        if (($payment_method->id == 1 && $point_c->point_c < $order->total) ||($payment_method->status == 0) || (!in_array($payment_method->id, $payment_method_avai))){
+            return back()->with('message', 'Hình thức thanh toán không khả dụng cho đơn hàng của bạn, mời chọn lại hình thức thanh toán khác');
+
+        }
         foreach ($order->order_stores()->get() as $order_store) {
             $vat_services = 0;
             $vat_services = round($payment_method->fee * ($order_store->sub_total + $order_store->vat_products - $order_store->discount_products + max($order_store->shipping_total - $order_store->m_point, 0) * 1.08));
@@ -627,6 +643,7 @@ class CheckoutController extends Controller
         }
         $order->vat_services = $order->order_stores()->sum('vat_services') + $payment_method->tax;
         $order->payment_method = $payment_method->id;
+        $order->order_stores()->update(['payment_method'=>$payment_method->id]);
         $order->total_payment_services = round(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0));
         $order->remaining_m_point = max($order->m_point - $order->shipping_total - $order->vat_services, 0);
         $order->tax_services =round(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) - max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) / 1.08);
@@ -634,6 +651,7 @@ class CheckoutController extends Controller
         foreach ($order->order_stores()->get() as $order_store) {
             $order_store->total = round($order_store->sub_total - $order_store->discount_products + $order_store->vat_products + ($order->total_payment_services / $order->order_stores()->count()));
             $order_store->discount_services = round( ($order_store->shipping_total * 108 / 100) + $order_store->vat_services - ($order->total_payment_services / $order->order_stores()->count()) < 0 ? ($order_store->shipping_total * 108 / 100) + $order_store->vat_services : $order->total_payment_services / $order->order_stores()->count());
+            $order_store->vat = round($order_store->vat_products + $order->tax_services / $order->order_stores()->count());
             $order_store->save();
         }
         $order->total = $order->order_stores()->sum('total');
@@ -664,7 +682,23 @@ class CheckoutController extends Controller
                 $check_shipping_method = false;
             }
         }
-        return view('checkout.payment_method', compact('order', 'user', 'point_c', 'check_shipping_method', 'payment_methods'));
+        $payment_method_avai = $this->getPaymentMethodAccept($order);
+        return view('checkout.payment_method', compact('payment_method_avai','order', 'user', 'point_c', 'check_shipping_method', 'payment_methods'));
+    }
+    public function getPaymentMethodAccept($order){
+        $payment_method_avai = range(1,PaymentMethod::count());
+        foreach ($order->order_stores()->get() as $order_store) {
+            foreach($order_store->order_products()->get() as $order_product){
+                $product = $order_product->product()->first();
+                if($product){
+                    $payment_method_product = explode(',',$product->payments);
+                    $payment_method_avai = array_intersect($payment_method_avai, $payment_method_product);
+                }
+
+            }
+        }
+        $payment_method_avai = array_unique($payment_method_avai);
+        return $payment_method_avai;
     }
     public function postPayment(Request $request)
     {
@@ -813,6 +847,8 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $order->payment_method_option = $request->payment_option;
+        $order->order_stores()->update(['payment_method_option'=>$request->payment_option]);
+
         $order->save();
         $this->processOrder($order);
         return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
@@ -842,6 +878,7 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
         }
         $order->payment_method_option = $request->payment_option;
+        $order->order_stores()->update(['payment_method_option'=>$request->payment_option]);
         $order->save();
         $this->processOrder($order);
         return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);

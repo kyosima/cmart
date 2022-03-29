@@ -16,11 +16,17 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Models\PaymentMethod;
 use DataTables;
+use App\Admin\Controllers\AdminLogController; 
 
 class AdminProductController extends Controller
 {
     use ajaxProductTrait;
+    public $logController;
 
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function index()
     {
         $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
@@ -48,47 +54,80 @@ class AdminProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'product_sku' => 'required|unique:products,sku',
-            'product_name' => 'required|unique:products,name',
-            'slug' => 'unique:products,slug',
-            'feature_img' => 'required',
-            'category_parent' => 'required',
-            'product_brand' => 'required',
-            'payments' => 'required',
-            'product_status' => 'required',
-            'product_price' => 'required|numeric',
-            'product_regular_price' => 'required|numeric',
-            'product_wholesale_price' => 'required|numeric',
-            'product_shock_price' => 'required|numeric',
-            'cpoint' => 'nullable|numeric',
-            'mpoint' => 'nullable|numeric',
-            'phi_xuly' => 'nullable|numeric',
-            'tax' => 'required',
-        ], [
-            'product_sku.required' => 'SKU không được để trống',
-            'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
-            'product_name.required' => 'Tên sản phẩm không được để trống',
-            'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
-            'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
-            'feature_img' => 'Ảnh đại diện không được để trống',
-            'category_parent' => 'Danh mục sản phẩm không được để trống',
-            'product_brand' => 'Thương hiệu không được để trống',
-            'payments' => 'Hình thức thanh toán không được để trống',
-            'product_status' => 'Trạng thái không được để trống',
-            'cpoint' => 'CPoint phải là số',
-            'mpoint' => 'MPoint phải là số',
-            'product_price.required' => 'Giá nhập không được để trống',
-            'product_regular_price.required' => 'Giá bán lẻ không được để trống',
-            'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
-            'product_shock_price.required' => 'Giá shock không được để trống',
-            'product_price.numeric' => 'Giá nhập phải là số',
-            'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
-            'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
-            'product_shock_price.numeric' => 'Giá shock phải là số',
-            'phi_xuly.numeric' => 'Phí xử lý phải là số',
-            'tax' => 'Thuế không được để trống',
-        ]);
+        if($request->is_ecard == 1){
+            $request->validate([
+                'product_sku' => 'required|unique:products,sku',
+                'product_name' => 'required|unique:products,name',
+                'slug' => 'unique:products,slug',
+                'feature_img' => 'required',
+                'category_parent' => 'required',
+                'product_brand' => 'required',
+                'payments' => 'required',
+                'product_status' => 'required',
+                'cpoint' => 'nullable|numeric',
+                'mpoint' => 'nullable|numeric',
+                'phi_xuly' => 'nullable|numeric',
+                'tax' => 'required',
+            ], [
+                'product_sku.required' => 'SKU không được để trống',
+                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
+                'product_name.required' => 'Tên sản phẩm không được để trống',
+                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
+                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
+                'feature_img' => 'Ảnh đại diện không được để trống',
+                'category_parent' => 'Danh mục sản phẩm không được để trống',
+                'product_brand' => 'Thương hiệu không được để trống',
+                'payments' => 'Hình thức thanh toán không được để trống',
+                'product_status' => 'Trạng thái không được để trống',
+                'cpoint' => 'CPoint phải là số',
+                'mpoint' => 'MPoint phải là số',
+                'phi_xuly.numeric' => 'Phí xử lý phải là số',
+                'tax' => 'Thuế không được để trống',
+            ]);
+        }else{
+            $request->validate([
+                'product_sku' => 'required|unique:products,sku',
+                'product_name' => 'required|unique:products,name',
+                'slug' => 'unique:products,slug',
+                'feature_img' => 'required',
+                'category_parent' => 'required',
+                'product_brand' => 'required',
+                'payments' => 'required',
+                'product_status' => 'required',
+                'product_price' => 'required|numeric',
+                'product_regular_price' => 'required|numeric',
+                'product_wholesale_price' => 'required|numeric',
+                'product_shock_price' => 'required|numeric',
+                'cpoint' => 'nullable|numeric',
+                'mpoint' => 'nullable|numeric',
+                'phi_xuly' => 'nullable|numeric',
+                'tax' => 'required',
+            ], [
+                'product_sku.required' => 'SKU không được để trống',
+                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
+                'product_name.required' => 'Tên sản phẩm không được để trống',
+                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
+                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
+                'feature_img' => 'Ảnh đại diện không được để trống',
+                'category_parent' => 'Danh mục sản phẩm không được để trống',
+                'product_brand' => 'Thương hiệu không được để trống',
+                'payments' => 'Hình thức thanh toán không được để trống',
+                'product_status' => 'Trạng thái không được để trống',
+                'cpoint' => 'CPoint phải là số',
+                'mpoint' => 'MPoint phải là số',
+                'product_price.required' => 'Giá nhập không được để trống',
+                'product_regular_price.required' => 'Giá bán lẻ không được để trống',
+                'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
+                'product_shock_price.required' => 'Giá shock không được để trống',
+                'product_price.numeric' => 'Giá nhập phải là số',
+                'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
+                'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
+                'product_shock_price.numeric' => 'Giá shock phải là số',
+                'phi_xuly.numeric' => 'Phí xử lý phải là số',
+                'tax' => 'Thuế không được để trống',
+            ]);
+        }
+        
 
         return DB::transaction(function () use ($request) {
             try {
@@ -110,6 +149,7 @@ class AdminProductController extends Controller
                     'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,
                     'long_desc' => $request->description,
+                    'is_ecard' => $request->is_ecard,
                     'meta_desc' => $request->meta_description,
                     'meta_keyword' => $request->meta_keyword,
                 ]);
@@ -128,6 +168,10 @@ class AdminProductController extends Controller
 
                 $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới sản phẩm ' . $product->name;
                 Log::info($message);
+                $admin = auth('admin')->user();
+
+                $this->logController->createLog($admin, 'Sản phẩm', 'Tạo', 'sản phẩm '.$product->name, route('san-pham.edit',$product->id ));
+
 
                 return redirect()->route('san-pham.edit', $product->id)->with('success', 'Cập nhật sản phẩm thành công');
             } catch (\Throwable $th) {
@@ -161,47 +205,80 @@ class AdminProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'product_sku' => 'required|unique:products,sku,'.$id,
-            'product_name' => 'required|unique:products,name,'.$id,
-            'slug' => 'unique:products,slug',
-            'feature_img' => 'required',
-            'category_parent' => 'required',
-            'product_brand' => 'required',
-            'payments' => 'required',
-            'product_status' => 'required',
-            'product_price' => 'required|numeric',
-            'product_regular_price' => 'required|numeric',
-            'product_wholesale_price' => 'required|numeric',
-            'product_shock_price' => 'required|numeric',
-            'cpoint' => 'nullable|numeric',
-            'mpoint' => 'nullable|numeric',
-            'phi_xuly' => 'nullable|numeric',
-            'tax' => 'required',
-        ], [
-            'product_sku.required' => 'SKU không được để trống',
-            'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
-            'product_name.required' => 'Tên sản phẩm không được để trống',
-            'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
-            'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
-            'feature_img' => 'Ảnh đại diện không được để trống',
-            'category_parent' => 'Danh mục sản phẩm không được để trống',
-            'product_brand' => 'Thương hiệu không được để trống',
-            'payments' => 'Hình thức thanh toán không được để trống',
-            'product_status' => 'Trạng thái không được để trống',
-            'cpoint' => 'CPoint phải là số',
-            'mpoint' => 'MPoint phải là số',
-            'product_price.required' => 'Giá nhập không được để trống',
-            'product_regular_price.required' => 'Giá bán lẻ không được để trống',
-            'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
-            'product_shock_price.required' => 'Giá shock không được để trống',
-            'product_price.numeric' => 'Giá nhập phải là số',
-            'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
-            'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
-            'product_shock_price.numeric' => 'Giá shock phải là số',
-            'phi_xuly.numeric' => 'Phí xử lý phải là số',
-            'tax' => 'Thuế không được để trống',
-        ]);
+        if($request->is_ecard == 1){
+            $request->validate([
+                'product_sku' => 'required|unique:products,sku,'.$id,
+                'product_name' => 'required|unique:products,name,'.$id,
+                'slug' => 'unique:products,slug',
+                'feature_img' => 'required',
+                'category_parent' => 'required',
+                'product_brand' => 'required',
+                'payments' => 'required',
+                'product_status' => 'required',
+                'cpoint' => 'nullable|numeric',
+                'mpoint' => 'nullable|numeric',
+                'phi_xuly' => 'nullable|numeric',
+                'tax' => 'required',
+            ], [
+                'product_sku.required' => 'SKU không được để trống',
+                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
+                'product_name.required' => 'Tên sản phẩm không được để trống',
+                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
+                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
+                'feature_img' => 'Ảnh đại diện không được để trống',
+                'category_parent' => 'Danh mục sản phẩm không được để trống',
+                'product_brand' => 'Thương hiệu không được để trống',
+                'payments' => 'Hình thức thanh toán không được để trống',
+                'product_status' => 'Trạng thái không được để trống',
+                'cpoint' => 'CPoint phải là số',
+                'mpoint' => 'MPoint phải là số',
+                'phi_xuly.numeric' => 'Phí xử lý phải là số',
+                'tax' => 'Thuế không được để trống',
+            ]);
+        }else{
+            $request->validate([
+                'product_sku' => 'required|unique:products,sku,'.$id,
+                'product_name' => 'required|unique:products,name,'.$id,
+                'slug' => 'unique:products,slug',
+                'feature_img' => 'required',
+                'category_parent' => 'required',
+                'product_brand' => 'required',
+                'payments' => 'required',
+                'product_status' => 'required',
+                'product_price' => 'required|numeric',
+                'product_regular_price' => 'required|numeric',
+                'product_wholesale_price' => 'required|numeric',
+                'product_shock_price' => 'required|numeric',
+                'cpoint' => 'nullable|numeric',
+                'mpoint' => 'nullable|numeric',
+                'phi_xuly' => 'nullable|numeric',
+                'tax' => 'required',
+            ], [
+                'product_sku.required' => 'SKU không được để trống',
+                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
+                'product_name.required' => 'Tên sản phẩm không được để trống',
+                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
+                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
+                'feature_img' => 'Ảnh đại diện không được để trống',
+                'category_parent' => 'Danh mục sản phẩm không được để trống',
+                'product_brand' => 'Thương hiệu không được để trống',
+                'payments' => 'Hình thức thanh toán không được để trống',
+                'product_status' => 'Trạng thái không được để trống',
+                'cpoint' => 'CPoint phải là số',
+                'mpoint' => 'MPoint phải là số',
+                'product_price.required' => 'Giá nhập không được để trống',
+                'product_regular_price.required' => 'Giá bán lẻ không được để trống',
+                'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
+                'product_shock_price.required' => 'Giá shock không được để trống',
+                'product_price.numeric' => 'Giá nhập phải là số',
+                'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
+                'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
+                'product_shock_price.numeric' => 'Giá shock phải là số',
+                'phi_xuly.numeric' => 'Phí xử lý phải là số',
+                'tax' => 'Thuế không được để trống',
+            ]);
+        }
+        
 
         return DB::transaction(function () use ($request, $id) {
             try {
@@ -227,6 +304,7 @@ class AdminProductController extends Controller
                     'payments' => implode(',',$request->payments),
                     'status' => $request->product_status,
                     'long_desc' => $request->description,
+                    'is_ecard' => $request->is_ecard,
                     'meta_desc' => $request->meta_description,
                     'meta_keyword' => $request->meta_keyword,
                 ]);
@@ -242,8 +320,11 @@ class AdminProductController extends Controller
                     'tax' => $request->tax,
                 ]);
 
-                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện cập nhật sản phẩm ' . $request->product_name;
-                Log::info($message);
+                $admin = auth('admin')->user();
+                $product = Product::where('id', $id)->first();
+                $this->logController->createLog($admin, 'Sản phẩm', 'Sửa', 'sản phẩm '.$product->name, route('san-pham.edit',$product->id ));
+
+
 
                 return redirect()->route('san-pham.edit', $id)->with('success', 'Cập nhật sản phẩm thành công');
             } catch (\Throwable $th) {
@@ -258,8 +339,9 @@ class AdminProductController extends Controller
         $product = Product::findOrFail($id);
         Product::destroy($id);
 
-        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name;
-        Log::info($message);
+        $admin = auth('admin')->user();
+        $this->logController->createLog($admin, 'Sản phẩm', 'Xóa', 'sản phẩm '.$product->name);
+
 
         return redirect()->route('san-pham.index');
     }

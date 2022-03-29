@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Models\PointC;
 use App\Models\PointCHistory;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 
 class AdminHomeController extends Controller
@@ -38,48 +40,34 @@ class AdminHomeController extends Controller
     }
     public function postLogin(Request $request){
         if(Auth::guard('admin')->attempt($request->only('email','password'))){
-            $user = User::all();
-            foreach ($user->where('id','!=',1) as $us) {
-                $datePoint = $us->created_at->addMonth('1')->startOfDay();
-                if (Carbon::now() >= $datePoint) {
-                    $us->created_at = $us->created_at->addMonth('1')->startOfDay();
-                    $notelichsu = Carbon::parse($us->created_at)->format('Y-m-d');
-                    
-                    $pointC = PointC::where('user_id','=',$us->id)->first();
-                    $amount = round($pointC->point_c * 0.01, 0);
-                    $pointTietKiem = $pointC->point_c + $amount;
-    
-                    $id_user_chuyen = User::where('id','=',1)->first()->id;
-                    $vi_user_chuyen = PointC::where('user_id','=',$id_user_chuyen)->first();
-                    // luu lich su 
-                    
-                    $lichsu_chuyen = new PointCHistory;
-                    $lichsu_chuyen->point_c_idnhan = $us->id;
-                    $lichsu_chuyen->point_past_nhan = $pointC->point_c;
-                    $lichsu_chuyen->point_present_nhan = $pointTietKiem;
-                    $lichsu_chuyen->makhachhang = $us->code_customer;
-                    $lichsu_chuyen->note = 'Tiết kiệm ngày '.$notelichsu.' từ TK '.$us->code_customer;
-                    $lichsu_chuyen->amount = $amount;
-                    $lichsu_chuyen->type = 3;
-                    $lichsu_chuyen->created_at = $us->created_at->startOfDay();
-
-                    $lichsu_chuyen->point_c_idchuyen = $vi_user_chuyen->id;
-                    $lichsu_chuyen->point_past_chuyen = $vi_user_chuyen->point_c;
-                    $lichsu_chuyen->point_present_chuyen = $vi_user_chuyen->point_c - $amount;
-                    $lichsu_chuyen->makhachhang_chuyen = 202201170001;
-                    $lichsu_chuyen->save();
-    
-                    $pointC->point_c = $pointTietKiem;
-                    $vi_user_chuyen->point_c -= $amount;
-                    $vi_user_chuyen->save();
-                    $pointC->save();
-    
-                    $us->save();
-                }
-            }
+           
             return redirect('/admin');
         }
         Session::flash('error', 'Tài khoản hoặc mật khẩu không đúng');
         return back();
+    }
+
+    public function getChangePassword(Request $request){
+        return view('admin.change_password');
+    }
+    public function postChangePassword(Request $request){
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'new_password' => 'required|min:8',
+          
+        ], [
+            'old_password.required' => 'Mật khẩu hiện tại không được để trống',
+            'new_password.required' => 'Mật khẩu mới không được để trống',
+            'new_password.min' => 'Mật khẩu mới phải trên 8 ký tự',
+        ]);
+        $admin = auth('admin')->user();
+
+        if (Hash::check($request->old_password, $admin->password)) {
+            $admin->password =  Hash::make($request->new_password);
+            return back()->with('message', 'Đổi mật khẩu thành công');
+        }else{
+            return back()->with('message', 'Mật khẩu hiện tại không đúng');
+        }
+
     }
 }

@@ -16,12 +16,19 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Constraint\Count;
+use App\Admin\Controllers\AdminLogController; 
 
 class AdminCouponController extends Controller
 {
     use ajaxProductTrait;
     use ajaxCustomerTrait;
     use ajaxCouponTrait;
+    public $logController;
+
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function index()
     {
         // $coupons = Coupon::with('promo')->get();
@@ -202,6 +209,10 @@ class AdminCouponController extends Controller
 
         $coupon->save();
         $coupon_promo->save();
+        $admin = auth()->guard('admin')->user();
+
+        $this->logController->createLog($admin, 'Mã ưu đãi', 'Tạo', 'mã ưu đãi '.$coupon->code, route('coupon.edit', $coupon->id));
+
         return redirect()->route('coupon.edit', $coupon->id)->with('message', 'Tạo mã ưu đãi thành công');
         
     }
@@ -287,6 +298,10 @@ class AdminCouponController extends Controller
 
         $coupon->save();
         $coupon_promo->save();
+        $admin = auth()->guard('admin')->user();
+
+        $this->logController->createLog($admin, 'Mã ưu đãi', 'Sửa', 'mã ưu đãi '.$coupon->code, route('coupon.edit', $coupon->id));
+
         return redirect()->back()->with('message', 'Chỉnh sửa mã ưu đãi thành công');
         
     }
@@ -341,9 +356,16 @@ class AdminCouponController extends Controller
     public function delete(Request $request)
     {
         
+        $coupon = Coupon::whereId($request->id)->first();
+
+        $admin = auth()->guard('admin')->user();
+
+        $this->logController->createLog($admin, 'Mã ưu đãi', 'Xóa', 'mã ưu đãi '.$coupon->code);
+        $coupon = Coupon::whereId($request->id)->delete();
         CouponPromo::where('id_ofcoupon', $request->id)->delete();
 
-        $coupon = Coupon::destroy($request->id);
+        return redirect()->route('coupon.index')->with('success', 'Xóa voucher/coupon thành công');
+
         if($request->ajax()){
 
             if($coupon){
@@ -358,7 +380,7 @@ class AdminCouponController extends Controller
                 ]);
             }
         }
-        return redirect()->route('coupon.index')->with('success', 'Xóa voucher/coupon thành công');
+      
 
     }
 

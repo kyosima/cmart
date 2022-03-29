@@ -10,10 +10,16 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use App\Admin\Requests\StoreInfoCompanyRequest;
+use App\Admin\Controllers\AdminLogController; 
 
 class AdminInfoCompanyController extends Controller
 {
-    //
+    //  
+    public $logController;
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
 
     public function index(){
         $page = InfoCompany::all();
@@ -37,7 +43,11 @@ class AdminInfoCompanyController extends Controller
         ]);
         Log::info('Admin '.auth()->guard('admin')->user()->name.' Tạo trang đơn #'.$info_company->id);
         Session::flash('success', 'Bạn đã thêm thành công !');
+        $ad = auth('admin')->user();
+        $this->logController->createLog($ad, 'Dịch vụ và chính sách', 'Tạo', ' trang: '.$info_company->name, route('info-company.edit',$info_company));
+
         return redirect()->route('info-company.edit', ['info_company' => $info_company->id]);
+        
     }
 
     public function edit(InfoCompany $info_company){
@@ -56,6 +66,9 @@ class AdminInfoCompanyController extends Controller
             'sort' => $request->in_sort ? $request->in_sort : 0,
             'updated_at' => Carbon::now()
         ]);
+        $ad = auth('admin')->user();
+        $this->logController->createLog($ad, 'Dịch vụ và chính sách', 'Sửa', ' trang: '.$info_company->name, route('info-company.edit',$info_company));
+
         Session::flash('success', 'Bạn đã sửa thành công !');
         return back();
     }
@@ -86,6 +99,9 @@ class AdminInfoCompanyController extends Controller
         ->get();
     }
     public function delete(Request $request, InfoCompany $info_company){
+        $ad = auth('admin')->user();
+        $this->logController->createLog($ad, 'Dịch vụ và chính sách', 'Xóa', ' trang: '.$info_company->name);
+
         $info_company->delete();
         Log::info('Admin '.auth()->guard('admin')->user()->name.' Xóa nhật trang đơn #'.$info_company->id);
         if ($request->isMethod('get')) {

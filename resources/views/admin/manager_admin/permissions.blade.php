@@ -34,7 +34,7 @@
                 <div class="col-xs-12 col-md-9">
                     <form action="{{ route('permissions.multiple') }}" method="post">
                         @csrf
-                        <div class="input-group action-multiple" style="display:none">
+                        {{-- <div class="input-group action-multiple" style="display:none">
                             <select class="custom-select" name="action" required >
                                 <option value="">Chọn hành động</option>
                                 <option value="delete">Xóa</option>
@@ -42,13 +42,13 @@
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="submit">Áp dụng</button>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- table -->
                         <div class="table__container mt-2">
-                            <table class="table table-hover" id="tblPermission" class="display" style="width:100%">
-                                <thead class="table__daily">
+                            <table class="table table-striped table-bordered" id="tblPermission" class="display" style="width:100%">
+                                <thead class="bg-dark text-light">
                                     <tr>
-                                        <th class="title" style="width: 30px;"><input class="form-check" name="checkAll" type="checkbox"></th>
+                                        {{-- <th class="title" style="width: 30px;"><input class="form-check" name="checkAll" type="checkbox"></th> --}}
                                         <th scope="col">Tên</th>
                                         <th scope="col">Thao tác</th>
                                     </tr>
@@ -56,7 +56,7 @@
                                 <tbody class="font-size-1">
                                     @foreach ($permissions as $value)
                                     <tr class="replaywith-{{$value->id}}">
-                                        <td><input type="checkbox" name="id[]" value="{{ $value->id }}"></td>
+                                        {{-- <td><input type="checkbox" name="id[]" value="{{ $value->id }}"></td> --}}
                                         <td>{{$value->name}}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning ajax-edit" data-id="{{$value->id}}" data-name="{{$value->name}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
@@ -127,7 +127,7 @@
         $(document).ready(function() {
             $('#tblPermission').DataTable({
                 columnDefs: [
-                    { orderable: false, targets: [0, 2] }
+                    { orderable: false, targets: [ 1] }
                 ],
                 "language": {
                     "emptyTable": "Không có dữ liệu nào !",

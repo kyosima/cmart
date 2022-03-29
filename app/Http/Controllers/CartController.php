@@ -20,6 +20,10 @@ class CartController extends Controller
     {
         if(Auth::check()){
             $user = Auth::user();
+            if($user->status == 0){
+                Auth::logout();
+               return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
+            }
             $orders_not_payment = $user->orders()->where('is_payment',0)->get();
             if (count($orders_not_payment) > 0) {
                 foreach($orders_not_payment as $order){
@@ -43,7 +47,10 @@ class CartController extends Controller
             if(Cart::instance($store->id)->count()> 0){
                 $cart = Cart::instance($store->id);
                 foreach($cart->content() as $row){
-                    $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
+                    if($row->model->is_ecard == 0){
+                        $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
+
+                    }
                 }
             }
         }
@@ -72,8 +79,13 @@ class CartController extends Controller
                 0
             ], 200);
         }
-      
-        Cart::instance($store_id)->add(['id' => $product->id, 'name' => $product->name, 'price' =>  getPriceOfLevel($product), 'qty' => $qty, 'options' => [ 'method_ship' => 0, 'type_ship' => 0, 'price_normal' => 0, 'price_fast'=>0]])->associate('App\Models\Product');
+        if($product->is_ecard == 0){
+            Cart::instance($store_id)->add(['id' => $product->id, 'name' => $product->name, 'price' =>  getPriceOfLevel($product), 'qty' => $qty, 'options' => [ 'method_ship' => 0, 'type_ship' => 0, 'price_normal' => 0, 'price_fast'=>0]])->associate('App\Models\Product');
+
+        }else{
+            Cart::instance($store_id)->add(['id' => $product->id, 'name' => $product->name, 'price' =>  $request->price, 'qty' => $qty, 'options' => [ 'method_ship' => 0, 'type_ship' => 0, 'price_normal' => 0, 'price_fast'=>0]])->associate('App\Models\Product');
+
+        }
         $stores = Store::get();
         $count_cart = 0;
         foreach ($stores as $store) {

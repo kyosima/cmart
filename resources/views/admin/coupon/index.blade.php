@@ -194,43 +194,6 @@
                 });
             @endif
 
-            @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
-                // DELETE
-                $(document).on('click', '.item-delete', function () {
-                var id = $(this).data('unitid')
-                $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-                });
-                if(confirm('Bạn có chắc muốn xóa')){
-                $.ajax({
-                type: "DELETE",
-                url: `{{ route('coupon.delete') }}`,
-                data: {
-                id: id
-                },
-                success: function (response) {
-                $.toast({
-                heading: 'Thành công',
-                text: 'Thực hiện thành công',
-                position: 'top-right',
-                icon: 'success'
-                });
-                table.ajax.reload();
-                },
-                error: function(response) {
-                $.toast({
-                heading: 'Thất bại',
-                text: 'Thực hiện không thành công',
-                position: 'top-right',
-                icon: 'error'
-                });
-                }
-                });
-                }
-                })
-            @endif
 
             var table = $('#table-calculation-unit').DataTable({
                 ordering: false,

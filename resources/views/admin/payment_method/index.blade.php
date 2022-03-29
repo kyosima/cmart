@@ -99,7 +99,7 @@
                             DANH SÁCH HÌNH THỨC THANH TOÁN</span>
                         <span class="caption-helper"></span>
                     </div>
-                    @if (auth()->guard('admin')->user()->can('Truy cập mục HTTT + ẩn') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission'))
+                    @if (auth()->guard('admin')->user()->can('Truy cập mục HTTT + ẩn') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <div class="ps-4">
                             <a href="#payment_option_create" data-toggle="modal" class="btn btn-add"><i
                                     class="fa fa-plus"></i>

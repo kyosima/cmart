@@ -25,18 +25,25 @@ use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\HistoryPointController; 
 use App\Http\Controllers\NoticeController; 
+use App\Admin\Controllers\AdminLogController; 
 
 use App\Models\PointCHistory;
 use App\Models\PointMHistory;
 use App\Models\PointC;
 use App\Models\PointM;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 class AdminOrderController extends Controller
 {
     //
 
+    public $logController;
+
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function index(Request $request)
     {
         $orders = Order::whereIsPayment(1)->orderBy('id', 'DESC')->get();
@@ -92,6 +99,15 @@ class AdminOrderController extends Controller
     {
         $order = Order::whereOrderCode($request->order_code)->first();
         return view('admin.order.c_bill_normal', compact('order'));
+    }
+    public function viewCbillSign(Request $request)
+    {
+        $order = Order::whereOrderCode($request->order_code)->first();
+        // $url =asset('public/c_bill/'.$order->c_bill);
+        return response()->file(
+            public_path('c_bill/'.$order->c_bill)
+        );
+        // return redirect($url);
     }
     public function viewPDF(Request $request)
     {
@@ -211,6 +227,8 @@ class AdminOrderController extends Controller
             'note' => $request->note,
             'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
         ]);
+            $admin = auth()->guard('admin')->user();
+        $this->logController->createLog($admin, 'Đơn hàng', 'Sửa', 'ghi chú đơn hàng '.$order->order_code.' thành:" '.$request->note.'"', route('order.viewCbill', ['order_code'=>$order->order_code]));
         Log::info('Admin ' . auth()->guard('admin')->user()->name . ' cập nhật đơn hàng #' . $order->id, ['data' => $request->all()]);
         Session::flash('success', 'Sửa đơn hàng thành công');
         return back();
@@ -255,11 +273,45 @@ class AdminOrderController extends Controller
         $user = $order_store->order()->first()->user()->first();
         $noticeController->createNotice(4,$user, null,$order_store);
         $order_store->save();
-
-
+        $admin = auth()->guard('admin')->user();
+        $this->logController->createLog($admin, 'Đơn hàng', 'Thay đổi', 'trạng thái đơn hàng '.$order_store->order_store_code.' thành '.orderStatusSimple($request->status), route('order.viewCbill', ['order_code'=>$order->order_code]));
         Session::flash('success', 'Thực hiện thành công');
 
         return back();
+    }
+    public function changeStatusOrderStoreWithBill(Request $request){
+        $this->validate($request, [
+            'order_id' => 'required',
+            'status' => 'required',
+            'c_bill' => 'required',
+        ], [
+            'order_id.required' => 'Không tìm thấy đơn hàng',
+            'status.required' => 'Chọn trạng thái',
+            'c_bill.required'=> 'File C-Bill không được để trống'
+        ]);
+        if ($request->hasFile('c_bill')) {
+            $order_store = OrderStore::whereId($request->order_id)->first();
+            $order = $order_store->order()->first();
+
+            $c_bill = $request->c_bill;
+            $c_bill_name = $order->order_code.'-'.time() . '.' . $c_bill->getClientOriginalExtension();
+            $destinationPath = public_path('/c_bill');
+            $c_bill->move($destinationPath, $c_bill_name);
+            $order->c_bill = $c_bill_name;
+            $this->proccessCpoint($order->user, $request->status, $order_store->status, $order_store->c_point, $order_store);
+            $order_store->status = $request->status;
+            $noticeController = new NoticeController();
+            $user = $order_store->order()->first()->user()->first();
+            $noticeController->createNotice(4,$user, null,$order_store);
+            $order_store->save();
+            $order->save();
+            $admin = auth()->guard('admin')->user();
+            $this->logController->createLog($admin, 'Đơn hàng', 'Thay đổi', 'trạng thái đơn hàng '.$order_store->order_store_code.' thành '.orderStatusSimple($request->status), route('order.viewCbill', ['order_code'=>$order->order_code]));
+            return back()->with('message', 'Thay đổi trạng thái đơn hàng thành công');
+
+        }else{
+            return back()->with('message', 'File C-Bill không được để trống');
+        }
     }
     public function proccessCpoint($user, $request_status, $order_status, $order_cpoint, $order)
     {
@@ -287,6 +339,7 @@ class AdminOrderController extends Controller
             foreach ($order->order_products()->get() as $order_product) {
                 if ($order_product->sku != null) {
                     $store_product = $store->product_stores()->where('id_ofproduct', $order_product->id_product)->first();
+
                     $store_product->soluong += $order_product->quantity;
                     $store_product->save();
                 }
@@ -313,7 +366,6 @@ class AdminOrderController extends Controller
             Session::flash('success', 'Thực hiện thành công');
         } else {
             foreach ($order as $value) {
-                $this->proccessCpoint($value->user, $request->action, $value->status, $value->c_point);
             }
             Order::whereIn('id', $request->id)->update(['status' => $request->action]);
             Session::flash('success', 'Thực hiện thành công');
@@ -351,5 +403,30 @@ class AdminOrderController extends Controller
         return optional(District::where('maquanhuyen', $request->id)->first(), function ($response) {
             return $response->ward()->select('maphuongxa', 'tenphuongxa')->get();
         });
+    }
+
+    public function getStatistical(Request $request){
+        if ($request->has('time_start') && $request->has('time_end') ) {
+            $time_start = $request->time_start;
+            $time_end = $request->time_end;
+            $order_stores_confirm = OrderStore::whereStatus(0)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_payment = OrderStore::whereStatus(1)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_process =OrderStore::whereStatus(2)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_ship = OrderStore::whereStatus(3)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_success = OrderStore::whereStatus(4)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+            $order_stores_cancel = OrderStore::whereStatus(5)->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime($time_start)))->where('updated_at', '<=', date('Y-m-d H:i:s', strtotime($time_end)))->get();
+        }else{
+            $time_start = null;
+            $time_end = null;
+            $order_stores_confirm = OrderStore::whereStatus(0)->get();
+            $order_stores_payment = OrderStore::whereStatus(1)->get();
+            $order_stores_process = OrderStore::whereStatus(2)->get();
+            $order_stores_ship = OrderStore::whereStatus(3)->get();
+            $order_stores_success = OrderStore::whereStatus(4)->get();
+            $order_stores_cancel = OrderStore::whereStatus(5)->get();
+
+        }
+        $arr_order_stores = [$order_stores_confirm,$order_stores_payment,$order_stores_process,$order_stores_ship,$order_stores_success, $order_stores_cancel];
+        return view('admin.order.statistical', compact('time_start', 'time_end', 'arr_order_stores'));
     }
 }

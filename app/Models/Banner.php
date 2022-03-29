@@ -10,14 +10,11 @@ class Banner extends Model
     use HasFactory;
 
     protected $table = "banner";
-    public $timestamps = false;
-    // protected $fillable = [
-    //     'product_name', 'product_desc', 'product_status'
-    // ];
+ 
     protected $guarded =[];
     
-    public function getRouteKeyName()
+    public function getLocation()
 	{
-	    return 'type';
+	    return $this->hasOne(BannerLocation::class, 'id', 'id_location');
 	}
 }

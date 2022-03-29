@@ -42,7 +42,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <a  href="{{route('order.index')}}"class="btn btn-primary ">Quay lại</a>
 
-                                            @if(auth()->guard('admin')->user()->can('Cập nhật đơn hàng'))
+                                            @if(auth()->guard('admin')->user()->can('Chỉnh sửa Ghi chú đơn hàng'))
                                                     <button type="submit" class="btn btn-info btn-submit-unit">Cập nhật</button>
                                              
                                             @endif

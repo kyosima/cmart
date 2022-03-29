@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\Rule;
+use App\Admin\Controllers\AdminLogController; 
 
 
 class AdminManagerAdminController extends Controller
@@ -21,6 +22,11 @@ class AdminManagerAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $logController;
+    public function __construct()
+    {
+        $this->logController = new AdminLogController();
+    }
     public function index()
     {
         //
@@ -51,7 +57,7 @@ class AdminManagerAdminController extends Controller
         $validator = Validator::make($request->all(), [
             'fullname' => 'required|min:3|unique:App\Models\Admin,name',
             'in_email' => 'required|min:3|email|unique:App\Models\Admin,email',
-            'in_password' => 'required|min:3',
+            'in_password' => 'required|min:8',
             'in_confirm_password' => 'same:in_password',
             'sel_permission' => 'required'
         ], [
@@ -59,7 +65,7 @@ class AdminManagerAdminController extends Controller
             'fullname.min' => 'Ít nhất 3 ký tự',
             'in_email.min' => 'Ít nhất 3 ký tự',
             'in_email.unique' => 'Email này đã tồn tại',
-            'in_password.min' => 'Ít nhất 3 ký tự',
+            'in_password.min' => 'Mật khẩu Ít nhất 8 ký tự',
             'in_confirm_password.same' => 'Mật khẩu không khớp',
             'sel_permission.required' => 'Vui lòng chọn vai trò'
         ]);
@@ -79,6 +85,9 @@ class AdminManagerAdminController extends Controller
         $permission_name = $request->sel_permission;
         $type = 'admin';
         $html = view('admin.template-render.render', compact('admin', 'type', 'permission_name'))->render();
+        $ad = auth('admin')->user();
+        $this->logController->createLog($ad, 'Quản lý Admin', 'Tạo', ' tài khoản admin, email: '.$request->in_email. ' ,Họ tên: '.$request->fullname);
+      
         return $html;
     }
 
@@ -117,18 +126,31 @@ class AdminManagerAdminController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $validator = Validator::make($request->all(), [
-            'in_fullname_edit' => ['required', 'min:3'],
-            'in_confirm_new_password' => 'same:in_new_password',
-            'sel_permission_edit' => 'required'
-        ], [
-            'in_name.min' => 'Ít nhất 3 ký tự',
-            'in_email.min' => 'Ít nhất 3 ký tự',
-            'in_email.unique' => 'Email này đã tồn tại',
-            'in_password.min' => 'Ít nhất 3 ký tự',
-            'in_confirm_password.same' => 'Mật khẩu không khớp',
-            'sel_role_edit.required' => 'Vui lòng chọn vai trò'
-        ]);
+        if($request->is_changepass == 1){
+            $validator = Validator::make($request->all(), [
+                'in_fullname_edit' => ['required', 'min:3'],
+                'in_confirm_new_password' => 'same:in_new_password',
+                'sel_permission_edit' => 'required'
+            ], [
+                'in_name.min' => 'Ít nhất 3 ký tự',
+                'in_email.min' => 'Ít nhất 3 ký tự',
+                'in_email.unique' => 'Email này đã tồn tại',
+                'in_password.min' => 'Mật khẩu Ít nhất 8 ký tự',
+                'in_confirm_password.same' => 'Mật khẩu không khớp',
+                'sel_role_edit.required' => 'Vui lòng chọn vai trò'
+            ]);
+        }else{
+            $validator = Validator::make($request->all(), [
+                'in_fullname_edit' => ['required', 'min:3'],
+                'sel_permission_edit' => 'required'
+            ], [
+                'in_name.min' => 'Ít nhất 3 ký tự',
+                'in_email.min' => 'Ít nhất 3 ký tự',
+                'in_email.unique' => 'Email này đã tồn tại',
+                'sel_role_edit.required' => 'Vui lòng chọn vai trò'
+            ]);
+        }
+        
         if($validator->fails()){
             return response($validator->errors(), 400);
         }
@@ -138,15 +160,22 @@ class AdminManagerAdminController extends Controller
         $admin = Admin::find($request->in_id_edit);
         $admin->fullname = $request->in_fullname_edit;
         $admin->DVCQ = $request->DVCQ;
-        if ($request->in_new_password != null) {
-            $admin->password = bcrypt($request->in_new_password);
+        if($request->is_changepass == 1){
+            if ($request->in_new_password != null) {
+                $admin->password = bcrypt($request->in_new_password);
+            }
         }
+   
 
         $admin->save();
+        $admin = Admin::find($request->in_id_edit);
+
         $admin->syncPermissions($request->sel_permission_edit);
         $permission_name = $request->sel_permission_edit;
         $type = 'admin';
         $html = view('admin.template-render.render', compact('admin', 'type', 'permission_name'))->render();
+        $ad = auth('admin')->user();
+        $this->logController->createLog($ad, 'Quản lý Admin', 'Sửa', ' tài khoản admin, email: '.$admin->email. ' ,Họ tên: '.$admin->fullname);
         return $html;
     }
 
@@ -158,7 +187,10 @@ class AdminManagerAdminController extends Controller
      */
     public function destroy($id)
     {
+        $admin =Admin::find($id);
         Admin::find($id)->delete();
+        $ad = auth('admin')->user();
+        $this->logController->createLog($ad, 'Quản lý Admin', 'Xoá', ' tài khoản admin, email: '.$admin->email. ' ,Họ tên: '.$admin->fullname);
         return response('Thành công', 200);
     }
 
@@ -184,4 +216,6 @@ class AdminManagerAdminController extends Controller
         }
         return back();
     }
+
+   
 }
