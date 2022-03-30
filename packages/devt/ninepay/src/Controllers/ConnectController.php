@@ -66,7 +66,7 @@ class ConnectController extends Controller
     }
 
     public function back(Request $request){
-        // try {
+        try {
             $hashChecksum = strtoupper(hash('sha256', $request->result . $this->setting->key_checksum));
             // Check checksum code
             if ($hashChecksum === $request->checksum) {
@@ -75,6 +75,9 @@ class ConnectController extends Controller
                 $payment = json_decode($result);
                 $status = $payment->status;
                 $link = '';
+                if($request->session()->has('link-payment-ninepay')){
+                    $link = $request->session()->get('link-payment-ninepay');
+                }
                 $order_code = explode('-', $payment->invoice_no)[1];
                 HistoryPaymentNinepay::create([
                     'order_code' => $order_code,
@@ -118,13 +121,13 @@ class ConnectController extends Controller
             //     'message' => 'Thông tin không trùng khớp vui lòng liên hệ với cửa hàng để được xử lý.',
             // ]);
 
-        // } catch (\Exception $e) {
-		//     return redirect()->route('paymentFail');
-        //     // return response()->json([
-        //     //     'status' => 500,
-        //     //     'message' => 'Thanh toán đang gặp vấn đề vui lòng liên hệ với chúng tôi để được hỗ trợ.',
-        //     // ]);
-        // }
+        } catch (\Exception $e) {
+		    return redirect()->route('paymentFail');
+            // return response()->json([
+            //     'status' => 500,
+            //     'message' => 'Thanh toán đang gặp vấn đề vui lòng liên hệ với chúng tôi để được hỗ trợ.',
+            // ]);
+        }
     }
 
     public function callBack(Request $request){

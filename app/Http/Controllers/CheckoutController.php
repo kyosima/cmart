@@ -759,33 +759,33 @@ class CheckoutController extends Controller
                         $result = $paymentNinepayController->call();
                         $result = $result->getData();
                         if ($result->status == 200) {
-                            // Session::put('link-payment-ninepay', $result->data);
+                            session()->put('link-payment-ninepay', $result->data);
                             return redirect()->away($result->data);
                         } else {
                             return redirect()->route('paymentFail');
                         }
                         break;
                     case 8:
-                        Session::put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
+                        session()->put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
                         //gọi api thanh toán; param: payment_method, order_code, desc, amount
                         $paymentNinepayController = new PaymentNinepayController('CREDIT_CARD', $order->order_code, 'Thanh toán đơn hàng từ Cmart', $order->total);
                         $result = $paymentNinepayController->call();
                         $result = $result->getData();
                         if ($result->status == 200) {
-                            // Session::put('link-payment-ninepay', $result->data);
+                            Session::put('link-payment-ninepay', $result->data);
                             return redirect()->away($result->data);
                         } else {
                             return redirect()->route('paymentFail');
                         }
                         break;
                     case 9:
-                        Session::put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
+                        session()->put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
                         //gọi api thanh toán; param: payment_method, order_code, desc, amount
                         $paymentNinepayController = new PaymentNinepayController('ATM_CARD', $order->order_code, 'Thanh toán đơn hàng từ Cmart', $order->total);
                         $result = $paymentNinepayController->call();
                         $result = $result->getData();
                         if ($result->status == 200) {
-                            // Session::put('link-payment-ninepay', $result->data);
+                            Session::put('link-payment-ninepay', $result->data);
                             return redirect()->away($result->data);
                         } else {
                             return redirect()->route('paymentFail');
