@@ -287,7 +287,35 @@ class AdminProductController extends Controller
                 if(str_starts_with($request->gallery_img, ', ')){
                     $request->gallery_img = substr_replace($request->gallery_img,'',0,2);
                 }
-
+                $product = Product::where('id', $id)->first();
+                $message = '';
+                if($product->sku != $request->product_sku){
+                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku.', ';
+                }
+                if($product->name != $request->product_name){
+                    $message .= 'tên sản phẩm: '.$product->sku.' -> '.$request->product_name.', ';
+                }
+                if($product->feature_img != $request->feature_img){
+                    $message .= 'ảnh sản phẩm, ';
+                }
+                if($product->gallery != rtrim($request->gallery_img, ", ")){
+                    $message .= 'thư viện ảnh, ';
+                }
+                if($product->sku != $request->product_sku){
+                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku;
+                }
+                if($product->sku != $request->product_sku){
+                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku;
+                }
+                if($product->sku != $request->product_sku){
+                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku;
+                }
+                if($product->sku != $request->product_sku){
+                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku;
+                }
+                if($product->sku != $request->product_sku){
+                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku;
+                }
                 Product::where('id', $id)->update([
                     'sku' => $request->product_sku,
                     'name' => $request->product_name,
@@ -321,7 +349,6 @@ class AdminProductController extends Controller
                 ]);
 
                 $admin = auth('admin')->user();
-                $product = Product::where('id', $id)->first();
                 $this->logController->createLog($admin, 'Sản phẩm', 'Sửa', 'sản phẩm '.$product->name, route('san-pham.edit',$product->id ));
 
 

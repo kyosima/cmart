@@ -107,7 +107,31 @@ class AdminStoreController extends Controller
         return DB::transaction(function () use ($request, $id) {
             try {
                 $slug = Str::slug($request->store_name, '-');
+                $store = Store::where('id', $id)->first();
+                $message = '';
+                if($store->name != $request->store_name){
+                    $message .= 'tiêu đề: '.$store->store_name.' -> '.$request->store_name.', ';
+                }
+                if($store->address != $request->store_address){
+                    $message .= 'địa chỉ: '.$store->address.' -> '.$request->store_address.', ';
+                }
+                $addressController = new AddressController();
 
+                if($store->id_province != $request->sel_province){
+                    $store_province_old = $addressController->getProvinceDetail($store->id_province);
+                    $store_province_new = $addressController->getProvinceDetail($request->sel_province);
+                    $message .= 'cấp tỉnh: '.$store_province_old->PROVINCE_NAME.' -> '.$store_province_new->PROVINCE_NAME.', ';
+                }
+                if($store->id_district != $request->sel_district){
+                    $store_district_old = $addressController->getDistrictDetail($store->id_province,$store->id_district);
+                    $store_district_new = $addressController->getDistrictDetail($request->sel_province,$request->sel_district);
+                    $message .= 'cấp huyện: '.$store_district_old->DISTRICT_NAME.' -> '.$store_district_new->DISTRICT_NAME.', ';
+                }
+                if($store->id_ward != $request->sel_ward){
+                    $store_ward_old = $addressController->getWardDetail($store->id_district,$store->id_ward);
+                    $store_ward_new = $addressController->getWardDetail($request->sel_district,$request->sel_ward);
+                    $message .= 'cấp xã: '.$store_ward_old->WARDS_NAME.' -> '.$store_ward_new->WARDS_NAME.', ';
+                }
                 Store::where('id', $id)->update([
                     'name' => $request->store_name,
                     'slug' => $slug,
@@ -118,10 +142,9 @@ class AdminStoreController extends Controller
                     'id_ward' => $request->sel_ward,
                 ]);
 
-                $store = Store::where('id', $id)->first();
                 $admin = auth('admin')->user();
 
-                $this->logController->createLog($admin, 'Cửa hàng', 'Sửa', 'cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+                $this->logController->createLog($admin, 'Cửa hàng', 'Sửa', $message, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
 
 
                 return redirect()->route('store.edit', ['slug' => $slug, 'id' => $id])->with('success', 'Cập nhật cửa hàng thành công');

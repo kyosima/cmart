@@ -221,14 +221,15 @@ class AdminOrderController extends Controller
         //     'address' => $request->address,
         //     'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
         // ]);
+        $admin = auth()->guard('admin')->user();
+        $this->logController->createLog($admin, 'Đơn hàng', 'Sửa', 'ghi chú đơn hàng '.$order->order_code.': '.$order->order_info()->value('note').' -> '.$request->note, route('order.viewCbill', ['order_code'=>$order->order_code]));
         $order->order_info()->update([
             // 'fullname' => $request->fullname,
             // 'phone' => $request->phone,
             'note' => $request->note,
             'updated_at' => Carbon::now('Asia/Ho_Chi_Minh')
         ]);
-            $admin = auth()->guard('admin')->user();
-        $this->logController->createLog($admin, 'Đơn hàng', 'Sửa', 'ghi chú đơn hàng '.$order->order_code.' thành:" '.$request->note.'"', route('order.viewCbill', ['order_code'=>$order->order_code]));
+          
         Log::info('Admin ' . auth()->guard('admin')->user()->name . ' cập nhật đơn hàng #' . $order->id, ['data' => $request->all()]);
         Session::flash('success', 'Sửa đơn hàng thành công');
         return back();
@@ -268,14 +269,14 @@ class AdminOrderController extends Controller
         $order_store = OrderStore::whereId($request->order_id)->first();
         $order = $order_store->order()->first();
         $this->proccessCpoint($order->user, $request->status, $order_store->status, $order_store->c_point, $order_store);
+        $admin = auth()->guard('admin')->user();
+        $this->logController->createLog($admin, 'Đơn hàng', 'Thay đổi', 'trạng thái đơn hàng '.$order_store->order_store_code.': ' .orderStatusSimple($order->status).' -> '.orderStatusSimple($request->status), route('order.viewCbill', ['order_code'=>$order->order_code]));
         $order_store->status = $request->status;
         $noticeController = new NoticeController();
         $user = $order_store->order()->first()->user()->first();
         $noticeController->createNotice(4,$user, null,$order_store);
         $order_store->save();
-        $admin = auth()->guard('admin')->user();
-        $this->logController->createLog($admin, 'Đơn hàng', 'Thay đổi', 'trạng thái đơn hàng '.$order_store->order_store_code.' thành '.orderStatusSimple($request->status), route('order.viewCbill', ['order_code'=>$order->order_code]));
-        Session::flash('success', 'Thực hiện thành công');
+              Session::flash('success', 'Thực hiện thành công');
 
         return back();
     }
@@ -299,15 +300,15 @@ class AdminOrderController extends Controller
             $c_bill->move($destinationPath, $c_bill_name);
             $order->c_bill = $c_bill_name;
             $this->proccessCpoint($order->user, $request->status, $order_store->status, $order_store->c_point, $order_store);
+            $admin = auth()->guard('admin')->user();
+            $this->logController->createLog($admin, 'Đơn hàng', 'Thay đổi', 'trạng thái đơn hàng '.$order_store->order_store_code.': '.orderStatusSimple($order_store->status).' -> '.orderStatusSimple($request->status), route('order.viewCbill', ['order_code'=>$order->order_code]));
             $order_store->status = $request->status;
             $noticeController = new NoticeController();
             $user = $order_store->order()->first()->user()->first();
             $noticeController->createNotice(4,$user, null,$order_store);
             $order_store->save();
             $order->save();
-            $admin = auth()->guard('admin')->user();
-            $this->logController->createLog($admin, 'Đơn hàng', 'Thay đổi', 'trạng thái đơn hàng '.$order_store->order_store_code.' thành '.orderStatusSimple($request->status), route('order.viewCbill', ['order_code'=>$order->order_code]));
-            return back()->with('message', 'Thay đổi trạng thái đơn hàng thành công');
+                        return back()->with('message', 'Thay đổi trạng thái đơn hàng thành công');
 
         }else{
             return back()->with('message', 'File C-Bill không được để trống');

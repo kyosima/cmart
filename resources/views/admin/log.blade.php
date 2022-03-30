@@ -58,7 +58,7 @@
                             <td>{{ $log->email }}</td>
                             <td>{{ $log->tab }} </td>
                             @if ($log->object_link != null)
-                               <td><a href="{{ $log->object_link }}" target="_blank">{{ $log->handling }} {{ $log->content }}</a></td>
+                               <td><a href="{{ $log->object_link }}" class="text-dark" target="_blank">{{ $log->handling }} {{ $log->content }}</a></td>
                             @else
                                 <td>{{ $log->handling }} {{ $log->content }}</td>
                             @endif

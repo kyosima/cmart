@@ -133,6 +133,26 @@ class AdminProductCategoryController extends Controller
         ]);
 
         if ($request->proCatParent == 0) {
+            $category = ProductCategory::where('id', $id)->first();
+            $message = '';
+            if($category->name != $request->proCatName){
+                $message .='tên: '.$category->name.' -> '.$request->proCatName.', ' ;
+            }
+            if($category->feature_img != $request->feature_img){
+                $message .='ảnh ngành hàng, ' ;
+            }
+            if($category->gallery != rtrim($request->gallery_img, ", ")){
+                $message .='thư viện ảnh, ' ;
+            }
+            if($category->description != $request->proCatDescription){
+                $message .='mô tả, ' ;
+            }
+            if($category->link_to_category != $request->linkProCat){
+                $message .='liên kết đến ngành hàng khác, ' ;
+            }
+            if($category->priority != $request->proCatPriority){
+                $message .='thứ tự ưu tiên: '.$category->priority.' -> '.$request->proCatPriority.', ' ;
+            }
             ProductCategory::where('id', $id)->update([
                 'category_parent' => 0,
                 'level' => 0,
@@ -148,12 +168,36 @@ class AdminProductCategoryController extends Controller
             ]);
             $admin = auth('admin')->user();
 
-            $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Sửa', 'ngành/nhóm hàng '.$request->proCatName, route('nganh-nhom-hang.edit',$id));
+            $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Sửa', $message, route('nganh-nhom-hang.edit',$id));
 
             $this->recursive($id, 0, 1);
         } else {
             $catPar = ProductCategory::where('id', $request->proCatParent)->first();
             if ($catPar) {
+                $category = ProductCategory::where('id', $id)->first();
+
+                $message = '';
+                if($category->category_parent != $request->proCatParent){
+                    $message .='Danh mục cha, ' ;
+                }
+                if($category->name != $request->proCatName){
+                    $message .='tên: '.$category->name.' -> '.$request->proCatName.', ' ;
+                }
+                if($category->feature_img != $request->feature_img){
+                    $message .='ảnh ngành hàng, ' ;
+                }
+                if($category->gallery != rtrim($request->gallery_img, ", ")){
+                    $message .='thư viện ảnh, ' ;
+                }
+                if($category->description != $request->proCatDescription){
+                    $message .='mô tả, ' ;
+                }
+                if($category->link_to_category != $request->linkProCat){
+                    $message .='liên kết đến ngành hàng khác, ' ;
+                }
+                if($category->priority != $request->proCatPriority){
+                    $message .='thứ tự ưu tiên: '.$category->priority.' -> '.$request->proCatPriority.', ' ;
+            }
                 ProductCategory::where('id', $id)->update([
                     'category_parent' => $request->proCatParent,
                     'level' => $catPar->level + 1,

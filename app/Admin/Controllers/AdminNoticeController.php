@@ -108,6 +108,25 @@ class AdminNoticeController extends Controller
             ]);
         }
         $notice = Notice::whereId( $id)->first();
+        $message = '';
+        if($notice->title != $request->title){
+            $message .='tiêu đề: '.$notice->title.' -> '.$request->title.', ';
+        }
+        if($notice->short_content != $request->short_content){
+            $message .='thay đổi nội dung ngắn, ';
+        }
+        if($notice->content != $request->content){
+            $message .='thay đổi nội dung, ';
+        }
+        if($notice->status != $request->status){
+            if($request->status == 1){
+                $message .='trạng thái: ngừng -> hoạt động, ';
+
+            }else{
+                $message .='trạng thái: hoạt động -> ngừng, ';
+
+            }
+        }
         $notice->title = $request->title;
         $notice->target = $request->target;
         $notice->slug = Str::slug($request->title).date('d-m-Y-H-i-s').time();
@@ -118,11 +137,14 @@ class AdminNoticeController extends Controller
         $notice->getUserNotices()->delete();
         if($request->target == 0 ){
             foreach(User::get() as $user){
+                
                 UserNotice::create([
                     'user_id'=>$user->id,
                     'notice_id'=>$notice->id,
                 ]);
             }
+            $message .='đối tượng: danh sách chỉ định -> tất cả';
+
         }else{
             foreach($request->customers as $user_id){
                 UserNotice::create([
@@ -130,10 +152,12 @@ class AdminNoticeController extends Controller
                     'notice_id'=>$notice->id,
                 ]);
             }
-        }
-        $admin = auth()->guard('admin')->user();
+            $message .='đối tượng: tất cả -> danh sách chỉ định';
 
-        $this->logController->createLog($admin, 'Thông báo', 'Sửa', 'thông báo '.$notice->title, route('notice.edit', $notice->id));
+        }
+
+        $admin = auth()->guard('admin')->user();
+        $this->logController->createLog($admin, 'Thông báo', 'Sửa', $message, route('notice.edit', $notice->id));
 
         return redirect()->route('notice.edit', $notice->id)->with('message', 'Cập nhật thông báo thành công');
     }
