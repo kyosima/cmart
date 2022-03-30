@@ -57,6 +57,29 @@ class AdminInfoCompanyController extends Controller
 
     public function update(StoreInfoCompanyRequest $request, InfoCompany $info_company){
         Log::info('Admin '.auth()->guard('admin')->user()->name.' Cập nhật trang đơn #'.$info_company->id);
+        $message = '';
+        if($info_company->name != $request->in_name){
+            $message .= 'tên: '.$info_company->name.' -> '.$request->in_name.', ';
+        }
+      
+        if($info_company->content != $request->description){
+            $message .= 'nội dung, ';
+        }
+        if($info_company->type != $request->in_type){
+            $message .= 'loại, ';
+        }
+        if($info_company->status != $request->in_status){
+            if($request->in_status == 0){
+                $message .= 'trạng thái: hoạt động -> ngưng, ';
+
+            }else{
+                $message .= 'trạng thái: ngưng -> hoạt động, ';
+
+            }
+        }
+        if($info_company->sort != $request->in_sort){
+            $message .= 'thứ tự: '.$info_company->sort.' -> '.$request->in_sort.', ';
+        }
         $info_company->update([
             'name' => $request->in_name,
             'slug' => $this->createSlug($request->in_name, $info_company->id),
@@ -66,9 +89,12 @@ class AdminInfoCompanyController extends Controller
             'sort' => $request->in_sort ? $request->in_sort : 0,
             'updated_at' => Carbon::now()
         ]);
-        $ad = auth('admin')->user();
-        $this->logController->createLog($ad, 'Dịch vụ và chính sách', 'Sửa', ' trang: '.$info_company->name, route('info-company.edit',$info_company));
-
+        if($message != ''){
+            $ad = auth('admin')->user();
+            $this->logController->createLog($ad, 'Dịch vụ và chính sách', 'Sửa', substr_replace($message ,"", -1), route('info-company.edit',$info_company));
+    
+        }
+      
         Session::flash('success', 'Bạn đã sửa thành công !');
         return back();
     }

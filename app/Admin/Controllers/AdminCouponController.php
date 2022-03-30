@@ -237,6 +237,46 @@ class AdminCouponController extends Controller
             'end_date.required' => 'Thời gian kết thúc ưu đãi không đước để trống',
         ]);
         $coupon = Coupon::whereId($request->id)->first();
+        $message = '';
+        if($coupon->name != $request->name){
+            $message .= 'tên ưu đãi: '.$coupon->name.' -> '.$request->name.', ';
+        }
+        if($coupon->code != $request->code){
+            $message .= 'mã ưu đãi: '.$coupon->code.' -> '.$request->code.', ';
+        }
+        if($coupon->type != $request->type){
+            switch ($coupon->type){
+                case 0:
+                    $message .= 'Phạm vi ưu đãi: Giảm giá toàn bộ giỏ hàng -> ';
+                    break;
+                case 1:
+                    $message .= 'Phạm vi ưu đãi: Giảm giá theo sản phẩm -> ';
+                    break;
+                case 2:
+                    $message .= 'Phạm vi ưu đãi: Giảm giá theo danh mục -> ';
+                    break;
+            }
+            switch ($coupon->type){
+                case 1:
+                    $message .= 'giảm giá toàn bộ giỏ hàng, ';
+                    break;
+                case 2:
+                    $message .= 'giảm giá theo sản phẩm , ';
+                    break;
+                case 3:
+                    $message .= 'giảm giá theo danh mục, ';
+                    break;
+            }
+        }
+        if($coupon->start_date != $request->start_date){
+            $message .= 'ngày bắt đầu: '.$coupon->start_date.' -> '.$request->start_date.', ';
+        }
+        if($coupon->end_date != $request->end_date){
+            $message .= 'ngày kết thúc: '.$coupon->end_date.' -> '.$request->end_date.', ';
+        }
+        if($coupon->description != $request->description){
+            $message .= 'mô tả: '.$coupon->description.' -> '.$request->description.', ';
+        }
         $coupon ->update([
             'name' => $request->name,
             'code' => $request->code,
@@ -246,6 +286,13 @@ class AdminCouponController extends Controller
             'description' => $request->description,
         ]);
         $coupon_promo = $coupon->promo()->first();
+        if($coupon_promo->is_percent != $coupon_promo->is_percent){
+            if($request->is_percent == 0){
+                $message .= 'Giảm giá theo: phần trăm -> cố định, ';
+            }else{
+                $message .= 'Giảm giá theo: cố định -> phần trăm, ';
+            }
+        }
         $coupon_promo->is_percent = $request->is_percent;
         if($request->type == 0){
             $coupon_promo->target = $request->target;
@@ -257,8 +304,11 @@ class AdminCouponController extends Controller
                     'level_1.id_levels' => 'Danh sách định danh khách hàng không được để trống',
                  
                 ]);
-                $coupon_promo->target = $request->target;
+          
                 $coupon_promo->id_levels =  implode(",", $request->id_levels);
+                if($coupon_promo->id_customers !=  implode(",", $request->id_customers)){
+                    $message .= 'định danh khách hàng, ';
+                }
             }else{
                 $request->validate([
                     'id_customers' => 'required',
@@ -266,7 +316,9 @@ class AdminCouponController extends Controller
                     'id_customers.required' => 'Danh sách khách hàng không được để trống',
                 ]);
                 $coupon_promo->id_customers = implode(",", $request->id_customers);
-                $coupon_promo->value_discount = $request->value_discount;
+                if($coupon_promo->id_customers !=  implode(",", $request->id_customers)){
+                    $message .= 'mã khách hàng, ';
+                }
 
             }
         }elseif($request->type == 1){
@@ -276,7 +328,9 @@ class AdminCouponController extends Controller
                 'id_products.required' => 'Danh sách sản phẩm không được để trống',
             ]);
             $coupon_promo->id_products = implode(",", $request->id_products);
-            $coupon_promo->value_discount = $request->value_discount;
+            if($coupon_promo->id_products !=  implode(",", $request->id_products)){
+                $message .= 'danh sách sản phẩm, ';
+            }
 
         }else{
             $request->validate([
@@ -285,22 +339,45 @@ class AdminCouponController extends Controller
                 'id_procats.required' => 'Danh sách danh mục sản phẩm không được để trống',
             ]);
             $coupon_promo->id_procats = implode(",", $request->id_procats);
-            $coupon_promo->value_discount = $request->value_discount;
+            if($coupon_promo->id_products !=  implode(",", $request->id_products)){
+                $message .= 'danh mục sản phẩm, ';
+            }
+
+        }
+        if($coupon->supplier !=  $request->supplier){
+            $message .= 'đơn vị cung cấp: '.$coupon->supplier.' -> '.$request->supplier.', ';
+        }
+        if($coupon->connect !=  $request->connect){
+            $message .= 'phạm vi kết hợp, ';
         }
         $coupon->supplier = $request->supplier;
         $coupon->connect = $request->connect;
+
         if($request->connect == 2){
             $coupon->id_coupons = implode(",", $request->id_coupons);
         }
+
+        if($coupon->min !=  $request->min){
+            $message .= 'điều kiện GTSP: '.$coupon->min.' -> '.$request->min.', ';
+        }
+        if($coupon->max !=  $request->max){
+            $message .= 'giảm giá tối đa: '.$coupon->max.' -> '.$request->max.', ';
+        }
+        if($coupon->value_discount !=  $request->value_discount){
+            $message .= 'mức ưu đãi: '.$coupon->value_discount.' -> '.$request->value_discount.', ';
+        }
         $coupon->min = $request->min;
+
         $coupon->max = $request->max;
         $coupon_promo->value_discount = $request->value_discount;
 
         $coupon->save();
         $coupon_promo->save();
-        $admin = auth()->guard('admin')->user();
-
-        $this->logController->createLog($admin, 'Mã ưu đãi', 'Sửa', 'mã ưu đãi '.$coupon->code, route('coupon.edit', $coupon->id));
+        if($message != ''){
+            $admin = auth()->guard('admin')->user();
+            $this->logController->createLog($admin, 'Mã ưu đãi', 'Sửa', substr_replace($message ,"", -1), route('coupon.edit', $coupon->id));
+        }
+     
 
         return redirect()->back()->with('message', 'Chỉnh sửa mã ưu đãi thành công');
         

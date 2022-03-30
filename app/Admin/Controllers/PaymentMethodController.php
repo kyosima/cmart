@@ -93,7 +93,25 @@ class PaymentMethodController extends Controller
     public function update(Request $request)
     {
         if (isset($request->name) && isset($request->number) && isset($request->account)) {
+            $message = '';
             $option = PaymentMethodOption::where('id', $request->id)->first();
+
+            if($option->name != $request->name){
+                $message .= 'tên đơn vị: '.$option->name .' -> '. $request->name.', ';
+            }
+            if($option->account != $request->account){
+                $message .= 'chủ tài khoản: '.$option->account .' -> '. $request->account.', ';
+            }
+            if($option->number != $request->number){
+                $message .= 'số tài khoản: '.$option->number .' -> '. $request->number.', ';
+            }
+            if($option->payment_method_id != $request->payment_method_id){
+                if($request->payment_method_id == 2){
+                    $message .= 'Phương thức: chuyển tiên -> nạp tiền, ';
+                }else{
+                    $message .= 'Phương thức: nạp tiên -> chuyển tiền, ';
+                }
+            }
             
                 $option->name = $request->name;
                 $option->account = $request->account;
@@ -107,8 +125,11 @@ class PaymentMethodController extends Controller
                 $option->qr_image = 'public/images/qr_code/'.$filename;
             }
             $option->save();
-            $admin = auth('admin')->user();
-            $this->logController->createLog($admin, 'Đơn vị thanh toán', 'Sửa', 'đơn vị thanh toán '.$option->name);
+            if($message != ''){
+                $admin = auth('admin')->user();
+                $this->logController->createLog($admin, 'Đơn vị thanh toán', 'Sửa', substr_replace($message ,"", -1));
+            }
+      
             
 
         } else {

@@ -141,12 +141,13 @@ class AdminStoreController extends Controller
                     'id_district' => $request->sel_district,
                     'id_ward' => $request->sel_ward,
                 ]);
+                if($message != ''){
 
                 $admin = auth('admin')->user();
 
-                $this->logController->createLog($admin, 'Cửa hàng', 'Sửa', $message, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+                $this->logController->createLog($admin, 'Cửa hàng', 'Sửa', substr_replace($message ,"", -1), route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
 
-
+                }
                 return redirect()->route('store.edit', ['slug' => $slug, 'id' => $id])->with('success', 'Cập nhật cửa hàng thành công');
             } catch (\Throwable $th) {
                 return redirect()->back()->withErrors(['error' => 'Đã có lỗi xảy ra vui lòng thử lại']);

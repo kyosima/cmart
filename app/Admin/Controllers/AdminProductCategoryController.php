@@ -168,7 +168,7 @@ class AdminProductCategoryController extends Controller
             ]);
             $admin = auth('admin')->user();
 
-            $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Sửa', $message, route('nganh-nhom-hang.edit',$id));
+            $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Sửa',substr_replace($message ,"", -1), route('nganh-nhom-hang.edit',$id));
 
             $this->recursive($id, 0, 1);
         } else {
@@ -213,7 +213,7 @@ class AdminProductCategoryController extends Controller
                 ]);
                 $admin = auth('admin')->user();
 
-                $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Tạo', 'ngành/nhóm hàng '.$request->proCatName, route('nganh-nhom-hang.edit',$id));
+                $this->logController->createLog($admin, 'Ngành/nhóm hàng', 'Sửa',substr_replace($message ,"", -1), route('nganh-nhom-hang.edit',$id));
     
                 $this->recursive($id, 1, 0);
             }

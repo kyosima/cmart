@@ -76,7 +76,25 @@ class AdminBannerController extends Controller
             'file.required' => 'File ảnh không được để trống',
         ]);
 		$banner = Banner::whereId($request->id)->first();
-
+		$message = '';
+		if($banner->id_location != $request->id_location){
+			$message .= 'trang, ';
+		}
+		if($banner->position != $request->position){
+			$message .= 'vị trí, ';
+		}
+		if($banner->unit_name != $request->unit_name){
+			$message .= 'đơn vị sử dụng: '.$banner->unit_name.' -> '. $request->unit_name.', ';
+		}
+		if($banner->expire_date != $banner->expire_date){
+			$message .= 'hạn sử dụng: '.$banner->expire_date.' -> '. $request->expire_date.', ';
+		}
+		if($banner->file != $banner->file){
+			$message .= 'ảnh banner, ';
+		}
+		if($banner->link != $banner->link){
+			$message .= 'liên kết: '.$banner->link.' -> '. $request->link.', ';
+		}
 		$banner->update([
 			'id_location'=> $request->id_location,
 			'position' => $request->position,
@@ -85,11 +103,13 @@ class AdminBannerController extends Controller
 			'file' => $request->file,
 			'link' => $request->link,
 		]);
+		if($message != ''){
+			$admin = auth('admin')->user();
 
-		$admin = auth('admin')->user();
-
-		$this->logController->createLog($admin, 'Banner', 'Sửa', 'banner cho đơn vị '. $request->unit_name, route('admin.banner.edit',$banner->id ));
-
+			$this->logController->createLog($admin, 'Banner', 'Sửa',  substr_replace($message ,"", -1), route('admin.banner.edit',$banner->id ));
+	
+		}
+		
 		return redirect()->back()->with('message','Cập nhật banner thành công');
 
 	}

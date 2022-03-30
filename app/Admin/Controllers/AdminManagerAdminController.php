@@ -158,10 +158,19 @@ class AdminManagerAdminController extends Controller
             return Response::json(['error' => ['Tên không chứa ký tự đặc biệt và khoảng cách']], 400);
         }
         $admin = Admin::find($request->in_id_edit);
+        $message = '';
+        if($admin->fullname != $request->in_fullname_edit){
+            $message .= 'họ và tên: '.$admin->fullname.' -> '.$request->in_fullname_edit.', ';
+        }
+        if($admin->DVCQ != $request->DVCQ){
+            $message .= 'đơn vị chủ quản: '.$admin->DVCQ.' -> '.$request->DVCQ.', ';
+        }
+     
         $admin->fullname = $request->in_fullname_edit;
         $admin->DVCQ = $request->DVCQ;
         if($request->is_changepass == 1){
             if ($request->in_new_password != null) {
+                $message .= 'mật khẩu, ';
                 $admin->password = bcrypt($request->in_new_password);
             }
         }
@@ -174,8 +183,11 @@ class AdminManagerAdminController extends Controller
         $permission_name = $request->sel_permission_edit;
         $type = 'admin';
         $html = view('admin.template-render.render', compact('admin', 'type', 'permission_name'))->render();
-        $ad = auth('admin')->user();
-        $this->logController->createLog($ad, 'Quản lý Admin', 'Sửa', ' tài khoản admin, email: '.$admin->email. ' ,Họ tên: '.$admin->fullname);
+        if($message != ''){
+            $ad = auth('admin')->user();
+                $this->logController->createLog($ad, 'Quản lý Admin', 'Sửa',substr_replace($message ,"", -1));
+        }
+        
         return $html;
     }
 

@@ -135,20 +135,38 @@ class UserController extends Controller
         if($user->hoten != $request->hoten || $user->phone != $request->phone || $user->address != $request->address || $user->id_tinhthanh != $request->sel_province){
             $noticeController = new NoticeController();
             $noticeController->createNotice(2,$user);
-            $admin = auth('admin')->user();
-            $this->logController->createLog($admin, 'Khách hàng', 'Chỉnh sửa', 'khách hàng '.$user->hoten, route('user.detail', $user->id));
-          
+                     
         }
-     
+        $message = '';
+        if($user->hoten != $request->hoten){
+            $message .= 'họ và tên: '.$user->hoten.' -> '.$request->hoten.', ';
+        }
+        if($user->phone != $request->phone){
+            $message .= 'số điẹn thoại: '.$user->phone.' -> '.$request->phone.', ';
+        }
+        if($user->id_tinhthanh != $request->sel_province){
+            $message .= 'cấp tỉnh, ';
+        }
+        if($user->id_quanhuyen != $request->sel_district){
+            $message .= 'cấp huyện, ';
+        }
+        if($user->id_phuongxa != $request->sel_ward){
+            $message .= 'cấp xã, ';
+        }
+        if($user->duong != $request->duong){
+            $message .= 'điạ chỉ chi tiết: '.$user->duong.' -> '.$request->duong.', ';
+        }
         $user->hoten = $request->hoten;
         if($user->level != $request->level){
             $user->level = $request->level;
             $noticeController = new NoticeController();
             $noticeController->createNotice(1,$user);
-            $admin = auth('admin')->user();
-            $this->logController->createLog($admin, 'Khách hàng', 'Thay đổi', 'định danh khách hàng '.$user->hoten.' thành '.formatLevel($request->level), route('user.detail', $user->id));
-           
+            $message .= 'định danh khách hàng: '.formatLevel($user->level).' -> '.formatLevel($request->level).', ';
+            
         }
+        $admin = auth('admin')->user();
+        $this->logController->createLog($admin, 'Khách hàng', 'Sửa',substr_replace($message ,"", -1), route('user.detail', $user->id));
+       
         $user->phone = $request->phone;
         $user->address = $request->address;
         // $user->check_kyc = $request->check_kyc;

@@ -155,10 +155,11 @@ class AdminNoticeController extends Controller
             $message .='đối tượng: tất cả -> danh sách chỉ định';
 
         }
+        if($message != ''){
 
         $admin = auth()->guard('admin')->user();
-        $this->logController->createLog($admin, 'Thông báo', 'Sửa', $message, route('notice.edit', $notice->id));
-
+        $this->logController->createLog($admin, 'Thông báo', 'Sửa', substr_replace($message ,"", -1), route('notice.edit', $notice->id));
+        }
         return redirect()->route('notice.edit', $notice->id)->with('message', 'Cập nhật thông báo thành công');
     }
 

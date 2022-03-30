@@ -25,7 +25,7 @@
                                     aria-required="true">(*)</span></label>
                             <div class="col-md-9">
                                 <input type="text" name="account" class="form-control" required
-                                    value="{{ $option->name }}">
+                                    value="{{ $option->account }}">
                             </div>
                         </div>
                         <div class="form-group d-flex mb-2">

@@ -278,6 +278,9 @@ class AdminProductController extends Controller
                 'tax' => 'Thuế không được để trống',
             ]);
         }
+        if($request->is_ecard == null){
+            $request->is_ecard = 0;
+        }
         
 
         return DB::transaction(function () use ($request, $id) {
@@ -301,20 +304,43 @@ class AdminProductController extends Controller
                 if($product->gallery != rtrim($request->gallery_img, ", ")){
                     $message .= 'thư viện ảnh, ';
                 }
-                if($product->sku != $request->product_sku){
-                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku;
+                if($product->category_id != $request->category_parent){
+                    $message .= 'danh mục sản phẩm, ';
                 }
-                if($product->sku != $request->product_sku){
-                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku;
+                if($product->weight != $request->product_weight){
+                    $message .= 'khối lượng: '.$product->weight.' -> '.$request->product_weight.', ';
                 }
-                if($product->sku != $request->product_sku){
-                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku;
+                if($product->height != $request->product_height){
+                    $message .= 'chiều cao: '.$product->height.' -> '.$request->product_height.', ';
                 }
-                if($product->sku != $request->product_sku){
-                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku;
+                if($product->length != $request->product_length){
+                    $message .= 'chiều dài: '.$product->length.' -> '.$request->product_length.', ';
                 }
-                if($product->sku != $request->product_sku){
-                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku;
+                if($product->width != $request->product_width){
+                    $message .= 'chiều rộng: '.$product->width.' -> '.$request->width.', ';
+                }
+                if(isset($request->upsell) ){
+                    if($product->upsell !=  implode(',',$request->upsell) ){
+                        $message .= 'sản phẩm liên quan, ';
+                    }
+                }
+                if($product->payments != implode(',',$request->payments)){
+                    $message .= 'hình thức thanh toán, ';
+                }
+                if($product->status != $request->product_status){
+                    if($request->status == 1){
+                        $message .= 'trạng thái: ngưng hoạt động -> hoạt động, ';
+
+                    }
+                }
+                if($product->long_desc != $request->description){
+                    $message .= 'Mô tả chi tiết, ';
+                }
+                if($product->is_ecard != $request->is_ecard){
+                    if($request->is_ecard == 1){
+                        $message .= 'sản phẩm: thường -> Ecard ';
+
+                    }
                 }
                 Product::where('id', $id)->update([
                     'sku' => $request->product_sku,
@@ -336,7 +362,31 @@ class AdminProductController extends Controller
                     'meta_desc' => $request->meta_description,
                     'meta_keyword' => $request->meta_keyword,
                 ]);
-
+                $product_price = ProductPrice::where('id_ofproduct', $id)->first();
+                if($product_price->price != $request->product_price){
+                    $message .= 'giá nhập: '.$product_price->price.' -> '.$request->product_price.', ';
+                }
+                if($product_price->regular_price != $request->product_regular_price){
+                    $message .= 'giá bán lẻ: '.$product_price->regular_price.' -> '.$request->product_regular_price.', ';
+                }
+                if($product_price->shock_price != $request->product_shock_price){
+                    $message .= 'giá shock: '.$product_price->shock_price.' -> '.$request->product_shock_price.', ';
+                }
+                if($product_price->wholesale_price != $request->product_wholesale_price){
+                    $message .= 'giá buôn: '.$product_price->wholesale_price.' -> '.$request->product_wholesale_price.', ';
+                }
+                if($product_price->cpoint != $request->cpoint){
+                    $message .= 'tích lũy C: '.$product_price->cpoint.' -> '.$request->cpoint.', ';
+                }
+                if($product_price->mpoint != $request->mpoint){
+                    $message .= 'tích lũy M: '.$product_price->mpoint.' -> '.$request->mpoint.', ';
+                }
+                if($product_price->phi_xuly != $request->phi_xuly){
+                    $message .= 'phí xử lý: '.$product_price->phi_xuly.' -> '.$request->phi_xuly.', ';
+                }
+                if($product_price->tax != $request->tax){
+                    $message .= 'thuế suất: '.$product_price->tax.' -> '.$request->tax.', ';
+                }
                 ProductPrice::where('id_ofproduct', $id)->update([
                     'price' => $request->product_price,
                     'regular_price' => $request->product_regular_price,
@@ -347,11 +397,13 @@ class AdminProductController extends Controller
                     'phi_xuly' => $request->phi_xuly,
                     'tax' => $request->tax,
                 ]);
-
-                $admin = auth('admin')->user();
-                $this->logController->createLog($admin, 'Sản phẩm', 'Sửa', 'sản phẩm '.$product->name, route('san-pham.edit',$product->id ));
-
-
+                if($message != ''){
+                    $admin = auth('admin')->user();
+                    $this->logController->createLog($admin, 'Sản phẩm', 'Sửa', substr_replace($message ,"", -1), route('san-pham.edit',$product->id ));
+    
+    
+                }
+             
 
                 return redirect()->route('san-pham.edit', $id)->with('success', 'Cập nhật sản phẩm thành công');
             } catch (\Throwable $th) {
