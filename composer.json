@@ -38,7 +38,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Devt\\Payme\\": "packages/devt/payme/src"
+            "Devt\\Payme\\": "packages/devt/payme/src",
+            "Devt\\Ninepay\\": "packages/devt/ninepay/src"
         },
         "files": [
             "app/Helpers/Helper.php"

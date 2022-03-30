@@ -17,7 +17,7 @@ class PaymentPaymeController extends Controller
     public function PaymentPayme($order, $pay_method = 'ATMCARD'){
         //lấy cấu hình
     	// $setting_payment_payme = SettingPaymentPayme::first();
-        $setting_payment_payme = SettingPaymentPayme::whereEnvironment(1)->first();
+        $setting_payment_payme = SettingPaymentPayme::whereEnvironment(config('custom-config.environment.payme'))->first();
         // đưa dữ liệu bảo mật.
         $apiService = new ApiService(true,  $setting_payment_payme->domain, $setting_payment_payme->app_id, $setting_payment_payme->private_key, $setting_payment_payme->public_key, $setting_payment_payme->accessToken);
 
@@ -58,7 +58,7 @@ class PaymentPaymeController extends Controller
 
 	public function refund($order){
 		//lấy cấu hình
-        $setting_payment_payme = SettingPaymentPayme::whereEnvironment(1)->first();
+        $setting_payment_payme = SettingPaymentPayme::whereEnvironment(config('custom-config.environment.payme'))->first();
     	// $setting_payment_payme = SettingPaymentPayme::first();
         // đưa dữ liệu bảo mật.
         $apiService = new ApiService(true,  $setting_payment_payme->domain, $setting_payment_payme->app_id, $setting_payment_payme->private_key, $setting_payment_payme->public_key, $setting_payment_payme->accessToken);
@@ -85,7 +85,7 @@ class PaymentPaymeController extends Controller
 
 	public function paymentQuery($partnerTransaction){
 		//lấy cấu hình
-        $setting_payment_payme = SettingPaymentPayme::whereEnvironment(1)->first();
+        $setting_payment_payme = SettingPaymentPayme::whereEnvironment(config('custom-config.environment.payme'))->first();
     	// $setting_payment_payme = SettingPaymentPayme::first();
         // đưa dữ liệu bảo mật.
         $apiService = new ApiService(true,  $setting_payment_payme->domain, $setting_payment_payme->app_id, $setting_payment_payme->private_key, $setting_payment_payme->public_key, $setting_payment_payme->accessToken);

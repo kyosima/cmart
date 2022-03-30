@@ -1,0 +1,12 @@
+{
+    "name": "devt/ninepay",
+    "description": "Payment ninepay online",
+    "authors": [
+        {
+            "name": "trantruong321",
+            "email": "tranvantruongtvtpro123@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

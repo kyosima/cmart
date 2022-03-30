@@ -40,5 +40,9 @@ return [
     'shipping_type_name' => [
         'Cmart', 'Tiêu chuẩn', 'Hỏa tốc'
     ],
-    'name-all-permission' => 'Tất cả quyền'
+    'name-all-permission' => 'Tất cả quyền',
+    'environment' => [
+        'payme' => 1,
+        'ninepay' => 0
+    ],
 ];
