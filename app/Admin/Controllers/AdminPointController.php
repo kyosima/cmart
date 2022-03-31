@@ -128,15 +128,15 @@ class AdminPointController extends Controller
         $historyPointController = new HistoryPointController();
         $historyPointController->createHistory($user, $request->amount, 2, null, $request->content, $request->method, $request->time);
         $admin = auth('admin')->user();
-        if($request->method == 0){
+        if($request->method == 1){
             $this->logController->createLog($admin, 'Tiền tích lũy', 'Chuyển khoản nhận ngay', ' vào tài khoản khách hàng có mã khách hàng '.$user->code_customer.', giá trị giao dịch '.formatNumber($request->amount));
 
-        }elseif($request->method == 1){
+        }elseif($request->method == 2){
             $this->logController->createLog($admin, 'Tiền tích lũy', 'Chuyển khoản phong tỏa', ' vào tài khoản khách hàng có mã khách hàng '.$user->code_customer.', giá trị giao dịch '.formatNumber($request->amount));
 
         }else{
             $this->logController->createLog($admin, 'Tiền tích lũy', 'Chuyển khoản hoàn đơn hàng hủy', ' vào tài khoản khách hàng có mã khách hàng '.$user->code_customer.', giá trị giao dịch '.formatNumber($request->amount));
-
+ 
         }
       
         return back()->with('message', 'Chuyển khoản thành công');

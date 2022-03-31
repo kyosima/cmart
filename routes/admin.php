@@ -345,6 +345,9 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::group(['prefix'=>'thong-bao','middleware' => ['permission:Quản lý thông báo,admin']], function () {
         Route::get('/', [AdminNoticeController::class, 'index'])->name('notice.index');
+    });
+    Route::group(['prefix'=>'thong-bao','middleware' => ['permission:Tạo thông báo,admin']], function () {
+
         Route::get('tao-thong-bao', [AdminNoticeController::class, 'create'])->name('notice.create');
         Route::post('tao-thong-bao', [AdminNoticeController::class, 'store'])->name('notice.store');
         Route::get('tim-khach-hang', [AdminNoticeController::class, 'getUsers'])->name('notice.getUsers');

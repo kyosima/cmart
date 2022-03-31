@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Http\Controllers\AddressController;
-use App\Admin\Controllers\AdminLogController; 
-
+use App\Admin\Controllers\AdminLogController;
+use App\Models\ProductStore;
 
 class AdminStoreController extends Controller
 {
@@ -207,19 +207,35 @@ class AdminStoreController extends Controller
                 'error' => $validator->errors(),
             ], 400);
         }
-
-        $for_user = implode(',', $request->for_user);
-        $for_user .= ',';
-        DB::table('product_store')->updateOrInsert(
-            ['id_ofproduct' => $request->id_ofproduct, 'id_ofstore' => $request->id_ofstore],
-            ['for_user' => $for_user, 'soluong' => $request->quantity]
-        );
+        $admin = auth('admin')->user();
 
         $store = Store::findOrFail($request->id_ofstore);
         $product = Product::findOrFail($request->id_ofproduct);
-        $admin = auth('admin')->user();
+        $for_user = implode(',', $request->for_user);
+        $for_user .= ',';
+        $store_product = ProductStore::whereIdOfproduct($request->id_ofproduct)->whereIdOfstore($request->id_ofstore)->first();
+        if($store_product != null){
+            $message = '';
+            if($store_product->for_user != $for_user){
+                $message .= 'hiển thị cho định danh, ';
+            }
+            if($store_product->quantity != $request->quantity){
+                $message .= 'tồn kho';
+            }
+            $store_product->update(  ['for_user' => $for_user, 'soluong' => $request->quantity]);
+            $this->logController->createLog($admin, 'Cửa hàng', 'Sửa', $message, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
 
-        $this->logController->createLog($admin, 'Cửa hàng', 'Thêm/Sửa', 'sản phẩm '. $product->name .' vào cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+        }else{
+            ProductStore::create([
+                'id_ofproduct' => $request->id_ofproduct, 'id_ofstore' => $request->id_ofstore,'for_user' => $for_user, 'soluong' => $request->quantity
+            ]);
+            $this->logController->createLog($admin, 'Cửa hàng', 'Thêm', 'sản phẩm '. $product->name .' vào cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+
+        }
+    
+
+       
+
 
         return response()->json([$product->name] ,200);
     }

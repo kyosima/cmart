@@ -78,10 +78,13 @@ class AdminBannerController extends Controller
 		$banner = Banner::whereId($request->id)->first();
 		$message = '';
 		if($banner->id_location != $request->id_location){
-			$message .= 'trang, ';
+			$location_old = BannerLocation::whereId($banner->id_location)->first();
+			$location_new = BannerLocation::whereId($request->id_location)->first();
+
+			$message .= 'trang: '.$location_old->name.' -> '.$location_new->name.', ';
 		}
 		if($banner->position != $request->position){
-			$message .= 'vị trí, ';
+			$message .= 'vị trí: '.getPositionBanner($banner->position).' -> '.getPositionBanner($request->position).', ';
 		}
 		if($banner->unit_name != $request->unit_name){
 			$message .= 'đơn vị sử dụng: '.$banner->unit_name.' -> '. $request->unit_name.', ';

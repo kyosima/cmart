@@ -158,7 +158,7 @@ class AdminManagerAdminController extends Controller
             return Response::json(['error' => ['Tên không chứa ký tự đặc biệt và khoảng cách']], 400);
         }
         $admin = Admin::find($request->in_id_edit);
-        $message = '';
+        $message = 'admin email: '.$admin->email.', ';
         if($admin->fullname != $request->in_fullname_edit){
             $message .= 'họ và tên: '.$admin->fullname.' -> '.$request->in_fullname_edit.', ';
         }
@@ -178,9 +178,22 @@ class AdminManagerAdminController extends Controller
 
         $admin->save();
         $admin = Admin::find($request->in_id_edit);
-
+        $permissions_old = $admin->permissions;
         $admin->syncPermissions($request->sel_permission_edit);
         $permission_name = $request->sel_permission_edit;
+        if($permissions_old != $admin->permissions){
+            $message .= 'quyền: ';
+
+            foreach($permissions_old as $permission){
+                $message .= $permission->name.', ';
+            }
+    
+            $message .= ' -> ';
+            foreach($admin->permissions as $permission){
+                $message .= $permission->name.', ';
+            }
+        }
+      
         $type = 'admin';
         $html = view('admin.template-render.render', compact('admin', 'type', 'permission_name'))->render();
         if($message != ''){

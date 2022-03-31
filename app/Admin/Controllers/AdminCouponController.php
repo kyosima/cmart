@@ -339,7 +339,7 @@ class AdminCouponController extends Controller
                 'id_procats.required' => 'Danh sách danh mục sản phẩm không được để trống',
             ]);
             $coupon_promo->id_procats = implode(",", $request->id_procats);
-            if($coupon_promo->id_products !=  implode(",", $request->id_products)){
+            if($coupon_promo->id_procats !=  implode(",", $request->id_procats)){
                 $message .= 'danh mục sản phẩm, ';
             }
 

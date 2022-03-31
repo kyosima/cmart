@@ -66,7 +66,7 @@ class AdminInfoCompanyController extends Controller
             $message .= 'nội dung, ';
         }
         if($info_company->type != $request->in_type){
-            $message .= 'loại, ';
+            $message .= 'loại: '.getTypePage($info_company->type).' -> '.getTypePage($request->in_type).' , ';
         }
         if($info_company->status != $request->in_status){
             if($request->in_status == 0){

@@ -24,16 +24,16 @@
                         <th>Thời gian</th>
                         <th>Tên thông báo</th>
                         <th>Nội dung ngắn</th>
-                        <th>Thao tác</th>
+                        {{-- <th>Thao tác</th> --}}
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($notices as $notice)
                         <tr style="text-align:center">
                             <td>{{ date('d-m-Y H:i:s', strtotime($notice->created_at)) }}</td>
-                            <td><a href="{{route('notice.edit', $notice->id)}}">{{ $notice->title }}</a></td>
+                            <td><a href="{{route('notice.edit', $notice->id)}}">{{$notice->title}}</a></td>
                             <td>{{ $notice->short_content }}</td>
-                            <td>
+                            {{-- <td>
                                 <div class="input-group justify-content-center" style="min-width: 108px;">
                                     <span style=" max-width: 150px;min-width: 150px;" type="text"
                                         class="form-control form-control-sm font-size-s text-primary @if ($notice->status == 1) active @else stop @endif text-center"
@@ -74,7 +74,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </td>
+                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>
@@ -91,8 +91,8 @@
     {{-- <script type="text/javascript" src="{{ asset('public/css/table/table.js') }}"></script> --}}
     <script>
         $(document).ready(function() {
-            $.fn.dataTable.moment('HH:mm MMM D, YY');
-            $.fn.dataTable.moment('dddd, MMMM Do, YYYY');
+                // $.fn.dataTable.moment('HH:mm MMM D, YY');
+                // $.fn.dataTable.moment('dddd, MMMM Do, YYYY');
 
             // $('#history-c').on('error.dt', function(e, settings, techNote, message) {
             //     console.log('An error has been reported by DataTables: ', message);

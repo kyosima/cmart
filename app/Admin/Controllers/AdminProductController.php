@@ -331,7 +331,13 @@ class AdminProductController extends Controller
                     if($request->status == 1){
                         $message .= 'trạng thái: ngưng hoạt động -> hoạt động, ';
 
+                    }else{
+                        $message .= 'trạng thái: hoạt động -> ngưng hoạt động, ';
+
                     }
+                }
+                if($product->brand != $request->product_brand){
+                    $message .= 'thương hiệu: '.$product->brand.' -> '.$request->product_brand.', ';
                 }
                 if($product->long_desc != $request->description){
                     $message .= 'Mô tả chi tiết, ';

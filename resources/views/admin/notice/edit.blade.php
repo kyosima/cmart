@@ -36,8 +36,8 @@
             </div>
             <hr>
             <div class="portlet-body">
-                <form action="{{ route('notice.update', $notice->id) }}" method="post">
-                    @csrf
+                {{-- <form action="{{ route('notice.update', $notice->id) }}" method="post">
+                    @csrf --}}
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -131,12 +131,12 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12">
+                        {{-- <div class="col-sm-12">
                             <button type="submit" class="btn btn-info">Cập nhật thông báo</button>
-                        </div>
+                        </div> --}}
 
                     </div>
-                </form>
+                {{-- </form> --}}
             </div>
         </div>
     </div>

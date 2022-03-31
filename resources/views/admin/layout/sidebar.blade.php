@@ -22,7 +22,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->guard('admin')->user()->can('Quản lý thông báo'))
+        @if (auth()->guard('admin')->user()->can('Truy cập thông báo'))
             <li class="dropdown">
                 <a href="#" class="dropbtn">
                     <i class="fa fa-bell" aria-hidden="true"></i>
@@ -31,8 +31,9 @@
                 </a>
                 <span class="dropdown-content">
                     <a href="{{ route('notice.index') }}">Danh sách thông báo</a>
-
-                    <a href="{{ route('notice.create') }}">Tạo thông báo</a>
+                    @if (auth()->guard('admin')->user()->can('Tạo thông báo'))
+                        <a href="{{ route('notice.create') }}">Tạo thông báo</a>
+                    @endif
                 </span>
 
 

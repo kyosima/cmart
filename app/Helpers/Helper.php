@@ -260,7 +260,26 @@ if (!function_exists('helper')) {
             return '<span class="text-danger status-order">Đã hủy</span>';
         }
     }
-
+    function getTypePage($type){
+        if ($type == 'introduce') {
+            return 'giới thiệu';
+        } elseif ($type == 'policy') {
+            return 'chính sách';
+        
+        } elseif ($type == 'service') {
+            return 'dịch vụ';
+        } 
+    }
+    function getPositionBanner($position){
+        if ($position == 0) {
+            return 'slider';
+        } elseif ($position == 1) {
+            return 'bên trái trang';
+        
+        } elseif ($position == 2) {
+            return 'bên phải trang';
+        } 
+    }
     function orderStatusSimple($status)
     {
         if ($status == 0) {
