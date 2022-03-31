@@ -127,7 +127,7 @@
                     <span class="links_name w-100 align-items-center d-flex">Tiền tích lũy C <i
                             class="fa fa-angle-double-right float-end" aria-hidden="true"></i></span>
                 </a>
-                <span class="dropdown-content" style="top: -170px;">
+                <span class="dropdown-content" style="top: -50px;">
                     @if (auth()->guard('admin')->user()->can('Truy cập mục TTL') ||(auth()->guard('admin')->user()->can('Nạp thêm C vào tk C-Mart')) ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <a href="{{ route('point.getStatistical') }}">Tài khoản C / HSKH</a>

@@ -94,7 +94,7 @@
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="">Liên kết <sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" name="link" value="{{ $banner->link }}" required>
+                                <input type="text" class="form-control" name="link" value="{{ $banner->link }}" >
                             </div>
                         </div>
                     </div>

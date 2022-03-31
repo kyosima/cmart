@@ -175,7 +175,6 @@
                                                         </td> --}}
                                                         <td>{{ $item->products()->count() }}</td>
                                                         <td>{{ $item->product_stores()->sum('soluong') }}</td>
-
                                                         <td>
                                                            
                                                             <a class="btn modal-edit-unit"

@@ -89,7 +89,7 @@ class AdminBannerController extends Controller
 		if($banner->unit_name != $request->unit_name){
 			$message .= 'đơn vị sử dụng: '.$banner->unit_name.' -> '. $request->unit_name.', ';
 		}
-		if($banner->expire_date != $banner->expire_date){
+		if(strtotime($banner->expire_date) != strtotime($banner->expire_date)){
 			$message .= 'hạn sử dụng: '.$banner->expire_date.' -> '. $request->expire_date.', ';
 		}
 		if($banner->file != $banner->file){
@@ -119,18 +119,32 @@ class AdminBannerController extends Controller
 
 	public function changeStatus(Request $request){
 		$banner = Banner::whereId($request->id)->first();
+		$message = '';
 		if($banner->status == 1){
 			$banner->status = 0;
+			if($banner->link != $banner->link){
+				$message .= 'trạng thái: hoạt động -> ngưng ';
+			}
 		}else{
 			$banner->status = 1;
+			$message .= 'trạng thái: ngưng -> hoạt động ';
+
 		}
 		$banner->save();
+		$admin = auth('admin')->user();
+
+		$this->logController->createLog($admin, 'Banner', 'Sửa',  substr_replace($message ,"", -1), route('admin.banner.edit',$banner->id ));
+
 		return back();
 	}
 	
 	public function delete(Request $request){
 		$banner = Banner::whereId($request->id)->first();
 		$banner->delete();
+		$admin = auth('admin')->user();
+
+		$this->logController->createLog($admin, 'Banner', 'Xóa', 'banner mã giao dịch '.$banner->code);
+
 		return redirect()->route('admin.banner.index')->with('message','Xóa banner thành công');
 	}
 

@@ -268,10 +268,10 @@ class AdminCouponController extends Controller
                     break;
             }
         }
-        if($coupon->start_date != $request->start_date){
+        if(strtotime($coupon->start_date) != strtotime($request->start_date)){
             $message .= 'ngày bắt đầu: '.$coupon->start_date.' -> '.$request->start_date.', ';
         }
-        if($coupon->end_date != $request->end_date){
+        if(strtotime($coupon->end_date) != strtotime($request->end_date)){
             $message .= 'ngày kết thúc: '.$coupon->end_date.' -> '.$request->end_date.', ';
         }
         if($coupon->description != $request->description){

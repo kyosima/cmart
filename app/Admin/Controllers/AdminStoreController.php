@@ -215,21 +215,26 @@ class AdminStoreController extends Controller
         $for_user .= ',';
         $store_product = ProductStore::whereIdOfproduct($request->id_ofproduct)->whereIdOfstore($request->id_ofstore)->first();
         if($store_product != null){
-            $message = '';
             if($store_product->for_user != $for_user){
+                $message = '';
+
                 $message .= 'hiển thị cho định danh, ';
+                $this->logController->createLog($admin, 'Cửa hàng', 'Sửa', $message, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+
             }
             if($store_product->quantity != $request->quantity){
-                $message .= 'tồn kho';
+                $message = '';
+
+                $message .= 'tồn kho sản phẩm '.$product->name.': '.$store_product->soluong.' -> '.$request->quantity;
+                $this->logController->createLog($admin, 'Cửa hàng', 'Sửa', $message, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
+
             }
             $store_product->update(  ['for_user' => $for_user, 'soluong' => $request->quantity]);
-            $this->logController->createLog($admin, 'Cửa hàng', 'Sửa', $message, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
 
         }else{
             ProductStore::create([
                 'id_ofproduct' => $request->id_ofproduct, 'id_ofstore' => $request->id_ofstore,'for_user' => $for_user, 'soluong' => $request->quantity
             ]);
-            $this->logController->createLog($admin, 'Cửa hàng', 'Thêm', 'sản phẩm '. $product->name .' vào cửa hàng '.$store->name, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
 
         }
     
