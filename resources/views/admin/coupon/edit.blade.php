@@ -127,14 +127,7 @@
                                                 </div>
     
                                             </div>
-                                            <div class="form-group d-flex mb-2">
-                                                <label class="col-md-3 control-label">Mức ưu đãi<span class="required"
-                                                        aria-required="true">(*)</span></label>
-                                                <div class="col-md-9">
-                                                    <input type="number" class="form-control" name="value_discount" value="{{$coupon->promo->value_discount}}"
-                                                        required>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                         @elseif($coupon->promo->target == 1)
                                             <div class="block-customer div-target-value">
@@ -155,14 +148,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group d-flex mb-2">
-                                                    <label class="col-md-3 control-label">Mức ưu đãi<span
-                                                            class="required" aria-required="true">(*)</span></label>
-                                                    <div class="col-md-9">
-                                                        <input type="number" class="form-control" name="value_discount"
-                                                            value="{{ $coupon->promo->value_discount }}" required>
-                                                    </div>
-                                                </div>
+                                           
                                             </div>
                                         @endif
                                     </div>
@@ -185,14 +171,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group d-flex mb-2">
-                                            <label class="col-md-3 control-label">Mức ưu đãi<span class="required"
-                                                    aria-required="true">(*)</span></label>
-                                            <div class="col-md-9">
-                                                <input type="number" class="form-control" name="value_discount"
-                                                    value="{{ $coupon->promo->value_discount }}" required>
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                 @else
                                     <div class="block-procat">
@@ -211,16 +190,17 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group d-flex mb-2">
-                                            <label class="col-md-3 control-label">Mức ưu đãi<span class="required"
-                                                    aria-required="true">(*)</span></label>
-                                            <div class="col-md-9">
-                                                <input type="number" class="form-control" name="value_discount"
-                                                    value="{{ $coupon->promo->value_discount }}" required>
-                                            </div>
-                                        </div>
+                                    
                                     </div>
                                 @endif
+                                <div class="form-group d-flex mb-2">
+                                    <label class="col-md-3 control-label">Mức ưu đãi<span class="required"
+                                            aria-required="true">(*)</span></label>
+                                    <div class="col-md-9">
+                                        <input type="number" class="form-control" name="value_discount" value="{{$coupon->promo->value_discount}}"
+                                            required>
+                                    </div>
+                                </div>
                                 <div class="form-group d-flex mb-2">
                                     <label class="col-md-3 control-label">Điều kiện GTSP</label>
                                     <div class="col-md-9">

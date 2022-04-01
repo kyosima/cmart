@@ -218,7 +218,7 @@ class AdminStoreController extends Controller
             if($store_product->for_user != $for_user){
                 $message = '';
 
-                $message .= 'hiển thị cho định danh, ';
+                $message .= 'hiển thị cho định danh sản phẩm: '.$product->name.', ';
                 $this->logController->createLog($admin, 'Cửa hàng', 'Sửa', $message, route('store.edit',['slug'=>$store->slug,'id'=>$store->id] ));
 
             }

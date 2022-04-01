@@ -121,19 +121,20 @@ class AdminBannerController extends Controller
 		$banner = Banner::whereId($request->id)->first();
 		$message = '';
 		if($banner->status == 1){
+			$message .= 'trạng thái: hoạt động -> ngưng ';
+
 			$banner->status = 0;
-			if($banner->link != $banner->link){
-				$message .= 'trạng thái: hoạt động -> ngưng ';
-			}
+		
 		}else{
-			$banner->status = 1;
 			$message .= 'trạng thái: ngưng -> hoạt động ';
+
+			$banner->status = 1;
 
 		}
 		$banner->save();
 		$admin = auth('admin')->user();
 
-		$this->logController->createLog($admin, 'Banner', 'Sửa',  substr_replace($message ,"", -1), route('admin.banner.edit',$banner->id ));
+		$this->logController->createLog($admin, 'Banner', 'Thay đổi',  substr_replace($message ,"", -1), route('admin.banner.edit',$banner->id ));
 
 		return back();
 	}

@@ -198,7 +198,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{dd($store->product_stores()->get())}}
 
                             <div class="col-md-12">
                                 <div class="form-group">

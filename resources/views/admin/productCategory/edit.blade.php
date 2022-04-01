@@ -238,7 +238,7 @@
                     <form action="{{route('nganh-nhom-hang.delete', $proCat->id)}}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="confirm('Bạn có chắc muốn xóa danh mục?')">Xóa danh mục</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa danh mục?')">Xóa danh mục</button>
                     </form>
                 </div>
             </div>

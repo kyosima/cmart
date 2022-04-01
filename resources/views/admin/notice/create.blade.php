@@ -68,7 +68,7 @@
                                 </select>
 
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label class="control-label text-left">
                                     Trạng thái<span class="required" aria-required="true">(*)</span>
                                 </label>
@@ -76,7 +76,7 @@
                                     <option value="1" selected>Hoạt động</option>
                                     <option value="0">Ngừng</option>
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label class="control-label text-left">
                                     Nội dung ngắn<span class="required" aria-required="true">(*)</span>

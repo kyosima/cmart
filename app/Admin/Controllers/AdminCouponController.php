@@ -327,10 +327,11 @@ class AdminCouponController extends Controller
             ],[
                 'id_products.required' => 'Danh sách sản phẩm không được để trống',
             ]);
-            $coupon_promo->id_products = implode(",", $request->id_products);
             if($coupon_promo->id_products !=  implode(",", $request->id_products)){
                 $message .= 'danh sách sản phẩm, ';
             }
+            $coupon_promo->id_products = implode(",", $request->id_products);
+          
 
         }else{
             $request->validate([
@@ -338,10 +339,11 @@ class AdminCouponController extends Controller
             ],[
                 'id_procats.required' => 'Danh sách danh mục sản phẩm không được để trống',
             ]);
-            $coupon_promo->id_procats = implode(",", $request->id_procats);
             if($coupon_promo->id_procats !=  implode(",", $request->id_procats)){
                 $message .= 'danh mục sản phẩm, ';
             }
+            $coupon_promo->id_procats = implode(",", $request->id_procats);
+          
 
         }
         if($coupon->supplier !=  $request->supplier){
@@ -363,7 +365,7 @@ class AdminCouponController extends Controller
         if($coupon->max !=  $request->max){
             $message .= 'giảm giá tối đa: '.$coupon->max.' -> '.$request->max.', ';
         }
-        if($coupon->value_discount !=  $request->value_discount){
+        if($coupon_promo->value_discount !=  $request->value_discount){
             $message .= 'mức ưu đãi: '.$coupon->value_discount.' -> '.$request->value_discount.', ';
         }
         $coupon->min = $request->min;
