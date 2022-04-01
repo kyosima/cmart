@@ -33,6 +33,7 @@ use App\Http\Controllers\PaymentPaymeController;
 use App\Models\PaymentMethodOption;
 use Aws\History;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
+use Devt\Ninepay\Controllers\ConnectController as PaymentNinepayController;
 
 class CheckoutController extends Controller
 {
@@ -708,6 +709,7 @@ class CheckoutController extends Controller
         }
         $user = Auth::user();
         $payment_method = PaymentMethod::whereId($order->payment_method)->first();
+        // return $payment_method->id;
         switch ($payment_method->type) {
             case 1:
                 switch ($payment_method->id) {
@@ -720,8 +722,8 @@ class CheckoutController extends Controller
                     case 3:
                         return redirect()->route('payment.Send', ['order_code' => $order->order_code, 'payment_method' => $payment_method->id]);
                         break;
-                    case 5 || 6:
-                        Session::put('order_code', $order->order_code);
+                    case 5:
+                        Session::put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
                         $paymentPaymeController = new PaymentPaymeController();
                         $result = $paymentPaymeController->PaymentPayme($order, $pay_method = 'CREDITCARD');
                         $result = json_decode($result);
@@ -735,10 +737,10 @@ class CheckoutController extends Controller
                             return redirect()->route('paymentFail');
                         }
                         break;
-                    case 9:
-                        Session::put('order_code', $order->order_code);
+                    case 6:
+                        Session::put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
                         $paymentPaymeController = new PaymentPaymeController();
-                        $result = $paymentPaymeController->PaymentPayme($order);
+                        $result = $paymentPaymeController->PaymentPayme($order, $pay_method = 'CREDITCARD');
                         $result = json_decode($result);
 
                         if ($result->code == '105000') {
@@ -746,6 +748,45 @@ class CheckoutController extends Controller
                             $this->processOrder($order);
 
                             return redirect($result->data->url);
+                        } else {
+                            return redirect()->route('paymentFail');
+                        }
+                        break;
+                    case 7:
+                        Session::put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
+                        //gọi api thanh toán; param: payment_method, order_code, desc, amount
+                        $paymentNinepayController = new PaymentNinepayController('CREDIT_CARD', $order->order_code, 'Thanh toán đơn hàng từ Cmart', $order->total);
+                        $result = $paymentNinepayController->call();
+                        $result = $result->getData();
+                        if ($result->status == 200) {
+                            session()->put('link-payment-ninepay', $result->data);
+                            return redirect()->away($result->data);
+                        } else {
+                            return redirect()->route('paymentFail');
+                        }
+                        break;
+                    case 8:
+                        session()->put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
+                        //gọi api thanh toán; param: payment_method, order_code, desc, amount
+                        $paymentNinepayController = new PaymentNinepayController('CREDIT_CARD', $order->order_code, 'Thanh toán đơn hàng từ Cmart', $order->total);
+                        $result = $paymentNinepayController->call();
+                        $result = $result->getData();
+                        if ($result->status == 200) {
+                            Session::put('link-payment-ninepay', $result->data);
+                            return redirect()->away($result->data);
+                        } else {
+                            return redirect()->route('paymentFail');
+                        }
+                        break;
+                    case 9:
+                        session()->put('order_code', ['code' => $order->order_code, 'payment_method' => $payment_method->id]);
+                        //gọi api thanh toán; param: payment_method, order_code, desc, amount
+                        $paymentNinepayController = new PaymentNinepayController('ATM_CARD', $order->order_code, 'Thanh toán đơn hàng từ Cmart', $order->total);
+                        $result = $paymentNinepayController->call();
+                        $result = $result->getData();
+                        if ($result->status == 200) {
+                            Session::put('link-payment-ninepay', $result->data);
+                            return redirect()->away($result->data);
                         } else {
                             return redirect()->route('paymentFail');
                         }
@@ -949,6 +990,7 @@ class CheckoutController extends Controller
     public function orderSuccess(Request $request)
     {
         $order = Order::whereOrderCode($request->order_code)->first();
+
         if (!$request->order_code || $order == null || $order->is_payment == 0) {
             return redirect('/');
         }

@@ -169,6 +169,7 @@ return [
          * Package Service Providers...
          */
         Devt\Payme\PaymeServiceProvider::class,
+        Devt\Ninepay\NinepayServiceProvider::class,
         /*
          * Application Service Providers...
          */
