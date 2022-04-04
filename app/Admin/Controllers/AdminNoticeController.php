@@ -58,7 +58,6 @@ class AdminNoticeController extends Controller
             'short_content' => $request->short_content,
             'content'=>$request->content,
             'method' => 1,
-            'status' => $request->status,
         ]);
         if($request->target == 0 ){
             foreach(User::get() as $user){
@@ -118,21 +117,20 @@ class AdminNoticeController extends Controller
         if($notice->content != $request->content){
             $message .='thay đổi nội dung, ';
         }
-        if($notice->status != $request->status){
-            if($request->status == 1){
-                $message .='trạng thái: ngừng -> hoạt động, ';
+        // if($notice->status != $request->status){
+        //     if($request->status == 1){
+        //         $message .='trạng thái: ngừng -> hoạt động, ';
 
-            }else{
-                $message .='trạng thái: hoạt động -> ngừng, ';
+        //     }else{
+        //         $message .='trạng thái: hoạt động -> ngừng, ';
 
-            }
-        }
+        //     }
+        // }
         $notice->title = $request->title;
         $notice->target = $request->target;
         $notice->slug = Str::slug($request->title).date('d-m-Y-H-i-s').time();
         $notice->short_content = $request->short_content;
         $notice->content =$request->content;
-        $notice->status = $request->status;
         $notice->save();
         $notice->getUserNotices()->delete();
         if($request->target == 0 ){

@@ -36,12 +36,9 @@
             </div>
             <hr>
             <div class="portlet-body">
-                @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi'))
-                    <form action="{{ route('coupon.update', $coupon->id) }}" method="post">
-                        @csrf
-                        @method('PUT')
-                @endif
-                <div class="row">
+                <form action="{{ route('coupon.update', $coupon->id) }}" method="post">
+                    @csrf
+                    @method('PUT')
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-md-6">
@@ -49,7 +46,8 @@
                                     <label class="col-md-3 control-label">Đơn vị cung cấp<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
-                                        <input type="text" name="supplier" class="form-control" required value="{{$coupon->supplier}}">
+                                        <input type="text" name="supplier" class="form-control" required
+                                            value="{{ $coupon->supplier }}">
                                     </div>
                                 </div>
                                 <div class="form-group d-flex mb-2">
@@ -101,34 +99,39 @@
                                             </div>
                                         </div>
                                         @if ($coupon->promo->target == 0)
-                                        <div class=" div-target-value">
-                                            <div class="form-group d-flex mb-2">
-                                                <label class="col-md-3 control-label">Chọn định danh khách hàng<span
-                                                        class="required" aria-required="true">(*)</span></label>
-                                                <div class="col-md-9">
-                                                    <select name="id_levels[]" id="select-level" class="form-control" multiple
-                                                        required>
-                                                        <option value="0" @if(in_array(0, explode(',',$coupon->promo->id_levels))) selected @endif>
-                                                            Khách hàng thân thiết
-                                                        </option>
-                                                        <option value="1" @if(in_array(1, explode(',',$coupon->promo->id_levels))) selected @endif>
-                                                            Khách hàng V.I.P
-                                                        </option>
-                                                        <option value="2" @if(in_array(2, explode(',',$coupon->promo->id_levels))) selected @endif>
-                                                            Cộng tác viên
-                                                        </option>
-                                                        <option value="3" @if(in_array(3, explode(',',$coupon->promo->id_levels))) selected @endif>
-                                                            Purchasing
-                                                        </option>
-                                                        <option value="4" @if(in_array(4, explode(',',$coupon->promo->id_levels))) selected @endif>
-                                                            Khách hàng thương mại
-                                                        </option>
-                                                    </select>
+                                            <div class=" div-target-value">
+                                                <div class="form-group d-flex mb-2">
+                                                    <label class="col-md-3 control-label">Chọn định danh khách hàng<span
+                                                            class="required" aria-required="true">(*)</span></label>
+                                                    <div class="col-md-9">
+                                                        <select name="id_levels[]" id="select-level" class="form-control"
+                                                            multiple required>
+                                                            <option value="0"
+                                                                @if (in_array(0, explode(',', $coupon->promo->id_levels))) selected @endif>
+                                                                Khách hàng thân thiết
+                                                            </option>
+                                                            <option value="1"
+                                                                @if (in_array(1, explode(',', $coupon->promo->id_levels))) selected @endif>
+                                                                Khách hàng V.I.P
+                                                            </option>
+                                                            <option value="2"
+                                                                @if (in_array(2, explode(',', $coupon->promo->id_levels))) selected @endif>
+                                                                Cộng tác viên
+                                                            </option>
+                                                            <option value="3"
+                                                                @if (in_array(3, explode(',', $coupon->promo->id_levels))) selected @endif>
+                                                                Purchasing
+                                                            </option>
+                                                            <option value="4"
+                                                                @if (in_array(4, explode(',', $coupon->promo->id_levels))) selected @endif>
+                                                                Khách hàng thương mại
+                                                            </option>
+                                                        </select>
+                                                    </div>
+
                                                 </div>
-    
+
                                             </div>
-                                            
-                                        </div>
                                         @elseif($coupon->promo->target == 1)
                                             <div class="block-customer div-target-value">
                                                 <div class="form-group d-flex mb-2 div-select-customer">
@@ -148,7 +151,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                           
+
                                             </div>
                                         @endif
                                     </div>
@@ -171,7 +174,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                 @else
                                     <div class="block-procat">
@@ -190,15 +193,15 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    
+
                                     </div>
                                 @endif
                                 <div class="form-group d-flex mb-2">
                                     <label class="col-md-3 control-label">Mức ưu đãi<span class="required"
                                             aria-required="true">(*)</span></label>
                                     <div class="col-md-9">
-                                        <input type="number" class="form-control" name="value_discount" value="{{$coupon->promo->value_discount}}"
-                                            required>
+                                        <input type="number" class="form-control" name="value_discount"
+                                            value="{{ $coupon->promo->value_discount }}" required>
                                     </div>
                                 </div>
                                 <div class="form-group d-flex mb-2">
@@ -305,13 +308,13 @@
                         <button type="submit" class="btn btn-info">Cập nhật</button>
 
                     </div>
-                  
 
-                </div>
-                </form>
-              
+
             </div>
+            </form>
+
         </div>
+    </div>
     </div>
     <div class="footer text-center">
         <span style="font-size: 12px;">Copyright©2005-2021 . All rights reserved</span>
@@ -321,7 +324,6 @@
 
 @push('scripts')
     <script>
-
         $(document).ready(function() {
             $("form").validate({
                 ignore: [],
@@ -358,7 +360,7 @@
     </script>
 
     <script>
-          $('#select-level').select2({
+        $('#select-level').select2({
             width: '100%',
             multiple: true,
             minimumInputLength: 3,

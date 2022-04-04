@@ -13,5 +13,8 @@ class UserNotice extends Model
         'notice_id',
         'is_read',
     ];
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
     
 }

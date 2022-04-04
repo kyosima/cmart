@@ -36,177 +36,181 @@
             </div>
             <hr>
             <div class="portlet-body">
-                @if (auth()->guard('admin')->user()->can('Tạo+sửa Ưu đãi'))
-                    <form action="{{ route('coupon.store') }}" method="post">
-                        @csrf
-                @endif
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Đơn vị cung cấp<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="supplier" class="form-control" required value="">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Mã ưu đãi<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="code" class="form-control" required value="">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Tên ưu đãi<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="name" class="form-control" required value="">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2 couponType">
-                                    <label class="col-md-3 control-label">Phạm vi ưu đãi<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <select class="form-control" name="type" id="couponType">
-                                            <option value="0">Giảm giá cho toàn
-                                                bộ giỏ hàng</option>
-                                            <option value="1">Giảm giá theo sản
-                                                phẩm</option>
-                                            <option value="2">Giảm giá theo danh
-                                                mục sản phẩm</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="block-target">
-                                    <div class="form-group d-flex mb-2 div-select-target">
-                                        <label class="col-md-3 control-label">Chọn đối tượng<span class="required"
+                <form action="{{ route('coupon.store') }}" method="post">
+                    @csrf
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group d-flex mb-2">
+                                        <label class="col-md-3 control-label">Đơn vị cung cấp<span class="required"
                                                 aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
-                                            <label for="target-level" class="mr-2"><input type="radio"
-                                                    id="target-level" name="target" value="0" checked>Theo định danh khách
-                                                hàng</label>
-                                            <label for="target-customer"><input type="radio" id="target-customer"
-                                                    name="target" value="1">Theo mã khách hàng</label>
+                                            <input type="text" name="supplier" class="form-control" required value="">
                                         </div>
                                     </div>
-                                    <div class=" div-target-value">
-                                        <div class="form-group d-flex mb-2">
-                                            <label class="col-md-3 control-label">Chọn định danh khách hàng<span
-                                                    class="required" aria-required="true">(*)</span></label>
+                                    <div class="form-group d-flex mb-2">
+                                        <label class="col-md-3 control-label">Mã ưu đãi<span class="required"
+                                                aria-required="true">(*)</span></label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="code" class="form-control" required value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group d-flex mb-2">
+                                        <label class="col-md-3 control-label">Tên ưu đãi<span class="required"
+                                                aria-required="true">(*)</span></label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="name" class="form-control" required value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group d-flex mb-2 couponType">
+                                        <label class="col-md-3 control-label">Phạm vi ưu đãi<span class="required"
+                                                aria-required="true">(*)</span></label>
+                                        <div class="col-md-9">
+                                            <select class="form-control" name="type" id="couponType">
+                                                <option value="0">Giảm giá cho toàn
+                                                    bộ giỏ hàng</option>
+                                                <option value="1">Giảm giá theo sản
+                                                    phẩm</option>
+                                                <option value="2">Giảm giá theo danh
+                                                    mục sản phẩm</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="block-target">
+                                        <div class="form-group d-flex mb-2 div-select-target">
+                                            <label class="col-md-3 control-label">Chọn đối tượng<span class="required"
+                                                    aria-required="true">(*)</span></label>
                                             <div class="col-md-9">
-                                                <select name="id_levels[]" id="select-level" class="form-control" multiple
-                                                    required>
-                                                    <option value="0">
-                                                        Khách hàng thân thiết
-                                                    </option>
-                                                    <option value="1">
-                                                        Khách hàng V.I.P
-                                                    </option>
-                                                    <option value="2">
-                                                        Cộng tác viên
-                                                    </option>
-                                                    <option value="3">
-                                                        Purchasing
-                                                    </option>
-                                                    <option value="4">
-                                                        Khách hàng thương mại
-                                                    </option>
-                                                </select>
+                                                <label for="target-level" class="mr-2"><input type="radio"
+                                                        id="target-level" name="target" value="0" checked>Theo định danh
+                                                    khách
+                                                    hàng</label>
+                                                <label for="target-customer"><input type="radio" id="target-customer"
+                                                        name="target" value="1">Theo mã khách hàng</label>
+                                            </div>
+                                        </div>
+                                        <div class=" div-target-value">
+                                            <div class="form-group d-flex mb-2">
+                                                <label class="col-md-3 control-label">Chọn định danh khách hàng<span
+                                                        class="required" aria-required="true">(*)</span></label>
+                                                <div class="col-md-9">
+                                                    <select name="id_levels[]" id="select-level" class="form-control"
+                                                        multiple required>
+                                                        <option value="0">
+                                                            Khách hàng thân thiết
+                                                        </option>
+                                                        <option value="1">
+                                                            Khách hàng V.I.P
+                                                        </option>
+                                                        <option value="2">
+                                                            Cộng tác viên
+                                                        </option>
+                                                        <option value="3">
+                                                            Purchasing
+                                                        </option>
+                                                        <option value="4">
+                                                            Khách hàng thương mại
+                                                        </option>
+                                                    </select>
+                                                </div>
+
                                             </div>
 
                                         </div>
-                                        
                                     </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Mức ưu đãi<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <input type="number" class="form-control" name="value_discount" value=""
-                                            required>
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Điều kiện GTSP</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="min" placeholder="Giá trị Sản phẩm tối thiểu"
-                                            class="form-control" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Giảm giá tối đa</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="max" placeholder="Giảm giá tối đa" class="form-control"
-                                            value="">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Giảm giá theo<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <div class="mt-radio-inline pb-0">
-                                            <label class="mt-radio blue mt-radio-outline">
-                                                <input type="radio" name="is_percent" value="0" checked>
-                                                Giá cố định
-                                            </label>
-                                            <label class="mt-radio blue mt-radio-outline">
-                                                <input type="radio" name="is_percent" value="1">
-                                                Phần trăm
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="block-coupon">
-                                    <div class="form-group d-flex mb-2 div-select-connect">
-                                        <label class="col-md-3 control-label">Chọn phạm vi kết hợp<span
-                                                class="required" aria-required="true">(*)</span></label>
+                                    <div class="form-group d-flex mb-2">
+                                        <label class="col-md-3 control-label">Mức ưu đãi<span class="required"
+                                                aria-required="true">(*)</span></label>
                                         <div class="col-md-9">
-                                            <label for="connect0" class="mr-2 w-100"><input type="radio" id="connect0"
-                                                    name="connect" value="0" checked>Không áp dụng đồng thời với các CTSK
-                                                khác</label>
-                                            <label for="connect1" class="mr-2 w-100"><input type="radio" id="connect1"
-                                                    name="connect" value="1">Áp dụng đồng thời với mọi CTSK</label>
-                                            <label for="connect2" class="mr-2 w-100"><input type="radio" id="connect2"
-                                                    name="connect" value="2">Áp dụng với CTSK cụ thể</label>
+                                            <input type="number" class="form-control" name="value_discount" value=""
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group d-flex mb-2">
+                                        <label class="col-md-3 control-label">Điều kiện GTSP</label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="min" placeholder="Giá trị Sản phẩm tối thiểu"
+                                                class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group d-flex mb-2">
+                                        <label class="col-md-3 control-label">Giảm giá tối đa</label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="max" placeholder="Giảm giá tối đa"
+                                                class="form-control" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group d-flex mb-2">
+                                        <label class="col-md-3 control-label">Giảm giá theo<span class="required"
+                                                aria-required="true">(*)</span></label>
+                                        <div class="col-md-9">
+                                            <div class="mt-radio-inline pb-0">
+                                                <label class="mt-radio blue mt-radio-outline">
+                                                    <input type="radio" name="is_percent" value="0" checked>
+                                                    Giá cố định
+                                                </label>
+                                                <label class="mt-radio blue mt-radio-outline">
+                                                    <input type="radio" name="is_percent" value="1">
+                                                    Phần trăm
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="block-coupon">
+                                        <div class="form-group d-flex mb-2 div-select-connect">
+                                            <label class="col-md-3 control-label">Chọn phạm vi kết hợp<span
+                                                    class="required" aria-required="true">(*)</span></label>
+                                            <div class="col-md-9">
+                                                <label for="connect0" class="mr-2 w-100"><input type="radio"
+                                                        id="connect0" name="connect" value="0" checked>Không áp dụng đồng
+                                                    thời với các CTSK
+                                                    khác</label>
+                                                <label for="connect1" class="mr-2 w-100"><input type="radio"
+                                                        id="connect1" name="connect" value="1">Áp dụng đồng thời với mọi
+                                                    CTSK</label>
+                                                <label for="connect2" class="mr-2 w-100"><input type="radio"
+                                                        id="connect2" name="connect" value="2">Áp dụng với CTSK cụ
+                                                    thể</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group d-flex mb-2">
+                                        <label class="col-md-3 control-label">Ngày bắt đầu<span class="required"
+                                                aria-required="true">(*)</span></label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" id="from" name="start_date" required
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group d-flex mb-2">
+                                        <label class="col-md-3 control-label">Ngày kết thúc<span class="required"
+                                                aria-required="true">(*)</span></label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" id="to" name="end_date" required
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group d-flex mb-2">
+                                        <label class="col-md-3 control-label">Mô tả</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" name="description" rows="3"
+                                                placeholder="Mời nhập văn bản phê duyệt và thông tin mô tả chi tiết"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Ngày bắt đầu<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="from" name="start_date" required
-                                            value="">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Ngày kết thúc<span class="required"
-                                            aria-required="true">(*)</span></label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="to" name="end_date" required value="">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex mb-2">
-                                    <label class="col-md-3 control-label">Mô tả</label>
-                                    <div class="col-md-9">
-                                        <textarea class="form-control" name="description" rows="3" placeholder="Mời nhập văn bản phê duyệt và thông tin mô tả chi tiết"></textarea>
-                                    </div>
-                                </div>
+
                             </div>
-
                         </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <button type="submit" class="btn btn-info">Tạo mã ưu đãi</button>
-                    </div>
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-info">Tạo mã ưu đãi</button>
+                        </div>
 
-                </div>
+                    </div>
                 </form>
             </div>
         </div>

@@ -23,6 +23,7 @@
                     <tr style="text-align:center">
                         <th>Thời gian</th>
                         <th>Tên thông báo</th>
+                        <th>Khách hàng</th>
                         <th>Nội dung ngắn</th>
                         {{-- <th>Thao tác</th> --}}
                     </tr>
@@ -33,6 +34,16 @@
                             <td>{{ date('d-m-Y H:i:s', strtotime($notice->created_at)) }}</td>
                             {{-- <td><a href="{{route('notice.edit', $notice->id)}}">{{$notice->title}}</a></td> --}}
                             <td>{{$notice->title}}</td>
+                            <td>
+                                @if ($notice->target == 0)
+                                    Tất cả khác hàng
+                                @else
+                                    @foreach ($notice->getUserNotices()->get() as $item)
+                                        {{$item->user()->value('code_customer')}}, 
+                                        
+                                    @endforeach
+                                @endif
+                            </td>
                             <td>{{ $notice->short_content }}</td>
                             {{-- <td>
                                 <div class="input-group justify-content-center" style="min-width: 108px;">
