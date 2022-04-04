@@ -108,19 +108,19 @@
                                                 <div class="col-md-9">
                                                     <select name="id_levels[]" id="select-level" class="form-control" multiple
                                                         required>
-                                                        <option value="0" @if(in_array(0, explode($coupon->promo->target,','))) selected @endif>
+                                                        <option value="0" @if(in_array(0, explode(',',$coupon->promo->id_levels))) selected @endif>
                                                             Khách hàng thân thiết
                                                         </option>
-                                                        <option value="1" @if(in_array(1, explode($coupon->promo->target,','))) selected @endif>
+                                                        <option value="1" @if(in_array(1, explode(',',$coupon->promo->id_levels))) selected @endif>
                                                             Khách hàng V.I.P
                                                         </option>
-                                                        <option value="2" @if(in_array(2, explode($coupon->promo->target,','))) selected @endif>
+                                                        <option value="2" @if(in_array(2, explode(',',$coupon->promo->id_levels))) selected @endif>
                                                             Cộng tác viên
                                                         </option>
-                                                        <option value="3" @if(in_array(3, explode($coupon->promo->target,','))) selected @endif>
+                                                        <option value="3" @if(in_array(3, explode(',',$coupon->promo->id_levels))) selected @endif>
                                                             Purchasing
                                                         </option>
-                                                        <option value="4" @if(in_array(4, explode($coupon->promo->target,','))) selected @endif>
+                                                        <option value="4" @if(in_array(4, explode(',',$coupon->promo->id_levels))) selected @endif>
                                                             Khách hàng thương mại
                                                         </option>
                                                     </select>

@@ -323,6 +323,11 @@ class AdminProductController extends Controller
                     if($product->upsell !=  implode(',',$request->upsell) ){
                         $message .= 'sản phẩm liên quan, ';
                     }
+                }elseif(($product->upsell) &&(!$request->upsell) ){
+                    $admin = auth('admin')->user();
+                    $this->logController->createLog($admin, 'Sản phẩm', 'Xóa', 'sản phẩm liên quan', route('san-pham.edit',$product->id ));
+    
+    
                 }
                 if($product->payments != implode(',',$request->payments)){
                     $message .= 'hình thức thanh toán, ';

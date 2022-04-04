@@ -256,14 +256,14 @@ class AdminCouponController extends Controller
                     $message .= 'Phạm vi ưu đãi: Giảm giá theo danh mục -> ';
                     break;
             }
-            switch ($coupon->type){
-                case 1:
+            switch ($request->type){
+                case 0:
                     $message .= 'giảm giá toàn bộ giỏ hàng, ';
                     break;
-                case 2:
+                case 1:
                     $message .= 'giảm giá theo sản phẩm , ';
                     break;
-                case 3:
+                case 2:
                     $message .= 'giảm giá theo danh mục, ';
                     break;
             }
@@ -304,21 +304,22 @@ class AdminCouponController extends Controller
                     'level_1.id_levels' => 'Danh sách định danh khách hàng không được để trống',
                  
                 ]);
-          
-                $coupon_promo->id_levels =  implode(",", $request->id_levels);
-                if($coupon_promo->id_customers !=  implode(",", $request->id_customers)){
+                if($coupon_promo->id_levels !=  implode(",", $request->id_levels)){
                     $message .= 'định danh khách hàng, ';
                 }
+                $coupon_promo->id_levels =  implode(",", $request->id_levels);
+               
             }else{
                 $request->validate([
                     'id_customers' => 'required',
                 ],[
                     'id_customers.required' => 'Danh sách khách hàng không được để trống',
                 ]);
-                $coupon_promo->id_customers = implode(",", $request->id_customers);
                 if($coupon_promo->id_customers !=  implode(",", $request->id_customers)){
                     $message .= 'mã khách hàng, ';
                 }
+                $coupon_promo->id_customers = implode(",", $request->id_customers);
+            
 
             }
         }elseif($request->type == 1){
@@ -350,7 +351,20 @@ class AdminCouponController extends Controller
             $message .= 'đơn vị cung cấp: '.$coupon->supplier.' -> '.$request->supplier.', ';
         }
         if($coupon->connect !=  $request->connect){
-            $message .= 'phạm vi kết hợp, ';
+            if($coupon->connect == 0){
+                $message .= 'phạm vi kết hợp: không áp dụng đồng thời với các CTSK khác -> ';
+            }elseif($coupon->connect == 1){
+                $message .= 'phạm vi kết hợp: áp dụng đồng thời với mọi CTSK -> ';
+            }else{
+                $message .= 'phạm vi kết hợp: áp dụng với CTSK cụ thể -> ';
+            }
+            if($request->connect == 0){
+                $message .= 'không áp dụng đồng thời với các CTSK khác, ';
+            }elseif($request->connect == 1){
+                $message .= 'áp dụng đồng thời với mọi CTSK , ';
+            }else{
+                $message .= 'áp dụng với CTSK cụ thể, ';
+            }
         }
         $coupon->supplier = $request->supplier;
         $coupon->connect = $request->connect;

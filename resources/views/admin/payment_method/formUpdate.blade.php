@@ -36,14 +36,7 @@
                                     value="{{ $option->number }}">
                             </div>
                         </div>
-                        <div class="form-group d-flex mb-2">
-                            <label class="col-md-3 control-label">Chủ tài khoản<span class="required"
-                                    aria-required="true">(*)</span></label>
-                            <div class="col-md-9">
-                                <input type="text" name="account" class="form-control" required
-                                    value="{{ $option->name }}">
-                            </div>
-                        </div>
+                    
                         <div class="form-group d-flex mb-2">
                             <label class="col-md-3 control-label">Ảnh QrCode</label>
                             <div class="col-md-9">

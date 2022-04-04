@@ -89,7 +89,7 @@ class AdminBannerController extends Controller
 		if($banner->unit_name != $request->unit_name){
 			$message .= 'đơn vị sử dụng: '.$banner->unit_name.' -> '. $request->unit_name.', ';
 		}
-		if(strtotime($banner->expire_date) != strtotime($banner->expire_date)){
+		if(strtotime($banner->expire_date) != strtotime($request->expire_date)){
 			$message .= 'hạn sử dụng: '.$banner->expire_date.' -> '. $request->expire_date.', ';
 		}
 		if($banner->file != $banner->file){

@@ -31,7 +31,8 @@
                     @foreach ($notices as $notice)
                         <tr style="text-align:center">
                             <td>{{ date('d-m-Y H:i:s', strtotime($notice->created_at)) }}</td>
-                            <td><a href="{{route('notice.edit', $notice->id)}}">{{$notice->title}}</a></td>
+                            {{-- <td><a href="{{route('notice.edit', $notice->id)}}">{{$notice->title}}</a></td> --}}
+                            <td>{{$notice->title}}</td>
                             <td>{{ $notice->short_content }}</td>
                             {{-- <td>
                                 <div class="input-group justify-content-center" style="min-width: 108px;">

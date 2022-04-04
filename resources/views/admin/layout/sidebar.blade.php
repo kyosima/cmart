@@ -22,7 +22,8 @@
                 </a>
             </li>
         @endif
-        @if (auth()->guard('admin')->user()->can('Truy cập thông báo'))
+        @if (auth()->guard('admin')->user()->can('Truy cập thông báo')||
+        auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
             <li class="dropdown">
                 <a href="#" class="dropbtn">
                     <i class="fa fa-bell" aria-hidden="true"></i>
@@ -31,7 +32,8 @@
                 </a>
                 <span class="dropdown-content">
                     <a href="{{ route('notice.index') }}">Danh sách thông báo</a>
-                    @if (auth()->guard('admin')->user()->can('Tạo thông báo'))
+                    @if (auth()->guard('admin')->user()->can('Tạo thông báo')||
+                    auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <a href="{{ route('notice.create') }}">Tạo thông báo</a>
                     @endif
                 </span>
@@ -136,7 +138,7 @@
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <a href="{{ route('point.Transfer') }}">Chuyển C</a>
                     @endif
-                    @if (auth()->guard('admin')->user()->can('Truy cập mục TTL') ||(auth()->guard('admin')->user()->can('Nạp thêm C vào tk C-Mart')) ||
+                    @if (auth()->guard('admin')->user()->can('Truy cập mục TTL') || auth()->guard('admin')->user()->can('Truy cập mục chuyển C') ||(auth()->guard('admin')->user()->can('Nạp thêm C vào tk C-Mart')) ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
                         <a href="{{ route('point.account') }}">Tài khoản C / C-Mart</a>
                         <a href="{{ route('point.historyReceiver') }}">Lịch sử nhận C</a>
@@ -197,7 +199,7 @@
         @endif
 
 
-        @if (auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
+        @if (auth()->guard('admin')->user()->can('Truy cập mục cài đặt') || auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
             <li class="dropdown">
                 <a href="{{ route('setting.index') }}" class="dropbtn">
                     <i class="fas fa-cog"></i>

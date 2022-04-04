@@ -465,6 +465,8 @@
                         "conditions": {
                             "number": {
                                 "equals": '=',
+                                'gt': 'Greater Than'
+
                             },
                             "string": {
                                 "contains": '=',

@@ -66,7 +66,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('lichsudiemm', [PointHistoryController::class, 'lichsudiemM'])->name('lichsudiemm');
 
     //Danh sách lịch sử thao tác
-    Route::group(['middleware' => ['permission:|'.config('custom-config.name-all-permission').',admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập lịch sử thao tác hệ thống|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/lich-su-thao-tac-he-thong', [AdminLogController::class, 'index'])->name('log');
     });
     //Danh sach vi diem
@@ -170,7 +170,7 @@ Route::group(['middleware' => ['admin']], function () {
     });
 
 
-    Route::group(['middleware' => ['permission:'.config('custom-config.name-all-permission').',admin']], function () {
+    Route::group(['middleware' => ['permission:Truy cập mục cài đặt|'.config('custom-config.name-all-permission').',admin']], function () {
         //setting
         Route::get('setting', [AdminSettingController::class, 'index'])->name('setting.index');
 
@@ -326,7 +326,7 @@ Route::group(['middleware' => ['admin']], function () {
     // Route::get('/nganh-nhom-hang/test/{id}/{status}/{levelChange}', [AdminProductCategoryController::class, 'recursive'])->name('nganh-nhom-hang.recursive');
     //HistoryPoint
 
-    Route::group(['prefix'=>'diem-tich-luy','middleware' => ['permission:Truy cập mục TTL|Nạp thêm C vào tk C-Mart|'.config('custom-config.name-all-permission').',admin']], function () {
+    Route::group(['prefix'=>'diem-tich-luy','middleware' => ['permission:Truy cập mục TTL|Nạp thêm C vào tk C-Mart|Truy cập mục chuyển C|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('lich-su-nhan-diem', [AdminPointController::class, 'getHistoryReceiverC'])->name('point.historyReceiver');
         Route::get('lich-su-tich-luy', [AdminPointController::class, 'getAccumulationC'])->name('point.historyAccumulation');
         Route::get('lich-su-chuyen-khoan', [AdminPointController::class, 'getHistoryTransfer'])->name('point.historyTransfer');
@@ -337,16 +337,18 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('tai-khoan-cmart', [AdminPointController::class, 'getStatisticalAccount'])->name('point.account');
         Route::post('nap-c', [AdminPointController::class, 'postDeposit'])->name('point.deposit')->middleware('permission:Nạp thêm C vào tk C-Mart|'.config('custom-config.name-all-permission').',admin');
         Route::get('thong-ke-so-du-c', [AdminPointController::class, 'getRememberC'])->name('point.getRememberC');
-
+        Route::get('diem-tich-luy/chuyen-khoan', [AdminPointController::class, 'getTransfer'])->name('point.Transfer')->middleware('permission:Truy cập mục chuyển C|'.config('custom-config.name-all-permission').',admin');
+        Route::post('diem-tich-luy/chuyen-khoan', [AdminPointController::class, 'postTransfer'])->name('point.postTransfer')->middleware('permission:Truy cập mục chuyển C|'.config('custom-config.name-all-permission').',admin');
+    
 
     });
     Route::get('diem-tich-luy/chuyen-khoan', [AdminPointController::class, 'getTransfer'])->name('point.Transfer')->middleware('permission:Truy cập mục chuyển C|'.config('custom-config.name-all-permission').',admin');
     Route::post('diem-tich-luy/chuyen-khoan', [AdminPointController::class, 'postTransfer'])->name('point.postTransfer')->middleware('permission:Truy cập mục chuyển C|'.config('custom-config.name-all-permission').',admin');
 
-    Route::group(['prefix'=>'thong-bao','middleware' => ['permission:Quản lý thông báo,admin']], function () {
+    Route::group(['prefix'=>'thong-bao','middleware' => ['permission:Truy cập thông báo|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/', [AdminNoticeController::class, 'index'])->name('notice.index');
     });
-    Route::group(['prefix'=>'thong-bao','middleware' => ['permission:Tạo thông báo,admin']], function () {
+    Route::group(['prefix'=>'thong-bao','middleware' => ['permission:Tạo thông báo|'.config('custom-config.name-all-permission').',admin']], function () {
 
         Route::get('tao-thong-bao', [AdminNoticeController::class, 'create'])->name('notice.create');
         Route::post('tao-thong-bao', [AdminNoticeController::class, 'store'])->name('notice.store');
