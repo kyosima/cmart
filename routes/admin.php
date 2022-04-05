@@ -408,7 +408,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::delete('/chuyen-muc-bai-viet/multiple-delete', [BlogCategoryController::class, 'multipleDestory'])->name('chuyenmuc-baiviet.multipleDestory');
     });
 
-    Route::group(['middleware' => ['permission:Quản lý yêu cầu thay đổi thông tin tài khoản khách hàng,admin']], function(){
+    Route::group(['middleware' => ['permission:Quản lý yêu cầu thay đổi thông tin tài khoản khách hàng|'.config('custom-config.name-all-permission').',admin']], function(){
         Route::get('/quan-ly-yeu-cau-thay-doi-thong-tin', [AdminEkycController::class, 'index'])->name('ekyc.index');
         Route::get('/quan-ly-yeu-cau-thay-doi-thong-tin/duyet', [AdminEkycController::class, 'changeStatus'])->name('ekyc.changeStatus');
     });

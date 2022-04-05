@@ -109,6 +109,7 @@ Route::post('tai-khoan/yeu-cau-thay-doi-thong-tin', [EkycController::class, 'get
 
 Route::prefix('tai-khoan')->group(function () {
     Route::get('ekyc', [EkycVNPTController::class, 'index'])->name('vnpt.index');
+    Route::post('post-ekyc', [EkycVNPTController::class, 'postResult'])->name('vnpt.postResult');
 });
 
 //Route - Liên hệ

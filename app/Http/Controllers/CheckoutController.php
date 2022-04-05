@@ -760,6 +760,8 @@ class CheckoutController extends Controller
                         $result = $result->getData();
                         if ($result->status == 200) {
                             session()->put('link-payment-ninepay', $result->data);
+                            $this->processOrder($order);
+
                             return redirect()->away($result->data);
                         } else {
                             return redirect()->route('paymentFail');
@@ -773,6 +775,8 @@ class CheckoutController extends Controller
                         $result = $result->getData();
                         if ($result->status == 200) {
                             Session::put('link-payment-ninepay', $result->data);
+                            $this->processOrder($order);
+
                             return redirect()->away($result->data);
                         } else {
                             return redirect()->route('paymentFail');
@@ -786,6 +790,7 @@ class CheckoutController extends Controller
                         $result = $result->getData();
                         if ($result->status == 200) {
                             Session::put('link-payment-ninepay', $result->data);
+                            $this->processOrder($order);
                             return redirect()->away($result->data);
                         } else {
                             return redirect()->route('paymentFail');
