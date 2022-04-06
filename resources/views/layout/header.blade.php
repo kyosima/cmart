@@ -234,55 +234,57 @@
         </nav>
     </div>
     </div>
-    <div class=" d-flex flex-column justify-center align-items-center bannercmart pt-2" id="gradient">
-        {{-- <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
-            Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
-        </span> --}}
-
-        <p>
-            Mọi liên hệ nên thực hiện <b>từ Số điện thoại đăng ký giao dịch</b> và <b>đến các kênh kết nối chính thức
-                của C-Mart</b>
-        </p>
-
-    </div>
-    <div class="container">
-        <div class="d-flex justify-content-around align-items-center ct-header">
-
-            <div class="box-contacth">
-                <b class="d-flex align-items-center justify-content-center"><img
-                        src="{{ asset('/public/image/phone.png') }}" alt=""><a
-                        href="tel:0899663883">0899.663.883</a></b>
-                <small>Kênh Hỗ trợ - Đặt hàng</small>
-            </div>
-            <div class="box-contacth">
-                <b class="d-flex align-items-center justify-content-center"><img
-                        src="{{ asset('/public/image/facebook.png') }}" alt=""><a
-                        href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
-                <small>Kênh Hỗ trợ - Đặt hàng</small>
-
-            </div>
-            <div class="box-contacth">
-                <b class="d-flex align-items-center justify-content-center"><img
-                        src="{{ asset('/public/image/zalo.png') }}" alt=""><a
-                        href="https://zalo.me/3597490523695148504">Zalo</a></b>
-                <small>Kênh Hỗ trợ - Đặt hàng</small>
-
-            </div>
-            <div class="box-contacth">
-                <b class="d-flex align-items-center justify-content-center"><img
-                        src="{{ asset('/public/image/email.png') }}" alt=""><a
-                        href="mailto:center@cm.com.vn">center@cm.com.vn</a></b>
-                <small>Kênh dành cho Tổ chức</small>
-
-            </div>
-        </div>
-        <div class="text-center">
-            <h5 class="store-system-hello"><a href="https://cm.com.vn/chinh-sach/he-thong-kenh-cua-hang-c-store"><b> Hệ thống các kênh Cửa hàng C-Store </b></a></h5>
-            <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách Hàng</p>
-        </div>
-    </div>
+   
+    
 
 </header>
+<div class=" d-flex flex-column justify-center align-items-center bannercmart pt-2" id="gradient">
+    {{-- <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
+        Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
+    </span> --}}
+
+    <p>
+        Mọi liên hệ nên thực hiện <b>từ Số điện thoại đăng ký giao dịch</b> và <b>đến các kênh kết nối chính thức
+            của C-Mart</b>
+    </p>
+
+</div>
+<div class="container">
+    <div class="d-flex justify-content-around align-items-center ct-header">
+
+        <div class="box-contacth">
+            <b class="d-flex align-items-center justify-content-center"><img
+                    src="{{ asset('/public/image/phone.png') }}" alt=""><a
+                    href="tel:0899663883">0899.663.883</a></b>
+            <small>Kênh Hỗ trợ - Đặt hàng</small>
+        </div>
+        <div class="box-contacth">
+            <b class="d-flex align-items-center justify-content-center"><img
+                    src="{{ asset('/public/image/facebook.png') }}" alt=""><a
+                    href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
+            <small>Kênh Hỗ trợ - Đặt hàng</small>
+
+        </div>
+        <div class="box-contacth">
+            <b class="d-flex align-items-center justify-content-center"><img
+                    src="{{ asset('/public/image/zalo.png') }}" alt=""><a
+                    href="https://zalo.me/3597490523695148504">Zalo</a></b>
+            <small>Kênh Hỗ trợ - Đặt hàng</small>
+
+        </div>
+        <div class="box-contacth">
+            <b class="d-flex align-items-center justify-content-center"><img
+                    src="{{ asset('/public/image/email.png') }}" alt=""><a
+                    href="mailto:center@cm.com.vn">center@cm.com.vn</a></b>
+            <small>Kênh dành cho Tổ chức</small>
+
+        </div>
+    </div>
+    <div class="text-center">
+        <h5 class="store-system-hello"><a href="https://cm.com.vn/chinh-sach/he-thong-kenh-cua-hang-c-store"><b> Hệ thống các kênh Cửa hàng C-Store </b></a></h5>
+        <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách Hàng</p>
+    </div>
+</div>
 <!-- menu-tablet-mobile -->
 <header class="header-tablet-mobile">
 

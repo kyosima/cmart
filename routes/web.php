@@ -103,13 +103,16 @@ Route::get('don-hang/chi-tiet', [OrderController::class, 'getCbill'])->name('get
 Route::get('tim-kiem', [ProductCategoryController::class, 'getSearch'])->name('search');
 Route::get('tim-kiem/goi-y', [ProductCategoryController::class, 'getSearchSuggest'])->name('search.suggest');
 
-Route::get('tai-khoan/xac-thuc', [EkycController::class, 'getVerifyAccount'])->name('ekyc.getVerify');
-Route::post('tai-khoan/xac-thuc', [EkycController::class, 'postVerifyAccount'])->name('ekyc.postVerify');
-Route::post('tai-khoan/yeu-cau-thay-doi-thong-tin', [EkycController::class, 'getRequestChangeEkyc'])->name('ekyc.change');
+// Route::get('tai-khoan/xac-thuc', [EkycController::class, 'getVerifyAccount'])->name('ekyc.getVerify');
+// Route::post('tai-khoan/xac-thuc', [EkycController::class, 'postVerifyAccount'])->name('ekyc.postVerify');
+// Route::post('tai-khoan/yeu-cau-thay-doi-thong-tin', [EkycController::class, 'getRequestChangeEkyc'])->name('ekyc.change');
 
 Route::prefix('tai-khoan')->group(function () {
     Route::get('ekyc', [EkycVNPTController::class, 'index'])->name('vnpt.index');
     Route::post('post-ekyc', [EkycVNPTController::class, 'postResult'])->name('vnpt.postResult');
+    Route::get('confirm-ekyc', [EkycVNPTController::class, 'confirmResult'])->name('vnpt.confirmResult');
+    Route::post('yeu-cau-thay-doi-thong-tin', [EkycVNPTController::class, 'getRequestChangeEkyc'])->name('vnpt.changeEKYC');
+
 });
 
 //Route - Liên hệ

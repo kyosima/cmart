@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                             @if ($profileUser->change_ekyc == 1)
-                                <a href="{{ route('ekyc.getVerify') }}" class="w-100 btn btn-success">Thực hiện thay
+                                <a href="{{ route('vnpt.index') }}" class="w-100 btn btn-success">Thực hiện thay
                                     đổi thông tin bằng EKYC</a>
                             @else
                                 @if ($check == 0)
@@ -133,7 +133,7 @@
                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
-                                                <form action="{{ route('ekyc.change') }}" method="post">
+                                                <form action="{{ route('vnpt.changeEKYC') }}" method="post">
                                                     @csrf
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLongTitle">Gửu yêu cầu
@@ -184,33 +184,11 @@
                             <!--</div>-->
                         </div>
                         <div class="form-group">
-                            <select class="form-select mb-1" name="type_cmnd" aria-label="Default select example" readonly>
-                                @if ($profileUser->type_cmnd == 0)
-                                    <option value="0" selected>Chọn loại giấy tờ tùy thân</option>
-                                @elseif($profileUser->type_cmnd == 1)
-                                    <option value="1" selected>Chứng minh nhân dân</option>
-                                @elseif($profileUser->type_cmnd == 2)
-                                    <option value="2" selected>Căn cước công dân</option>
-                                @elseif($profileUser->type_cmnd == 3)
-                                    <option value="3" selected>Hộ chiếu</option>
-                                @else
-                                @endif
-
-                                @if ($profileUser->type_cmnd != 1)
-                                    <option value="1">Chứng minh nhân dân</option>
-                                @else
-                                @endif
-
-                                @if ($profileUser->type_cmnd != 2)
-                                    <option value="2">Căn cước công dân</option>
-                                @else
-                                @endif
-
-                                @if ($profileUser->type_cmnd != 3)
-                                    <option value="3">Hộ chiếu</option>
-                                @else
-                                @endif
-                            </select>
+                            <label for="">Loại giấy tờ tùy thân</label>
+                            <input type="text" class="form-control" name="" value="{{ $profileUser->type_cmnd}}" readonly> 
+                        </div>
+                        <div class="form-group">
+                            <label for="">ID giấy tờ tùy thân</label>
                             <input type="text" class="form-control" name="cmnd" value="{{ $profileUser->cmnd }}"
                                 placeholder="Mời nhập số CMND/CCCD/Hộ chiếu" readonly>
                         </div>
