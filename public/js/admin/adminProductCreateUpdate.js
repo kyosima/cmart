@@ -6,6 +6,80 @@ $(document).ready(function() {
         $('input[name="product_shock_price"]').rules('remove', 'required');
 
     }
+    if ($('input[name="is_shipping"]').is(':checked')) {
+        $('input[name="c_ship_price_df0"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_price_weight0"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_df0"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_weight0"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_distance0"]').rules('add', {
+            required: true
+        });
+
+        $('input[name="c_ship_price_df1"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_price_weight1"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_df1"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_weight1"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_distance1"]').rules('add', {
+            required: true
+        });
+
+        $('input[name="c_ship_price_df2"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_price_weight2"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_df2"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_weight2"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_distance2"]').rules('add', {
+            required: true
+        });
+
+        $('input[name="c_ship_price_df3"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_price_weight3"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_df3"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_weight3"]').rules('add', {
+            required: true
+        });
+        $('input[name="c_ship_fast_price_distance3"]').rules('add', {
+            required: true
+        });
+        $('input[name="product_price"]').rules('remove', 'required');
+        $('input[name="product_regular_price"]').rules('remove', 'required');
+        $('input[name="product_wholesale_price"]').rules('remove', 'required');
+        $('input[name="product_shock_price"]').rules('remove', 'required');
+        $('.block-spvc').css('display', 'block');
+
+
+    } else {
+        $('.block-spvc').css('display', 'none');
+    }
     $("form").validate({
         ignore: [],
         rules: {
@@ -96,8 +170,11 @@ $(document).ready(function() {
             product_wholesale_price: "Không được để trống",
             product_shock_price: "Không được để trống",
             payments: "Không được để trống",
-            tax: "Không được để trống"
+            tax: "Không được để trống",
+            price_weight: "Không được để trống",
+            price_distance: "Không được để trống"
         }
+
     });
     $('input[name="is_ecard"]').on('change', function() {
         if ($('input[name="is_ecard"]').is(':checked')) {
@@ -120,6 +197,136 @@ $(document).ready(function() {
                 required: true
             });
 
+
+        }
+    });
+    $('input[name="is_shipping"]').on('change', function() {
+        if ($('input[name="is_shipping"]').is(':checked')) {
+
+            $('input[name="c_ship_price_df0"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_price_weight0"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_df0"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_weight0"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_distance0"]').rules('add', {
+                required: true
+            });
+
+            $('input[name="c_ship_price_df0"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_price_weight0"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_df0"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_weight0"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_distance0"]').rules('add', {
+                required: true
+            });
+
+            $('input[name="c_ship_price_df1"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_price_weight1"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_df1"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_weight1"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_distance1"]').rules('add', {
+                required: true
+            });
+
+            $('input[name="c_ship_price_df2"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_price_weight2"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_df2"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_weight2"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_distance2"]').rules('add', {
+                required: true
+            });
+
+            $('input[name="c_ship_price_df3"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_price_weight3"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_df3"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_weight3"]').rules('add', {
+                required: true
+            });
+            $('input[name="c_ship_fast_price_distance3"]').rules('add', {
+                required: true
+            });
+            $('input[name="product_price"]').rules('remove', 'required');
+            $('input[name="product_regular_price"]').rules('remove', 'required');
+            $('input[name="product_wholesale_price"]').rules('remove', 'required');
+            $('input[name="product_shock_price"]').rules('remove', 'required');
+
+            $('.block-spvc').css('display', 'block');
+
+        } else {
+            $('input[name="c_ship_price_df0"]').rules('remove', 'required');
+            $('input[name="c_ship_price_weight0"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_df0"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_weight0"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_distance0"]').rules('remove', 'required');
+
+            $('input[name="c_ship_price_df1"]').rules('remove', 'required');
+            $('input[name="c_ship_price_weight1"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_df1"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_weight1"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_distance1"]').rules('remove', 'required');
+
+            $('input[name="c_ship_price_df2"]').rules('remove', 'required');
+            $('input[name="c_ship_price_weight2"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_df2"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_weight2"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_distance2"]').rules('remove', 'required');
+
+            $('input[name="c_ship_price_df3"]').rules('remove', 'required');
+            $('input[name="c_ship_price_weight3"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_df3"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_weight3"]').rules('remove', 'required');
+            $('input[name="c_ship_fast_price_distance3"]').rules('remove', 'required');
+
+            $('input[name="product_price"]').rules('add', {
+                required: true
+            });
+            $('input[name="product_regular_price"]').rules('add', {
+                required: true
+            });
+            $('input[name="product_wholesale_price"]').rules('add', {
+                required: true
+            });
+            $('input[name="product_shock_price"]').rules('add', {
+                required: true
+            });
+            $('.block-spvc').css('display', 'none');
         }
     });
 });

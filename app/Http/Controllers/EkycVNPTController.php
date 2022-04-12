@@ -18,9 +18,11 @@ class EkycVNPTController extends Controller
                 return view('ekyc_vnpt.index');
     
             }else{
-
                 return redirect()->route('home');
             }
+        }else{
+            return redirect()->route('account');
+
         }
     }
     public function getRequestChangeEkyc(Request $request){

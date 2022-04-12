@@ -43,7 +43,7 @@ Route::get('/lay-danh-muc-con', [ProductCategoryController::class, 'getMenuCateg
 Route::get('/lay-danh-muc-con-mobile', [ProductCategoryController::class, 'getMenuCategoryChildMobile'])->name('proCat.getCatChildMobile');
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
-
+    
 
 // Route::get('/huong-dan-dat-hang', [PolicyController::class,'hddh'])->name('policy.hddh');
 // Route::get('/chinh-sach-thanh-toan', [PolicyController::class,'cstt'])->name('policy.cstt');

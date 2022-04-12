@@ -64,35 +64,48 @@
                                                     href="{{ route('proBrand.index', $product->brand) }}">{{ $product->brand }}</a>
                                             </p>
                                         </div>
-                                        @if(Auth::check())
-                                            @if(in_array(Auth::user()->level, [3,4]))
+                                        @if (Auth::check())
+                                            @if (in_array(Auth::user()->level, [3, 4]))
                                             @else
                                                 <div class="manufacture info-detail">
                                                     <p>
-                                                    
-                                                        <span class="text-dark" style="font-weight: 300">Chiết khấu C <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
-                                                            class="ttt text-justify p-1"> Tiền Tích Lũy C là chiết khấu nhận được khi mua sản phẩm, có giá trị thanh toán tại C-Mart và các Đối Tác Liên Kết, có giá trị tích lũy tốt theo Chính sách Tiết Kiệm Tích Tài C-Saving, có giá trị lưu trữ không giới hạn
-                                                        </span></span>:</span><span class="text-dark"
+
+                                                        <span class="text-dark" style="font-weight: 300">Chiết khấu C
+                                                            <span class="tt"><i
+                                                                    class="text-danger fa fa-question-circle-o"></i><span
+                                                                    class="ttt text-justify p-1"> Tiền Tích Lũy C là chiết
+                                                                    khấu nhận được khi mua sản phẩm, có giá trị thanh toán
+                                                                    tại C-Mart và các Đối Tác Liên Kết, có giá trị tích lũy
+                                                                    tốt theo Chính sách Tiết Kiệm Tích Tài C-Saving, có giá
+                                                                    trị lưu trữ không giới hạn
+                                                                </span></span>:</span><span class="text-dark"
                                                             style="font-weight: 600">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
-                                                            </span>
-                                                         
+                                                        </span>
+
                                                     </p>
                                                     <p>
-                                                    
-                                                        <span class="text-dark" style="font-weight: 300">Chiết khấu M <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
-                                                            class="ttt text-justify p-1">Điểm Dịch Vụ M là chiết khấu nhận được khi mua sản phẩm, có chức năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển, phí thanh toán...). Số dư M còn lại sẽ được hoàn vào Tài khoản Tiền Tích Lũy của HSKH đặt hàng. Thời gian tra soát: 30 ngày kể từ ngày đơn hàng hoàn thành
-                                                        </span></span>:</span><span class="text-dark"
+
+                                                        <span class="text-dark" style="font-weight: 300">Chiết khấu M
+                                                            <span class="tt"><i
+                                                                    class="text-danger fa fa-question-circle-o"></i><span
+                                                                    class="ttt text-justify p-1">Điểm Dịch Vụ M là chiết
+                                                                    khấu nhận được khi mua sản phẩm, có chức năng giảm trừ
+                                                                    theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận
+                                                                    chuyển, phí thanh toán...). Số dư M còn lại sẽ được hoàn
+                                                                    vào Tài khoản Tiền Tích Lũy của HSKH đặt hàng. Thời gian
+                                                                    tra soát: 30 ngày kể từ ngày đơn hàng hoàn thành
+                                                                </span></span>:</span><span class="text-dark"
                                                             style="font-weight: 600">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
-                                                            </span>
-                                                                                
+                                                        </span>
+
                                                     </p>
-        
+
                                                     <style>
                                                         .tt {
                                                             position: relative;
                                                             display: inline-block;
                                                         }
-        
+
                                                         .tt .ttt {
                                                             visibility: hidden;
                                                             top: -25px;
@@ -105,68 +118,83 @@
                                                             position: absolute;
                                                             z-index: 1;
                                                         }
-        
+
                                                         .tt:hover .ttt {
                                                             visibility: visible;
                                                         }
-        
+
                                                     </style>
                                                 </div>
                                             @endif
                                         @else
-                                        <div class="manufacture info-detail">
-                                            <p>
-                                              
-                                                <span class="text-dark" style="font-weight: 300">Chiết khấu C <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
-                                                    class="ttt"> Tiền Tích Lũy C là chiết khấu nhận được khi mua sản phẩm, có giá trị thanh toán tại C-Mart và các Đối Tác Liên Kết, có giá trị tích lũy tốt theo Chính sách Tiết Kiệm Tích Tài C-Saving, có giá trị lưu trữ không giới hạn
-                                                </span></span>:</span><span class="text-dark"
-                                                    style="font-weight: 600">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
+                                            <div class="manufacture info-detail">
+                                                <p>
+
+                                                    <span class="text-dark" style="font-weight: 300">Chiết khấu C <span
+                                                            class="tt"><i
+                                                                class="text-danger fa fa-question-circle-o"></i><span
+                                                                class="ttt"> Tiền Tích Lũy C là chiết khấu nhận
+                                                                được khi mua sản phẩm, có giá trị thanh toán tại C-Mart và
+                                                                các Đối Tác Liên Kết, có giá trị tích lũy tốt theo Chính
+                                                                sách Tiết Kiệm Tích Tài C-Saving, có giá trị lưu trữ không
+                                                                giới hạn
+                                                            </span></span>:</span><span class="text-dark"
+                                                        style="font-weight: 600">{{ number_format($product->productPrice()->value('cpoint'), 0, '.', ',') }}
                                                     </span>
-                                                  
-                                            </p>
-                                            <p>
-                                              
-                                                <span class="text-dark" style="font-weight: 300">Chiết khấu M <span class="tt"><i class="text-danger fa fa-question-circle-o"></i><span
-                                                    class="ttt">Điểm Dịch Vụ M là chiết khấu nhận được khi mua sản phẩm, có chức năng giảm trừ theo giá trị tương ứng cho mọi loại phí dịch vụ (phí vận chuyển, phí thanh toán...). Số dư M còn lại sẽ được hoàn vào Tài khoản Tiền Tích Lũy của HSKH đặt hàng. Thời gian tra soát: 30 ngày kể từ ngày đơn hàng hoàn thành
-                                                </span></span>:</span><span class="text-dark"
-                                                    style="font-weight: 600">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
+
+                                                </p>
+                                                <p>
+
+                                                    <span class="text-dark" style="font-weight: 300">Chiết khấu M <span
+                                                            class="tt"><i
+                                                                class="text-danger fa fa-question-circle-o"></i><span
+                                                                class="ttt">Điểm Dịch Vụ M là chiết khấu nhận
+                                                                được khi mua sản phẩm, có chức năng giảm trừ theo giá trị
+                                                                tương ứng cho mọi loại phí dịch vụ (phí vận chuyển, phí
+                                                                thanh toán...). Số dư M còn lại sẽ được hoàn vào Tài khoản
+                                                                Tiền Tích Lũy của HSKH đặt hàng. Thời gian tra soát: 30 ngày
+                                                                kể từ ngày đơn hàng hoàn thành
+                                                            </span></span>:</span><span class="text-dark"
+                                                        style="font-weight: 600">{{ number_format($product->productPrice()->value('mpoint'), 0, '.', ',') }}
                                                     </span>
-                                                                        
-                                            </p>
 
-                                            <style>
-                                                .tt {
-                                                    position: relative;
-                                                    display: inline-block;
-                                                }
+                                                </p>
 
-                                                .tt .ttt {
-                                                    visibility: hidden;
-                                                    top: -25px;
-                                                    width: 400px;
-                                                    background-color: #0000008c;
-                                                    color: #fff !important;
-                                                    text-align: center;
-                                                    border-radius: 6px;
-                                                    padding: 5px 0;
-                                                    position: absolute;
-                                                    z-index: 1;
-                                                }
+                                                <style>
+                                                    .tt {
+                                                        position: relative;
+                                                        display: inline-block;
+                                                    }
 
-                                                .tt:hover .ttt {
-                                                    visibility: visible;
-                                                }
+                                                    .tt .ttt {
+                                                        visibility: hidden;
+                                                        top: -25px;
+                                                        width: 400px;
+                                                        background-color: #0000008c;
+                                                        color: #fff !important;
+                                                        text-align: center;
+                                                        border-radius: 6px;
+                                                        padding: 5px 0;
+                                                        position: absolute;
+                                                        z-index: 1;
+                                                    }
 
-                                            </style>
-                                        </div>
+                                                    .tt:hover .ttt {
+                                                        visibility: visible;
+                                                    }
+
+                                                </style>
+                                            </div>
                                         @endif
-                                        
+
 
                                         <div class="all-price">
-                                            @if($product->is_ecard == 0)
-                                            <p class="new-price">{{ formatPriceOfLevel($product) }}</p>
+                                            @if ($product->is_ecard == 1)
+                                                <input type="number" placeholder="Mời nhập giá bạn muốn mua" value=""
+                                                    name="price" class="form-control">
+                                            @elseif($product->is_shipping == 1)
                                             @else
-                                            <input type="number" placeholder="Mời nhập giá bạn muốn mua" value="" name="price" class="form-control">
+                                                <p class="new-price">{{ formatPriceOfLevel($product) }}</p>
                                             @endif
                                             {{-- @if ($product->shock_price != null || $product->shock_price != 0)
                                             <p class="new-price">{{ formatPrice($product->shock_price) }}</p>
@@ -194,36 +222,39 @@
                                     </div> --}}
                                     </div>
                                     <div class="col-sm-12 col-md-12 col-lg-6">
-                                        @if(Auth::check())
-                                        <input type="hidden" class="card-quality-input" name="product_id"
-                                            value="{{ $product->id }}">
-                                        {{-- <div class="form-group">
+                                        @if (Auth::check())
+                                            <input type="hidden" class="card-quality-input" name="product_id"
+                                                value="{{ $product->id }}">
+                                            {{-- <div class="form-group">
 
                                             <label for="sl-store">Chọn cửa hàng</label>
                                             <select name="store_id" id="sl-store" class="form-control">
                                                 <option value="0">---Chọn cửa hàng---</option> --}}
-                                                <p><b>Danh sách cửa hàng</b></p>
-                                                @foreach ($stores as $store)
-                                                    @if (in_array($user->level, array_diff(explode(',', $store->getOriginal('pivot_for_user')),array(""))))
-                                                        {{-- <option value="{{ $store->id }}"
+                                            <p><b>Danh sách cửa hàng</b></p>
+                                            @foreach ($stores as $store)
+                                                @if (in_array($user->level, array_diff(explode(',', $store->getOriginal('pivot_for_user')), [''])))
+                                                    {{-- <option value="{{ $store->id }}"
                                                             @if ($store->getOriginal('pivot_soluong') == 0) disabled @endif>
                                                             {{ $store->name }} còn
                                                             {{ $store->getOriginal('pivot_soluong') }} sản
                                                             phẩm</option> --}}
-                                                            @if( $store->getOriginal('pivot_soluong') >0)
-                                                            <div class="form-group d-flex justify-content-start align-items-center">
-                                                                <input type="radio" id="store-{{ $store->id}}" name="store_id" value="{{ $store->id }}">
-                                                                <label style="margin-bottom: 0; padding-left: 3px" for="store-{{ $store->id}}"> {{ $store->name }} (còn
-                                                                    {{ $store->getOriginal('pivot_soluong') }} sản
-                                                                    phẩm)</label>
-                                                            </div>
-                                                            @endif
+                                                    @if ($store->getOriginal('pivot_soluong') > 0)
+                                                        <div
+                                                            class="form-group d-flex justify-content-start align-items-center">
+                                                            <input type="radio" id="store-{{ $store->id }}"
+                                                                name="store_id" value="{{ $store->id }}">
+                                                            <label style="margin-bottom: 0; padding-left: 3px"
+                                                                for="store-{{ $store->id }}"> {{ $store->name }} (còn
+                                                                {{ $store->getOriginal('pivot_soluong') }} sản
+                                                                phẩm)</label>
+                                                        </div>
                                                     @endif
-                                                @endforeach
+                                                @endif
+                                            @endforeach
                                             {{-- </select> --}}
                                             <p class="text-danger" id="notice-store" style="display:none">Chọn cửa hàng
                                                 trước khi thêm</p>
-                                        {{-- </div> --}}
+                                            {{-- </div> --}}
                                         @endif
                                     </div>
                                 </div>
@@ -236,20 +267,133 @@
 
 
                                     <div class="qty-block">
-                                        <div class="qty">
-                                            <input type="text" name="qty" maxlength="12" value="1" title=""
-                                                class="input-text" />
-                                            <div class="qty_inc_dec">
-                                                <i class="increment" onclick="incrementQty()">+</i>
-                                                <i class="decrement" onclick="decrementQty()">-</i>
+                                        <div class="input-product-shipping">
+                                            <label for="">Thông tin vận chuyển</label>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control"
+                                                            placeholder="Nhập khối lượng vận chuyển">
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control"
+                                                            placeholder="Nhập Chiều dài vận chuyển">
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control"
+                                                            placeholder="Nhập Chiều cao vận chuyển">
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control"
+                                                            placeholder="Nhập Chiều rộng vận chuyển">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label for="">Địa chỉ gửi</label>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="">Cấp tỉnh<sup class="text-danger">*</sup></label>
+                                                        <select name="sel_province" class="form-control select2"
+                                                            data-placeholder="---Chọn tỉnh thành---" required>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="">Cấp huyện<sup class="text-danger">*</sup></label>
+                                                        <select class="form-control select2" name="sel_district"
+                                                            data-placeholder="---Chọn quận huyên---" required>
+
+                                                            <option value="">Cấp huyện</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="">Cấp xã<sup class="text-danger">*</sup></label>
+                                                        <select class="form-control select2" name="sel_ward"
+                                                            data-placeholder="---Chọn phường xã---" required>
+
+                                                            <option value="">Cấp xã</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="">Địa chỉ chi tiết<sup
+                                                                class="text-danger">*</sup></label>
+                                                        <input type="text" name="address" class="form-control" value=""
+                                                            placeholder="Mời nhập địa chỉ" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label for="">Địa chỉ nhận</label>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="">Cấp tỉnh<sup class="text-danger">*</sup></label>
+                                                        <select name="sel_province_to" class="form-control select2"
+                                                            data-placeholder="---Chọn tỉnh thành---" required>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="">Cấp huyện<sup class="text-danger">*</sup></label>
+                                                        <select class="form-control select2" name="sel_district_to"
+                                                            data-placeholder="---Chọn quận huyên---" required>
+
+                                                            <option value="">Cấp huyện</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="">Cấp xã<sup class="text-danger">*</sup></label>
+                                                        <select class="form-control select2" name="sel_ward_to"
+                                                            data-placeholder="---Chọn phường xã---" required>
+
+                                                            <option value="">Cấp xã</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="">Địa chỉ chi tiết<sup
+                                                                class="text-danger">*</sup></label>
+                                                        <input type="text" name="address_to" class="form-control" value=""
+                                                            placeholder="Mời nhập địa chỉ" required>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        @if(Auth::check())
-                                        <button type="submit" title="Add to Cart" class="btn-cart">Thêm vào
-                                            giỏ hàng</button>
+                                        @if ($product->is_shipping == 1)
+                                            <input type="hidden" name="qty" maxlength="12" value="1" title=""
+                                                class="input-text" />
                                         @else
-                                        <button onclick="location.href='{{ route('account') }}'" title="Add to Cart" class="btn-cart">Thêm vào
-                                            giỏ hàng</button>
+                                            <div class="qty">
+                                                <input type="text" name="qty" maxlength="12" value="1" title=""
+                                                    class="input-text" />
+                                                <div class="qty_inc_dec">
+                                                    <i class="increment" onclick="incrementQty()">+</i>
+                                                    <i class="decrement" onclick="decrementQty()">-</i>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if (Auth::check())
+                                            <button type="submit" title="Add to Cart" class="btn-cart">Thêm vào
+                                                giỏ hàng</button>
+                                        @else
+                                            <button onclick="location.href='{{ route('account') }}'" title="Add to Cart"
+                                                class="btn-cart">Thêm vào
+                                                giỏ hàng</button>
                                         @endif
                                     </div>
                                 </div>
@@ -634,6 +778,8 @@
 
 
 @push('scripts')
+    <script src="{{ asset('public/js/address.js') }}"></script>
+    <script src="{{ asset('public/js/address_to.js') }}"></script>
     <script src="{{ asset('public/js/fotorama.js') }}"></script>
     <script src="{{ asset('public/js/main.js') }}"></script>
     <script src="https://kenwheeler.github.io/slick/slick/slick.js"></script>

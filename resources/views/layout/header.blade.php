@@ -78,14 +78,16 @@
                                                                 href="{{ url('/xac-thuc-ho-so') }}">Thông tin
                                                                 HSKH</a>
                                                             <a class="dropdown-item text-dark"
-                                                                href="{{ route('order.history')}}">Lịch sử
+                                                                href="{{ route('order.history') }}">Lịch sử
                                                                 đơn
                                                                 hàng</a>
                                                             <a class="dropdown-item text-dark"
                                                                 href="{{ url('/lich-su-tien-tich-luy') }}">Tài khoản
                                                                 C</a>
                                                             <a class="dropdown-item text-dark"
-                                                                href="{{route('noticeuser.index')}}">Thông báo <sup class="text-danger font-weight-bold">{{ Auth::user()->notices()->whereIsRead(0)->count() }} </span></a>
+                                                                href="{{ route('noticeuser.index') }}">Thông báo <sup
+                                                                    class="text-danger font-weight-bold">{{ Auth::user()->notices()->whereIsRead(0)->count() }}
+                                                                    </span></a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item text-danger"
                                                                 href="{{ route('logoutuser') }}">Đăng
@@ -189,8 +191,9 @@
                                         <ul class="dropdown-navcmart dvcmart">
                                             @php
                                                 $pages = App\Models\InfoCompany::whereType('service')
-                                                ->orderBy('sort', 'asc')->whereStatus(1)
-                                                ->get();
+                                                    ->orderBy('sort', 'asc')
+                                                    ->whereStatus(1)
+                                                    ->get();
                                             @endphp
                                             @foreach ($pages as $page)
                                                 <li><a rel="nofollow"
@@ -212,7 +215,8 @@
                                         <ul class="dropdown-navcmart">
                                             @php
                                                 $pages = App\Models\InfoCompany::whereType('policy')
-                                                    ->orderBy('sort', 'asc')->whereStatus(1)
+                                                    ->orderBy('sort', 'asc')
+                                                    ->whereStatus(1)
                                                     ->get();
                                             @endphp
                                             @foreach ($pages as $page)
@@ -234,57 +238,63 @@
         </nav>
     </div>
     </div>
-   
-    
+
+
 
 </header>
-<div class=" d-flex flex-column justify-center align-items-center bannercmart pt-2" id="gradient">
-    {{-- <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
-        Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
-    </span> --}}
-
-    <p>
-        Mọi liên hệ nên thực hiện <b>từ Số điện thoại đăng ký giao dịch</b> và <b>đến các kênh kết nối chính thức
-            của C-Mart</b>
-    </p>
-
-</div>
-<div class="container">
-    <div class="d-flex justify-content-around align-items-center ct-header">
-
-        <div class="box-contacth">
-            <b class="d-flex align-items-center justify-content-center"><img
-                    src="{{ asset('/public/image/phone.png') }}" alt=""><a
-                    href="tel:0899663883">0899.663.883</a></b>
-            <small>Kênh Hỗ trợ - Đặt hàng</small>
-        </div>
-        <div class="box-contacth">
-            <b class="d-flex align-items-center justify-content-center"><img
-                    src="{{ asset('/public/image/facebook.png') }}" alt=""><a
-                    href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
-            <small>Kênh Hỗ trợ - Đặt hàng</small>
-
-        </div>
-        <div class="box-contacth">
-            <b class="d-flex align-items-center justify-content-center"><img
-                    src="{{ asset('/public/image/zalo.png') }}" alt=""><a
-                    href="https://zalo.me/3597490523695148504">Zalo</a></b>
-            <small>Kênh Hỗ trợ - Đặt hàng</small>
-
-        </div>
-        <div class="box-contacth">
-            <b class="d-flex align-items-center justify-content-center"><img
-                    src="{{ asset('/public/image/email.png') }}" alt=""><a
-                    href="mailto:center@cm.com.vn">center@cm.com.vn</a></b>
-            <small>Kênh dành cho Tổ chức</small>
-
+<div class="header-site">
+    <div class="bg-white d-flex flex-column justify-center align-items-center bannercmart pt-2" id="gradient">
+        {{-- <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
+            Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
+        </span> --}}
+    
+        <p>
+            Mọi liên hệ nên thực hiện <b>từ Số điện thoại đăng ký giao dịch</b> và <b>đến các kênh kết nối chính thức
+                của C-Mart</b>
+        </p>
+    
+    </div>
+    <div class="bg-white">
+        <div class="container">
+            <div class="d-flex justify-content-around align-items-top ct-header">
+    
+                <div class="box-contacth">
+                    <b class="d-flex align-items-center justify-content-center"><img
+                            src="{{ asset('/public/image/phone.png') }}" alt=""><a
+                            href="tel:0899663883">0899.663.883</a></b>
+                    <small>Kênh Hỗ trợ - Đặt hàng</small>
+                </div>
+                <div class="box-contacth">
+                    <b class="d-flex align-items-center justify-content-center"><img
+                            src="{{ asset('/public/image/facebook.png') }}" alt=""><a
+                            href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
+                    <small>Kênh Hỗ trợ - Đặt hàng</small>
+    
+                </div>
+                <div class="box-contacth">
+                    <b class="d-flex align-items-center justify-content-center"><img
+                            src="{{ asset('/public/image/zalo.png') }}" alt=""><a
+                            href="https://zalo.me/3597490523695148504">Zalo</a></b>
+                    <small>Kênh Hỗ trợ - Đặt hàng</small>
+    
+                </div>
+                <div class="box-contacth">
+                    <b class="d-flex align-items-center justify-content-center"><img
+                            src="{{ asset('/public/image/email.png') }}" alt=""><a
+                            href="mailto:center@cm.com.vn">center@cm.com.vn</a></b>
+                    <small>Kênh dành cho Tổ chức</small>
+    
+                </div>
+            </div>
+            <div class="text-center">
+                <h5 class="store-system-hello"><a href="https://cm.com.vn/chinh-sach/he-thong-kenh-cua-hang-c-store"><b> Hệ
+                            thống các kênh Cửa hàng C-Store </b></a></h5>
+                <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách Hàng</p>
+            </div>
         </div>
     </div>
-    <div class="text-center">
-        <h5 class="store-system-hello"><a href="https://cm.com.vn/chinh-sach/he-thong-kenh-cua-hang-c-store"><b> Hệ thống các kênh Cửa hàng C-Store </b></a></h5>
-        <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách Hàng</p>
-    </div>
 </div>
+
 <!-- menu-tablet-mobile -->
 <header class="header-tablet-mobile">
 
@@ -350,15 +360,16 @@
                                             <button class="title collapsed" type="button" data-toggle="collapse"
                                                 data-target="#collapse-{{ $item->id }}" aria-expanded="false"
                                                 aria-controls="collapse-{{ $item->id }}"
-                                                data-id="{{ $item->id }}" data-url="{{route('proCat.getCatChildMobile')}}"
-                                                    onclick="getCategoryChildMobile(this)">
+                                                data-id="{{ $item->id }}"
+                                                data-url="{{ route('proCat.getCatChildMobile') }}"
+                                                onclick="getCategoryChildMobile(this)">
                                                 <a href="{{ route('proCat.index', $item->slug) }}"
                                                     title="{{ $item->name }}">{{ $item->name }}</a>
                                                 <span class="expand-menu">
                                                     <i class="fas fas-custom fa-angle-right"></i>
                                                 </span>
                                             </button>
-                                            <ul id="collapse-{{$item->id}}" class="collapse sub-nav">
+                                            <ul id="collapse-{{ $item->id }}" class="collapse sub-nav">
                                             </ul>
                                         </li>
                                     </div>

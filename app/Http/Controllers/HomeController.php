@@ -36,7 +36,7 @@ class HomeController extends Controller
             ->get();
         if (Auth::check()) {
             if (Auth::user()->is_ekyc == 0) {
-                return redirect()->route('ekyc.getVerify');
+                return redirect()->route('vnpt.index');
             }
         }
         if(Auth::check()){
@@ -91,7 +91,7 @@ class HomeController extends Controller
             }
             if (Auth::check()) {
                 if (Auth::user()->is_ekyc == 0) {
-                    return redirect()->route('ekyc.getVerify');
+                    return redirect()->route('vnpt.index');
                 }
             }
             
@@ -271,16 +271,8 @@ class HomeController extends Controller
 
     public function getXacthuc()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            if ($user->is_ekyc == 0) {
-                return view('account.check_kyc_acc');
-            } else {
-                return redirect('/thong-tin-tai-khoan');
-            }
-        } else {
-            return redirect('tai-khoan')->with('thongbao', 'Bạn chưa đăng nhập!');
-        }
+        return redirect('/thong-tin-tai-khoan');
+
     }
 
     public function getProfile()

@@ -84,6 +84,36 @@ class AdminProductController extends Controller
                 'phi_xuly.numeric' => 'Phí xử lý phải là số',
                 'tax' => 'Thuế không được để trống',
             ]);
+        }elseif($request->is_shipping == 1){
+            $request->validate([
+                'product_sku' => 'required|unique:products,sku',
+                'product_name' => 'required|unique:products,name',
+                'slug' => 'unique:products,slug',
+                'feature_img' => 'required',
+                'category_parent' => 'required',
+                'product_brand' => 'required',
+                'payments' => 'required',
+                'product_status' => 'required',
+                'cpoint' => 'nullable|numeric',
+                'mpoint' => 'nullable|numeric',
+                'phi_xuly' => 'nullable|numeric',
+                'tax' => 'required',
+            ], [
+                'product_sku.required' => 'SKU không được để trống',
+                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
+                'product_name.required' => 'Tên sản phẩm không được để trống',
+                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
+                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
+                'feature_img' => 'Ảnh đại diện không được để trống',
+                'category_parent' => 'Danh mục sản phẩm không được để trống',
+                'product_brand' => 'Thương hiệu không được để trống',
+                'payments' => 'Hình thức thanh toán không được để trống',
+                'product_status' => 'Trạng thái không được để trống',
+                'cpoint' => 'CPoint phải là số',
+                'mpoint' => 'MPoint phải là số',
+                'phi_xuly.numeric' => 'Phí xử lý phải là số',
+                'tax' => 'Thuế không được để trống',
+            ]);
         }else{
             $request->validate([
                 'product_sku' => 'required|unique:products,sku',
@@ -128,7 +158,9 @@ class AdminProductController extends Controller
             ]);
         }
         
-
+        if($request->is_ecard == null){
+            $request->is_ecard = 0;
+        }
         return DB::transaction(function () use ($request) {
             try {
                 $slug = Str::slug($request->product_name, '-');
@@ -150,6 +182,7 @@ class AdminProductController extends Controller
                     'status' => $request->product_status,
                     'long_desc' => $request->description,
                     'is_ecard' => $request->is_ecard,
+                    'is_shipping' => $request->is_shipping,
                     'meta_desc' => $request->meta_description,
                     'meta_keyword' => $request->meta_keyword,
                 ]);
@@ -159,6 +192,32 @@ class AdminProductController extends Controller
                 $productPrice->regular_price = $request->product_regular_price;
                 $productPrice->wholesale_price = $request->product_wholesale_price;
                 $productPrice->shock_price = $request->product_shock_price;
+
+                $productPrice->c_ship_price_df0 = $request->c_ship_price_df0;
+                $productPrice->c_ship_price_weight0 = $request->c_ship_price_weight0;
+                $productPrice->c_ship_fast_price_df0 = $request->c_ship_fast_price_df0;
+                $productPrice->c_ship_fast_price_weight0 = $request->c_ship_fast_price_weight0;
+                $productPrice->c_ship_fast_price_distance0 = $request->c_ship_fast_price_distance0;
+                
+                $productPrice->c_ship_price_df1 = $request->c_ship_price_df1;
+                $productPrice->c_ship_price_weight1 = $request->c_ship_price_weight1;
+                $productPrice->c_ship_fast_price_df1 = $request->c_ship_fast_price_df1;
+                $productPrice->c_ship_fast_price_weight1 = $request->c_ship_fast_price_weight1;
+                $productPrice->c_ship_fast_price_distance1 = $request->c_ship_fast_price_distance1;
+
+                $productPrice->c_ship_price_df2 = $request->c_ship_price_df2;
+                $productPrice->c_ship_price_weight2 = $request->c_ship_price_weight2;
+                $productPrice->c_ship_fast_price_df2 = $request->c_ship_fast_price_df2;
+                $productPrice->c_ship_fast_price_weight2 = $request->c_ship_fast_price_weight2;
+                $productPrice->c_ship_fast_price_distance2 = $request->c_ship_fast_price_distance2;
+
+                $productPrice->c_ship_price_df3 = $request->c_ship_price_df3;
+                $productPrice->c_ship_price_weight3 = $request->c_ship_price_weight3;
+                $productPrice->c_ship_fast_price_df3 = $request->c_ship_fast_price_df3;
+                $productPrice->c_ship_fast_price_weight3 = $request->c_ship_fast_price_weight3;
+                $productPrice->c_ship_fast_price_distance3 = $request->c_ship_fast_price_distance3;
+
+
                 $productPrice->cpoint = $request->cpoint;
                 $productPrice->mpoint = $request->mpoint;
                 $productPrice->phi_xuly = $request->phi_xuly;
@@ -206,6 +265,36 @@ class AdminProductController extends Controller
     public function update(Request $request, $id)
     {
         if($request->is_ecard == 1){
+            $request->validate([
+                'product_sku' => 'required|unique:products,sku,'.$id,
+                'product_name' => 'required|unique:products,name,'.$id,
+                'slug' => 'unique:products,slug',
+                'feature_img' => 'required',
+                'category_parent' => 'required',
+                'product_brand' => 'required',
+                'payments' => 'required',
+                'product_status' => 'required',
+                'cpoint' => 'nullable|numeric',
+                'mpoint' => 'nullable|numeric',
+                'phi_xuly' => 'nullable|numeric',
+                'tax' => 'required',
+            ], [
+                'product_sku.required' => 'SKU không được để trống',
+                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
+                'product_name.required' => 'Tên sản phẩm không được để trống',
+                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
+                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
+                'feature_img' => 'Ảnh đại diện không được để trống',
+                'category_parent' => 'Danh mục sản phẩm không được để trống',
+                'product_brand' => 'Thương hiệu không được để trống',
+                'payments' => 'Hình thức thanh toán không được để trống',
+                'product_status' => 'Trạng thái không được để trống',
+                'cpoint' => 'CPoint phải là số',
+                'mpoint' => 'MPoint phải là số',
+                'phi_xuly.numeric' => 'Phí xử lý phải là số',
+                'tax' => 'Thuế không được để trống',
+            ]);
+        }elseif($request->is_shipping == 1){
             $request->validate([
                 'product_sku' => 'required|unique:products,sku,'.$id,
                 'product_name' => 'required|unique:products,name,'.$id,
@@ -403,6 +492,31 @@ class AdminProductController extends Controller
                     'regular_price' => $request->product_regular_price,
                     'wholesale_price' => $request->product_wholesale_price,
                     'shock_price' => $request->product_shock_price,
+
+                    'c_ship_price_df0' => $request->c_ship_price_df0,
+                    'c_ship_price_weight0' => $request->c_ship_price_weight0,
+                    'c_ship_fast_price_df0' =>$request->c_ship_fast_price_df0,
+                    'c_ship_fast_price_weight0' => $request->c_ship_fast_price_weight0,
+                    'c_ship_fast_price_distance0' => $request->c_ship_fast_price_distance0,
+                    
+                    'c_ship_price_df1' => $request->c_ship_price_df1,
+                    'c_ship_price_weight1' => $request->c_ship_price_weight1,
+                    'c_ship_fast_price_df1' =>$request->c_ship_fast_price_df1,
+                    'c_ship_fast_price_weight1' => $request->c_ship_fast_price_weight1,
+                    'c_ship_fast_price_distance1' => $request->c_ship_fast_price_distance1,
+                    
+                    'c_ship_price_df2' => $request->c_ship_price_df2,
+                    'c_ship_price_weight2' => $request->c_ship_price_weight2,
+                    'c_ship_fast_price_df2' =>$request->c_ship_fast_price_df2,
+                    'c_ship_fast_price_weight2' => $request->c_ship_fast_price_weight2,
+                    'c_ship_fast_price_distance2' => $request->c_ship_fast_price_distance2,
+
+                    'c_ship_price_df3' => $request->c_ship_price_df3,
+                    'c_ship_price_weight3' => $request->c_ship_price_weight3,
+                    'c_ship_fast_price_df3' =>$request->c_ship_fast_price_df3,
+                    'c_ship_fast_price_weight3' => $request->c_ship_fast_price_weight3,
+                    'c_ship_fast_price_distance3' => $request->c_ship_fast_price_distance3,
+
                     'cpoint' => $request->cpoint,
                     'mpoint' => $request->mpoint,
                     'phi_xuly' => $request->phi_xuly,

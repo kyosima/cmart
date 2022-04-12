@@ -23,7 +23,7 @@
                     <tr style="text-align:center">
                         <th>Thời gian</th>
                         <th>Tên thông báo</th>
-                        <th>Khách hàng</th>
+                        <th>TK nhận thông báo</th>
                         <th>Nội dung ngắn</th>
                         {{-- <th>Thao tác</th> --}}
                     </tr>
@@ -39,7 +39,7 @@
                                     Tất cả khác hàng
                                 @else
                                     @foreach ($notice->getUserNotices()->get() as $item)
-                                        {{$item->user()->value('code_customer')}}, 
+                                        {{$item->user()->value('code_customer')}} 
                                         
                                     @endforeach
                                 @endif
