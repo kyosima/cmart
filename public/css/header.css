@@ -578,6 +578,8 @@ p {
         z-index: 500;
         height: auto;
         border-top: 1px solid #cbcbcb;
+        max-height: 55px;
+        margin-bottom: -2px;
     }
     .offcanvas-header {
         display: block;
@@ -857,8 +859,13 @@ p {
         background: url(https://japana.vn/assets/images/Icons2020.png) no-repeat;
         display: inline-block;
     }
+    .toolbar2 ul{
+        margin: 0;
+        padding: 5px 0 2px;
+    }
     .toolbar2 ul li {
         text-align: center;
+        list-style: none;
     }
     .toolbar2 ul li a span {
         color: #222;

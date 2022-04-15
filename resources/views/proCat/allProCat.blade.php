@@ -17,7 +17,7 @@
         <div class="page-title shop-page-title">
             <div class="page-title-inner container">
                 <nav class="breadcrumbs">
-                    <a href="#">Trang chủ</a>
+                    <a href="{{url('/')}}">Trang chủ</a>
                     <span class="divider">/</span>
                     @if (isset($proCat))
                         @if ($proCat->parents != null)
@@ -213,9 +213,9 @@
                 a = li[i].getElementsByTagName("a")[0];
                 txtValue = a.textContent || a.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    li[i].getElementsByTagName("a")[0].style.display = "";
+                    li[i].style.display = "";
                 } else {
-                    li[i].getElementsByTagName("a")[0].style.display = "none";
+                    li[i].style.display = "none";
                 }
             }
             if (filter == '') {

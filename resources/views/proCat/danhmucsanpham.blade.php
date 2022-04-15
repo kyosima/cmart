@@ -16,7 +16,7 @@
         <div class="page-title shop-page-title">
             <div class="page-title-inner container">
                 <nav class="breadcrumbs">
-                    <a href="#">Trang chủ</a>
+                    <a href="{{url('/')}}">Trang chủ</a>
                     <span class="divider">/</span>
                     @if ($proCat->parents != null)
                         @if ($proCat->parents->categories != null)
@@ -185,7 +185,7 @@
                             <aside class="widget">
                                 <div class="title-box d-lg-none">
                                     <span>Bộ lọc</span>
-                                    <button class="close-filter" onclick="closeSidebar()"></button>
+                                    <button type="button" class="close-filter" onclick="closeSidebar()"></button>
                                 </div>
                                 <div class="slider-price">
                                     <h3 class="widget-title">Giá</h3>
@@ -252,8 +252,8 @@
                                     </div>
                                 </div>
                                 <div class="footer-filter d-lg-none">
-                                    <button type="button" class="clear_filter">Xóa lọc</button>
-                                    <button type="button" class="submit_click">Áp dụng</button>
+                                    <button type="button" class="clear_filter" onclick="closeSidebar()">Xóa lọc</button>
+                                    <button type="submit" class="submit_click">Áp dụng</button>
                                 </div>
                             </aside>
                             <input type="hidden" id="order" name="order" value="">
@@ -272,7 +272,7 @@
                             <div class="filter-cate">
                                 <p class="d-lg-inline d-none">Sắp xếp theo:</p>
                                 <select id="filter-products" class="form-control form-control-sm ms-2 d-lg-inline"
-                                    style="width: 200px">
+                                    style="max-width: 200px">
                                     <option value="" selected>Mặc định</option>
                                     <option value="name asc">A-Z</option>
                                     <option value="name desc">Z-A</option>
@@ -283,6 +283,7 @@
                                     {{-- <option value="cpoint asc">C tăng dần</option> --}}
                                     <option value="cpoint desc">C giảm dần</option>
                                 </select>
+                                <button onclick="openSidebar()" class="form-control form-control-sm d-lg-none d-xl-none" style="width: fit-content;">Bộ lọc</button>
                             </div>
 
                             <!-- SẢN PHẨM -->
@@ -355,12 +356,16 @@
 
     <script type='text/javascript'>
         function openSidebar() {
+            document.getElementById("shopsidebar").style.opacity = "1";
             document.getElementById("shopsidebar").style.zIndex = "1000";
+            document.getElementById("shopsidebar").style.visibility = "visible";
             document.body.style.overflow = "hidden";
         }
-
+        
         function closeSidebar() {
+            document.getElementById("shopsidebar").style.opacity = "0";
             document.getElementById("shopsidebar").style.zIndex = "0";
+            document.getElementById("shopsidebar").style.visibility = "hidden";
             document.body.style.overflow = "auto";
         }
     </script>
@@ -393,9 +398,9 @@
                 a = li[i].getElementsByTagName("a")[0];
                 txtValue = a.textContent || a.innerText;
                 if (txtValue.toUpperCase().includes(filter)) {
-                    li[i].getElementsByTagName("a")[0].style.display = "";
+                    li[i].style.display = "";
                 } else {
-                    li[i].getElementsByTagName("a")[0].style.display = "none";
+                    li[i].style.display = "none";
                 }
             }
             if (filter == '') {
