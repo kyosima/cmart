@@ -37,15 +37,15 @@
                                     <hr>
                                     <div id="store-cart">
                                         <div class="row row-head d-md-flex d-none">
-                                            <div class="col-lg-1 col-md-2 col-xs-12 text-center">
+                                            <div class="col-lg-2 col-md-2 col-xs-12 text-center">
                                                 <b>Ảnh</b>
                                             </div>
 
                                             
-                                            <div class="col-lg-1 col-md-2 col-xs-12 text-center">
+                                            <div class="col-lg-2 col-md-2 col-xs-12 text-center">
                                                 <b>Mã sản phẩm</b>
                                             </div>
-                                            <div class="col-lg-4 col-md-4 col-xs-12 text-center">
+                                            <div class="col-lg-3 col-md-3 col-xs-12 text-center">
                                                 <b>Tên sản phẩm</b>
                                             </div>
                                             @if (!in_array(Auth::user()->level, [3, 4]))
@@ -57,32 +57,36 @@
                                                 </div>
                                             @endif
 
-                                            <div class="col-lg-1 col-md-2 col-xs-3 text-center">
+                                            <div class="col-lg-2 col-md-2 col-xs-3 text-center">
                                                 <b> Đơn giá</b>
                                             </div>
                                             <div class="col-lg-2 col-md-2 col-xs-3 text-center">
                                                 <b> Số lượng</b>
                                             </div>
-                                            <div class="col-lg-1 col-md-2 col-xs-3">
+                                            <div class="col-lg-1 col-md-1 col-xs-3">
 
                                             </div>
                                         </div>
                                         @foreach ($cart->content() as $row)
                                             <div class="row cart_item">
                                                 <div
-                                                    class="col-lg-1 col-md-2 col-xs-12 d-flex align-items-center justify-content-center text-center">
+                                                    class="col-lg-2 col-md-2 col-xs-12 d-flex align-items-center justify-content-center text-center">
                                                     <a href="{{ route('san-pham.show', $row->model->slug) }}">
                                                         <img src="{{ asset($row->model->feature_img) }}"
                                                             class="w-50">
                                                     </a>
                                                 </div>
-                                               
-                                                <div
-                                                    class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
-                                                    <span> {{ $row->model->sku }}</span>
+                                                <div class="col-lg-1 col-md-2 col-5 ml-3 d-block d-sm-none">
+                                                    <b> Mã sản phẩm</b>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-6 d-flex align-items-center justify-content-center">
+                                                   <span> {{ $row->model->sku }}</span>
+                                                </div>
+                                                <div class="col-lg-1 col-md-2 col-5 ml-3 d-block d-sm-none">
+                                                    <b>Tên sản phẩm</b>
                                                 </div>
                                                 <div
-                                                class="col-lg-4 col-md-4 col-12 d-flex align-items-center justify-content-center">
+                                                class="col-lg-3 col-md-3 col-6 d-flex align-items-center justify-content-center">
                                                 <a href="{{ route('san-pham.show', $row->model->slug) }}"
                                                     class="cart-item-name">{{ $row->name }}</a>
                                             </div>
@@ -92,13 +96,19 @@
                                                         <span> {{ $row->model->productPrice()->value('cpoint') }}</span>
                                                     </div>
                                                     <div
-                                                        class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
+                                                        class="col-lg-1 col-md-2 col-4 d-flex align-items-center justify-content-center">
                                                         <span> {{ $row->model->productPrice()->value('mpoint') }}</span>
                                                     </div>
                                                 @endif
+                                                <div class="col-lg-2 col-md-2 col-5 ml-3 d-block d-sm-none">
+                                                    <b>Đơn giá</b>
+                                                </div>
                                                 <div
-                                                    class="col-lg-1 col-md-1 col-6 d-flex align-items-center justify-content-center">
+                                                    class="col-lg-2 col-md-2 col-6 d-flex align-items-center justify-content-center">
                                                     <b> {{ formatPrice($row->price) }}</b>
+                                                </div>
+                                                <div class="col-lg-1 col-md-2 col-5 ml-3 d-block d-sm-none">
+                                                    <b>Số lượng</b>
                                                 </div>
                                                 <div
                                                     class="col-lg-2 col-md-2 col-6 d-flex align-items-center justify-content-center">
@@ -201,11 +211,11 @@
                                 @endif
                             </div>
                             <div class="d-flex justify-content-around row">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <a class="btn-ttms" href="{{ url('/danh-muc-san-pham') }}"> Tiếp tục mua
                                         sắm</a>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <button id="btn-to-checkout" class="btn-dathang" type="submit" disabled>Chọn cửa hàng
                                         cần thanh
                                         toán</button>

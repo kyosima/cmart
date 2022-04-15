@@ -299,7 +299,7 @@
 <header class="header-tablet-mobile">
 
     <div class="top-header">
-        <div class="container">
+        <div class="container mb-2">
             <div class="d-flex justify-content-between  align-items-center pb-2">
                 <div class="icon-nav">
                     <a href="#>" data-trigger="navbar_main" class="fas fa-bars"></a>

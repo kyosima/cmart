@@ -451,7 +451,7 @@ hr {
 }
 
 .cart-item-name {
-    height: 25px;
+  
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -459,7 +459,11 @@ hr {
     -webkit-line-clamp: 2;
     text-transform: uppercase;
 }
-
+@media (max-width: 900px) {
+    .cart-item-name{
+        font-size: 13px;
+    }
+}
 .check-all-store,
 .form-checkout {
     padding: 20px 10px;

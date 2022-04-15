@@ -159,6 +159,7 @@ table {
 }
 
 .btn-back-cart {
+    margin-right: 10px;
     font-size: 13px !important;
     font-weight: 400 !important;
     color: #FFFFFF;
@@ -606,11 +607,13 @@ tr .title {
     border-top: 0;
 }
 
-
+p{
+    line-height: 1.5
+}
 /* ---------------- */
 
 .donhang-footer {
-    border-top: 1px dashed#666;
+    border-top: 1px dashed #666;
 }
 
 .card-body {
