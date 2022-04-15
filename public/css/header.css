@@ -97,7 +97,7 @@ header li {
         background-clip: text;
         text-transform: uppercase;
     }
-    .text:before {
+    /* .text:before {
         content: attr(data-title);
         background: linear-gradient(
             90deg,
@@ -126,7 +126,7 @@ header li {
         100% {
             width: 0;
         }
-    }
+    } */
     .dv-ht {
         position: relative;
         top: 50%;
