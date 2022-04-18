@@ -24,10 +24,10 @@ function showPolicy(e) {
             slug: slug,
             url: url,
         },
-        error: function (data) {
+        error: function(data) {
             console.log(data);
         },
-        success: function (response) {
+        success: function(response) {
             console.log(response);
             $('#modal-policy #policy-title').text(response.name);
             $('#modal-policy .policy-content').html(response.content);
@@ -35,10 +35,10 @@ function showPolicy(e) {
         }
     });
 }
-$('select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function () {
+$('select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function() {
     $('input[name="address"]').val('');
 });
-$('input[name="address"], select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function () {
+$('input[name="address"], select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function() {
     getship();
 });
 
@@ -55,7 +55,7 @@ function getship() {
 
 function cal_ship(province, district, ward, address) {
     shipcmart = [];
-    $(".list-stores-body input.receiverstore:checked").each(function () {
+    $(".list-stores-body input.receiverstore:checked").each(function() {
         shipcmart.push($(this).val());
     });
     $.ajax({
@@ -68,17 +68,17 @@ function cal_ship(province, district, ward, address) {
             address: address.val(),
             shipcmart: shipcmart
         },
-        beforeSend: function () {
+        beforeSend: function() {
             $('.loading').show();
             $("#btn-to-payment").attr('disabled', 'disabled');
         },
-        error: function (data) {
+        error: function(data) {
             console.log(data);
         },
-        success: function (response) {
+        success: function(response) {
             response = JSON.parse(response);
             console.log(response);
-            $.each(response, function () {
+            $.each(response, function() {
                 switch (this.method) {
                     case 1:
                         method = 'C-Ship';
@@ -92,14 +92,15 @@ function cal_ship(province, district, ward, address) {
                 }
                 store_name = this.name;
                 store_id = this.id;
-                if (this.weight == 0) {
-                    cshipbyweight('#' + store_name + ' .receiverstore');
+                // if (this.weight == 0) {
+                //     cshipbyweight('#' + store_name + ' .receiverstore');
 
-                } else if ($('#' + store_name + ' .receiverstore').prop('checked') == false) {
+                // } else 
+                if ($('#' + store_name + ' .receiverstore').prop('checked') == false) {
                     $('#' + store_name + ' .name-method').text(method);
                     $('#' + store_name + ' .total-cost').text(this.total_cost.text);
                     $('#' + store_name + ' .total-cost').attr('data-total', this.total_cost.value);
-                    $.each(this.ship_total, function (key, val) {
+                    $.each(this.ship_total, function(key, val) {
                         if (key == 'ship') {
                             $('#' + store_name + ' .ship-normal').empty().append(' <input checked type="radio" onclick="calTotal(this)" data-id="' + store_id + '" data-type="1" data-store="' + store_name + '" id="ship_normal' + store_name + '" name="shipping_value' + store_name + '" value="' + val.value + '">' +
                                 ' <label for="ship_normal' + store_name + '"  >Tiêu chuẩn: ' + val.text + '</label>');
@@ -128,7 +129,7 @@ function cal_ship(province, district, ward, address) {
 
 function showShipTotal() {
     total_ship = 0;
-    $('input.ship-fee').each(function () {
+    $('input.ship-fee').each(function() {
         total_ship += +$(this).val();
     });
     $('#amount-shipping').text(parseInt(total_ship).toLocaleString() + ' ₫');
@@ -150,30 +151,31 @@ function calTotal(e) {
             storeid: $(e).data('id'),
             type: $(e).data('type')
         },
-        error: function (data) {
+        error: function(data) {
             console.log(data);
         },
-        success: function (response) {
+        success: function(response) {
             console.log(response);
             showShipTotal();
 
         }
     });
 }
-function cshipbyweight(e){
+
+function cshipbyweight(e) {
     $.ajax({
         type: 'GET',
         url: $("#method-ship").data('urlcmartship'),
         data: {
             storeid: $(e).data('storeid')
         },
-        error: function (data) {
+        error: function(data) {
             console.log(data);
         },
-        success: function (response) {
+        success: function(response) {
             response = JSON.parse(response);
             console.log(response);
-    
+
             store = response['store' + $(e).data('storeid')];
             store_name = store.name;
             $('#' + store_name + ' .ship-normal').empty().append(' <input checked type="radio" onclick="calTotal(this)" data-store="' + store_name + '" id="ship_cmart' + store_name + '" name="shipping_value' + store_name + '" value="' + store.ship_total.value + '">' +
@@ -183,11 +185,11 @@ function cshipbyweight(e){
             $('#' + store_name + ' .total-cost').text(store.total_cost.text);
             $('#' + store_name + ' .total-cost').attr('data-total', store.total_cost.value);
             $('#' + store_name + ' input.ship-fee').val(store.ship_total.value);
-    
+
             $('#' + store_name + ' .store-footer').removeClass('d-none');
             $('#' + store_name + ' .store-footer').addClass('d-flex');
             showShipTotal();
-    
+
         }
     });
 }
@@ -201,10 +203,10 @@ function receiverStore(e) {
             data: {
                 storeid: $(e).data('storeid')
             },
-            error: function (data) {
+            error: function(data) {
                 console.log(data);
             },
-            success: function (response) {
+            success: function(response) {
                 response = JSON.parse(response);
                 console.log(response);
 

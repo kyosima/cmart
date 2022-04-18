@@ -11,13 +11,14 @@ use App\Models\Order;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\AddressController;
 class CartController extends Controller
 {
     //
 
     public function index()
     {
+        // dd(Cart::instance(1)->content());
         if(Auth::check()){
             $user = Auth::user();
             if($user->status == 0){
@@ -47,9 +48,8 @@ class CartController extends Controller
             if(Cart::instance($store->id)->count()> 0){
                 $cart = Cart::instance($store->id);
                 foreach($cart->content() as $row){
-                    if($row->model->is_ecard == 0){
+                    if($row->model->is_ecard == 0 || $row->model->is_shipping == 0){
                         $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
-
                     }
                 }
             }
@@ -79,11 +79,54 @@ class CartController extends Controller
                 0
             ], 200);
         }
-        if($product->is_ecard == 0){
-            Cart::instance($store_id)->add(['id' => $product->id, 'name' => $product->name, 'price' =>  getPriceOfLevel($product), 'qty' => $qty, 'options' => [ 'method_ship' => 0, 'type_ship' => 0, 'price_normal' => 0, 'price_fast'=>0]])->associate('App\Models\Product');
-
+        if($product->is_ecard == 1){
+            Cart::instance($store_id)->add(['id' => $product->id, 'name' => $product->name, 'price' =>  $request->price, 'qty' => $qty, 'is_shipping' => 0, 'options' => [ 'method_ship' => 0, 'type_ship' => 0, 'price_normal' => 0, 'price_fast'=>0]])->associate('App\Models\Product');
+        }if($product->is_shipping == 1){
+            $addressController = new AddressController();
+            $weight = ceil(max($request->weight / 1000, (($request->height * $request->width * $request->length) / 3000)) * 1000);
+            $province_from = $addressController->getProvinceDetail($request->sel_province);
+            $district_from = $addressController->getDistrictDetail($request->sel_province, $request->sel_district);
+            $ward_from = $addressController->getWardDetail($request->sel_district, $request->sel_ward);
+            $address_from = $request->address;
+            $province_to = $addressController->getProvinceDetail($request->sel_province_to);
+            $district_to = $addressController->getDistrictDetail($request->sel_province_to, $request->sel_district_to);
+            $ward_to = $addressController->getWardDetail($request->sel_district_to, $request->sel_ward_to);
+            $address_to = $request->address_to;
+            $product_name = $province_from->PROVINCE_NAME .', '.$district_from->DISTRICT_NAME . ', '.$ward_from->WARDS_NAME.', '.$address_from .' - '. $province_to->PROVINCE_NAME .', '.$district_to->DISTRICT_NAME .', '.$ward_to->WARDS_NAME.', '.$address_to;
+            Cart::instance($store_id)->add(['id' => $product->id,  'name'=> $product_name.'-'.$weight.'(g)', 'price' =>  0, 'qty' => 1,  'options' => [
+                'id_province_from' => $request->sel_province,
+                'id_district_from' => $request->sel_district,
+                'id_ward_from' => $request->sel_ward,
+                'address_from' => $request->address,
+                'id_province_to' => $request->sel_province_to,
+                'id_district_to' => $request->sel_district_to,
+                'id_ward_to' => $request->sel_ward_to,
+                'address_to' => $request->address_to,
+                'weight' => $request->weight,
+                'is_shipping' => 1,
+                'method_ship' => 0,
+                'type_ship' => 0,
+                'price_normal' => 0,
+                'price_fast'=>0
+                ]])->associate('App\Models\Product');
+            // Cart::instance('product_shipping')->add(['id' => $product->id,  'name'=> $product_name.'-'.$weight.'(g)', 'price' =>  0, 'qty' => 1,  'options' => [
+            //     'id_province_from' => $request->sel_province,
+            //     'id_district_from' => $request->sel_district,
+            //     'id_ward_from' => $request->sel_ward,
+            //     'address_from' => $request->address,
+            //     'id_province_to' => $request->sel_province_to,
+            //     'id_district_to' => $request->sel_district_to,
+            //     'id_ward_to' => $request->sel_ward_to,
+            //     'address_to' => $request->address_to,
+            //     'weight' => $request->weight,
+            //     'is_shipping' => 1,
+            //     'method_ship' => 0,
+            //     'type_ship' => 0,
+            //     'price_normal' => 0,
+            //     'price_fast'=>0
+            //     ]])->associate('App\Models\Product');
         }else{
-            Cart::instance($store_id)->add(['id' => $product->id, 'name' => $product->name, 'price' =>  $request->price, 'qty' => $qty, 'options' => [ 'method_ship' => 0, 'type_ship' => 0, 'price_normal' => 0, 'price_fast'=>0]])->associate('App\Models\Product');
+            Cart::instance($store_id)->add(['id' => $product->id, 'name' => $product->name, 'price' =>  getPriceOfLevel($product), 'qty' => $qty, 'is_shipping' => 0, 'options' => [ 'method_ship' => 0, 'type_ship' => 0, 'price_normal' => 0, 'price_fast'=>0]])->associate('App\Models\Product');
 
         }
         $stores = Store::get();

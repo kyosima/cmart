@@ -137,6 +137,9 @@
                                                 <option value=""> Cấp xã </option>
                                             </select>
                                         </div>
+                                        <div class="col-md-12 pb-3">
+                                            <label for=""><input type="checkbox" name="is_company">Khách hàng doanh nghiệp</label>
+                                        </div>
                                     </div>
                                     <input type="submit" value="Đăng ký" name="Đăng ký">
 

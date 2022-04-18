@@ -229,90 +229,388 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 input-product-shipping">
-                                    <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Biểu giá vận chuyển C-Ship
-                                            tiêu chuẩn<span class="required" aria-required="true">(*)</span>:</label>
-                                        <div class="row">
+                                <div class="block-spvc">
+                                    <label class="col-md-12 control-label text-left text-primary">Khách hàng thân thiết<span class="required"
+                                            aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12 input-product-shipping">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển C-Ship
+                                                tiêu chuẩn<span class="required"
+                                                    aria-required="true">(*)</span>:</label>
+                                            <div class="row">
 
-                                            <div class="col-md-6 ">
-                                                <div class="form-group">
-                                                    <label class="col-md-12 control-label text-left">Phí mặc
-                                                        định<span class="required"
-                                                            aria-required="true">(*)</span>:</label>
-                                                    <div class="col-md-12">
-                                                        <input type="text" class="form-control number-separator-c-df"
-                                                            value="{{ old('c_ship_price_df',$product->productPrice->c_ship_price_df) }}">
-                                                        <input type="hidden" id="c_ship_price_df" name="c_ship_price_df"
-                                                            value="{{ old('c_ship_price_df',$product->productPrice->c_ship_price_df) }}">
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí mặc
+                                                            định<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text" class="form-control number-separator-c-df0"
+                                                                value="{{ old('c_ship_price_df0', $product->productPrice->c_ship_price_df0) }}">
+                                                            <input type="hidden" id="c_ship_price_df0" name="c_ship_price_df0"
+                                                                value="{{ old('c_ship_price_df0', $product->productPrice->c_ship_price_df0) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo trọng
+                                                            lượng vận chuyển<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-weight0"
+                                                                value="{{ old('c_ship_price_weight0', $product->productPrice->c_ship_price_weight0) }}">
+                                                            <input type="hidden" id="c_ship_price_weight0"
+                                                                name="c_ship_price_weight0"
+                                                                value="{{ old('c_ship_price_weight0',  $product->productPrice->c_ship_price_weight0) }}">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 ">
-                                                <div class="form-group">
-                                                    <label class="col-md-12 control-label text-left">Phí theo trọng
-                                                        lượng vận chuyển<span class="required"
-                                                            aria-required="true">(*)</span>:</label>
-                                                    <div class="col-md-12">
-                                                        <input type="text" class="form-control number-separator-c-weight"
-                                                            value="{{ old('c_ship_price_weight',$product->productPrice->c_ship_price_weight) }}">
-                                                        <input type="hidden" id="c_ship_price_weight"
-                                                            name="c_ship_price_weight"
-                                                            value="{{ old('c_ship_price_weight',$product->productPrice->c_ship_price_weight) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 input-product-shipping">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển
+                                                C-Ship hỏa tốc<span class="required"
+                                                    aria-required="true">(*)</span>:</label>
+                                            <div class="row">
+
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí mặc
+                                                            định<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-df0"
+                                                                value="{{ old('c_ship_fast_price_df0',  $product->productPrice->c_ship_fast_price_df0) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_df0"
+                                                                name="c_ship_fast_price_df0"
+                                                                value="{{ old('c_ship_fast_price_df0',  $product->productPrice->c_ship_fast_price_df0) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo
+                                                            trọng lượng<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-weight0"
+                                                                value="{{ old('c_ship_fast_price_weight0',  $product->productPrice->c_ship_fast_price_weight0) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_weight0"
+                                                                name="c_ship_fast_price_weight0"
+                                                                value="{{ old('c_ship_fast_price_weight0',  $product->productPrice->c_ship_fast_price_weight0) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo
+                                                            quãng đường<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-distance0"
+                                                                value="{{ old('c_ship_fast_price_distance0',  $product->productPrice->c_ship_fast_price_distance0) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_distance0"
+                                                                name="c_ship_fast_price_distance0"
+                                                                value="{{ old('c_ship_fast_price_distance0',  $product->productPrice->c_ship_fast_price_distance0) }}">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 input-product-shipping">
-                                    <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Biểu giá vận chuyển
-                                            C-Ship hỏa tốc<span class="required"
-                                                aria-required="true">(*)</span>:</label>
-                                        <div class="row">
+                                <div class="block-spvc">
+                                    <label class="col-md-12 control-label text-left text-primary">Khách hàng V.I.P/Cộng tác viên<span class="required"
+                                        aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12 input-product-shipping">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển C-Ship
+                                                tiêu chuẩn<span class="required"
+                                                    aria-required="true">(*)</span>:</label>
+                                            <div class="row">
 
-                                            <div class="col-md-4 ">
-                                                <div class="form-group">
-                                                    <label class="col-md-12 control-label text-left">Phí mặc
-                                                        định<span class="required"
-                                                            aria-required="true">(*)</span>:</label>
-                                                    <div class="col-md-12">
-                                                        <input type="text" class="form-control number-separator-c-fast-df"
-                                                            value="{{ old('c_ship_fast_price_df',$product->productPrice->c_ship_fast_price_df) }}">
-                                                        <input type="hidden" id="c_ship_fast_price_df"
-                                                            name="c_ship_fast_price_df"
-                                                            value="{{ old('c_ship_fast_price_df', $product->productPrice->c_ship_fast_price_df) }}">
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí mặc
+                                                            định<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text" class="form-control number-separator-c-df1"
+                                                                value="{{ old('c_ship_price_df1',  $product->productPrice->c_ship_price_df1) }}">
+                                                            <input type="hidden" id="c_ship_price_df1" name="c_ship_price_df1"
+                                                                value="{{ old('c_ship_price_df1',  $product->productPrice->c_ship_price_df1) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo trọng
+                                                            lượng vận chuyển<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-weight1"
+                                                                value="{{ old('c_ship_price_weight1',  $product->productPrice->c_ship_price_weight1) }}">
+                                                            <input type="hidden" id="c_ship_price_weight1"
+                                                                name="c_ship_price_weight1"
+                                                                value="{{ old('c_ship_price_weight1',  $product->productPrice->c_ship_price_weight1) }}">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 ">
-                                                <div class="form-group">
-                                                    <label class="col-md-12 control-label text-left">Phí theo
-                                                        trọng lượng<span class="required"
-                                                            aria-required="true">(*)</span>:</label>
-                                                    <div class="col-md-12">
-                                                        <input type="text"
-                                                            class="form-control number-separator-c-fast-weight"
-                                                            value="{{ old('c_ship_fast_price_weight', $product->productPrice->c_ship_fast_price_weight) }}">
-                                                        <input type="hidden" id="c_ship_fast_price_weight"
-                                                            name="c_ship_fast_price_weight"
-                                                            value="{{ old('c_ship_fast_price_weight', $product->productPrice->c_ship_fast_price_weight) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 input-product-shipping">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển
+                                                C-Ship hỏa tốc<span class="required"
+                                                    aria-required="true">(*)</span>:</label>
+                                            <div class="row">
+
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí mặc
+                                                            định<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-df1"
+                                                                value="{{ old('c_ship_fast_price_df1',  $product->productPrice->c_ship_fast_price_df1) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_df1"
+                                                                name="c_ship_fast_price_df1"
+                                                                value="{{ old('c_ship_fast_price_df1',  $product->productPrice->c_ship_fast_price_df1) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo
+                                                            trọng lượng<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-weight1"
+                                                                value="{{ old('c_ship_fast_price_weight1',  $product->productPrice->c_ship_fast_price_weight1) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_weight1"
+                                                                name="c_ship_fast_price_weight1"
+                                                                value="{{ old('c_ship_fast_price_weight1',  $product->productPrice->c_ship_fast_price_weight1) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo
+                                                            quãng đường<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-distance1"
+                                                                value="{{ old('c_ship_fast_price_distance1',  $product->productPrice->c_ship_fast_price_distance1) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_distance1"
+                                                                name="c_ship_fast_price_distance1"
+                                                                value="{{ old('c_ship_fast_price_distance1',  $product->productPrice->c_ship_fast_price_distance1) }}">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 ">
-                                                <div class="form-group">
-                                                    <label class="col-md-12 control-label text-left">Phí theo
-                                                        quãng đường<span class="required"
-                                                            aria-required="true">(*)</span>:</label>
-                                                    <div class="col-md-12">
-                                                        <input type="text"
-                                                            class="form-control number-separator-c-fast-distance"
-                                                            value="{{ old('c_ship_fast_price_distance', $product->productPrice->c_ship_fast_price_distance) }}">
-                                                        <input type="hidden" id="c_ship_fast_price_distance"
-                                                            name="c_ship_fast_price_distance"
-                                                            value="{{ old('c_ship_fast_price_distance', $product->productPrice->c_ship_fast_price_distance) }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="block-spvc">
+                                    <label class="col-md-12 control-label text-left text-primary">Purchasing<span class="required"
+                                        aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12 input-product-shipping">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển C-Ship
+                                                tiêu chuẩn<span class="required"
+                                                    aria-required="true">(*)</span>:</label>
+                                            <div class="row">
+
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí mặc
+                                                            định<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text" class="form-control number-separator-c-df2"
+                                                                value="{{ old('c_ship_price_df2',  $product->productPrice->c_ship_price_df2) }}">
+                                                            <input type="hidden" id="c_ship_price_df2" name="c_ship_price_df2"
+                                                                value="{{ old('c_ship_price_df2',  $product->productPrice->c_ship_price_df2) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo trọng
+                                                            lượng vận chuyển<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-weight2"
+                                                                value="{{ old('c_ship_price_weight2',  $product->productPrice->c_ship_price_weight2) }}">
+                                                            <input type="hidden" id="c_ship_price_weight2"
+                                                                name="c_ship_price_weight2"
+                                                                value="{{ old('c_ship_price_weight2',  $product->productPrice->c_ship_price_weight2) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 input-product-shipping">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển
+                                                C-Ship hỏa tốc<span class="required"
+                                                    aria-required="true">(*)</span>:</label>
+                                            <div class="row">
+
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí mặc
+                                                            định<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-df2"
+                                                                value="{{ old('c_ship_fast_price_df2',  $product->productPrice->c_ship_fast_price_df2) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_df2"
+                                                                name="c_ship_fast_price_df2"
+                                                                value="{{ old('c_ship_fast_price_df2',  $product->productPrice->c_ship_fast_price_df2) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo
+                                                            trọng lượng<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-weight2"
+                                                                value="{{ old('c_ship_fast_price_weight2',  $product->productPrice->c_ship_fast_price_weight2) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_weight2"
+                                                                name="c_ship_fast_price_weight2"
+                                                                value="{{ old('c_ship_fast_price_weight2',  $product->productPrice->c_ship_fast_price_weight2) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo
+                                                            quãng đường<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-distance2"
+                                                                value="{{ old('c_ship_fast_price_distance2', $product->productPrice->c_ship_fast_price_distance2) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_distance2"
+                                                                name="c_ship_fast_price_distance2"
+                                                                value="{{ old('c_ship_fast_price_distance2',  $product->productPrice->c_ship_fast_price_distance2) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="block-spvc">
+                                    <label class="col-md-12 control-label text-left text-primary">Khách hàng thương mại<span class="required"
+                                        aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12 input-product-shipping">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển C-Ship
+                                                tiêu chuẩn<span class="required"
+                                                    aria-required="true">(*)</span>:</label>
+                                            <div class="row">
+
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí mặc
+                                                            định<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text" class="form-control number-separator-c-df3"
+                                                                value="{{ old('c_ship_price_df3',  $product->productPrice->c_ship_price_df3) }}">
+                                                            <input type="hidden" id="c_ship_price_df3" name="c_ship_price_df3"
+                                                                value="{{ old('c_ship_price_df3',  $product->productPrice->c_ship_price_df3) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo trọng
+                                                            lượng vận chuyển<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-weight3"
+                                                                value="{{ old('c_ship_price_weight3',  $product->productPrice->c_ship_price_weight3) }}">
+                                                            <input type="hidden" id="c_ship_price_weight3"
+                                                                name="c_ship_price_weight3"
+                                                                value="{{ old('c_ship_price_weight3',  $product->productPrice->c_ship_price_weight3) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 input-product-shipping">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển
+                                                C-Ship hỏa tốc<span class="required"
+                                                    aria-required="true">(*)</span>:</label>
+                                            <div class="row">
+
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí mặc
+                                                            định<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-df3"
+                                                                value="{{ old('c_ship_fast_price_df3',  $product->productPrice->c_ship_fast_price_df3) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_df3"
+                                                                name="c_ship_fast_price_df3"
+                                                                value="{{ old('c_ship_fast_price_df3',  $product->productPrice->c_ship_fast_price_df3) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo
+                                                            trọng lượng<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-weight3"
+                                                                value="{{ old('c_ship_fast_price_weight3',  $product->productPrice->c_ship_fast_price_weight3) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_weight3"
+                                                                name="c_ship_fast_price_weight3"
+                                                                value="{{ old('c_ship_fast_price_weight3',  $product->productPrice->c_ship_fast_price_weight3) }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 control-label text-left">Phí theo
+                                                            quãng đường<span class="required"
+                                                                aria-required="true">(*)</span>:</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                class="form-control number-separator-c-fast-distance3"
+                                                                value="{{ old('c_ship_fast_price_distance3',  $product->productPrice->c_ship_fast_price_distance3) }}">
+                                                            <input type="hidden" id="c_ship_fast_price_distance3"
+                                                                name="c_ship_fast_price_distance3"
+                                                                value="{{ old('c_ship_fast_price_distance3',  $product->productPrice->c_ship_fast_price_distance3) }}">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -631,29 +929,116 @@
                 resultInput: '#product_price',
             })
             easyNumberSeparator({
-                selector: '.number-separator-c-df',
+                selector: '.number-separator-c-df0',
                 separator: '.',
-                resultInput: '#c_ship_price_df',
+                resultInput: '#c_ship_price_df0',
             })
             easyNumberSeparator({
-                selector: '.number-separator-c-weight',
+                selector: '.number-separator-c-df0',
                 separator: '.',
-                resultInput: '#c_ship_price_weight',
+                resultInput: '#c_ship_price_df0',
             })
             easyNumberSeparator({
-                selector: '.number-separator-c-fast-df',
+                selector: '.number-separator-c-weight0',
                 separator: '.',
-                resultInput: '#c_ship_fast_price_df',
+                resultInput: '#c_ship_price_weight0',
             })
             easyNumberSeparator({
-                selector: '.number-separator-c-fast-weight',
+                selector: '.number-separator-c-fast-df0',
                 separator: '.',
-                resultInput: '#c_ship_fast_price_weight',
+                resultInput: '#c_ship_fast_price_df0',
             })
             easyNumberSeparator({
-                selector: '.number-separator-c-fast-distance',
+                selector: '.number-separator-c-fast-weight0',
                 separator: '.',
-                resultInput: '#c_ship_fast_price_distance',
+                resultInput: '#c_ship_fast_price_weight0',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-distance0',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_distance0',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-df1',
+                separator: '.',
+                resultInput: '#c_ship_price_df1',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-weight1',
+                separator: '.',
+                resultInput: '#c_ship_price_weight1',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-df1',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_df1',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-weight1',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_weight1',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-distance1',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_distance1',
+            })
+
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-distance1',
+                separator: '.',
+                resultInput: '#c_ship_price_fast_distance1',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-df2',
+                separator: '.',
+                resultInput: '#c_ship_price_df2',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-weight2',
+                separator: '.',
+                resultInput: '#c_ship_price_weight2',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-df2',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_df2',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-weight2',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_weight2',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-distance2',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_distance2',
+            })
+
+            easyNumberSeparator({
+                selector: '.number-separator-c-df3',
+                separator: '.',
+                resultInput: '#c_ship_price_df3',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-weight3',
+                separator: '.',
+                resultInput: '#c_ship_price_weight3',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-df3',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_df3',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-weight3',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_weight3',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-distance3',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_distance3',
             })
             $('#meta_description').keyup(function() {
                 var characterCount = $(this).val().length,

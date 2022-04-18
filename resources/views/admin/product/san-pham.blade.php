@@ -370,10 +370,6 @@
                             if (row.product_price.phi_xuly == null) {
                                 return `0`
                             }
-                            // return new Intl.NumberFormat('vi-VN', {
-                            //     style: 'currency',
-                            //     currency: 'VND'
-                            // }).format(row.product_price.phi_xuly)
                             return formatNum(row.product_price.phi_xuly, '.', ',');
 
                         }

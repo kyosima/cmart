@@ -16,6 +16,9 @@ $("#form-add-to-cart").submit(function(e) {
             type: method,
             url: url,
             data: form.serialize(),
+            beforeSend: function() {
+                $('.loading').show();
+            },
             error: function(data) {
                 console.log(data);
             },
@@ -42,6 +45,8 @@ $("#form-add-to-cart").submit(function(e) {
                     $('.cart .number-cart .count-giohang').text(response[0]);
                     $('#notice-store').css('display', 'none');
                 }
+                $('.loading').hide();
+
 
 
             }

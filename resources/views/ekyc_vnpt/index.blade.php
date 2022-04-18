@@ -24,7 +24,7 @@
 
 @push('scripts')
     <script>
-        let vnpt_ekyc_sdk = document.createElement("script");
+              let vnpt_ekyc_sdk = document.createElement("script");
         vnpt_ekyc_sdk.id = "vnpt_ekyc_sdk";
         vnpt_ekyc_sdk.src = "{{ asset('public/sdk_ekyc/ekyc-web-sdk-2.1.4.4.js') }}";
         vnpt_ekyc_sdk.async = true;

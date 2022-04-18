@@ -10,9 +10,198 @@
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        div.loading {
+            z-index: 99;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(16, 16, 16, 0.5);
+        }
+
+        @-webkit-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-webkit-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-moz-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-ms-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-moz-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-webkit-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-o-keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes uil-ring-anim {
+            0% {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        .uil-ring-css {
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+        }
+
+        .uil-ring-css>div {
+            position: absolute;
+            display: block;
+            width: 160px;
+            height: 160px;
+            top: 20px;
+            left: 20px;
+            border-radius: 80px;
+            box-shadow: 0 6px 0 0 #ffffff;
+            -ms-animation: uil-ring-anim 1s linear infinite;
+            -moz-animation: uil-ring-anim 1s linear infinite;
+            -webkit-animation: uil-ring-anim 1s linear infinite;
+            -o-animation: uil-ring-anim 1s linear infinite;
+            animation: uil-ring-anim 1s linear infinite;
+        }
+
+    </style>
 @endpush
 
 @section('content')
+    <div class="loading">
+        <div class='uil-ring-css' style='transform:scale(0.79);'>
+            <div></div>
+        </div>
+    </div>
     <main>
         <div class="category-product">
             <div class="container">
@@ -262,118 +451,128 @@
 
 
 
-
                                 <div class="quantity">
 
 
                                     <div class="qty-block">
-                                        <div class="input-product-shipping">
-                                            <label for="">Thông tin vận chuyển</label>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <input type="number" class="form-control"
-                                                            placeholder="Nhập khối lượng vận chuyển">
+                                        @if ($product->is_shipping == 1)
+                                            <div class="input-product-shipping">
+                                                <label for="">Thông tin vận chuyển</label>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <input type="number" class="form-control"
+                                                                placeholder="Nhập khối lượng vận chuyển" name="weight"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <input type="number" class="form-control"
+                                                                placeholder="Nhập Chiều dài vận chuyển" name="length"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <input type="number" class="form-control"
+                                                                placeholder="Nhập Chiều cao vận chuyển" name="height"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <input type="number" class="form-control"
+                                                                placeholder="Nhập Chiều rộng vận chuyển" name="width"
+                                                                required>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <input type="number" class="form-control"
-                                                            placeholder="Nhập Chiều dài vận chuyển">
+                                                <label for="">Địa chỉ gửi</label>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="">Cấp tỉnh<sup
+                                                                    class="text-danger">*</sup></label>
+                                                            <select name="sel_province" class="form-control select2"
+                                                                data-placeholder="---Chọn tỉnh thành---" required>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="">Cấp huyện<sup
+                                                                    class="text-danger">*</sup></label>
+                                                            <select class="form-control select2" name="sel_district"
+                                                                data-placeholder="---Chọn quận huyên---" required>
+
+                                                                <option value="">Cấp huyện</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="">Cấp xã<sup class="text-danger">*</sup></label>
+                                                            <select class="form-control select2" name="sel_ward"
+                                                                data-placeholder="---Chọn phường xã---" required>
+
+                                                                <option value="">Cấp xã</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="">Địa chỉ chi tiết<sup
+                                                                    class="text-danger">*</sup></label>
+                                                            <input type="text" name="address" class="form-control"
+                                                                value="" placeholder="Mời nhập địa chỉ" required>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <input type="number" class="form-control"
-                                                            placeholder="Nhập Chiều cao vận chuyển">
+                                                <label for="">Địa chỉ nhận</label>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="">Cấp tỉnh<sup
+                                                                    class="text-danger">*</sup></label>
+                                                            <select name="sel_province_to" class="form-control select2"
+                                                                data-placeholder="---Chọn tỉnh thành---" required>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <input type="number" class="form-control"
-                                                            placeholder="Nhập Chiều rộng vận chuyển">
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="">Cấp huyện<sup
+                                                                    class="text-danger">*</sup></label>
+                                                            <select class="form-control select2" name="sel_district_to"
+                                                                data-placeholder="---Chọn quận huyên---" required>
+
+                                                                <option value="">Cấp huyện</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="">Cấp xã<sup class="text-danger">*</sup></label>
+                                                            <select class="form-control select2" name="sel_ward_to"
+                                                                data-placeholder="---Chọn phường xã---" required>
+
+                                                                <option value="">Cấp xã</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="">Địa chỉ chi tiết<sup
+                                                                    class="text-danger">*</sup></label>
+                                                            <input type="text" name="address_to" class="form-control"
+                                                                value="" placeholder="Mời nhập địa chỉ" required>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <label for="">Địa chỉ gửi</label>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Cấp tỉnh<sup class="text-danger">*</sup></label>
-                                                        <select name="sel_province" class="form-control select2"
-                                                            data-placeholder="---Chọn tỉnh thành---" required>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Cấp huyện<sup class="text-danger">*</sup></label>
-                                                        <select class="form-control select2" name="sel_district"
-                                                            data-placeholder="---Chọn quận huyên---" required>
+                                        @endif
 
-                                                            <option value="">Cấp huyện</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Cấp xã<sup class="text-danger">*</sup></label>
-                                                        <select class="form-control select2" name="sel_ward"
-                                                            data-placeholder="---Chọn phường xã---" required>
-
-                                                            <option value="">Cấp xã</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Địa chỉ chi tiết<sup
-                                                                class="text-danger">*</sup></label>
-                                                        <input type="text" name="address" class="form-control" value=""
-                                                            placeholder="Mời nhập địa chỉ" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <label for="">Địa chỉ nhận</label>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Cấp tỉnh<sup class="text-danger">*</sup></label>
-                                                        <select name="sel_province_to" class="form-control select2"
-                                                            data-placeholder="---Chọn tỉnh thành---" required>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Cấp huyện<sup class="text-danger">*</sup></label>
-                                                        <select class="form-control select2" name="sel_district_to"
-                                                            data-placeholder="---Chọn quận huyên---" required>
-
-                                                            <option value="">Cấp huyện</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Cấp xã<sup class="text-danger">*</sup></label>
-                                                        <select class="form-control select2" name="sel_ward_to"
-                                                            data-placeholder="---Chọn phường xã---" required>
-
-                                                            <option value="">Cấp xã</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Địa chỉ chi tiết<sup
-                                                                class="text-danger">*</sup></label>
-                                                        <input type="text" name="address_to" class="form-control" value=""
-                                                            placeholder="Mời nhập địa chỉ" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         @if ($product->is_shipping == 1)
                                             <input type="hidden" name="qty" maxlength="12" value="1" title=""
                                                 class="input-text" />

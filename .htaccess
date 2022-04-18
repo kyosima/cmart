@@ -20,8 +20,12 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ server.php [L]
 
+   
 </IfModule>
-
+# <IfModule mod_headers.c>
+# Header set Access-Control-Allow-Origin http://localhost:888/cmart  
+# Header set Access-Control-Allow-Credentials true
+# </IfModule>
 # php -- BEGIN cPanel-generated handler, do not edit
 # This domain inherits the “PHP” package.
 # php -- END cPanel-generated handler, do not edit

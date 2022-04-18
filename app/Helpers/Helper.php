@@ -1,5 +1,60 @@
 <?php
 
+if (!function_exists('getFeeProductShipping')) {
+    function getFeeProductShipping($user, $price)
+    {
+        $fee = [];
+        switch ($user->level){
+            case 0:
+                $fee = [
+                    $price->c_ship_price_df0,
+                    $price->c_ship_price_weight0, 
+                    $price->c_ship_fast_price_df0, 
+                    $price->c_ship_fast_price_weight0, 
+                    $price->c_ship_fast_price_distance0,
+                ];
+                break;
+            case 1:
+                $fee = [
+                    $price->c_ship_price_df1,
+                    $price->c_ship_price_weight1, 
+                    $price->c_ship_fast_price_df1, 
+                    $price->c_ship_fast_price_weight1, 
+                    $price->c_ship_fast_price_distance1,
+                ];
+                break;
+            case 2:
+                $fee = [
+                    $price->c_ship_price_df2,
+                    $price->c_ship_price_weight2, 
+                    $price->c_ship_fast_price_df2, 
+                    $price->c_ship_fast_price_weight2, 
+                    $price->c_ship_fast_price_distance2,
+                ];
+                break;
+            case 3:
+                $fee = [
+                    $price->c_ship_price_df2,
+                    $price->c_ship_price_weight2, 
+                    $price->c_ship_fast_price_df2, 
+                    $price->c_ship_fast_price_weight2, 
+                    $price->c_ship_fast_price_distance2,
+                ];
+                break;
+            case 4:
+                $fee = [
+                    $price->c_ship_price_df3,
+                    $price->c_ship_price_weight3, 
+                    $price->c_ship_fast_price_df3, 
+                    $price->c_ship_fast_price_weight3, 
+                    $price->c_ship_fast_price_distance3,
+                ];
+                break;
+        }
+        return $fee;
+    }
+}
+
 if (!function_exists('formatPrice')) {
     function formatPrice($price)
     {

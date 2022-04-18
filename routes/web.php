@@ -21,6 +21,7 @@ use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\PaymentPaymeController;
 use Psy\VersionUpdater\Checker;
 use App\Http\Controllers\SendEmailController;
+use App\Http\Controllers\EcontractController;
 use App\Models\ProductCategory;
 
 /*
@@ -217,3 +218,10 @@ Route::get('/redirectUrl', [PaymentPaymeController::class, 'redirectUrl'])->name
 Route::get('/failedUrl', [PaymentPaymeController::class, 'failedUrl'])->name('failedUrl');
 
 Route::get('thanh-toan-that-bai', [PaymentPaymeController::class, 'paymentFail'])->name('paymentFail');
+
+
+//econtract 
+Route::prefix('econtract')->group(function () {
+    Route::get('create-contract', [EcontractController::class, 'createContract'])->name('econtract.getToken');
+});
+

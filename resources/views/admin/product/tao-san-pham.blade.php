@@ -796,30 +796,118 @@
                 resultInput: '#product_price',
             })
             easyNumberSeparator({
-                selector: '.number-separator-c-df',
+                selector: '.number-separator-c-df0',
                 separator: '.',
-                resultInput: '#c_ship_price_df',
+                resultInput: '#c_ship_price_df0',
             })
             easyNumberSeparator({
-                selector: '.number-separator-c-weight',
+                selector: '.number-separator-c-df0',
                 separator: '.',
-                resultInput: '#c_ship_price_weight',
+                resultInput: '#c_ship_price_df0',
             })
             easyNumberSeparator({
-                selector: '.number-separator-c-fast-df',
+                selector: '.number-separator-c-weight0',
                 separator: '.',
-                resultInput: '#c_ship_fast_price_df',
+                resultInput: '#c_ship_price_weight0',
             })
             easyNumberSeparator({
-                selector: '.number-separator-c-fast-weight',
+                selector: '.number-separator-c-fast-df0',
                 separator: '.',
-                resultInput: '#c_ship_fast_price_weight',
+                resultInput: '#c_ship_fast_price_df0',
             })
             easyNumberSeparator({
-                selector: '.number-separator-c-fast-distance',
+                selector: '.number-separator-c-fast-weight0',
                 separator: '.',
-                resultInput: '#c_ship_fast_price_distance',
+                resultInput: '#c_ship_fast_price_weight0',
             })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-distance0',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_distance0',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-df1',
+                separator: '.',
+                resultInput: '#c_ship_price_df1',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-weight1',
+                separator: '.',
+                resultInput: '#c_ship_price_weight1',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-df1',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_df1',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-weight1',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_weight1',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-distance1',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_distance1',
+            })
+
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-distance1',
+                separator: '.',
+                resultInput: '#c_ship_price_fast_distance1',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-df2',
+                separator: '.',
+                resultInput: '#c_ship_price_df2',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-weight2',
+                separator: '.',
+                resultInput: '#c_ship_price_weight2',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-df2',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_df2',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-weight2',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_weight2',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-distance2',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_distance2',
+            })
+
+            easyNumberSeparator({
+                selector: '.number-separator-c-df3',
+                separator: '.',
+                resultInput: '#c_ship_price_df3',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-weight3',
+                separator: '.',
+                resultInput: '#c_ship_price_weight3',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-df3',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_df3',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-weight3',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_weight3',
+            })
+            easyNumberSeparator({
+                selector: '.number-separator-c-fast-distance3',
+                separator: '.',
+                resultInput: '#c_ship_fast_price_distance3',
+            })
+          
             $('#selectCategory').select2({
                 width: '100%',
                 allowClear: true,

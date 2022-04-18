@@ -372,8 +372,8 @@ class AdminProductController extends Controller
         }
         
 
-        return DB::transaction(function () use ($request, $id) {
-            try {
+        // return DB::transaction(function () use ($request, $id) {
+        //     try {
                 $slug = Str::slug($request->product_name, '-');
 
                 if(str_starts_with($request->gallery_img, ', ')){
@@ -492,36 +492,36 @@ class AdminProductController extends Controller
                     'regular_price' => $request->product_regular_price,
                     'wholesale_price' => $request->product_wholesale_price,
                     'shock_price' => $request->product_shock_price,
-
-                    'c_ship_price_df0' => $request->c_ship_price_df0,
-                    'c_ship_price_weight0' => $request->c_ship_price_weight0,
-                    'c_ship_fast_price_df0' =>$request->c_ship_fast_price_df0,
-                    'c_ship_fast_price_weight0' => $request->c_ship_fast_price_weight0,
-                    'c_ship_fast_price_distance0' => $request->c_ship_fast_price_distance0,
-                    
-                    'c_ship_price_df1' => $request->c_ship_price_df1,
-                    'c_ship_price_weight1' => $request->c_ship_price_weight1,
-                    'c_ship_fast_price_df1' =>$request->c_ship_fast_price_df1,
-                    'c_ship_fast_price_weight1' => $request->c_ship_fast_price_weight1,
-                    'c_ship_fast_price_distance1' => $request->c_ship_fast_price_distance1,
-                    
-                    'c_ship_price_df2' => $request->c_ship_price_df2,
-                    'c_ship_price_weight2' => $request->c_ship_price_weight2,
-                    'c_ship_fast_price_df2' =>$request->c_ship_fast_price_df2,
-                    'c_ship_fast_price_weight2' => $request->c_ship_fast_price_weight2,
-                    'c_ship_fast_price_distance2' => $request->c_ship_fast_price_distance2,
-
-                    'c_ship_price_df3' => $request->c_ship_price_df3,
-                    'c_ship_price_weight3' => $request->c_ship_price_weight3,
-                    'c_ship_fast_price_df3' =>$request->c_ship_fast_price_df3,
-                    'c_ship_fast_price_weight3' => $request->c_ship_fast_price_weight3,
-                    'c_ship_fast_price_distance3' => $request->c_ship_fast_price_distance3,
-
                     'cpoint' => $request->cpoint,
                     'mpoint' => $request->mpoint,
                     'phi_xuly' => $request->phi_xuly,
                     'tax' => $request->tax,
                 ]);
+                $productPrice =  ProductPrice::where('id_ofproduct', $id)->first();
+                $productPrice->c_ship_price_df0 = $request->c_ship_price_df0;
+                $productPrice->c_ship_price_weight0 = $request->c_ship_price_weight0;
+                $productPrice->c_ship_fast_price_df0 = $request->c_ship_fast_price_df0;
+                $productPrice->c_ship_fast_price_weight0 = $request->c_ship_fast_price_weight0;
+                $productPrice->c_ship_fast_price_distance0 = $request->c_ship_fast_price_distance0;
+
+                $productPrice->c_ship_price_df1 = $request->c_ship_price_df1;
+                $productPrice->c_ship_price_weight1 = $request->c_ship_price_weight1;
+                $productPrice->c_ship_fast_price_df1 = $request->c_ship_fast_price_df1;
+                $productPrice->c_ship_fast_price_weight1 = $request->c_ship_fast_price_weight1;
+                $productPrice->c_ship_fast_price_distance1 = $request->c_ship_fast_price_distance1;
+
+                $productPrice->c_ship_price_df2 = $request->c_ship_price_df2;
+                $productPrice->c_ship_price_weight2 = $request->c_ship_price_weight2;
+                $productPrice->c_ship_fast_price_df2 = $request->c_ship_fast_price_df2;
+                $productPrice->c_ship_fast_price_weight2 = $request->c_ship_fast_price_weight2;
+                $productPrice->c_ship_fast_price_distance2 = $request->c_ship_fast_price_distance2;
+
+                $productPrice->c_ship_price_df3 = $request->c_ship_price_df3;
+                $productPrice->c_ship_price_weight3 = $request->c_ship_price_weight3;
+                $productPrice->c_ship_fast_price_df3 = $request->c_ship_fast_price_df3;
+                $productPrice->c_ship_fast_price_weight3 = $request->c_ship_fast_price_weight3;
+                $productPrice->c_ship_fast_price_distance3 = $request->c_ship_fast_price_distance3;
+                $productPrice->save();
                 if($message != ''){
                     $admin = auth('admin')->user();
                     $this->logController->createLog($admin, 'Sản phẩm', 'Sửa', substr_replace($message ,"", -1), route('san-pham.edit',$product->id ));
@@ -531,11 +531,11 @@ class AdminProductController extends Controller
              
 
                 return redirect()->route('san-pham.edit', $id)->with('success', 'Cập nhật sản phẩm thành công');
-            } catch (\Throwable $th) {
-                throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
-                return redirect()->back()->withErrors(['error' => $th->getMessage()]);
-            }
-        });
+        //     } catch (\Throwable $th) {
+        //         throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
+        //         return redirect()->back()->withErrors(['error' => $th->getMessage()]);
+        //     }
+        // });
     }
 
     public function destroy($id)
