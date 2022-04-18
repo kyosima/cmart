@@ -56,19 +56,17 @@ section{
 /* KẾT */
 
 /* Slider */
-.carousel{
-    margin: 0px 8px 20px 8px;
-    z-index: 1;
-    background: #f8f8f8;
+.slider{
+    margin-bottom: 10px;
 }
-.carousel-indicators .active {
-    background-color: #2d1407;
+.slider .fotorama .fotorama__stage__frame{
+    border-radius: 10px;
 }
-.carousel-indicators li {
-    width: 15px;
-    height: 15px;
-    border-radius: 15px;
-    background-color: rgba(45,20,7,.5);
+.slider .fotorama img{
+    transition: 0.5s;
+}
+.slider .fotorama img:hover{
+    filter: brightness(1.1);
 }
 /* KẾT */
 
@@ -478,7 +476,14 @@ section{
 }
 .products .box-image .image-cover img{
     width: 100%;
-    height: 220px;
+    object-fit: cover;
+    height: 100%;
+}
+.products .box-image .image-cover {
+    max-width: 150px;
+    margin: 0 auto;
+    max-height: 225px;
+    overflow: hidden;
 }
 .products .box-image .block-sale{
     position: absolute;
@@ -616,15 +621,6 @@ section{
 
 /* RESPONSIVE */
 @media only screen and (max-width: 991px) {
-    /* slider */
-    .carousel{
-        padding: 10px;
-    }
-    /* kết */
-    /* .container, .row{
-        padding: 0;
-        margin: 0;
-    } */
     .category-page .shop-sidebar{
         padding: 0;
         background: #fff;
@@ -793,9 +789,6 @@ section{
     }
     .products .price-wrapper *{
         font-size: 4.1vw !important;
-    }
-    .products .box-image img{
-        height: 75px !important;
     }
 }
 
