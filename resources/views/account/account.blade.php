@@ -35,7 +35,7 @@
 
     <div class="container">
         <div class="row d-flex justify-content-center">
-            <div class="col col-lg-6 col-md-6 col-xs-12 col-sm-12 ">
+            <div class="col col-lg-6 col-md-8 col-xs-12 col-sm-12 ">
                 <section class="loginWrapper">
 
 

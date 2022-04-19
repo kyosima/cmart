@@ -88,7 +88,7 @@ img.review-stars {
     position: absolute;
     top: calc(44%);
     cursor: pointer;
-    z-index: 999;
+    z-index: 1;
 }
 .right {
     right: 20px;

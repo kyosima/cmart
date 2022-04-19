@@ -298,18 +298,23 @@ a:hover {
     position: relative;
 }
 
-.box-contact {
-    width: 470px;
+.contact.content .container {
     position: absolute;
     top: 0;
-    background: rgba(0, 0, 0, .7);
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+.contact.content .container>.row {
+    height: 100%;
+    padding-top: 100px;
+}
+.contact.content .box-contact {
+    background: rgb(0 230 248);
     text-align: center;
     padding: 32px 30px 35px;
-    top: 50%;
-    right: 95px;
-    -webkit-transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
-    transform: translate(0, -50%);
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .box-contact .title {
@@ -331,6 +336,7 @@ a:hover {
     font-style: italic;
     border-radius: 0;
     margin-bottom: 24px;
+    border-radius: 5px;
 }
 
 textarea.form-control {
@@ -338,21 +344,36 @@ textarea.form-control {
 }
 
 .btn-contact {
-    background: #bb0029;
-    padding: 16px 0;
+    background: #ffba00;
+    padding: 5px 25px;
     color: #fff;
     font-weight: 500;
     font-size: 16px;
     text-align: center;
     border: 0;
-    width: 100%;
+    width: fit-content;
+    border-radius: 10px;
 }
 
 .btn-contact:hover {
     background: #fff;
-    color: #bb0029;
+    color: #ffba00;
 }
 
+@media (max-width: 991px) {
+    .contact.content .container .col-md-5 {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .contact.content .container {
+        position: relative;
+    }
+    .contact.content .container>.row {
+        height: 100%;
+        padding-top: 15px;
+    }
+}
 
 /* -----------------------------------Trang Đơn Hàng Sau Khi Tra Cứu----------------------------------- */
 

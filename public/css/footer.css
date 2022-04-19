@@ -126,11 +126,15 @@
 }
 
 @media (max-width: 1024px) {
+    .site-footer{
+        margin-bottom: 52px;
+    }
     .info-company .title-info {
         color: #bb0029 !important;
         font-size: 4.5vw;
         font-weight: 500;
         margin-bottom: 5px;
+        line-height: 2rem;
     }
     .title-client {
         text-transform: none !important;
@@ -185,6 +189,7 @@
     }
     .socials-footer ul li {
         margin: 0 10px;
+        list-style: none;
     }
     .socials-footer {
         border-top: 1px solid #e3e3e3;
@@ -192,6 +197,7 @@
     .socials-footer>.col-box>ul {
         padding: 10px 10px 5px;
         width: 100%;
+        flex-wrap: wrap;
     }
     .icon-s1 {
         background-position: -488px -22px !important;
@@ -243,12 +249,19 @@
         display: none;
     }
 }
+@media (max-width: 500px) {
+    #button {
+        bottom: 60px;
+        right: 15px;
+    }
+}
 
 .info-company .title-info,
 .title-info {
     font-weight: 500;
     color: #333;
     font-size: 16px;
+    line-height:1.5;
     text-transform: uppercase;
 }
 

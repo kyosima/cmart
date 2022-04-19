@@ -1,6 +1,6 @@
 .carousel-control-next,
 .carousel-control-prev {
-    bottom: 50px;
+    /* bottom: 50px; */
     width: 6%;
     color: #fff;
 }
@@ -358,7 +358,15 @@ h6 {
 .blog-mobile {
     display: none;
 }
-
+@media (max-width:600px){
+    .detail .title a,
+    .detail .box-price li.price {
+        font-size: 11px !important;
+    }
+    .slider-pc .carousel-item img {
+        height: 200px;
+    }
+}
 @media (max-width: 1024px) {
     .items-blog {
         display: none !important;
@@ -413,7 +421,7 @@ h6 {
         } */
     .detail .title a,
     .detail .box-price li.price {
-        font-size: 3.5vw;
+        font-size: 1.5vw;
     }
     .detail .box-price li.old-price {
         font-size: 3vw;
@@ -476,7 +484,7 @@ h6 {
 
 .detail .title a {
     margin-top: 10px;
-    height: 40px;
+    /* height: 40px; */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -491,7 +499,7 @@ h6 {
 
 @media all and (max-width: 600px) {
     .section-title-normal span {
-        font-size: 13px;
+        font-size: 11px !important;
         width: 75%;
         margin-right: 0;
     }

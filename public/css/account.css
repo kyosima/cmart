@@ -52,15 +52,33 @@
   display: table-cell;
   list-style: none;
   text-align: center;
-  padding: 20px 20px 25px 20px;
+  padding: 20px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   color: #666;
   background-color: none;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
 
+}
+@media (max-width: 768px) {
+  .tabs > li {
+    padding: 12px;
+    transition-duration: .25s;
+    display: table-cell;
+    list-style: none;
+    text-align: center;
+  
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    color: #666;
+    background-color: none;
+    font-size: 13px;
+    font-weight: 600;
+  
+  }
 }
 .tabs > li:before {
   z-index: -1;
@@ -151,7 +169,7 @@ box-shadow: 0px 12px 34px -8px rgba(0,0,0,0.28);
 	.loginWrapper [type="submit"] {
 		background: #f7732c;
 		color: #FFF;
-		padding: 24px;
+		/* padding: 15px; */
 		width: 100%;
 		cursor: pointer;
         border-radius: 25px;

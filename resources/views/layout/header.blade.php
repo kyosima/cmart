@@ -299,7 +299,7 @@
 <header class="header-tablet-mobile">
 
     <div class="top-header">
-        <div class="container">
+        <div class="container mb-2">
             <div class="d-flex justify-content-between  align-items-center pb-2">
                 <div class="icon-nav">
                     <a href="#>" data-trigger="navbar_main" class="fas fa-bars"></a>
@@ -383,7 +383,7 @@
                         <ul>
                             @if (Auth::check())
                                 <li><a id="profile-btn" href="{{ url('/xac-thuc-ho-so') }}" title="title"><i
-                                            class="fas fa-user"></i><span>{{ Auth::user()->name }}</span></a>
+                                            class="fas fa-user"></i><span>{{ Auth::user()->hoten }}</span></a>
                                 </li>
                             @else
                                 <li><a id="register-btn" href="{{ url('/tai-khoan') }}" title="title"><i

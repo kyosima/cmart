@@ -192,7 +192,7 @@ Route::post('/dang-ky', [HomeController::class, 'postRegister'])->name('user.reg
 Route::get('/dang-xuat', [HomeController::class, 'getLogout'])->name('logoutuser');
 
 Route::get('/thong-tin-tai-khoan', [HomeController::class, 'getProfile'])->name('account.info');
-Route::post('/thong-tin-tai-khoan', [HomeController::class, 'postProfile']);
+Route::post('   ', [HomeController::class, 'postProfile']);
 
 Route::get('/xac-thuc-ho-so', [HomeController::class, 'getXacthuc']);
 
