@@ -383,7 +383,7 @@
                         <ul>
                             @if (Auth::check())
                                 <li><a id="profile-btn" href="{{ url('/xac-thuc-ho-so') }}" title="title"><i
-                                            class="fas fa-user"></i><span>{{ Auth::user()->name }}</span></a>
+                                            class="fas fa-user"></i><span>{{ Auth::user()->hoten }}</span></a>
                                 </li>
                             @else
                                 <li><a id="register-btn" href="{{ url('/tai-khoan') }}" title="title"><i
