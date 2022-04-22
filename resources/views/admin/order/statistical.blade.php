@@ -113,27 +113,27 @@
                                         <td>
                                             @switch($i)
                                                 @case(0)
-                                                    Đơn hàng Đã xác nhận
+                                                    Đã đặt hàng
                                                 @break
 
                                                 @case(1)
-                                                    Đơn hàng Đã thanh toán
+                                                    Đã xác nhận thanh toán
                                                 @break
 
                                                 @case(2)
-                                                    Đơn hàng Đang xử lý
+                                                   Đang xử lý
                                                 @break
 
                                                 @case(3)
-                                                    Đơn hàng Đang vận chuyển
+                                                    Đang vận chuyển
                                                 @break
 
                                                 @case(4)
-                                                    Đơn hàng Hoàn thành
+                                                    Hoàn thành
                                                 @break
 
                                                 @case(5)
-                                                    Đơn hàng Hủy
+                                                   Đã Hủy
                                                 @break
                                             @endsWitch
                                         </td>

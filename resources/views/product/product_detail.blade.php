@@ -3,7 +3,6 @@
 @section('title', 'Chi tiết sản phẩm')
 
 @push('css')
-<<<<<<< HEAD
     <link rel="stylesheet" href="{{ asset('public/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/fotorama.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/lastview_product.css') }}">
@@ -215,37 +214,6 @@
                     <li class="ml-1"> {{ $product->name }}</li>
                 </ul>
             </div>
-=======
-<link rel="stylesheet" href="{{ asset('public/css/style.css') }}">
-<link rel="stylesheet" href="{{ asset('public/css/fotorama.css') }}">
-<link rel="stylesheet" href="{{ asset('public/css/lastview_product.css') }}">
-<link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
-<link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
-<link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
-<link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
-<link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
-<link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
-<link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
-<link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
-<link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
-{!! SEOMeta::generate() !!}
-{!! OpenGraph::generate() !!}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-@endpush
-
-@section('content')
-<main>
-    <div class="category-product">
-        <div class="container" style="height: 100%;">
-            <ul>
-                <li><a href="#">Trang chủ</a></li>
-                @foreach ($categoryIds as $category_id)
-                <?php $category = App\Models\ProductCategory::find($category_id); ?>
-                <li><a href="{{ route('proCat.index', $category->slug) }}">{{ $category->name }} </a></li>
-                @endforeach
-                <li class="ml-1"> {{ $product->name }}</li>
-            </ul>
->>>>>>> hieu
         </div>
     </div>
     <!-- search-mobile-fixed -->
@@ -461,146 +429,12 @@
 
 
 
-<<<<<<< HEAD
-                                <div class="quantity">
-
-
-                                    <div class="qty-block">
-                                        @if ($product->is_shipping == 1)
-                                            <div class="input-product-shipping">
-                                                <label for="">Thông tin vận chuyển</label>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <input type="number" class="form-control"
-                                                                placeholder="Nhập khối lượng vận chuyển" name="weight"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <input type="number" class="form-control"
-                                                                placeholder="Nhập Chiều dài vận chuyển" name="length"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <input type="number" class="form-control"
-                                                                placeholder="Nhập Chiều cao vận chuyển" name="height"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <input type="number" class="form-control"
-                                                                placeholder="Nhập Chiều rộng vận chuyển" name="width"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <label for="">Địa chỉ gửi</label>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <label for="">Cấp tỉnh<sup
-                                                                    class="text-danger">*</sup></label>
-                                                            <select name="sel_province" class="form-control select2"
-                                                                data-placeholder="---Chọn tỉnh thành---" required>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <label for="">Cấp huyện<sup
-                                                                    class="text-danger">*</sup></label>
-                                                            <select class="form-control select2" name="sel_district"
-                                                                data-placeholder="---Chọn quận huyên---" required>
-
-                                                                <option value="">Cấp huyện</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <label for="">Cấp xã<sup class="text-danger">*</sup></label>
-                                                            <select class="form-control select2" name="sel_ward"
-                                                                data-placeholder="---Chọn phường xã---" required>
-
-                                                                <option value="">Cấp xã</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <label for="">Địa chỉ chi tiết<sup
-                                                                    class="text-danger">*</sup></label>
-                                                            <input type="text" name="address" class="form-control"
-                                                                value="" placeholder="Mời nhập địa chỉ" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <label for="">Địa chỉ nhận</label>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <label for="">Cấp tỉnh<sup
-                                                                    class="text-danger">*</sup></label>
-                                                            <select name="sel_province_to" class="form-control select2"
-                                                                data-placeholder="---Chọn tỉnh thành---" required>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <label for="">Cấp huyện<sup
-                                                                    class="text-danger">*</sup></label>
-                                                            <select class="form-control select2" name="sel_district_to"
-                                                                data-placeholder="---Chọn quận huyên---" required>
-
-                                                                <option value="">Cấp huyện</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <label for="">Cấp xã<sup class="text-danger">*</sup></label>
-                                                            <select class="form-control select2" name="sel_ward_to"
-                                                                data-placeholder="---Chọn phường xã---" required>
-
-                                                                <option value="">Cấp xã</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <label for="">Địa chỉ chi tiết<sup
-                                                                    class="text-danger">*</sup></label>
-                                                            <input type="text" name="address_to" class="form-control"
-                                                                value="" placeholder="Mời nhập địa chỉ" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-
-                                        @if ($product->is_shipping == 1)
-                                            <input type="hidden" name="qty" maxlength="12" value="1" title=""
-                                                class="input-text" />
-                                        @else
-                                            <div class="qty">
-                                                <input type="text" name="qty" maxlength="12" value="1" title=""
-                                                    class="input-text" />
-                                                <div class="qty_inc_dec">
-                                                    <i class="increment" onclick="incrementQty()">+</i>
-                                                    <i class="decrement" onclick="decrementQty()">-</i>
-                                                </div>
-=======
 
                         <div class="quantity">
 
 
                             <div class="qty-block">
+                                @if($product->is_shipping == 1)
                                 <div class="input-product-shipping">
                                     <label for="">Thông tin vận chuyển</label>
                                     <div class="row">
@@ -622,7 +456,6 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <input type="number" class="form-control" placeholder="Nhập Chiều rộng vận chuyển">
->>>>>>> hieu
                                             </div>
                                         </div>
                                     </div>
@@ -695,6 +528,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                                 @if ($product->is_shipping == 1)
                                 <input type="hidden" name="qty" maxlength="12" value="1" title="" class="input-text" />
                                 @else
