@@ -474,7 +474,7 @@
                 if (repo.text) {
                     return repo.text
                 } else {
-                    return `${repo.name} (#${repo.id})`;
+                    return `${repo.fullname} (#${repo.id})`;
                 }
             }
         </script>
