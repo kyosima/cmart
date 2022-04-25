@@ -220,7 +220,7 @@
         background-size: 700px !important;
     }
     .icon-m {
-        background: url(https://japana.vn/assets/mobile/assets/images/icon-m3.png) no-repeat;
+        background: url(../image/icon.png) no-repeat;
         display: inline-block;
     }
 }

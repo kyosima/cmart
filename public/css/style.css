@@ -1067,9 +1067,6 @@ input#rate-1:checked~label {
     .product__detail .short-desc .title {
         margin-top: 30px;
     }
-    .product__detail .short-desc .info-detail {
-        display: none;
-    }
     .product__detail .short-desc .promo-intro {
         background: none;
         padding: 0;

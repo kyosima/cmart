@@ -87,7 +87,7 @@
                                                             <a class="dropdown-item text-dark"
                                                                 href="{{ route('noticeuser.index') }}">Thông báo <sup
                                                                     class="text-danger font-weight-bold">{{ Auth::user()->notices()->whereIsRead(0)->count() }}
-                                                                    </span></a>
+                                                                    </sup></a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item text-danger"
                                                                 href="{{ route('logoutuser') }}">Đăng
@@ -242,64 +242,12 @@
 
 
 </header>
-<div class="header-site">
-    <div class="bg-white d-flex flex-column justify-center align-items-center bannercmart pt-2" id="gradient">
-        {{-- <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
-            Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
-        </span> --}}
-    
-        <p>
-            Mọi liên hệ nên thực hiện <b>từ Số điện thoại đăng ký giao dịch</b> và <b>đến các kênh kết nối chính thức
-                của C-Mart</b>
-        </p>
-    
-    </div>
-    <div class="bg-white">
-        <div class="container">
-            <div class="d-flex justify-content-around align-items-top ct-header">
-    
-                <div class="box-contacth">
-                    <b class="d-flex align-items-center justify-content-center"><img
-                            src="{{ asset('/public/image/phone.png') }}" alt=""><a
-                            href="tel:0899663883">0899.663.883</a></b>
-                    <small>Kênh Hỗ trợ - Đặt hàng</small>
-                </div>
-                <div class="box-contacth">
-                    <b class="d-flex align-items-center justify-content-center"><img
-                            src="{{ asset('/public/image/facebook.png') }}" alt=""><a
-                            href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
-                    <small>Kênh Hỗ trợ - Đặt hàng</small>
-    
-                </div>
-                <div class="box-contacth">
-                    <b class="d-flex align-items-center justify-content-center"><img
-                            src="{{ asset('/public/image/zalo.png') }}" alt=""><a
-                            href="https://zalo.me/3597490523695148504">Zalo</a></b>
-                    <small>Kênh Hỗ trợ - Đặt hàng</small>
-    
-                </div>
-                <div class="box-contacth">
-                    <b class="d-flex align-items-center justify-content-center"><img
-                            src="{{ asset('/public/image/email.png') }}" alt=""><a
-                            href="mailto:center@cm.com.vn">center@cm.com.vn</a></b>
-                    <small>Kênh dành cho Tổ chức</small>
-    
-                </div>
-            </div>
-            <div class="text-center">
-                <h5 class="store-system-hello"><a href="https://cm.com.vn/chinh-sach/he-thong-kenh-cua-hang-c-store"><b> Hệ
-                            thống các kênh Cửa hàng C-Store </b></a></h5>
-                <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách Hàng</p>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- menu-tablet-mobile -->
 <header class="header-tablet-mobile">
 
     <div class="top-header">
-        <div class="container mb-2">
+        <div class="container">
             <div class="d-flex justify-content-between  align-items-center pb-2">
                 <div class="icon-nav">
                     <a href="#>" data-trigger="navbar_main" class="fas fa-bars"></a>
@@ -309,10 +257,10 @@
                         <img src="{{ asset('public/image/logo-c-v.png') }}" alt="Siêu thị Nhật Bản Japana.vn">
                     </a>
                 </div>
-                <div class="cart-nav">
+                <div class="cart-nav cart">
                     <a class="number-cart" rel="nofollow" href="{{ url('/gio-hang') }}" title="giỏ hàng">
-                        <i class="icon-2020 icon-cart-2020"></i>
-                        <span class="count-item count-giohang">{{ $count_cart }}</span>
+                        <i class="icon-2020 icon-cart-2020"></i>                        
+                        <sup class="count-item count-giohang">{{ $count_cart }}</sup>
                     </a>
                 </div>
             </div>
@@ -385,6 +333,83 @@
                                 <li><a id="profile-btn" href="{{ url('/xac-thuc-ho-so') }}" title="title"><i
                                             class="fas fa-user"></i><span>{{ Auth::user()->hoten }}</span></a>
                                 </li>
+                                <li>
+                                    <a href="{{ url('/lich-su-don-hang') }}">
+                                        <i class="fas fa-history"></i><span>Lịch sử đơn hàng</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/lich-su-tien-tich-luy') }}">
+                                        <i class="fas fa-circle-notch"></i><span>Tài khoản C</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/thong-bao') }}">
+                                        <i class="fas fa-bell"></i><span>Thông báo
+                                        <sup class="text-danger font-weight-bold">
+                                            {{ Auth::user()->notices()->whereIsRead(0)->count() }} 
+                                        </sup>
+                                        </span> 
+                                    </a>
+                                </li>
+                                <li>
+                                    <button class="title collapsed" type="button" data-toggle="collapse" 
+                                    data-target="#dichvucmart" aria-expanded="false" aria-controls="dichvucmart" data-id="dichvucmart">
+                                        <a href="#" title="dichvucmart">
+                                        <i class="fas fa-book-reader"></i><span>Dịch vụ của C Mart</span>
+                                        </a>
+                                        <span class="expand-menu">
+                                            <i class="fas fas-custom fa-angle-right"></i>
+                                        </span>
+                                    </button>
+                                    <ul id="dichvucmart" class="sub-nav collapse acc-menu-dropdown" style="">
+                                        @php
+                                            $pages = App\Models\InfoCompany::whereType('service')
+                                                ->orderBy('sort', 'asc')
+                                                ->whereStatus(1)
+                                                ->get();
+                                        @endphp
+                                        @foreach ($pages as $page)
+                                        <li>
+                                            <h4 class="title">
+                                                <a rel="nofollow"
+                                                href="{{ route('chinh-sach.show', $page->slug) }}"
+                                                title="{{ $page->name }}">{{ $page->name }}
+                                                </a>
+                                            </h4>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                                <li>
+                                    <button class="title collapsed" type="button" data-toggle="collapse" 
+                                    data-target="#dieukhoanchinhsach" aria-expanded="false" aria-controls="dieukhoanchinhsach" data-id="dieukhoanchinhsach">
+                                        <a href="#" title="dieukhoanchinhsach">
+                                        <i class="fas fa-flag"></i><span>Điều khoản và chính sách</span>
+                                        </a>
+                                        <span class="expand-menu">
+                                            <i class="fas fas-custom fa-angle-right"></i>
+                                        </span>
+                                    </button>
+                                    <ul id="dieukhoanchinhsach" class="sub-nav collapse acc-menu-dropdown" style="">
+                                        @php
+                                            $pages = App\Models\InfoCompany::whereType('policy')
+                                                ->orderBy('sort', 'asc')
+                                                ->whereStatus(1)
+                                                ->get();
+                                        @endphp
+                                        @foreach ($pages as $page)
+                                        <li>
+                                            <h4 class="title">
+                                                <a rel="nofollow"
+                                                href="{{ route('chinh-sach.show', $page->slug) }}"
+                                                title="{{ $page->name }}">{{ $page->name }}
+                                                </a>
+                                            </h4>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
                             @else
                                 <li><a id="register-btn" href="{{ url('/tai-khoan') }}" title="title"><i
                                             class="fas fa-user"></i><span>Đăng ký tài khoản</span></a></li>
@@ -393,6 +418,13 @@
                             @endif
                             <li><a href="{{ url('/theo-doi-don-hang ') }}" title="title"><i
                                         class="far fa-sticky-note"></i><span>Tra cứu đơn hàng</span></a></li>
+                            @if (Auth::check())
+                                <li>
+                                    <a href="{{ url('/dang-xuat') }}">
+                                        <i class="fas fa-sign-out-alt"></i><span>Đăng xuất</span>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -406,15 +438,71 @@
     <span class="screen-darken"></span>
 
 </header>
+
+<div class="header-site">
+    <div class="bg-white d-flex flex-column justify-center align-items-center bannercmart pt-2" id="gradient">
+        {{-- <span data-title=" Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart" class="text">
+            Chào mừng Quý Khách đến với Cửa hàng trực tuyến C-Mart
+        </span> --}}
+    
+        <p>
+            Mọi liên hệ nên thực hiện <b>từ Số điện thoại đăng ký giao dịch</b> và <b>đến các kênh kết nối chính thức
+                của C-Mart</b>
+        </p>
+    
+    </div>
+    <div class="bg-white">
+        <div class="container">
+            <div style="overflow: auto">
+                <div class="d-flex justify-content-between align-items-top ct-header">
+        
+                    <div class="box-contacth">
+                        <b class="d-flex align-items-center justify-content-center"><img
+                                src="{{ asset('/public/image/phone.png') }}" alt=""><a
+                                href="tel:0899663883">0899.663.883</a></b>
+                        <small>Kênh Hỗ trợ - Đặt hàng</small>
+                    </div>
+                    <div class="box-contacth">
+                        <b class="d-flex align-items-center justify-content-center"><img
+                                src="{{ asset('/public/image/facebook.png') }}" alt=""><a
+                                href="https://www.facebook.com/cm.com.vn/">Facebook</a></b>
+                        <small>Kênh Hỗ trợ - Đặt hàng</small>
+        
+                    </div>
+                    <div class="box-contacth">
+                        <b class="d-flex align-items-center justify-content-center"><img
+                                src="{{ asset('/public/image/zalo.png') }}" alt=""><a
+                                href="https://zalo.me/3597490523695148504">Zalo</a></b>
+                        <small>Kênh Hỗ trợ - Đặt hàng</small>
+        
+                    </div>
+                    <div class="box-contacth">
+                        <b class="d-flex align-items-center justify-content-center"><img
+                                src="{{ asset('/public/image/email.png') }}" alt=""><a
+                                href="mailto:center@cm.com.vn">center@cm.com.vn</a></b>
+                        <small>Kênh dành cho Tổ chức</small>
+        
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <h5 class="store-system-hello"><a href="https://cm.com.vn/chinh-sach/he-thong-kenh-cua-hang-c-store"><b> Hệ
+                            thống các kênh Cửa hàng C-Store </b></a></h5>
+                <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách Hàng</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="toolbar2 ">
     <ul class="d-flex justify-content-around  align-items-center">
         <li><a id="home" href="{{ url('/') }}" title="Trang chủ"><i
                     class="icon-2020 icon-home-2020"></i><br><span>Trang chủ</span></a></li>
-        <li><a id="goidien" href="{{ url('/') }}" title="phone"><i
+        <li><a id="goidien" href="tel:0899663883" title="phone"><i
                     class="icon-2020 icon-phone-2020"></i><br><span>Gọi điện</span></a></li>
-        <li><a id="chatzalo" href="{{ url('/') }}" title="zalo"><i
+        <li><a id="chatzalo" href="https://zalo.me/3597490523695148504" title="zalo"><i
                     class="icon-2020 icon-zalo-2020"></i><br><span>Chat zalo</span></a></li>
-        <li><a id="chatfb" href="{{ url('/') }}" title="facebook"><i
+        <li><a id="chatfb" href="https://www.facebook.com/cm.com.vn/" title="facebook"><i
                     class="icon-2020 icon-facebook-2020"></i><br><span>Chat facebook</span></a></li>
     </ul>
 </div>

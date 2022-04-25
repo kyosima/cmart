@@ -182,6 +182,7 @@ class ProductCategoryController extends Controller
             foreach($products as $product){
                 $stores_id_temp = $product->store_products()->pluck('id_ofstore')->toArray();
                 if(count(array_intersect($stores_id_temp, $request->id_stores))>0){
+
                     $temp_pr []= $product;
                 }
             }

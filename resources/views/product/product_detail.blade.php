@@ -3,218 +3,277 @@
 @section('title', 'Chi tiết sản phẩm')
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('public/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/css/fotorama.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/css/lastview_product.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
-    {!! SEOMeta::generate() !!}
-    {!! OpenGraph::generate() !!}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        div.loading {
-            z-index: 99;
-            display: none;
-            position: fixed;
-            top: 0;
+<link rel="stylesheet" href="{{ asset('public/css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('public/css/fotorama.css') }}">
+<link rel="stylesheet" href="{{ asset('public/css/lastview_product.css') }}">
+<link rel="stylesheet" href="{{ asset('public/css/rating.css') }}">
+{!! SEOMeta::generate() !!}
+{!! OpenGraph::generate() !!}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    div.loading {
+        z-index: 99;
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(16, 16, 16, 0.5);
+    }
+
+    @-webkit-keyframes uil-ring-anim {
+        0% {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @-webkit-keyframes uil-ring-anim {
+        0% {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @-moz-keyframes uil-ring-anim {
+        0% {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @-ms-keyframes uil-ring-anim {
+        0% {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @-moz-keyframes uil-ring-anim {
+        0% {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @-webkit-keyframes uil-ring-anim {
+        0% {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @-o-keyframes uil-ring-anim {
+        0% {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes uil-ring-anim {
+        0% {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    .uil-ring-css {
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 200px;
+        height: 200px;
+    }
+
+    .uil-ring-css>div {
+        position: absolute;
+        display: block;
+        width: 160px;
+        height: 160px;
+        top: 20px;
+        left: 20px;
+        border-radius: 80px;
+        box-shadow: 0 6px 0 0 #ffffff;
+        -ms-animation: uil-ring-anim 1s linear infinite;
+        -moz-animation: uil-ring-anim 1s linear infinite;
+        -webkit-animation: uil-ring-anim 1s linear infinite;
+        -o-animation: uil-ring-anim 1s linear infinite;
+        animation: uil-ring-anim 1s linear infinite;
+    }
+
+    /* breadcrumbs */
+    section#breadcrumbs {
+        padding-bottom: 10px;
+    }
+
+    .page-title.shop-page-title {
+        background-color: #fff;
+        padding: 10px 0;
+        box-shadow: -1px 1px 4px 0px rgb(137 152 172 / 30%);
+    }
+
+    .page-title.shop-page-title .breadcrumbs a {
+        color: #999;
+    }
+
+    .page-title.shop-page-title .breadcrumbs a.active,
+    .page-title.shop-page-title .breadcrumbs a:hover,
+    .page-title.shop-page-title .breadcrumbs span {
+        color: #007aff;
+    }
+
+    /* mô tả chiết khấu C, M */
+    .manufacture span.text-dark {
+        position: relative;
+    }
+    .tt {
+        display: inline-block;
+    }
+    .tt .ttt {
+        visibility: hidden;
+        top: -10px;
+        width: 400px;
+        background-color: #0000008c;
+        color: #fff !important;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+    }
+    .tt:hover .ttt {
+        visibility: visible;
+    }
+    /* sản phẩm liên quan */
+    .row-des .category .product_img{
+        max-width: 130px;
+        margin: 0 auto;
+    }
+    @media only screen and (max-width: 576px) {
+        .tt .ttt {
+            width: calc(100vw - 30px);
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(16, 16, 16, 0.5);
         }
-
-        @-webkit-keyframes uil-ring-anim {
-            0% {
-                -ms-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -webkit-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -ms-transform: rotate(360deg);
-                -moz-transform: rotate(360deg);
-                -webkit-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @-webkit-keyframes uil-ring-anim {
-            0% {
-                -ms-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -webkit-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -ms-transform: rotate(360deg);
-                -moz-transform: rotate(360deg);
-                -webkit-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @-moz-keyframes uil-ring-anim {
-            0% {
-                -ms-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -webkit-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -ms-transform: rotate(360deg);
-                -moz-transform: rotate(360deg);
-                -webkit-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @-ms-keyframes uil-ring-anim {
-            0% {
-                -ms-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -webkit-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -ms-transform: rotate(360deg);
-                -moz-transform: rotate(360deg);
-                -webkit-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @-moz-keyframes uil-ring-anim {
-            0% {
-                -ms-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -webkit-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -ms-transform: rotate(360deg);
-                -moz-transform: rotate(360deg);
-                -webkit-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @-webkit-keyframes uil-ring-anim {
-            0% {
-                -ms-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -webkit-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -ms-transform: rotate(360deg);
-                -moz-transform: rotate(360deg);
-                -webkit-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @-o-keyframes uil-ring-anim {
-            0% {
-                -ms-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -webkit-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -ms-transform: rotate(360deg);
-                -moz-transform: rotate(360deg);
-                -webkit-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes uil-ring-anim {
-            0% {
-                -ms-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -webkit-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-
-            100% {
-                -ms-transform: rotate(360deg);
-                -moz-transform: rotate(360deg);
-                -webkit-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        .uil-ring-css {
-            margin: auto;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            width: 200px;
-            height: 200px;
-        }
-
-        .uil-ring-css>div {
-            position: absolute;
-            display: block;
-            width: 160px;
-            height: 160px;
-            top: 20px;
-            left: 20px;
-            border-radius: 80px;
-            box-shadow: 0 6px 0 0 #ffffff;
-            -ms-animation: uil-ring-anim 1s linear infinite;
-            -moz-animation: uil-ring-anim 1s linear infinite;
-            -webkit-animation: uil-ring-anim 1s linear infinite;
-            -o-animation: uil-ring-anim 1s linear infinite;
-            animation: uil-ring-anim 1s linear infinite;
-        }
-
-    </style>
+    }
+</style>
 @endpush
 
 @section('content')
-    <div class="loading">
-        <div class='uil-ring-css' style='transform:scale(0.79);'>
-            <div></div>
-        </div>
+<div class="loading">
+    <div class='uil-ring-css' style='transform:scale(0.79);'>
+        <div></div>
     </div>
-    <main>
-        <div class="category-product">
-            <div class="container">
-                <ul>
-                    <li><a href="#">Trang chủ</a></li>
+</div>
+<main>
+    <!-- breadcrumbs -->
+    <section id="breadcrumbs">
+        <div class="page-title shop-page-title">
+            <div class="page-title-inner container">
+                <nav class="breadcrumbs">
+                    <a href="{{url('/')}}">Trang chủ</a>
+                    <span class="divider">/</span>
                     @foreach ($categoryIds as $category_id)
-                        <?php $category = App\Models\ProductCategory::find($category_id); ?>
-                        <li><a href="{{ route('proCat.index', $category->slug) }}">{{ $category->name }} </a></li>
+                    <?php $category = App\Models\ProductCategory::find($category_id); ?>
+                    <a href="{{ route('proCat.index', $category->slug) }}">{{ $category->name }} </a>
+                    <span class="divider">/</span>
                     @endforeach
-                    <li class="ml-1"> {{ $product->name }}</li>
-                </ul>
+                    <span class="active">{{ $product->name }}</span>
+                </nav>
             </div>
         </div>
+    </section>
     </div>
     <!-- search-mobile-fixed -->
     <div class="search">
@@ -235,7 +294,6 @@
                         @endforeach
                     </div>
                 </div>
-
                 <div class="col-sm-12 col-md-12 col-lg-6">
                     <form id="form-add-to-cart" method="POST" action="{{ route('cart.add') }}">
 
@@ -254,7 +312,6 @@
                                     </div>
                                     @if (Auth::check())
                                     @if (in_array(Auth::user()->level, [3, 4]))
-                                    @else
                                     <div class="manufacture info-detail">
                                         <p>
 
@@ -281,30 +338,6 @@
                                             </span>
 
                                         </p>
-
-                                        <style>
-                                            .tt {
-                                                position: relative;
-                                                display: inline-block;
-                                            }
-
-                                            .tt .ttt {
-                                                visibility: hidden;
-                                                top: -25px;
-                                                width: 400px;
-                                                background-color: #0000008c;
-                                                color: #fff !important;
-                                                text-align: center;
-                                                border-radius: 6px;
-                                                padding: 5px 0;
-                                                position: absolute;
-                                                z-index: 1;
-                                            }
-
-                                            .tt:hover .ttt {
-                                                visibility: visible;
-                                            }
-                                        </style>
                                     </div>
                                     @endif
                                     @else
@@ -332,30 +365,6 @@
                                             </span>
 
                                         </p>
-
-                                        <style>
-                                            .tt {
-                                                position: relative;
-                                                display: inline-block;
-                                            }
-
-                                            .tt .ttt {
-                                                visibility: hidden;
-                                                top: -25px;
-                                                width: 400px;
-                                                background-color: #0000008c;
-                                                color: #fff !important;
-                                                text-align: center;
-                                                border-radius: 6px;
-                                                padding: 5px 0;
-                                                position: absolute;
-                                                z-index: 1;
-                                            }
-
-                                            .tt:hover .ttt {
-                                                visibility: visible;
-                                            }
-                                        </style>
                                     </div>
                                     @endif
 
@@ -368,214 +377,216 @@
                                         <p class="new-price">{{ formatPriceOfLevel($product) }}</p>
                                         @endif
                                         {{-- @if ($product->shock_price != null || $product->shock_price != 0)
-                                            <p class="new-price">{{ formatPrice($product->shock_price) }}</p>
+                                        <p class="new-price">{{ formatPrice($product->shock_price) }}</p>
                                         <p class="old-price">{{ formatPrice($product->regular_price) }}</p>
                                         @else
                                         <p class="new-price">{{ formatPrice($product->regular_price) }}</p>
                                         @endif --}}
                                     </div>
+
                                     {{-- <div class="promo-intro">
                                         <p class="title-promo">Tiết kiệm
-                                            {{ formatPrice($product->regular_price - $product->shock_price) }} Ngay Hôm Nay !</p>
+                                            {{ formatPrice($product->regular_price - $product->shock_price) }} Ngay Hôm Nay !
+                                        </p>
+                                    </div>
+                                    <div class="star-mobile">
+                                        <div class="star">
+                                            <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
+                                            <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
+                                            <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
+                                            <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
+                                            <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
+                                            <span>5</span>
+                                        </div>
+                                        <div class="sold">
+                                            <span>Đã bán 1877</span>
+                                        </div>
+                                    </div> --}}
+                                            
                                 </div>
-                                <div class="star-mobile">
-                                    <div class="star">
-                                        <img src="{{ asset('public/image/icon/star.svg') }}" alt="">
-                                        <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
-                                        <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
-                                        <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
-                                        <img src="{{ asset('public//image/icon/star.svg') }}" alt="">
-                                        <span>5</span>
-                                    </div>
-                                    <div class="sold">
-                                        <span>Đã bán 1877</span>
-                                    </div>
-                                </div> --}}
-                            </div>
-                            <div class="col-sm-12 col-md-12 col-lg-6">
-                                @if (Auth::check())
-                                <input type="hidden" class="card-quality-input" name="product_id" value="{{ $product->id }}">
-                                {{-- <div class="form-group">
+                                <div class="col-sm-12 col-md-12 col-lg-6">
+                                    @if (Auth::check())
+                                    <input type="hidden" class="card-quality-input" name="product_id" value="{{ $product->id }}">
+                                    {{-- <div class="form-group">
 
                                             <label for="sl-store">Chọn cửa hàng</label>
                                             <select name="store_id" id="sl-store" class="form-control">
                                                 <option value="0">---Chọn cửa hàng---</option> --}}
-                                <p><b>Danh sách cửa hàng</b></p>
-                                @foreach ($stores as $store)
-                                @if (in_array($user->level, array_diff(explode(',', $store->getOriginal('pivot_for_user')), [''])))
-                                {{-- <option value="{{ $store->id }}"
-                                @if ($store->getOriginal('pivot_soluong') == 0) disabled @endif>
-                                {{ $store->name }} còn
-                                {{ $store->getOriginal('pivot_soluong') }} sản
-                                phẩm</option> --}}
-                                @if ($store->getOriginal('pivot_soluong') > 0)
-                                <div class="form-group d-flex justify-content-start align-items-center">
-                                    <input type="radio" id="store-{{ $store->id }}" name="store_id" value="{{ $store->id }}">
-                                    <label style="margin-bottom: 0; padding-left: 3px" for="store-{{ $store->id }}"> {{ $store->name }} (còn
-                                        {{ $store->getOriginal('pivot_soluong') }} sản
-                                        phẩm)</label>
+                                    <p><b>Danh sách cửa hàng</b></p>
+                                    @foreach ($stores as $store)
+                                    @if (in_array($user->level, array_diff(explode(',', $store->getOriginal('pivot_for_user')), [''])))
+                                    {{-- <option value="{{ $store->id }}"
+                                    @if ($store->getOriginal('pivot_soluong') == 0) disabled @endif>
+                                    {{ $store->name }} còn
+                                    {{ $store->getOriginal('pivot_soluong') }} sản
+                                    phẩm</option> --}}
+                                    @if ($store->getOriginal('pivot_soluong') > 0)
+                                    <div class="form-group d-flex justify-content-start align-items-center">
+                                        <input type="radio" id="store-{{ $store->id }}" name="store_id" value="{{ $store->id }}">
+                                        <label style="margin-bottom: 0; padding-left: 3px" for="store-{{ $store->id }}"> {{ $store->name }} (còn
+                                            {{ $store->getOriginal('pivot_soluong') }} sản
+                                            phẩm)</label>
+                                    </div>
+                                    @endif
+                                    @endif
+                                    @endforeach
+                                    {{-- </select> --}}
+                                    <p class="text-danger" id="notice-store" style="display:none">Chọn cửa hàng
+                                        trước khi thêm</p>
+                                    {{-- </div> --}}
+                                    @endif
                                 </div>
-                                @endif
-                                @endif
-                                @endforeach
-                                {{-- </select> --}}
-                                <p class="text-danger" id="notice-store" style="display:none">Chọn cửa hàng
-                                    trước khi thêm</p>
-                                {{-- </div> --}}
-                                @endif
                             </div>
-                        </div>
 
 
 
 
 
-                        <div class="quantity">
+                            <div class="quantity">
 
 
-                            <div class="qty-block">
-                                @if($product->is_shipping == 1)
-                                <div class="input-product-shipping">
-                                    <label for="">Thông tin vận chuyển</label>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" placeholder="Nhập khối lượng vận chuyển">
+                                <div class="qty-block">
+                                    @if($product->is_shipping == 1)
+                                    <div class="input-product-shipping">
+                                        <label for="">Thông tin vận chuyển</label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" placeholder="Nhập khối lượng vận chuyển">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" placeholder="Nhập Chiều dài vận chuyển">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" placeholder="Nhập Chiều cao vận chuyển">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" placeholder="Nhập Chiều rộng vận chuyển">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" placeholder="Nhập Chiều dài vận chuyển">
+                                        <label for="">Địa chỉ gửi</label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="">Cấp tỉnh<sup class="text-danger">*</sup></label>
+                                                    <select name="sel_province" class="form-control select2" data-placeholder="---Chọn tỉnh thành---" required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="">Cấp huyện<sup class="text-danger">*</sup></label>
+                                                    <select class="form-control select2" name="sel_district" data-placeholder="---Chọn quận huyên---" required>
+
+                                                        <option value="">Cấp huyện</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="">Cấp xã<sup class="text-danger">*</sup></label>
+                                                    <select class="form-control select2" name="sel_ward" data-placeholder="---Chọn phường xã---" required>
+
+                                                        <option value="">Cấp xã</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>
+                                                    <input type="text" name="address" class="form-control" value="" placeholder="Mời nhập địa chỉ" required>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" placeholder="Nhập Chiều cao vận chuyển">
+                                        <label for="">Địa chỉ nhận</label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="">Cấp tỉnh<sup class="text-danger">*</sup></label>
+                                                    <select name="sel_province_to" class="form-control select2" data-placeholder="---Chọn tỉnh thành---" required>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" placeholder="Nhập Chiều rộng vận chuyển">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="">Cấp huyện<sup class="text-danger">*</sup></label>
+                                                    <select class="form-control select2" name="sel_district_to" data-placeholder="---Chọn quận huyên---" required>
+
+                                                        <option value="">Cấp huyện</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="">Cấp xã<sup class="text-danger">*</sup></label>
+                                                    <select class="form-control select2" name="sel_ward_to" data-placeholder="---Chọn phường xã---" required>
+
+                                                        <option value="">Cấp xã</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>
+                                                    <input type="text" name="address_to" class="form-control" value="" placeholder="Mời nhập địa chỉ" required>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <label for="">Địa chỉ gửi</label>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="">Cấp tỉnh<sup class="text-danger">*</sup></label>
-                                                <select name="sel_province" class="form-control select2" data-placeholder="---Chọn tỉnh thành---" required>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="">Cấp huyện<sup class="text-danger">*</sup></label>
-                                                <select class="form-control select2" name="sel_district" data-placeholder="---Chọn quận huyên---" required>
-
-                                                    <option value="">Cấp huyện</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="">Cấp xã<sup class="text-danger">*</sup></label>
-                                                <select class="form-control select2" name="sel_ward" data-placeholder="---Chọn phường xã---" required>
-
-                                                    <option value="">Cấp xã</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>
-                                                <input type="text" name="address" class="form-control" value="" placeholder="Mời nhập địa chỉ" required>
-                                            </div>
+                                    @endif
+                                    @if ($product->is_shipping == 1)
+                                    <input type="hidden" name="qty" maxlength="12" value="1" title="" class="input-text" />
+                                    @else
+                                    <div class="qty">
+                                        <input type="text" name="qty" maxlength="12" value="1" title="" class="input-text" />
+                                        <div class="qty_inc_dec">
+                                            <i class="increment" onclick="incrementQty()">+</i>
+                                            <i class="decrement" onclick="decrementQty()">-</i>
                                         </div>
                                     </div>
-                                    <label for="">Địa chỉ nhận</label>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="">Cấp tỉnh<sup class="text-danger">*</sup></label>
-                                                <select name="sel_province_to" class="form-control select2" data-placeholder="---Chọn tỉnh thành---" required>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="">Cấp huyện<sup class="text-danger">*</sup></label>
-                                                <select class="form-control select2" name="sel_district_to" data-placeholder="---Chọn quận huyên---" required>
-
-                                                    <option value="">Cấp huyện</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="">Cấp xã<sup class="text-danger">*</sup></label>
-                                                <select class="form-control select2" name="sel_ward_to" data-placeholder="---Chọn phường xã---" required>
-
-                                                    <option value="">Cấp xã</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="">Địa chỉ chi tiết<sup class="text-danger">*</sup></label>
-                                                <input type="text" name="address_to" class="form-control" value="" placeholder="Mời nhập địa chỉ" required>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endif
+                                    @if (Auth::check())
+                                    <button type="submit" title="Add to Cart" class="btn-cart">Thêm vào
+                                        giỏ hàng</button>
+                                    @else
+                                    <button onclick="location.href='{{ route('account') }}'" title="Add to Cart" class="btn-cart">Thêm vào
+                                        giỏ hàng</button>
+                                    @endif
                                 </div>
-                                @endif
-                                @if ($product->is_shipping == 1)
-                                <input type="hidden" name="qty" maxlength="12" value="1" title="" class="input-text" />
-                                @else
-                                <div class="qty">
-                                    <input type="text" name="qty" maxlength="12" value="1" title="" class="input-text" />
-                                    <div class="qty_inc_dec">
-                                        <i class="increment" onclick="incrementQty()">+</i>
-                                        <i class="decrement" onclick="decrementQty()">-</i>
-                                    </div>
-                                </div>
-                                @endif
-                                @if (Auth::check())
-                                <button type="submit" title="Add to Cart" class="btn-cart">Thêm vào
-                                    giỏ hàng</button>
-                                @else
-                                <button onclick="location.href='{{ route('account') }}'" title="Add to Cart" class="btn-cart">Thêm vào
-                                    giỏ hàng</button>
-                                @endif
                             </div>
+
+
+
                         </div>
-
-
-
+                    </form>
                 </div>
-                </form>
-
-            </div>
-            <div class="col-sm-12 col-md-12 col-lg-12 freeship">
-                <div class="freeship_d">
-                    <img src="{{ asset('public/image/car.png') }}" alt="">
-                    <p>Miễn phí vận chuyển cho đơn từ 1.500.000đ</p>
+                <div class="col-sm-12 col-md-12 col-lg-12 freeship">
+                    <div class="freeship_d">
+                        <img src="{{ asset('public/image/car.png') }}" alt="">
+                        <p>Miễn phí vận chuyển cho đơn từ 1.500.000đ</p>
+                    </div>
                 </div>
-            </div>
-            <div class="ads-mobile">
-                <img src="{{ asset('public/image/ads-mobile.jpg') }}" alt="">
-            </div>
-            <div class="quality">
-                <div class="quality-control">
-                    <img src="{{ asset('public/image/quality-star.png') }}" alt="">
-                    <p>100% sản phẩm được kiểm soát chất lượng</p>
+                <div class="ads-mobile">
+                    <img src="{{ asset('public/image/ads-mobile.jpg') }}" alt="">
                 </div>
-                <div class="commit">
-                    <img src="{{ asset('public/image/circle-return.png') }}" alt="">
-                    <p>Cam kết 90 ngày đổi trả miễn phí</p>
+                <div class="quality">
+                    <div class="quality-control">
+                        <img src="{{ asset('public/image/quality-star.png') }}" alt="">
+                        <p>100% sản phẩm được kiểm soát chất lượng</p>
+                    </div>
+                    <div class="commit">
+                        <img src="{{ asset('public/image/circle-return.png') }}" alt="">
+                        <p>Cam kết 90 ngày đổi trả miễn phí</p>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
     <section class="product__des">
