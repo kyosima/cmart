@@ -15,6 +15,7 @@ use App\Http\Controllers\InfoCompanyController;
 use App\Http\Controllers\CPointController;
 use App\Http\Controllers\EkycController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EkycVNPTController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ViettelPostController;
@@ -183,6 +184,9 @@ Route::get('lay-quan-huyen-theo-tinh-thanh', [ShippingController::class, 'distri
 Route::get('lay-phuong-xa-theo-quan-huyen', [ShippingController::class, 'wardOfDistrict']);
 // Route::get('danhsach',[UserController::class, 'getDanhsach']);
 
+Route::get('/dang-ky-doanh-nghiep', [CompanyController::class, 'create'])->name('company.register');
+
+Route::post('/dang-ky-doanh-nghiep', [CompanyController::class, 'store'])->name('company.post.register');
 
 Route::get('/tai-khoan', [HomeController::class, 'getAccessAccount'])->name('account');
 Route::post('/dang-nhap', [HomeController::class, 'postLogin'])->name('user.login');

@@ -272,68 +272,66 @@ class CheckoutController extends Controller
                 $store_product = $store->product_stores()->where('id_ofproduct', $row->model->id)->first();
                 $store_product->soluong -= $row->qty;
                 $store_product->save();
-                if($row->model->is_shipping == 0){
-                    OrderProduct::create([
-                        'id_order' => $order->id,
-                        'id_order_store' => $order_store->id,
-                        'id_product' => $row->model->id,
-                        'sku' => $row->model->sku,
-                        'name' => $row->name,
-                        'slug' => $row->model->slug,
-                        'feature_img' => $row->model->feature_img,
-                        'quantity' => $row->qty,
-                        'weight' => $this->getWeight($row->model, 1),
-                        'price' => $row->price,
-                        'discount' => 0,
-                        'c_point' => $price->cpoint,
-                        'm_point' => $price->mpoint
-                    ]);
-                }
+                OrderProduct::create([
+                    'id_order' => $order->id,
+                    'id_order_store' => $order_store->id,
+                    'id_product' => $row->model->id,
+                    'sku' => $row->model->sku,
+                    'name' => $row->name,
+                    'slug' => $row->model->slug,
+                    'feature_img' => $row->model->feature_img,
+                    'quantity' => $row->qty,
+                    'weight' => $this->getWeight($row->model, 1),
+                    'price' => $row->price,
+                    'discount' => 0,
+                    'c_point' => $price->cpoint,
+                    'm_point' => $price->mpoint
+                ]);
                 
             }
             // dd(Cart::instance('product_shipping')->content());
-            foreach (Cart::instance('product_shipping')->content() as $row) {
-                    $shipping_total = 0;
-                    switch ($store_shipping_type) {
-                        case 2:
-                            $shipping_total = $row->options->price_fast;
-                            break;
-                        default:
-                            $shipping_total = $row->options->price_normal;
-                            break;
-                    }
-                    OrderProduct::create([
-                        'id_order' => $order->id,
-                        'id_order_store' => $order_store->id,
-                        'id_product' => $row->model->id,
-                        'sku' => $row->model->sku,
-                        'name' => $row->name,
-                        'slug' => $row->model->slug,
-                        'feature_img' => $row->model->feature_img,
-                        'quantity' => $row->qty,
-                        'weight' => $row->options->weight,
-                        'price' => $row->price,
-                        'discount' => 0,
-                        'c_point' => $price->cpoint,
-                        'm_point' => $price->mpoint,
-                        'is_shipping' => 1,
-                        'id_province_from' => $row->options->id_province_from,
-                        'id_district_from' => $row->options->id_district_from,
-                        'id_ward_from' => $row->options->id_ward_from,
-                        'address_from' => $row->options->address_from,
-                        'id_province_to' => $row->options->id_province_to,
-                        'id_district_to' => $row->options->id_district_to,
-                        'id_ward_to' => $row->options->id_ward_to,
-                        'address_to' => $row->options->address_to,
-                        'shipping_method' => $row->options->method_ship,
-                        'shipping_distance' => $row->options->distance,
-                        'shipping_weight'=> $row->options->weight,
-                        'shipping_type' => $store_shipping_type,
-                        'shipping_total' => $shipping_total,
+            // foreach (Cart::instance('product_shipping')->content() as $row) {
+            //         $shipping_total = 0;
+            //         switch ($store_shipping_type) {
+            //             case 2:
+            //                 $shipping_total = $row->options->price_fast;
+            //                 break;
+            //             default:
+            //                 $shipping_total = $row->options->price_normal;
+            //                 break;
+            //         }
+            //         OrderProduct::create([
+            //             'id_order' => $order->id,
+            //             'id_order_store' => $order_store->id,
+            //             'id_product' => $row->model->id,
+            //             'sku' => $row->model->sku,
+            //             'name' => $row->name,
+            //             'slug' => $row->model->slug,
+            //             'feature_img' => $row->model->feature_img,
+            //             'quantity' => $row->qty,
+            //             'weight' => $row->options->weight,
+            //             'price' => $row->price,
+            //             'discount' => 0,
+            //             'c_point' => $price->cpoint,
+            //             'm_point' => $price->mpoint,
+            //             'is_shipping' => 1,
+            //             'id_province_from' => $row->options->id_province_from,
+            //             'id_district_from' => $row->options->id_district_from,
+            //             'id_ward_from' => $row->options->id_ward_from,
+            //             'address_from' => $row->options->address_from,
+            //             'id_province_to' => $row->options->id_province_to,
+            //             'id_district_to' => $row->options->id_district_to,
+            //             'id_ward_to' => $row->options->id_ward_to,
+            //             'address_to' => $row->options->address_to,
+            //             'shipping_method' => $row->options->method_ship,
+            //             'shipping_distance' => $row->options->distance,
+            //             'shipping_weight'=> $row->options->weight,
+            //             'shipping_type' => $store_shipping_type,
+            //             'shipping_total' => $shipping_total,
         
-                    ]);
+            //         ]);
                 
-            }
+            // }
             OrderProduct::create([
                 'id_order' => $order->id,
                 'id_order_store' => $order_store->id,
@@ -349,6 +347,7 @@ class CheckoutController extends Controller
                 'c_point' => 0,
                 'm_point' => 0,
             ]);
+
             $order_store->tax = $store_tax;
             $order_store->process_fee = $process_fee;
             $order_store->shipping_method = $store_shipping_method;
@@ -379,7 +378,6 @@ class CheckoutController extends Controller
             $total += ceil($order_store->total);
             // Cart::instance($store_id)->destroy();
         }
-        
         if ($show_vat == 1) {
             $vat = OrderVat::create([
                 'id_order' => $order->id,
@@ -875,7 +873,7 @@ class CheckoutController extends Controller
             $address2 = $data['address'] . ' ' . $address2_province->PROVINCE_NAME . ' ' . $address2_district->DISTRICT_NAME . ' ' . $address2_ward->WARDS_NAME;
             if ($data['province'] == $store->id_province) {
                 $ship_arr = array(0, 0);
-                $ship_product_shipping = array(0, 0);
+                // $ship_product_shipping = array(0, 0);
                 //tinsh spdvvc
                 // foreach($cart->content() as $row){
                 //     $user = Auth::user();
@@ -931,7 +929,7 @@ class CheckoutController extends Controller
                 $cart = Cart::instance($store_id);
 
                 foreach ($cart->content() as $row) {
-                    if($row->model->is_shipping == 0){
+                    // if($row->model->is_shipping == 0){
                         $price = $row->model->productPrice()->first();
                         $process_fee += $row->qty * $price->phi_xuly;
                         $options = $row->options;
@@ -941,8 +939,8 @@ class CheckoutController extends Controller
                         $options->price_fast = 0;
                         $cart->update($row->rowId, ['options' => $options]);
                         $weight += $this->getWeight($row->model, $row->qty);
-                        $count++;
-                    }
+                        // $count++;
+                    // }
                 }
                 // if($count > 0){
                     $ship_temp = $this->getCShip($process_fee, $weight, $distance);
@@ -950,8 +948,8 @@ class CheckoutController extends Controller
                 // }else{
                 //     $ship_temp = [0,0];
                 // }
-                $ship_temp[0] += $ship_product_shipping[0];
-                $ship_temp[1] += $ship_product_shipping[1];
+                // $ship_temp[0] += $ship_product_shipping[0];
+                // $ship_temp[1] += $ship_product_shipping[1];
                 $ship_arr[0] += $ship_temp[0];
                 $ship_arr[1] += $ship_temp[1];
                 

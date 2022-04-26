@@ -45,7 +45,7 @@
                                             <div class="col-lg-2 col-md-2 col-xs-12 text-center">
                                                 <b>Mã sản phẩm</b>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+                                            <div class="col-lg-2 col-md-2 col-xs-12 text-center">
                                                 <b>Tên sản phẩm</b>
                                             </div>
                                             @if (!in_array(Auth::user()->level, [3, 4]))
@@ -60,7 +60,7 @@
                                             <div class="col-lg-2 col-md-2 col-xs-3 text-center">
                                                 <b> Đơn giá</b>
                                             </div>
-                                            <div class="col-lg-2 col-md-2 col-xs-3 text-center">
+                                            <div class="col-lg-1 col-md-1 col-xs-3 text-center">
                                                 <b> Số lượng</b>
                                             </div>
                                             <div class="col-lg-1 col-md-1 col-xs-3">
@@ -86,7 +86,7 @@
                                                     <b>Tên sản phẩm</b>
                                                 </div>
                                                 <div
-                                                class="col-lg-3 col-md-3 col-6 d-flex align-items-center justify-content-center">
+                                                class="col-lg-2 col-md-2 col-6 d-flex align-items-center justify-content-center">
                                                 <a href="{{ route('san-pham.show', $row->model->slug) }}"
                                                     class="cart-item-name">{{ $row->name }}</a>
                                             </div>
@@ -107,11 +107,11 @@
                                                     class="col-lg-2 col-md-2 col-6 d-flex align-items-center justify-content-center">
                                                     <b> {{ formatPrice($row->price) }}</b>
                                                 </div>
-                                                <div class="col-lg-1 col-md-2 col-5 ml-3 d-block d-sm-none">
+                                                <div class="col-lg-1 col-md-1 col-5 ml-3 d-block d-sm-none">
                                                     <b>Số lượng</b>
                                                 </div>
                                                 <div
-                                                    class="col-lg-2 col-md-2 col-6 d-flex align-items-center justify-content-center">
+                                                    class="col-lg-1 col-md-1 col-6 d-flex align-items-center justify-content-center">
                                                     <input type="number"
                                                         class="product-qty soluong form-control form-control-sm text-center"
                                                         value="{{ $row->qty }}" step="1" min="1" max="" name="qty"
