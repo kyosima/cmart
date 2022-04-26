@@ -43,7 +43,7 @@
                                                 x-webkit-speech_off="" x-webkit-grammar_off="builtin:search"
                                                 id="search-input" name="keyword" minlength="3" required
                                                 class="form-control ipt-search"
-                                                placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." type="text"
+                                                placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." type="text"
                                                 value="">
                                             <button onclick="" type="submit" class="icon-search"><i
                                                     class="fas fa-search"></i></button>

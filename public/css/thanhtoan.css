@@ -111,7 +111,16 @@ table {
     padding: 15px 20px 5px 20px;
     border-top: 1px solid #ddd;
 }
-
+@media (max-width: 768px){
+    .store-footer {
+        padding:0px;
+      
+    }
+    .payment-store-footer>div>div {
+       
+        padding: 10px 2px;
+    }
+}
 .product-image img {
     width: 100%;
 }
