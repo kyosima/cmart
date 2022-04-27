@@ -264,10 +264,10 @@
                     </a>
                 </div>
             </div>
-            <form method="GET" name="frm" id="frm" action="{{ route('search') }}" enctype="multipart/form-data"
+            <form method="GET" id="search-mobile-form" name="frm" id="frm" action="{{ route('search') }}" enctype="multipart/form-data"
                 class="form-search">
                 <div class="header-search">
-                    <i class="fas fa-search"></i>
+                    <i class="fas fa-search"  onclick="document.getElementById('search-mobile-form').submit();"></i>
                     <input class="form-control ipt-search"  onkeyup="showSearchSuggestMobile(this)" data-url="{{ route('search.suggest') }}" type="text"
                         placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." id="search-input-mobile" name="keyword">
                     <div id="showsearchmobile">

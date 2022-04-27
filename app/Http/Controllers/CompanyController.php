@@ -42,13 +42,11 @@ class CompanyController extends Controller
         //
 
         $this->validate($request, [
-            'phone' => 'required|min:8|unique:users,name,phone',
+            'phone' => 'required|min:8|unique:users,phone',
             'password' => 'required|min:8|max:30',
             'repassword' => 'required|same:password',
-            'company_licensen_id' => 'required|unique:user_company.company_licensen_id',
-            'id_user' => 'required',
+            'company_licensen_id' => 'required|unique:user_company,company_licensen_id',
             'company_name' =>'required',
-            'company_licensen_id' => 'required|unique',
         ], [
 
             'password.min' => 'Mật khẩu ít nhất có 8 ký tự',
@@ -57,6 +55,7 @@ class CompanyController extends Controller
             'repassword.same' => 'Mật khẩu nhập lại chưa khớp',
             'phone.required' => 'Số điện thoại ít nhất phải có 8 số',
             'phone.unique' => 'Số điện thoại đã được sử dụng',
+            'company_licensen_id' => 'Mã số thuế đã tồn tại',
         ]);
         $userToday = User::where('created_at', '>=', Carbon::today())->count();
         $userOrder = $userToday + 1;
