@@ -35,8 +35,8 @@
                             @endif
                         </div>
                         <!-- <button class="profile-card__button btn-1 button--orange"><span>Số tiền hiện tại</span></button>
-                                                                                                                <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
-                                                                                                                <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
+                                                                                                                                        <button class="profile-card__button btn-2 button--blue"><span>Điểm tích lũy</span></button>
+                                                                                                                                        <button class="profile-card__button btn-3 button--purple"><span>Điểm thưởng</span></button> -->
 
                         <div class="row d-flex justify-content-around">
                             <div class="col-md-4 col-12">
@@ -73,8 +73,8 @@
                                         <input type="phone" class="form-control mb-2" name="phone"
                                             placeholder="Nhập số điện thoại" value="{{ $user->phone }}">
                                         <!-- <span class="text-uppercase">Email</span>
-                                                                                                                            <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
-                                                                                                                                value="{{ $user->email }}" readonly=""> -->
+                                                                                                                                                    <input type="email" class="form-control mb-2" name="email" placeholder="Nhập địa chỉ email"
+                                                                                                                                                        value="{{ $user->email }}" readonly=""> -->
                                     </div>
 
                                     <div class="col-lg-4 text-start">
@@ -119,6 +119,20 @@
                                         </select>
 
                                     </div>
+                                    @if ($user->is_company == 1)
+                                        <div class="col-lg-4 text-start">
+                                            <span class="text-uppercase">Trạng thái tài khoản doanh nghiệp</span>
+                                            <select name="check_company" class="form-control" id="">
+                                                @if ($user->check_company == 1)
+                                                    <option value="1">Xác minh</option>
+                                                    <option value="0">Chưa xác minh</option>
+                                                @else
+                                                    <option value="0">Chưa xác minh</option>
+                                                    <option value="1">Xác minh</option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                    @endif
                                     {{-- <div class="col-lg-4 text-start">
                                     <span class="text-uppercase">Loại giấy tờ</span>
                                     <select class="form-select" name="type_cmnd" aria-label="Default select example">
@@ -259,19 +273,35 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        @if ($user->is_ekyc == 1)
+                                        <br>
+                                        @if ($user->is_company == 1)
                                             <div class="row mb-3">
                                                 <div class="col-lg-6">
-                                                    <p class="text-uppercase text-center">Mặt trước CMND</p>
-                                                    <img src="{{ $user->cmnd_image }}" width="100%" alt="profile"
-                                                        height="300px">
+                                                    <p class="text-uppercase text-center">Mặt trước giấy phép kinh doanh</p>
+                                                    <img src="{{ asset('public/company_licensen/' . $user->company()->value('company_licensen_image_front')) }}"
+                                                        width="100%" alt="profile" height="300px">
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <p class="text-uppercase text-center">Mặt sau CMND</p>
-                                                    <img src="{{ $user->cmnd_image2 }}" alt="profile" width="100%"
-                                                        height="300px">
+                                                    <p class="text-uppercase text-center">Mặt sau giấy phép kinh doanh</p>
+                                                    <img src="{{ asset('public/company_licensen/' . $user->company()->value('company_licensen_image_back')) }}"
+                                                        width="100%" alt="profile" height="300px">
                                                 </div>
                                             </div>
+                                        @else
+                                            @if ($user->is_ekyc == 1)
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-6">
+                                                        <p class="text-uppercase text-center">Mặt trước CMND</p>
+                                                        <img src="{{ $user->cmnd_image }}" width="100%" alt="profile"
+                                                            height="300px">
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <p class="text-uppercase text-center">Mặt sau CMND</p>
+                                                        <img src="{{ $user->cmnd_image2 }}" alt="profile" width="100%"
+                                                            height="300px">
+                                                    </div>
+                                                </div>
+                                            @endif
                                         @endif
 
                                         <div class="pt-5">

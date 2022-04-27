@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', 'Tài khoản')
+@section('title', 'Đăng ký tài khoản doanh nghiệp')
 
 @push('css')
     <link href="{{ asset('public/css/account.css') }}" rel="stylesheet" type='text/css' />
@@ -13,55 +13,69 @@
                 <h3 class="text-center text-primary text-uppercase">Đăng ký tài khoản doanh nghiệp</h3>
             </div>
         </div>
-        <form action="{{ route('company.post.register') }}">
+        <form action="{{ route('company.post.register') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $err)
+                        {{ $err }}<br>
+                    @endforeach
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="number" class="form-control" name="phone" placeholder="Mời nhập Số điện thoại đăng ký giao dịch"
+                        <input type="number" class="form-control" name="phone"
+                            placeholder="Mời nhập Số điện thoại đăng ký giao dịch" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="fullname" placeholder="Mời nhập Tên người đại diện"
+                            required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="company_name" placeholder="Mời nhập Tên công ty"
                             required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control"  name="fullname" placeholder="Mời nhập Tên người đại diện" required>
+                        <input type="number" class="form-control" name="company_licensen_id"
+                            placeholder="Mời nhập Mã số thuế" required>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="company_name" placeholder="Mời nhập Tên công ty" required>
+                        <input type="password" class="form-control" name="password" placeholder="Mời nhập mật khẩu"
+                            required>
                     </div>
+
                     <div class="form-group">
-                        <input type="number" class="form-control" name="company_license_id" placeholder="Mời nhập Mã số thuế" required>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <input type="password" class="form-control" name="password" placeholder="Mời nhập mật khẩu" required>
-                    </div>
-                 
-                    <div class="form-group">
-                        <input type="password" class="form-control" name="repassword" placeholder="Mời nhập lại mật khẩu" required>
+                        <input type="password" class="form-control" name="repassword" placeholder="Mời nhập lại mật khẩu"
+                            required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Mời nhập địa chỉ chi tiết">
+                        <select name="sel_province" class="form-control" data-placeholder=" Cấp tỉnh " required>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <select class="form-control select2" name="sel_district" data-placeholder=" Cấp huyện " required>
-                            <option value=""> Cấp huyện </option>
+                        <select class="form-control " name="sel_ward" data-placeholder=" Cấp xã " required>
+                            <option value=""> Cấp xã </option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <select name="sel_province" class="form-control select2" data-placeholder=" Cấp tỉnh " required>
+                        <select class="form-control " name="sel_district" data-placeholder=" Cấp huyện " required>
+                            <option value=""> Cấp huyện </option>
                         </select>
                     </div>
+                    
                     <div class="form-group">
-                        <select class="form-control select2" name="sel_ward" data-placeholder=" Cấp xã " required>
-                            <option value=""> Cấp xã </option>
-                        </select>
+                        <input type="text" class="form-control mt-0" name="address" placeholder="Mời nhập địa chỉ chi tiết">
                     </div>
                 </div>
             </div>
@@ -69,20 +83,22 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">Giấy phép kinh doanh mặt trước <sup class="text-danger">*</sup></label>
-                        <input type='file' id="companylisencenfront" name="company_licensen_image_front" class="d-none" required />
+                        <input type='file' id="companylicensenfront" name="company_licensen_image_front"
+                            class="d-none" required accept="image/png, image/gif, image/jpeg" />
                         <label class="w-100" for="companylicensenfront"><img id="preview-company-front"
                                 src="{{ asset('public/company_licensen/company_license_default.jpeg') }}"
-                                class="w-100" style="height: 300px" alt="your image" />
+                                class="w-100" style="height: 300px" />
                         </label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">Giấy phép kinh doanh mặt sau <sup class="text-danger">*</sup></label>
-                        <input type='file' id="companylisencenback" class="d-none" required />
+                        <input type='file' id="companylisencenback" name="company_licensen_image_back"
+                            class="d-none" required accept="image/png, image/gif, image/jpeg" />
                         <label class="w-100" for="companylisencenback"><img id="preview-company-back"
                                 src="{{ asset('public/company_licensen/company_license_default.jpeg') }}"
-                                class="w-100" style="height: 300px" alt="your image" />
+                                class="w-100" style="height: 300px" />
                         </label>
                     </div>
                 </div>
@@ -112,7 +128,7 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-        $("#companylisencenfront").change(function() {
+        $("#companylicensenfront").change(function() {
             readURL(this, $('#preview-company-front'));
         });
         $("#companylisencenback").change(function() {

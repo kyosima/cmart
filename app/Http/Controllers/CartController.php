@@ -21,6 +21,11 @@ class CartController extends Controller
         // dd(Cart::instance(1)->content());
         if(Auth::check()){
             $user = Auth::user();
+            if($user->is_company == 1){
+                if($user->check_company ==0){
+                    return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng doanh nghiệp chưa xác minh');
+                }
+            }
             if($user->status == 0){
                 Auth::logout();
                return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
@@ -47,9 +52,11 @@ class CartController extends Controller
             $count_cart += Cart::instance($store->id)->count();
             if(Cart::instance($store->id)->count()> 0){
                 $cart = Cart::instance($store->id);
-                foreach($cart->content() as $row){
-                    if($row->model->is_ecard == 0 || $row->model->is_shipping == 0){
-                        $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
+                if(Auth::check()){
+                    foreach($cart->content() as $row){
+                        if($row->model->is_ecard == 0 || $row->model->is_shipping == 0){
+                            $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
+                        }
                     }
                 }
             }

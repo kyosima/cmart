@@ -92,7 +92,7 @@
                                     <th>Định danh Khách Hàng</th>
                                     <th>Giá trị C từ mua SP/tháng</th>
                                     <th>Số dư C</th>
-
+                                    <th>Loại tài khoản</th>
                                     <th>Trạng thái</th>
                                     <th>Trạng thái</th>
 
@@ -127,7 +127,13 @@
                                         <td>
                                             {{ formatNumber($k->point_c()->value('point_c')) }}
                                         </td>
-
+                                        <td>
+                                            @if ($k->is_company == 1)
+                                                Doanh nghiệp
+                                            @else
+                                                Cá nhân
+                                            @endif
+                                        </td>
                                         <td style="text-align: -webkit-center;">
 
                                             <div class="input-group" style="min-width: 108px;">
@@ -177,6 +183,15 @@ bg-danger @endif text-center"
                                                                 </span>
                                                             </a>
                                                         </li>
+                                                        @if ($k->is_company == 1 && $k->check_company == 0)
+                                                            <li>
+                                                                <a href="{{route('user.verifyCompany', $k->id)}}">
+                                                                    <span class="dropdown-item btn-delete">
+                                                                        Xác minh doanh nghiệp
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        @endif
                                                     @endif
                                                 </ul>
                                             </div>
@@ -237,11 +252,11 @@ bg-danger @endif text-center"
                 ],
                 columnDefs: [{
 
-                    targets: [6],
+                    targets: [7],
                     orderable: false,
                 }, {
 
-                    targets: [7],
+                    targets: [8],
                     visible: false,
                 }, ],
 

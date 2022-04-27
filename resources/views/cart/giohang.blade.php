@@ -48,7 +48,7 @@
                                             <div class="col-lg-2 col-md-2 col-xs-12 text-center">
                                                 <b>Tên sản phẩm</b>
                                             </div>
-                                            @if (!in_array(Auth::user()->level, [3, 4]))
+                                            @if (Auth::check() && !in_array(Auth::user()->level, [3, 4]))
                                                 <div class="col-lg-1 col-md-2 col-xs-3 text-center">
                                                     <b> C</b>
                                                 </div>
@@ -90,7 +90,7 @@
                                                 <a href="{{ route('san-pham.show', $row->model->slug) }}"
                                                     class="cart-item-name">{{ $row->name }}</a>
                                             </div>
-                                                @if (!in_array(Auth::user()->level, [3, 4]))
+                                                @if (Auth::check() && !in_array(Auth::user()->level, [3, 4]))
                                                     <div
                                                         class="col-lg-1 col-md-1 col-4 d-flex align-items-center justify-content-center">
                                                         <span> {{ $row->model->productPrice()->value('cpoint') }}</span>
@@ -197,11 +197,11 @@
                             @csrf
                             <input type="hidden" name="store_ids" value="">
 
-                            <div class="d-md-flex  @if (in_array(Auth::user()->level, [3, 4])) justify-content-center @else justify-content-around @endif">
+                            <div class="d-md-flex  @if (Auth::check() && in_array(Auth::user()->level, [3, 4])) justify-content-center @else justify-content-around @endif">
                                 <div class="">
                                     <b>Tổng giá trị Sản phẩm: </b><span class="text-danger" id="total">0 đ</span>
                                 </div>
-                                @if (!in_array(Auth::user()->level, [3, 4]))
+                                @if (Auth::check() && !in_array(Auth::user()->level, [3, 4]))
                                     <div class="">
                                         <b>Tổng C: </b><span class="text-danger" id="cpoint">0</span>
                                     </div>

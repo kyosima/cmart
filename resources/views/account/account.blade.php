@@ -138,7 +138,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-12 pb-3">
-                                            <label for=""><input type="checkbox" name="is_company">Khách hàng doanh nghiệp</label>
+                                            <a href="{{route('company.register')}}" class="">Đăng ký tài khoản doanh nghiệp!</a>
                                         </div>
                                     </div>
                                     <input type="submit" value="Đăng ký" name="Đăng ký">

@@ -34,6 +34,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('doi-trang-thai-user/{id}', [UserController::class, 'changeStatusUser'])->name('user.changeStatus');
     Route::get('/nang-cap-vip/{id}', [UserController::class, 'upgrageVipUser'])->name('user.upgradeVip')->middleware('permission:Sửa+ẩn KH|'.config('custom-config.name-all-permission').',admin');
     Route::get('/nang-cap-user/{id}', [UserController::class, 'postDanhsach'])->middleware('permission:Sửa+ẩn KH|'.config('custom-config.name-all-permission').',admin');
+    Route::get('/xac-minh/{id}', [UserController::class, 'verifyCompany'])->name('user.verifyCompany')->middleware('permission:Sửa+ẩn KH|'.config('custom-config.name-all-permission').',admin');
 
     Route::group(['prefix' => 'danh-sach-user', 'middleware' => ['permission:Truy cập mục KH|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/', [UserController::class, 'getDanhsach']);

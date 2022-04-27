@@ -175,7 +175,9 @@ class UserController extends Controller
         $user->id_quanhuyen = $request->sel_district;
         $user->id_phuongxa = $request->sel_ward;
         $user->duong = $request->duong;
-       
+        if($user->is_company == 1){
+            $user->check_company = $request->check_company;
+        }
         $user->save();
          return back();
     }
@@ -214,7 +216,17 @@ class UserController extends Controller
         $noticeController->createNotice(1,$user);
         return back();
     }
-
+    public function verifyCompany(Request $request){
+        $user = User::whereId($request->id)->first();
+        $user->check_company = 1;
+        $user->save();
+        $admin = auth('admin')->user();
+        $this->logController->createLog($admin, 'Khách hàng', 'Xác nhận', 'định danh khách hàng doanh nghiệp '.$user->company()->value('company_name').'từ không xác minh thành xác minh', route('user.detail', $user->id));
+       
+        // $noticeController = new NoticeController();
+        // $noticeController->createNotice(1,$user);
+        return back();
+    }
     public function export(Excel $excel) {
         return $excel->download(new UsersExport, 'users.xlsx');
     }

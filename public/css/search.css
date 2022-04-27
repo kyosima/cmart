@@ -1,4 +1,4 @@
-#showsearch{
+#showsearch {
     display: none;
     border-radius: 5px;
     border: 1px solid rgb(153, 153, 153);
@@ -9,11 +9,35 @@
     padding: 10px;
     z-index: 99999;
 }
-#showsearch ul li{
+
+#showsearch ul li {
     margin: 5px 0px;
     padding: 5px 0px;
     border-bottom: 1px solid #ddd;
 }
-#showsearch ul li:last-child{
+
+#showsearch ul li:last-child {
+    border-bottom: unset;
+}
+
+#showsearchmobile {
+    display: none;
+    border-radius: 5px;
+    border: 1px solid rgb(153, 153, 153);
+    position: absolute;
+    width: 100%;
+    background: #fff;
+    margin-top: 4px;
+    padding: 10px;
+    z-index: 99999;
+}
+
+#showsearchmobile ul li {
+    margin: 5px 0px;
+    padding: 5px 0px;
+    border-bottom: 1px solid #ddd;
+}
+
+#showsearchmobile ul li:last-child {
     border-bottom: unset;
 }
