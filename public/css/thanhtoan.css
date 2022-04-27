@@ -116,6 +116,9 @@ table {
         padding:0px;
       
     }
+    .ship-fast{
+        display: inline-block;
+    }
     .payment-store-footer>div>div {
        
         padding: 10px 2px;
