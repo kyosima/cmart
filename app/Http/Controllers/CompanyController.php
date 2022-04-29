@@ -68,6 +68,8 @@ class CompanyController extends Controller
             'password' => bcrypt($request->password),
             'hoten' => $request->fullname,
             'is_company' => 1,
+            'is_ekyc' => 1,
+            'check_ekyc' => 1,
         ]);
         $user->address = $request->address;
         $user->id_phuongxa = $request->sel_ward;

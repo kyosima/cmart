@@ -311,7 +311,7 @@
                                         </p>
                                     </div>
                                     @if (Auth::check())
-                                    @if (in_array(Auth::user()->level, [3, 4]))
+                                    @if (!in_array(Auth::user()->level, [3, 4]))
                                     <div class="manufacture info-detail">
                                         <p>
 

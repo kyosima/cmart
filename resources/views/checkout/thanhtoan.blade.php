@@ -184,7 +184,7 @@
                                         </div> --}}
                                         <div class="store-footer d-none justify-content-between ">
                                             <div>Đơn vị vận chuyển: <span class="name-method"></span></div>
-                                            <div><span class="ship-normal"> </span><span class="ship-fast"></span>
+                                            <div><span class="ship-normal"> </span><span class="ship-fast "></span>
                                             </div>
                                             <div class="d-none">Tổng tiền: <span class="total-cost"></span>
                                             </div>

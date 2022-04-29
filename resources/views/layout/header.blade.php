@@ -43,7 +43,7 @@
                                                 x-webkit-speech_off="" x-webkit-grammar_off="builtin:search"
                                                 id="search-input" name="keyword" minlength="3" required
                                                 class="form-control ipt-search"
-                                                placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." type="text"
+                                                placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." type="text"
                                                 value="">
                                             <button onclick="" type="submit" class="icon-search"><i
                                                     class="fas fa-search"></i></button>
@@ -513,7 +513,7 @@
     </div>
 </div>
 
-<div class="toolbar2 ">
+{{-- <div class="toolbar2 ">
     <ul class="d-flex justify-content-around  align-items-center">
         <li><a id="home" href="{{ url('/') }}" title="Trang chủ"><i
                     class="icon-2020 icon-home-2020"></i><br><span>Trang chủ</span></a></li>
@@ -524,7 +524,7 @@
         <li><a id="chatfb" href="https://www.facebook.com/cm.com.vn/" title="facebook"><i
                     class="icon-2020 icon-facebook-2020"></i><br><span>Chat facebook</span></a></li>
     </ul>
-</div>
+</div> --}}
 
 
 

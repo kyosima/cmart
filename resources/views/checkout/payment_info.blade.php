@@ -90,7 +90,7 @@
                                         </div>
                                     </div>
                                     <div class="store-footer payment-store-footer">
-                                        <div class="d-md-flex justify-content-between">
+                                        <div class="d-flex justify-content-between">
                                             <div class="text-center">
                                                 <p>Giá trị sản phẩm</p>
                                                 <p>{{ formatPrice($order_store->sub_total) }}</p>
@@ -108,7 +108,7 @@
                                                 <p>{{ formatNumber($order_store->m_point) }}</p>
                                             </div>
                                         </div>
-                                        <div class="d-md-flex justify-content-between">
+                                        <div class="d-flex justify-content-between">
                                             <div class="text-center">
                                                 <p>Phí Vận chuyển</p>
                                                 <p><small>(Chưa bao gồm thuế VAT 8%)</small></p>
