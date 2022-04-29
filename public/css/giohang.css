@@ -449,7 +449,9 @@ hr {
     text-align: center;
     margin-top: 10px;
 }
-
+.img_mb{
+    width:30% !important
+}
 .cart-item-name {
   
     overflow: hidden;

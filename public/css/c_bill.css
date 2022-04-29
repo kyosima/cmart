@@ -30,9 +30,9 @@
 
 table {
     table-layout: auto;
-    table-layout: fixed;
+    /* table-layout: fixed; */
 }
-
+/* 
 table td {
     word-break: break-word;
 }
@@ -55,4 +55,4 @@ table thead th:nth-child(9) {
 
 table td {
     padding: 10px 2px;
-}
+} */

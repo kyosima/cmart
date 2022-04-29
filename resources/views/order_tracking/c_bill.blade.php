@@ -185,7 +185,7 @@
                                             <div class="d-md-flex justify-content-between">
                                                 <div class="text-center">
                                                     <p><b>Số Km</b></p>
-                                                    <p><small style="visibility:hidden">(Chưa bao gồm thuế VAT
+                                                    <p class="d-md-block d-none"><small style="visibility:hidden" >(Chưa bao gồm thuế VAT
                                                             8%)</small></p>
                                                     <p>{{ $order_store->shipping_distance }} km</p>
                                                 </div>

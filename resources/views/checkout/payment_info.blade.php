@@ -90,20 +90,20 @@
                                         </div>
                                     </div>
                                     <div class="store-footer payment-store-footer">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="text-center">
+                                        <div class="d-flex  justify-content-md-between justify-content-center flex-md-nowrap flex-wrap">
+                                            <div class="text-center mr-4">
                                                 <p>Giá trị sản phẩm</p>
                                                 <p>{{ formatPrice($order_store->sub_total) }}</p>
                                             </div>
-                                            <div class="text-center">
+                                            <div class="text-center mr-4">
                                                 <p>Giảm giá sản phẩm</p>
                                                 <p>{{ formatPrice($order_store->discount_product) }}</p>
                                             </div>
-                                            <div class="text-center">
+                                            <div class="text-center mx-4">
                                                 <p>Thuế GTGT sản phẩm</p>
                                                 <p>{{ formatPrice($order_store->vat_products) }}</p>
                                             </div>
-                                            <div class="text-center">
+                                            <div class="text-center ">
                                                 <p>Tích M giảm giá dịch vụ</p>
                                                 <p>{{ formatNumber($order_store->m_point) }}</p>
                                             </div>
@@ -136,8 +136,8 @@
                         <div>
                             <h3>TỔNG KẾT</h3>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <div class="text-center">
+                        <div class="d-flex justify-content-md-between justify-content-center flex-md-nowrap flex-wrap">
+                            <div class="text-center mr-4">
                                 <p>Tổng phí vận chuyển</p>
                                 <p><small>(Chưa bao gồm thuế VAT 8%)</small></p>
                                 <p>{{ formatPrice($order->shipping_total) }}</p>

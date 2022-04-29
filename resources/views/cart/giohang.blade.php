@@ -40,8 +40,6 @@
                             <div class="col-lg-2 col-md-2 col-xs-12 text-center">
                                 <b>Ảnh</b>
                             </div>
-
-
                             <div class="col-lg-2 col-md-2 col-xs-12 text-center">
                                 <b>Mã sản phẩm</b>
                             </div>
@@ -49,10 +47,10 @@
                                 <b>Tên sản phẩm</b>
                             </div>
                             @if (in_array(Auth::user()->level, [3, 4]))
-                            <div class="col-lg-1 col-md-2 col-xs-12 text-center">
+                            <div class="col-lg-1 col-md-1 col-xs-12 text-center">
                                 <b> C</b>
                             </div>
-                            <div class="col-lg-1 col-md-2 col-xs-12 text-center">
+                            <div class="col-lg-1 col-md-1 col-xs-12 text-center">
                                 <b> M</b>
                             </div>
                             @endif
@@ -71,7 +69,7 @@
                         <div class="row cart_item">
                             <div class="col-lg-2 col-md-2 col-xs-12 d-flex align-items-center justify-content-center text-center">
                                 <a href="{{ route('san-pham.show', $row->model->slug) }}">
-                                    <img src="{{ asset($row->model->feature_img) }}" class="w-50">
+                                    <img src="{{ asset($row->model->feature_img) }}" class="w-50 img_mb">
                                 </a>
                             </div>
                             <div class="col-lg-1 col-md-2 col-5 ml-3 d-block d-sm-none">
@@ -97,7 +95,7 @@
                             <div class="col-lg-1 col-md-2 col-5 ml-3 d-block d-sm-none">
                                 <b>M</b>
                             </div>
-                            <div class="col-lg-1 col-md-2 col-6 d-flex align-items-center justify-content-center">
+                            <div class="col-lg-1 col-md-1 col-6 d-flex align-items-center justify-content-center">
                                 <span> {{ $row->model->productPrice()->value('mpoint') }}</span>
                             </div>
                             @endif
