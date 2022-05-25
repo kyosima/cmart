@@ -427,6 +427,7 @@ class AdminOrderController extends Controller
             $order_stores_cancel = OrderStore::whereStatus(5)->get();
 
         }
+        // dd($order_stores_confirm->where('shipping_method',2)->count());
         $arr_order_stores = [$order_stores_confirm,$order_stores_payment,$order_stores_process,$order_stores_ship,$order_stores_success, $order_stores_cancel];
         return view('admin.order.statistical', compact('time_start', 'time_end', 'arr_order_stores'));
     }

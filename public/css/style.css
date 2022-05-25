@@ -953,7 +953,17 @@ input#rate-1:checked~label {
     width: 100% !important;
     height: unset !important;
 }
-
+.product-carousel p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-transform: uppercase;
+}
+.product__des .category {
+    margin-top:0px !important;
+}
 @media only screen and (max-width: 991px) and (min-width: 500px) {
     .category-product {
         display: none;

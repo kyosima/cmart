@@ -70,7 +70,7 @@ class ProductCategoryController extends Controller
         $categoryIds = $arrCatIds;
         $products = Product::whereIn('category_id', $categoryIds)
         ->where('status', 1)
-         ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+        ->with('productPrice')
         ->orderBy('products.id', 'desc')
         ->get();
         $stores_id = [];
@@ -86,26 +86,26 @@ class ProductCategoryController extends Controller
 
                     $products = Product::whereIn('category_id', $categoryIds)
                         ->where('status', 1)
-                         ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                        ->with('productPrice')
                         ->orderBy('products.name', 'asc')
                         ->get();
                 } else {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->with('productPrice')
                     ->orderBy('products.name', 'desc')
                     ->get();                }
             } elseif($order[0] == 'regular_price') {
                 if ($order[1] == 'asc') {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->with('productPrice')
                     ->orderBy('product_price.regular_price', 'asc')
                     ->get();
                 } else {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->with('productPrice')
                     ->orderBy('product_price.regular_price', 'desc')
                     ->get();
                 }
@@ -113,13 +113,13 @@ class ProductCategoryController extends Controller
                 if ($order[1] == 'asc') {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->with('productPrice')
                     ->orderBy('product_price.cpoint', 'asc')
                     ->get();
                 } else {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->with('productPrice')
                     ->orderBy('product_price.cpoint', 'desc')
                     ->get();
                 }
@@ -127,13 +127,13 @@ class ProductCategoryController extends Controller
                 if ($order[1] == 'asc') {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->with('productPrice')
                     ->orderBy('product_price.mpoint', 'asc')
                     ->get();
                 } else {
                     $products = Product::whereIn('category_id', $categoryIds)
                     ->where('status', 1)
-                     ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                    ->with('productPrice')
                     ->orderBy('product_price.mpoint', 'desc')
                     ->get();
                 }
@@ -141,7 +141,7 @@ class ProductCategoryController extends Controller
         }else{
             $products = Product::whereIn('category_id', $categoryIds)
                         ->where('status', 1)
-                         ->leftJoin('product_price', 'products.id', '=', 'product_price.id_ofproduct')
+                        ->with('productPrice')
                         ->orderBy('products.id', 'desc')
                         ->get();
         }
@@ -176,14 +176,15 @@ class ProductCategoryController extends Controller
             }
         }
         // KIỂM TRA XEM CÓ FILTER THEO BRAND KH
+        // dd($products);
         if (isset($request->id_stores) && !in_array(null, $request->id_stores)) {
             // LẤY RA BRAND ĐỂ SO SÁNH
-            $temp_pr =  [];
+            $temp_pr =  array();
             foreach($products as $product){
                 $stores_id_temp = $product->store_products()->pluck('id_ofstore')->toArray();
                 if(count(array_intersect($stores_id_temp, $request->id_stores))>0){
-
-                    $temp_pr []= $product;
+                    // $temp_pr []= $product;
+                    array_push($temp_pr,$product);
                 }
             }
             $products = $temp_pr;

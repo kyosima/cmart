@@ -138,9 +138,9 @@
                                             @endsWitch
                                         </td>
                                         <td>{{ formatNumber($arr_order_stores[$i]->count()) }}</td>
-                                        <td>{{ formatNumber($arr_order_stores[$i]->where('shipping_method','0')->count()) }}</td>
-                                        <td>{{ formatNumber($arr_order_stores[$i]->where('shipping_method','1')->count()) }}</td>
-                                        <td>{{ formatNumber($arr_order_stores[$i]->where('shipping_method','2')->count()) }}</td>
+                                        <td>{{ formatNumber($arr_order_stores[$i]->where('shipping_method',1)->count()) }}</td>
+                                        <td>{{ formatNumber($arr_order_stores[$i]->where('shipping_method',2)->count()) }}</td>
+                                        <td>{{ formatNumber($arr_order_stores[$i]->where('shipping_method',0)->count()) }}</td>
                                         <td>{{ formatNumber($arr_order_stores[$i]->sum('c_point')) }}</td>
                                         <td>{{ formatNumber($arr_order_stores[$i]->sum('m_point')) }}</td>
                                         <td>{{ formatNumber($arr_order_stores[$i]->sum('sub_total')) }}</td>

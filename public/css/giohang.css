@@ -116,8 +116,7 @@ section {
     display: block;
 }
 
-body {
-}
+body {}
 
 ol,
 ul {
@@ -370,8 +369,7 @@ hr {
     color: #333;
 }
 
-.btn {
-}
+.btn {}
 
 .btn-a {
     display: -webkit-box;
@@ -450,8 +448,11 @@ hr {
     margin-top: 10px;
 }
 
+.img_mb {
+    width: 30% !important
+}
+
 .cart-item-name {
-  
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -459,11 +460,24 @@ hr {
     -webkit-line-clamp: 2;
     text-transform: uppercase;
 }
+
 @media (max-width: 900px) {
-    .cart-item-name{
+    .cart-item-name {
         font-size: 13px;
     }
 }
+
+@media (max-width: 600px) {
+    .cart_item>div:first-child img {
+        width: 20% !important;
+    }
+    .cart_item>div:first-child,
+    .cart_item>div:last-child {
+        text-align: center;
+        justify-content: center;
+    }
+}
+
 .check-all-store,
 .form-checkout {
     padding: 20px 10px;

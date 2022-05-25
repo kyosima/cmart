@@ -9,6 +9,7 @@
 
 @section('content')
     <section class="home-pc">
+        
         <div class="container">
 
             <div class="slider-pc">
@@ -60,6 +61,7 @@
         </div>
         <div class="product">
             <div class="container">
+                
                 <!--<div class="sp1 row">-->
                 <!--    <div class=" col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 ">-->
                 <!--        <a href="{{ url('/khuyen-mai') }}" title="calbee">-->
