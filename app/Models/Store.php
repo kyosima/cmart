@@ -2,40 +2,46 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Store extends Model
 {
     use HasFactory;
 
 	protected $guarded = [];
-
-    public $timestamps = false;
-
-    public function province() {
-        return $this->belongsto(Province::class, 'id_province', 'matinhthanh');
-    } 
-	public function district() {
-        return $this->belongsto(District::class, 'id_district', 'maquanhuyen');
-    } 
-	public function ward() {
-        return $this->belongsto(Ward::class, 'id_ward', 'maphuongxa');
-    } 
-
-    public function products(){
-        return $this->belongsToMany(Product::class, 'product_store', 'id_ofstore', 'id_ofproduct')->withPivot(['soluong','for_user']);
-    }
-    public function owner()
+    protected $table = 'stores';
+    use Sluggable;
+    public function sluggable(): array
     {
-        return $this->belongsto(Admin::class, 'id_owner', 'id');
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
-    public function product_stores(){
-		return $this->hasMany(ProductStore::class, 'id_ofstore');
-	}
+    protected $fillable = [
+        'title',
+        'slug',
+        'introduce',
+    ];
 
-    public function order_stores(){
-        return $this->hasMany(OrderStore::class, 'id_store', 'id');
+    function store_address(){
+        return $this->hasOne(StoreAddress::class, 'store_id', 'id');
     }
 
+    function admins(){
+    	return $this->belongsToMany(Admin::class, 'store_admin', 'store_id', 'admin_id');
+    }
+
+    function store_admins(){
+        return $this->hasMany(StoreAdmin::class, 'store_id', 'id');
+    }
+    
+    function store_products(){
+        return $this->hasMany(StoreProduct::class, 'store_id', 'id');
+
+    }
+    
 }

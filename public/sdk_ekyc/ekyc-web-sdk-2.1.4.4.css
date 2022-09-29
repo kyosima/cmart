@@ -452,13 +452,8 @@ body {
     width: 50%;
 }
 
-.block-result {
-    display: flex;
-    justify-content: space-between;
-}
-
 #ekyc_sdk_intergrated .btn-redemo {
-    width: 40%;
+    width: 100%;
     /* height: 49px;
   */
     background: #18d696;
@@ -896,7 +891,7 @@ body {
         width: 70% !important;
     }
     #ekyc_sdk_intergrated .btn-redemo {
-        width: 60%;
+        width: 100%;
     }
     #ekyc_sdk_intergrated .btn-redemo span {
         font-size: 20px;

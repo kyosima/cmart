@@ -57,7 +57,7 @@
                             <div class="d-flex align-items-center justify-content-between ml-auto">
 
 
-                                @if (Auth::check())
+                                @if (Auth::guard('user')->check())
                                     <nav class="login-logout navbar navbar-expand-lg navbar-light">
                                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
                                             <ul class="navbar-nav ml-auto" style="">
@@ -66,7 +66,7 @@
                                                         <a class="btn btn-light text-dark"
                                                             href="{{ url('/xac-thuc-ho-so') }}"><i
                                                                 class="fas fa-user text-dark"></i>
-                                                            {{ Auth::user()->phone }}</a>
+                                                            {{ Auth::guard('user')->user()->phone }}</a>
                                                         <button type="button"
                                                             class="btn  btn-light text-dark dropdown-toggle dropdown-toggle-split"
                                                             data-toggle="dropdown" aria-haspopup="true"
@@ -86,7 +86,7 @@
                                                                 C</a>
                                                             <a class="dropdown-item text-dark"
                                                                 href="{{ route('noticeuser.index') }}">Thông báo <sup
-                                                                    class="text-danger font-weight-bold">{{ Auth::user()->notices()->whereIsRead(0)->count() }}
+                                                                    class="text-danger font-weight-bold">{{ Auth::guard('user')->user()->notices()->whereIsRead(0)->count() }}
                                                                 </sup></a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item text-danger"
@@ -129,17 +129,11 @@
                                         </a>
                                     </div>
                                     <div class="cart d-flex align-items-center">
-                                        @php
-                                            $stores = App\Models\Store::get();
-                                            $count_cart = 0;
-                                            foreach ($stores as $store) {
-                                                $count_cart += Cart::instance($store->id)->count();
-                                            }
-                                        @endphp
+                                     
                                         <a rel="nofollow" class="number-cart" href="{{ url('/gio-hang') }}"
                                             title="Giỏ hàng">
                                             <img src="{{ asset('/public/image/iconcart.png') }}" alt="">
-                                            <sup class="count-giohang">{{ $count_cart }}</sup>
+                                            <sup class="count-giohang">{{getCountCart()}}</sup>
                                         </a>
                                         <a rel="nofollow" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
 
@@ -260,7 +254,7 @@
                 <div class="cart-nav cart">
                     <a class="number-cart" rel="nofollow" href="{{ url('/gio-hang') }}" title="giỏ hàng">
                         <i class="icon-2020 icon-cart-2020"></i>
-                        <sup class="count-item count-giohang">{{ $count_cart }}</sup>
+                        <sup class="count-item count-giohang">{{getCountCart() }}</sup>
                     </a>
                 </div>
             </div>
@@ -345,14 +339,9 @@
                 <div role="tabpanel" class="tab-pane " id="acc">
                     <div class="box-item">
                         <ul>
-                            @if (Auth::check())
+                            @if (Auth::guard('user')->check())
                                 <li><a id="profile-btn" href="{{ url('/xac-thuc-ho-so') }}" title="title"><i
-                                            class="fas fa-user"></i><span>{{ Auth::user()->hoten }}</span></a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/lich-su-don-hang') }}">
-                                        <i class="fas fa-history"></i><span>Lịch sử đơn hàng</span>
-                                    </a>
+                                            class="fas fa-user"></i><span>{{ Auth::guard('user')->user()->hoten }}</span></a>
                                 </li>
                                 <li>
                                     <a href="{{ url('/lich-su-tien-tich-luy') }}">
@@ -363,71 +352,19 @@
                                     <a href="{{ url('/thong-bao') }}">
                                         <i class="fas fa-bell"></i><span>Thông báo
                                             <sup class="text-danger font-weight-bold">
-                                                {{ Auth::user()->notices()->whereIsRead(0)->count() }}
+                                                {{ Auth::guard('user')->user()->notices()->whereIsRead(0)->count() }}
                                             </sup>
                                         </span>
                                     </a>
                                 </li>
                                 <li>
-                                    <button class="title collapsed" type="button" data-toggle="collapse"
-                                        data-target="#dichvucmart" aria-expanded="false" aria-controls="dichvucmart"
-                                        data-id="dichvucmart">
-                                        <a href="#" title="dichvucmart">
-                                            <i class="fas fa-book-reader"></i><span>Dịch vụ của C Mart</span>
-                                        </a>
-                                        <span class="expand-menu">
-                                            <i class="fas fas-custom fa-angle-right"></i>
-                                        </span>
-                                    </button>
-                                    <ul id="dichvucmart" class="sub-nav collapse acc-menu-dropdown" style="">
-                                        @php
-                                            $pages = App\Models\InfoCompany::whereType('service')
-                                                ->orderBy('sort', 'asc')
-                                                ->whereStatus(1)
-                                                ->get();
-                                        @endphp
-                                        @foreach ($pages as $page)
-                                            <li>
-                                                <h4 class="title">
-                                                    <a rel="nofollow"
-                                                        href="{{ route('chinh-sach.show', $page->slug) }}"
-                                                        title="{{ $page->name }}">{{ $page->name }}
-                                                    </a>
-                                                </h4>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                    <a href="{{ url('/lich-su-don-hang') }}">
+                                        <i class="fas fa-history"></i><span>Lịch sử đơn hàng</span>
+                                    </a>
                                 </li>
-                                <li>
-                                    <button class="title collapsed" type="button" data-toggle="collapse"
-                                        data-target="#dieukhoanchinhsach" aria-expanded="false"
-                                        aria-controls="dieukhoanchinhsach" data-id="dieukhoanchinhsach">
-                                        <a href="#" title="dieukhoanchinhsach">
-                                            <i class="fas fa-flag"></i><span>Điều khoản và chính sách</span>
-                                        </a>
-                                        <span class="expand-menu">
-                                            <i class="fas fas-custom fa-angle-right"></i>
-                                        </span>
-                                    </button>
-                                    <ul id="dieukhoanchinhsach" class="sub-nav collapse acc-menu-dropdown" style="">
-                                        @php
-                                            $pages = App\Models\InfoCompany::whereType('policy')
-                                                ->orderBy('sort', 'asc')
-                                                ->whereStatus(1)
-                                                ->get();
-                                        @endphp
-                                        @foreach ($pages as $page)
-                                            <li>
-                                                <h4 class="title">
-                                                    <a rel="nofollow"
-                                                        href="{{ route('chinh-sach.show', $page->slug) }}"
-                                                        title="{{ $page->name }}">{{ $page->name }}
-                                                    </a>
-                                                </h4>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
+                          
+                             
+                                
                             @else
                                 <li><a id="register-btn" href="{{ url('/tai-khoan') }}" title="title"><i
                                             class="fas fa-user"></i><span>Đăng ký tài khoản</span></a></li>
@@ -436,13 +373,74 @@
                             @endif
                             <li><a href="{{ url('/theo-doi-don-hang ') }}" title="title"><i
                                         class="far fa-sticky-note"></i><span>Tra cứu đơn hàng</span></a></li>
-                            @if (Auth::check())
+                            @if (Auth::guard('user')->check())
                                 <li>
                                     <a href="{{ url('/dang-xuat') }}">
                                         <i class="fas fa-sign-out-alt"></i><span>Đăng xuất</span>
                                     </a>
                                 </li>
                             @endif
+
+                            <li>
+                                <button class="title collapsed" type="button" data-toggle="collapse"
+                                    data-target="#dichvucmart" aria-expanded="false" aria-controls="dichvucmart"
+                                    data-id="dichvucmart">
+                                    <a href="#" title="dichvucmart">
+                                        <i class="fas fa-book-reader"></i><span>Dịch vụ của C-Mart</span>
+                                    </a>
+                                    <span class="expand-menu">
+                                        <i class="fas fas-custom fa-angle-right"></i>
+                                    </span>
+                                </button>
+                                <ul id="dichvucmart" class="sub-nav collapse acc-menu-dropdown" style="">
+                                    @php
+                                        $pages = App\Models\InfoCompany::whereType('service')
+                                            ->orderBy('sort', 'asc')
+                                            ->whereStatus(1)
+                                            ->get();
+                                    @endphp
+                                    @foreach ($pages as $page)
+                                        <li>
+                                            <h4 class="title">
+                                                <a rel="nofollow"
+                                                    href="{{ route('chinh-sach.show', $page->slug) }}"
+                                                    title="{{ $page->name }}">{{ $page->name }}
+                                                </a>
+                                            </h4>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                            <li>
+                                <button class="title collapsed" type="button" data-toggle="collapse"
+                                    data-target="#dieukhoanchinhsach" aria-expanded="false"
+                                    aria-controls="dieukhoanchinhsach" data-id="dieukhoanchinhsach">
+                                    <a href="#" title="dieukhoanchinhsach">
+                                        <i class="fas fa-flag"></i><span>Điều khoản và chính sách</span>
+                                    </a>
+                                    <span class="expand-menu">
+                                        <i class="fas fas-custom fa-angle-right"></i>
+                                    </span>
+                                </button>
+                                <ul id="dieukhoanchinhsach" class="sub-nav collapse acc-menu-dropdown" style="">
+                                    @php
+                                        $pages = App\Models\InfoCompany::whereType('policy')
+                                            ->orderBy('sort', 'asc')
+                                            ->whereStatus(1)
+                                            ->get();
+                                    @endphp
+                                    @foreach ($pages as $page)
+                                        <li>
+                                            <h4 class="title">
+                                                <a rel="nofollow"
+                                                    href="{{ route('chinh-sach.show', $page->slug) }}"
+                                                    title="{{ $page->name }}">{{ $page->name }}
+                                                </a>
+                                            </h4>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -498,15 +496,15 @@
                         <b class="d-flex align-items-center justify-content-center"><img
                                 src="{{ asset('/public/image/email.png') }}" alt=""><a
                                 href="mailto:center@cm.com.vn">center@cm.com.vn</a></b>
-                        <small>Kênh dành cho Tổ chức</small>
+                        <small>Kênh dành cho Đối Tác</small>
 
                     </div>
                 </div>
             </div>
             <div class="text-center">
                 <h5 class="store-system-hello"><a
-                        href="https://cm.com.vn/chinh-sach/he-thong-kenh-cua-hang-c-store"><b> Hệ
-                            thống các kênh Cửa hàng C-Store </b></a></h5>
+                        href="{{route('chinh-sach.show', 'he-thong-kenh-cua-hang-cstore')}}"><b> Hệ
+                            thống các kênh Cửa hàng CSTORE </b></a></h5>
                 <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách Hàng</p>
             </div>
         </div>
@@ -612,3 +610,6 @@
 
     // DOMContentLoaded  end
 </script>
+
+
+

@@ -2,540 +2,197 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Traits\ajaxProductTrait;
-use App\Http\Controllers\Controller;
+use DataTables;
 use App\Models\Brand;
-use App\Models\CalculationUnit;
 use App\Models\Payment;
 use App\Models\Product;
-use App\Models\ProductCategory;
+use App\Models\Province;
+use App\Models\UserLevel;
+use App\Models\UserPrice;
+use App\Models\ProductType;
+use Illuminate\Support\Str;
+use App\Models\ProductBrand;
 use App\Models\ProductPrice;
 use Illuminate\Http\Request;
+use App\Models\PaymentMethod;
+use App\Models\CalculationUnit;
+use App\Models\ProductCategory;
+use App\Models\ProductVariation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use App\Models\PaymentMethod;
-use DataTables;
+use App\Http\Controllers\Controller;
+use App\Admin\Traits\ajaxProductTrait;
 use App\Admin\Controllers\AdminLogController; 
 
 class AdminProductController extends Controller
 {
     use ajaxProductTrait;
-    public $logController;
-
-    public function __construct()
-    {
-        $this->logController = new AdminLogController();
-    }
     public function index()
     {
-        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập xem trang sản phẩm';
-        Log::info($message);
-        $products = Product::select(['id', 'slug', 'name', 'sku', 'feature_img', 'weight','height','width', 'length', 'status'])
-                    ->orderBy('name', 'desc')->get();
-        return view('admin.product.san-pham', compact('products'));
+
+        return view('admin.product.index');
     }
 
     public function create()
     {
-        $nganhHang = ProductCategory::where('category_parent', 0)
-                                ->with('childrenCategories')
-                                ->get();
-        $products = Product::all();
-        $calculationUnits = CalculationUnit::all();
-        $brands = Brand::all();
-        $payments = PaymentMethod::all();
-
-        $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện truy cập trang tạo mới sản phẩm';
-        Log::info($message);
-
-        return view('admin.product.tao-san-pham', compact('nganhHang', 'calculationUnits', 'brands', 'payments', 'products'));
+        $payments = PaymentMethod::select('id', 'name')->oldest()->get();
+        $product_types = ProductType::select('id', 'name')->oldest()->get();
+        $user_prices = UserPrice::select('id', 'label')->orderBy('id', 'asc')->get();
+        $product_brands = ProductBrand::select('id', 'name')->orderBy('id', 'asc')->get();
+        return view('admin.product.create', compact( 'payments', 'product_types', 'user_prices', 'product_brands'));
     }
 
     public function store(Request $request)
-    {
-        if($request->is_ecard == 1){
-            $request->validate([
-                'product_sku' => 'required|unique:products,sku',
-                'product_name' => 'required|unique:products,name',
-                'slug' => 'unique:products,slug',
-                'feature_img' => 'required',
-                'category_parent' => 'required',
-                'product_brand' => 'required',
-                'payments' => 'required',
-                'product_status' => 'required',
-                'cpoint' => 'nullable|numeric',
-                'mpoint' => 'nullable|numeric',
-                'phi_xuly' => 'nullable|numeric',
-                'tax' => 'required',
-            ], [
-                'product_sku.required' => 'SKU không được để trống',
-                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
-                'product_name.required' => 'Tên sản phẩm không được để trống',
-                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
-                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
-                'feature_img' => 'Ảnh đại diện không được để trống',
-                'category_parent' => 'Danh mục sản phẩm không được để trống',
-                'product_brand' => 'Thương hiệu không được để trống',
-                'payments' => 'Hình thức thanh toán không được để trống',
-                'product_status' => 'Trạng thái không được để trống',
-                'cpoint' => 'CPoint phải là số',
-                'mpoint' => 'MPoint phải là số',
-                'phi_xuly.numeric' => 'Phí xử lý phải là số',
-                'tax' => 'Thuế không được để trống',
-            ]);
-        }elseif($request->is_shipping == 1){
-            $request->validate([
-                'product_sku' => 'required|unique:products,sku',
-                'product_name' => 'required|unique:products,name',
-                'slug' => 'unique:products,slug',
-                'feature_img' => 'required',
-                'category_parent' => 'required',
-                'product_brand' => 'required',
-                'payments' => 'required',
-                'product_status' => 'required',
-                'cpoint' => 'nullable|numeric',
-                'mpoint' => 'nullable|numeric',
-                'phi_xuly' => 'nullable|numeric',
-                'tax' => 'required',
-            ], [
-                'product_sku.required' => 'SKU không được để trống',
-                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
-                'product_name.required' => 'Tên sản phẩm không được để trống',
-                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
-                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
-                'feature_img' => 'Ảnh đại diện không được để trống',
-                'category_parent' => 'Danh mục sản phẩm không được để trống',
-                'product_brand' => 'Thương hiệu không được để trống',
-                'payments' => 'Hình thức thanh toán không được để trống',
-                'product_status' => 'Trạng thái không được để trống',
-                'cpoint' => 'CPoint phải là số',
-                'mpoint' => 'MPoint phải là số',
-                'phi_xuly.numeric' => 'Phí xử lý phải là số',
-                'tax' => 'Thuế không được để trống',
-            ]);
-        }else{
-            $request->validate([
-                'product_sku' => 'required|unique:products,sku',
-                'product_name' => 'required|unique:products,name',
-                'slug' => 'unique:products,slug',
-                'feature_img' => 'required',
-                'category_parent' => 'required',
-                'product_brand' => 'required',
-                'payments' => 'required',
-                'product_status' => 'required',
-                'product_price' => 'required|numeric',
-                'product_regular_price' => 'required|numeric',
-                'product_wholesale_price' => 'required|numeric',
-                'product_shock_price' => 'required|numeric',
-                'cpoint' => 'nullable|numeric',
-                'mpoint' => 'nullable|numeric',
-                'phi_xuly' => 'nullable|numeric',
-                'tax' => 'required',
-            ], [
-                'product_sku.required' => 'SKU không được để trống',
-                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
-                'product_name.required' => 'Tên sản phẩm không được để trống',
-                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
-                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
-                'feature_img' => 'Ảnh đại diện không được để trống',
-                'category_parent' => 'Danh mục sản phẩm không được để trống',
-                'product_brand' => 'Thương hiệu không được để trống',
-                'payments' => 'Hình thức thanh toán không được để trống',
-                'product_status' => 'Trạng thái không được để trống',
-                'cpoint' => 'CPoint phải là số',
-                'mpoint' => 'MPoint phải là số',
-                'product_price.required' => 'Giá nhập không được để trống',
-                'product_regular_price.required' => 'Giá bán lẻ không được để trống',
-                'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
-                'product_shock_price.required' => 'Giá shock không được để trống',
-                'product_price.numeric' => 'Giá nhập phải là số',
-                'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
-                'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
-                'product_shock_price.numeric' => 'Giá shock phải là số',
-                'phi_xuly.numeric' => 'Phí xử lý phải là số',
-                'tax' => 'Thuế không được để trống',
-            ]);
-        }
-        
-        if($request->is_ecard == null){
-            $request->is_ecard = 0;
-        }
-        return DB::transaction(function () use ($request) {
-            try {
-                $slug = Str::slug($request->product_name, '-');
+    {    
+        $data_product = $request->only('title','sku','category_id','brand_id', 'product_type_id','is_variation', 'is_ecard','status');
+        $product = Product::create($data_product);
+    
 
-                $product = Product::create([
-                    'sku' => $request->product_sku,
-                    'name' => $request->product_name,
-                    'slug' => $slug,
-                    'feature_img' => $request->feature_img,
-                    'gallery' => rtrim($request->gallery_img, ", "),
-                    'category_id' => $request->category_parent,
-                    'weight' => $request->product_weight,
-                    'height' => $request->product_height,
-                    'width' => $request->product_width,
-                    'length' => $request->product_length,
-                    'brand' => strtoupper($request->product_brand),
-                    'upsell' => isset($request->upsell) != false ? implode(',',$request->upsell) : null,
-                    'payments' => implode(',',$request->payments),
-                    'status' => $request->product_status,
-                    'long_desc' => $request->description,
-                    'is_ecard' => $request->is_ecard,
-                    'is_shipping' => $request->is_shipping,
-                    'meta_desc' => $request->meta_description,
-                    'meta_keyword' => $request->meta_keyword,
+        $data_product_detail = $request->only('feature_img','gallery','weight','height','width','length','meta_desc','meta_keyword');
+        $product->product_detail()->create($data_product_detail);
+        $data_product_price = $request->only('cpoint','mpoint','fee_process','tax_gtgt','tax_ttdb','tax_nt_tndn','tax_nt_gtgt');
+        $product_price = $product->product_price()->create($data_product_price);
+
+        foreach($request->payment_ids as $payment_id){
+            $product->product_payment()->create([
+                'payment_id' => $payment_id
+            ]);
+        }
+        if($request->product_related_id != null){
+            foreach($request->product_related_id as $product_related_id){
+                $product->product_relateds()->create([
+                    'product_related_id' => $product_related_id
                 ]);
-
-                $productPrice = new ProductPrice();
-                $productPrice->price = $request->product_price;
-                $productPrice->regular_price = $request->product_regular_price;
-                $productPrice->wholesale_price = $request->product_wholesale_price;
-                $productPrice->shock_price = $request->product_shock_price;
-
-                $productPrice->c_ship_price_df0 = $request->c_ship_price_df0;
-                $productPrice->c_ship_price_weight0 = $request->c_ship_price_weight0;
-                $productPrice->c_ship_fast_price_df0 = $request->c_ship_fast_price_df0;
-                $productPrice->c_ship_fast_price_weight0 = $request->c_ship_fast_price_weight0;
-                $productPrice->c_ship_fast_price_distance0 = $request->c_ship_fast_price_distance0;
-                
-                $productPrice->c_ship_price_df1 = $request->c_ship_price_df1;
-                $productPrice->c_ship_price_weight1 = $request->c_ship_price_weight1;
-                $productPrice->c_ship_fast_price_df1 = $request->c_ship_fast_price_df1;
-                $productPrice->c_ship_fast_price_weight1 = $request->c_ship_fast_price_weight1;
-                $productPrice->c_ship_fast_price_distance1 = $request->c_ship_fast_price_distance1;
-
-                $productPrice->c_ship_price_df2 = $request->c_ship_price_df2;
-                $productPrice->c_ship_price_weight2 = $request->c_ship_price_weight2;
-                $productPrice->c_ship_fast_price_df2 = $request->c_ship_fast_price_df2;
-                $productPrice->c_ship_fast_price_weight2 = $request->c_ship_fast_price_weight2;
-                $productPrice->c_ship_fast_price_distance2 = $request->c_ship_fast_price_distance2;
-
-                $productPrice->c_ship_price_df3 = $request->c_ship_price_df3;
-                $productPrice->c_ship_price_weight3 = $request->c_ship_price_weight3;
-                $productPrice->c_ship_fast_price_df3 = $request->c_ship_fast_price_df3;
-                $productPrice->c_ship_fast_price_weight3 = $request->c_ship_fast_price_weight3;
-                $productPrice->c_ship_fast_price_distance3 = $request->c_ship_fast_price_distance3;
-
-
-                $productPrice->cpoint = $request->cpoint;
-                $productPrice->mpoint = $request->mpoint;
-                $productPrice->phi_xuly = $request->phi_xuly;
-                $productPrice->tax = $request->tax;
-
-                $product->productPrice()->save($productPrice);
-
-                $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện tạo mới sản phẩm ' . $product->name;
-                Log::info($message);
-                $admin = auth('admin')->user();
-
-                $this->logController->createLog($admin, 'Sản phẩm', 'Tạo', 'sản phẩm '.$product->name, route('san-pham.edit',$product->id ));
-
-
-                return redirect()->route('san-pham.edit', $product->id)->with('success', 'Cập nhật sản phẩm thành công');
-            } catch (\Throwable $th) {
-                throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
-                return redirect()->back()->withErrors(['error' => $th->getMessage()]);
             }
-        });
+        }
+     
+
+        switch($request->is_variation){
+            case 0:
+                $user_prices = UserPrice::select('id', 'label')->orderBy('id', 'asc')->get();
+                foreach($user_prices as $item){
+                    $product_price->product_price_details()->create([
+                        'user_price_id' => $item->id,
+                        'price' =>  $_POST['price'.$item->id],
+                    ]);
+                }
+                break;
+            case 1:
+                foreach($request->order as $order){
+                    $product_variation = $product->product_variations()->create([
+                        'name' => $_POST['variation_name'.$order],
+                        'sku' => $_POST['variation_sku'.$order]
+                    ]);
+                    $user_prices = UserPrice::select('id', 'label')->orderBy('id', 'asc')->get();
+                    foreach($user_prices as $item){
+                        $product_variation->product_price_details()->create([
+                            'user_price_id'=> $item->id,
+                            'price' => $_POST['price'.$item->id.$order]
+                        ]);
+                    }
+                }
+                break;
+        }
+
+        return redirect()->route('product.edit', $product->id)->with('success', 'Thêm sản phẩm thành công');
     }
+
+    public function getPriceForm(Request $request){
+        $user_prices = UserPrice::select('id', 'label')->orderBy('id', 'asc')->get();
+        switch ($request->is_variation){
+            case 0:
+                $html = view('admin.product.price.price_normal', compact('user_prices'))->render();
+                break;
+            case 1:
+                $order = 1;
+                $html = view('admin.product.price.price_variation_list', compact('user_prices', 'order'))->render();
+                break;
+        }
+        return $html;
+    }
+    
+    public function getMoreVariation(Request $request){
+        $order = $request->order + 1;
+        $user_prices = UserPrice::select('id', 'label')->orderBy('id', 'asc')->get();
+        $html =  view('admin.product.price.price_variation', compact('user_prices', 'order'))->render();
+        return response()->json(['html' => $html, 'order' => $order]);
+    }
+
+   
 
     public function edit($id)
     {
-        $product = Product::find($id);
-        $products = Product::all();
-        $nganhHang = ProductCategory::where('category_parent', 0)
-                                ->with('childrenCategories')
-                                ->get();
-        $calculationUnits = CalculationUnit::all();
-        $brands = Brand::all();
-        $payments = PaymentMethod::all();
-
-        $upsells = [];
-        if ($product->upsell != null) {
-            $upsells = explode(',', $product->upsell);
-            $upsells = Product::whereIn('id', $upsells)->get();
-        }
-        $message = 'User: '. auth()->guard('admin')->user()->name . ' truy cập trang cập nhật sản phẩm';
-        Log::info($message);
-
-        return view('admin.product.cap-nhat-san-pham', compact('product', 'products', 'nganhHang', 'calculationUnits', 'brands', 'payments', 'upsells'));
+        $product = Product::whereId($id)->with('product_relateds.product','product_detail', 'product_category','product_brand','product_type' ,'product_price.product_price_details.user_price', 'product_payment', 'product_variations.product_price_details.user_price')->first();   
+        $payments = PaymentMethod::select('id', 'name')->oldest()->get();
+        $product_types = ProductType::select('id', 'name')->oldest()->get();
+        $user_prices = UserPrice::select('id', 'label')->orderBy('id', 'asc')->get();
+        $product_brands = ProductBrand::select('id', 'name')->orderBy('id', 'asc')->get();
+        // return($product->product_variations[0]);
+        return view('admin.product.edit', compact('product', 'payments', 'product_types', 'user_prices', 'product_brands'));
     }
 
     public function update(Request $request, $id)
     {
-        if($request->is_ecard == 1){
-            $request->validate([
-                'product_sku' => 'required|unique:products,sku,'.$id,
-                'product_name' => 'required|unique:products,name,'.$id,
-                'slug' => 'unique:products,slug',
-                'feature_img' => 'required',
-                'category_parent' => 'required',
-                'product_brand' => 'required',
-                'payments' => 'required',
-                'product_status' => 'required',
-                'cpoint' => 'nullable|numeric',
-                'mpoint' => 'nullable|numeric',
-                'phi_xuly' => 'nullable|numeric',
-                'tax' => 'required',
-            ], [
-                'product_sku.required' => 'SKU không được để trống',
-                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
-                'product_name.required' => 'Tên sản phẩm không được để trống',
-                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
-                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
-                'feature_img' => 'Ảnh đại diện không được để trống',
-                'category_parent' => 'Danh mục sản phẩm không được để trống',
-                'product_brand' => 'Thương hiệu không được để trống',
-                'payments' => 'Hình thức thanh toán không được để trống',
-                'product_status' => 'Trạng thái không được để trống',
-                'cpoint' => 'CPoint phải là số',
-                'mpoint' => 'MPoint phải là số',
-                'phi_xuly.numeric' => 'Phí xử lý phải là số',
-                'tax' => 'Thuế không được để trống',
-            ]);
-        }elseif($request->is_shipping == 1){
-            $request->validate([
-                'product_sku' => 'required|unique:products,sku,'.$id,
-                'product_name' => 'required|unique:products,name,'.$id,
-                'slug' => 'unique:products,slug',
-                'feature_img' => 'required',
-                'category_parent' => 'required',
-                'product_brand' => 'required',
-                'payments' => 'required',
-                'product_status' => 'required',
-                'cpoint' => 'nullable|numeric',
-                'mpoint' => 'nullable|numeric',
-                'phi_xuly' => 'nullable|numeric',
-                'tax' => 'required',
-            ], [
-                'product_sku.required' => 'SKU không được để trống',
-                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
-                'product_name.required' => 'Tên sản phẩm không được để trống',
-                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
-                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
-                'feature_img' => 'Ảnh đại diện không được để trống',
-                'category_parent' => 'Danh mục sản phẩm không được để trống',
-                'product_brand' => 'Thương hiệu không được để trống',
-                'payments' => 'Hình thức thanh toán không được để trống',
-                'product_status' => 'Trạng thái không được để trống',
-                'cpoint' => 'CPoint phải là số',
-                'mpoint' => 'MPoint phải là số',
-                'phi_xuly.numeric' => 'Phí xử lý phải là số',
-                'tax' => 'Thuế không được để trống',
-            ]);
-        }else{
-            $request->validate([
-                'product_sku' => 'required|unique:products,sku,'.$id,
-                'product_name' => 'required|unique:products,name,'.$id,
-                'slug' => 'unique:products,slug',
-                'feature_img' => 'required',
-                'category_parent' => 'required',
-                'product_brand' => 'required',
-                'payments' => 'required',
-                'product_status' => 'required',
-                'product_price' => 'required|numeric',
-                'product_regular_price' => 'required|numeric',
-                'product_wholesale_price' => 'required|numeric',
-                'product_shock_price' => 'required|numeric',
-                'cpoint' => 'nullable|numeric',
-                'mpoint' => 'nullable|numeric',
-                'phi_xuly' => 'nullable|numeric',
-                'tax' => 'required',
-            ], [
-                'product_sku.required' => 'SKU không được để trống',
-                'product_sku.unique' => 'SKU đang sử dụng đã bị trùng lặp',
-                'product_name.required' => 'Tên sản phẩm không được để trống',
-                'product_name.unique' => 'Tên sản phẩm đã bị trùng lặp, vui lòng đặt tên khác',
-                'slug.unique' => 'Slug đang sử dụng đã bị trùng lặp, vui lòng đặt tên khác',
-                'feature_img' => 'Ảnh đại diện không được để trống',
-                'category_parent' => 'Danh mục sản phẩm không được để trống',
-                'product_brand' => 'Thương hiệu không được để trống',
-                'payments' => 'Hình thức thanh toán không được để trống',
-                'product_status' => 'Trạng thái không được để trống',
-                'cpoint' => 'CPoint phải là số',
-                'mpoint' => 'MPoint phải là số',
-                'product_price.required' => 'Giá nhập không được để trống',
-                'product_regular_price.required' => 'Giá bán lẻ không được để trống',
-                'product_wholesale_price.required' => 'Giá bán buôn không được để trống',
-                'product_shock_price.required' => 'Giá shock không được để trống',
-                'product_price.numeric' => 'Giá nhập phải là số',
-                'product_regular_price.numeric' => 'Giá bán lẻ phải là số',
-                'product_wholesale_price.numeric' => 'Giá bán buôn phải là số',
-                'product_shock_price.numeric' => 'Giá shock phải là số',
-                'phi_xuly.numeric' => 'Phí xử lý phải là số',
-                'tax' => 'Thuế không được để trống',
-            ]);
+        $product = Product::whereId($id)->first();
+        $data_product = $request->only('title','sku','category_id','brand_id', 'product_type_id','is_variation', 'is_ecard','status');
+        $product->update($data_product);  
+
+        $data_product_detail = $request->only('feature_img','gallery','weight','height','width','length','meta_description','meta_keyword', 'description');
+        $product->product_detail()->update($data_product_detail);
+        $data_product_price = $request->only('cpoint','mpoint','fee_process','tax_gtgt','tax_ttdb','tax_nt_tndn','tax_nt_gtgt');
+        $product_price = $product->product_price()->first();
+        $product_price->update($data_product_price);
+        $product_variation_ids = $product->product_variations()->pluck('id')->toArray();
+
+        if($request->product_related_id != null){
+            foreach($request->product_related_id as $product_related_id){
+                $product->product_relateds()->updateOrCreate(['product_related_id'=>$product_related_id],[]);
+            }
         }
-        if($request->is_ecard == null){
-            $request->is_ecard = 0;
+        foreach($request->payment_ids as $payment_id){
+            $product->product_payment()->updateOrCreate(['payment_id'=>$payment_id],[]);
         }
+ 
+        switch($request->is_variation){
+            case 0:
+                $user_prices = UserPrice::select('id', 'label')->orderBy('id', 'asc')->get();
+                foreach($user_prices as $item){
+                    $product_price->product_price_details()->updateOrCreate([
+                        'user_price_id' => $item->id,
+                    ], [
+                        'price' =>  $_POST['price'.$item->id]
+                    ]);
+                }
+                break;
+            case 1:
+                $user_prices = UserPrice::select('id', 'label')->orderBy('id', 'asc')->get();
+                foreach($request->order as $variation_id){
+                    $product_variation = $product->product_variations()->updateOrCreate(['id'=>$variation_id],[
+                        'name' => $_POST['variation_name'.$variation_id],
+                        'sku' => $_POST['variation_sku'.$variation_id]
+                    ]);
+                    foreach($user_prices as $item){
+                        $product_variation->product_price_details()->updateOrCreate([
+                            'product_variation_id'=> $product_variation->id,
+                            'user_price_id' => $item->id
+                        ],[
+                            'price' => $_POST['price'.$item->id.$variation_id]
+                        ]);
+                    }
+                }
+                $remove_variations = array_diff($product_variation_ids, $request->order);
+
+                foreach ($remove_variations as $remove_variation){
+                    $product_variation = $product->product_variations()->whereId($remove_variation)->first();
+                    $product_variation->product_price_details()->delete();
+                    $product_variation->delete();
+                }
+                break;
+        }
+
         
+        return back()->with('success', 'Cập nhật sản phẩm thành công');
 
-        // return DB::transaction(function () use ($request, $id) {
-        //     try {
-                $slug = Str::slug($request->product_name, '-');
-
-                if(str_starts_with($request->gallery_img, ', ')){
-                    $request->gallery_img = substr_replace($request->gallery_img,'',0,2);
-                }
-                $product = Product::where('id', $id)->first();
-                $message = '';
-                if($product->sku != $request->product_sku){
-                    $message .= 'mã sản phẩm: '.$product->sku.' -> '.$request->product_sku.', ';
-                }
-                if($product->name != $request->product_name){
-                    $message .= 'tên sản phẩm: '.$product->sku.' -> '.$request->product_name.', ';
-                }
-                if($product->feature_img != $request->feature_img){
-                    $message .= 'ảnh sản phẩm, ';
-                }
-                if($product->gallery != rtrim($request->gallery_img, ", ")){
-                    $message .= 'thư viện ảnh, ';
-                }
-                if($product->category_id != $request->category_parent){
-                    $message .= 'danh mục sản phẩm, ';
-                }
-                if($product->weight != $request->product_weight){
-                    $message .= 'khối lượng: '.$product->weight.' -> '.$request->product_weight.', ';
-                }
-                if($product->height != $request->product_height){
-                    $message .= 'chiều cao: '.$product->height.' -> '.$request->product_height.', ';
-                }
-                if($product->length != $request->product_length){
-                    $message .= 'chiều dài: '.$product->length.' -> '.$request->product_length.', ';
-                }
-                if($product->width != $request->product_width){
-                    $message .= 'chiều rộng: '.$product->width.' -> '.$request->width.', ';
-                }
-                if(isset($request->upsell) ){
-                    if($product->upsell !=  implode(',',$request->upsell) ){
-                        $message .= 'sản phẩm liên quan, ';
-                    }
-                }elseif(($product->upsell) &&(!$request->upsell) ){
-                    $admin = auth('admin')->user();
-                    $this->logController->createLog($admin, 'Sản phẩm', 'Xóa', 'sản phẩm liên quan', route('san-pham.edit',$product->id ));
-    
-    
-                }
-                if($product->payments != implode(',',$request->payments)){
-                    $message .= 'hình thức thanh toán, ';
-                }
-                if($product->status != $request->product_status){
-                    if($request->status == 1){
-                        $message .= 'trạng thái: ngưng hoạt động -> hoạt động, ';
-
-                    }else{
-                        $message .= 'trạng thái: hoạt động -> ngưng hoạt động, ';
-
-                    }
-                }
-                if($product->brand != $request->product_brand){
-                    $message .= 'thương hiệu: '.$product->brand.' -> '.$request->product_brand.', ';
-                }
-                if($product->long_desc != $request->description){
-                    $message .= 'Mô tả chi tiết, ';
-                }
-                if($product->is_ecard != $request->is_ecard){
-                    if($request->is_ecard == 1){
-                        $message .= 'sản phẩm: thường -> Ecard ';
-
-                    }
-                }
-                Product::where('id', $id)->update([
-                    'sku' => $request->product_sku,
-                    'name' => $request->product_name,
-                    'slug' => $slug,
-                    'feature_img' => $request->feature_img,
-                    'gallery' => rtrim($request->gallery_img, ", "),
-                    'category_id' => $request->category_parent,
-                    'weight' => $request->product_weight,
-                    'height' => $request->product_height,
-                    'width' => $request->product_width,
-                    'length' => $request->product_length,
-                    'brand' => strtoupper($request->product_brand),
-                    'upsell' => isset($request->upsell) != false ? implode(',',$request->upsell) : null,
-                    'payments' => implode(',',$request->payments),
-                    'status' => $request->product_status,
-                    'long_desc' => $request->description,
-                    'is_ecard' => $request->is_ecard,
-                    'meta_desc' => $request->meta_description,
-                    'meta_keyword' => $request->meta_keyword,
-                ]);
-                $product_price = ProductPrice::where('id_ofproduct', $id)->first();
-                if($product_price->price != $request->product_price){
-                    $message .= 'giá nhập: '.$product_price->price.' -> '.$request->product_price.', ';
-                }
-                if($product_price->regular_price != $request->product_regular_price){
-                    $message .= 'giá bán lẻ: '.$product_price->regular_price.' -> '.$request->product_regular_price.', ';
-                }
-                if($product_price->shock_price != $request->product_shock_price){
-                    $message .= 'giá shock: '.$product_price->shock_price.' -> '.$request->product_shock_price.', ';
-                }
-                if($product_price->wholesale_price != $request->product_wholesale_price){
-                    $message .= 'giá buôn: '.$product_price->wholesale_price.' -> '.$request->product_wholesale_price.', ';
-                }
-                if($product_price->cpoint != $request->cpoint){
-                    $message .= 'tích lũy C: '.$product_price->cpoint.' -> '.$request->cpoint.', ';
-                }
-                if($product_price->mpoint != $request->mpoint){
-                    $message .= 'tích lũy M: '.$product_price->mpoint.' -> '.$request->mpoint.', ';
-                }
-                if($product_price->phi_xuly != $request->phi_xuly){
-                    $message .= 'phí xử lý: '.$product_price->phi_xuly.' -> '.$request->phi_xuly.', ';
-                }
-                if($product_price->tax != $request->tax){
-                    $message .= 'thuế suất: '.$product_price->tax.' -> '.$request->tax.', ';
-                }
-                ProductPrice::where('id_ofproduct', $id)->update([
-                    'price' => $request->product_price,
-                    'regular_price' => $request->product_regular_price,
-                    'wholesale_price' => $request->product_wholesale_price,
-                    'shock_price' => $request->product_shock_price,
-                    'cpoint' => $request->cpoint,
-                    'mpoint' => $request->mpoint,
-                    'phi_xuly' => $request->phi_xuly,
-                    'tax' => $request->tax,
-                ]);
-                $productPrice =  ProductPrice::where('id_ofproduct', $id)->first();
-                $productPrice->c_ship_price_df0 = $request->c_ship_price_df0;
-                $productPrice->c_ship_price_weight0 = $request->c_ship_price_weight0;
-                $productPrice->c_ship_fast_price_df0 = $request->c_ship_fast_price_df0;
-                $productPrice->c_ship_fast_price_weight0 = $request->c_ship_fast_price_weight0;
-                $productPrice->c_ship_fast_price_distance0 = $request->c_ship_fast_price_distance0;
-
-                $productPrice->c_ship_price_df1 = $request->c_ship_price_df1;
-                $productPrice->c_ship_price_weight1 = $request->c_ship_price_weight1;
-                $productPrice->c_ship_fast_price_df1 = $request->c_ship_fast_price_df1;
-                $productPrice->c_ship_fast_price_weight1 = $request->c_ship_fast_price_weight1;
-                $productPrice->c_ship_fast_price_distance1 = $request->c_ship_fast_price_distance1;
-
-                $productPrice->c_ship_price_df2 = $request->c_ship_price_df2;
-                $productPrice->c_ship_price_weight2 = $request->c_ship_price_weight2;
-                $productPrice->c_ship_fast_price_df2 = $request->c_ship_fast_price_df2;
-                $productPrice->c_ship_fast_price_weight2 = $request->c_ship_fast_price_weight2;
-                $productPrice->c_ship_fast_price_distance2 = $request->c_ship_fast_price_distance2;
-
-                $productPrice->c_ship_price_df3 = $request->c_ship_price_df3;
-                $productPrice->c_ship_price_weight3 = $request->c_ship_price_weight3;
-                $productPrice->c_ship_fast_price_df3 = $request->c_ship_fast_price_df3;
-                $productPrice->c_ship_fast_price_weight3 = $request->c_ship_fast_price_weight3;
-                $productPrice->c_ship_fast_price_distance3 = $request->c_ship_fast_price_distance3;
-                $productPrice->save();
-                if($message != ''){
-                    $admin = auth('admin')->user();
-                    $this->logController->createLog($admin, 'Sản phẩm', 'Sửa', substr_replace($message ,"", -1), route('san-pham.edit',$product->id ));
-    
-    
-                }
-             
-
-                return redirect()->route('san-pham.edit', $id)->with('success', 'Cập nhật sản phẩm thành công');
-        //     } catch (\Throwable $th) {
-        //         throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
-        //         return redirect()->back()->withErrors(['error' => $th->getMessage()]);
-        //     }
-        // });
     }
 
     public function destroy($id)
@@ -553,12 +210,13 @@ class AdminProductController extends Controller
     public function multiChange(Request $request) {
         if ($request->id == null) {
             return redirect()->back();
-        } 
+        }    
         else {
             if ($request->action == 'delete') {
                 foreach($request->id as $item) {
                     $product = Product::findOrFail($item);
                     Product::destroy($item);
+
     
                     $message = 'User: '. auth()->guard('admin')->user()->name . ' thực hiện xóa sản phẩm ' . $product->name;
                     Log::info($message);
@@ -609,7 +267,7 @@ class AdminProductController extends Controller
 
     public function indexDatatable()
     {
-        $products = Product::latest()->with('productPrice')->get();
+        $products = Product::latest()->with('product_detail', 'product_category','product_brand','product_type' ,'product_price.product_price_details.user_price', 'product_payment', 'product_variations.product_price_details.user_price')->get();
         return datatables()->of($products)->toJson();
     }
 }

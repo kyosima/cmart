@@ -12,6 +12,21 @@ class ProductCategory extends Model
     protected $guarded = [];
     protected $table = 'product_categories';
 
+
+    public function parent()
+    {
+        return $this->belongsTo(ProductCategory::class,'id', 'category_parent');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(ProductCategory::class,'category_parent', 'id');
+    }
+    public function childrenRecursive()
+    {
+    return $this->children()->with('childrenRecursive');
+    }
+
     public function categories()
     {
         return $this->belongsTo(ProductCategory::class, 'category_parent', 'id');

@@ -41,10 +41,9 @@ class postRememberC extends Command
     {
         foreach(User::orderBy('id', 'asc')->get() as $user){
             RememberC::create([
-                'user_id' => $user->id,
+                'user_id' => $user->id,\
                 'balance' => $user->point_c()->value('point_c'),
             ]);
-        }
-        
+        }        
     }
 }

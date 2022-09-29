@@ -30,11 +30,11 @@ class OrderInfo extends Model
 	protected $table = 'order_info';
 
 	protected $casts = [
-		'id_order' => 'int'
+		'order_id' => 'int'
 	];
 
 	protected $fillable = [
-		'id_order',
+		'order_id',
 		'fullname',
 		'phone',
 		'note'
@@ -42,6 +42,6 @@ class OrderInfo extends Model
 
 	public function order()
 	{
-		return $this->belongsTo(Order::class, 'id_order');
+		return $this->belongsTo(Order::class, 'order_id');
 	}
 }

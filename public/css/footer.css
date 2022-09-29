@@ -126,9 +126,7 @@
 }
 
 @media (max-width: 1024px) {
-    .site-footer{
-        margin-bottom: 52px;
-    }
+    .site-footer {}
     .info-company .title-info {
         color: #bb0029 !important;
         font-size: 4.5vw;
@@ -249,6 +247,7 @@
         display: none;
     }
 }
+
 @media (max-width: 500px) {
     #button {
         bottom: 60px;
@@ -261,7 +260,7 @@
     font-weight: 500;
     color: #333;
     font-size: 16px;
-    line-height:1.5;
+    line-height: 1.5;
     text-transform: uppercase;
 }
 

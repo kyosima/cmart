@@ -1,19 +1,24 @@
-
-.pager{
+.pager {
     margin: 10px 0px;
     list-style: none;
     display: flex;
     justify-content: center;
+    padding-left: 0;
 }
-.pager li:first-child, .pager li:last-child{
+
+.pager li:first-child,
+.pager li:last-child {
     height: auto;
     border-radius: 5px;
 }
-.pager li.active,  .pager li.disable{
+
+.pager li.active,
+.pager li.disable {
     background-color: rgb(189, 0, 0);
     color: #fff;
 }
-.pager li{
+
+.pager li {
     margin: 0px 5px;
     background-color: rgba(241, 247, 252, 0.87);
     height: 30px;
@@ -21,9 +26,10 @@
     display: flex;
     justify-content: center;
     border-radius: 50%;
-
 }
-.pager li span,  .pager li a{
+
+.pager li span,
+.pager li a {
     display: block;
     margin: auto;
 }

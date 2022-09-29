@@ -29,22 +29,22 @@ class OrderProduct extends Model
 	protected $table = 'order_products';
 
 	protected $casts = [
-		'id_order_store' => 'int',
-		'id_product' => 'int',
+		'order_store_id' => 'int',
+		'product_id' => 'int',
 		'quantity' => 'int',
 		'price' => 'float',
 	];
 
 	protected $fillable = [
-		'id_order',
-		'id_order_store',
-		'id_product',
+		'order_id',
+		'order_store_id',
+		'product_id',
 		'sku',
 		'name',
 		'feature_img',
 		'slug',
-		'c_point',
-		'm_point',
+		'cpoint',
+		'mpoint',
 		'quantity',
 		'weight',
 		'discount',
@@ -53,14 +53,14 @@ class OrderProduct extends Model
 
 	public function order()
 	{
-		return $this->belongsTo(Order::class, 'id_order');
+		return $this->belongsTo(Order::class, 'order_id');
 	}
 	public function order_store()
 	{
-		return $this->belongsTo(OrderStỏe::class, 'id_order_store');
+		return $this->belongsTo(OrderStỏe::class, 'order_store_id');
 	}
 	public function product()
 	{
-		return $this->belongsTo(Product::class, 'id_product');
+		return $this->belongsTo(Product::class, 'product_id');
 	}
 }

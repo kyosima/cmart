@@ -15,4 +15,8 @@ class Province extends Model
     public function district() {
         return $this->hasMany(District::class, 'matinhthanh', 'matinhthanh');
     }
+
+    function transpot_variations(){
+        return $this->hasMany(TranspotVariation::class, 'province_id', 'matinhthanh');
+    }
 }

@@ -253,7 +253,7 @@
                     [25, 50, -1],
                     [25, 50, "All"]
                 ],
-                ajax: "{{ route('san-pham.indexDatatable') }}",
+                ajax: "{{ route('product.indexDatatable') }}",
 
                 columnDefs: [{
                         targets: 0,
@@ -296,8 +296,8 @@
                             //     style: 'currency',
                             //     currency: 'VND'
                             // }).format(row.product_price.price);
-                            if(row.product_price.price != null){
-                                return formatNum(row.product_price.price, '.', ',');
+                            if(row.product_price.price_retail != null){
+                                return formatNum(row.product_price.price_retail, '.', ',');
                             }else{
                                 return `0`;
                             }
@@ -425,6 +425,7 @@
                             '>=': null,
                             'null': null,
                             '!null': null,
+                            
                         },
                         string: {
                             '!=': null,

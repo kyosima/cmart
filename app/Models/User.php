@@ -15,6 +15,12 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $guarded =[];
 
+    public function user_level() {
+        return $this->hasOne(UserLevel::class, 'id', 'level');
+    }
+    public function carts() {
+        return $this->hasMany(Cart::class, 'user_id', 'id');
+    }
     public function orders() {
         return $this->hasMany(Order::class, 'user_id', 'id');
     }
@@ -24,9 +30,8 @@ class User extends Authenticatable
     public function getstoreAddress(){
         return $this->hasMany(StoreAddress::class, 'id_user', 'id');
     }
-
-    public function point_c() {
-        return $this->hasOne(PointC::class, 'user_id', 'id');
+    public function wallet() {
+        return $this->hasOne(Wallet::class, 'user_id', 'id');
     }
     public function company() {
         return $this->hasOne(UserCompany::class, 'id_user', 'id');
@@ -37,11 +42,9 @@ class User extends Authenticatable
     public function request_ekyc(){
         return $this->hasMany(RequestEkyc::class, 'user_id', 'id');
     }
-
     public function getHistory(){
         return $this->hasMany(HistoryPoint::class, 'user_id', 'id');
     }
-
     public function getRememberC(){
         return $this->hasMany(RememberC::class, 'user_id', 'id');
     }
@@ -60,4 +63,10 @@ class User extends Authenticatable
     public function notices(){
         return $this->belongsToMany(Notice::class, 'user_notice', 'user_id', 'notice_id')->withPivot(['is_read']);
     }
+    // public function carts(){
+    //     return $this->hasMany(Cart::class, 'user_id', 'id');
+    // }
+
+
+
 }

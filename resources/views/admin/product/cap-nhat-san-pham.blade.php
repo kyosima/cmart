@@ -7,7 +7,6 @@
 @endpush
 
 @section('content')
-
     <div class="m-3">
         <div class="wrapper bg-white p-4">
             @if (session('success'))
@@ -31,156 +30,123 @@
                     <div class="caption">
                         <i class="fa fa-product-hunt icon-drec" aria-hidden="true"></i>
                         <span class="caption-subject bold uppercase">
-                            Chỉnh sửa sản phẩm</span>
+                            Thông tin sản phẩm</span>
                     </div>
                 </div>
             </div>
             <hr>
             <div class="portlet-body">
-                <form action="{{ route('san-pham.update', $product->id) }}" method="post">
+                <form action="{{ route('san-pham.update', $product->id) }}" method="post" data-parsley-validate="">
                     @csrf
-                    @method('PUT')
+                    @method('put')
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail size-img-profile">
-                                    <img src="{{ old('feature_img', $product->feature_img) }}">
+                                    <img src="{{ $product->feature_img }}">
                                 </div>
                                 <div class="form-group my-2">
-                                    <input id="ckfinder-input-1" type="hidden" required name="feature_img"
-                                        class="form-control" value="{{ old('feature_img', $product->feature_img) }}"
-                                        readonly required>
-                                    <a style="cursor: pointer;" id="ckfinder-popup-1" class="btn btn-success">Chọn ảnh</a>
+                                    <input id="ckfinder-input-1" type="hidden" required
+                                        data-parsley-required-message="Không được để trống" name="feature_img"
+                                        class="form-control" value="{{ $product->feature_img }}">
+                                    <a style="cursor: pointer;" id="ckfinder-popup-1" class="btn btn-success w-100">Chọn ảnh
+                                        đại diện</a>
                                 </div>
                             </div>
 
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="form-group my-2">
                                     <input id="ckfinder-input-2" type="hidden" name="gallery_img" data-type="multiple"
-                                        data-hasid="{{ $product->id }}" readonly class="form-control"
-                                        value="{{ old('gallery_img', $product->gallery . ',') . ' ' }}">
-                                    <a style="cursor: pointer;" id="ckfinder-popup-2" class="btn btn-success">Chọn nhiều
+                                        data-hasid="{{ $product->id }}" readonly class="form-control" value="">
+                                    <a style="cursor: pointer;" id="ckfinder-popup-2" class="btn btn-info w-100">Chọn thư
+                                        viện
                                         ảnh</a>
                                 </div>
                                 <div class="fileinput-gallery thumbnail">
                                     <div class="row">
-                                        @if (old('gallery_img') && old('gallery_img') != $product->gallery . ',')
-                                            @php
-                                                $galleries = explode(',', old('gallery_img'));
-                                            @endphp
-                                            @foreach ($galleries as $img)
-                                                @if ($img != null || $img != '')
-                                                    <div class="col-md-3">
-                                                        <span style="cursor: pointer;" data-id=''
-                                                            data-url="{{ trim($img) }}" class="delete_gallery">
-                                                            <i class="fas fa-times"></i>
-                                                        </span>
-                                                        <img src="{{ trim($img) }}">
-                                                    </div>
-                                                @endif
+                                        @if ($product->gallery != null)
+                                            @foreach (explode(',', $product->gallery) as $img)
+                                                <div class="col-md-3">
+                                                    <span style="cursor: pointer;" data-id='{{ $product->id }}'
+                                                        data-url="{{ $img }}" class="delete_gallery">
+                                                        <i class="fas fa-times"></i>
+                                                    </span>
+                                                    <img src="{{ $img }}">
+                                                </div>
                                             @endforeach
-                                        @else
-                                            @php
-                                                $gallery = explode(', ', $product->gallery);
-                                            @endphp
-                                            @if ($product->gallery != null)
-                                                @foreach ($gallery as $img)
-                                                    <div class="col-md-3">
-                                                        <span style="cursor: pointer;" data-id='{{ $product->id }}'
-                                                            data-url="{{ $img }}" class="delete_gallery">
-                                                            <i class="fas fa-times"></i>
-                                                        </span>
-                                                        <img src="{{ $img }}">
-                                                    </div>
-                                                @endforeach
-                                            @endif
                                         @endif
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="col-sm-9">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Mã sản phẩm<span
-                                                class="required" aria-required="true">(*)</span>:</label>
+                                        <label class="col-md-12 control-label text-left">Mã sản phẩm<span class="required"
+                                                aria-required="true">(*)</span>:</label>
                                         <div class="col-md-12">
-                                            <div class="form-group d-flex">
-                                                <input type="text" name="product_sku" class="form-control w-50" required
-                                                    value="{{ old('product_sku', $product->sku) }}">
-                                                <div class="input-group-btn w-50" id="product-status">
-                                                    <select name="product_status" class="selectpicker form-control">
-                                                        <option value="0" {{ $product->status == 0 ? 'selected' : '' }}>
-                                                            Ngưng hoạt động</option>
-                                                        <option value="1" {{ $product->status == 1 ? 'selected' : '' }}>
-                                                            Hoạt động</option>
-                                                    </select>
-                                                </div>
+                                            <div class="form-group ">
+                                                <input type="text" name="sku" class="form-control" required
+                                                    data-parsley-required-message="Không được để trống"
+                                                    value="{{ $product->sku }}">
+
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Tên sản phẩm<span
-                                                class="required" aria-required="true">(*)</span>:</label>
+                                        <label class="col-md-12 control-label text-left">Trạng thái<span class="required"
+                                                aria-required="true">(*)</span>:</label>
+                                        <div class="input-group-btn" id="product-status">
+                                            <select name="product_status" class="selectpicker form-control">
+                                                <option value="0" {{ $product->status == '0' ? 'selected' : '' }}>
+                                                    Ngưng hoạt động</option>
+                                                <option value="1" {{ $product->status == '1' ? 'selected' : '' }}>
+                                                    Hoạt
+                                                    động</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label text-left">Tên sản phẩm<span class="required"
+                                                aria-required="true">(*)</span>:</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="product_name" class="form-control" required
-                                                value="{{ old('product_name', $product->name) }}">
+                                            <input type="text" name="name" class="form-control" required
+                                                data-parsley-required-message="Không được để trống"
+                                                data-parsley-required-message="Không được để trống"
+                                                value="{{ $product->name }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12 control-label text-left">Danh mục sản phẩm<span
                                                 class="required" aria-required="true">(*)</span>:</label>
                                         <div class="col-md-12">
-                                            <select class="selectpicker form-control" id="selectCategory"
-                                                name="category_parent" required>
-                                                <option value="{{ $product->category_id }}">
+                                            <select class="selectpicker form-control" id="selectCategory" name="category_id"
+                                                required data-parsley-required-message="Không được để trống">
+                                                <option value="{{ $product->category_id }}" selected>
                                                     {{ $product->productCategory->name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Sản phẩm liên quan:</label>
-                                        <div class="col-md-12">
-                                            <select id="select-upsell" class="form-control select-upsell" name="upsell[]"
-                                                multiple>
-                                                @if (is_array(old('upsell')))
-                                                    @foreach (old('upsell') as $upsell)
-                                                        <option value="{{ $upsell }}" selected="selected">
-                                                            {{ App\Models\Product::where('id', $upsell)->value('name') }}
-                                                            (#{{ $upsell }})</option>
-                                                    @endforeach
-                                                @else
-                                                    @if (count($upsells) > 0)
-                                                        @foreach ($upsells as $item)
-                                                            <option value="{{ $item->id }}" selected>
-                                                                {{ $item->name }} (#{{ $item->id }})</option>
-                                                        @endforeach
-                                                    @endif
-                                                @endif
-                                            </select>
-                                        </div>
-                                    </div>
 
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Thương hiệu<span
-                                                class="required" aria-required="true">(*)</span>:</label>
+                                        <label class="col-md-12 control-label text-left">Thương hiệu<span class="required"
+                                                aria-required="true">(*)</span>:</label>
                                         <div class="col-md-12">
                                             <input type="text" name="product_brand" class="form-control" required
-                                                value="{{ old('product_brand', $product->brand) }}">
+                                                data-parsley-required-message="Không được để trống"
+                                                value="{{ $product->brand }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12 control-label text-left">Khối lượng (g):</label>
                                         <div class="col-md-12">
-                                            <input type="number" step="0.1" min="0" name="product_weight"
-                                                class="form-control"
-                                                value="{{ old('product_weight', $product->weight) }}">
+                                            <input type="number" step="0.1" min="0" name="weight"
+                                                class="form-control" value="{{ $product->weight }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -188,629 +154,293 @@
                                             <div class="col-4">
                                                 <label class="col-md-12 control-label text-left">Chiều dài (cm):</label>
                                                 <div class="col-md-12">
-                                                    <input type="number" step="0.1" min="0" name="product_length"
-                                                        class="form-control"
-                                                        value="{{ old('product_length', $product->length) }}">
+                                                    <input type="number" step="0.1" min="0" name="length"
+                                                        class="form-control" value="{{ $product->length }}">
                                                 </div>
                                             </div>
                                             <div class="col-4">
                                                 <label class="col-md-12 control-label text-left">Chiều cao (cm):</label>
                                                 <div class="col-md-12">
-                                                    <input type="number" step="0.1" min="0" name="product_height"
-                                                        class="form-control"
-                                                        value="{{ old('product_height', $product->height) }}">
+                                                    <input type="number" step="0.1" min="0" name="height"
+                                                        class="form-control" value="{{ $product->height }}">
                                                 </div>
                                             </div>
                                             <div class="col-4">
                                                 <label class="col-md-12 control-label text-left">Chiều rộng (cm):</label>
                                                 <div class="col-md-12">
-                                                    <input type="number" step="0.1" min="0" name="product_width"
-                                                        class="form-control"
-                                                        value="{{ old('product_width', $product->width) }}">
+                                                    <input type="number" step="0.1" min="0" name="width"
+                                                        class="form-control" value="{{ $product->width }}">
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <hr style="margin: 10px;">
-
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="is_ecard"><input type="checkbox" name="is_ecard" id="is_ecard"
-                                                    value="1" @if ($product->is_ecard == 1) checked @endif> Sản phẩm
-                                                E-Card</label>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label for="is_shipping"><input type="checkbox" name="is_shipping"
-                                                    id="is_shipping" value="1" @if ($product->is_shipping == 1) checked @endif> Sản phẩm vận chuyển</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="block-spvc">
-                                    <label class="col-md-12 control-label text-left text-primary">Khách hàng thân thiết<span class="required"
-                                            aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12 input-product-shipping">
-                                        <div class="form-group">
-                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển C-Ship
-                                                tiêu chuẩn<span class="required"
-                                                    aria-required="true">(*)</span>:</label>
-                                            <div class="row">
-
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí mặc
-                                                            định<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text" class="form-control number-separator-c-df0"
-                                                                value="{{ old('c_ship_price_df0', $product->productPrice->c_ship_price_df0) }}">
-                                                            <input type="hidden" id="c_ship_price_df0" name="c_ship_price_df0"
-                                                                value="{{ old('c_ship_price_df0', $product->productPrice->c_ship_price_df0) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo trọng
-                                                            lượng vận chuyển<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-weight0"
-                                                                value="{{ old('c_ship_price_weight0', $product->productPrice->c_ship_price_weight0) }}">
-                                                            <input type="hidden" id="c_ship_price_weight0"
-                                                                name="c_ship_price_weight0"
-                                                                value="{{ old('c_ship_price_weight0',  $product->productPrice->c_ship_price_weight0) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 input-product-shipping">
-                                        <div class="form-group">
-                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển
-                                                C-Ship hỏa tốc<span class="required"
-                                                    aria-required="true">(*)</span>:</label>
-                                            <div class="row">
-
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí mặc
-                                                            định<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-df0"
-                                                                value="{{ old('c_ship_fast_price_df0',  $product->productPrice->c_ship_fast_price_df0) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_df0"
-                                                                name="c_ship_fast_price_df0"
-                                                                value="{{ old('c_ship_fast_price_df0',  $product->productPrice->c_ship_fast_price_df0) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo
-                                                            trọng lượng<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-weight0"
-                                                                value="{{ old('c_ship_fast_price_weight0',  $product->productPrice->c_ship_fast_price_weight0) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_weight0"
-                                                                name="c_ship_fast_price_weight0"
-                                                                value="{{ old('c_ship_fast_price_weight0',  $product->productPrice->c_ship_fast_price_weight0) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo
-                                                            quãng đường<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-distance0"
-                                                                value="{{ old('c_ship_fast_price_distance0',  $product->productPrice->c_ship_fast_price_distance0) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_distance0"
-                                                                name="c_ship_fast_price_distance0"
-                                                                value="{{ old('c_ship_fast_price_distance0',  $product->productPrice->c_ship_fast_price_distance0) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="block-spvc">
-                                    <label class="col-md-12 control-label text-left text-primary">Khách hàng V.I.P/Cộng tác viên<span class="required"
-                                        aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12 input-product-shipping">
-                                        <div class="form-group">
-                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển C-Ship
-                                                tiêu chuẩn<span class="required"
-                                                    aria-required="true">(*)</span>:</label>
-                                            <div class="row">
-
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí mặc
-                                                            định<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text" class="form-control number-separator-c-df1"
-                                                                value="{{ old('c_ship_price_df1',  $product->productPrice->c_ship_price_df1) }}">
-                                                            <input type="hidden" id="c_ship_price_df1" name="c_ship_price_df1"
-                                                                value="{{ old('c_ship_price_df1',  $product->productPrice->c_ship_price_df1) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo trọng
-                                                            lượng vận chuyển<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-weight1"
-                                                                value="{{ old('c_ship_price_weight1',  $product->productPrice->c_ship_price_weight1) }}">
-                                                            <input type="hidden" id="c_ship_price_weight1"
-                                                                name="c_ship_price_weight1"
-                                                                value="{{ old('c_ship_price_weight1',  $product->productPrice->c_ship_price_weight1) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 input-product-shipping">
-                                        <div class="form-group">
-                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển
-                                                C-Ship hỏa tốc<span class="required"
-                                                    aria-required="true">(*)</span>:</label>
-                                            <div class="row">
-
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí mặc
-                                                            định<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-df1"
-                                                                value="{{ old('c_ship_fast_price_df1',  $product->productPrice->c_ship_fast_price_df1) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_df1"
-                                                                name="c_ship_fast_price_df1"
-                                                                value="{{ old('c_ship_fast_price_df1',  $product->productPrice->c_ship_fast_price_df1) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo
-                                                            trọng lượng<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-weight1"
-                                                                value="{{ old('c_ship_fast_price_weight1',  $product->productPrice->c_ship_fast_price_weight1) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_weight1"
-                                                                name="c_ship_fast_price_weight1"
-                                                                value="{{ old('c_ship_fast_price_weight1',  $product->productPrice->c_ship_fast_price_weight1) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo
-                                                            quãng đường<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-distance1"
-                                                                value="{{ old('c_ship_fast_price_distance1',  $product->productPrice->c_ship_fast_price_distance1) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_distance1"
-                                                                name="c_ship_fast_price_distance1"
-                                                                value="{{ old('c_ship_fast_price_distance1',  $product->productPrice->c_ship_fast_price_distance1) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="block-spvc">
-                                    <label class="col-md-12 control-label text-left text-primary">Purchasing<span class="required"
-                                        aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12 input-product-shipping">
-                                        <div class="form-group">
-                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển C-Ship
-                                                tiêu chuẩn<span class="required"
-                                                    aria-required="true">(*)</span>:</label>
-                                            <div class="row">
-
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí mặc
-                                                            định<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text" class="form-control number-separator-c-df2"
-                                                                value="{{ old('c_ship_price_df2',  $product->productPrice->c_ship_price_df2) }}">
-                                                            <input type="hidden" id="c_ship_price_df2" name="c_ship_price_df2"
-                                                                value="{{ old('c_ship_price_df2',  $product->productPrice->c_ship_price_df2) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo trọng
-                                                            lượng vận chuyển<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-weight2"
-                                                                value="{{ old('c_ship_price_weight2',  $product->productPrice->c_ship_price_weight2) }}">
-                                                            <input type="hidden" id="c_ship_price_weight2"
-                                                                name="c_ship_price_weight2"
-                                                                value="{{ old('c_ship_price_weight2',  $product->productPrice->c_ship_price_weight2) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 input-product-shipping">
-                                        <div class="form-group">
-                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển
-                                                C-Ship hỏa tốc<span class="required"
-                                                    aria-required="true">(*)</span>:</label>
-                                            <div class="row">
-
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí mặc
-                                                            định<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-df2"
-                                                                value="{{ old('c_ship_fast_price_df2',  $product->productPrice->c_ship_fast_price_df2) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_df2"
-                                                                name="c_ship_fast_price_df2"
-                                                                value="{{ old('c_ship_fast_price_df2',  $product->productPrice->c_ship_fast_price_df2) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo
-                                                            trọng lượng<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-weight2"
-                                                                value="{{ old('c_ship_fast_price_weight2',  $product->productPrice->c_ship_fast_price_weight2) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_weight2"
-                                                                name="c_ship_fast_price_weight2"
-                                                                value="{{ old('c_ship_fast_price_weight2',  $product->productPrice->c_ship_fast_price_weight2) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo
-                                                            quãng đường<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-distance2"
-                                                                value="{{ old('c_ship_fast_price_distance2', $product->productPrice->c_ship_fast_price_distance2) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_distance2"
-                                                                name="c_ship_fast_price_distance2"
-                                                                value="{{ old('c_ship_fast_price_distance2',  $product->productPrice->c_ship_fast_price_distance2) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="block-spvc">
-                                    <label class="col-md-12 control-label text-left text-primary">Khách hàng thương mại<span class="required"
-                                        aria-required="true">(*)</span>:</label>
-                                    <div class="col-md-12 input-product-shipping">
-                                        <div class="form-group">
-                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển C-Ship
-                                                tiêu chuẩn<span class="required"
-                                                    aria-required="true">(*)</span>:</label>
-                                            <div class="row">
-
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí mặc
-                                                            định<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text" class="form-control number-separator-c-df3"
-                                                                value="{{ old('c_ship_price_df3',  $product->productPrice->c_ship_price_df3) }}">
-                                                            <input type="hidden" id="c_ship_price_df3" name="c_ship_price_df3"
-                                                                value="{{ old('c_ship_price_df3',  $product->productPrice->c_ship_price_df3) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo trọng
-                                                            lượng vận chuyển<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-weight3"
-                                                                value="{{ old('c_ship_price_weight3',  $product->productPrice->c_ship_price_weight3) }}">
-                                                            <input type="hidden" id="c_ship_price_weight3"
-                                                                name="c_ship_price_weight3"
-                                                                value="{{ old('c_ship_price_weight3',  $product->productPrice->c_ship_price_weight3) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 input-product-shipping">
-                                        <div class="form-group">
-                                            <label class="col-md-12 control-label text-left">Biểu giá vận chuyển
-                                                C-Ship hỏa tốc<span class="required"
-                                                    aria-required="true">(*)</span>:</label>
-                                            <div class="row">
-
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí mặc
-                                                            định<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-df3"
-                                                                value="{{ old('c_ship_fast_price_df3',  $product->productPrice->c_ship_fast_price_df3) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_df3"
-                                                                name="c_ship_fast_price_df3"
-                                                                value="{{ old('c_ship_fast_price_df3',  $product->productPrice->c_ship_fast_price_df3) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo
-                                                            trọng lượng<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-weight3"
-                                                                value="{{ old('c_ship_fast_price_weight3',  $product->productPrice->c_ship_fast_price_weight3) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_weight3"
-                                                                name="c_ship_fast_price_weight3"
-                                                                value="{{ old('c_ship_fast_price_weight3',  $product->productPrice->c_ship_fast_price_weight3) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 ">
-                                                    <div class="form-group">
-                                                        <label class="col-md-12 control-label text-left">Phí theo
-                                                            quãng đường<span class="required"
-                                                                aria-required="true">(*)</span>:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text"
-                                                                class="form-control number-separator-c-fast-distance3"
-                                                                value="{{ old('c_ship_fast_price_distance3',  $product->productPrice->c_ship_fast_price_distance3) }}">
-                                                            <input type="hidden" id="c_ship_fast_price_distance3"
-                                                                name="c_ship_fast_price_distance3"
-                                                                value="{{ old('c_ship_fast_price_distance3',  $product->productPrice->c_ship_fast_price_distance3) }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Giá Nhập<span
-                                                class="required" aria-required="true">(*)</span>:</label>
-                                        <div class="col-md-12">
-                                            <input type="text" class="form-control number-separator-4"
-                                                value="{{ old('product_price', $product->productPrice->price) }}">
-                                            <input type="hidden" id="product_price" name="product_price"
-                                                value="{{ old('product_price', $product->productPrice->price) }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Giá Bán Lẻ<span
-                                                class="required" aria-required="true">(*)</span>:</label>
+                                        <label class="col-md-12 control-label text-left">Sản phẩm liên quan:</label>
                                         <div class="col-md-12">
-                                            <input type="text" class="form-control number-separator"
-                                                value="{{ old('product_regular_price', $product->productPrice->regular_price) }}">
-                                            <input type="hidden" id="product_regular_price" name="product_regular_price"
-                                                value="{{ old('product_regular_price', $product->productPrice->regular_price) }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Giá Shock<span
-                                                class="required" aria-required="true">(*)</span>:</label>
-                                        <div class="col-md-12">
-                                            <input type="text" class="form-control number-separator-1"
-                                                value="{{ old('product_shock_price', $product->productPrice->shock_price) }}">
-                                            <input type="hidden" id="product_shock_price" name="product_shock_price"
-                                                value="{{ old('product_shock_price', $product->productPrice->shock_price) }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Giá Buôn<span
-                                                class="required" aria-required="true">(*)</span>:</label>
-                                        <div class="col-md-12">
-                                            <input type="text" class="form-control number-separator-2"
-                                                value="{{ old('product_wholesale_price', $product->productPrice->wholesale_price) }}">
-                                            <input type="hidden" id="product_wholesale_price" name="product_wholesale_price"
-                                                value="{{ old('product_wholesale_price', $product->productPrice->wholesale_price) }}">
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Tích lũy (C):</label>
-                                        <div class="col-md-12">
-                                            <input type="number" step="1" min="0" name="cpoint" class="form-control"
-                                                value="{{ old('cpoint', $product->productPrice->cpoint) }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Tích lũy (M):</label>
-                                        <div class="col-md-12">
-                                            <input type="number" step="1" min="0" name="mpoint" class="form-control"
-                                                value="{{ old('mpoint', $product->productPrice->mpoint) }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Phí xử lý:</label>
-                                        <div class="col-md-12">
-                                            <input type="text" class="form-control number-separator-3"
-                                                value="{{ old('phi_xuly', $product->productPrice->phi_xuly) }}">
-                                            <input type="hidden" id="phi_xuly" name="phi_xuly"
-                                                value="{{ old('phi_xuly', $product->productPrice->phi_xuly) }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12 control-label text-left">Thuế suất<span
-                                                class="required" aria-required="true">(*)</span>:</label>
-                                        <div class="col-md-12">
-                                            <select class="selectpicker form-control" name="tax" required title="Thuế suất"
-                                                data-placeholder="Chọn thuế suất">
-                                                <option></option>
-                                                @if (old('tax') != null)
-                                                    <option value="KKK" {{ old('tax') == 'KKK' ? 'selected' : '' }}>KKK
-                                                    </option>
-                                                    <option value="KTT" {{ old('tax') == 'KTT' ? 'selected' : '' }}>KTT
-                                                    </option>
-                                                    <option value="0.05" {{ old('tax') == 0.05 ? 'selected' : '' }}>5%
-                                                    </option>
-                                                    <option value="0.05" {{ old('tax') == 0.08 ? 'selected' : '' }}>8%
-                                                    </option>
-                                                    <option value="0.1" {{ old('tax') == 0.1 ? 'selected' : '' }}>10%
-                                                    </option>
-                                                @else
-                                                    <option value="KKK"
-                                                        {{ $product->productPrice->tax == 'KKK' ? 'selected' : '' }}>KKK
-                                                    </option>
-                                                    <option value="KTT"
-                                                        {{ $product->productPrice->tax == 'KTT' ? 'selected' : '' }}>KTT
-                                                    </option>
-                                                    <option value="0.05"
-                                                        {{ $product->productPrice->tax == 0.05 ? 'selected' : '' }}>5%
-                                                    </option>
-                                                    <option value="0.08"
-                                                        {{ $product->productPrice->tax == 0.08 ? 'selected' : '' }}>8%
-                                                    </option>
-                                                    <option value="0.1"
-                                                        {{ $product->productPrice->tax == 0.1 ? 'selected' : '' }}>10%
-                                                    </option>
+                                            <select class="form-control  select-upsell" id="select-upsell"
+                                                name="upsell[]" multiple>
+                                                @if (count($upsells) > 0)
+                                                    @foreach ($upsells as $item)
+                                                        <option value="{{ $item->id }}" selected>
+                                                            {{ $item->name }} (#{{ $item->id }})</option>
+                                                    @endforeach
                                                 @endif
                                             </select>
                                         </div>
                                     </div>
                                 </div>
+
+                                <hr style="margin: 10px;">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label text-left">Chọn loại sản phẩm<span
+                                                class="required" aria-required="true">(*)</span>:</label>
+                                        <div class="col-md-12">
+                                            <select class="selectpicker form-control" id="selectProductType"
+                                                name="product_type" required
+                                                data-parsley-required-message="Không được để trống">
+                                                <option value="0">Chọn loại sản phẩm</option>
+                                                @foreach ($product_types as $item)
+                                                    <option value="{{ $item->id }}" {{$product->product_type == $item->id ? 'selected' : ''}}>{{ $item->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr style="margin: 10px;">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label text-left">Phân loại sản phẩm<span
+                                                class="required" aria-required="true">(*)</span>:</label>
+                                        <div class="col-md-12">
+                                            <select class="form-control" id="productVariation" name="product_variation" required
+                                                data-parsley-required-message="Không được để trống">
+                                                <option value="1" {{$product->product_variation == 1 ? 'selected' : ''}}>Sản phẩm thường</option>
+                                                <option value="2" {{$product->product_variation == 2 ? 'selected' : ''}}>Sản phẩm có biến thể</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="margin: 10px;">
+                                <div id="productPriceForm" data-url="{{route('san-pham.getPriceForm')}}" class="product-price-form">
+                                    @switch($product->productType->type)
+                                        @case(1)
+                                            @switch($product->product_variation)
+                                                @case(1)
+                                                    @include('admin.product.include_edit.form_product_type1', ['form_sub'=> view('admin.product.include.product_type1')->render()])
+                                                    @break
+                                                @case(2)
+                                                    @include('admin.product.include_edit.form_attribute', ['product'=>$product])
+                                                    @break
+                                                @default
+                                                    
+                                            @endswitch
+                                            @break
+                                        @case(2)
+                                            @switch($product->product_variation)
+                                                 @case(1)
+                                                    @include('admin.product.include_edit.product_type2', ['product'=>$product])
+                                                    @break
+                                                @case(2)
+                                                    @switch($product->productType->transpot_type)
+                                                        @case(1)
+                                                            @include('admin.product.include_edit.form_attribute_transpot1', ['product'=>$product, 'provinces'=>$provinces])
+                                                            @break
+                                                        @case(2)
+
+                                                            @break
+                                                        @default
+                                                            @include('admin.product.include_edit.form_attribute', ['product'=>$product])
+                                                    @endswitch
+                                                    @break
+                                                @default
+                                                    
+                                            @endswitch
+                                            @break
+                                        @default
+                                            
+                                    @endswitch
+                                </div>
+                                <hr style="margin: 10px;">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="col-md-12 control-label text-left">Tích lũy
+                                                    (C):</label>
+                                                <div class="col-md-12">
+                                                    <input type="text" id="ip_cpoint" class="form-control"
+                                                        value="{{ $product->productPrice->cpoint }}">
+                                                    <input type="hidden" id="cpoint" step="1" min="0"
+                                                        name="cpoint" class="form-control"
+                                                        value="{{ $product->productPrice->cpoint }}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-12 control-label text-left">Tích lũy
+                                                    (M):</label>
+                                                <div class="col-md-12">
+                                                    <input type="text" id="ip_mpoint" class="form-control"
+                                                        value="{{ $product->productPrice->mpoint }}">
+                                                    <input type="hidden" id="mpoint" step="1" min="0"
+                                                        name="mpoint" class="form-control"
+                                                        value="{{ $product->productPrice->mpoint }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="col-md-12 control-label text-left">Phí xử lý:</label>
+                                                <div class="col-md-12">
+                                                    <input type="text" id="ip_fee_process" class="form-control"
+                                                        value="{{ $product->productPrice->fee_process }}">
+                                                    <input type="hidden" id="fee_process" class="form-control"
+                                                        name="fee_process"
+                                                        value="{{ $product->productPrice->fee_process }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="margin: 10px;">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="col-md-12 control-label text-left">Thuế GTGT(%):</label>
+                                                <div class="col-md-12">
+                                                    <select class="form-control" name="tax_gtgt" required
+                                                        data-placeholder="Chọn thuế suất">
+                                                        <option value="KKK"
+                                                            {{ $product->productPrice->tax_gtgt == 'KKK' ? 'selected' : '' }}>
+                                                            KKK
+                                                        </option>
+                                                        <option value="KTT"
+                                                            {{ $product->productPrice->tax_gtgt == 'KTT' ? 'selected' : '' }}>
+                                                            KTT
+                                                        </option>
+                                                        <option value="0.05"
+                                                            {{ $product->productPrice->tax_gtgt == 0.05 ? 'selected' : '' }}>
+                                                            5%
+                                                        </option>
+                                                        <option value="0.05"
+                                                            {{ $product->productPrice->tax_gtgt == 0.08 ? 'selected' : '' }}>
+                                                            8%
+                                                        </option>
+                                                        <option value="0.1"
+                                                            {{ $product->productPrice->tax_gtgt == 0.1 ? 'selected' : '' }}>
+                                                            10%
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-12 control-label text-left">Thuế NT-TNDN(%):</label>
+                                                <div class="col-md-12">
+                                                    <input type="number" class="form-control" name="tax_nt_tndn"
+                                                        value="{{ $product->productPrice->tax_nt_tndn }}"
+                                                        data-parsley-max="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="col-md-12 control-label text-left">Thuế TTĐB(%):</label>
+                                                <div class="col-md-12">
+                                                    <input type="number" class="form-control" name="tax_ttdb"
+                                                        value="{{ $product->productPrice->tax_ttdb }}"
+                                                        data-parsley-max="100">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-12 control-label text-left">Thuế NT-GTGT(%):</label>
+                                                <div class="col-md-12">
+                                                    <input type="number" class="form-control" name="tax_nt_gtgt"
+                                                        value="{{ $product->productPrice->tax_nt_gtgt }}"
+                                                        data-parsley-max="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Hình thức thanh toán<span
+                                            class="required" aria-required="true">(*)</span>:</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control multiple-payments" name="payments[]" required
+                                            data-parsley-required-message="Không được để trống" multiple>
+                                            @foreach ($payments as $item)
+                                                <option value="{{ $item->id }}"
+                                                    {{ in_array($item->id, explode(',', $product->payments)) ? 'selected' : '' }}>
+                                                    {{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-left">Sản phẩm kèm theo:</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control  select-product-group" id="selectProductGroup"
+                                            name="product_group[]" multiple>
+                                            @if (count($product_groups) > 0)
+                                                @foreach ($product_groups as $item)
+                                                    <option value="{{ $item->id }}" selected>
+                                                        {{ $item->name }} (#{{ $item->id }})</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group mb-2">
+                                        <label class="col-md-12 control-label vertical text-left">Meta
+                                            description:</label>
+                                        <div class="col-md-12">
+                                            <textarea name="meta_desc" id="meta_description" class="form-control" rows="3"
+                                                placeholder="Meta description tối đa 150 - 160 ký tự" maxlength="160">{{ $product->meta_desc }}</textarea>
+                                            <div id="the-count">
+                                                <span id="current">0</span>
+                                                <span id="maximum">/ 160</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group mb-2">
+                                        <label class="col-md-12 control-label vertical text-left">Meta keyword
+                                            (cách nhau
+                                            bởi dấu phẩy)</label>
+                                        <div class="col-md-12">
+                                            <textarea name="meta_keyword" id="meta_keyword" class="form-control" rows="3"
+                                                placeholder="Ví dụ: từ khóa 1, từ khóa 2,..">{{ $product->meta_keyword }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12 control-label text-left">Hình thức thanh toán<span
-                                        class="required" aria-required="true">(*)</span>:</label>
+                                <label class="col-md-12 control-label vertical text-left text-danger">Mô tả chi
+                                    tiết:</label>
                                 <div class="col-md-12">
-                                    <select class="form-control multiple-payments" name="payments[]" required multiple>
-                                        @php
-                                            $proPay = explode(',', $product->payments);
-                                        @endphp
-                                        @foreach ($payments as $item)
-                                            <option value="{{ $item->id }}" @php
-                                                if (old('payments')) {
-                                                    if (in_array($item->id, $proPay) || in_array($item->id, old('payments'))) {
-                                                        echo 'selected';
-                                                    }
-                                                } else {
-                                                    if (in_array($item->id, $proPay)) {
-                                                        echo 'selected';
-                                                    }
-                                                }
-                                            @endphp>{{ $item->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <textarea name="long_desc" id="description" class="form-control" rows="3" placeholder="...">{{ $product->long_desc }}</textarea>
                                 </div>
                             </div>
                         </div>
-                    </div>
-            </div>
 
-            <div class="col-md-12 mb-3">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group mb-2">
-                            <label class="col-md-12 control-label vertical text-left">Meta description:</label>
-                            <div class="col-md-12">
-                                <textarea name="meta_description" id="meta_description" class="form-control" rows="3"
-                                    placeholder="Meta description tối đa 150 - 160 ký tự"
-                                    maxlength="160">{{ old('meta_description', $product->meta_desc) }}</textarea>
-                                <div id="the-count">
-                                    <span id="current">0</span>
-                                    <span id="maximum">/ 160</span>
-                                </div>
-                            </div>
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-info">Cập nhật sản phẩm</button>
                         </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group mb-2">
-                            <label class="col-md-12 control-label vertical text-left">Meta keyword (cách nhau bởi dấu
-                                phẩy)</label>
-                            <div class="col-md-12">
-                                <textarea name="meta_keyword" id="meta_keyword" class="form-control" rows="3"
-                                    placeholder="Ví dụ: từ khóa 1, từ khóa 2,..">{{ old('meta_keyword', $product->meta_keyword) }}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="col-md-12 control-label vertical text-left text-danger">Mô tả chi tiết:</label>
-                    <div class="col-md-12">
-                        <textarea name="description" id="description" class="form-control" rows="3"
-                            placeholder="...">{{ old('description', $product->long_desc) }}</textarea>
                     </div>
-                </div>
+                </form>
             </div>
-
-            <div class="col-sm-12">
-                <button type="submit" class="btn btn-info">Cập nhật sản phẩm</button>
-            </div>
-
         </div>
-        </form>
-
-        <div class="col-sm-12">
-            <form action="{{ route('san-pham.delete', $product->id) }}" method="post">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger" onclick="confirm('Bạn có chắc muốn xóa sản phẩm?')">Xóa sản
-                    phẩm</button>
-            </form>
-        </div>
-
-    </div>
-    </div>
     </div>
     <div class="footer text-center">
-        <spans style="font-size: 12px;">Copyright©2005-2021 . All rights reserved</spans>
+        <span style="font-size: 12px;">Copyright©2005-2021 . All rights reserved</span>
     </div>
 @endsection
 
@@ -818,8 +448,7 @@
     <script src={{ asset('/public/packages/ckeditor/ckeditor.js') }}></script>
     <script src={{ asset('/public/packages/ckfinder-watermark/ckfinder.js') }}></script>
     <script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
-
-
+    <script src={{ asset('/public/js/admin/formatNumber.js') }}></script>
     <script>
         $(document).ready(function() {
             $('select.selectpicker').select2({
@@ -831,6 +460,7 @@
                 multiple: true,
                 width: '100%',
             });
+
 
             $('#selectCategory').select2({
                 width: '100%',
@@ -866,7 +496,32 @@
                     return `${repo.name}`;
                 }
             }
-
+            $('#selectProductGroup').select2({
+                width: '100%',
+                multiple: true,
+                minimumInputLength: 3,
+                dataType: 'json',
+                ajax: {
+                    delay: 350,
+                    url: `{{ route('san-pham.getProduct') }}`,
+                    dataType: 'json',
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                        }
+                        return query;
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: 'Chọn sản phẩm kèm theo...',
+                templateResult: formatRepoSelection,
+                templateSelection: formatRepoSelection
+            })
             $('#select-upsell').select2({
                 width: '100%',
                 multiple: true,
@@ -879,7 +534,6 @@
                     data: function(params) {
                         var query = {
                             search: params.term,
-                            id: {{ $product->id }},
                         }
                         return query;
                     },
@@ -903,143 +557,6 @@
                 }
             }
 
-            easyNumberSeparator({
-                selector: '.number-separator',
-                separator: '.',
-                resultInput: '#product_regular_price',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-1',
-                separator: '.',
-                resultInput: '#product_shock_price',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-2',
-                separator: '.',
-                resultInput: '#product_wholesale_price',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-3',
-                separator: '.',
-                resultInput: '#phi_xuly',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-4',
-                separator: '.',
-                resultInput: '#product_price',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-df0',
-                separator: '.',
-                resultInput: '#c_ship_price_df0',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-df0',
-                separator: '.',
-                resultInput: '#c_ship_price_df0',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-weight0',
-                separator: '.',
-                resultInput: '#c_ship_price_weight0',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-df0',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_df0',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-weight0',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_weight0',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-distance0',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_distance0',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-df1',
-                separator: '.',
-                resultInput: '#c_ship_price_df1',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-weight1',
-                separator: '.',
-                resultInput: '#c_ship_price_weight1',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-df1',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_df1',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-weight1',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_weight1',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-distance1',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_distance1',
-            })
-
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-distance1',
-                separator: '.',
-                resultInput: '#c_ship_price_fast_distance1',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-df2',
-                separator: '.',
-                resultInput: '#c_ship_price_df2',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-weight2',
-                separator: '.',
-                resultInput: '#c_ship_price_weight2',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-df2',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_df2',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-weight2',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_weight2',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-distance2',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_distance2',
-            })
-
-            easyNumberSeparator({
-                selector: '.number-separator-c-df3',
-                separator: '.',
-                resultInput: '#c_ship_price_df3',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-weight3',
-                separator: '.',
-                resultInput: '#c_ship_price_weight3',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-df3',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_df3',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-weight3',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_weight3',
-            })
-            easyNumberSeparator({
-                selector: '.number-separator-c-fast-distance3',
-                separator: '.',
-                resultInput: '#c_ship_fast_price_distance3',
-            })
             $('#meta_description').keyup(function() {
                 var characterCount = $(this).val().length,
                     current = $('#current'),
@@ -1058,14 +575,10 @@
                 }
             })
 
-            setInterval(() => {
-                $('.portlet-status').remove();
-            }, 1500);
-
             CKEDITOR.replace('description', {
                 toolbar: [{
                         name: 'clipboard',
-                        items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo',
+                        items: ['Cut','Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo',
                             'Redo'
                         ]
                     },
@@ -1123,7 +636,6 @@
 
             function selectFileWithCKFinder(elementId) {
                 var type = $(`#${elementId}`).data('type')
-                var hasid = $(`#${elementId}`).data('hasid')
                 CKFinder.popup({
                     chooseFiles: true,
                     width: 800,
@@ -1133,25 +645,15 @@
                             if (type == "multiple") {
                                 var files = evt.data.files;
                                 var chosenFiles = $(`#${elementId}`).val();
-
                                 files.forEach(function(file, idx, array) {
                                     chosenFiles += new URL(file.getUrl()).pathname +
                                         ', ';
-                                    if (hasid != '') {
-                                        $('.fileinput-gallery .row').append(`<div class="col-md-3">
-                                        <span style="cursor: pointer;" data-id='${hasid}' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
-                                            <i class="fas fa-times"></i>
-                                        </span>
-                                        <img src="${new URL(file.getUrl()).pathname}">
-                                    </div>`)
-                                    } else {
-                                        $('.fileinput-gallery .row').append(`<div class="col-md-3">
-                                        <span style="cursor: pointer;" data-id='' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
-                                            <i class="fas fa-times"></i>
-                                        </span>
-                                        <img src="${new URL(file.getUrl()).pathname}">
-                                    </div>`)
-                                    }
+                                    $('.fileinput-gallery .row').append(`<div class="col-md-3">
+                                    <span style="cursor: pointer;" data-id='' data-url="${new URL(file.getUrl()).pathname}" class="delete_gallery">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                    <img src="${new URL(file.getUrl()).pathname}">
+                                </div>`)
                                 });
                                 var output = document.getElementById(elementId);
                                 output.value = chosenFiles;
@@ -1180,9 +682,9 @@
                 in_value.val(newValue);
                 t.parent().remove();
             });
-
         });
     </script>
 
     <script type="text/javascript" src="{{ asset('/js/admin/adminProductCreateUpdate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/admin/parsley/parsley.min.js') }}"></script>
 @endpush

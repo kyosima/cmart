@@ -8,7 +8,7 @@
 @endpush
 
 @section('content')
-    <form action="{{ route('checkout.getPayment') }}" class="form-checkout" method="get">
+    <form action="{{ route('payment.getPaymentDetail') }}" class="form-checkout" method="get">
         <div class="container">
             @if (Session::has('message'))
                 <p class="alert alert-danger text-center">{{ Session::get('message') }}</p>
@@ -32,7 +32,7 @@
                                             <div class="form-group d-flex justify-content-start align-items-center ">
                                                 <input type="radio" id="pay{{ $payment_method->id }}"
                                                     name="payment_method" value="{{ $payment_method->id }}"
-                                                    @if (($payment_method->id == 1 && $point_c->point_c < $order->total) ||($payment_method->status == 0) || (!in_array($payment_method->id, $payment_method_avai))) disabled @endif
+                                                    @if (($payment_method->id == 1 && $wallet->cpoint < $order->total) ||($payment_method->status == 0) || (!in_array($payment_method->id, $payment_method_avai))) disabled @endif
                                                   >
                                                 <label for="pay{{ $payment_method->id }}">{{ $payment_method->name }}
                                                    
@@ -41,38 +41,7 @@
                                         @endif
                                     @endforeach
 
-                                    {{-- <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay1" name="payment_method" value="1">
-                                        <label for="pay1">Nạp tiền</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay2" name="payment_method" value="2" checked>
-                                        <label for="pay2">Chuyển tiền</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay3" name="payment_method" value="3">
-                                        <label for="pay3">Công nợ linh hoạt</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay4" name="payment_method" value="4">
-                                        <label for="pay4">Thanh toán online bằng Thẻ Visa / Mastercard</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay5" name="payment_method" value="5">
-                                        <label for="pay5">Thanh toán online bằng Thẻ JCB / CUP</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay6" name="payment_method" value="6">
-                                        <label for="pay6">Thanh toán online bằng Thẻ Amex / Diners Club</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay7" name="payment_method" value="7">
-                                        <label for="pay7">Thanh toán online bằng Thẻ Ngoài nước / Discover</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay8" name="payment_method" value="8">
-                                        <label for="pay8">Thanh toán online bằng Thẻ Nội địa</label>
-                                    </div> --}}
+                                 
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
@@ -92,70 +61,7 @@
                                             </div>
                                         @endif
                                     @endforeach
-                                    {{-- <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay9" name="payment_method" value="9"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay9">Thanh toán khi nhận hàng (Chuyển khoản)</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay10" name="payment_method" value="10"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay10">Thanh toán trực tiếp bằng Thẻ Visa / Mastercard </label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay11" name="payment_method" value="11"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay11">Thanh toán trực tiếp bằng Thẻ Visa / Mastercard do SHB phát hành,
-                                            qua app QR SHB</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay12" name="payment_method" value="12"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay12">Thanh toán trực tiếp bằng Thẻ Visa / Mastercard / JCB do TPBank
-                                            phát hành, qua app QR TPBank</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay13" name="payment_method" value="13"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay13">Thanh toán trực tiếp bằng Thẻ JCB / CUP </label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay14" name="payment_method" value="14"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay14">Thanh toán trực tiếp bằng Thẻ JCB / CUP do MBBank phát
-                                            hành</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay15" name="payment_method" value="15"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay15">Thanh toán trực tiếp bằng Thẻ Amex / Diners Club</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay16" name="payment_method" value="16"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay16">Thanh toán trực tiếp bằng Thẻ Ngoài nước / Discover</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay17" name="payment_method" value="17"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay17">Thanh toán trực tiếp bằng Thẻ Nội địa</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay18" name="payment_method" value="18"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay18">Thanh toán trực tiếp bằng Thẻ Nội địa do MBBank phát hành</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay19" name="payment_method" value="19"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay19">Thanh toán trực tiếp bằng Thẻ Nội địa do SCB phát hành</label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-start align-items-center">
-                                        <input type="radio" id="pay20" name="payment_method" value="20"
-                                            @if (!$check_shipping_method) disabled @endif>
-                                        <label for="pay20">Thanh toán trực tiếp bằng Thẻ Nội địa do TPBank phát hành, qua
-                                            app QR TPBank</label>
-                                    </div> --}}
+                                  
                                 </div>
                             </div>
 

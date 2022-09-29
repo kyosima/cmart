@@ -11,6 +11,7 @@
         "barryvdh/laravel-dompdf": "^1.0",
         "carlos-meneses/laravel-mpdf": "^2.1",
         "ckfinder/ckfinder-plugin-imagewatermark-php": "^3.4",
+        "cviebrock/eloquent-sluggable": "^8.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "hardevine/shoppingcart": "^3.0",
@@ -73,8 +74,12 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "platform-check": false
+
     },
     "minimum-stability": "dev",
     "prefer-stable": true
+
+
 }

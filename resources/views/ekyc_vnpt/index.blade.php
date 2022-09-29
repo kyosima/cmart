@@ -168,7 +168,7 @@
                             .done(function(response) {
                                 console.log('ket qua: ');
                                 console.log(response);
-                                $('#btn-redemo').after(response[0]);
+                                $('#btn-redemo').replaceWith(response[0]);
                             });
 
                         ekycsdk.viewResult(data.type_document, merged);

@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <div class="socials-footer">
+    {{-- <div class="socials-footer">
         <div class="col-box">
             <ul class="d-flex justify-content-center">
                 <li><a rel="nofollow" href="#" title="title"><i class="icon-m icon-s1"></i></a></li>
@@ -74,7 +74,7 @@
                 <li><a rel="nofollow" href="#" title="title"><i class="icon-m icon-s4"></i></a></li>
             </ul>
         </div>
-    </div>
+    </div> --}}
 
     <!--<div class="bottom-footer mt-4">-->
     <!--    <div class="container d-flex justify-content-center ">-->

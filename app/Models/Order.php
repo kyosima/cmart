@@ -44,6 +44,7 @@ class Order extends Model
 		'order_code',
 		'payment_method',
 		'shipping_total',
+		'transpot_price_total',
 		'c_point',
 		'm_point',
 		'tax_services',
@@ -60,7 +61,7 @@ class Order extends Model
 
 	public function order_address()
 	{
-		return $this->hasOne(OrderAddress::class, 'id_order');
+		return $this->hasOne(OrderAddress::class, 'order_id');
 	}
 
 	public function user()
@@ -69,18 +70,18 @@ class Order extends Model
 	}
 
 	public function order_products(){
-		return $this->hasOne(OrderProduct::class, 'id_order');
+		return $this->hasOne(OrderProduct::class, 'order_id');
 	}
 	public function order_stores(){
-		return $this->hasMany(OrderStore::class, 'id_order','id');
+		return $this->hasMany(OrderStore::class, 'order_id','id');
 	}
 
 
 	public function order_info(){
-		return $this->hasOne(OrderInfo::class, 'id_order');
+		return $this->hasOne(OrderInfo::class, 'order_id');
 	}
 	public function order_vat(){
-		return $this->hasOne(OrderVat::class, 'id_order');
+		return $this->hasOne(OrderVat::class, 'order_id');
 	}
 
 	public function order_shipping(){
@@ -94,7 +95,7 @@ class Order extends Model
 
 	public function products()
 	{
-		return $this->belongsToMany(Product::class, 'order_products', 'id_order', 'id_product')
+		return $this->belongsToMany(Product::class, 'order_products', 'order_id', 'product_id')
 					->withPivot('id', 'quantity', 'price')
 					->withTimestamps();
 	}

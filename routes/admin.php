@@ -1,32 +1,36 @@
 <?php
 
-use App\Admin\Controllers\AdminCouponController;
+use App\Models\Admin;
+use App\Admin\UserController;
+use App\Admin\PointHistoryController;
 use Illuminate\Support\Facades\Route;
+use App\Admin\Controllers\BlogController;
+use App\Admin\Controllers\BrandController;
+use App\Admin\Controllers\AddressController;
+use App\Admin\Controllers\CountryController;
+use App\Admin\Controllers\PaymentController;
+use App\Admin\Controllers\AdminLogController;
+use App\Admin\Controllers\AdminEkycController;
 use App\Admin\Controllers\AdminHomeController;
+use App\Admin\Controllers\WarehouseController;
+use App\Admin\Controllers\AdminOrderController;
+use App\Admin\Controllers\AdminPointController;
 use App\Admin\Controllers\AdminRolesController;
+use App\Admin\Controllers\AdminStoreController;
+use App\Admin\Controllers\AdminBannerController;
+use App\Admin\Controllers\AdminCouponController;
+use App\Admin\Controllers\AdminNoticeController;
+use App\Admin\Controllers\InfoCompanyController;
+use App\Admin\Controllers\AdminProductController;
+use App\Admin\Controllers\AdminSettingController;
+use App\Admin\Controllers\BlogCategoryController;
+use App\Admin\Controllers\AdminTranspotController;
+use App\Admin\Controllers\PaymentMethodController;
+use App\Admin\Controllers\CalculationUnitController;
+use App\Admin\Controllers\AdminInfoCompanyController;
 use App\Admin\Controllers\AdminPermissionsController;
 use App\Admin\Controllers\AdminManagerAdminController;
 use App\Admin\Controllers\AdminProductCategoryController;
-use App\Admin\Controllers\AdminProductController;
-use App\Admin\Controllers\BlogCategoryController;
-use App\Admin\Controllers\BlogController;
-use App\Admin\Controllers\BrandController;
-use App\Admin\Controllers\CalculationUnitController;
-use App\Admin\Controllers\WarehouseController;
-use App\Admin\Controllers\AdminOrderController;
-use App\Admin\Controllers\AdminInfoCompanyController;
-use App\Admin\Controllers\AdminSettingController;
-use App\Admin\UserController;
-use App\Admin\PointHistoryController;
-use App\Admin\Controllers\InfoCompanyController;
-use App\Admin\Controllers\PaymentController;
-use App\Admin\Controllers\AdminBannerController;
-use App\Admin\Controllers\AdminEkycController;
-use App\Admin\Controllers\AdminLogController;
-use App\Admin\Controllers\AdminNoticeController;
-use App\Admin\Controllers\AdminStoreController;
-use App\Admin\Controllers\PaymentMethodController;
-use App\Admin\Controllers\AdminPointController;
 
 Route::group(['middleware' => ['admin']], function () {
     // Route::resource('permissions', AdminPermissionsController::class);
@@ -159,6 +163,7 @@ Route::group(['middleware' => ['admin']], function () {
         Route::get('changeStatus/{id}', [AdminBannerController::class, 'changeStatus'])->name('admin.banner.changeStatus');
 
     });
+    
 
     Route::group(['middleware' => ['permission:Truy cập mục Admin|'.config('custom-config.name-all-permission').',admin']], function () {
         //
@@ -182,41 +187,39 @@ Route::group(['middleware' => ['admin']], function () {
         Route::post('setting', [AdminSettingController::class, 'store'])->name('post.setting');
     });
 
-    // CỬA HÀNG
-    Route::group(['middleware' => ['permission:Truy cập CH|Tạo+xóa+sửa CH|Chỉnh sửa Tồn kho cho CH chỉ định|'.config('custom-config.name-all-permission').',admin']], function () {
-        Route::get('/cua-hang', [AdminStoreController::class, 'index'])->name('store.index');
-    });
+    Route::prefix('cua-hang')->group(function () {
+        Route::group(['middleware' => ['permission:Truy cập CH|Tạo+xóa+sửa CH|Chỉnh sửa Tồn kho cho CH chỉ định|'.config('custom-config.name-all-permission').',admin']], function () {
+            Route::get('/', [AdminStoreController::class, 'index'])->name('store.index');
+        });
 
-    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|'.config('custom-config.name-all-permission').',admin']], function () {
-        Route::post('/cua-hang', [AdminStoreController::class, 'store'])->name('store.store');
-    });
-    
-    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|Chỉnh sửa Tồn kho cho CH chỉ định|'.config('custom-config.name-all-permission').',admin']], function () {
-        Route::put('/cua-hang/{id}', [AdminStoreController::class, 'update'])->name('store.update');
-    });
+        Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|'.config('custom-config.name-all-permission').',admin']], function () {
+            Route::get('create', [AdminStoreController::class, 'create'])->name('store.create');
+            Route::post('store', [AdminStoreController::class, 'store'])->name('store.store');
+        });
+        
+        Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|Chỉnh sửa Tồn kho cho CH chỉ định|'.config('custom-config.name-all-permission').',admin']], function () {
+            Route::get('edit/{id}', [AdminStoreController::class, 'edit'])->name('store.edit');
+            Route::put('update/{id}', [AdminStoreController::class, 'update'])->name('store.update');
+        });
 
-    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH,admin']], function () {
-        Route::get('/cua-hang/get-location', [AdminStoreController::class, 'getLocation'])->name('store.getLocation');
-        Route::get('/cua-hang/list-owners', [AdminStoreController::class, 'getListOwner'])->name('store.getListOwner');
-    });
+        Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|Chỉnh sửa Tồn kho cho CH chỉ định|'.config('custom-config.name-all-permission').',admin']], function () {
+            Route::get('show/{id}', [AdminStoreController::class, 'show'])->name('store.show');
+            Route::get('search-product', [AdminStoreController::class, 'getProduct'])->name('store.getProduct');
+            Route::get('product/add/{id}', [AdminStoreController::class, 'addProduct'])->name('store.addProduct');
+            Route::post('product/store', [AdminStoreController::class, 'storeProduct'])->name('store.storeProduct');
+            Route::get('product/edit/{id}', [AdminStoreController::class, 'editProduct'])->name('store.editProduct');
+            Route::put('product/update/{id}', [AdminStoreController::class, 'updateProduct'])->name('store.updateProduct');
+            Route::delete('product/delete/{id}', [AdminStoreController::class, 'deleteProduct'])->name('store.deleteProduct');
 
-    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|Chỉnh sửa Tồn kho cho CH chỉ định|'.config('custom-config.name-all-permission').',admin']], function () {
-        Route::post('/cua-hang/them-san-pham', [AdminStoreController::class, 'storeProduct'])->name('store.storeProduct');
-        Route::delete('/cua-hang/san-pham/{id_store}/{id_product}', [AdminStoreController::class, 'deleteProductStore'])->name('store.deleteProductStore');
-    });
-    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|Chỉnh sửa Tồn kho cho CH chỉ định|'.config('custom-config.name-all-permission').',admin']], function () {
-        Route::get('/cua-hang/edit/{slug}/{id}', [AdminStoreController::class, 'edit'])->name('store.edit');
-        Route::get('/cua-hang/searchProduct', [AdminStoreController::class, 'getProduct'])->name('store.getProduct');
-        Route::get('/cua-hang/list-product', [AdminStoreController::class, 'getListProduct'])->name('store.getListProduct');
-        Route::get('/cua-hang/thong-ke/{id}', [AdminStoreController::class, 'getStatistical'])->name('store.getStatistical');
+        }); 
 
+        Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|'.config('custom-config.name-all-permission').',admin']], function () {
+            Route::delete('delete', [AdminStoreController::class, 'deleteStore'])->name('store.delete');
+        });
     });
-
-    Route::group(['middleware' => ['permission:Tạo+xóa+sửa CH|'.config('custom-config.name-all-permission').',admin']], function () {
-        Route::post('/cua-hang/multiple-change', [AdminStoreController::class, 'multiChange'])->name('store.multiChange');
-        Route::delete('/cua-hang/{id}', [AdminStoreController::class, 'delete'])->name('store.delete');
-    });
-
+    //Quốc gia
+    Route::post('quoc-gia/store', [CountryController::class, 'store'])->name('country.store');
+    Route::get('quoc-gia/get-location', [CountryController::class, 'getLocation'])->name('country.getLocation');
 
     // COUPON
     // được phép xem mã ưu đãi
@@ -259,22 +262,32 @@ Route::group(['middleware' => ['admin']], function () {
     // Route::delete('/coupon/{id}', [AdminCouponController::class, 'deleteForm'])->name('coupon.deleteForm');
 
     // PRODUCT
+    Route::prefix('san-pham')->group(function () {
+        Route::get('/create', [AdminProductController::class, 'create'])->name('product.create');
+        Route::post('/store', [AdminProductController::class, 'store'])->name('product.store');
+
+        Route::get('/get-price-form', [AdminProductController::class, 'getPriceForm'])->name('product.getPriceForm');
+        Route::get('/add-more-variation', [AdminProductController::class, 'getMoreVariation'])->name('product.getMoreVariation');
+
+        Route::get('/edit/{id}', [AdminProductController::class, 'edit'])->name('product.edit');
+        Route::put('update/{id}', [AdminProductController::class, 'update'])->name('product.update');
+
+    });
     // được phép xem sản phẩm
     Route::group(['middleware' => ['permission:Truy cập mục TTSP|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/san-pham', [AdminProductController::class, 'index'])->name('san-pham.index');
-        Route::get('/san-pham/getDatatable', [AdminProductController::class, 'indexDatatable'])->name('san-pham.indexDatatable');
+        Route::get('/san-pham/getDatatable', [AdminProductController::class, 'indexDatatable'])->name('product.indexDatatable');
     });
 
     // được phép thêm sản phẩm
     Route::group(['middleware' => ['permission:Tạo+sửa+xóa SP|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/tao-san-pham', [AdminProductController::class, 'create'])->name('san-pham.create');
-        Route::post('/san-pham', [AdminProductController::class, 'store'])->name('san-pham.store');
     });
 
     // được phép chỉnh sửa sản phẩm
     Route::group(['middleware' => ['permission:Tạo+sửa+xóa SP|'.config('custom-config.name-all-permission').',admin']], function () {
-        Route::get('/san-pham/edit/{id}', [AdminProductController::class, 'edit'])->name('san-pham.edit');
-        Route::put('/san-pham/update/{id}', [AdminProductController::class, 'update'])->name('san-pham.update');
+        // Route::get('/san-pham/edit/{id}', [AdminProductController::class, 'edit'])->name('san-pham.edit');
+        // Route::put('/san-pham/update/{id}', [AdminProductController::class, 'update'])->name('san-pham.update');
     });
 
     // được phép XÓA sản phẩm
@@ -292,7 +305,37 @@ Route::group(['middleware' => ['admin']], function () {
     });
 
 
+    //Dịch vụ vận chuyển
+    Route::prefix('dich-vu-van-chuyen')->group(function () {
+        Route::prefix('dich-vu-cmart-tu-van-chuyen')->group(function () {
+            Route::get('/', [AdminTranspotController::class, 'indexCmartTranspot'])->name('transpot.cmart.index');
+            Route::get('edit/{id}', [AdminTranspotController::class, 'editCmartTranspot'])->name('transpot.cmart.edit'); 
+            Route::put('update/{id}', [AdminTranspotController::class, 'updateCmartTranspot'])->name('transpot.cmart.update'); 
+        });
+
+        Route::prefix('dich-vu-van-chuyen-noi-tinh')->group(function () {
+            Route::get('/', [AdminTranspotController::class, 'indexProvinceTranspot'])->name('transpot.province.index');
+            Route::get('edit/{id}', [AdminTranspotController::class, 'editProvinceTranspot'])->name('transpot.province.edit'); 
+            Route::put('update/{id}', [AdminTranspotController::class, 'updateProvinceTranspot'])->name('transpot.province.update'); 
+        });
+
+        Route::prefix('dich-vu-van-chuyen-lien-tinh')->group(function () {
+            Route::get('/', [AdminTranspotController::class, 'indexCrossProvinceTranspot'])->name('transpot.cross_province.index');
+            Route::get('/get-list-province/{province_id}', [AdminTranspotController::class, 'getListProvince'])->name('transpot.get.province');
+            Route::post('/transpot-to/store', [AdminTranspotController::class, 'storeTranspotTo'])->name('transpot.cross_province.transpot_to.store');
+            Route::get('/variation/show/{id}', [AdminTranspotController::class, 'showCrossProvinceVariation'])->name('transpot.cross_province.variation.show');
+            Route::get('/variation/edit/price/{id}', [AdminTranspotController::class, 'editCrossProvinceVariationPrice'])->name('transpot.cross_province.variation.edit_price');
+            Route::put('/variation/update/price/{id}', [AdminTranspotController::class, 'updateCrossProvinceVariationPrice'])->name('transpot.cross_province.variation.update_price');
+            Route::get('/variation/list/{province_id}', [AdminTranspotController::class, 'getListVariations'])->name('transpot.cross_province.get_list_variation');
+
+            Route::get('/transpot-variation/create/{province_id}', [AdminTranspotController::class, 'createVariationCrossProvinceTranspot'])->name('transpot.cross_province.variation.create');
+
+        });
+    });
+    
     // PRODUCT CATEGORIES
+
+
     // được phép xem danh mục sản phẩm
     Route::group(['middleware' => ['permission:Truy cập+tạo+sửa+xóa+ẩn mục Ngành hàng|'.config('custom-config.name-all-permission').',admin']], function () {
         Route::get('/nganh-nhom-hang', [AdminProductCategoryController::class, 'index'])->name('nganh-nhom-hang.index');
@@ -520,6 +563,12 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/get-location', [WarehouseController::class, 'getLocation'])->name('warehouse.getLocation');
     Route::get('/get-warehouse', [WarehouseController::class, 'getWarehouse'])->name('warehouse.getWarehouse');
     Route::get('/ton-kho-dai-ly/modal-edit', [WarehouseController::class, 'modalEdit'])->name('warehouse.modalEdit');
+
+    //Lấy địa chỉ
+    Route::get('lay-tinh-thanh', [AddressController::class, 'allProvinces'])->name('allProvince');
+    Route::get('lay-quan-huyen-theo-tinh-thanh', [AddressController::class, 'districtOfProvince']);
+    Route::get('lay-phuong-xa-theo-quan-huyen', [AddressController::class, 'wardOfDistrict']);
+
 });
 
 

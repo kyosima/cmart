@@ -20,10 +20,11 @@
     <link href="{{ asset('public/css/footer.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/search.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
         rel="stylesheet">
@@ -32,6 +33,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" href="{{ asset('public/vnpt-econtract/vnpt-econtract.min.css') }}">
     <script src="{{ asset('public/vnpt-econtract/vnpt-econtract.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     @stack('css')
 </head>
 
@@ -44,7 +47,7 @@
             @endif
         @endif --}}
     @include('layout.header')
-
+                @include('layout.include.loading')
     @yield('content')
 
     @include('layout.footer')

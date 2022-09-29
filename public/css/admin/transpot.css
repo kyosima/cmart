@@ -1,0 +1,23 @@
+.block-input-transpot {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.transpot-form {
+    margin-bottom: 20px;
+}
+
+.list-cmart-price-detail {
+    padding-left: 0;
+    list-style: none;
+}
+
+.list-cmart-price-detail li {
+    margin-bottom: 15px;
+}
+
+.dropdown-transpot-to {
+    display: inline;
+}

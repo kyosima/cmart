@@ -30,17 +30,17 @@ class OrderAddress extends Model
 	protected $table = 'order_address';
 
 	protected $casts = [
-		'id_order' => 'int',
-		'id_province' => 'int',
-		'id_district' => 'int',
-		'id_ward' => 'int'
+		'order_id' => 'int',
+		'province_id' => 'int',
+		'district_id' => 'int',
+		'ward_id' => 'int'
 	];
 
 	protected $fillable = [
-		'id_order',
-		'id_province',
-		'id_district',
-		'id_ward',
+		'order_id',
+		'province_id',
+		'district_id',
+		'ward_id',
 		'address',
 		'address_full'
 	];
@@ -55,7 +55,7 @@ class OrderAddress extends Model
     } 
 
 	public function province() {
-        return $this->belongsto(Province::class, 'id_province', 'matinhthanh');
+        return $this->belongsto(Province::class, 'province_id', 'matinhthanh');
     } 
 	public function district() {
         return $this->belongsto(District::class, 'id_district', 'maquanhuyen');

@@ -1,5 +1,18 @@
 <?php
 
+if(!function_exists('showImageWithError')){
+    function showImageWithError($img){
+        if (file_exists(asset($img))){
+            return asset($img);
+        }
+        else{
+            return asset(config('custom-config.default-image'));
+        }
+    }
+}
+
+
+
 if (!function_exists('getFeeProductShipping')) {
     function getFeeProductShipping($user, $price)
     {
@@ -117,32 +130,94 @@ if (!function_exists('formatTypeCoupon')) {
     }
 }
 if (!function_exists('formatLevel')) {
-    function formatLevel($type)
+    function formatLevel($level)
     {
-        switch ($type) {
-            case 0:
-                return 'Khách hàng thân thiết';
+        switch ($level) {
             case 1:
-                return 'Khách hàng V.I.P';
+                return 'Khách hàng thân thiết';
             case 2:
-                return 'Cộng tác viên';
+                return 'Khách hàng V.I.P';
             case 3:
-                return 'Purchasing';
+                return 'Cộng tác viên';
             case 4:
+                return 'Purchasing';
+            case 5:
                 return 'Khách hàng thương mại';
         }
     }
 }
-if (!function_exists('formatPriceOfLevel')) {
 
-    if (!function_exists('formatPriceOfLevel')) {
-        function formatPriceOfLevel($product)
+if(!function_exists('formatNumber')){
+    function formatNumber($number){
+        return number_format($number, 0, ',', '.') ;
+    }
+}
+if (!function_exists('formatPriceWithType')) {
+
+        function formatPriceWithType($price, $product_type)
         {
-            return number_format(getPriceOfLevel($product), 0, ',', '.') . ' ₫';
+            if($product_type == 0){
+                return number_format($price, 0, ',', '.') . ' ₫';
+            }else{
+                return number_format($price, 0, ',', '.') . ' %';
+            }
+        }
+}
+if (!function_exists('formatCurrency')) {
+
+    function formatCurrency($price)
+    {
+            return number_format($price, 0, ',', '.') . ' ₫';
+      
+    }
+}
+
+if (!function_exists('formatPriceWithVariation')) {
+
+    function formatPriceWithVariation($product)
+    {
+     
+
+        if($product->is_variation == 0){
+            return '<span class="price-number">'.formatPriceWithType($product->product_price->product_price_details[0]->price, $product->is_ecard).'</span>';
+        }else{
+            $min = $product->product_variations[0]->product_price_details[0]->price;
+            foreach($product->product_variations as $variation){
+            
+                if($min > $variation->product_price_details[0]->price){
+                    $min = $variation->product_price_details[0]->price;
+                }
+            }
+            return 'Từ <span class="price-number">'.formatPriceWithType($min, $product->is_ecard).'</span>';
+
         }
     }
 }
 
+if (!function_exists('formatPriceOfLevelVariation')) {
+    function formatPriceOfLevelVariation($variation,$product)
+    {
+        if($product->productPrice->price_type == 1){
+            return number_format(getPriceOfLevelVariation($variation), 0, ',', '.') . ' ₫';
+        }else{
+            return number_format(getPriceOfLevelVariation($variation), 0, ',', '.') . ' %';
+        }
+    }
+}
+
+if (!function_exists('getCountCart')) {
+    function getCountCart()
+    {
+        if (Auth::guard('user')->check()) {
+            $user = Auth::guard('user')->user();
+            $carts =  $user->carts()->with('cart_item')->get();
+            return ($carts->pluck('cart_item')->flatten()->sum('quantity'));
+        }else{
+            return 0;
+        }
+        return 0;
+    }
+}
 if (!function_exists('getTagSale')) {
     function getTagSale($product)
     {
@@ -182,31 +257,39 @@ if (!function_exists('formatTax')) {
         }
     }
 }
-if (!function_exists('getPriceOfLevel')) {
-    function getPriceOfLevel($product)
+
+
+if (!function_exists('getPriceOfLevelVariation')) {
+    function getPriceOfLevelVariation($variation)
     {
-        if (Auth::check()) {
+        if (Auth::gcheck()) {
             $user = Auth::user();
             switch ($user->level) {
                 case 0:
-                    return $product->productPrice()->value('regular_price');
+                    return $variation->price_retail;
                 case 1:
-                    return $product->productPrice()->value('shock_price');
+                    return $variation->price_shock;
+
                 case 2:
-                    return $product->productPrice()->value('shock_price');
+                    return $variation->price_shock;
+
                 case 3:
-                    return $product->productPrice()->value('price');
+                    return $variation->price_purchase;
+
                 case 4:
-                    return $product->productPrice()->value('wholesale_price');
+                    return $variation->price_wholesale;
+
                 default:
-                    return $product->productPrice()->value('regular_price');
+                    return $variation->price_retail;
+
             }
         } else {
+            return $variation->price_retail;
 
-            return $product->productPrice()->value('regular_price');
         }
     }
 }
+
 if (!function_exists('formatPriceOfLevelCate')) {
     function formatPriceOfLevelCate($item)
     {
@@ -287,6 +370,7 @@ if (!function_exists('helper')) {
         $str = '';
         foreach ($data as $value) {
             $str .= '<span class="badge bg-primary me-1">' . $value->name . '</span>';
+    
         }
         return $str;
     }
@@ -403,5 +487,13 @@ if (!function_exists('helper')) {
     function shippingTypeName($type)
     {
         return config('custom-config.shipping_type_name')[$type];
+    }
+    function transformDate($value, $format = 'Y-m-d')
+    {
+        try {
+            return \Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value));
+        } catch (\ErrorException $e) {
+            return \Carbon\Carbon::createFromFormat($format, $value);
+        }
     }
 }

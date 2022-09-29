@@ -224,7 +224,6 @@
                                             <div class="check-side">
                                                 <label class="check-custom">
                                                     {{ $store->name }}
-                                                    {{-- <span class="count-item"> ({{ $countBrand[$item] }})</span> --}}
                                                     <input name="id_stores[]" class="submit_click" type="checkbox"
                                                         value="{{ $store->id }}">
                                                     <span class="checkmark"></span>

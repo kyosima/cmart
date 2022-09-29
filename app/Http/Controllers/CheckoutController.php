@@ -2,133 +2,194 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Province;
-use App\Models\District;
+use Aws\History;
+use App\Models\User;
 use App\Models\Ward;
 use App\Models\Order;
+use App\Models\Store;
+use App\Models\Product;
+use App\Models\District;
+use App\Models\OrderVat;
+use App\Models\Province;
 use App\Models\OrderInfo;
-use App\Models\PaymentMethod;
-use App\Models\PointCHistory;
+use App\Models\OrderPayme;
+use App\Models\OrderStore;
+use App\Models\InfoCompany;
 use App\Models\OrderAddress;
 use App\Models\OrderProduct;
 use App\Models\StoreAddress;
-use App\Models\InfoCompany;
-use App\Models\Store;
-use App\Models\OrderVat;
-use App\Models\User;
 
-use App\Models\OrderPayme;
-use App\Models\OrderStore;
-use App\Http\Controllers\ViettelPostController;
-use App\Http\Controllers\EkycController;
-use App\Http\Controllers\HistoryPointController;
-
-use Illuminate\Support\Facades\Auth;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Http\Request;
+use App\Models\PaymentMethod;
+use App\Models\PointCHistory;
+use App\Http\Traits\TranspotTrait;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\PaymentPaymeController;
+
 use App\Models\PaymentMethodOption;
-use Aws\History;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\EkycController;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Http\Controllers\ViettelPostController;
+use App\Http\Controllers\HistoryPointController;
+use App\Http\Controllers\PaymentPaymeController;
+use stdClass;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 class CheckoutController extends Controller
 {
     //
+    use TranspotTrait;
     public function __construct()
     {
         $this->api_key = 'VuBqJVkHv1wiBSdJArMeq5rhSCC6q12e3cVeVxmc';
     }
     public function index()
     {
-        $user = Auth::user();
+        $user = Auth::guard('user')->user();
         if($user->status == 0){
-            Auth::logout();
-           return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
+            Auth::guard('user')->logout();
+            return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
         }
-        $stores = Store::get();
-      
-        foreach ($stores as $store) {
-            if(Cart::instance($store->id)->count()> 0){
-                $cart = Cart::instance($store->id);
-                foreach($cart->content() as $row){
-                    if($row->model->is_ecard == 0){
-                        $cart->update($row->rowId, ['price' => getPriceOfLevel($row->model)]);
-
-                    }
-                }
-            }
+        $user->level = $user->user_level()->first();
+        
+        if (Session::has('store_ids') == false) {
+            return redirect()->route('cart.index');
         }
-        $orders_not_payment = $user->orders()->where('is_payment', 0)->get();
-        if (count($orders_not_payment) > 0) {
-            foreach ($orders_not_payment as $order) {
-                foreach ($order->order_stores()->get() as $order_store) {
-                    foreach ($order_store->order_products()->get() as $order_product) {
-                        $order_product->delete();
-                    }
-                    $order_store->delete();
-                }
-                $order->delete();
-            }
+        $store_ids = Session::get('store_ids');
+        $carts = $user->carts()->whereIn('store_id', explode(',',$store_ids))->with(['cart_item.product.product_type', 'cart_item.product.product_price',
+        'cart_item.product.product_detail',
+        'cart_item.product.product_brand', 'cart_item.product.product_category',
+        'cart_item.product.product_price.product_price_detail' => function($query) use ($user) {
+            $query->where('user_price_id', '=', $user->level->user_price_id); 
+        },
+        'cart_item.variation.product_price_detail'=> function($query) use ($user) {
+            $query->where('user_price_id', '=', $user->level->user_price_id);
         }
-        if (Auth::check()) {
-            $user = Auth::user();
-            if ($user->is_ekyc == 0) {
-                return redirect()->route('ekyc.getVerify');
-            }
+        , 'store', 'transpot_service', 'cart_item.store'])->get();
+        foreach($carts as $cart_store){
+            $cart_store->cart_item->map(function ($value){
+                $value->total_p = $value->quantity * ($value->is_ecard == 1
+                ? $value->price
+                : ($value->product->is_variation == 1 ? $value->variation->product_price_detail->price: $value->product->product_price->product_price_detail->price));
+                $value->total_c = $value->quantity * $value->product->product_price->cpoint;
+                $value->total_m = $value->quantity * $value->product->product_price->mpoint;
+                return $value;
+            });
+        }
 
-            if (Session::has('store_ids') == false) {
-                return redirect()->route('cart.index');
-            }
-            $store_ids = Session::get('store_ids');
-            $province = Province::select('matinhthanh', 'tentinhthanh')->get();
-            $store_address = $user->getstoreAddress()->get();
-            $tax = 0;
-            $m_point = 0;
-            $c_point = 0;
-            $sub_total = 0;
-            $total = 0;
-            $count_cart = 0;
-            foreach (explode(",", $store_ids) as $store_id) {
-                $cart = Cart::instance($store_id);
-                foreach ($cart->content() as $row) {
-                    $price = $row->model->productPrice()->first();
-                    $tax += ($row->price * getTaxValue($price->tax)) * $row->qty;
-                    $m_point += $price->mpoint * $row->qty;
-                    $c_point += $price->cpoint * $row->qty;
+        return view('checkout.address', [
+            'user' => $user,
+            'store_ids' => $store_ids,
+            'carts' => $carts,
+        ]);
+    
+    }
+
+    public function getTranspotCart(Request $request){
+        $user = Auth::guard('user')->user();
+        $user->level = $user->user_level()->first();
+        $store_ids = Session::get('store_ids');
+        $order_address = new StdClass();
+        $order_address->province_id = $request->province;
+        $order_address->district_id = $request->district;
+        $order_address->ward_id = $request->ward;
+        $order_address->address = $request->address;
+        $carts = $user->carts()->whereIn('store_id', explode(',',$store_ids))->with(['cart_item.product.product_type', 'cart_item.product.product_price',
+        'cart_item.product.product_detail',
+        'cart_item.product.product_brand', 'cart_item.product.product_category',
+        'cart_item.product.product_price.product_price_detail' => function($query) use ($user) {
+            $query->where('user_price_id', '=', $user->level->user_price_id); 
+        },
+        'cart_item.variation.product_price_detail'=> function($query) use ($user) {
+            $query->where('user_price_id', '=', $user->level->user_price_id);
+        }
+        , 'store.store_address', 'cart_item.store.store_address'])->get();
+        // return $carts;
+        foreach($carts as $cart_store){
+            $transpot = $this->getTranspotStore($user,$cart_store, $order_address, $cart_store->store->store_address);
+            $cart_store->transpot_service_id = $transpot['transpot_service']->id;
+            $cart_store->transpot_price_default = $transpot['transpot_fee_default'];
+            $cart_store->transpot_price_fast = $transpot['transpot_fee_fast'];
+            $cart_store->accept_checkout = ($transpot['status'] == 200) ? 1 : 0;
+            $cart_store->save();
+            $cart_store->transpot = $transpot;
+            $cart_store->cart_item->map(function ($value){
+     
+                $value->total_p = $value->quantity * ($value->is_ecard == 1
+                ? $value->price
+                : ($value->product->is_variation == 1 ? $value->variation->product_price_detail->price: $value->product->product_price->product_price_detail->price));
+                $value->total_c = $value->quantity * $value->product->product_price->cpoint;
+                $value->total_m = $value->quantity * $value->product->product_price->mpoint;
+             
+                return $value;
+            });
+        }
+
+        return view('checkout.include.list_store', compact('carts'));
+ 
+        
+    }
+    public function getTranspotStore($user,$cart_store, $order_address, $store_address){
+        $total_weight = 0;
+        foreach($cart_store->cart_item as $item){
+            $total_weight += $this->getWeight($item);
+        }
+        switch($user->level->id){
+            case 4:
+                return $transpot = $this->getFeeCmartTranspot($total_weight, $user);
+                break;
+            default:
+                switch($total_weight <= 0){
+                    case true:
+                        return $transpot = $this->getFeeCmartTranspot($total_weight, $user);
+                        break;
+                    default:
+                        switch($order_address->province_id == $store_address->province_id) {
+                            case true:
+                                $distance = 10;
+                                return $transpot = $this->getFeeProvinceTranspot($distance, $total_weight, $user);
+                                break;
+                            case false:
+                                switch($order_address->province_id != $store_address->province_id) {
+                                    case true:
+                                        return $transpot = $this->getFeeCrossProvinceTranspot($store_address->province_id,$order_address->province_id,  $total_weight, $user);
+                                        break;
+                                    case false:
+                                        break;
+                                }
+                                break;
+                        }
+                        
+                        break;
                 }
-                $count_cart += $cart->count();
+                break;
+        }
+    }
 
-                $sub_total += intval(str_replace(",", "", $cart->subtotal()));
+    public function changeTypeTranspotStore(Request $request){
+        $user = Auth::guard('user')->user();
+        $store_id = $request->store_id;
+        $cart_store = $user->carts()->where('store_id', $store_id)->with(['store', 'transpot_service'])->first();
+        $cart_store->transpot_type = $request->type;
+        $cart_store->save();
+        switch($request->type) {
+            case 1:
+                $total = $cart_store->transpot_price_default +$request->total_product;
+                return formatCurrency($total);
+                break;
+            default:
+                $total = $cart_store->transpot_price_fast +$request->total_product;
+                return formatCurrency($total);
+                break;
 
-                $total += intval(str_replace(",", "", $cart->total()));
-            }
-
-
-            return view('checkout.thanhtoan', [
-                'cart_subtotal' => $sub_total,
-                'cart_total' => $total + $tax,
-                'province' => $province,
-                'user' => $user,
-                'tax' => $tax,
-                'm_point' => $m_point,
-                'c_point' => $c_point,
-                'store_address' => $store_address,
-                'count_cart' => $count_cart,
-                'store_ids' => $store_ids
-            ]);
-        } else {
-            return redirect()->route('account');
         }
     }
 
 
-
     public function getAddress(Request $request)
     {
-        $user = Auth::user();
+        $user = Auth::guard('user')->user();
         $addressController = new AddressController();
         $user_province = $addressController->getProvinceDetail($user->id_tinhthanh);
         $user_district = $addressController->getDistrictDetail($user->id_tinhthanh, $user->id_quanhuyen);
@@ -139,58 +200,40 @@ class CheckoutController extends Controller
 
     public function postOrder(Request $request)
     {
-        if (Session::has('edit_order')) {
-            return redirect()->route('checkout.edit', ['order_code' => Session::get('edit_order')]);
+        $user = Auth::guard('user')->user();
+        $user->level = $user->user_level()->first();
+        $carts = $user->carts()->where('accept_checkout', 1)->with(['cart_item.product.product_type', 'cart_item.product.product_price',
+        'cart_item.product.product_detail',
+        'cart_item.product.product_brand', 'cart_item.product.product_category',
+        'cart_item.product.product_price.product_price_detail' => function($query) use ($user) {
+            $query->where('user_price_id', '=', $user->level->user_price_id); 
+        },
+        'cart_item.variation.product_price_detail'=> function($query) use ($user) {
+            $query->where('user_price_id', '=', $user->level->user_price_id);
         }
-        if (Auth::check()) {
-            $user = Auth::user();
-            $user_id = $user->id;
-        }
-        if ($request->in_store == 1) {
-            $order_info = new OrderInfo();
-
-            $order_info->fullname = $user->hoten;
-            $order_info->phone = $user->phone;
-            $order_info->note = $request->note;
-            $order_address = new OrderAddress();
-            $order_address->id_province = $user->id_tinhthanh;
-            $order_address->id_district = $user->id_quanhuyen;
-            $order_address->id_ward = $user->id_phuongxa;
-            $order_address->address = $user->address;
-        } else {
-            $validation = $request->validate([
-                'fullname' => 'required',
-                'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/'],
-                'sel_province' => 'required',
-                'sel_district' => 'required',
-                'sel_ward' => 'required',
-                'address' => 'required',
-            ], [
-                'fullname.required' => 'Họ tên không được để trống',
-                'phone.required' => 'Số điện thoại đang sử dụng đã bị trùng lặp',
-                'sel_province.required' => ' Vui lòng chọn tỉnh/thành phố',
-                'sel_district.required' => 'Vui lòng chọn quận/huyện',
-                'sel_ward.required' => 'Vui lòng chọn phường/xã',
-                'address.required' => 'Địa chỉ không được để trống'
-            ]);
-            $order_info = new OrderInfo();
-            $order_info->fullname = $request->fullname;
-            $order_info->phone = $request->phone;
-            $order_info->note = $request->note;
-            $order_address = new OrderAddress();
-            $order_address->id_province = $request->sel_province;
-            $order_address->id_district = $request->sel_district;
-            $order_address->id_ward = $request->sel_ward;
-            $order_address->address = $request->address;
-        }
-        $viettelPostController = new ViettelPostController();
-        $store_address = $request->input('store_address');
-        $show_vat = $request->input('show_vat');
-        // $payment_method = $request->input('payment_method');
-        $store_ids = Session::get('store_ids');
-        $order = Order::create([
-            'user_id' => $user_id
+        , 'store.store_address', 'cart_item.store.store_address'])->get();
+        $validation = $request->validate([
+            'fullname' => 'required',
+            'phone' => ['required', 'regex:/((09|03|07|08|05)+([0-9]{8})\b)|(84)\d{9}/'],
+            'province_id' => 'required',
+            'district_id' => 'required',
+            'ward_id' => 'required',
+            'address' => 'required',
+        ], [
+            'fullname.required' => 'Họ tên không được để trống',
+            'phone.required' => 'Số điện thoại đang sử dụng đã bị trùng lặp',
+            'province_id.required' => ' Vui lòng chọn tỉnh/thành phố',
+            'district_id.required' => 'Vui lòng chọn quận/huyện',
+            'ward_id.required' => 'Vui lòng chọn phường/xã',
+            'address.required' => 'Địa chỉ không được để trống'
         ]);
+        if($carts->count() == 0){
+            return back()->with('message', 'Không có cửa hàng nào đáp ứng điều kiện thanh toán');
+        }
+        $order = $user->orders()->create();
+        $order_info = $order->order_info()->create($request->only('fullname', 'phone', 'note'));
+        $order_address = $order->order_address()->create($request->only('province_id', 'district_id', 'ward_id', 'address'));
+
         $total_tax = 0;
         $total_shipping = 0;
         $total_c = 0;
@@ -202,92 +245,70 @@ class CheckoutController extends Controller
         $total = 0;
         $time = (string)date('Y-m-d-H-i-s');
         $order_code = str_replace('-', '', $time);
-
         $order->order_code = $order_code;
+        
+      
         $count_store = 0;
-
-        foreach (explode(",", $store_ids) as $store_id) {
-            // Cart::instance($store_id)->destroy();
-
-            $cart = Cart::instance($store_id);
-            $order_store = OrderStore::create([
-                'id_order' => $order->id,
-                'id_store' => $store_id,
-
-            ]);
-            $store = Store::whereId($store_id)->first();
-            $addressController = new AddressController();
-            $address1_province = $addressController->getProvinceDetail($store->id_province);
-            $address1_district = $addressController->getDistrictDetail($store->id_province, $store->id_district);
-            $address1_ward = $addressController->getWardDetail($store->id_district, $store->id_ward);
-
-            $address2_province = $addressController->getProvinceDetail($order_address->id_province);
-            $address2_district = $addressController->getDistrictDetail($order_address->id_province, $order_address->id_district);
-            $address2_ward = $addressController->getWardDetail($order_address->id_district, $order_address->id_ward);
-
-            $address1 = $store->address . ' ' . $address1_province->PROVINCE_NAME . ' ' . $address1_district->DISTRICT_NAME . ' ' . $address1_ward->WARDS_NAME;
-            $address2 = $order_address->address . ' ' . $address2_province->PROVINCE_NAME . ' ' . $address2_district->DISTRICT_NAME . ' ' . $address2_ward->WARDS_NAME;
-
-            $order_store->shipping_distance = $this->getDistance($address1, $address2);
-
+        foreach($carts as $cart_store){
             $count_store++;
-            $store_tax = 0;
-            $store_shipping_total = 0;
-          
-            $store_shipping_method = 0;
-            $store_shipping_type = 0;
-            $store_shipping_weight = 0;
-            $store_c = 0;
-            $process_fee = 0;
-            $store_m = 0;
-            $vat_products = 0;
-            $vat_services = 0;
-            $discount_products = 0;
-            foreach ($cart->content() as $row) {
-                $price = $row->model->productPrice()->first();
-                $store_tax += ($row->price * getTaxValue($price->tax)) * $row->qty;
-                $store_c += $price->cpoint * $row->qty;
-                $store_m += $price->mpoint * $row->qty;
-                $process_fee += $price->phi_xuly * $row->qty;
-                $store_shipping_method = $row->options->method_ship;
-                $store_shipping_type = $row->options->type_ship;
-                $store_shipping_weight += $this->getWeight($row->model, $row->qty);
-                switch ($store_shipping_type) {
-                    case 2:
-                        $store_shipping_total += $row->options->price_fast;
-                        break;
-                    default:
-                        $store_shipping_total += $row->options->price_normal;
-                        break;
-                }
-                $vat_products += $row->price * getTaxValue($price->tax) * $row->qty;
-                if (in_array(Auth::user()->level, [3, 4])) {
-                    $price->cpoint = 0;
-                    $price->mpoint = 0;
-                }
-                $store = Store::whereId($store_id)->first();
-                $store_product = $store->product_stores()->where('id_ofproduct', $row->model->id)->first();
-                $store_product->soluong -= $row->qty;
-                $store_product->save();
-                OrderProduct::create([
-                    'id_order' => $order->id,
-                    'id_order_store' => $order_store->id,
-                    'id_product' => $row->model->id,
-                    'sku' => $row->model->sku,
-                    'name' => $row->name,
-                    'slug' => $row->model->slug,
-                    'feature_img' => $row->model->feature_img,
-                    'quantity' => $row->qty,
-                    'weight' => $this->getWeight($row->model, 1),
-                    'price' => $row->price,
+            $order_store = $order->order_stores()->create([
+                'store_id'=> $cart_store->store_id,
+                'order_store_code'=> str_replace('-', '', $time) . '-' . '00' . $count_store
+            ]);
+            $cart_store->cart_item->map(function ($value) use($order_store, $order){
+                $value->tax = $value->quantity * ($value->is_ecard == 1
+                ? $value->price
+                : ($value->product->is_variation == 1 ? $value->variation->product_price_detail->price: $value->product->product_price->product_price_detail->price))
+                * getTaxValue($value->product->product_price->tax_gtgt);
+                $value->total_p = $value->quantity * ($value->is_ecard == 1
+                ? $value->price
+                : ($value->product->is_variation == 1 ? $value->variation->product_price_detail->price: $value->product->product_price->product_price_detail->price));
+                $value->total_c = $value->quantity * $value->product->product_price->cpoint;
+                $value->total_m = $value->quantity * $value->product->product_price->mpoint;
+                $value->total_weight = $value->quantity *  $this->getWeight($value);
+                $value->total_process_fee = $value->quantity *$value->product->product_price->process_fee;
+                $value->vat_product = $value->quantity * ($value->is_ecard == 1
+                ? $value->price
+                : ($value->product->is_variation == 1 ? $value->variation->product_price_detail->price: $value->product->product_price->product_price_detail->price))
+                * getTaxValue($value->product->product_price->tax_gtgt);
+
+                $order_store->order_products()->create([
+                    'order_id' => $order->id,
+                    'product_id' => $value->product->id,
+                    'product_variation_id' => $value->variation_id,
+                    'sku' => $value->product->sku,
+                    'name' => $value->product->title,
+                    'slug' => $value->product->slug,
+                    'feature_img' =>  $value->product->feature_img,
+                    'quantity' => $value->quantity,
+                    'weight' => $this->getWeight($value),
+                    'price' => ($value->is_ecard == 1
+                    ? $value->price
+                    : ($value->product->is_variation == 1 ? $value->variation->product_price_detail->price: $value->product->product_price->product_price_detail->price)),
                     'discount' => 0,
-                    'c_point' => $price->cpoint,
-                    'm_point' => $price->mpoint
+                    'cpoint' => $value->product->product_price->cpoint,
+                    'mpoint' => $value->product->product_price->mpoint
                 ]);
-            }
-            OrderProduct::create([
+                return $value;
+            });
+            $order_store->update([
+                'tax'  => $cart_store->cart_item->sum('tax'),
+                'transpot_service_id'=> $cart_store->transpot_service_id,
+                'transpot_type' => $cart_store->transpot_type,
+                'transpot_price'=> ($cart_store->transpot_type == 1)? $cart_store->transpot_price_default : $cart_store->transpot_price_fast,
+                'transpot_distance' => 10,
+                'transpot_weight' => $cart_store->cart_item->sum('total_weight'),
+                'process_fee' => $cart_store->cart_item->sum('total_process_fee'),
+                'vat_products' => $cart_store->cart_item->sum('vat_product'),
+                'cpoint' => $cart_store->cart_item->sum('total_c'),
+                'mpoint' => $cart_store->cart_item->sum('total_m'),
+                'remaining_m_point' => max( $cart_store->cart_item->sum('total_m') - (($cart_store->transpot_type == 1)? $cart_store->transpot_price_default : $cart_store->transpot_price_fast), 0),
+                'sub_total' => $cart_store->cart_item->sum('total_p') + 300,
+                'total' => $cart_store->cart_item->sum('total_p') + 300 + $cart_store->cart_item->sum('vat_product') +  ($cart_store->transpot_type == 1)? $cart_store->transpot_price_default : $cart_store->transpot_price_fast,
+            ]);
+           
+            $order_store->order_products()->create([
                 'id_order' => $order->id,
-                'id_order_store' => $order_store->id,
                 'id_product' => null,
                 'sku' => null,
                 'name' => "Hóa đơn GTGT",
@@ -300,86 +321,185 @@ class CheckoutController extends Controller
                 'c_point' => 0,
                 'm_point' => 0,
             ]);
-            $order_store->tax = $store_tax;
-            $order_store->process_fee = $process_fee;
-            $order_store->shipping_method = $store_shipping_method;
-            $order_store->shipping_weight = $store_shipping_weight;
-            $order_store->shipping_type = $store_shipping_type;
-            $order_store->shipping_total = ceil($store_shipping_total);
-            if (in_array(Auth::user()->level, [3, 4])) {
-                $store_c = 0;
-                $store_m = 0;
-            }
-            $order_store->remaining_m_point = max($store_m - $store_shipping_total, 0);
-          
-            $order_store->c_point = $store_c;
-            $order_store->m_point = $store_m;
-            $order_store->vat_products = $vat_products;
-            $order_store->sub_total = intval(str_replace(",", "", $cart->subtotal())) + 300;
-            $order_store->total = $order_store->sub_total + $vat_products + $vat_services + $store_shipping_total;
-            $order_store_code = str_replace('-', '', $time) . '-' . '00' . $count_store;
-            $order_store->order_store_code = $order_store_code;
-            $order_store->save();
-            $total_tax += $store_tax;
-            $total_shipping += round($store_shipping_total);
-            $total_c += $store_c;
-            $total_m += $store_m;
-            $total_vat_products += $vat_products;
-            $total_discount_products += $discount_products;
-            $sub_total += $order_store->sub_total;
-            $total += ceil($order_store->total);
-            // Cart::instance($store_id)->destroy();
-        }
 
-        if ($show_vat == 1) {
-            $vat = OrderVat::create([
-                'id_order' => $order->id,
+
+        }
+        if (isset($request->vat_company) && ($request->vat_email) && isset($request->vat_mst) && ($request->vat_address)) {
+            $vat =  $order->order_vat()->create([
                 'vat_company' => $request->vat_company,
                 'vat_email' => $request->vat_email,
                 'vat_mst' => $request->vat_mst,
                 'vat_address' => $request->vat_address
             ]);
-            $vat->save();
         }
-        $order->payment_method = null;
-        $order->tax = $total_tax;
-        $order->shipping_total = $total_shipping;
-        $order->c_point = $total_c;
-        $order->m_point = $total_m;
-        $order->sub_total = $sub_total;
-        $order->total = $total;
-        $order->vat_products = $total_vat_products;
-        $order->discount_products = $total_discount_products;
+        $order_stores = $order->order_stores()->get();
+        $order->tax = $order_stores->sum('tax');
+        $order->transpot_price_total = $order_stores->sum('transpot_price');
+        $order->c_point = $order_stores->sum('cpoint');
+        $order->m_point = $order_stores->sum('mpoint');
+        $order->sub_total = $order_stores->sum('sub_total');
+        $order->total = $order_stores->sum('total');
+        $order->vat_products = $order_stores->sum('vat_products');
+        $order->discount_products = $order_stores->sum('discount_products');
         $order->save();
+        // dd($carts);
 
+        // foreach (explode(",", $store_ids) as $store_id) {
+        //     // Cart::instance($store_id)->destroy();
 
-        $order->order_address()->save($order_address);
+        //     $cart = Cart::instance($store_id);
+        //     $order_store = OrderStore::create([
+        //         'id_order' => $order->id,
+        //         'id_store' => $store_id,
 
+        //     ]);
+        //     $store = Store::whereId($store_id)->first();
+        //     $addressController = new AddressController();
+        //     $address1_province = $addressController->getProvinceDetail($store->id_province);
+        //     $address1_district = $addressController->getDistrictDetail($store->id_province, $store->id_district);
+        //     $address1_ward = $addressController->getWardDetail($store->id_district, $store->id_ward);
 
-        $order->order_info()->save($order_info);
+        //     $address2_province = $addressController->getProvinceDetail($order_address->id_province);
+        //     $address2_district = $addressController->getDistrictDetail($order_address->id_province, $order_address->id_district);
+        //     $address2_ward = $addressController->getWardDetail($order_address->id_district, $order_address->id_ward);
 
-        // Session::forget('store_ids');
-        // Session::put('order_code', $order->order_code);
-        // if($payment_method == 2){
-        //     $paymentPaymeController = new PaymentPaymeController();
-        //     $result = $paymentPaymeController->PaymentPayme($order);
-        //     $result = json_decode($result);
-        //     if( $result->code == '105000'){
-        //         $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
-        //         return redirect($result->data->url);
-        //     }else{
-        //         return redirect()->route('paymentFail');
+        //     $address1 = $store->address . ' ' . $address1_province->PROVINCE_NAME . ' ' . $address1_district->DISTRICT_NAME . ' ' . $address1_ward->WARDS_NAME;
+        //     $address2 = $order_address->address . ' ' . $address2_province->PROVINCE_NAME . ' ' . $address2_district->DISTRICT_NAME . ' ' . $address2_ward->WARDS_NAME;
 
+        //     $order_store->shipping_distance = $this->getDistance($address1, $address2);
+
+        //     $count_store++;
+        //     $store_tax = 0;
+        //     $store_shipping_total = 0;
+          
+        //     $store_shipping_method = 0;
+        //     $store_shipping_type = 0;
+        //     $store_shipping_weight = 0;
+        //     $store_c = 0;
+        //     $process_fee = 0;
+        //     $store_m = 0;
+        //     $vat_products = 0;
+        //     $vat_services = 0;
+        //     $discount_products = 0;
+        //     foreach ($cart->content() as $row) {
+        //         $price = $row->model->productPrice()->first();
+        //         $store_tax += ($row->price * getTaxValue($price->tax)) * $row->qty;
+        //         $store_c += $price->cpoint * $row->qty;
+        //         $store_m += $price->mpoint * $row->qty;
+        //         $process_fee += $price->phi_xuly * $row->qty;
+        //         $store_shipping_method = $row->options->method_ship;
+        //         $store_shipping_type = $row->options->type_ship;
+        //         $store_shipping_weight += $this->getWeight($row->model, $row->qty);
+        //         switch ($store_shipping_type) {
+        //             case 2:
+        //                 $store_shipping_total += $row->options->price_fast;
+        //                 break;
+        //             default:
+        //                 $store_shipping_total += $row->options->price_normal;
+        //                 break;
+        //         }
+        //         $vat_products += $row->price * getTaxValue($price->tax) * $row->qty;
+        //         if (in_array(Auth::guard('user')->user()->level, [3, 4])) {
+        //             $price->cpoint = 0;
+        //             $price->mpoint = 0;
+        //         }
+        //         $store = Store::whereId($store_id)->first();
+        //         $store_product = $store->product_stores()->where('id_ofproduct', $row->model->id)->first();
+        //         $store_product->soluong -= $row->qty;
+        //         $store_product->save();
+        //         OrderProduct::create([
+        //             'id_order' => $order->id,
+        //             'id_order_store' => $order_store->id,
+        //             'id_product' => $row->model->id,
+        //             'sku' => $row->model->sku,
+        //             'name' => $row->name,
+        //             'slug' => $row->model->slug,
+        //             'feature_img' => $row->model->feature_img,
+        //             'quantity' => $row->qty,
+        //             'weight' => $this->getWeight($row->model, 1),
+        //             'price' => $row->price,
+        //             'discount' => 0,
+        //             'c_point' => $price->cpoint,
+        //             'm_point' => $price->mpoint
+        //         ]);
         //     }
-
-        // }else{
-
-        return redirect()->route('checkout.getPaymentMethod', ['order_code' => $order->order_code]);
+        //     OrderProduct::create([
+        //         'id_order' => $order->id,
+        //         'id_order_store' => $order_store->id,
+        //         'id_product' => null,
+        //         'sku' => null,
+        //         'name' => "Hóa đơn GTGT",
+        //         'slug' => null,
+        //         'feature_img' => null,
+        //         'quantity' => 1,
+        //         'weight' => 0,
+        //         'price' => 300,
+        //         'discount' => 0,
+        //         'c_point' => 0,
+        //         'm_point' => 0,
+        //     ]);
+        //     $order_store->tax = $store_tax;
+        //     $order_store->process_fee = $process_fee;
+        //     $order_store->shipping_method = $store_shipping_method;
+        //     $order_store->shipping_weight = $store_shipping_weight;
+        //     $order_store->shipping_type = $store_shipping_type;
+        //     $order_store->shipping_total = ceil($store_shipping_total);
+        //     if (in_array(Auth::guard('user')->user()->level, [3, 4])) {
+        //         $store_c = 0;
+        //         $store_m = 0;
+        //     }
+        //     $order_store->remaining_m_point = max($store_m - $store_shipping_total, 0);
+          
+        //     $order_store->c_point = $store_c;
+        //     $order_store->m_point = $store_m;
+        //     $order_store->vat_products = $vat_products;
+        //     $order_store->sub_total = intval(str_replace(",", "", $cart->subtotal())) + 300;
+        //     $order_store->total = $order_store->sub_total + $vat_products + $vat_services + $store_shipping_total;
+        //     $order_store_code = str_replace('-', '', $time) . '-' . '00' . $count_store;
+        //     $order_store->order_store_code = $order_store_code;
+        //     $order_store->save();
+        //     $total_tax += $store_tax;
+        //     $total_shipping += round($store_shipping_total);
+        //     $total_c += $store_c;
+        //     $total_m += $store_m;
+        //     $total_vat_products += $vat_products;
+        //     $total_discount_products += $discount_products;
+        //     $sub_total += $order_store->sub_total;
+        //     $total += ceil($order_store->total);
+        //     // Cart::instance($store_id)->destroy();
         // }
 
-        // } else {
-        //     return redirect()->route('cart.index');
+        // if ($show_vat == 1) {
+        //     $vat = OrderVat::create([
+        //         'order_id' => $order->id,
+        //         'vat_company' => $request->vat_company,
+        //         'vat_email' => $request->vat_email,
+        //         'vat_mst' => $request->vat_mst,
+        //         'vat_address' => $request->vat_address
+        //     ]);
+        //     $vat->save();
         // }
+        // $order->payment_method = null;
+        // $order->tax = $total_tax;
+        // $order->shipping_total = $total_shipping;
+        // $order->c_point = $total_c;
+        // $order->m_point = $total_m;
+        // $order->sub_total = $sub_total;
+        // $order->total = $total;
+        // $order->vat_products = $total_vat_products;
+        // $order->discount_products = $total_discount_products;
+        // $order->save();
+
+
+        // $order->order_address()->save($order_address);
+
+
+        // $order->order_info()->save($order_info);
+
+  
+
+        return redirect()->route('payment.getPaymentMethod', ['order_code' => $order->order_code]);
+       
     }
 
     public function getEditOrder(Request $request)
@@ -390,8 +510,8 @@ class CheckoutController extends Controller
 
     public function postEditOrder(Request $request)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
+        if (Auth::guard('user')->check()) {
+            $user = Auth::guard('user')->user();
             $user_id = $user->id;
         }
         $order = Order::whereOrderCode($request->order_code)->first();
@@ -495,7 +615,7 @@ class CheckoutController extends Controller
                 }
 
                 $vat_products += $row->price * getTaxValue($price->tax) * $row->qty;
-                if (in_array(Auth::user()->level, [3, 4])) {
+                if (in_array(Auth::guard('user')->user()->level, [3, 4])) {
                     $price->cpoint = 0;
                     $price->mpoint = 0;
                 }
@@ -537,7 +657,7 @@ class CheckoutController extends Controller
             $order_store->shipping_type = $store_shipping_type;
             $order_store->shipping_total = $store_shipping_total;
             $order_store->remaining_m_point = max($store_m - $store_shipping_total, 0);
-            if (in_array(Auth::user()->level, [3, 4])) {
+            if (in_array(Auth::guard('user')->user()->level, [3, 4])) {
                 $store_c = 0;
                 $store_m = 0;
             }
@@ -606,7 +726,7 @@ class CheckoutController extends Controller
 
         // }else{
 
-        return redirect()->route('checkout.getPaymentMethod', ['order_code' => $order->order_code]);
+        return redirect()->route('payment.getPaymentMethod', ['order_code' => $order->order_code]);
         // }
 
         // } else {
@@ -614,288 +734,17 @@ class CheckoutController extends Controller
         // }
     }
 
-    public function getPayment(Request $request)
-    {
-        $user = Auth::user();
-        if (!$request->payment_method) {
-            return back()->with('message', 'Mời chọn hình thức thanh toán');
-        }
+   
+   
 
-        $order = Order::whereOrderCode($request->order_code)->first();
-      
-        if ($order->status > 0) {
-            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-        }
-        $payment_method = PaymentMethod::whereId($request->payment_method)->first();
-        $payment_method_avai = $this->getPaymentMethodAccept($order);
-        $point_c = $user->point_c()->first();
+   
 
-        if (($payment_method->id == 1 && $point_c->point_c < $order->total) ||($payment_method->status == 0) || (!in_array($payment_method->id, $payment_method_avai))){
-            return back()->with('message', 'Hình thức thanh toán không khả dụng cho đơn hàng của bạn, mời chọn lại hình thức thanh toán khác');
+    
 
-        }
-        foreach ($order->order_stores()->get() as $order_store) {
-            $vat_services = 0;
-            $vat_services = round($payment_method->fee * ($order_store->sub_total + $order_store->vat_products - $order_store->discount_products + max($order_store->shipping_total - $order_store->m_point, 0) * 1.08));
-            $order_store->vat_services = $vat_services;
-            $order_store->total = round($order_store->sub_total + $vat_services + $order_store->vat_products);
-            $order_store->save();
-        }
-        $order->vat_services = $order->order_stores()->sum('vat_services') + $payment_method->tax;
-        $order->payment_method = $payment_method->id;
-        $order->order_stores()->update(['payment_method'=>$payment_method->id]);
-        $order->total_payment_services = round(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0));
-        $order->remaining_m_point = max($order->m_point - $order->shipping_total - $order->vat_services, 0);
-        $order->tax_services =round(max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) - max((max($order->shipping_total - $order->m_point, 0) * 108) / 100 + ($order->vat_services - max($order->m_point - $order->shipping_total, 0)), 0) / 1.08);
-        $order->total_tax_services = $order->vat_products + $order->tax_services;
-        foreach ($order->order_stores()->get() as $order_store) {
-            $order_store->total = round($order_store->sub_total - $order_store->discount_products + $order_store->vat_products + ($order->total_payment_services / $order->order_stores()->count()));
-            $order_store->discount_services = round( ($order_store->shipping_total * 108 / 100) + $order_store->vat_services - ($order->total_payment_services / $order->order_stores()->count()) < 0 ? ($order_store->shipping_total * 108 / 100) + $order_store->vat_services : $order->total_payment_services / $order->order_stores()->count());
-            $order_store->vat = round($order_store->vat_products + $order->tax_services / $order->order_stores()->count());
-            $order_store->save();
-        }
-        $order->total = $order->order_stores()->sum('total');
-        $order->save();
-        $order_vat = $order->order_vat()->first();
-        return view('checkout.payment_info', compact('order', 'user', 'order_vat'));
-    }
-
-    public function getPaymentMethod(Request $request)
-    {
-
-        $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->status > 0) {
-            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-        }
-        $user = Auth::user();
-        $point_c = $user->point_c()->first();
-        $payment_methods = PaymentMethod::orderBy('id', 'asc')->get();
-        // $viettelPostController = new ViettelPostController();
-        // foreach($order->order_stores()->get() as $order_store){
-        //     if($order_store->shipping_method == 2){
-        //         return $viettelPostController->createOrder($order_store);
-        //     }   
-        // }
-        $check_shipping_method = true;
-        foreach ($order->order_stores()->get() as $order_store) {
-            if ($order_store->shipping_method == 2) {
-                $check_shipping_method = false;
-            }
-        }
-        $payment_method_avai = $this->getPaymentMethodAccept($order);
-        return view('checkout.payment_method', compact('payment_method_avai','order', 'user', 'point_c', 'check_shipping_method', 'payment_methods'));
-    }
-    public function getPaymentMethodAccept($order){
-        $payment_method_avai = range(1,PaymentMethod::count());
-        foreach ($order->order_stores()->get() as $order_store) {
-            foreach($order_store->order_products()->get() as $order_product){
-                $product = $order_product->product()->first();
-                if($product){
-                    $payment_method_product = explode(',',$product->payments);
-                    $payment_method_avai = array_intersect($payment_method_avai, $payment_method_product);
-                }
-
-            }
-        }
-        $payment_method_avai = array_unique($payment_method_avai);
-        return $payment_method_avai;
-    }
-    public function postPayment(Request $request)
-    {
-        $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->status > 0) {
-            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-        }
-        $user = Auth::user();
-        $payment_method = PaymentMethod::whereId($order->payment_method)->first();
-        switch ($payment_method->type) {
-            case 1:
-                switch ($payment_method->id) {
-                    case 1:
-                        return redirect()->route('payment.C', ['order_code' => $order->order_code, 'payment_method' => $payment_method->id]);
-                        break;
-                    case 2:
-                        return redirect()->route('payment.Deposit', ['order_code' => $order->order_code, 'payment_method' => $payment_method->id]);
-                        break;
-                    case 3:
-                        return redirect()->route('payment.Send', ['order_code' => $order->order_code, 'payment_method' => $payment_method->id]);
-                        break;
-                    case 5 || 6:
-                        Session::put('order_code', $order->order_code);
-                        $paymentPaymeController = new PaymentPaymeController();
-                        $result = $paymentPaymeController->PaymentPayme($order, $pay_method = 'CREDITCARD');
-                        $result = json_decode($result);
-
-                        if ($result->code == '105000') {
-                            $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
-                            $this->processOrder($order);
-
-                            return redirect($result->data->url);
-                        } else {
-                            return redirect()->route('paymentFail');
-                        }
-                        break;
-                    case 9:
-                        Session::put('order_code', $order->order_code);
-                        $paymentPaymeController = new PaymentPaymeController();
-                        $result = $paymentPaymeController->PaymentPayme($order);
-                        $result = json_decode($result);
-
-                        if ($result->code == '105000') {
-                            $this->createOrderPayme($order->id, $order->order_code, $result->data->url, $result->data->transaction);
-                            $this->processOrder($order);
-
-                            return redirect($result->data->url);
-                        } else {
-                            return redirect()->route('paymentFail');
-                        }
-                        break;
-                    default:
-                        return redirect()->route('checkout.getPaymentMethod', ['order_code' => $order->order_code])->with(['message' => 'Hình thức thanh toán không khả dụng']);
-                        break;
-                }
-            default:
-                $this->processOrder($order);
-                return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-                break;
-        }
-    }
-
-    public function processOrder($order)
-    {
-        $user = Auth::user();
-        $order_status = true;
-        foreach ($order->order_stores()->get() as $order_store) {
-            if (($order_store->shipping_method == 0) || ($order_store->shipping_method == 1)) {
-                $order_store->shipping_code = $order_store->order_store_code;
-                $order_store->save();
-            } else {
-                $viettelPostController = new ViettelPostController();
-                $result_vt = $viettelPostController->createOrder($order_store);
-                if ($result_vt['status'] == 200) {
-                    $order_store->shipping_code = $result_vt['data']['ORDER_NUMBER'];
-                    $order_store->save();
-                } else {
-                    foreach ($order->order_stores()->get() as $order_store) {
-                        foreach ($order_store->order_products()->get() as $order_product) {
-                            $order_product->delete();
-                        }
-                        $order_store->delete();
-                    }
-                    $order->delete();
-                    $order_status = false;
-                   
-                }
-            }
-        }
-        if($order_status){
-            if ($order->payment_method == 1) {
-                // DB::transaction(function () use ($order, $user) {
-                //     try {
-                        $transaction_code = $order->order_code;
-                        $historyPointController = new HistoryPointController();
-                        $historyPointController->createHistory($user, $order->total, 1, 1, $transaction_code, null, null);
-                        $order->is_payment = 1;
-                        $order->save();
-                    
-                //     } catch (\Throwable $th) {
-                //         throw new \Exception('Đã có lỗi xảy ra vui lòng thử lại');
-                //         return redirect()->back()->withErrors(['error' => $th->getMessage()]);
-                //     }
-                // });
-            }
-            $order->is_payment = 1;
-            $order->save();
-            $noticeController = new NoticeController();
-            $user = $order->user()->first();
-            foreach($order->order_stores()->get() as $order_store){
-                $noticeController->createNotice(4,$user, null,$order_store);
-            }
-            $store_ids = Session::get('store_ids');
-            foreach (explode(",", $store_ids) as $store_id) {
-                Cart::instance($store_id)->destroy();
-            }
-            Session::forget('store_ids');
-        }else{
-            return redirect()->route('home');
-        }
-      
-    }
-
-    public function getPaymentDeposit(Request $request)
-    {
-
-        $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->is_payment != 0) {
-            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-        }
-        $payment_method = PaymentMethod::whereId($request->payment_method)->first();
-        return view('checkout.payment.payment_nap', compact('payment_method', 'order'));
-    }
-    public function postPaymentDeposit(Request $request)
-    {
-
-        $validation = $request->validate([
-            'payment_option' => 'required',
-
-        ], [
-            'payment_option.required' => "Mời chọn đơn vị thanh toán",
-        ]);
-        $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->is_payment != 0) {
-            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-        }
-        $order->payment_method_option = $request->payment_option;
-        $order->order_stores()->update(['payment_method_option'=>$request->payment_option]);
-
-        $order->save();
-        $this->processOrder($order);
-        return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-    }
-    public function getPaymentSend(Request $request)
-    {
-
-        $order = Order::whereOrderCode($request->order_code)->first();
-
-        if ($order->is_payment != 0) {
-            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-        }
-        $payment_method = PaymentMethod::whereId($request->payment_method)->first();
-        return view('checkout.payment.payment_send', compact('payment_method', 'order'));
-    }
-
-    public function postPaymentSend(Request $request)
-    {
-        $validation = $request->validate([
-            'payment_option' => 'required',
-
-        ], [
-            'payment_option.required' => "Mời chọn đơn vị thanh toán",
-        ]);
-        $order = Order::whereOrderCode($request->order_code)->first();
-        if ($order->is_payment != 0) {
-            return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-        }
-        $order->payment_method_option = $request->payment_option;
-        $order->order_stores()->update(['payment_method_option'=>$request->payment_option]);
-        $order->save();
-        $this->processOrder($order);
-        return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
-    }
-
-    public function getInfoPaymentOption(Request $request)
-    {
-
-        $payment_method = PaymentMethod::whereId($request->method_id)->first();
-        $payment_option = PaymentMethodOption::whereId($request->option_id)->first();
-        if ($payment_option->qr_image != null) {
-            $payment_option->qr_image = asset($payment_option->qr_image);
-        }
-        return $payment_option;
-    }
+  
     public function getPaymentC(Request $request)
     {
-        $user = Auth::user();
+        $user = Auth::guard('user')->user();
         $point_c = $user->point_c()->first();
         $order = Order::whereOrderCode($request->order_code)->first();
 
@@ -911,7 +760,7 @@ class CheckoutController extends Controller
     public function postPaymentC(Request $request)
     {
 
-        $user = Auth::user();
+        $user = Auth::guard('user')->user();
         $order = Order::whereOrderCode($request->order_code)->first();
         if ($order->is_payment != 0) {
             return redirect()->route('checkout.orderSuccess', ['order_code' => $order->order_code]);
@@ -946,18 +795,7 @@ class CheckoutController extends Controller
         return $policy;
     }
 
-    public function orderSuccess(Request $request)
-    {
-        $order = Order::whereOrderCode($request->order_code)->first();
-        if (!$request->order_code || $order == null || $order->is_payment == 0) {
-            return redirect('/');
-        }
-        // $order_info = $order->order_info()->first();
-        // $order_address = $order->order_address()->first();
-        // $order_stores = $order->order_stores()->get();
-      
-        return view('checkout.thanhcong', compact('order'));
-    }
+    
     public function showFail()
     {
         return view('checkout.order_fail');
@@ -1355,11 +1193,11 @@ class CheckoutController extends Controller
         // }
         return array(round($ship), round($ship_fast));
     }
-    public function getWeight($product, $quantity)
-    {
-        $weight = ceil(max($product->weight / 1000, (($product->height * $product->width * $product->length) / 3000)) * 1000);
-        return $weight * $quantity;
-    }
+    // public function getWeight($product, $quantity)
+    // {
+    //     $weight = ceil(max($product->weight / 1000, (($product->height * $product->width * $product->length) / 3000)) * 1000);
+    //     return $weight * $quantity;
+    // }
     public function getDistance($address1, $address2)
     {
         // $address1 ="730/32/5 Lac Long Quan So 9 Tan Binh Ho Chi Minh";

@@ -45,4 +45,5 @@ return [
         'payme' => 1,
         'ninepay' => 0
     ],
+    'default-image'=> 'public/storage/images/default-image.png'
 ];

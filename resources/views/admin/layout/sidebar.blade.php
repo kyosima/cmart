@@ -83,6 +83,21 @@
                 </span>
             </li>
         @endif
+        <li class="dropdown">
+            <a href="#" class="dropbtn">
+                <i class="fa fa-bell" aria-hidden="true"></i>
+                <span class="links_name w-100 align-items-center d-flex">Dịch vụ vận chuyển<i class="fa fa-speaker float-end"
+                        aria-hidden="true"></i></span>
+            </a>
+            <span class="dropdown-content">
+                <a href="{{ route('transpot.cmart.index') }}">C-Mart tự vận chuyển</a>
+                <a href="{{ route('transpot.province.index') }}">Dịch vụ vận chuyển nội tỉnh</a>
+                <a href="{{ route('transpot.cross_province.index') }}">Dịch vụ vận chuyển liên tỉnh</a>
+
+            </span>
+
+
+        </li>
         @if (auth()->guard('admin')->user()->can('Truy cập mục Ưu đãi') ||
     auth()->guard('admin')->user()->can(config('custom-config.name-all-permission')))
             <li class="dropdown">

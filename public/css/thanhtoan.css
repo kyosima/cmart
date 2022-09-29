@@ -24,6 +24,19 @@ table {
     width: 100% !important;
 }
 
+ul {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.store-title {
+    padding: 10px;
+    background: #ddd;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+}
+
 .result-order h3 {
     font-size: 16px !important;
     font-weight: 600;
@@ -129,7 +142,6 @@ table {
 }
 
 .store-block {
-    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-bottom: 10px;

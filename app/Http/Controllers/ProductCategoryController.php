@@ -2,22 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Brand;
 use App\Models\Product;
-use App\Models\ProductCategory;
-use Artesaos\SEOTools\Facades\OpenGraph;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
+use App\Models\ProductCategory;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
+use Illuminate\Support\Facades\App;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use App\Http\Traits\getCategoryWithProduct;
+use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
+
 class ProductCategoryController extends Controller
 {
     //
-    public function index($slug, Request $request)
+    use getCategoryWithProduct;
+    public function index($slug, Request $request){
+        $category = $this->getProductofCategory($slug);
+        $products =  new Collection();
+
+        $products = $products->merge($category->products);
+        $products = $this->getAllProduct($category, $products)->paginate(3);
+        return view('proCat.show', compact('category','products'));
+    }
+
+    public function getAllProduct($parent,$products){
+        foreach ($parent->childrenRecursive as $category){
+            $products = $products->merge($category->products);
+            if (isset($category->childrenRecursive)){
+                if ($category->childrenRecursive->count() > 0){
+                    return $this->getAllProduct($category,$products);
+                }
+            }
+        }
+        return $products;
+    }
+
+    public function index2($slug, Request $request)
     {
         // KIỂM TRA XEM GIÁ TRỊ CỦA ORDER CÓ ĐÚNG GIÁ TRỊ CHO PHÉP
         if ($request->order != '' || $request->order != null) {
@@ -243,7 +268,7 @@ class ProductCategoryController extends Controller
             ->where('id', '!=', 1)
             ->with(['childrenCategories.products', 'products'])
             ->get();
-        $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->whereStatus(1)->get();
+        $products = Product::where('title', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->whereStatus(1)->get();
 
         return view('proCat.search', compact('categories', 'products', 'keyword'));
     }
@@ -251,7 +276,7 @@ class ProductCategoryController extends Controller
     public function getSearchSuggest(Request $request)
     {
         $keyword =  $request->keyword;
-        $products = Product::where('name', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->whereStatus(1)->get();
+        $products = Product::where('title', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->whereStatus(1)->get();
         return view('proCat.search_suggest', ['products' => $products])->render();
     }
 

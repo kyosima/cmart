@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use Artesaos\SEOTools\Facades\OpenGraph;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Illuminate\Http\Request;
-use App\Models\ProductCategory;
 use App\Models\Brand;
-use App\Models\ProductRating;
-use Illuminate\Support\Facades\URL;
 use App\Models\Store;
+use App\Models\Product;
+use Illuminate\Http\Request;
+use App\Models\ProductRating;
+use App\Http\Traits\getProduct;
+use App\Models\ProductCategory;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
+use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Support\Facades\Session;
+use Artesaos\SEOTools\Facades\OpenGraph;
 
 
 class ProductController extends Controller
 {
+    use getProduct;
     /**
      * Display a listing of the resource.
      *
@@ -63,13 +65,7 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
-        // if (Auth::check()) {
-            //
-            $user = Auth::user();
-            $product = Product::whereSlug($slug)->firstorfail();
-            if( $product->status == 0){
-                return redirect()->route('home');
-            }
+            $product = $this->getProductWithPrice($slug); 
             SEOMeta::setTitle($product->name);
             SEOMeta::addMeta('robots', 'noindex, nofollow');
             SEOMeta::addMeta('name', $product->name, 'itemprop');
@@ -77,7 +73,6 @@ class ProductController extends Controller
             SEOMeta::addKeyword(explode(",", $product->meta_keyword));
 
             OpenGraph::setTitle($product->name)
-                // ->setDescription('Some Article')
                 ->setSiteName('cmart.vn')
                 ->setType('product')
                 ->setUrl(URL::current())
@@ -95,28 +90,10 @@ class ProductController extends Controller
                 ->toArray();
             $categoryIds = array_diff($categoryIds, [0]);
             $new_products = Product::latest()->paginate(5);
-            $related_product = $product->productUpsell($product->id);
+            $relateds_product = $product->product_relateds()->with('product')->get();
             $lastview_product = Product::latest()->paginate(10);
-            $ratings = $product->ratings()->latest()->get();
-            $rating_sum = $product->ratings()->sum('value');
-            $rating_count = $product->ratings()->count();
-
-            $rating_average = $rating_sum > 0 ?  number_format($rating_sum / $rating_count, 1) : 0;
-            $rating_list = [
-                $product->ratings()->whereValue(5)->count(),
-                $product->ratings()->whereValue(4)->count(),
-                $product->ratings()->whereValue(3)->count(),
-                $product->ratings()->whereValue(2)->count(),
-                $product->ratings()->whereValue(1)->count()
-            ];
-            $stores = $product->stores()->get();
-            return view('product.product_detail', ['user' => $user, 'stores' => $stores, 'related_product' => $related_product, 'ratings' => $ratings, 'rating_list' => $rating_list, 'rating_count' => $rating_count, 'rating_average' => $rating_average, 'product' => $product, 'categoryIds' => $categoryIds, 'new_products' => $new_products, 'lastview_product' => $lastview_product]);
-        // } else {
-            
-        //     Session::put('url_back', URL::current());
-
-        //     return redirect()->route('account');
-        // }
+            $stores = $product->store_product()->with('store')->get();
+            return view('product.product_detail', [ 'stores'=>$stores, 'relateds_product' => $relateds_product,  'product' => $product, 'categoryIds' => $categoryIds, 'new_products' => $new_products, 'lastview_product' => $lastview_product]);
     }
 
     /**

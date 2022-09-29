@@ -100,7 +100,7 @@
                         </div>
                         <div class="col">
                             <div class="row align-items-center">
-                                <div class="col-md-7">
+                                <div class="col-md-12">
                                     <h4 class="mb-1">Mã Khách Hàng:
                                         <strong>{{ $profileUser->code_customer }}</strong>
                                     </h4>
@@ -147,51 +147,55 @@
                                     <button class="w-100 btn btn-warning">Chưa xác minh doanh nghiệp</button>
                                 @endif
                             @else
-                                @if ($profileUser->change_ekyc == 1)
-                                    <a href="{{ route('vnpt.index') }}" class="w-100 btn btn-success">Thực hiện thay
-                                        đổi thông tin bằng EKYC</a>
-                                @else
-                                    @if ($check == 0)
-                                        <button class="w-100 btn btn-info" data-toggle="modal"
-                                            data-target="#modalrequestekyc">Gửi yêu cầu thay đổi thông tin</button>
+                                @if($profileUser->is_ekyc == 1)
+                                    @if ($profileUser->change_ekyc == 1)
+                                        <a href="{{ route('vnpt.index') }}" class="w-100 btn btn-success">Thực hiện thay
+                                            đổi thông tin bằng EKYC</a>
+                                    @else
+                                        @if ($check == 0)
+                                            <button class="w-100 btn btn-info" data-toggle="modal"
+                                                data-target="#modalrequestekyc">Gửi yêu cầu thay đổi thông tin Hồ Sơ Khách Hàng</button>
 
-                                        <div class="modal fade" id="modalrequestekyc" tabindex="-1" role="dialog"
-                                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <form action="{{ route('vnpt.changeEKYC') }}" method="post">
-                                                        @csrf
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle">Gửu yêu
-                                                                cầu
-                                                                thay đổi thông tin tài khoản</h5>
-                                                            <button type="button" class="close"
-                                                                data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="form-group">
-                                                                <label for="reason">Nhập lý do vì sao bạn muốn thay đổi
-                                                                    thông
-                                                                    tin tài khoản</label>
-                                                                <textarea class="w-100" name="content" id="reason" cols="30" rows="10"></textarea>
+                                            <div class="modal fade" id="modalrequestekyc" tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <form action="{{ route('vnpt.changeEKYC') }}" method="post">
+                                                            @csrf
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLongTitle">Gửi yêu cầu thay đổi thông tin Hồ Sơ Khách Hàng</h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
                                                             </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Hủy</button>
-                                                            <button type="submit" class="btn btn-primary">Gửi yêu
-                                                                cầu</button>
-                                                        </div>
-                                                    </form>
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label for="reason">Nhập nội dung bạn muốn thay đổi, kèm nguyên nhân thay đổi</label>
+                                                                    <textarea class="w-100" name="content" id="reason" cols="30" rows="10"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Hủy</button>
+                                                                <button type="submit" class="btn btn-primary">Gửi yêu
+                                                                    cầu</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @else
-                                        <button class="btn btn-warning w-100" type="button">Đã gửi yêu cầu thay đổi thông
-                                            tin</button>
+                                        @else
+                                            <button class="btn btn-warning w-100" type="button">Đã yêu cầu thay đổi thông tin Hồ Sơ Khách Hàng</button>
+                                        @endif
                                     @endif
+                                    @if($profileUser->is_econtract == 0)
+                                            <p>Tài khoản Khách hàng chưa ký hợp đồng giao dịch <a href="{{route('econtract.index')}}" class="text-info">Ký tại đây</a></p>
+                                    @else
+                                            
+                                    @endif
+                                @else
+                                           <p>Tài khoản Khách hàng chưa được xác minh <a href="{{route('vnpt.index')}}" class="text-info">Xác minh tại đây</a></p>
                                 @endif
                             @endif
                         </div>
@@ -203,7 +207,7 @@
                         <div class="form-row">
                             @if ($profileUser->is_company == 1)
                                 <div class="form-group col-md-12">
-                                    <label for="firstname">Tên công ty</label>
+                                    <label for="firstname">Tên tổ chức</label>
                                     <input type="text" name="hoten" class="form-control"
                                         value="{{ $profileUser->hoten }}" readonly>
                                 </div>
@@ -238,12 +242,12 @@
                             </div>
                         @else
                             <div class="form-group">
-                                <label for="">Loại giấy tờ tùy thân</label>
+                                <label for="">Loại giấy tờ</label>
                                 <input type="text" class="form-control" name="" value="{{ $profileUser->type_cmnd }}"
                                     readonly>
                             </div>
                             <div class="form-group">
-                                <label for="">ID giấy tờ tùy thân</label>
+                                <label for="">Mã số giấy tờ</label>
                                 <input type="text" class="form-control" name="cmnd" value="{{ $profileUser->cmnd }}"
                                     placeholder="Mời nhập số CMND/CCCD/Hộ chiếu" readonly>
                             </div>
@@ -285,7 +289,7 @@
                             </div>
                         @else
                             <div class="form-group">
-                                <label for="inputAddress5">Ảnh CMND</label>
+                                <label for="inputAddress5">Ảnh giấy tờ mặt trước</label>
                                 {{-- @if ($profileUser->cmnd_image != null) --}}
                                 <img id="imgFileUpload" src="{{ $profileUser->cmnd_image }}" width="100%"
                                     style="cursor: pointer" />
@@ -301,7 +305,7 @@
                             @endif --}}
                             </div>
                             <div class="form-group">
-                                <label for="inputAddress5">Ảnh CMND mặt sau</label>
+                                <label for="inputAddress5">Ảnh giấy tờ mặt sau</label>
                                 {{-- @if ($profileUser->cmnd_image2 != null) --}}
                                 <img id="imgFileUpload2" src="{{ $profileUser->cmnd_image2 }}" width="100%"
                                     style="cursor: pointer" />

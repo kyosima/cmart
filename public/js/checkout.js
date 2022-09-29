@@ -35,23 +35,73 @@ function showPolicy(e) {
         }
     });
 }
-$('select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function() {
+$('select[name="province_id"], select[name="district_id"], select[name="ward_id"]').on('change', function() {
     $('input[name="address"]').val('');
 });
-$('input[name="address"], select[name="sel_ward"], select[name="sel_district"], select[name="sel_province"]').on('change', function() {
+$('input[name="address"], select[name="province_id"], select[name="district_id"], select[name="ward_id"]').on('change', function() {
     getship();
+});
+$(document).on('change', '.list-transpot-type-price input', function() {
+    store_id = $(this).data('store_id');
+    type = $(this).val();
+    total_product = $('#store' + store_id + ' .total-cost').data('total_product');
+    $.ajax({
+        type: 'GET',
+        url: $("#eUrl").data("url_change_type_ship"),
+        data: {
+            store_id: store_id,
+            type: type,
+            total_product: total_product,
+        },
+        beforeSend: function() {
+            $('.loading').show();
+        },
+        error: function(data) {
+            console.log(data);
+        },
+        success: function(response) {
+            $('.loading').hide();
+            console.log(response);
+            $('#store' + store_id + ' .total-cost').text(response);
+        }
+    });
 });
 
 
 function getship() {
-    address = $('input[name="address"]');
-    ward = $('select[name="sel_ward"]');
-    district = $('select[name="sel_district"]');
-    province = $('select[name="sel_province"]');
-    if ((address.val() != '') && (ward.val() != '') && (district.val() != '') && (province.val() != '')) {
-        cal_ship(province, district, ward, address);
+    address = $('input[name="address"]').val();
+    ward = $('select[name="ward_id"]').val();
+    district = $('select[name="district_id"]').val();
+    province = $('select[name="province_id"]').val();
+    if ((address != '') && (ward != '') && (district != '') && (province != '')) {
+        getTranspot(province, district, ward, address);
     }
 }
+
+function getTranspot(province, district, ward, address) {
+    $.ajax({
+        type: 'GET',
+        url: $("#eUrl").data("url_get_transpot"),
+        data: {
+            province: province,
+            district: district,
+            ward: ward,
+            address: address
+        },
+        beforeSend: function() {
+            $('.loading').show();
+        },
+        error: function(data) {
+            console.log(data);
+        },
+        success: function(response) {
+            console.log(response);
+            $('.loading').hide();
+            $('.list-stores-body').empty().append(response);
+        }
+    });
+}
+
 
 function cal_ship(province, district, ward, address) {
     shipcmart = [];

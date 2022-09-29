@@ -1,27 +1,45 @@
-var ekycsdk = function(e) { var t = {};
+var ekycsdk = function(e) {
+    var t = {};
 
-    function i(n) { if (t[n]) return t[n].exports; var o = t[n] = { i: n, l: !1, exports: {} }; return e[n].call(o.exports, o, o.exports, i), o.l = !0, o.exports } return i.m = e, i.c = t, i.d = function(e, t, n) { i.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: n }) }, i.r = function(e) { "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 }) }, i.t = function(e, t) { if (1 & t && (e = i(e)), 8 & t) return e; if (4 & t && "object" == typeof e && e && e.__esModule) return e; var n = Object.create(null); if (i.r(n), Object.defineProperty(n, "default", { enumerable: !0, value: e }), 2 & t && "string" != typeof e)
-            for (var o in e) i.d(n, o, function(t) { return e[t] }.bind(null, o)); return n }, i.n = function(e) { var t = e && e.__esModule ? function() { return e.default } : function() { return e }; return i.d(t, "a", t), t }, i.o = function(e, t) { return Object.prototype.hasOwnProperty.call(e, t) }, i.p = "", i(i.s = 0) }([function(e, t, i) { e.exports = i(5) }, function(e, t, i) { var n = { "./en.json": 2, "./locales.json": 3, "./vi.json": 4 };
+    function i(n) { if (t[n]) return t[n].exports; var o = t[n] = { i: n, l: !1, exports: {} }; return e[n].call(o.exports, o, o.exports, i), o.l = !0, o.exports }
+    return i.m = e, i.c = t, i.d = function(e, t, n) { i.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: n }) }, i.r = function(e) { "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 }) }, i.t = function(e, t) {
+        if (1 & t && (e = i(e)), 8 & t) return e;
+        if (4 & t && "object" == typeof e && e && e.__esModule) return e;
+        var n = Object.create(null);
+        if (i.r(n), Object.defineProperty(n, "default", { enumerable: !0, value: e }), 2 & t && "string" != typeof e)
+            for (var o in e) i.d(n, o, function(t) { return e[t] }.bind(null, o));
+        return n
+    }, i.n = function(e) { var t = e && e.__esModule ? function() { return e.default } : function() { return e }; return i.d(t, "a", t), t }, i.o = function(e, t) { return Object.prototype.hasOwnProperty.call(e, t) }, i.p = "", i(i.s = 0)
+}([function(e, t, i) { e.exports = i(5) }, function(e, t, i) {
+    var n = { "./en.json": 2, "./locales.json": 3, "./vi.json": 4 };
 
     function o(e) { var t = a(e); return i(t) }
 
     function a(e) { if (!i.o(n, e)) { var t = new Error("Cannot find module '" + e + "'"); throw t.code = "MODULE_NOT_FOUND", t } return n[e] }
-    o.keys = function() { return Object.keys(n) }, o.resolve = a, e.exports = o, o.id = 1 }, function(e) { e.exports = JSON.parse('{"home":{"title":"SELECT IDENTIFICATION DOCUMENT","cmt":"ID card, Citizen Identity card","passpost":"Passport","cmt_army":"Military ID card","license":"Driver\'s license","cmt_chip":"Chip identification card","start":"START"},"face":{"portrait":"Portrait","please":"Please","des_1":"Move the face to fit the restricted area","take_photo":"Take photo","take_again":"Take again","next":"Next","guide":"Guideline","guide_1":"Guideline for verifying document owner\'s face","guide_2":"Move the face to fit the restricted area","guide_3":"Keep your face steady when taking a photo","guide_4":"Avoid other people appearing in the camera while taking photos","touch":"Touch to take a photo","guide_5":"Keep document within the rectangular frame,","guide_6":"capture enough lighting and clarity","guide_7":"Move the face to fit","guide_8":"the restricted area","guide_9":"Please remove the glasses"},"front":{"qr":"QR code","front":"Front","back":"Back","result":"Result","guide_1":"Guideline for capturing your documents","guide_2":"Bring your document to the camera so that its four corners match with the restricted area","guide_3":"Capture information on document clearly and completely ","guide_4":"Place document within the rectangular frame, capture enough lighting and clarity","guide_5":"Select Retake if the image is blurry, not in focus","guide_6":"Select Next to go to the next step","guide_7":"Select “Next” to go to the next step","upload_image":"Upload image","qr_des":"Please put the QR code in the center of the camera","previous":"Back","accept":"Accept"},"notice":{"notice_1":"Don\'t shoot too blurry","notice_2":"Don\'t take the shot off the angle","notice_3":"Do not take a blowout picture"},"choose_version_qr":{"choose_version":"CHOOSE VERSION","version_for_you":"Choose the version you want to experience","standard_version":"Standard version","use_qrcode":"The version uses QR Code to extract CCCD information","is_qrcode_scan":"Scan the QR Code"},"document_modal":{"tutorial_title":"Guideline for capturing your documents","tutorial_notice1":"Bring your document to the camera so that its four corners match with the restricted area","tutorial_notice2":"Capture information on document clearly and completely ","do_not":"Don\'t take","tutorial1":"too blurry","tutorial2":"take the shot off the angle","tutorial3":"glare"},"face_modal":{"tutorial_title":"Guideline for verifying document owner\'s face","tutorial_notice1":"Move the face to fit the restricted area","tutorial_notice2":"Keep your face steady when taking a photo","tutorial_notice3":" Avoid other people appearing in the camera while taking photos","do_not":"Don\'t take","tutorial1":"too blurry","tutorial2":"wear glasses","tutorial3":"glare"},"oval_face":{"tutorial_title":"Tutorial","tutorial_title2":"Guideline for capturing your documents","tutorial_title3":"Watch the video for an easier experience","tutorial_notice1":"Let the face fit small frame and large frame","tutorial_notice2":"Do not wear glasses, masks, do not take photos against the light"}}') }, function(e) { e.exports = JSON.parse('{"vi":{"title":"Tiêu đề"}}') }, function(e) { e.exports = JSON.parse('{"home":{"title":"CHỌN LOẠI GIẤY TỜ","cmt":"Chứng minh thư, Thẻ căn cước","passpost":"Hộ chiếu","cmt_army":"Chứng minh thư quân đội","license":"Bằng lái xe","cmt_chip":"Thẻ căn cước gắn chíp","start":"BẮT ĐẦU"},"face":{"portrait":"Chân dung","please":"Xin vui lòng","des_1":"Di chuyển khuôn mặt sao cho vừa với vùng giới hạn","take_photo":"Chụp ảnh","take_again":"Chụp lại","upload_photo":"Tải ảnh","next":"Tiếp theo","guide":"Hướng dẫn","guide_1":"Hướng dẫn Chụp ảnh Chân dung","guide_2":"Di chuyển khuôn mặt sao cho vừa với vùng giới hạn","guide_3":"Giữ nguyên khuôn mặt khi chụp ảnh","guide_4":"Hạn chế có người khác trong camera khi chụp","touch":"Chạm để chụp ảnh","guide_5":"Đặt giấy tờ nằm vừa khung hình chữ nhật,","guide_6":"chụp đủ ánh sáng và rõ nét","guide_7":"Di chuyển khuôn mặt sao cho vừa","guide_8":"với vùng giới hạn","guide_9":"Vui lòng tháo kính để xác thực chính xác hơn"},"front":{"qr":"QR code","front":"Mặt trước","back":"Mặt sau","result":"Kết quả","guide_1":"Hướng dẫn Chụp ảnh giấy tờ cầm tay","guide_2":"Đưa giấy tờ vào gần camera sao cho 4 góc của giấy tờ trùng với vùng giới hạn","guide_3":"Chụp rõ nét và đầy đủ thông tin trên giấy tờ","guide_4":"Đặt giấy tờ nằm vừa khung hình chữ nhật, chụp đủ ánh sáng và rõ nét","guide_5":"Chọn Chụp lại nếu ảnh mờ, không rõ nét","guide_6":"Chọn Tiếp theo để sang bước tiếp theo","guide_7":"Chọn “Tiếp theo” để sang bước tiếp theo","upload_image":"Tải ảnh lên","qr_des":"Xin vui lòng đưa mã QR code vào trung tâm của camera","previous":"Quay lại","accept":"Đồng ý"},"notice":{"notice_1":"Không chụp quá mờ","notice_2":"Không chụp mất góc","notice_3":"Không chụp lóa sáng"},"choose_version_qr":{"choose_version":"CHỌN PHIÊN BẢN","version_for_you":"Chọn phiên bản bạn muốn trải nghiệm","standard_version":"Phiên bản tiêu chuẩn","use_qrcode":"Phiên bản sử dụng QR Code để bóc tách thông tin CCCD","is_qrcode_scan":"Quét QR Code"},"document_modal":{"tutorial_title":"Hướng dẫn chụp ảnh giấy tờ cầm tay","tutorial_notice1":"Đưa giấy tờ vào gần camera sao cho 4 góc của giấy tờ trùng với vùng giới hạn","tutorial_notice2":"Chụp rõ nét và đầy đủ thông tin trên giấy tờ","do_not":"Không chụp","tutorial1":"quá mờ","tutorial2":"mất góc","tutorial3":"lóa sáng"},"face_modal":{"tutorial_title":"Hướng dẫn chụp ảnh chân dung","tutorial_notice1":"Di chuyển khuôn mặt sao cho vừa với vùng giới hạn","tutorial_notice2":"Giữ nguyên khuôn mặt khi chụp ảnh","tutorial_notice3":" Hạn chế có người khác trong camera khi chụp","do_not":"Không chụp","tutorial1":"quá mờ","tutorial2":"đeo kính","tutorial3":"lóa sáng"},"oval_face":{"tutorial_title":"Hướng dẫn","tutorial_title2":"Xác thực khuôn mặt chủ giấy tờ","tutorial_title3":"Xem video để trải nghiệm dễ dàng hơn","tutorial_notice1":"Để khuôn mặt vừa khung hình nhỏ và khung hình lớn ","tutorial_notice2":"Không đeo kính, khẩu trang, không chụp ngược sáng"}}') }, function(e, t, i) { "use strict";
+    o.keys = function() { return Object.keys(n) }, o.resolve = a, e.exports = o, o.id = 1
+}, function(e) { e.exports = JSON.parse('{"home":{"title":"SELECT IDENTIFICATION DOCUMENT","cmt":"ID card, Citizen Identity card","passpost":"Passport","cmt_army":"Military ID card","license":"Driver\'s license","cmt_chip":"Chip identification card","start":"START"},"face":{"portrait":"Portrait","please":"Please","des_1":"Move the face to fit the restricted area","take_photo":"Take photo","take_again":"Take again","next":"Next","guide":"Guideline","guide_1":"Guideline for verifying document owner\'s face","guide_2":"Move the face to fit the restricted area","guide_3":"Keep your face steady when taking a photo","guide_4":"Avoid other people appearing in the camera while taking photos","touch":"Touch to take a photo","guide_5":"Keep document within the rectangular frame,","guide_6":"capture enough lighting and clarity","guide_7":"Move the face to fit","guide_8":"the restricted area","guide_9":"Please remove the glasses"},"front":{"qr":"QR code","front":"Front","back":"Back","result":"Result","guide_1":"Guideline for capturing your documents","guide_2":"Bring your document to the camera so that its four corners match with the restricted area","guide_3":"Capture information on document clearly and completely ","guide_4":"Place document within the rectangular frame, capture enough lighting and clarity","guide_5":"Select Retake if the image is blurry, not in focus","guide_6":"Select Next to go to the next step","guide_7":"Select “Next” to go to the next step","upload_image":"Upload image","qr_des":"Please put the QR code in the center of the camera","previous":"Back","accept":"Accept"},"notice":{"notice_1":"Don\'t shoot too blurry","notice_2":"Don\'t take the shot off the angle","notice_3":"Do not take a blowout picture"},"choose_version_qr":{"choose_version":"CHOOSE VERSION","version_for_you":"Choose the version you want to experience","standard_version":"Standard version","use_qrcode":"The version uses QR Code to extract CCCD information","is_qrcode_scan":"Scan the QR Code"},"document_modal":{"tutorial_title":"Guideline for capturing your documents","tutorial_notice1":"Bring your document to the camera so that its four corners match with the restricted area","tutorial_notice2":"Capture information on document clearly and completely ","do_not":"Don\'t take","tutorial1":"too blurry","tutorial2":"take the shot off the angle","tutorial3":"glare"},"face_modal":{"tutorial_title":"Guideline for verifying document owner\'s face","tutorial_notice1":"Move the face to fit the restricted area","tutorial_notice2":"Keep your face steady when taking a photo","tutorial_notice3":" Avoid other people appearing in the camera while taking photos","do_not":"Don\'t take","tutorial1":"too blurry","tutorial2":"wear glasses","tutorial3":"glare"},"oval_face":{"tutorial_title":"Tutorial","tutorial_title2":"Guideline for capturing your documents","tutorial_title3":"Watch the video for an easier experience","tutorial_notice1":"Let the face fit small frame and large frame","tutorial_notice2":"Do not wear glasses, masks, do not take photos against the light"}}') }, function(e) { e.exports = JSON.parse('{"vi":{"title":"Tiêu đề"}}') }, function(e) { e.exports = JSON.parse('{"home":{"title":"CHỌN LOẠI GIẤY TỜ","cmt":"Chứng minh thư, Thẻ căn cước","passpost":"Hộ chiếu","cmt_army":"Chứng minh thư quân đội","license":"Bằng lái xe","cmt_chip":"Thẻ căn cước gắn chíp","start":"BẮT ĐẦU"},"face":{"portrait":"Chân dung","please":"Xin vui lòng","des_1":"Di chuyển khuôn mặt sao cho vừa với vùng giới hạn","take_photo":"Chụp ảnh","take_again":"Chụp lại","upload_photo":"Tải ảnh","next":"Tiếp theo","guide":"Hướng dẫn","guide_1":"Hướng dẫn Chụp ảnh Chân dung","guide_2":"Di chuyển khuôn mặt sao cho vừa với vùng giới hạn","guide_3":"Giữ nguyên khuôn mặt khi chụp ảnh","guide_4":"Hạn chế có người khác trong camera khi chụp","touch":"Chạm để chụp ảnh","guide_5":"Đặt giấy tờ nằm vừa khung hình chữ nhật,","guide_6":"chụp đủ ánh sáng và rõ nét","guide_7":"Di chuyển khuôn mặt sao cho vừa","guide_8":"với vùng giới hạn","guide_9":"Vui lòng tháo kính để xác thực chính xác hơn"},"front":{"qr":"QR code","front":"Mặt trước","back":"Mặt sau","result":"Kết quả","guide_1":"Hướng dẫn Chụp ảnh giấy tờ cầm tay","guide_2":"Đưa giấy tờ vào gần camera sao cho 4 góc của giấy tờ trùng với vùng giới hạn","guide_3":"Chụp rõ nét và đầy đủ thông tin trên giấy tờ","guide_4":"Đặt giấy tờ nằm vừa khung hình chữ nhật, chụp đủ ánh sáng và rõ nét","guide_5":"Chọn Chụp lại nếu ảnh mờ, không rõ nét","guide_6":"Chọn Tiếp theo để sang bước tiếp theo","guide_7":"Chọn “Tiếp theo” để sang bước tiếp theo","upload_image":"Tải ảnh lên","qr_des":"Xin vui lòng đưa mã QR code vào trung tâm của camera","previous":"Quay lại","accept":"Đồng ý"},"notice":{"notice_1":"Không chụp quá mờ","notice_2":"Không chụp mất góc","notice_3":"Không chụp lóa sáng"},"choose_version_qr":{"choose_version":"CHỌN PHIÊN BẢN","version_for_you":"Chọn phiên bản bạn muốn trải nghiệm","standard_version":"Phiên bản tiêu chuẩn","use_qrcode":"Phiên bản sử dụng QR Code để bóc tách thông tin CCCD","is_qrcode_scan":"Quét QR Code"},"document_modal":{"tutorial_title":"Hướng dẫn chụp ảnh giấy tờ cầm tay","tutorial_notice1":"Đưa giấy tờ vào gần camera sao cho 4 góc của giấy tờ trùng với vùng giới hạn","tutorial_notice2":"Chụp rõ nét và đầy đủ thông tin trên giấy tờ","do_not":"Không chụp","tutorial1":"quá mờ","tutorial2":"mất góc","tutorial3":"lóa sáng"},"face_modal":{"tutorial_title":"Hướng dẫn chụp ảnh chân dung","tutorial_notice1":"Di chuyển khuôn mặt sao cho vừa với vùng giới hạn","tutorial_notice2":"Giữ nguyên khuôn mặt khi chụp ảnh","tutorial_notice3":" Hạn chế có người khác trong camera khi chụp","do_not":"Không chụp","tutorial1":"quá mờ","tutorial2":"đeo kính","tutorial3":"lóa sáng"},"oval_face":{"tutorial_title":"Hướng dẫn","tutorial_title2":"Xác thực khuôn mặt chủ giấy tờ","tutorial_title3":"Xem video để trải nghiệm dễ dàng hơn","tutorial_notice1":"Để khuôn mặt vừa khung hình nhỏ và khung hình lớn ","tutorial_notice2":"Không đeo kính, khẩu trang, không chụp ngược sáng"}}') }, function(e, t, i) {
+    "use strict";
 
     function n(e) { return "object" == typeof e ? "{}" === JSON.stringify(e) || "[]" === JSON.stringify(e) || !e : "string" == typeof e ? !e.trim() : void 0 === e }
 
-    function o(e, t = {}, i, o, a, c = {}) { var l = new XMLHttpRequest,
+    function o(e, t = {}, i, o, a, c = {}) {
+        var l = new XMLHttpRequest,
             s = c.AUTHORIZION,
             d = c.TOKEN_ID,
             r = c.TOKEN_KEY;
-        l.open("POST", e, !0), !n(t) && l.setRequestHeader(t.key, t.value), l.setRequestHeader("Authorization", "Bearer " + s), l.setRequestHeader("Token-id", d), l.setRequestHeader("Token-key", r), l.setRequestHeader("mac-address", "WEB-001"), l.onreadystatechange = function() { 4 == l.readyState && (200 == l.status ? o(l.responseText) : a(l.responseText)) }, l.send(i) }
+        l.open("POST", e, !0), !n(t) && l.setRequestHeader(t.key, t.value), l.setRequestHeader("Authorization", "Bearer " + s), l.setRequestHeader("Token-id", d), l.setRequestHeader("Token-key", r), l.setRequestHeader("mac-address", "WEB-001"), l.onreadystatechange = function() { 4 == l.readyState && (200 == l.status ? o(l.responseText) : a(l.responseText)) }, l.send(i)
+    }
 
-    function a(e) { var t = new Date(e),
+    function a(e) {
+        var t = new Date(e),
             i = "" + (t.getMonth() + 1),
             n = "" + t.getDate(),
-            o = t.getFullYear(); return i.length < 2 && (i = "0" + i), n.length < 2 && (n = "0" + n), [o, i, n].join("-") }
+            o = t.getFullYear();
+        return i.length < 2 && (i = "0" + i), n.length < 2 && (n = "0" + n), [o, i, n].join("-")
+    }
 
-    function c(e, t, i) { var n = {},
+    function c(e, t, i) {
+        var n = {},
             o = {},
             c = {};
         n[piexif.ImageIFD.Make] = "wb", n[piexif.ImageIFD.XResolution] = [t, 1], n[piexif.ImageIFD.YResolution] = [i, 1], n[piexif.ImageIFD.Software] = "vnpt_ekyc", o[piexif.ExifIFD.DateTimeOriginal] = a(new Date), o[piexif.ExifIFD.LensMake] = "LensMake", o[piexif.ExifIFD.Sharpness] = 777, o[piexif.ExifIFD.LensSpecification] = [
@@ -29,84 +47,155 @@ var ekycsdk = function(e) { var t = {};
             [1, 1],
             [1, 1],
             [1, 1]
-        ], c[piexif.GPSIFD.GPSVersionID] = [7, 7, 7, 7], c[piexif.GPSIFD.GPSDateStamp] = "1999:99:99 99:99:99"; var l = { "0th": n, Exif: o, GPS: c },
-            s = piexif.dump(l); return piexif.insert(s, e) }
+        ], c[piexif.GPSIFD.GPSVersionID] = [7, 7, 7, 7], c[piexif.GPSIFD.GPSDateStamp] = "1999:99:99 99:99:99";
+        var l = { "0th": n, Exif: o, GPS: c },
+            s = piexif.dump(l);
+        return piexif.insert(s, e)
+    }
 
-    function l(e, t) { var i = btoa(JSON.stringify(e)),
+    function l(e, t) {
+        var i = btoa(JSON.stringify(e)),
             n = CryptoJS.AES.encrypt(i, t).toString(),
             o = CryptoJS.AES.decrypt(n, t).toString(CryptoJS.enc.Utf8);
-        JSON.parse(atob(o)); return n }
+        JSON.parse(atob(o));
+        return n
+    }
 
     function s(e) { return decodeURIComponent(atob(e).split("").map((function(e) { return "%" + ("00" + e.charCodeAt(0).toString(16)).slice(-2) })).join("")) }
 
     function d(e) { for (var t = atob(e.split(",")[1]), i = new ArrayBuffer(t.length), n = new Uint8Array(i), o = 0; o < t.length; o++) n[o] = t.charCodeAt(o); return new Blob([i], { type: "image/jpeg" }) }
 
-    function r() { let e = document.getElementById("ekyc-loading"),
+    function r() {
+        let e = document.getElementById("ekyc-loading"),
             t = document.getElementById("step1-demo-ekyc");
-        e && (e.style.display = "none"), t.parentNode.removeChild(t) }
+        e && (e.style.display = "none"), t.parentNode.removeChild(t)
+    }
 
-    function v() { let e = document.getElementById("ekyc-loading");
-        e && (e.style.display = "block") }
+    function v() {
+        let e = document.getElementById("ekyc-loading");
+        e && (e.style.display = "block")
+    }
     i.r(t), i.d(t, "init", (function() { return q })), i.d(t, "reload", (function() { return Q })), i.d(t, "viewResult", (function() { return z })), i.d(t, "removeExistingItem", (function() { return J }));
 
-    function _(e, t) { t = t.toLowerCase();
-        ["en", "vi"].includes(t) || (t = "vi"); const n = i(1)(`./${t}.json`); for (var o = 0; o < e.length; o++) try { e[o].textContent = new Function("return this." + e[o].textContent.toLowerCase() + ";").call(n) } catch (t) { e[o].textContent = "" } } const p = e => { let t = document.getElementById(e),
+    function _(e, t) {
+        t = t.toLowerCase();
+        ["en", "vi"].includes(t) || (t = "vi");
+        const n = i(1)(`./${t}.json`);
+        for (var o = 0; o < e.length; o++) try { e[o].textContent = new Function("return this." + e[o].textContent.toLowerCase() + ";").call(n) } catch (t) { e[o].textContent = "" }
+    }
+    const p = e => {
+        let t = document.getElementById(e),
             i = document.createElement("canvas"),
-            n = null; return i.width = t.videoWidth, i.height = t.videoHeight, i.getContext("2d").drawImage(t, 0, 0, t.videoWidth, t.videoHeight), n = i.toDataURL("image/jpeg"), n };
+            n = null;
+        return i.width = t.videoWidth, i.height = t.videoHeight, i.getContext("2d").drawImage(t, 0, 0, t.videoWidth, t.videoHeight), n = i.toDataURL("image/jpeg"), n
+    };
 
-    function u(e) { var t = new Date(e),
+    function u(e) {
+        var t = new Date(e),
             i = "" + (t.getMonth() + 1),
             n = "" + t.getDate(),
-            o = t.getFullYear(); return i.length < 2 && (i = "0" + i), n.length < 2 && (n = "0" + n), [o, i, n].join("-") }
+            o = t.getFullYear();
+        return i.length < 2 && (i = "0" + i), n.length < 2 && (n = "0" + n), [o, i, n].join("-")
+    }
 
-    function g(e) { for (var t = atob(e.split(",")[1]), i = new ArrayBuffer(t.length), n = new Uint8Array(i), o = 0; o < t.length; o++) n[o] = t.charCodeAt(o); return new Blob([i], { type: "image/jpeg" }) } const m = (e, t) => { try { var i = document.getElementById(e),
+    function g(e) { for (var t = atob(e.split(",")[1]), i = new ArrayBuffer(t.length), n = new Uint8Array(i), o = 0; o < t.length; o++) n[o] = t.charCodeAt(o); return new Blob([i], { type: "image/jpeg" }) }
+    const m = (e, t) => {
+        try {
+            var i = document.getElementById(e),
                 n = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
-            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia; var o = "environment",
-                a = {}; if (n < 1024) { var c = window.innerWidth > 0 ? window.innerWidth : screen.width;
-                a = { audio: !1, video: { facingMode: o, width: { ideal: c / .75 }, height: { ideal: c }, frameRate: { ideal: 30 } } } } else a = { audio: !1, video: { facingMode: o, width: { ideal: 640 }, height: { ideal: 360 } } }; if (navigator.mediaDevices.getUserMedia) { const n = s("VnVpIGzDsm5nIGtp4buDbSB0cmEgY2FtZXJhIGPhu6dhIGLhuqFuIQ=="),
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+            var o = "environment",
+                a = {};
+            if (n < 1024) {
+                var c = window.innerWidth > 0 ? window.innerWidth : screen.width;
+                a = { audio: !1, video: { facingMode: o, width: { ideal: c / .75 }, height: { ideal: c }, frameRate: { ideal: 30 } } }
+            } else a = { audio: !1, video: { facingMode: o, width: { ideal: 640 }, height: { ideal: 360 } } };
+            if (navigator.mediaDevices.getUserMedia) {
+                const n = s("VnVpIGzDsm5nIGtp4buDbSB0cmEgY2FtZXJhIGPhu6dhIGLhuqFuIQ=="),
                     o = s("UGjDoXQgaGnhu4duIHdlYmNhbSDhuqNvLiBWdWkgbMOybmcga2nhu4NtIHRyYSBs4bqhaSBjYW1lcmEgY+G7p2EgYuG6oW4h"),
                     c = i.parentElement;
-                navigator.mediaDevices.getUserMedia(a).then(async n => { let a = n.getVideoTracks()[0].label ? n.getVideoTracks()[0].label.toLowerCase() : "anonymous"; if (i.srcObject = n, await (async(e, t) => { let i = !1; for (let n = 0; n < t.length; n++) e.includes(t[n]) && (i = !0); return i })(a, ["fake", "virtual", "many"])) alert(o), y(n), location.reload();
-                    else { i.play(), t(n); let a = null,
+                navigator.mediaDevices.getUserMedia(a).then(async n => {
+                    let a = n.getVideoTracks()[0].label ? n.getVideoTracks()[0].label.toLowerCase() : "anonymous";
+                    if (i.srcObject = n, await (async(e, t) => { let i = !1; for (let n = 0; n < t.length; n++) e.includes(t[n]) && (i = !0); return i })(a, ["fake", "virtual", "many"])) alert(o), y(n), location.reload();
+                    else {
+                        i.play(), t(n);
+                        let a = null,
                             l = null;
-                        setTimeout((function() { "block" == c.style.display && (a = p(e)) }), 3e3), setTimeout((function() { "block" == c.style.display && (l = p(e), a === l && (alert(o), y(n), location.reload())) }), 6e3) } }).catch((function(e) { console.log("getUserMedia Error", e), alert(n), location.reload() })) } } catch (e) { console.log("Webcam error", e) } };
+                        setTimeout((function() { "block" == c.style.display && (a = p(e)) }), 3e3), setTimeout((function() { "block" == c.style.display && (l = p(e), a === l && (alert(o), y(n), location.reload())) }), 6e3)
+                    }
+                }).catch((function(e) { console.log("getUserMedia Error", e), alert(n), location.reload() }))
+            }
+        } catch (e) { console.log("Webcam error", e) }
+    };
 
-    function y(e) { for (let t = 0; t < e.length; t++) { e[t].getTracks().forEach((function(e) { "live" == e.readyState && e.stop() })) } } var b = e => { const t = "" + e.MODAL_FACE_STYLE.face_icon; return `<div class="ekyc-popup" id="ekyc-popup-1" style="box-shadow: rgba(0, 0, 0, 0.06) 0px 0px 2px, rgba(0, 0, 0, 0.1) 0px 3px 8px;">\n      <div class="pu-header">\n        <img class="close-btn" id="close-pop-1" width="32px" height="32px" src=${""+e.MODAL_FACE_STYLE.close_icon} />\n        <div class="icons"><img class="main-icons" src=${t} /></div>\n        <div class="content" id="header-title-pop" style="color: rgb(200, 36, 45);"><var>FACE_MODAL.TUTORIAL_TITLE</var></div>\n      </div>\n      <div class="pu-body">\n        <ul>\n          <li><var>FACE_MODAL.TUTORIAL_NOTICE1</var></li>\n          <li><var>FACE_MODAL.TUTORIAL_NOTICE2</var></li>\n          <li><var>FACE_MODAL.TUTORIAL_NOTICE3</var></li>\n        </ul>\n      </div>\n      <div class="pu-footer">\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_FACE_STYLE.notice1_icon} />\n          <p>\n            <var>FACE_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>FACE_MODAL.TUTORIAL1</var>\n          </p>\n        </div>\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_FACE_STYLE.notice2_icon} />\n          <p>\n            <var>FACE_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>FACE_MODAL.TUTORIAL2</var>\n          </p>\n        </div>\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_FACE_STYLE.notice3_icon} />\n          <p>\n            <var>FACE_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>FACE_MODAL.TUTORIAL3</var>\n          </p>\n        </div>\n      </div>\n    </div>`.replace(/(\r\n|\n|\r)/gm, "") },
-        h = "https://sandbox-idg.vnpt.vn/"; const E = (e, t, i) => { let n = {}; return n = { "Content-Type": "application/json", Authorization: "Bearer " + e, "Token-id": t, "Token-key": i, "mac-address": "WEB-001" }, n };
+    function y(e) { for (let t = 0; t < e.length; t++) { e[t].getTracks().forEach((function(e) { "live" == e.readyState && e.stop() })) } }
+    var b = e => { const t = "" + e.MODAL_FACE_STYLE.face_icon; return `<div class="ekyc-popup" id="ekyc-popup-1" style="box-shadow: rgba(0, 0, 0, 0.06) 0px 0px 2px, rgba(0, 0, 0, 0.1) 0px 3px 8px;">\n      <div class="pu-header">\n        <img class="close-btn" id="close-pop-1" width="32px" height="32px" src=${""+e.MODAL_FACE_STYLE.close_icon} />\n        <div class="icons"><img class="main-icons" src=${t} /></div>\n        <div class="content" id="header-title-pop" style="color: rgb(200, 36, 45);"><var>FACE_MODAL.TUTORIAL_TITLE</var></div>\n      </div>\n      <div class="pu-body">\n        <ul>\n          <li><var>FACE_MODAL.TUTORIAL_NOTICE1</var></li>\n          <li><var>FACE_MODAL.TUTORIAL_NOTICE2</var></li>\n          <li><var>FACE_MODAL.TUTORIAL_NOTICE3</var></li>\n        </ul>\n      </div>\n      <div class="pu-footer">\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_FACE_STYLE.notice1_icon} />\n          <p>\n            <var>FACE_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>FACE_MODAL.TUTORIAL1</var>\n          </p>\n        </div>\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_FACE_STYLE.notice2_icon} />\n          <p>\n            <var>FACE_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>FACE_MODAL.TUTORIAL2</var>\n          </p>\n        </div>\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_FACE_STYLE.notice3_icon} />\n          <p>\n            <var>FACE_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>FACE_MODAL.TUTORIAL3</var>\n          </p>\n        </div>\n      </div>\n    </div>`.replace(/(\r\n|\n|\r)/gm, "") },
+        h = "https://sandbox-idg.vnpt.vn/";
+    const E = (e, t, i) => { let n = {}; return n = { "Content-Type": "application/json", Authorization: "Bearer " + e, "Token-id": t, "Token-key": i, "mac-address": "WEB-001" }, n };
 
-    function f(e, t, i, n) { try { var a = (n.BACKEND_URL.length > 0 ? n.BACKEND_URL : h) + "file-service/v1/addFile",
+    function f(e, t, i, n) {
+        try {
+            var a = (n.BACKEND_URL.length > 0 ? n.BACKEND_URL : h) + "file-service/v1/addFile",
                 c = new FormData;
-            c.append("file\t", e.file), c.append("title\t", "upload_file"), c.append("description\t", "ic_upload_file"), o(a, {}, c, i => { t(JSON.parse(i), e) }, e => { i(e) }, n) } catch (e) { console.log("uploadImageErr", e) } }
-    async function k(e, t) { let i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/card/liveness"; var n = { img: e.currentHash, client_session: t.client_session, token: "ai/v1/web/card/liveness" },
+            c.append("file\t", e.file), c.append("title\t", "upload_file"), c.append("description\t", "ic_upload_file"), o(a, {}, c, i => { t(JSON.parse(i), e) }, e => { i(e) }, n)
+        } catch (e) { console.log("uploadImageErr", e) }
+    }
+    async function k(e, t) {
+        let i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/card/liveness";
+        var n = { img: e.currentHash, client_session: t.client_session, token: "ai/v1/web/card/liveness" },
             o = t.AUTHORIZION,
             a = t.TOKEN_ID,
-            c = t.TOKEN_KEY; return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e) }
-    async function A(e, t) { let i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/face/liveness"; var n = { img: e.hashFace, client_session: t.client_session, token: "ai/v1/web/card/liveness" },
+            c = t.TOKEN_KEY;
+        return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e)
+    }
+    async function A(e, t) {
+        let i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/face/liveness";
+        var n = { img: e.hashFace, client_session: t.client_session, token: "ai/v1/web/card/liveness" },
             o = t.AUTHORIZION,
             a = t.TOKEN_ID,
-            c = t.TOKEN_KEY; return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e) }
-    async function T(e, t) { var i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/ocr/id/front",
+            c = t.TOKEN_KEY;
+        return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e)
+    }
+    async function T(e, t) {
+        var i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/ocr/id/front",
             n = { img_front: e.currentHash, client_session: t.client_session, token: "e41-1b6d-45c9-9", type: e.typeDocument, crop_param: "0,0", validate_postcode: !0 },
             o = t.AUTHORIZION,
             a = t.TOKEN_ID,
-            c = t.TOKEN_KEY; return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e) }
-    async function I(e, t) { var i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/ocr/id",
+            c = t.TOKEN_KEY;
+        return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e)
+    }
+    async function I(e, t) {
+        var i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/ocr/id",
             n = { img_front: e.dataHash.hash0, img_back: e.dataHash.hash1, client_session: t.client_session, token: "e41-1b6d-45c9-9", type: e.typeDocument, crop_param: "0,0", validate_postcode: !0 },
             o = t.AUTHORIZION,
             a = t.TOKEN_ID,
-            c = t.TOKEN_KEY; return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e) }
-    async function w(e, t) { var i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/face/mask",
+            c = t.TOKEN_KEY;
+        return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e)
+    }
+    async function w(e, t) {
+        var i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/face/mask",
             n = { img: e.hashFace, face_bbox: null, face_lmark: null, client_session: t.client_session },
             o = t.AUTHORIZION,
             a = t.TOKEN_ID,
-            c = t.TOKEN_KEY; return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e) }
-    async function C(e, t) { var i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/face/compare",
+            c = t.TOKEN_KEY;
+        return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e)
+    }
+    async function C(e, t) {
+        var i = (t.BACKEND_URL.length > 0 ? t.BACKEND_URL : h) + "ai/v1/web/face/compare",
             n = { img_front: e.hashFront, img_face: e.hashFace, client_session: t.client_session, token: "/ai/v1/web/face/compare" },
             o = t.AUTHORIZION,
             a = t.TOKEN_ID,
-            c = t.TOKEN_KEY; return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e) } var L = e => `<div class="ekyc-loading" id="ekyc-loading" style="${e.OTHER_CONFIG.loading_styles}">\n    <img class="arc" src=${e.OTHER_CONFIG.loading_icon}></img>\n  </div>`.replace(/(\r\n|\n|\r)/gm, ""); var S = (e, t, i, n) => { var o = `<div class="capture-webcam-wrapper">\n      <div class="capture-webcam">\n        <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>FACE.PORTRAIT</var></p>\n        <div class="webcame-zone" id="wedatabcame-zone" >\n          <div class="video-block" id="video-block"><video class="action-block" id="video1" muted="" playsinline="" autoplay=""></video></div>\n          <div id="webcam-result">\n            <img id="img-result" />\n          </div>\n        </div>\n        <div class="ekyc_description" id="ekyc_description" style="display: block; color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <span><var>FACE.PLEASE</var></span><br />\n          <span><var>FACE.DES_1</var></span>\n        </div>\n\n        <div class="take-picture-btn" id="take-picture-webcam" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n          <img id="take-picture-webcam-img" class="camera-icon" src=${t.CAPTURE_IMAGE_STYLE.capture_btn_icon} />\n          <span class="title" id="take-picture-webcam-title"><var style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color}">FACE.TAKE_PHOTO</var></span>\n        </div>\n        \n        <div class="after-capture-wrapper" id="after-capture">\n          <div class="step1-after-capture">\n            <div class="re-capture" id="re-capture" style="background: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_background}; border: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_border}">\n              <img id="re-capture-icon" class="camera-icon" src=${t.CAPTURE_IMAGE_STYLE.recapture_btn_icon} />\n              <span id="re-capture-title"><var style="color: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_color}">FACE.TAKE_AGAIN</var></span>\n            </div>\n            <div class="next-step" id="step1-next-step" style="background: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background}; border: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_border} ">\n              <img id="step1-next-step-icon" class="next-icon" src=${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon} />\n              <span id="step1-next-step-title"><var style="color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_color}">FACE.NEXT</var></span>\n            </div>\n          </div>\n        </div>\n        \n        ${L(t)}\n        <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n      </div>\n      <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n      ${b(t)}\n    </div>`; const a = document.getElementById("ekyc_sdk_intergrated");
+            c = t.TOKEN_KEY;
+        return await fetch(i, { method: "POST", mode: "cors", credentials: "same-origin", headers: E(o, a, c), body: JSON.stringify(n) }).then(e => e.json()).then(e => e).catch(e => e)
+    }
+    var L = e => `<div class="ekyc-loading" id="ekyc-loading" style="${e.OTHER_CONFIG.loading_styles}">\n    <img class="arc" src=${e.OTHER_CONFIG.loading_icon}></img>\n  </div>`.replace(/(\r\n|\n|\r)/gm, "");
+    var S = (e, t, i, n) => {
+        var o = `<div class="capture-webcam-wrapper">\n      <div class="capture-webcam">\n        <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>FACE.PORTRAIT</var></p>\n        <div class="webcame-zone" id="wedatabcame-zone" >\n          <div class="video-block" id="video-block"><video class="action-block" id="video1" muted="" playsinline="" autoplay=""></video></div>\n          <div id="webcam-result">\n            <img id="img-result" />\n          </div>\n        </div>\n        <div class="ekyc_description" id="ekyc_description" style="display: block; color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <span><var>FACE.PLEASE</var></span><br />\n          <span><var>FACE.DES_1</var></span>\n        </div>\n\n        <div class="take-picture-btn" id="take-picture-webcam" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n          <img id="take-picture-webcam-img" class="camera-icon" src=${t.CAPTURE_IMAGE_STYLE.capture_btn_icon} />\n          <span class="title" id="take-picture-webcam-title"><var style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color}">FACE.TAKE_PHOTO</var></span>\n        </div>\n        \n        <div class="after-capture-wrapper" id="after-capture">\n          <div class="step1-after-capture">\n            <div class="re-capture" id="re-capture" style="background: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_background}; border: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_border}">\n              <img id="re-capture-icon" class="camera-icon" src=${t.CAPTURE_IMAGE_STYLE.recapture_btn_icon} />\n              <span id="re-capture-title"><var style="color: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_color}">FACE.TAKE_AGAIN</var></span>\n            </div>\n            <div class="next-step" id="step1-next-step" style="background: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background}; border: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_border} ">\n              <img id="step1-next-step-icon" class="next-icon" src=${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon} />\n              <span id="step1-next-step-title"><var style="color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_color}">FACE.NEXT</var></span>\n            </div>\n          </div>\n        </div>\n        \n        ${L(t)}\n        <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n      </div>\n      <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n      ${b(t)}\n    </div>`;
+        const a = document.getElementById("ekyc_sdk_intergrated");
         a.insertAdjacentHTML("beforeend", o.replace(/(\r\n|\n|\r)/gm, ""));
-        _(a.getElementsByTagName("var"), t.LANGUAGE), m("video1", e => { j(e) }); const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth; let l = document.getElementById("tutorial-mobile"),
+        _(a.getElementsByTagName("var"), t.LANGUAGE), m("video1", e => { j(e) });
+        const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+        let l = document.getElementById("tutorial-mobile"),
             s = document.getElementById("tutorial_btn"),
             r = document.getElementById("close-pop-1"),
             v = document.getElementById("ekyc-popup-1"),
@@ -133,17 +222,28 @@ var ekycsdk = function(e) { var t = {};
         function B(e) { M.hashFace = e.object.hash, R.style.display = "none" }
 
         function D(e) { console.log("uploadFileFail", e), R.style.display = "none" }
-        u.onclick = () => { let e = document.getElementById("video1"),
+        u.onclick = () => {
+            let e = document.getElementById("video1"),
                 i = document.createElement("canvas"),
                 n = null,
                 o = null,
                 a = {};
-            i.width = e.videoWidth, i.height = e.videoHeight, i.getContext("2d").drawImage(e, 0, 0, e.videoWidth, e.videoHeight), n = i.toDataURL("image/jpeg"), h.src = n, o = d(n), a.file = o, g.style.display = "none", u.style.display = "none", E.style.display = "block", T.style.display = "block", R.style.display = "block", f(a, B, D, t), y(O), S.base64_face_img = { img_face_far: n } }, k.onclick = () => { T.style.display = "none", E.style.display = "none", g.style.display = "block", u.style.display = "flex", m("video1", e => { j(e) }) }, I.onclick = async() => { M.hashFront = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, R.style.display = "block"; let e = null,
+            i.width = e.videoWidth, i.height = e.videoHeight, i.getContext("2d").drawImage(e, 0, 0, e.videoWidth, e.videoHeight), n = i.toDataURL("image/jpeg"), h.src = n, o = d(n), a.file = o, g.style.display = "none", u.style.display = "none", E.style.display = "block", T.style.display = "block", R.style.display = "block", f(a, B, D, t), y(O), S.base64_face_img = { img_face_far: n }
+        }, k.onclick = () => { T.style.display = "none", E.style.display = "none", g.style.display = "block", u.style.display = "flex", m("video1", e => { j(e) }) }, I.onclick = async() => {
+            M.hashFront = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, R.style.display = "block";
+            let e = null,
                 i = null,
                 o = null;
-            t.CHECK_LIVENESS_FACE && (e = await A(M, t), S.liveness_face = e), t.CHECK_MASKED_FACE && (i = await w(M, t), S.masked = i), t.COMPARE_FACE && (o = await C(M, t), S.compare = o), await n(S), await (async() => { R.style.display = "none" })() }, r.onclick = function() { U() }, s.onclick = function() { N() }, l.onclick = function() { N() }, t.SHOW_HELP ? N() : (U(), s.style.display = "none", l.style.display = "none") }; var O = (e, t, i, n) => { let o = `<div class="capture-and-upload-block-wrapper">\n      <div class="capture-and-upload-block">\n        <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>FACE.PORTRAIT</var></p>\n        <div class="capture-and-upload-wrapper" style="background-color: ${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg}">\n          <div class="capture-and-upload-wrapper-body" style="background-image: url(${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg_img})">\n            <div class="btn-wrapper">\n              <div id="upload-image-web" class="upload-btn-wrapper">\n                <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                  <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                  <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                </button>\n                <input accept="image/*" id="fileInputWeb10" name="img-id" type="file" />\n              </div>\n            </div>\n\n            <div class="camera_result" id="results_front_camera">\n              <img id="img-result"/>\n              <div class="action-wrapper">\n                <div id="upload-image-web" class="upload-btn-wrapper">\n                  <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                    <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                    <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                  </button>\n                  <input accept="image/*" id="fileInputWeb12" name="img-id" type="file" />\n                </div>\n            </div>\n            </div>\n          </div>\n        </div>\n\n        <div class="ekyc_description" id="ekyc_description" style="display: block; color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <span><var>FACE.PLEASE</var></span><br />\n          <span><var>FACE.DES_1</var></span>\n        </div>\n\n        <div class="common-btn" id="next-step-btn" style="background-color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background}">\n          <img class="next-icon" src=${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon} />\n          <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FACE.NEXT</var></span>\n        </div>\n        ${L(t)}\n        <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n      </div>\n      <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n      ${b(t)}\n    </div>`; const a = document.getElementById("ekyc_sdk_intergrated");
+            t.CHECK_LIVENESS_FACE && (e = await A(M, t), S.liveness_face = e), t.CHECK_MASKED_FACE && (i = await w(M, t), S.masked = i), t.COMPARE_FACE && (o = await C(M, t), S.compare = o), await n(S), await (async() => { R.style.display = "none" })()
+        }, r.onclick = function() { U() }, s.onclick = function() { N() }, l.onclick = function() { N() }, t.SHOW_HELP ? N() : (U(), s.style.display = "none", l.style.display = "none")
+    };
+    var O = (e, t, i, n) => {
+        let o = `<div class="capture-and-upload-block-wrapper">\n      <div class="capture-and-upload-block">\n        <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>FACE.PORTRAIT</var></p>\n        <div class="capture-and-upload-wrapper" style="background-color: ${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg}">\n          <div class="capture-and-upload-wrapper-body" style="background-image: url(${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg_img})">\n            <div class="btn-wrapper">\n              <div id="upload-image-web" class="upload-btn-wrapper">\n                <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                  <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                  <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                </button>\n                <input accept="image/*" id="fileInputWeb10" name="img-id" type="file" />\n              </div>\n            </div>\n\n            <div class="camera_result" id="results_front_camera">\n              <img id="img-result"/>\n              <div class="action-wrapper">\n                <div id="upload-image-web" class="upload-btn-wrapper">\n                  <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                    <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                    <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                  </button>\n                  <input accept="image/*" id="fileInputWeb12" name="img-id" type="file" />\n                </div>\n            </div>\n            </div>\n          </div>\n        </div>\n\n        <div class="ekyc_description" id="ekyc_description" style="display: block; color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <span><var>FACE.PLEASE</var></span><br />\n          <span><var>FACE.DES_1</var></span>\n        </div>\n\n        <div class="common-btn" id="next-step-btn" style="background-color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background}">\n          <img class="next-icon" src=${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon} />\n          <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FACE.NEXT</var></span>\n        </div>\n        ${L(t)}\n        <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n      </div>\n      <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n      ${b(t)}\n    </div>`;
+        const a = document.getElementById("ekyc_sdk_intergrated");
         a.insertAdjacentHTML("beforeend", o.replace(/(\r\n|\n|\r)/gm, ""));
-        _(a.getElementsByTagName("var"), t.LANGUAGE); const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth; let l = document.getElementById("img-result"),
+        _(a.getElementsByTagName("var"), t.LANGUAGE);
+        const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+        let l = document.getElementById("img-result"),
             s = document.getElementsByClassName("btn-wrapper")[0],
             r = document.getElementById("next-step-btn"),
             v = document.getElementById("close-pop-1"),
@@ -159,27 +259,47 @@ var ekycsdk = function(e) { var t = {};
         function T() { g.style.display = "block", m.style.display = "none", c > 1024 ? u.style.display = "none" : p.style.display = "none" }
 
         function I() { c > 1024 ? u.style.display = "block" : p.style.display = "block", g.style.display = "none", m.style.display = "block" }
-        E.type_document = e; const S = e => { k.hashFace = e.object.hash, y.style.display = "none" },
+        E.type_document = e;
+        const S = e => { k.hashFace = e.object.hash, y.style.display = "none" },
             O = e => { y.style.display = "none", console.log("uploadFileFail", e) },
-            M = e => { var i, n = {};
-                s.style.display = "none", h.style.display = "block", l.src = e.target.result, y.style.display = "block", R(), i = d(e.target.result), n.file = i, E.base64_face_img = { img_face_far: e.target.result }, f(n, S, O, t) },
+            M = e => {
+                var i, n = {};
+                s.style.display = "none", h.style.display = "block", l.src = e.target.result, y.style.display = "block", R(), i = d(e.target.result), n.file = i, E.base64_face_img = { img_face_far: e.target.result }, f(n, S, O, t)
+            },
             R = () => { r.style.display = "flex" };
-        document.getElementById("fileInputWeb10").onchange = function() { let e = this.value,
+        document.getElementById("fileInputWeb10").onchange = function() {
+            let e = this.value,
                 t = /(\.jpg|\.jpeg|\.png|\.gif)$/i,
                 i = new FileReader,
                 n = this.files[0];
-            i.onloadend = i => { if (!n || !t.exec(e)) return alert("Please upload file image only!"), this.value = "", !1;
-                M(i) }, i.readAsDataURL(n) }, document.getElementById("fileInputWeb12").onchange = function() { let e = this.value,
+            i.onloadend = i => {
+                if (!n || !t.exec(e)) return alert("Please upload file image only!"), this.value = "", !1;
+                M(i)
+            }, i.readAsDataURL(n)
+        }, document.getElementById("fileInputWeb12").onchange = function() {
+            let e = this.value,
                 t = /(\.jpg|\.jpeg|\.png|\.gif)$/i,
                 i = new FileReader,
                 n = this.files[0];
-            i.onloadend = i => { if (!n || !t.exec(e)) return alert("Please upload file image only!"), this.value = "", !1;
-                M(i) }, i.readAsDataURL(n) }, r.onclick = async() => { k.hashFront = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, y.style.display = "block"; let e = null,
+            i.onloadend = i => {
+                if (!n || !t.exec(e)) return alert("Please upload file image only!"), this.value = "", !1;
+                M(i)
+            }, i.readAsDataURL(n)
+        }, r.onclick = async() => {
+            k.hashFront = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, y.style.display = "block";
+            let e = null,
                 i = null,
                 o = null;
-            t.CHECK_LIVENESS_FACE && (e = await A(k, t), E.liveness_face = e), t.CHECK_MASKED_FACE && (i = await w(k, t), E.masked = i), t.COMPARE_FACE && (o = await C(k, t), E.compare = o), await n(E), await (async() => { y.style.display = "none" })() }, v.onclick = function() { I() }, u.onclick = function() { T() }, p.onclick = function() { T() }, t.SHOW_HELP ? T() : (I(), u.style.display = "none", p.style.display = "none") }; var M = (e, t, i, n) => { let o = `<div class="capture-and-upload-block-wrapper">\n    <div class="capture-and-upload-block">\n      <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>FACE.PORTRAIT</var></p>\n      <div class="capture-and-upload-wrapper" style="background-color: ${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg}">\n        <div class="capture-and-upload-wrapper-body" style="background-image: url(${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg_img})">\n          <div class="btn-wrapper">\n            <div class="common-btn" id="capture-btn-id" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n              <img id="take-picture-step1-img" class="camera-icon"  src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n              <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_PHOTO</var></span>\n            </div>\n            <div id="upload-image-web" class="upload-btn-wrapper">\n              <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n              </button>\n              <input accept="image/*" id="fileInputWeb10" name="img-id" type="file" />\n            </div>\n          </div>\n    \n          <div class="camera_attach" id="front_camera">\n            <video id="camera_attach_video" width="100%" muted="" playsinline="" class="video-stream" src=""></video>\n            <div class="action-wrapper">\n              <div class="common-btn" id="caputure-in-video" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n                <img id="take-picture-step1-img" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n                <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_PHOTO</var></span>\n              </div>\n              <div id="upload-image-web" class="upload-btn-wrapper">\n                <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                  <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                  <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                </button>\n                <input accept="image/*" id="fileInputWeb11" name="img-id" type="file" />\n              </div>\n            </div>\n          </div>\n    \n          <div class="camera_result" id="results_front_camera">\n            <img id="img-result"/>\n            <div class="action-wrapper">\n              <div class="common-btn" id="re-caputure-in-video" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n                <img id="take-picture-step1-img" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n                <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_AGAIN</var></span>\n              </div>\n              <div id="upload-image-web" class="upload-btn-wrapper">\n                <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                  <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                  <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                </button>\n                <input accept="image/*" id="fileInputWeb12" name="img-id" type="file" />\n              </div>\n          </div>\n          </div>\n        </div>\n      </div>\n    \n      <div class="ekyc_description" id="ekyc_description" style="display: block; color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n        <span><var>FACE.PLEASE</var></span><br />\n        <span><var>FACE.DES_1</var></span>\n      </div>\n    \n      <div class="common-btn" id="next-step-btn" style="background-color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background}>\n        <img class="next-icon" src=${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon} />\n        <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FACE.NEXT</var></span>\n      </div>\n      ${L(t)}\n      <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n    </div>\n    <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n    ${b(t)}\n    </div>`; const a = document.getElementById("ekyc_sdk_intergrated");
+            t.CHECK_LIVENESS_FACE && (e = await A(k, t), E.liveness_face = e), t.CHECK_MASKED_FACE && (i = await w(k, t), E.masked = i), t.COMPARE_FACE && (o = await C(k, t), E.compare = o), await n(E), await (async() => { y.style.display = "none" })()
+        }, v.onclick = function() { I() }, u.onclick = function() { T() }, p.onclick = function() { T() }, t.SHOW_HELP ? T() : (I(), u.style.display = "none", p.style.display = "none")
+    };
+    var M = (e, t, i, n) => {
+        let o = `<div class="capture-and-upload-block-wrapper">\n    <div class="capture-and-upload-block">\n      <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>FACE.PORTRAIT</var></p>\n      <div class="capture-and-upload-wrapper" style="background-color: ${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg}">\n        <div class="capture-and-upload-wrapper-body" style="background-image: url(${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg_img})">\n          <div class="btn-wrapper">\n            <div class="common-btn" id="capture-btn-id" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n              <img id="take-picture-step1-img" class="camera-icon"  src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n              <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_PHOTO</var></span>\n            </div>\n            <div id="upload-image-web" class="upload-btn-wrapper">\n              <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n              </button>\n              <input accept="image/*" id="fileInputWeb10" name="img-id" type="file" />\n            </div>\n          </div>\n    \n          <div class="camera_attach" id="front_camera">\n            <video id="camera_attach_video" width="100%" muted="" playsinline="" class="video-stream" src=""></video>\n            <div class="action-wrapper">\n              <div class="common-btn" id="caputure-in-video" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n                <img id="take-picture-step1-img" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n                <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_PHOTO</var></span>\n              </div>\n              <div id="upload-image-web" class="upload-btn-wrapper">\n                <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                  <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                  <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                </button>\n                <input accept="image/*" id="fileInputWeb11" name="img-id" type="file" />\n              </div>\n            </div>\n          </div>\n    \n          <div class="camera_result" id="results_front_camera">\n            <img id="img-result"/>\n            <div class="action-wrapper">\n              <div class="common-btn" id="re-caputure-in-video" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n                <img id="take-picture-step1-img" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n                <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_AGAIN</var></span>\n              </div>\n              <div id="upload-image-web" class="upload-btn-wrapper">\n                <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                  <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                  <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                </button>\n                <input accept="image/*" id="fileInputWeb12" name="img-id" type="file" />\n              </div>\n          </div>\n          </div>\n        </div>\n      </div>\n    \n      <div class="ekyc_description" id="ekyc_description" style="display: block; color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n        <span><var>FACE.PLEASE</var></span><br />\n        <span><var>FACE.DES_1</var></span>\n      </div>\n    \n      <div class="common-btn" id="next-step-btn" style="background-color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background}>\n        <img class="next-icon" src=${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon} />\n        <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FACE.NEXT</var></span>\n      </div>\n      ${L(t)}\n      <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n    </div>\n    <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n    ${b(t)}\n    </div>`;
+        const a = document.getElementById("ekyc_sdk_intergrated");
         a.insertAdjacentHTML("beforeend", o.replace(/(\r\n|\n|\r)/gm, ""));
-        _(a.getElementsByTagName("var"), t.LANGUAGE); const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth; let l = document.getElementById("tutorial-mobile"),
+        _(a.getElementsByTagName("var"), t.LANGUAGE);
+        const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+        let l = document.getElementById("tutorial-mobile"),
             s = document.getElementById("tutorial_btn"),
             r = document.getElementById("close-pop-1"),
             v = document.getElementById("ekyc-popup-1"),
@@ -199,46 +319,81 @@ var ekycsdk = function(e) { var t = {};
         function R() { c > 1024 ? s.style.display = "block" : l.style.display = "block", v.style.display = "none", p.style.display = "block" }
 
         function N(e) { e && S.push(e) }
-        I.type_document = e; const U = e => { O.hashFace = e.object.hash, u.style.display = "none" },
+        I.type_document = e;
+        const U = e => { O.hashFace = e.object.hash, u.style.display = "none" },
             j = e => { u.style.display = "none", console.log("uploadFileFail", e) },
-            B = e => { let i = null,
+            B = e => {
+                let i = null,
                     n = {};
-                k.style.display = "none", g.style.display = "block", g.style.display = "none", h.style.display = "block", E.src = e.target.result, u.style.display = "block", D(), S.length > 0 && y(S), i = d(e.target.result), n.file = i, I.base64_face_img = { img_face_far: e.target.result }, f(n, U, j, t) },
+                k.style.display = "none", g.style.display = "block", g.style.display = "none", h.style.display = "block", E.src = e.target.result, u.style.display = "block", D(), S.length > 0 && y(S), i = d(e.target.result), n.file = i, I.base64_face_img = { img_face_far: e.target.result }, f(n, U, j, t)
+            },
             D = () => { T.style.display = "flex" };
-        document.getElementById("capture-btn-id").onclick = function() { k.style.display = "none", g.style.display = "block", u.style.display = "block", m("camera_attach_video", e => { N(e), e && (u.style.display = "none") }) }, document.getElementById("caputure-in-video").onclick = function() { let e = document.getElementById("camera_attach_video"),
+        document.getElementById("capture-btn-id").onclick = function() { k.style.display = "none", g.style.display = "block", u.style.display = "block", m("camera_attach_video", e => { N(e), e && (u.style.display = "none") }) }, document.getElementById("caputure-in-video").onclick = function() {
+            let e = document.getElementById("camera_attach_video"),
                 i = document.createElement("canvas"),
                 n = null,
                 o = null,
                 a = {};
-            i.width = e.videoWidth, i.height = e.videoHeight, i.getContext("2d").drawImage(e, 0, 0, e.videoWidth, e.videoHeight), n = i.toDataURL("image/jpeg"), E.src = n, o = d(n), a.file = o, g.style.display = "none", h.style.display = "block", u.style.display = "block", D(), y(S), I.base64_face_img = { img_face_far: n }, f(a, U, j, t) }, document.getElementById("re-caputure-in-video").onclick = function() { h.style.display = "none", g.style.display = "block", T.style.display = "none", u.style.display = "block", m("camera_attach_video", e => { e && (u.style.display = "none"), N(e) }) }, document.getElementById("fileInputWeb10").onchange = function() { let e = this.value,
+            i.width = e.videoWidth, i.height = e.videoHeight, i.getContext("2d").drawImage(e, 0, 0, e.videoWidth, e.videoHeight), n = i.toDataURL("image/jpeg"), E.src = n, o = d(n), a.file = o, g.style.display = "none", h.style.display = "block", u.style.display = "block", D(), y(S), I.base64_face_img = { img_face_far: n }, f(a, U, j, t)
+        }, document.getElementById("re-caputure-in-video").onclick = function() { h.style.display = "none", g.style.display = "block", T.style.display = "none", u.style.display = "block", m("camera_attach_video", e => { e && (u.style.display = "none"), N(e) }) }, document.getElementById("fileInputWeb10").onchange = function() {
+            let e = this.value,
                 t = /(\.jpg|\.jpeg|\.png|\.gif)$/i,
                 i = new FileReader,
                 n = this.files[0];
-            i.onloadend = i => { if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
-                B(i) }, i.readAsDataURL(n) }, document.getElementById("fileInputWeb11").onchange = function() { let e = this.value,
+            i.onloadend = i => {
+                if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
+                B(i)
+            }, i.readAsDataURL(n)
+        }, document.getElementById("fileInputWeb11").onchange = function() {
+            let e = this.value,
                 t = /(\.jpg|\.jpeg|\.png|\.gif)$/i,
                 i = new FileReader,
                 n = this.files[0];
-            i.onloadend = i => { if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
-                B(i) }, i.readAsDataURL(n) }, document.getElementById("fileInputWeb12").onchange = function() { let e = this.value,
+            i.onloadend = i => {
+                if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
+                B(i)
+            }, i.readAsDataURL(n)
+        }, document.getElementById("fileInputWeb12").onchange = function() {
+            let e = this.value,
                 t = /(\.jpg|\.jpeg|\.png|\.gif)$/i,
                 i = new FileReader,
                 n = this.files[0];
-            i.onloadend = i => { if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
-                B(i) }, i.readAsDataURL(n) }, T.onclick = async() => { O.hashFront = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, u.style.display = "block"; let e = null,
+            i.onloadend = i => {
+                if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
+                B(i)
+            }, i.readAsDataURL(n)
+        }, T.onclick = async() => {
+            O.hashFront = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, u.style.display = "block";
+            let e = null,
                 i = null,
                 o = null;
-            t.CHECK_LIVENESS_FACE && (e = await A(O, t), I.liveness_face = e), t.CHECK_MASKED_FACE && (i = await w(O, t), I.masked = i), t.COMPARE_FACE && (o = await C(O, t), I.compare = o), await n(I), await (async() => { u.style.display = "none" })() }, r.onclick = function() { R() }, s.onclick = function() { M() }, l.onclick = function() { M() }, t.SHOW_HELP ? M() : (R(), s.style.display = "none", l.style.display = "none") }; var R = function(e, t, i, n) { let o = {}; const a = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+            t.CHECK_LIVENESS_FACE && (e = await A(O, t), I.liveness_face = e), t.CHECK_MASKED_FACE && (i = await w(O, t), I.masked = i), t.COMPARE_FACE && (o = await C(O, t), I.compare = o), await n(I), await (async() => { u.style.display = "none" })()
+        }, r.onclick = function() { R() }, s.onclick = function() { M() }, l.onclick = function() { M() }, t.SHOW_HELP ? M() : (R(), s.style.display = "none", l.style.display = "none")
+    };
+    var R = function(e, t, i, n) {
+        let o = {};
+        const a = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
 
-        function c() { const e = document.getElementsByClassName("capture-and-upload-block-wrapper")[0];
-            e.parentNode.removeChild(e) }
+        function c() {
+            const e = document.getElementsByClassName("capture-and-upload-block-wrapper")[0];
+            e.parentNode.removeChild(e)
+        }
 
-        function l(e) { o = e, i(o), n && n(o) } if (t.USE_WEBCAM && t.USE_UPLOAD)
+        function l(e) { o = e, i(o), n && n(o) }
+        if (t.USE_WEBCAM && t.USE_UPLOAD)
             if (a > 1024) { M(e, t, "face", e => { c(), l(e) }) } else { O(e, t, "face", e => { c(), l(e) }) }
-        if (t.USE_WEBCAM && !t.USE_UPLOAD) { S(e, t, "face", e => { var t;
-                (t = document.getElementsByClassName("capture-webcam-wrapper")[0]) && t.parentNode.removeChild(t), l(e) }) } if (!t.USE_WEBCAM && t.USE_UPLOAD) { O(e, t, "face", e => { c(), l(e) }) } }; var N = e => { e.MODAL_FACE_STYLE.face_icon; return `<div class="ekyc-popup" id="ekyc-popup-1" style="box-shadow: rgba(0, 0, 0, 0.06) 0px 0px 2px, rgba(0, 0, 0, 0.1) 0px 3px 8px; padding: 10px;">\n      <div class="pu-header" style="height: 40px; border-bottom: none;">\n        <img class="close-btn" id="close-pop-1" width="32px" height="32px" src=${""+e.MODAL_FACE_STYLE.close_icon} />\n      </div>\n      <div class="pu-body" style="border-bottom: none;">\n        <video id='video-tutorial' muted playsinline autoplay controls src=${""+e.OTHER_CONFIG.video_tutorial_oval} style="width: 100%; border-radius: 16px"></video>\n      </div>\n    </div>`.replace(/(\r\n|\n|\r)/gm, "") };
+        if (t.USE_WEBCAM && !t.USE_UPLOAD) {
+            S(e, t, "face", e => {
+                var t;
+                (t = document.getElementsByClassName("capture-webcam-wrapper")[0]) && t.parentNode.removeChild(t), l(e)
+            })
+        }
+        if (!t.USE_WEBCAM && t.USE_UPLOAD) { O(e, t, "face", e => { c(), l(e) }) }
+    };
+    var N = e => { e.MODAL_FACE_STYLE.face_icon; return `<div class="ekyc-popup" id="ekyc-popup-1" style="box-shadow: rgba(0, 0, 0, 0.06) 0px 0px 2px, rgba(0, 0, 0, 0.1) 0px 3px 8px; padding: 10px;">\n      <div class="pu-header" style="height: 40px; border-bottom: none;">\n        <img class="close-btn" id="close-pop-1" width="32px" height="32px" src=${""+e.MODAL_FACE_STYLE.close_icon} />\n      </div>\n      <div class="pu-body" style="border-bottom: none;">\n        <video id='video-tutorial' muted playsinline autoplay controls src=${""+e.OTHER_CONFIG.video_tutorial_oval} style="width: 100%; border-radius: 16px"></video>\n      </div>\n    </div>`.replace(/(\r\n|\n|\r)/gm, "") };
 
-    function U(e, t, i, n) { var a = null,
+    function U(e, t, i, n) {
+        var a = null,
             p = document.getElementById("vnpt_ekyc"),
             m = [],
             b = "<div class='step1-demo-ekyc' id='step1-demo-ekyc'><div class='header-title'id='header-title' style='color: " + t.OTHER_CONFIG.oval_title_color + "'><var>FACE.PORTRAIT</var></div>" + function(e) { return "<div class='webcame-zone' id='webcame-zone'><div id='wrapper-oval'><div id='notice-ani'><div id='notice-face'></div></div><video class='action-block' id='video' muted playsinline autoplay style='visibility: visible'></video><div id='animation'></div><img id='outPut' crossorigin='anonymous' ><div style='" + e.OTHER_CONFIG.description_oval + "'>" + e.OTHER_CONFIG.description_oval_content + "</div></div><div id='canvas-border'><canvas id='canvas' style='overflow:auto; display:none'></canvas></div></div>" }(t) + L(t) + N(t) + "<img id='tutorial_btn' class='tutorial_btn' src='" + t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon + "'><div class='tutorial-mobile'><a id='tutorial-mobile'><var>FACE.GUIDE</var></a></div></div>",
@@ -250,9 +405,15 @@ var ekycsdk = function(e) { var t = {};
             w = !1,
             C = 0,
             S = "FAR",
-            O = { far_img: null, near_img: null }; const M = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
-        async function R(e, t) { return new Promise((function(i) { var n = document.getElementById("video"),
-                    o = document.createElement("canvas"); if (n) { o.width = n.videoWidth * e, o.height = n.videoHeight * t, (new Image).crossOrigin = "anonymous"; let a = (1 - e) / 2 * n.videoWidth,
+            O = { far_img: null, near_img: null };
+        const M = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+        async function R(e, t) {
+            return new Promise((function(i) {
+                var n = document.getElementById("video"),
+                    o = document.createElement("canvas");
+                if (n) {
+                    o.width = n.videoWidth * e, o.height = n.videoHeight * t, (new Image).crossOrigin = "anonymous";
+                    let a = (1 - e) / 2 * n.videoWidth,
                         c = (1 - t) / 2 * n.videoHeight,
                         l = n.videoWidth * e,
                         s = n.videoHeight,
@@ -260,55 +421,126 @@ var ekycsdk = function(e) { var t = {};
                         r = 0,
                         v = n.videoWidth * e,
                         _ = n.videoHeight;
-                    l < 0 && (a += l, l = Math.abs(l)), s < 0 && (c += s, s = Math.abs(s)), v < 0 && (d += v, v = Math.abs(v)), _ < 0 && (r += _, _ = Math.abs(_)); const p = Math.max(a, 0),
+                    l < 0 && (a += l, l = Math.abs(l)), s < 0 && (c += s, s = Math.abs(s)), v < 0 && (d += v, v = Math.abs(v)), _ < 0 && (r += _, _ = Math.abs(_));
+                    const p = Math.max(a, 0),
                         u = Math.min(a + l, n.videoWidth),
                         g = Math.max(c, 0),
                         m = Math.min(c + s, n.videoHeight),
                         y = v / l,
                         b = _ / s;
-                    o.getContext("2d").drawImage(n, p, g, u - p, m - g, a < 0 ? d - a * y : d, c < 0 ? r - c * b : r, (u - p) * y, (m - g) * b), i(o) } })) }
-        async function U() { var e, s, _, p, b, A, T = "FIT",
+                    o.getContext("2d").drawImage(n, p, g, u - p, m - g, a < 0 ? d - a * y : d, c < 0 ? r - c * b : r, (u - p) * y, (m - g) * b), i(o)
+                }
+            }))
+        }
+        async function U() {
+            var e, s, _, p, b, A, T = "FIT",
                 I = "TIME_EXCEED",
                 L = "vi" == t.LANGUAGE ? "Đảm bảo khuôn mặt vừa khung hình" : "Make sure the face fits in the frame",
                 M = "vi" == t.LANGUAGE ? "Có lỗi xảy tra trong quá trình liveness" : "An error occurred during liveness",
-                N = { FIT: "vi" == t.LANGUAGE ? "Giữ vững khuôn mặt" : "Keep your face steady", TO_THE_RIGHT: L, TO_THE_LEFT: L, TO_THE_BOTTOM: L, TO_THE_TOP: L, NOT_STRAIGHT: L, TOO_FAR: "vi" == t.LANGUAGE ? "Gần hơn nữa" : "A little closer", TOO_NEAR: "vi" == t.LANGUAGE ? "Xa hơn nữa" : "A little further", INVALID: L, NO_FACE: L, TIME_EXCEED: M, "Library not loaded": M, "Image format error": L }; if (w) { let L = null,
-                    M = null; var j = 0; if ((window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth) < 1024 ? ("FAR" == S && (j = .6 * 1.5 * .75, L = await R(j, .6)), "NEAR" == S && (j = 1.35, L = await R(j, 1)), M = await FaceVNPTBrowserSDK.processFace(L, 2)) : ("FAR" == S && (L = await R(.4, .65)), "NEAR" == S && (L = await R(.5, 1)), M = await FaceVNPTBrowserSDK.processFace(L, 1)), document.getElementById("notice-face").innerHTML = N[M], setTimeout(() => { requestAnimationFrame(U) }, 350), M === T ? C++ : M === I ? (v(), FaceVNPTBrowserSDK.free(), setTimeout((function() { r(), y(m), E.liveness_face = { object: {}, message: "liveness face error by TIME_EXCEED" }, i(E), n && n(E) }), 2e3)) : C = 0, C > 2 && "FAR" === S) { FaceVNPTBrowserSDK.notifyCapture(), a.playSegments([0, 100], !0), C = 0, S = "NEAR", w = !1; let e = await R(1, 1),
+                N = { FIT: "vi" == t.LANGUAGE ? "Giữ vững khuôn mặt" : "Keep your face steady", TO_THE_RIGHT: L, TO_THE_LEFT: L, TO_THE_BOTTOM: L, TO_THE_TOP: L, NOT_STRAIGHT: L, TOO_FAR: "vi" == t.LANGUAGE ? "Gần hơn nữa" : "A little closer", TOO_NEAR: "vi" == t.LANGUAGE ? "Xa hơn nữa" : "A little further", INVALID: L, NO_FACE: L, TIME_EXCEED: M, "Library not loaded": M, "Image format error": L };
+            if (w) {
+                let L = null,
+                    M = null;
+                var j = 0;
+                if ((window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth) < 1024 ? ("FAR" == S && (j = .6 * 1.5 * .75, L = await R(j, .6)), "NEAR" == S && (j = 1.35, L = await R(j, 1)), M = await FaceVNPTBrowserSDK.processFace(L, 2)) : ("FAR" == S && (L = await R(.4, .65)), "NEAR" == S && (L = await R(.5, 1)), M = await FaceVNPTBrowserSDK.processFace(L, 1)), document.getElementById("notice-face").innerHTML = N[M], setTimeout(() => { requestAnimationFrame(U) }, 350), M === T ? C++ : M === I ? (v(), FaceVNPTBrowserSDK.free(), setTimeout((function() { r(), y(m), E.liveness_face = { object: {}, message: "liveness face error by TIME_EXCEED" }, i(E), n && n(E) }), 2e3)) : C = 0, C > 2 && "FAR" === S) {
+                    FaceVNPTBrowserSDK.notifyCapture(), a.playSegments([0, 100], !0), C = 0, S = "NEAR", w = !1;
+                    let e = await R(1, 1),
                         i = { file: d(e.toDataURL()) };
-                    k.img_face_far = e.toDataURL(), E.base64_face_img = k, f(i, (function(e) { if (O.far_img = e.object.hash, t.COMPARE_FACE) { let i = {},
+                    k.img_face_far = e.toDataURL(), E.base64_face_img = k, f(i, (function(e) {
+                        if (O.far_img = e.object.hash, t.COMPARE_FACE) {
+                            let i = {},
                                 n = {};
                             i.hashFront = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, i.hashFace = e.object.hash, n.dataHash = i,
-                                function(e, t, i, n) { try { var a = (n.BACKEND_URL.length > 0 ? n.BACKEND_URL : h) + "ai/v1/web/face/compare",
+                                function(e, t, i, n) {
+                                    try {
+                                        var a = (n.BACKEND_URL.length > 0 ? n.BACKEND_URL : h) + "ai/v1/web/face/compare",
                                             c = { img_front: e.dataHash.hashFront, img_face: e.dataHash.hashFace, client_session: n.client_session, token: "/ai/v1/web/face/compare" };
-                                        o(a, { key: "Content-Type", value: "application/json" }, JSON.stringify(c), e => { t(JSON.parse(e)) }, e => { i(e) }, n) } catch (e) { console.log("compareFaceWebErr", e) } }(n, e => { E.compare = e }, e => { E.compare = JSON.parse(e) }, t) } if (t.CHECK_MASKED_FACE) { let i = {};
+                                        o(a, { key: "Content-Type", value: "application/json" }, JSON.stringify(c), e => { t(JSON.parse(e)) }, e => { i(e) }, n)
+                                    } catch (e) { console.log("compareFaceWebErr", e) }
+                                }(n, e => { E.compare = e }, e => { E.compare = JSON.parse(e) }, t)
+                        }
+                        if (t.CHECK_MASKED_FACE) {
+                            let i = {};
                             i.hashFace = e.object.hash,
-                                function(e, t, i, n) { try { var a = (n.BACKEND_URL.length > 0 ? n.BACKEND_URL : h) + "ai/v1/web/face/mask",
+                                function(e, t, i, n) {
+                                    try {
+                                        var a = (n.BACKEND_URL.length > 0 ? n.BACKEND_URL : h) + "ai/v1/web/face/mask",
                                             c = { img: e.hashFace, face_bbox: null, face_lmark: null, client_session: n.client_session };
-                                        o(a, { key: "Content-Type", value: "application/json" }, JSON.stringify(c), e => { t(JSON.parse(e)) }, e => { i(e) }, n) } catch (e) { console.log("maskedFaceWebErr", e) } }(i, e => { E.masked = e }, e => { E.masked = JSON.parse(e) }, t) } }), e => { console.log("loi upload file img_far", e) }, t), setTimeout(() => { w = !0, U() }, 3e3) } if (C > 2 && "NEAR" === S) { FaceVNPTBrowserSDK.notifyCapture(); let d = FaceVNPTBrowserSDK.getResult(),
+                                        o(a, { key: "Content-Type", value: "application/json" }, JSON.stringify(c), e => { t(JSON.parse(e)) }, e => { i(e) }, n)
+                                    } catch (e) { console.log("maskedFaceWebErr", e) }
+                                }(i, e => { E.masked = e }, e => { E.masked = JSON.parse(e) }, t)
+                        }
+                    }), e => { console.log("loi upload file img_far", e) }, t), setTimeout(() => { w = !0, U() }, 3e3)
+                }
+                if (C > 2 && "NEAR" === S) {
+                    FaceVNPTBrowserSDK.notifyCapture();
+                    let d = FaceVNPTBrowserSDK.getResult(),
                         T = { file: new Blob([d], { type: "text" }) };
-                    FaceVNPTBrowserSDK.free(), w = !1, a.playSegments([120, 180], !0); let I = await R(1, 1),
+                    FaceVNPTBrowserSDK.free(), w = !1, a.playSegments([120, 180], !0);
+                    let I = await R(1, 1),
                         C = (e = I.width, s = I.height, _ = I.toDataURL("image/jpeg"), p = c(_, b = e, A = s), document.getElementById("canvas-border").style.height = A + "px", { im_w: b, optimizer: l({ image_type: "jpeg", width: b, height: A, brand: "wb", date_taken: u(new Date), soft_ware: "vnpt_ekyc" }, "3cb7ecbd-2343-4272-b2f1-cdb12983ecc0"), current_height: A, file: g(p), image_base64: p });
 
                     function B(e) { setTimeout((function() { r(), y(m), E.liveness_face = e, i(E), n && n(E) }), 2e3) }
 
                     function D(e) { setTimeout((function() { r(), y(m), E.liveness_face = JSON.parse(e), i(E), n && n(E) }), 2e3) }
-                    k.img_face_near = I.toDataURL(), E.base64_face_img = k, v(), f(T, e => { f(C, (function(a) { O.near_img = a.object.hash, O.scan3d = e.object.hash, t.CHECK_LIVENESS_FACE ? function(e, t, i, n) { try { var a = (n.BACKEND_URL.length > 0 ? n.BACKEND_URL : h) + "ai/v1/web/face/liveness-3d",
+                    k.img_face_near = I.toDataURL(), E.base64_face_img = k, v(), f(T, e => {
+                        f(C, (function(a) {
+                            O.near_img = a.object.hash, O.scan3d = e.object.hash, t.CHECK_LIVENESS_FACE ? function(e, t, i, n) {
+                                try {
+                                    var a = (n.BACKEND_URL.length > 0 ? n.BACKEND_URL : h) + "ai/v1/web/face/liveness-3d",
                                         c = { far_img: e.far_img, near_img: e.near_img, scan3d: e.scan3d, token: "sdk-web-e41-1b6d-45c9-9", client_session: n.client_session };
-                                    o(a, { key: "Content-Type", value: "application/json" }, JSON.stringify(c), e => { t(JSON.parse(e)) }, e => { i(e) }, n) } catch (e) {} }(O, B, D, t) : setTimeout((function() { r(), y(m), i(E), n && n(E) }), 2e3) }), e => { r(), console.log("loi upload file img_near", e) }, t) }, e => { console.log("loi upload file 3dmask", e) }, t) } } } const j = async() => { const e = document.getElementById("tutorial_btn"),
+                                    o(a, { key: "Content-Type", value: "application/json" }, JSON.stringify(c), e => { t(JSON.parse(e)) }, e => { i(e) }, n)
+                                } catch (e) {}
+                            }(O, B, D, t) : setTimeout((function() { r(), y(m), i(E), n && n(E) }), 2e3)
+                        }), e => { r(), console.log("loi upload file img_near", e) }, t)
+                    }, e => { console.log("loi upload file 3dmask", e) }, t)
+                }
+            }
+        }
+        const j = async() => {
+            const e = document.getElementById("tutorial_btn"),
                 i = document.getElementById("tutorial-mobile"),
-                n = document.getElementById("webcame-zone"); let o = document.getElementById("header-title"),
+                n = document.getElementById("webcame-zone");
+            let o = document.getElementById("header-title"),
                 a = document.getElementById("ekyc-popup-1"),
-                c = document.getElementById("close-pop-1"); const l = async() => {! function(e) { try { var t = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
-                            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia; var i = "user",
-                                n = {}; if (t < 1024) { var o = window.innerWidth > 0 ? window.innerWidth : screen.width;
-                                n = { audio: !1, video: { facingMode: i, width: { ideal: o / .75 }, height: { ideal: o }, frameRate: { ideal: 30 } } } } else n = { audio: !1, video: { facingMode: i, width: { ideal: 640 }, height: { ideal: 360 } } };
-                            navigator.mediaDevices.getUserMedia && navigator.mediaDevices.getUserMedia(n).then((function(t) { if (video.srcObject = t, (t.getVideoTracks()[0].label ? t.getVideoTracks()[0].label.toLowerCase() : "anonymous").includes("fake")) { let e = s("VnVpIGzDsm5nIGtp4buDbSB0cmEgY2FtZXJhIGPhu6dhIGLhuqFuICE=");
-                                    alert(e), y(t), location.reload() } else video.play(), e(t) })).catch((function(e) { console.log("Something went wrong!", e); let t = s("VnVpIGzDsm5nIGtp4buDbSB0cmEgY2FtZXJhIGPhu6dhIGLhuqFuICE=");
-                                alert(t) })) } catch (e) { console.log("err webcam", e) } }(e => {! function(e) { e && m.push(e) }(e) }), w = !0, await U(), M > 1024 ? e.style.display = "block" : i.style.display = "block", a.style.display = "none", n.style.display = "block", o.style.display = "block" },
+                c = document.getElementById("close-pop-1");
+            const l = async() => {
+                    ! function(e) {
+                        try {
+                            var t = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+                            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+                            var i = "user",
+                                n = {};
+                            if (t < 1024) {
+                                var o = window.innerWidth > 0 ? window.innerWidth : screen.width;
+                                n = { audio: !1, video: { facingMode: i, width: { ideal: o / .75 }, height: { ideal: o }, frameRate: { ideal: 30 } } }
+                            } else n = { audio: !1, video: { facingMode: i, width: { ideal: 640 }, height: { ideal: 360 } } };
+                            navigator.mediaDevices.getUserMedia && navigator.mediaDevices.getUserMedia(n).then((function(t) {
+                                if (video.srcObject = t, (t.getVideoTracks()[0].label ? t.getVideoTracks()[0].label.toLowerCase() : "anonymous").includes("fake")) {
+                                    let e = s("VnVpIGzDsm5nIGtp4buDbSB0cmEgY2FtZXJhIGPhu6dhIGLhuqFuICE=");
+                                    alert(e), y(t), location.reload()
+                                } else video.play(), e(t)
+                            })).catch((function(e) {
+                                console.log("Something went wrong!", e);
+                                let t = s("VnVpIGzDsm5nIGtp4buDbSB0cmEgY2FtZXJhIGPhu6dhIGLhuqFuICE=");
+                                alert(t)
+                            }))
+                        } catch (e) { console.log("err webcam", e) }
+                    }(e => {! function(e) { e && m.push(e) }(e) }), w = !0, await U(), M > 1024 ? e.style.display = "block" : i.style.display = "block", a.style.display = "none", n.style.display = "block", o.style.display = "block"
+                },
                 d = async() => { w = !1, a.style.display = "block", n.style.display = "none", o.style.display = "none", M > 1024 ? e.style.display = "none" : i.style.display = "none" };
-            t.SHOW_HELP ? await d() : (await l(), e.style.display = "none", i.style.display = "none"), e.onclick = async() => { await d() }, i.onclick = async() => { await d() }, c.onclick = async() => { await l() } };
-        (async() => { await (async() => { p.insertAdjacentHTML("beforeend", b), _(document.getElementById("step1-demo-ekyc").getElementsByTagName("var"), t.LANGUAGE) })(), await j(), await (async() => { M < 1024 ? a = bodymovin.loadAnimation({ container: document.getElementById("animation"), path: T, renderer: "svg", loop: !1, autoplay: !1, name: "oval", rendererSettings: { progressiveLoad: !0 } }) : (document.getElementById("video").style.width = "640px", document.getElementById("video").style.height = "360px", a = bodymovin.loadAnimation({ container: document.getElementById("animation"), path: A, renderer: "svg", loop: !1, autoplay: !1, name: "oval" })), bodymovin.loadAnimation({ container: document.getElementById("notice-ani"), path: I, renderer: "svg", loop: !0, autoplay: !0, name: "caution" }) })() })() } var j = e => { const t = "" + e.MODAL_DOC_STYLE.touch_icon; return `<div class="ekyc-popup" id="ekyc-popup-1" style="box-shadow: rgba(0, 0, 0, 0.06) 0px 0px 2px, rgba(0, 0, 0, 0.1) 0px 3px 8px;">\n      <div class="pu-header">\n        <img class="close-btn" id="close-pop-1" width="32px" height="32px" src=${""+e.MODAL_DOC_STYLE.close_icon} />\n        <div class="icons"><img class="main-icons" src=${t} /></div>\n        <div class="content" id="header-title-pop" style="color: rgb(200, 36, 45);"><var>DOCUMENT_MODAL.TUTORIAL_TITLE</var></div>\n      </div>\n      <div class="pu-body">\n        <ul>\n          <li><var>DOCUMENT_MODAL.TUTORIAL_NOTICE1</var></li>\n          <li><var>DOCUMENT_MODAL.TUTORIAL_NOTICE2</var></li>\n        </ul>\n      </div>\n      <div class="pu-footer">\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_DOC_STYLE.notice1_icon} />\n          <p>\n            <var>DOCUMENT_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>DOCUMENT_MODAL.TUTORIAL1</var>\n          </p>\n        </div>\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_DOC_STYLE.notice2_icon} />\n          <p>\n            <var>DOCUMENT_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>DOCUMENT_MODAL.TUTORIAL2</var>\n          </p>\n        </div>\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_DOC_STYLE.notice3_icon} />\n          <p>\n            <var>DOCUMENT_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>DOCUMENT_MODAL.TUTORIAL3</var>\n          </p>\n        </div>\n      </div>\n    </div>`.replace(/(\r\n|\n|\r)/gm, "") }; var B = (e, t, i, n) => { let o = `<div class="capture-and-upload-block-wrapper">\n      <div class="capture-and-upload-block">\n        <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>${"front"==i?"FRONT.FRONT":"FRONT.BACK"}</var></p>\n        <div class="capture-and-upload-wrapper" style="background-color: ${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg}">\n          <div class="capture-and-upload-wrapper-body" style="background-image: url(${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg_img})">\n            <div class="btn-wrapper">\n              <div class="common-btn" id="capture-btn-id" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n                <img id="take-picture-step1-img" class="camera-icon"  src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n                <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_PHOTO</var></span>\n              </div>\n              <div id="upload-image-web" class="upload-btn-wrapper">\n                <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                  <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                  <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                </button>\n                <input accept="image/*" id="fileInputWeb10" name="img-id" type="file" />\n              </div>\n            </div>\n\n            <div class="camera_attach" id="front_camera">\n              <video id="camera_attach_video" width="100%" muted="" playsinline="" class="video-stream" src=""></video>\n              <div class="action-wrapper">\n                <div class="common-btn" id="caputure-in-video" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n                  <img id="take-picture-step1-img" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n                  <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_PHOTO</var></span>\n                </div>\n                <div id="upload-image-web" class="upload-btn-wrapper">\n                  <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                    <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                    <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                  </button>\n                  <input accept="image/*" id="fileInputWeb11" name="img-id" type="file" />\n                </div>\n              </div>\n            </div>\n\n            <div class="camera_result" id="results_front_camera">\n              <img id="img-result"/>\n              <div class="action-wrapper">\n                <div class="common-btn" id="re-caputure-in-video" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_background};">\n                  <img id="take-picture-step1-img" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.recapture_btn_icon}" />\n                  <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_color};"><var>FACE.TAKE_AGAIN</var></span>\n                </div>\n                <div id="upload-image-web" class="upload-btn-wrapper">\n                  <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                    <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                    <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                  </button>\n                  <input accept="image/*" id="fileInputWeb12" name="img-id" type="file" />\n                </div>\n            </div>\n            </div>\n          </div>\n        </div>\n\n        <div class="description" id="description-1" style="color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <p><var>FACE.PLEASE</var></p>\n          <p><var>FRONT.GUIDE_4</var></p>\n        </div>\n        <div class="description" id="description-2" style="color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <p><var>FRONT.GUIDE_7</var></p>\n        </div>\n\n        <div class="common-btn" id="next-step-btn" style="background-color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background};">\n          <img class="next-icon" src=${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon} />\n          <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_color}"><var>FACE.NEXT</var></span>\n        </div>\n        ${L(t)}\n        <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n      </div>\n      <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n      ${j(t)}\n    </div>`; const a = document.getElementById("ekyc_sdk_intergrated");
+            t.SHOW_HELP ? await d() : (await l(), e.style.display = "none", i.style.display = "none"), e.onclick = async() => { await d() }, i.onclick = async() => { await d() }, c.onclick = async() => { await l() }
+        };
+        (async() => { await (async() => { p.insertAdjacentHTML("beforeend", b), _(document.getElementById("step1-demo-ekyc").getElementsByTagName("var"), t.LANGUAGE) })(), await j(), await (async() => { M < 1024 ? a = bodymovin.loadAnimation({ container: document.getElementById("animation"), path: T, renderer: "svg", loop: !1, autoplay: !1, name: "oval", rendererSettings: { progressiveLoad: !0 } }) : (document.getElementById("video").style.width = "640px", document.getElementById("video").style.height = "360px", a = bodymovin.loadAnimation({ container: document.getElementById("animation"), path: A, renderer: "svg", loop: !1, autoplay: !1, name: "oval" })), bodymovin.loadAnimation({ container: document.getElementById("notice-ani"), path: I, renderer: "svg", loop: !0, autoplay: !0, name: "caution" }) })() })()
+    }
+    var j = e => { const t = "" + e.MODAL_DOC_STYLE.touch_icon; return `<div class="ekyc-popup" id="ekyc-popup-1" style="box-shadow: rgba(0, 0, 0, 0.06) 0px 0px 2px, rgba(0, 0, 0, 0.1) 0px 3px 8px;">\n      <div class="pu-header">\n        <img class="close-btn" id="close-pop-1" width="32px" height="32px" src=${""+e.MODAL_DOC_STYLE.close_icon} />\n        <div class="icons"><img class="main-icons" src=${t} /></div>\n        <div class="content" id="header-title-pop" style="color: rgb(200, 36, 45);"><var>DOCUMENT_MODAL.TUTORIAL_TITLE</var></div>\n      </div>\n      <div class="pu-body">\n        <ul>\n          <li><var>DOCUMENT_MODAL.TUTORIAL_NOTICE1</var></li>\n          <li><var>DOCUMENT_MODAL.TUTORIAL_NOTICE2</var></li>\n        </ul>\n      </div>\n      <div class="pu-footer">\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_DOC_STYLE.notice1_icon} />\n          <p>\n            <var>DOCUMENT_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>DOCUMENT_MODAL.TUTORIAL1</var>\n          </p>\n        </div>\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_DOC_STYLE.notice2_icon} />\n          <p>\n            <var>DOCUMENT_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>DOCUMENT_MODAL.TUTORIAL2</var>\n          </p>\n        </div>\n        <div class="text-center">\n          <img class="main-icons" src=${""+e.MODAL_DOC_STYLE.notice3_icon} />\n          <p>\n            <var>DOCUMENT_MODAL.DO_NOT</var>\n          </p>\n          <p>\n            <var>DOCUMENT_MODAL.TUTORIAL3</var>\n          </p>\n        </div>\n      </div>\n    </div>`.replace(/(\r\n|\n|\r)/gm, "") };
+    var B = (e, t, i, n) => {
+        let o = `<div class="capture-and-upload-block-wrapper">\n      <div class="capture-and-upload-block">\n        <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>${"front"==i?"FRONT.FRONT":"FRONT.BACK"}</var></p>\n        <div class="capture-and-upload-wrapper" style="background-color: ${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg}">\n          <div class="capture-and-upload-wrapper-body" style="background-image: url(${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg_img})">\n            <div class="btn-wrapper">\n              <div class="common-btn" id="capture-btn-id" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n                <img id="take-picture-step1-img" class="camera-icon"  src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n                <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_PHOTO</var></span>\n              </div>\n              <div id="upload-image-web" class="upload-btn-wrapper">\n                <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                  <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                  <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                </button>\n                <input accept="image/*" id="fileInputWeb10" name="img-id" type="file" />\n              </div>\n            </div>\n\n            <div class="camera_attach" id="front_camera">\n              <video id="camera_attach_video" width="100%" muted="" playsinline="" class="video-stream" src=""></video>\n              <div class="action-wrapper">\n                <div class="common-btn" id="caputure-in-video" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n                  <img id="take-picture-step1-img" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n                  <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_PHOTO</var></span>\n                </div>\n                <div id="upload-image-web" class="upload-btn-wrapper">\n                  <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                    <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                    <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                  </button>\n                  <input accept="image/*" id="fileInputWeb11" name="img-id" type="file" />\n                </div>\n              </div>\n            </div>\n\n            <div class="camera_result" id="results_front_camera">\n              <img id="img-result"/>\n              <div class="action-wrapper">\n                <div class="common-btn" id="re-caputure-in-video" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_background};">\n                  <img id="take-picture-step1-img" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.recapture_btn_icon}" />\n                  <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_color};"><var>FACE.TAKE_AGAIN</var></span>\n                </div>\n                <div id="upload-image-web" class="upload-btn-wrapper">\n                  <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                    <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                    <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                  </button>\n                  <input accept="image/*" id="fileInputWeb12" name="img-id" type="file" />\n                </div>\n            </div>\n            </div>\n          </div>\n        </div>\n\n        <div class="description" id="description-1" style="color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <p><var>FACE.PLEASE</var></p>\n          <p><var>FRONT.GUIDE_4</var></p>\n        </div>\n        <div class="description" id="description-2" style="color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <p><var>FRONT.GUIDE_7</var></p>\n        </div>\n\n        <div class="common-btn" id="next-step-btn" style="background-color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background};">\n          <img class="next-icon" src=${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon} />\n          <span class="title" id="take-picture-step1-title" style="color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_color}"><var>FACE.NEXT</var></span>\n        </div>\n        ${L(t)}\n        <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n      </div>\n      <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n      ${j(t)}\n    </div>`;
+        const a = document.getElementById("ekyc_sdk_intergrated");
         a.insertAdjacentHTML("beforeend", o.replace(/(\r\n|\n|\r)/gm, ""));
-        _(a.getElementsByTagName("var"), t.LANGUAGE); const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth; let l = document.getElementById("tutorial-mobile"),
+        _(a.getElementsByTagName("var"), t.LANGUAGE);
+        const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+        let l = document.getElementById("tutorial-mobile"),
             s = document.getElementById("tutorial_btn"),
             r = document.getElementById("close-pop-1"),
             v = document.getElementById("ekyc-popup-1"),
@@ -332,47 +564,86 @@ var ekycsdk = function(e) { var t = {};
         function B() { c > 1024 ? s.style.display = "block" : l.style.display = "block", v.style.display = "none", p.style.display = "block" }
 
         function D(e) { e && O.push(e) }
-        N.typeDocument = e, S.type_document = e, S.client_session = t.client_session ? t.client_session : ""; const P = e => { "front" == i && (localStorage.setItem("img_front_document", JSON.stringify(e.object.hash)), M.hash0 = e.object.hash), "back" == i && (M.hash1 = e.object.hash), u.style.display = "none" },
+        N.typeDocument = e, S.type_document = e, S.client_session = t.client_session ? t.client_session : "";
+        const P = e => { "front" == i && (localStorage.setItem("img_front_document", JSON.stringify(e.object.hash)), M.hash0 = e.object.hash), "back" == i && (M.hash1 = e.object.hash), u.style.display = "none" },
             G = e => { u.style.display = "none", console.log("uploadFileFail", e) },
-            F = e => { let n = null,
+            F = e => {
+                let n = null,
                     o = {};
-                E.style.display = "none", g.style.display = "block", g.style.display = "none", b.style.display = "block", h.src = e.target.result, u.style.display = "block", x(), O.length > 0 && y(O), "front" == i ? S.img_front_b64 = e.target.result : S.img_back_b64 = e.target.result, n = d(e.target.result), o.file = n, f(o, P, G, t) },
+                E.style.display = "none", g.style.display = "block", g.style.display = "none", b.style.display = "block", h.src = e.target.result, u.style.display = "block", x(), O.length > 0 && y(O), "front" == i ? S.img_front_b64 = e.target.result : S.img_back_b64 = e.target.result, n = d(e.target.result), o.file = n, f(o, P, G, t)
+            },
             x = () => { A.style.display = "none", w.style.display = "block", C.style.display = "flex" };
-        document.getElementById("capture-btn-id").onclick = function() { E.style.display = "none", g.style.display = "block", u.style.display = "block", m("camera_attach_video", e => { D(e), e && (u.style.display = "none") }) }, document.getElementById("caputure-in-video").onclick = function() { let e = document.getElementById("camera_attach_video"),
+        document.getElementById("capture-btn-id").onclick = function() { E.style.display = "none", g.style.display = "block", u.style.display = "block", m("camera_attach_video", e => { D(e), e && (u.style.display = "none") }) }, document.getElementById("caputure-in-video").onclick = function() {
+            let e = document.getElementById("camera_attach_video"),
                 n = document.createElement("canvas"),
                 o = null,
                 a = null,
                 c = {};
-            n.width = e.videoWidth, n.height = e.videoHeight, n.getContext("2d").drawImage(e, 0, 0, e.videoWidth, e.videoHeight), o = n.toDataURL("image/jpeg"), h.src = o, a = d(o), c.file = a, g.style.display = "none", b.style.display = "block", u.style.display = "block", x(), y(O), "front" == i ? S.img_front_b64 = o : S.img_back_b64 = o, f(c, P, G, t) }, document.getElementById("re-caputure-in-video").onclick = function() { b.style.display = "none", g.style.display = "block", A.style.display = "block", w.style.display = "none", C.style.display = "none", u.style.display = "block", m("camera_attach_video", e => { e && (u.style.display = "none"), D(e) }) }, document.getElementById("fileInputWeb10").onchange = function() { let e = this.value,
+            n.width = e.videoWidth, n.height = e.videoHeight, n.getContext("2d").drawImage(e, 0, 0, e.videoWidth, e.videoHeight), o = n.toDataURL("image/jpeg"), h.src = o, a = d(o), c.file = a, g.style.display = "none", b.style.display = "block", u.style.display = "block", x(), y(O), "front" == i ? S.img_front_b64 = o : S.img_back_b64 = o, f(c, P, G, t)
+        }, document.getElementById("re-caputure-in-video").onclick = function() { b.style.display = "none", g.style.display = "block", A.style.display = "block", w.style.display = "none", C.style.display = "none", u.style.display = "block", m("camera_attach_video", e => { e && (u.style.display = "none"), D(e) }) }, document.getElementById("fileInputWeb10").onchange = function() {
+            let e = this.value,
                 t = /(\.jpg|\.jpeg|\.png|\.gif)$/i,
                 i = new FileReader,
                 n = this.files[0];
-            i.onloadend = i => { if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
-                F(i) }, i.readAsDataURL(n) }, document.getElementById("fileInputWeb11").onchange = function() { let e = this.value,
+            i.onloadend = i => {
+                if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
+                F(i)
+            }, i.readAsDataURL(n)
+        }, document.getElementById("fileInputWeb11").onchange = function() {
+            let e = this.value,
                 t = /(\.jpg|\.jpeg|\.png|\.gif)$/i,
                 i = new FileReader,
                 n = this.files[0];
-            i.onloadend = i => { if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
-                F(i) }, i.readAsDataURL(n) }, document.getElementById("fileInputWeb12").onchange = function() { let e = this.value,
+            i.onloadend = i => {
+                if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
+                F(i)
+            }, i.readAsDataURL(n)
+        }, document.getElementById("fileInputWeb12").onchange = function() {
+            let e = this.value,
                 t = /(\.jpg|\.jpeg|\.png|\.gif)$/i,
                 i = new FileReader,
                 n = this.files[0];
-            i.onloadend = i => { if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
-                F(i) }, i.readAsDataURL(n) }; const Y = async() => { u.style.display = "none" };
-        C.onclick = async() => { if (u.style.display = "block", "front" == i)
+            i.onloadend = i => {
+                if (!n || !t.exec(e)) return alert("Please upload file image only."), this.value = "", !1;
+                F(i)
+            }, i.readAsDataURL(n)
+        };
+        const Y = async() => { u.style.display = "none" };
+        C.onclick = async() => {
+            if (u.style.display = "block", "front" == i)
                 if (await FaceVNPTBrowserSDK.init(), R.currentHash = M.hash0, N.currentHash = M.hash0, 5 == e || 6 == e)
-                    if (t.CHECK_LIVENESS_CARD) { const e = await k(R, t),
+                    if (t.CHECK_LIVENESS_CARD) {
+                        const e = await k(R, t),
                             i = await T(N, t);
-                        S.ocr = i, S.liveness_card_front = e, await n(S), await Y() } else { const e = await T(N, t);
-                        S.ocr = e, await n(S), await Y() }
-            else if (t.CHECK_LIVENESS_CARD) { const e = await k(R, t);
-                S.liveness_card_front = e, await n(S), await Y() } else await n(S), await Y();
-            else { let e = {}; if (e.hash0 = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, e.hash1 = M.hash1, N.dataHash = e, R.currentHash = M.hash1, t.CHECK_LIVENESS_CARD) { const e = await k(R, t),
+                        S.ocr = i, S.liveness_card_front = e, await n(S), await Y()
+                    } else {
+                        const e = await T(N, t);
+                        S.ocr = e, await n(S), await Y()
+                    }
+            else if (t.CHECK_LIVENESS_CARD) {
+                const e = await k(R, t);
+                S.liveness_card_front = e, await n(S), await Y()
+            } else await n(S), await Y();
+            else {
+                let e = {};
+                if (e.hash0 = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, e.hash1 = M.hash1, N.dataHash = e, R.currentHash = M.hash1, t.CHECK_LIVENESS_CARD) {
+                    const e = await k(R, t),
                         i = await I(N, t);
-                    S.ocr = i, S.liveness_card_back = e, await n(S), await Y() } else { const e = await I(N, t);
-                    S.ocr = e, await n(S), await Y() } } }, r.onclick = function() { B() }, s.onclick = function() { U() }, l.onclick = function() { U() }, t.SHOW_HELP ? "front" == i ? U() : B() : (B(), s.style.display = "none", l.style.display = "none") }; var D = (e, t, i, n) => { var o = `<div class="capture-webcam-wrapper">\n      <div class="capture-webcam">\n        <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>${"front"==i?"FRONT.FRONT":"FRONT.BACK"}</var></p>\n        <div class="webcame-zone" id="webcame-zone" >\n          <div class="video-block" id="video-block"><video class="action-block" id="video1" muted="" playsinline="" autoplay=""></video></div>\n          <div id="webcam-result">\n            <img id="img-result" />\n          </div>\n        </div>\n        <div class="ekyc_description" id="ekyc_description" style="display: block; color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <span><var>FACE.PLEASE</var></span><br />\n          <span><var>FRONT.GUIDE_4</var></span>\n        </div>\n        <div class="take-picture-btn" id="take-picture-webcam" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n          <img id="take-picture-webcam-img" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n          <span class="title" id="take-picture-webcam-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_PHOTO</var></span>\n        </div>\n        \n        <div class="after-capture-wrapper" id="after-capture">\n          <div class="step1-after-capture">\n            <div class="re-capture" id="re-capture" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_background}; border: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_border}">\n              <img id="re-capture-icon" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.recapture_btn_icon}" />\n              <span id="re-capture-title" style="color: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_color};"><var>FACE.TAKE_AGAIN</var></span>\n            </div>\n            <div class="next-step" id="step1-next-step" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background}">\n              <img id="step1-next-step-icon" class="next-icon" src="${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon}" />\n              <span id="step1-next-step-title" style="color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_color};"><var>FACE.NEXT</var></span>\n            </div>\n          </div>\n        </div>\n        ${L(t)}\n        <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n      </div>\n      <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n      ${j(t)}\n    </div>`; const a = document.getElementById("ekyc_sdk_intergrated");
+                    S.ocr = i, S.liveness_card_back = e, await n(S), await Y()
+                } else {
+                    const e = await I(N, t);
+                    S.ocr = e, await n(S), await Y()
+                }
+            }
+        }, r.onclick = function() { B() }, s.onclick = function() { U() }, l.onclick = function() { U() }, t.SHOW_HELP ? "front" == i ? U() : B() : (B(), s.style.display = "none", l.style.display = "none")
+    };
+    var D = (e, t, i, n) => {
+        var o = `<div class="capture-webcam-wrapper">\n      <div class="capture-webcam">\n        <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>${"front"==i?"FRONT.FRONT":"FRONT.BACK"}</var></p>\n        <div class="webcame-zone" id="webcame-zone" >\n          <div class="video-block" id="video-block"><video class="action-block" id="video1" muted="" playsinline="" autoplay=""></video></div>\n          <div id="webcam-result">\n            <img id="img-result" />\n          </div>\n        </div>\n        <div class="ekyc_description" id="ekyc_description" style="display: block; color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <span><var>FACE.PLEASE</var></span><br />\n          <span><var>FRONT.GUIDE_4</var></span>\n        </div>\n        <div class="take-picture-btn" id="take-picture-webcam" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.capture_btn_background};">\n          <img id="take-picture-webcam-img" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.capture_btn_icon}" />\n          <span class="title" id="take-picture-webcam-title" style="color: ${t.CAPTURE_IMAGE_STYLE.capture_btn_color};"><var>FACE.TAKE_PHOTO</var></span>\n        </div>\n        \n        <div class="after-capture-wrapper" id="after-capture">\n          <div class="step1-after-capture">\n            <div class="re-capture" id="re-capture" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_background}; border: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_border}">\n              <img id="re-capture-icon" class="camera-icon" src="${t.CAPTURE_IMAGE_STYLE.recapture_btn_icon}" />\n              <span id="re-capture-title" style="color: ${t.CAPTURE_IMAGE_STYLE.recapture_btn_color};"><var>FACE.TAKE_AGAIN</var></span>\n            </div>\n            <div class="next-step" id="step1-next-step" style="display: flex; background: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background}">\n              <img id="step1-next-step-icon" class="next-icon" src="${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon}" />\n              <span id="step1-next-step-title" style="color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_color};"><var>FACE.NEXT</var></span>\n            </div>\n          </div>\n        </div>\n        ${L(t)}\n        <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n      </div>\n      <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n      ${j(t)}\n    </div>`;
+        const a = document.getElementById("ekyc_sdk_intergrated");
         a.insertAdjacentHTML("beforeend", o.replace(/(\r\n|\n|\r)/gm, ""));
-        _(a.getElementsByTagName("var"), t.LANGUAGE), m("video1", e => { D(e) }); const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth; let l = document.getElementById("tutorial-mobile"),
+        _(a.getElementsByTagName("var"), t.LANGUAGE), m("video1", e => { D(e) });
+        const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+        let l = document.getElementById("tutorial-mobile"),
             s = document.getElementById("tutorial_btn"),
             r = document.getElementById("close-pop-1"),
             v = document.getElementById("ekyc-popup-1"),
@@ -396,28 +667,53 @@ var ekycsdk = function(e) { var t = {};
         function B() { c > 1024 ? s.style.display = "block" : l.style.display = "block", v.style.display = "none", p.style.display = "block" }
 
         function D(e) { e && O.push(e) }
-        S.type_document = e, S.client_session = t.client_session ? t.client_session : "", R.typeDocument = e; const P = e => { "front" == i && (localStorage.setItem("img_front_document", JSON.stringify(e.object.hash)), M.hash0 = e.object.hash), "back" == i && (M.hash1 = e.object.hash), w.style.display = "none" },
+        S.type_document = e, S.client_session = t.client_session ? t.client_session : "", R.typeDocument = e;
+        const P = e => { "front" == i && (localStorage.setItem("img_front_document", JSON.stringify(e.object.hash)), M.hash0 = e.object.hash), "back" == i && (M.hash1 = e.object.hash), w.style.display = "none" },
             G = e => { w.style.display = "none", console.log("uploadFileFail", e) };
-        u.onclick = () => { let e = document.getElementById("video1"),
+        u.onclick = () => {
+            let e = document.getElementById("video1"),
                 n = document.createElement("canvas"),
                 o = null,
                 a = null,
                 c = {};
-            n.width = e.videoWidth, n.height = e.videoHeight, n.getContext("2d").drawImage(e, 0, 0, e.videoWidth, e.videoHeight), o = n.toDataURL("image/jpeg"), b.src = o, a = d(o), c.file = a, g.style.display = "none", u.style.display = "none", h.style.display = "block", A.style.display = "block", w.style.display = "block", y(O), "front" == i ? S.img_front_b64 = o : S.img_back_b64 = o, f(c, P, G, t) }, E.onclick = () => { A.style.display = "none", h.style.display = "none", g.style.display = "block", u.style.display = "flex", m("video1", e => { D(e) }) }; const F = async() => { w.style.display = "none" };
-        C.onclick = async() => { if (w.style.display = "block", "front" == i)
+            n.width = e.videoWidth, n.height = e.videoHeight, n.getContext("2d").drawImage(e, 0, 0, e.videoWidth, e.videoHeight), o = n.toDataURL("image/jpeg"), b.src = o, a = d(o), c.file = a, g.style.display = "none", u.style.display = "none", h.style.display = "block", A.style.display = "block", w.style.display = "block", y(O), "front" == i ? S.img_front_b64 = o : S.img_back_b64 = o, f(c, P, G, t)
+        }, E.onclick = () => { A.style.display = "none", h.style.display = "none", g.style.display = "block", u.style.display = "flex", m("video1", e => { D(e) }) };
+        const F = async() => { w.style.display = "none" };
+        C.onclick = async() => {
+            if (w.style.display = "block", "front" == i)
                 if (await FaceVNPTBrowserSDK.init(), N.currentHash = M.hash0, R.currentHash = M.hash0, 5 == e || 6 == e)
-                    if (t.CHECK_LIVENESS_CARD) { const e = await k(N, t),
+                    if (t.CHECK_LIVENESS_CARD) {
+                        const e = await k(N, t),
                             i = await T(R, t);
-                        S.ocr = i, S.liveness_card_front = e, await n(S), await F() } else { const e = await T(R, t);
-                        S.ocr = e, await n(S), await F() }
-            else if (t.CHECK_LIVENESS_CARD) { const e = await k(N, t);
-                S.liveness_card_front = e, await n(S), await F() } else await n(S), await F();
-            else { let e = {}; if (e.hash0 = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, e.hash1 = M.hash1, R.dataHash = e, N.currentHash = M.hash1, t.CHECK_LIVENESS_CARD) { const e = await k(N, t),
+                        S.ocr = i, S.liveness_card_front = e, await n(S), await F()
+                    } else {
+                        const e = await T(R, t);
+                        S.ocr = e, await n(S), await F()
+                    }
+            else if (t.CHECK_LIVENESS_CARD) {
+                const e = await k(N, t);
+                S.liveness_card_front = e, await n(S), await F()
+            } else await n(S), await F();
+            else {
+                let e = {};
+                if (e.hash0 = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, e.hash1 = M.hash1, R.dataHash = e, N.currentHash = M.hash1, t.CHECK_LIVENESS_CARD) {
+                    const e = await k(N, t),
                         i = await I(R, t);
-                    S.ocr = i, S.liveness_card_back = e, await n(S), await F() } else { const e = await I(R, t);
-                    S.ocr = e, await n(S), await F() } } }, r.onclick = function() { B() }, s.onclick = function() { U() }, l.onclick = function() { U() }, t.SHOW_HELP ? "front" == i ? U() : B() : (B(), s.style.display = "none", l.style.display = "none") }; var P = (e, t, i, n) => { let o = `<div class="capture-and-upload-block-wrapper">\n      <div class="capture-and-upload-block">\n        <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>${"front"==i?"FRONT.FRONT":"FRONT.BACK"}</var></p>\n        <div class="capture-and-upload-wrapper" style="background-color: ${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg}">\n          <div class="capture-and-upload-wrapper-body" style="background-image: url(${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg_img})">\n            <div class="btn-wrapper">\n              <div id="upload-image-web" class="upload-btn-wrapper">\n                <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                  <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                  <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                </button>\n                <input accept="file" id="fileInputWeb10" name="img-id" type="file" />\n              </div>\n            </div>\n\n            <div class="camera_result" id="results_front_camera">\n              <img id="img-result"/>\n              <div class="action-wrapper">\n                <div id="upload-image-web" class="upload-btn-wrapper">\n                  <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                    <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                    <span  style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                  </button>\n                  <input accept="file" id="fileInputWeb12" name="img-id" type="file" />\n                </div>\n            </div>\n            </div>\n          </div>\n        </div>\n\n        <div class="description" id="description-1" style="color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <p><var>FACE.PLEASE</var></p>\n          <p><var>FRONT.GUIDE_4</var></p>\n        </div>\n        <div class="description" id="description-2" style="color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <p><var>FRONT.GUIDE_7</var></p>\n        </div>\n\n        <div class="common-btn" id="next-step-btn" style="background-color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background}">\n          <img class="next-icon" src=${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon} />\n          <span class="title" id="take-picture-step1-title"  style="color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_color}"><var>FACE.NEXT</var></span>\n        </div>\n        ${L(t)}\n        <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n      </div>\n      <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n      ${j(t)}\n    </div>`; const a = document.getElementById("ekyc_sdk_intergrated");
+                    S.ocr = i, S.liveness_card_back = e, await n(S), await F()
+                } else {
+                    const e = await I(R, t);
+                    S.ocr = e, await n(S), await F()
+                }
+            }
+        }, r.onclick = function() { B() }, s.onclick = function() { U() }, l.onclick = function() { U() }, t.SHOW_HELP ? "front" == i ? U() : B() : (B(), s.style.display = "none", l.style.display = "none")
+    };
+    var P = (e, t, i, n) => {
+        let o = `<div class="capture-and-upload-block-wrapper">\n      <div class="capture-and-upload-block">\n        <p class="header-title" style="color:${t.CAPTURE_IMAGE_STYLE.big_title_color}"><var>${"front"==i?"FRONT.FRONT":"FRONT.BACK"}</var></p>\n        <div class="capture-and-upload-wrapper" style="background-color: ${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg}">\n          <div class="capture-and-upload-wrapper-body" style="background-image: url(${t.CAPTURE_IMAGE_STYLE.capture_and_upload_wrapper_bg_img})">\n            <div class="btn-wrapper">\n              <div id="upload-image-web" class="upload-btn-wrapper">\n                <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                  <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                  <span style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                </button>\n                <input accept="file" id="fileInputWeb10" name="img-id" type="file" />\n              </div>\n            </div>\n\n            <div class="camera_result" id="results_front_camera">\n              <img id="img-result"/>\n              <div class="action-wrapper">\n                <div id="upload-image-web" class="upload-btn-wrapper">\n                  <button class="btn btn-upload-image" style="border: ${t.CAPTURE_IMAGE_STYLE.upload_btn_boder};background-color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_background}">\n                    <img alt="active" src=${t.CAPTURE_IMAGE_STYLE.upload_btn_icon} />\n                    <span  style="color: ${t.CAPTURE_IMAGE_STYLE.upload_btn_color}"><var>FRONT.UPLOAD_IMAGE</var></span>\n                  </button>\n                  <input accept="file" id="fileInputWeb12" name="img-id" type="file" />\n                </div>\n            </div>\n            </div>\n          </div>\n        </div>\n\n        <div class="description" id="description-1" style="color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <p><var>FACE.PLEASE</var></p>\n          <p><var>FRONT.GUIDE_4</var></p>\n        </div>\n        <div class="description" id="description-2" style="color:${t.CAPTURE_IMAGE_STYLE.description1_color};">\n          <p><var>FRONT.GUIDE_7</var></p>\n        </div>\n\n        <div class="common-btn" id="next-step-btn" style="background-color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_background}">\n          <img class="next-icon" src=${t.CAPTURE_IMAGE_STYLE.nextstep_btn_icon} />\n          <span class="title" id="take-picture-step1-title"  style="color: ${t.CAPTURE_IMAGE_STYLE.nextstep_btn_color}"><var>FACE.NEXT</var></span>\n        </div>\n        ${L(t)}\n        <div class="tutorial-mobile"><a id="tutorial-mobile"><var>FACE.GUIDE</var></a></div>\n      </div>\n      <img id="tutorial_btn" class="tutorial_btn" src=${t.CAPTURE_IMAGE_STYLE.tutorial_btn_icon}>\n      ${j(t)}\n    </div>`;
+        const a = document.getElementById("ekyc_sdk_intergrated");
         a.insertAdjacentHTML("beforeend", o.replace(/(\r\n|\n|\r)/gm, ""));
-        _(a.getElementsByTagName("var"), t.LANGUAGE); const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth; let l = document.getElementById("tutorial-mobile"),
+        _(a.getElementsByTagName("var"), t.LANGUAGE);
+        const c = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+        let l = document.getElementById("tutorial-mobile"),
             s = document.getElementById("tutorial_btn"),
             r = document.getElementById("close-pop-1"),
             v = document.getElementById("ekyc-popup-1"),
@@ -437,201 +733,484 @@ var ekycsdk = function(e) { var t = {};
         function O() { v.style.display = "block", p.style.display = "none", c > 1024 ? s.style.display = "none" : l.style.display = "none" }
 
         function M() { c > 1024 ? s.style.display = "block" : l.style.display = "block", v.style.display = "none", p.style.display = "block" }
-        A.type_document = e, A.client_session = t.client_session ? t.client_session : "", S.typeDocument = e; const R = e => { "front" == i && (localStorage.setItem("img_front_document", JSON.stringify(e.object.hash)), w.hash0 = e.object.hash), "back" == i && (w.hash1 = e.object.hash), u.style.display = "none" },
+        A.type_document = e, A.client_session = t.client_session ? t.client_session : "", S.typeDocument = e;
+        const R = e => { "front" == i && (localStorage.setItem("img_front_document", JSON.stringify(e.object.hash)), w.hash0 = e.object.hash), "back" == i && (w.hash1 = e.object.hash), u.style.display = "none" },
             N = e => { u.style.display = "none", console.log("uploadFileFail", e) },
-            U = e => { var n, o = {};
-                y.style.display = "none", g.style.display = "block", m.src = e.target.result, u.style.display = "block", B(), "front" == i ? A.img_front_b64 = e.target.result : A.img_back_b64 = e.target.result, n = d(e.target.result), o.file = n, f(o, R, N, t) },
+            U = e => {
+                var n, o = {};
+                y.style.display = "none", g.style.display = "block", m.src = e.target.result, u.style.display = "block", B(), "front" == i ? A.img_front_b64 = e.target.result : A.img_back_b64 = e.target.result, n = d(e.target.result), o.file = n, f(o, R, N, t)
+            },
             B = () => { b.style.display = "none", h.style.display = "block", E.style.display = "flex" };
-        document.getElementById("fileInputWeb10").onchange = function() { let e = this.value,
+        document.getElementById("fileInputWeb10").onchange = function() {
+            let e = this.value,
                 t = /(\.jpg|\.jpeg|\.png|\.gif)$/i,
                 i = new FileReader,
                 n = this.files[0];
-            i.onloadend = i => { if (!n || !t.exec(e)) return alert("Please upload file image only!"), this.value = "", !1;
-                U(i) }, i.readAsDataURL(n) }, document.getElementById("fileInputWeb12").onchange = function() { let e = this.value,
+            i.onloadend = i => {
+                if (!n || !t.exec(e)) return alert("Please upload file image only!"), this.value = "", !1;
+                U(i)
+            }, i.readAsDataURL(n)
+        }, document.getElementById("fileInputWeb12").onchange = function() {
+            let e = this.value,
                 t = /(\.jpg|\.jpeg|\.png|\.gif)$/i,
                 i = new FileReader,
                 n = this.files[0];
-            i.onloadend = i => { if (!n || !t.exec(e)) return alert("Please upload file image only!"), this.value = "", !1;
-                U(i) }, i.readAsDataURL(n) }; const D = async() => { u.style.display = "none" };
-        E.onclick = async() => { if (u.style.display = "block", "front" == i)
+            i.onloadend = i => {
+                if (!n || !t.exec(e)) return alert("Please upload file image only!"), this.value = "", !1;
+                U(i)
+            }, i.readAsDataURL(n)
+        };
+        const D = async() => { u.style.display = "none" };
+        E.onclick = async() => {
+            if (u.style.display = "block", "front" == i)
                 if (await FaceVNPTBrowserSDK.init(), C.currentHash = w.hash0, S.currentHash = w.hash0, 5 == e || 6 == e)
-                    if (t.CHECK_LIVENESS_CARD) { const e = await k(C, t),
+                    if (t.CHECK_LIVENESS_CARD) {
+                        const e = await k(C, t),
                             i = await T(S, t);
-                        A.ocr = i, A.liveness_card_front = e, await n(A), await D() } else { const e = await T(S, t);
-                        A.ocr = e, await n(A), await D() }
-            else if (t.CHECK_LIVENESS_CARD) { const e = await k(C, t);
-                A.liveness_card_front = e, await n(A), await D() } else await n(A), await D();
-            else { let e = {}; if (e.hash0 = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, e.hash1 = w.hash1, S.dataHash = e, C.currentHash = w.hash1, t.CHECK_LIVENESS_CARD) { const e = await k(C, t),
+                        A.ocr = i, A.liveness_card_front = e, await n(A), await D()
+                    } else {
+                        const e = await T(S, t);
+                        A.ocr = e, await n(A), await D()
+                    }
+            else if (t.CHECK_LIVENESS_CARD) {
+                const e = await k(C, t);
+                A.liveness_card_front = e, await n(A), await D()
+            } else await n(A), await D();
+            else {
+                let e = {};
+                if (e.hash0 = localStorage.getItem("img_front_document") ? JSON.parse(localStorage.getItem("img_front_document")) : null, e.hash1 = w.hash1, S.dataHash = e, C.currentHash = w.hash1, t.CHECK_LIVENESS_CARD) {
+                    const e = await k(C, t),
                         i = await I(S, t);
-                    A.ocr = i, A.liveness_card_back = e, await n(A), await D() } else { const e = await I(S, t);
-                    A.ocr = e, await n(A), await D() } } }, r.onclick = function() { M() }, s.onclick = function() { O() }, l.onclick = function() { O() }, t.SHOW_HELP ? "front" == i ? O() : M() : (M(), s.style.display = "none", l.style.display = "none") }; var G = function(e, t, i, n) { let o = {},
+                    A.ocr = i, A.liveness_card_back = e, await n(A), await D()
+                } else {
+                    const e = await I(S, t);
+                    A.ocr = e, await n(A), await D()
+                }
+            }
+        }, r.onclick = function() { M() }, s.onclick = function() { O() }, l.onclick = function() { O() }, t.SHOW_HELP ? "front" == i ? O() : M() : (M(), s.style.display = "none", l.style.display = "none")
+    };
+    var G = function(e, t, i, n) {
+        let o = {},
             a = {},
-            c = "vi" == t.LANGUAGE ? "Ảnh chụp giấy tờ không hợp lệ, vui lòng thử lại !" : "Photo of document is invalid, please try again!"; const l = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+            c = "vi" == t.LANGUAGE ? "Ảnh chụp giấy tờ không hợp lệ, vui lòng thử lại !" : "Photo of document is invalid, please try again!";
+        const l = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
 
-        function s() { const e = document.getElementsByClassName("capture-and-upload-block-wrapper")[0];
-            e.parentNode.removeChild(e) }
+        function s() {
+            const e = document.getElementsByClassName("capture-and-upload-block-wrapper")[0];
+            e.parentNode.removeChild(e)
+        }
 
-        function d(e) { a.img_front = e.img_front_b64, delete e.img_front_b64, o.base64_doc_img = a, o = Object.assign({...o }, e, {}), i(o), n && n(o) } if (t.USE_WEBCAM && t.USE_UPLOAD)
-            if (l > 1024) { const i = n => { s(), 400 == n.ocr.statusCode ? (alert(c), B(e, t, "front", i)) : d(n) };
-                B(e, t, "front", i) } else { const i = n => { s(), 400 == n.ocr.statusCode ? (alert(c), P(e, t, "front", i)) : d(n) };
-                P(e, t, "front", i) }
-        if (t.USE_WEBCAM && !t.USE_UPLOAD) { const i = n => { var o;
-                (o = document.getElementsByClassName("capture-webcam-wrapper")[0]).parentNode.removeChild(o), 400 == n.ocr.statusCode ? (alert(c), D(e, t, "front", i)) : d(n) };
-            D(e, t, "front", i) } if (!t.USE_WEBCAM && t.USE_UPLOAD) { const i = n => { s(), 400 == n.ocr.statusCode ? (alert(c), P(e, t, "front", i)) : d(n) };
-            P(e, t, "front", i) } }; var F, x, Y, H = function(e, t, i, n) { let o = {},
+        function d(e) { a.img_front = e.img_front_b64, delete e.img_front_b64, o.base64_doc_img = a, o = Object.assign({...o }, e, {}), i(o), n && n(o) }
+        if (t.USE_WEBCAM && t.USE_UPLOAD)
+            if (l > 1024) {
+                const i = n => { s(), 400 == n.ocr.statusCode ? (alert(c), B(e, t, "front", i)) : d(n) };
+                B(e, t, "front", i)
+            } else {
+                const i = n => { s(), 400 == n.ocr.statusCode ? (alert(c), P(e, t, "front", i)) : d(n) };
+                P(e, t, "front", i)
+            }
+        if (t.USE_WEBCAM && !t.USE_UPLOAD) {
+            const i = n => {
+                var o;
+                (o = document.getElementsByClassName("capture-webcam-wrapper")[0]).parentNode.removeChild(o), 400 == n.ocr.statusCode ? (alert(c), D(e, t, "front", i)) : d(n)
+            };
+            D(e, t, "front", i)
+        }
+        if (!t.USE_WEBCAM && t.USE_UPLOAD) {
+            const i = n => { s(), 400 == n.ocr.statusCode ? (alert(c), P(e, t, "front", i)) : d(n) };
+            P(e, t, "front", i)
+        }
+    };
+    var F, x, Y, H = function(e, t, i, n) {
+        let o = {},
             a = {},
-            c = "vi" == t.LANGUAGE ? "Ảnh chụp giấy tờ không hợp lệ, vui lòng thử lại !" : "Photo of document is invalid, please try again!"; const l = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+            c = "vi" == t.LANGUAGE ? "Ảnh chụp giấy tờ không hợp lệ, vui lòng thử lại !" : "Photo of document is invalid, please try again!";
+        const l = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
 
-        function s() { const e = document.getElementsByClassName("capture-and-upload-block-wrapper")[0];
-            e.parentNode.removeChild(e) }
+        function s() {
+            const e = document.getElementsByClassName("capture-and-upload-block-wrapper")[0];
+            e.parentNode.removeChild(e)
+        }
 
-        function d() { var e = document.getElementsByClassName("capture-webcam-wrapper")[0];
-            e.parentNode.removeChild(e) } if (t.USE_WEBCAM && t.USE_UPLOAD)
-            if (l > 1024) { const l = d => { s(), a.img_front = d.img_front_b64, delete d.img_front_b64;
-                    B(e, t, "back", r => { s(), 400 == r.ocr.statusCode ? (alert(c), B(e, t, "front", l)) : (a.img_back = r.img_back_b64, delete r.img_back_b64, o.base64_doc_img = a, o = Object.assign({...o }, d, r), i(o), n && n(o)) }) };
-                B(e, t, "front", l) } else { const l = d => { s(), a.img_front = d.img_front_b64, delete d.img_front_b64;
-                    P(e, t, "back", r => { s(), 400 == r.ocr.statusCode ? (alert(c), P(e, t, "front", l)) : (a.img_back = r.img_back_b64, delete r.img_back_b64, o.base64_doc_img = a, o = Object.assign({...o }, d, r), i(o), n && n(o)) }) };
-                P(e, t, "front", l) }
-        if (t.USE_WEBCAM && !t.USE_UPLOAD) { const l = s => { d(), a.img_front = s.img_front_b64, delete s.img_front_b64;
-                D(e, t, "back", r => { d(), 400 == r.ocr.statusCode ? (alert(c), D(e, t, "front", l)) : (a.img_back = r.img_back_b64, delete r.img_back_b64, o.base64_doc_img = a, o = Object.assign({...o }, s, r), i(o), n && n(o)) }) };
-            D(e, t, "front", l) } if (!t.USE_WEBCAM && t.USE_UPLOAD) { const c = c => { console.log("data1", c), s(), a.img_front = c.img_front_b64, delete c.img_front_b64;
-                P(e, t, "back", e => { console.log("data2", e), s(), a.img_back = e.img_back_b64, delete e.img_back_b64, o.base64_doc_img = a, o = Object.assign({...o }, c, e), i(o), n && n(o) }) };
-            P(e, t, "front", c) } };
+        function d() {
+            var e = document.getElementsByClassName("capture-webcam-wrapper")[0];
+            e.parentNode.removeChild(e)
+        }
+        if (t.USE_WEBCAM && t.USE_UPLOAD)
+            if (l > 1024) {
+                const l = d => {
+                    s(), a.img_front = d.img_front_b64, delete d.img_front_b64;
+                    B(e, t, "back", r => { s(), 400 == r.ocr.statusCode ? (alert(c), B(e, t, "front", l)) : (a.img_back = r.img_back_b64, delete r.img_back_b64, o.base64_doc_img = a, o = Object.assign({...o }, d, r), i(o), n && n(o)) })
+                };
+                B(e, t, "front", l)
+            } else {
+                const l = d => {
+                    s(), a.img_front = d.img_front_b64, delete d.img_front_b64;
+                    P(e, t, "back", r => { s(), 400 == r.ocr.statusCode ? (alert(c), P(e, t, "front", l)) : (a.img_back = r.img_back_b64, delete r.img_back_b64, o.base64_doc_img = a, o = Object.assign({...o }, d, r), i(o), n && n(o)) })
+                };
+                P(e, t, "front", l)
+            }
+        if (t.USE_WEBCAM && !t.USE_UPLOAD) {
+            const l = s => {
+                d(), a.img_front = s.img_front_b64, delete s.img_front_b64;
+                D(e, t, "back", r => { d(), 400 == r.ocr.statusCode ? (alert(c), D(e, t, "front", l)) : (a.img_back = r.img_back_b64, delete r.img_back_b64, o.base64_doc_img = a, o = Object.assign({...o }, s, r), i(o), n && n(o)) })
+            };
+            D(e, t, "front", l)
+        }
+        if (!t.USE_WEBCAM && t.USE_UPLOAD) {
+            const c = c => {
+                console.log("data1", c), s(), a.img_front = c.img_front_b64, delete c.img_front_b64;
+                P(e, t, "back", e => { console.log("data2", e), s(), a.img_back = e.img_back_b64, delete e.img_back_b64, o.base64_doc_img = a, o = Object.assign({...o }, c, e), i(o), n && n(o) })
+            };
+            P(e, t, "front", c)
+        }
+    };
 
-    function K(e, t, i) {! function() { localStorage.removeItem("v_ekyc_actk"), localStorage.removeItem("gg-tk"); var o = document.createElement("script");
-            o.id = "recapcha_v2_id", o.src = "https://www.google.com/recaptcha/api.js?onload=loadCaptcha&render=explicit", o.async = !0, o.defe = !0; var a = document.createElement("script");
-            a.id = "piexif_id", a.src = "https://cdn.jsdelivr.net/npm/piexifjs@1.0.6/piexif.js", a.async = !0, a.defe = !0; var c = document.createElement("script");
-            c.id = "crypto_id", c.src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js", c.async = !0, c.defe = !0, document.head.appendChild(a), document.head.appendChild(c); var l = function() { const t = e.LIST_ITEM; let i = "<div id='vnpt_ekyc'>";
-                i += "<div class='home-demo-ekyc' id='home-demo-ekyc'>", i += "<div class='title' style='color: " + e.LIST_CHOOSE_STYLE.text_color + "'> <var>HOME.TITLE</var> </div>", i += "<div class='list-choose'>"; for (let e of t) - 1 == e && (i += "<div class='item' id='verification-id' ><div class='icon-block'><img id='id-icon' src=''/></div><span class='title'><var>HOME.CMT</var></span></div>"), 5 == e && (i += "<div class='item' id='verification-passport' > <div class='icon-block'><img id='passport-icon' src=''/></div><span class='title'><var>HOME.PASSPOST</var></span></div>"), 7 == e && (i += "<div class='item' id='verification-army-id' ><div class='icon-block'><img id='army-id-icon' src=''/></div><span class='title'><var>HOME.CMT_ARMY</var></span></div>"), 6 == e && (i += "<div class='item' id='verification-card-drive'><div class='icon-block'><img id='card-drive-icon' src=''/></div><span class='title'><var>HOME.LICENSE</var></span></div>"), 9 == e && (i += "<div class='item' id='id-card-chip'><div class='icon-block'><img id='id-chip-icon' src=''/></div><span class='title'><var>HOME.CMT_CHIP</var></span></div>"); return i += (e.ENABLE_GGCAPCHAR, ""), i += "<div class='start-demo' id='start-demo-ekyc' tabindex='6'>", i += "<span class='label-cus'><var>HOME.START</var></span>", i += "</div></div></div></div>", i }(); if (!document.getElementById("vnpt_ekyc")) { var s = document.getElementById(e.PARRENT_ID); if (-1 === e.TYPE_DOCUMENT) s.insertAdjacentHTML("beforeend", "<div id='vnpt_ekyc'></div>"), "DOCUMENT" === e.FLOW_TYPE ? H(-1, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(-1, e, t, i) : R(-1, e, t, i));
+    function K(e, t, i) {
+        ! function() {
+            localStorage.removeItem("v_ekyc_actk"), localStorage.removeItem("gg-tk");
+            var o = document.createElement("script");
+            o.id = "recapcha_v2_id", o.src = "https://www.google.com/recaptcha/api.js?onload=loadCaptcha&render=explicit", o.async = !0, o.defe = !0;
+            var a = document.createElement("script");
+            a.id = "piexif_id", a.src = "https://cdn.jsdelivr.net/npm/piexifjs@1.0.6/piexif.js", a.async = !0, a.defe = !0;
+            var c = document.createElement("script");
+            c.id = "crypto_id", c.src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js", c.async = !0, c.defe = !0, document.head.appendChild(a), document.head.appendChild(c);
+            var l = function() {
+                const t = e.LIST_ITEM;
+                let i = "<div id='vnpt_ekyc'>";
+                i += "<div class='home-demo-ekyc' id='home-demo-ekyc'>", i += "<div class='title' style='color: " + e.LIST_CHOOSE_STYLE.text_color + "'> <var>HOME.TITLE</var> </div>", i += "<div class='list-choose'>";
+                for (let e of t) - 1 == e && (i += "<div class='item' id='verification-id' ><div class='icon-block'><img id='id-icon' src=''/></div><span class='title'><var>HOME.CMT</var></span></div>"), 5 == e && (i += "<div class='item' id='verification-passport' > <div class='icon-block'><img id='passport-icon' src=''/></div><span class='title'><var>HOME.PASSPOST</var></span></div>"), 7 == e && (i += "<div class='item' id='verification-army-id' ><div class='icon-block'><img id='army-id-icon' src=''/></div><span class='title'><var>HOME.CMT_ARMY</var></span></div>"), 6 == e && (i += "<div class='item' id='verification-card-drive'><div class='icon-block'><img id='card-drive-icon' src=''/></div><span class='title'><var>HOME.LICENSE</var></span></div>"), 9 == e && (i += "<div class='item' id='id-card-chip'><div class='icon-block'><img id='id-chip-icon' src=''/></div><span class='title'><var>HOME.CMT_CHIP</var></span></div>");
+                return i += (e.ENABLE_GGCAPCHAR, ""), i += "<div class='start-demo' id='start-demo-ekyc' tabindex='6'>", i += "<span class='label-cus'><var>HOME.START</var></span>", i += "</div></div></div></div>", i
+            }();
+            if (!document.getElementById("vnpt_ekyc")) {
+                var s = document.getElementById(e.PARRENT_ID);
+                if (-1 === e.TYPE_DOCUMENT) s.insertAdjacentHTML("beforeend", "<div id='vnpt_ekyc'></div>"), "DOCUMENT" === e.FLOW_TYPE ? H(-1, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(-1, e, t, i) : R(-1, e, t, i));
                 else if (7 === e.TYPE_DOCUMENT) s.insertAdjacentHTML("beforeend", "<div id='vnpt_ekyc'></div>"), "DOCUMENT" === e.FLOW_TYPE ? H(7, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(7, e, t, i) : R(7, e, t, i));
                 else if (5 === e.TYPE_DOCUMENT) s.insertAdjacentHTML("beforeend", "<div id='vnpt_ekyc'></div>"), "DOCUMENT" === e.FLOW_TYPE ? G(5, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(5, e, t, i) : R(5, e, t, i));
                 else if (6 === e.TYPE_DOCUMENT) s.insertAdjacentHTML("beforeend", "<div id='vnpt_ekyc'></div>"), "DOCUMENT" === e.FLOW_TYPE ? G(6, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(6, e, t, i) : R(6, e, t, i));
                 else if (9 === e.TYPE_DOCUMENT) s.insertAdjacentHTML("beforeend", "<div id='vnpt_ekyc'></div>"), "DOCUMENT" === e.FLOW_TYPE ? H(9, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(9, e, t, i) : R(9, e, t, i));
                 else {
-                    (s = document.getElementById(e.PARRENT_ID)).insertAdjacentHTML("beforeend", l), n(e.LIST_CHOOSE_STYLE) || function() { document.getElementById("id-icon") && (document.getElementById("id-icon").src = e.LIST_CHOOSE_STYLE.id_icon), document.getElementById("passport-icon") && (document.getElementById("passport-icon").src = e.LIST_CHOOSE_STYLE.passport_icon), document.getElementById("card-drive-icon") && (document.getElementById("card-drive-icon").src = e.LIST_CHOOSE_STYLE.drivecard_icon), document.getElementById("army-id-icon") && (document.getElementById("army-id-icon").src = e.LIST_CHOOSE_STYLE.army_id_icon), document.getElementById("id-chip-icon") && (document.getElementById("id-chip-icon").src = e.LIST_CHOOSE_STYLE.id_chip_icon), document.getElementById("start-demo-ekyc").style.background = e.LIST_CHOOSE_STYLE.start_button_background, document.getElementById("start-demo-ekyc").style.color = e.LIST_CHOOSE_STYLE.start_button_color; for (var t = document.getElementsByClassName("icon-block"), i = 0; i < t.length; i++) t[i].style.background = e.LIST_CHOOSE_STYLE.background_icon }() } } var d = "",
+                    (s = document.getElementById(e.PARRENT_ID)).insertAdjacentHTML("beforeend", l), n(e.LIST_CHOOSE_STYLE) || function() { document.getElementById("id-icon") && (document.getElementById("id-icon").src = e.LIST_CHOOSE_STYLE.id_icon), document.getElementById("passport-icon") && (document.getElementById("passport-icon").src = e.LIST_CHOOSE_STYLE.passport_icon), document.getElementById("card-drive-icon") && (document.getElementById("card-drive-icon").src = e.LIST_CHOOSE_STYLE.drivecard_icon), document.getElementById("army-id-icon") && (document.getElementById("army-id-icon").src = e.LIST_CHOOSE_STYLE.army_id_icon), document.getElementById("id-chip-icon") && (document.getElementById("id-chip-icon").src = e.LIST_CHOOSE_STYLE.id_chip_icon), document.getElementById("start-demo-ekyc").style.background = e.LIST_CHOOSE_STYLE.start_button_background, document.getElementById("start-demo-ekyc").style.color = e.LIST_CHOOSE_STYLE.start_button_color; for (var t = document.getElementsByClassName("icon-block"), i = 0; i < t.length; i++) t[i].style.background = e.LIST_CHOOSE_STYLE.background_icon }()
+                }
+            }
+            var d = "",
                 r = null;
 
-            function v(t, i) { d = t.id; let n = t.querySelectorAll(".title")[0];
+            function v(t, i) {
+                d = t.id;
+                let n = t.querySelectorAll(".title")[0];
                 t.querySelectorAll(".checkbox")[0];
-                t.style.background = e.LIST_CHOOSE_STYLE.item_active_color, n.style.color = "#FFFFFF", r = i }
+                t.style.background = e.LIST_CHOOSE_STYLE.item_active_color, n.style.color = "#FFFFFF", r = i
+            }
 
-            function _(t, i) { let n = document.getElementById(d),
+            function _(t, i) {
+                let n = document.getElementById(d),
                     o = n.querySelectorAll(".title")[0];
-                n.style.background = "#FFFFFF", o.style.color = "#111127"; let a = t.querySelectorAll(".title")[0];
-                t.style.background = e.LIST_CHOOSE_STYLE.item_active_color, a.style.color = "#FFFFFF", d = t.id, r = i }
-            document.getElementById("verification-id") && document.getElementById("verification-id").addEventListener("click", (function() { n(d) && v(this, -1), d != this.id && _(this, -1) })), document.getElementById("verification-passport") && document.getElementById("verification-passport").addEventListener("click", (function() { n(d) && v(this, 5), d != this.id && _(this, 5) })), document.getElementById("verification-army-id") && document.getElementById("verification-army-id").addEventListener("click", (function() { n(d) && v(this, 7), d != this.id && _(this, 7) })), document.getElementById("verification-card-drive") && document.getElementById("verification-card-drive").addEventListener("click", (function() { n(d) && v(this, 6), d != this.id && _(this, 6) })), document.getElementById("id-card-chip") && document.getElementById("id-card-chip").addEventListener("click", (function() { n(d) && v(this, 9), d != this.id && _(this, 9) })), document.getElementById("start-demo-ekyc") && document.getElementById("start-demo-ekyc").addEventListener("click", (function() { n(d) ? alert("Bạn phải chọn loại giấy tờ trước khi tiếp tục") : (document.getElementById("home-demo-ekyc").style.display = "none", 5 != r && 6 != r || ("DOCUMENT" === e.FLOW_TYPE ? G(r, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(r, e, t, i) : R(r, e, t, i))), -1 != r && 7 != r || ("DOCUMENT" === e.FLOW_TYPE ? H(r, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(r, e, t, i) : R(r, e, t, i))), 9 == r && ("DOCUMENT" === e.FLOW_TYPE ? H(r, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(r, e, t, i) : R(r, e, t, i)))) })) }(); const o = document.getElementById("home-demo-ekyc"); if (o) { _(o.getElementsByTagName("var"), e.LANGUAGE) } }
+                n.style.background = "#FFFFFF", o.style.color = "#111127";
+                let a = t.querySelectorAll(".title")[0];
+                t.style.background = e.LIST_CHOOSE_STYLE.item_active_color, a.style.color = "#FFFFFF", d = t.id, r = i
+            }
+            document.getElementById("verification-id") && document.getElementById("verification-id").addEventListener("click", (function() { n(d) && v(this, -1), d != this.id && _(this, -1) })), document.getElementById("verification-passport") && document.getElementById("verification-passport").addEventListener("click", (function() { n(d) && v(this, 5), d != this.id && _(this, 5) })), document.getElementById("verification-army-id") && document.getElementById("verification-army-id").addEventListener("click", (function() { n(d) && v(this, 7), d != this.id && _(this, 7) })), document.getElementById("verification-card-drive") && document.getElementById("verification-card-drive").addEventListener("click", (function() { n(d) && v(this, 6), d != this.id && _(this, 6) })), document.getElementById("id-card-chip") && document.getElementById("id-card-chip").addEventListener("click", (function() { n(d) && v(this, 9), d != this.id && _(this, 9) })), document.getElementById("start-demo-ekyc") && document.getElementById("start-demo-ekyc").addEventListener("click", (function() { n(d) ? alert("Bạn phải chọn loại giấy tờ trước khi tiếp tục") : (document.getElementById("home-demo-ekyc").style.display = "none", 5 != r && 6 != r || ("DOCUMENT" === e.FLOW_TYPE ? G(r, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(r, e, t, i) : R(r, e, t, i))), -1 != r && 7 != r || ("DOCUMENT" === e.FLOW_TYPE ? H(r, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(r, e, t, i) : R(r, e, t, i))), 9 == r && ("DOCUMENT" === e.FLOW_TYPE ? H(r, e, t, i) : "FACE" === e.FLOW_TYPE && (e.ADVANCE_LIVENESS_FACE ? U(r, e, t, i) : R(r, e, t, i)))) }))
+        }();
+        const o = document.getElementById("home-demo-ekyc");
+        if (o) { _(o.getElementsByTagName("var"), e.LANGUAGE) }
+    }
 
-    function $(e, t) {! function() { console.log("ket-qua", e); var t = document.getElementById("vnpt_ekyc"),
-                i = '<div class="step-4" id="ekyc-step-4"><ul class="progressbar" id="progressbar" style="width:45%;margin-bottom: 27px"><li class="complete" id="progress-step0">Mặt trước</li><li  class="complete" id="progress-step1">Mặt sau</li><li  class="complete" id="progress-step2">Chân dung</li><li  class="complete" id="progress-step3">Kết quả</li></ul><div class="info-wrap"><div class="tabs"><div id="validation" class="tab"><ul class="nav nav-tabs"><li id="info-tab"><div>Thông tin cá nhân</div></li><li id="validation-tab" class="active"><div>Validation</div></li></ul><div class="block-left" id="tab2-content"><div class="item"><div class="label-cus">Loại giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? '<div style="color:red;">Không hợp lệ</div>' : '<div style="color:green;">Hợp lệ</div>') + '</div></div><div class="item"><div class="label-cus">Mặt trước, sau giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? function(e) { let t = "";
-                    t = n(e && e.errors.find(e => "Dau vao mat truoc va sau khong cung loai" == e)) ? "" : '<div style="color:red;">Không cùng loại</div>'; return t }(e.orc_err) : function(e, t) { let i = "";
-                    i = e == t ? '<div style="color: green;">Cùng loại</div>' : '<div style="color: red;">Không cùng loại</div>'; return i }(e.ocr.object.back_type_id, e.ocr.object.type_id)) + '</div></div><div class="item"><div class="label-cus">Giấy tờ mờ nhòe/mất góc</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { let t = "";
-                    t = n(e) ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>'; return t }(e.ocr.object.warning)) + '</div></div><div class="item"><div class="label-cus">Chất lượng số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { let t = JSON.parse(e); if (n(t)) return '<div style="color: red;">Mờ nhòe</div>'; for (var i = 0; i < t.length; i++)
+    function $(e, t) {
+        ! function() {
+            console.log("ket-qua", e);
+            var t = document.getElementById("vnpt_ekyc"),
+                i = '<div class="step-4" id="ekyc-step-4"><ul class="progressbar" id="progressbar" style="width:45%;margin-bottom: 27px"><li class="complete" id="progress-step0">Mặt trước</li><li  class="complete" id="progress-step1">Mặt sau</li><li  class="complete" id="progress-step2">Chân dung</li><li  class="complete" id="progress-step3">Kết quả</li></ul><div class="info-wrap"><div class="tabs"><div id="validation" class="tab"><ul class="nav nav-tabs"><li id="info-tab"><div>Thông tin cá nhân</div></li><li id="validation-tab" class="active"><div>Validation</div></li></ul><div class="block-left" id="tab2-content"><div class="item"><div class="label-cus">Loại giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? '<div style="color:red;">Không hợp lệ</div>' : '<div style="color:green;">Hợp lệ</div>') + '</div></div><div class="item"><div class="label-cus">Mặt trước, sau giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? function(e) {
+                    let t = "";
+                    t = n(e && e.errors.find(e => "Dau vao mat truoc va sau khong cung loai" == e)) ? "" : '<div style="color:red;">Không cùng loại</div>';
+                    return t
+                }(e.orc_err) : function(e, t) {
+                    let i = "";
+                    i = e == t ? '<div style="color: green;">Cùng loại</div>' : '<div style="color: red;">Không cùng loại</div>';
+                    return i
+                }(e.ocr.object.back_type_id, e.ocr.object.type_id)) + '</div></div><div class="item"><div class="label-cus">Giấy tờ mờ nhòe/mất góc</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) {
+                    let t = "";
+                    t = n(e) ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>';
+                    return t
+                }(e.ocr.object.warning)) + '</div></div><div class="item"><div class="label-cus">Chất lượng số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) {
+                    let t = JSON.parse(e);
+                    if (n(t)) return '<div style="color: red;">Mờ nhòe</div>';
+                    for (var i = 0; i < t.length; i++)
                         if (t[i] < .93) return '<div style="color: red;">Mờ nhòe</div>';
-                    return '<div style="color: green;">Tốt</div>' }(e.ocr.object.id_probs)) + '</div></div><div class="item"><div class="label-cus">Chất lượng ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { if (e < .93) return '<div style="color: red;">Mờ nhòe</div>'; return '<div style="color: green;">Tốt</div>' }(e.ocr.object.issue_date_prob)) + '</div></div><div class="item"><div class="label-cus">Hạn giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { let t = "";
-                    t = "no" == e ? '<div style="color:green;">Còn hạn</div>' : '<div style="color:red;">Hết hạn</div>'; return t }(e.ocr.object.expire_warning)) + '</div></div><div class="item"><div class="label-cus">Xác thực giấy tờ</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_back) || n(e.liveness_card_front.object) || n(e.liveness_card_back.object) ? "" : function(e, t) { let i = "";
-                    i = e || t ? '<div style="color:red;">Không chụp trực tiếp</div>' : '<div style="color:green;">Chụp trực tiếp</div>'; return i }(e.liveness_card_front.object.fake_liveness, e.liveness_card_back.object.fake_liveness)) + '</div></div><div class="item"><div class="label-cus">Cảnh báo trường thông tin</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { const t = { id_sua_xoa: "Số ID bị sửa xóa", id_ko_hop_le: "Số ID không hợp lệ", id_dob_ko_khop: "Mã năm sinh không khớp", id_gender_ko_khop: "Mã giới tính không khớp", id_post_code_ko_khop: "Mã tỉnh/TP không khớp", invalid_dob: "Mã ngày sinh không hợp lệ", den_trang_ko_hop_le: "Giấy tờ photo", fake_printing: "Giấy tờ không hợp lệ", id_invalid_length: "Số ID không hợp lệ" }; let i = "",
+                    return '<div style="color: green;">Tốt</div>'
+                }(e.ocr.object.id_probs)) + '</div></div><div class="item"><div class="label-cus">Chất lượng ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { if (e < .93) return '<div style="color: red;">Mờ nhòe</div>'; return '<div style="color: green;">Tốt</div>' }(e.ocr.object.issue_date_prob)) + '</div></div><div class="item"><div class="label-cus">Hạn giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) {
+                    let t = "";
+                    t = "no" == e ? '<div style="color:green;">Còn hạn</div>' : '<div style="color:red;">Hết hạn</div>';
+                    return t
+                }(e.ocr.object.expire_warning)) + '</div></div><div class="item"><div class="label-cus">Xác thực giấy tờ</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_back) || n(e.liveness_card_front.object) || n(e.liveness_card_back.object) ? "" : function(e, t) {
+                    let i = "";
+                    i = e || t ? '<div style="color:red;">Không chụp trực tiếp</div>' : '<div style="color:green;">Chụp trực tiếp</div>';
+                    return i
+                }(e.liveness_card_front.object.fake_liveness, e.liveness_card_back.object.fake_liveness)) + '</div></div><div class="item"><div class="label-cus">Cảnh báo trường thông tin</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) {
+                    const t = { id_sua_xoa: "Số ID bị sửa xóa", id_ko_hop_le: "Số ID không hợp lệ", id_dob_ko_khop: "Mã năm sinh không khớp", id_gender_ko_khop: "Mã giới tính không khớp", id_post_code_ko_khop: "Mã tỉnh/TP không khớp", invalid_dob: "Mã ngày sinh không hợp lệ", den_trang_ko_hop_le: "Giấy tờ photo", fake_printing: "Giấy tờ không hợp lệ", id_invalid_length: "Số ID không hợp lệ" };
+                    let i = "",
                         n = [],
-                        o = []; for (var a = 0; a < e.length; a++) "id_ko_hop_le" == e[a] || "id_dob_ko_khop" == e[a] || "id_gender_ko_khop" == e[a] || "id_post_code_ko_khop" == e[a] || "invalid_dob" == e[a] ? n.push(e[a]) : o.push(e[a]); if (n.length > 0)
+                        o = [];
+                    for (var a = 0; a < e.length; a++) "id_ko_hop_le" == e[a] || "id_dob_ko_khop" == e[a] || "id_gender_ko_khop" == e[a] || "id_post_code_ko_khop" == e[a] || "invalid_dob" == e[a] ? n.push(e[a]) : o.push(e[a]);
+                    if (n.length > 0)
                         for (a = 0; a < n.length; a++) i += '<div style="color:#ff7f00;">' + t[e[a]] + "</div>";
                     else if (o.length > 0)
                         for (a = 0; a < o.length; a++) i += '<div style="color:#ff7f00;">' + t[e[a]] + "</div>";
-                    else i = '<div style="color:green;">Hợp lệ</div>'; return i }(e.ocr.object.tampering.warning)) + '</div></div><div class="item"><div class="label-cus">Dán đè ảnh</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_front.object) ? "" : function(e) { let t = "";
-                    t = e ? '<div style="color:red;">Có</div>' : '<div style="color:green;">Không</div>'; return t }(e.liveness_card_front.object.face_swapping)) + '</div></div><div class="item"><div class="label-cus">Mở mắt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) { let t = "";
-                    t = "yes" == e ? '<div style="color:green;">Có</div>' : '<div style="color:red;">Không</div>'; return t }(e.liveness_face.object.is_eye_open)) + '</div></div><div class="item"><div class="label-cus">Mờ mặt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) { let t = "";
-                    t = "no" == e ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>'; return t }(e.liveness_face.object.blur_face)) + '</div></div><div class="item"><div class="label-cus">Xác thực chân dung</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) { let t = "";
-                    t = "success" == e ? '<div style="color:green;">Người thật</div>' : '<div style="color:red;">Không phải người thật</div>'; return t }(e.liveness_face.object.liveness)) + '</div></div><div class="item"></div></div></div><div id="info" class="tab"><ul class="nav nav-tabs"><li id="info-tab1" class="active"><div>Thông tin cá nhân</div></li><li id="validation-tab1"><div>Validation</div></li></ul><div class="block-left"><div class="item"><div class="label-cus">Giấy tờ</div><div class="item-content">' + function() { let t = '<div style="color:green;" class="check-info-doc">Hợp lệ</div>';
-                    n(e) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data empty")) : (n(e.ocr) || n(e.ocr.object) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("ocr || obj empty")) : n(e.ocr.object.expire_warning) || "yes" == e.ocr.object.expire_warning && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.ocr.object.expire_warning")), n(e.liveness_card_front) || n(e.liveness_card_back) ? console.log("liveness_card_front || liveness_card_back empty") : (e.liveness_card_front.face_swapping && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.face_swapping")), e.liveness_card_front.fake_liveness && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_liveness")), e.liveness_card_front.fake_print_photo && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_print_photo")), e.liveness_card_back.face_swapping && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.face_swapping")), e.liveness_card_back.fake_liveness && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.face_swapping")), e.liveness_card_back.fake_print_photo && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.fake_print_photo")))); if (!(n(e) || n(e.ocr) || n(e.ocr.object) || n(e.ocr.object.warning_msg))) { let n = e.ocr.object.warning_msg;
-                        t = ""; for (var i = 0; i < n.length; i++) t += '<div style="color:#ff7f00;">' + n[i] + "</div>";
-                        console.log("data.ocr.object.warning", t) } return t }() + '</div></div><div class="item"><div class="label-cus">Số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.id) + '</div></div><div class="item"><div class="label-cus">Họ và tên</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.name) + '</div></div><div class="item"><div class="label-cus">Ngày sinh</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.birth_day) + '</div></div><div class="item"><div class="label-cus">Nơi ĐKHK TT</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.recent_location) + '</div></div><div class="item"><div class="label-cus">Giới tính</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.gender) + '</div></div><div class="item"><div class="label-cus">Ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_date) + '</div></div><div class="item"><div class="label-cus">Nơi cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_place) + '</div></div><div class="item"><div class="label-cus">So sánh</div><div class="item-content">' + (n(e) || n(e.compare) || n(e.compare.object) ? '<div style="color: red;"> Không tìm thấy khuôn mặt </div>' : function(e) { let t = "";
-                    t = "NOMATCH" == e.msg ? '<div style="color: red;">' + e.result + "</div>" : '<div style="color: green;">' + e.result + "</div>"; return t }(e.compare.object)) + '</div></div></div></div></div><div class="images-block"><img class="image-result" src="' + (!n(e) && !n(e.base64_doc_img) && e.base64_doc_img.img_front) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_doc_img) && e.base64_doc_img.img_back) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_far) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_near) + '"/></div></div><div class="block-result"><div class="btn-redemo" id="btn-redemo"><img src="https://ekyc-web.vnpt.vn/images/refresh_icon.png" style="width: 20px; height: 20px; margin-right: 5px"/><span>THỰC HIỆN LẠI</span></div></div></div>';
-            t.insertAdjacentHTML("beforeend", i), document.getElementById("btn-redemo").addEventListener("click", (function() { location.reload() })), document.getElementById("info-tab").addEventListener("click", (function() { let e = document.getElementById("validation"),
+                    else i = '<div style="color:green;">Hợp lệ</div>';
+                    return i
+                }(e.ocr.object.tampering.warning)) + '</div></div><div class="item"><div class="label-cus">Dán đè ảnh</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_front.object) ? "" : function(e) {
+                    let t = "";
+                    t = e ? '<div style="color:red;">Có</div>' : '<div style="color:green;">Không</div>';
+                    return t
+                }(e.liveness_card_front.object.face_swapping)) + '</div></div><div class="item"><div class="label-cus">Mở mắt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) {
+                    let t = "";
+                    t = "yes" == e ? '<div style="color:green;">Có</div>' : '<div style="color:red;">Không</div>';
+                    return t
+                }(e.liveness_face.object.is_eye_open)) + '</div></div><div class="item"><div class="label-cus">Mờ mặt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) {
+                    let t = "";
+                    t = "no" == e ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>';
+                    return t
+                }(e.liveness_face.object.blur_face)) + '</div></div><div class="item"><div class="label-cus">Xác thực chân dung</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) {
+                    let t = "";
+                    t = "success" == e ? '<div style="color:green;">Người thật</div>' : '<div style="color:red;">Không phải người thật</div>';
+                    return t
+                }(e.liveness_face.object.liveness)) + '</div></div><div class="item"></div></div></div><div id="info" class="tab"><ul class="nav nav-tabs"><li id="info-tab1" class="active"><div>Thông tin cá nhân</div></li><li id="validation-tab1"><div>Validation</div></li></ul><div class="block-left"><div class="item"><div class="label-cus">Giấy tờ</div><div class="item-content">' + function() {
+                    let t = '<div style="color:green;" class="check-info-doc">Hợp lệ</div>';
+                    n(e) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data empty")) : (n(e.ocr) || n(e.ocr.object) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("ocr || obj empty")) : n(e.ocr.object.expire_warning) || "yes" == e.ocr.object.expire_warning && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.ocr.object.expire_warning")), n(e.liveness_card_front) || n(e.liveness_card_back) ? console.log("liveness_card_front || liveness_card_back empty") : (e.liveness_card_front.face_swapping && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.face_swapping")), e.liveness_card_front.fake_liveness && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_liveness")), e.liveness_card_front.fake_print_photo && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_print_photo")), e.liveness_card_back.face_swapping && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.face_swapping")), e.liveness_card_back.fake_liveness && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.face_swapping")), e.liveness_card_back.fake_print_photo && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.fake_print_photo"))));
+                    if (!(n(e) || n(e.ocr) || n(e.ocr.object) || n(e.ocr.object.warning_msg))) {
+                        let n = e.ocr.object.warning_msg;
+                        t = "";
+                        for (var i = 0; i < n.length; i++) t += '<div style="color:#ff7f00;">' + n[i] + "</div>";
+                        console.log("data.ocr.object.warning", t)
+                    }
+                    return t
+                }() + '</div></div><div class="item"><div class="label-cus">Số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.id) + '</div></div><div class="item"><div class="label-cus">Họ và tên</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.name) + '</div></div><div class="item"><div class="label-cus">Ngày sinh</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.birth_day) + '</div></div><div class="item"><div class="label-cus">Nơi ĐKHK TT</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.recent_location) + '</div></div><div class="item"><div class="label-cus">Giới tính</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.gender) + '</div></div><div class="item"><div class="label-cus">Ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_date) + '</div></div><div class="item"><div class="label-cus">Nơi cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_place) + '</div></div><div class="item"><div class="label-cus">So sánh</div><div class="item-content">' + (n(e) || n(e.compare) || n(e.compare.object) ? '<div style="color: red;"> Không tìm thấy khuôn mặt </div>' : function(e) {
+                    let t = "";
+                    t = "NOMATCH" == e.msg ? '<div style="color: red;">' + e.result + "</div>" : '<div style="color: green;">' + e.result + "</div>";
+                    return t
+                }(e.compare.object)) + '</div></div></div></div></div><div class="images-block"><img class="image-result" src="' + (!n(e) && !n(e.base64_doc_img) && e.base64_doc_img.img_front) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_doc_img) && e.base64_doc_img.img_back) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_far) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_near) + '"/></div></div><div class="btn-redemo" id="btn-redemo"><img src="https://ekyc-web.vnpt.vn/images/refresh_icon.png" style="width: 20px; height: 20px; margin-right: 5px"/><span>THỰC HIỆN LẠI</span></div></div>';
+            t.insertAdjacentHTML("beforeend", i), document.getElementById("btn-redemo").addEventListener("click", (function() { location.reload() })), document.getElementById("info-tab").addEventListener("click", (function() {
+                let e = document.getElementById("validation"),
                     t = document.getElementById("info");
-                e.style.display = "none", t.style.display = "block" })), document.getElementById("info-tab1").addEventListener("click", (function() { let e = document.getElementById("validation"),
+                e.style.display = "none", t.style.display = "block"
+            })), document.getElementById("info-tab1").addEventListener("click", (function() {
+                let e = document.getElementById("validation"),
                     t = document.getElementById("info");
-                e.style.display = "none", t.style.display = "block" })), document.getElementById("validation-tab").addEventListener("click", (function() { let e = document.getElementById("validation"),
+                e.style.display = "none", t.style.display = "block"
+            })), document.getElementById("validation-tab").addEventListener("click", (function() {
+                let e = document.getElementById("validation"),
                     t = document.getElementById("info");
-                e.style.display = "block", t.style.display = "none" })), document.getElementById("validation-tab1").addEventListener("click", (function() { let e = document.getElementById("validation"),
+                e.style.display = "block", t.style.display = "none"
+            })), document.getElementById("validation-tab1").addEventListener("click", (function() {
+                let e = document.getElementById("validation"),
                     t = document.getElementById("info");
-                e.style.display = "block", t.style.display = "none" })) }() }
+                e.style.display = "block", t.style.display = "none"
+            }))
+        }()
+    }
 
-    function W(e, t) {! function() { console.log("ket-qua", e); var t = document.getElementById("vnpt_ekyc"),
-                i = '<div class="step-4" id="ekyc-step-4"><ul class="progressbar" id="progressbar" style="width:45%;margin-bottom: 27px"><li class="complete" id="progress-step0">Mặt trước</li><li  class="complete" id="progress-step1">Chân dung</li><li  class="complete" id="progress-step2">Kết quả</li></ul><div class="info-wrap"><div class="tabs"><div id="validation" class="tab"><ul class="nav nav-tabs"><li id="info-tab"><div>Thông tin cá nhân</div></li><li id="validation-tab" class="active"><div>Validation</div></li></ul><div class="block-left" id="tab2-content"><div class="item"><div class="label-cus">Loại giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? '<div style="color:red;">Không hợp lệ</div>' : '<div style="color:green;">Hợp lệ</div>') + '</div></div><div class="item"><div class="label-cus">Giấy tờ mờ nhòe/mất góc</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { let t = "";
-                    t = n(e) ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>'; return t }(e.ocr.object.warning)) + '</div></div><div class="item"><div class="label-cus">Chất lượng số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { let t = JSON.parse(e); if (n(t)) return '<div style="color: red;">Mờ nhòe</div>'; for (var i = 0; i < t.length; i++)
+    function W(e, t) {
+        ! function() {
+            console.log("ket-qua", e);
+            var t = document.getElementById("vnpt_ekyc"),
+                i = '<div class="step-4" id="ekyc-step-4"><ul class="progressbar" id="progressbar" style="width:45%;margin-bottom: 27px"><li class="complete" id="progress-step0">Mặt trước</li><li  class="complete" id="progress-step1">Chân dung</li><li  class="complete" id="progress-step2">Kết quả</li></ul><div class="info-wrap"><div class="tabs"><div id="validation" class="tab"><ul class="nav nav-tabs"><li id="info-tab"><div>Thông tin cá nhân</div></li><li id="validation-tab" class="active"><div>Validation</div></li></ul><div class="block-left" id="tab2-content"><div class="item"><div class="label-cus">Loại giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? '<div style="color:red;">Không hợp lệ</div>' : '<div style="color:green;">Hợp lệ</div>') + '</div></div><div class="item"><div class="label-cus">Giấy tờ mờ nhòe/mất góc</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) {
+                    let t = "";
+                    t = n(e) ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>';
+                    return t
+                }(e.ocr.object.warning)) + '</div></div><div class="item"><div class="label-cus">Chất lượng số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) {
+                    let t = JSON.parse(e);
+                    if (n(t)) return '<div style="color: red;">Mờ nhòe</div>';
+                    for (var i = 0; i < t.length; i++)
                         if (t[i] < .93) return '<div style="color: red;">Mờ nhòe</div>';
-                    return '<div style="color: green;">Tốt</div>' }(e.ocr.object.id_probs)) + '</div></div><div class="item"><div class="label-cus">Chất lượng ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { if (e < .93) return '<div style="color: red;">Mờ nhòe</div>'; return '<div style="color: green;">Tốt</div>' }(e.ocr.object.issue_date_prob)) + '</div></div><div class="item"><div class="label-cus">Hạn giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { let t = "";
-                    t = "no" == e ? '<div style="color:green;">Còn hạn</div>' : '<div style="color:red;">Hết hạn</div>'; return t }(e.ocr.object.expire_warning)) + '</div></div><div class="item"><div class="label-cus">Xác thực giấy tờ</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_front.object) ? '<div style="color:red;">Không chụp trực tiếp</div>' : function(e) { let t = "";
-                    t = e ? '<div style="color:red;">Không chụp trực tiếp</div>' : '<div style="color:green;">Chụp trực tiếp</div>'; return t }(e.liveness_card_front.object.fake_liveness)) + '</div></div><div class="item"><div class="label-cus">Cảnh báo trường thông tin</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) || n(e.ocr.object) ? "" : function(e) { const t = { id_sua_xoa: "Số ID bị sửa xóa", id_ko_hop_le: "Số ID không hợp lệ", id_dob_ko_khop: "Mã năm sinh không khớp", id_gender_ko_khop: "Mã giới tính không khớp", id_post_code_ko_khop: "Mã tỉnh/TP không khớp", invalid_dob: "Mã ngày sinh không hợp lệ", den_trang_ko_hop_le: "Giấy tờ photo", fake_printing: "Giấy tờ không hợp lệ", id_invalid_length: "Số ID không hợp lệ" }; let i = "",
+                    return '<div style="color: green;">Tốt</div>'
+                }(e.ocr.object.id_probs)) + '</div></div><div class="item"><div class="label-cus">Chất lượng ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { if (e < .93) return '<div style="color: red;">Mờ nhòe</div>'; return '<div style="color: green;">Tốt</div>' }(e.ocr.object.issue_date_prob)) + '</div></div><div class="item"><div class="label-cus">Hạn giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) {
+                    let t = "";
+                    t = "no" == e ? '<div style="color:green;">Còn hạn</div>' : '<div style="color:red;">Hết hạn</div>';
+                    return t
+                }(e.ocr.object.expire_warning)) + '</div></div><div class="item"><div class="label-cus">Xác thực giấy tờ</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_front.object) ? '<div style="color:red;">Không chụp trực tiếp</div>' : function(e) {
+                    let t = "";
+                    t = e ? '<div style="color:red;">Không chụp trực tiếp</div>' : '<div style="color:green;">Chụp trực tiếp</div>';
+                    return t
+                }(e.liveness_card_front.object.fake_liveness)) + '</div></div><div class="item"><div class="label-cus">Cảnh báo trường thông tin</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) || n(e.ocr.object) ? "" : function(e) {
+                    const t = { id_sua_xoa: "Số ID bị sửa xóa", id_ko_hop_le: "Số ID không hợp lệ", id_dob_ko_khop: "Mã năm sinh không khớp", id_gender_ko_khop: "Mã giới tính không khớp", id_post_code_ko_khop: "Mã tỉnh/TP không khớp", invalid_dob: "Mã ngày sinh không hợp lệ", den_trang_ko_hop_le: "Giấy tờ photo", fake_printing: "Giấy tờ không hợp lệ", id_invalid_length: "Số ID không hợp lệ" };
+                    let i = "",
                         n = [],
-                        o = []; for (var a = 0; a < e.length; a++) "id_ko_hop_le" == e[a] || "id_dob_ko_khop" == e[a] || "id_gender_ko_khop" == e[a] || "id_post_code_ko_khop" == e[a] || "invalid_dob" == e[a] ? n.push(e[a]) : o.push(e[a]); if (n.length > 0)
+                        o = [];
+                    for (var a = 0; a < e.length; a++) "id_ko_hop_le" == e[a] || "id_dob_ko_khop" == e[a] || "id_gender_ko_khop" == e[a] || "id_post_code_ko_khop" == e[a] || "invalid_dob" == e[a] ? n.push(e[a]) : o.push(e[a]);
+                    if (n.length > 0)
                         for (a = 0; a < n.length; a++) i += '<div style="color:#ff7f00;">' + t[e[a]] + "</div>";
                     else if (o.length > 0)
                         for (a = 0; a < o.length; a++) i += '<div style="color:#ff7f00;">' + t[e[a]] + "</div>";
-                    else i = '<div style="color:green;">Hợp lệ</div>'; return i }(e.ocr.object.tampering.warning)) + '</div></div><div class="item"><div class="label-cus">Dán đè ảnh</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_front.object) ? "" : function(e) { let t = "";
-                    t = e ? '<div style="color:red;">Có</div>' : '<div style="color:green;">Không</div>'; return t }(e.liveness_card_front.object.face_swapping)) + '</div></div><div class="item"><div class="label-cus">Mở mắt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) { let t = "";
-                    t = "yes" == e ? '<div style="color:green;">Có</div>' : '<div style="color:red;">Không</div>'; return t }(e.liveness_face.object.is_eye_open)) + '</div></div><div class="item"><div class="label-cus">Mờ mặt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) { let t = "";
-                    t = "no" == e ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>'; return t }(e.liveness_face.object.blur_face)) + '</div></div><div class="item"><div class="label-cus">Xác thực chân dung</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) { let t = "";
-                    t = "success" == e ? '<div style="color:green;">Người thật</div>' : '<div style="color:red;">Không phải người thật</div>'; return t }(e.liveness_face.object.liveness)) + '</div></div><div class="item"></div></div></div><div id="info" class="tab"><ul class="nav nav-tabs"><li id="info-tab1" class="active"><div>Thông tin cá nhân</div></li><li id="validation-tab1"><div>Validation</div></li></ul><div class="block-left"><div class="item"><div class="label-cus">Giấy tờ</div><div class="item-content">' + function() { let t = '<div style="color:green;" class="check-info-doc">Hợp lệ</div>';
-                    n(e) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data empty")) : (n(e.ocr) || n(e.ocr.object) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("ocr || obj empty")) : n(e.ocr.object.expire_warning) || "yes" == e.ocr.object.expire_warning && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.ocr.object.expire_warning")), n(e.liveness_card_front) ? console.log("liveness_card_front || liveness_card_back empty") : (e.liveness_card_front.face_swapping && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.face_swapping")), e.liveness_card_front.fake_liveness && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_liveness")), e.liveness_card_front.fake_print_photo && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_print_photo")))); if (!(n(e) || n(e.ocr) || n(e.ocr.object) || n(e.ocr.object.warning_msg))) { let n = e.ocr.object.warning_msg;
-                        t = ""; for (var i = 0; i < n.length; i++) t += '<div style="color:#ff7f00;">' + n[i] + "</div>";
-                        console.log("data.ocr.object.warning", t) } return t }() + '</div></div><div class="item"><div class="label-cus">Số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.id) + '</div></div><div class="item"><div class="label-cus">Họ và tên</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.name) + '</div></div><div class="item"><div class="label-cus">Ngày sinh</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.birth_day) + '</div></div><div class="item"><div class="label-cus">Nơi ĐKHK TT</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.recent_location) + '</div></div><div class="item"><div class="label-cus">Giới tính</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.gender) + '</div></div><div class="item"><div class="label-cus">Ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_date) + '</div></div><div class="item"><div class="label-cus">Nơi cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_place) + '</div></div><div class="item"><div class="label-cus">So sánh</div><div class="item-content">' + (n(e) || n(e.compare) || n(e.compare.object) ? '<div style="color: red;"> Không tìm thấy khuôn mặt </div>' : function(e) { let t = "";
-                    t = "NOMATCH" == e.msg ? '<div style="color: red;">' + e.result + "</div>" : '<div style="color: green;">' + e.result + "</div>"; return t }(e.compare.object)) + '</div></div></div></div></div><div class="images-block"><img class="image-result" src="' + (!n(e) && !n(e.base64_doc_img) && e.base64_doc_img.img_front) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_far) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_near) + '"/></div></div><div class="btn-redemo" id="btn-redemo"><img src="https://ekyc-web.vnpt.vn/images/refresh_icon.png" style="width: 20px; height: 20px; margin-right: 5px"/><span>THỰC HIỆN LẠI</span></div></div>';
-            t.insertAdjacentHTML("beforeend", i), document.getElementById("btn-redemo").addEventListener("click", (function() { location.reload() })), document.getElementById("info-tab").addEventListener("click", (function() { let e = document.getElementById("validation"),
+                    else i = '<div style="color:green;">Hợp lệ</div>';
+                    return i
+                }(e.ocr.object.tampering.warning)) + '</div></div><div class="item"><div class="label-cus">Dán đè ảnh</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_front.object) ? "" : function(e) {
+                    let t = "";
+                    t = e ? '<div style="color:red;">Có</div>' : '<div style="color:green;">Không</div>';
+                    return t
+                }(e.liveness_card_front.object.face_swapping)) + '</div></div><div class="item"><div class="label-cus">Mở mắt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) {
+                    let t = "";
+                    t = "yes" == e ? '<div style="color:green;">Có</div>' : '<div style="color:red;">Không</div>';
+                    return t
+                }(e.liveness_face.object.is_eye_open)) + '</div></div><div class="item"><div class="label-cus">Mờ mặt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) {
+                    let t = "";
+                    t = "no" == e ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>';
+                    return t
+                }(e.liveness_face.object.blur_face)) + '</div></div><div class="item"><div class="label-cus">Xác thực chân dung</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) {
+                    let t = "";
+                    t = "success" == e ? '<div style="color:green;">Người thật</div>' : '<div style="color:red;">Không phải người thật</div>';
+                    return t
+                }(e.liveness_face.object.liveness)) + '</div></div><div class="item"></div></div></div><div id="info" class="tab"><ul class="nav nav-tabs"><li id="info-tab1" class="active"><div>Thông tin cá nhân</div></li><li id="validation-tab1"><div>Validation</div></li></ul><div class="block-left"><div class="item"><div class="label-cus">Giấy tờ</div><div class="item-content">' + function() {
+                    let t = '<div style="color:green;" class="check-info-doc">Hợp lệ</div>';
+                    n(e) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data empty")) : (n(e.ocr) || n(e.ocr.object) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("ocr || obj empty")) : n(e.ocr.object.expire_warning) || "yes" == e.ocr.object.expire_warning && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.ocr.object.expire_warning")), n(e.liveness_card_front) ? console.log("liveness_card_front || liveness_card_back empty") : (e.liveness_card_front.face_swapping && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.face_swapping")), e.liveness_card_front.fake_liveness && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_liveness")), e.liveness_card_front.fake_print_photo && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_print_photo"))));
+                    if (!(n(e) || n(e.ocr) || n(e.ocr.object) || n(e.ocr.object.warning_msg))) {
+                        let n = e.ocr.object.warning_msg;
+                        t = "";
+                        for (var i = 0; i < n.length; i++) t += '<div style="color:#ff7f00;">' + n[i] + "</div>";
+                        console.log("data.ocr.object.warning", t)
+                    }
+                    return t
+                }() + '</div></div><div class="item"><div class="label-cus">Số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.id) + '</div></div><div class="item"><div class="label-cus">Họ và tên</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.name) + '</div></div><div class="item"><div class="label-cus">Ngày sinh</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.birth_day) + '</div></div><div class="item"><div class="label-cus">Nơi ĐKHK TT</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.recent_location) + '</div></div><div class="item"><div class="label-cus">Giới tính</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.gender) + '</div></div><div class="item"><div class="label-cus">Ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_date) + '</div></div><div class="item"><div class="label-cus">Nơi cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_place) + '</div></div><div class="item"><div class="label-cus">So sánh</div><div class="item-content">' + (n(e) || n(e.compare) || n(e.compare.object) ? '<div style="color: red;"> Không tìm thấy khuôn mặt </div>' : function(e) {
+                    let t = "";
+                    t = "NOMATCH" == e.msg ? '<div style="color: red;">' + e.result + "</div>" : '<div style="color: green;">' + e.result + "</div>";
+                    return t
+                }(e.compare.object)) + '</div></div></div></div></div><div class="images-block"><img class="image-result" src="' + (!n(e) && !n(e.base64_doc_img) && e.base64_doc_img.img_front) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_far) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_near) + '"/></div></div><div class="btn-redemo" id="btn-redemo"><img src="https://ekyc-web.vnpt.vn/images/refresh_icon.png" style="width: 20px; height: 20px; margin-right: 5px"/><span>THỰC HIỆN LẠI</span></div></div>';
+            t.insertAdjacentHTML("beforeend", i), document.getElementById("btn-redemo").addEventListener("click", (function() { location.reload() })), document.getElementById("info-tab").addEventListener("click", (function() {
+                let e = document.getElementById("validation"),
                     t = document.getElementById("info");
-                e.style.display = "none", t.style.display = "block" })), document.getElementById("info-tab1").addEventListener("click", (function() { let e = document.getElementById("validation"),
+                e.style.display = "none", t.style.display = "block"
+            })), document.getElementById("info-tab1").addEventListener("click", (function() {
+                let e = document.getElementById("validation"),
                     t = document.getElementById("info");
-                e.style.display = "none", t.style.display = "block" })), document.getElementById("validation-tab").addEventListener("click", (function() { let e = document.getElementById("validation"),
+                e.style.display = "none", t.style.display = "block"
+            })), document.getElementById("validation-tab").addEventListener("click", (function() {
+                let e = document.getElementById("validation"),
                     t = document.getElementById("info");
-                e.style.display = "block", t.style.display = "none" })), document.getElementById("validation-tab1").addEventListener("click", (function() { let e = document.getElementById("validation"),
+                e.style.display = "block", t.style.display = "none"
+            })), document.getElementById("validation-tab1").addEventListener("click", (function() {
+                let e = document.getElementById("validation"),
                     t = document.getElementById("info");
-                e.style.display = "block", t.style.display = "none" })) }() }
+                e.style.display = "block", t.style.display = "none"
+            }))
+        }()
+    }
 
     function V(e) {
         function t(e, t) { if (t) { var i = t ? t.split("|") : ""; return e == i[0] || e == i[1] ? "https://ekyc-web.vnpt.vn/img/checked.svg" : "https://ekyc-web.vnpt.vn/img/fail.svg" } }
 
         function i(e, t) { if (t) { var i = t ? t.split("|") : ""; return e.toLocaleLowerCase() == i[2].toLocaleLowerCase() ? "https://ekyc-web.vnpt.vn/img/checked.svg" : "https://ekyc-web.vnpt.vn/img/fail.svg" } }
 
-        function o(e, t) { if (t) { var i = t ? t.split("|") : null,
-                    n = ""; return e.split("/").join("") === i[3] ? (console.log("true"), n = "https://ekyc-web.vnpt.vn/img/checked.svg") : n = "https://ekyc-web.vnpt.vn/img/fail.svg", n } }! function() { console.log("ket-qua", e); var a = document.getElementById("vnpt_ekyc"),
-                c = '<div class="step-4" id="ekyc-step-4"><ul class="progressbar" id="progressbar" style="width:45%;margin-bottom: 27px"><li class="complete" id="progress-step0">Mặt trước</li><li  class="complete" id="progress-step1">Mặt sau</li><li  class="complete" id="progress-step2">Chân dung</li><li  class="complete" id="progress-step3">Kết quả</li></ul><div class="info-wrap"><div class="tabs"><div id="validation" class="tab"><ul class="nav nav-tabs"><li id="info-tab"><div>Thông tin cá nhân</div></li><li id="validation-tab" class="active"><div>Validation</div></li><li id="qr-code-tab"><div>QR Code</div></li></ul><div class="block-left" id="tab2-content"><div class="item"><div class="label-cus">Loại giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? '<div style="color:red;">Không hợp lệ</div>' : '<div style="color:green;">Hợp lệ</div>') + '</div></div><div class="item"><div class="label-cus">Mặt trước, sau giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? function(e) { let t = "";
-                    t = n(e && e.errors.find(e => "Dau vao mat truoc va sau khong cung loai" == e)) ? "" : '<div style="color:red;">Không cùng loại</div>'; return t }(e.orc_err) : function(e, t) { let i = "";
-                    i = e == t ? '<div style="color: green;">Cùng loại</div>' : '<div style="color: red;">Không cùng loại</div>'; return i }(e.ocr.object.back_type_id, e.ocr.object.type_id)) + '</div></div><div class="item"><div class="label-cus">Giấy tờ mờ nhòe/mất góc</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { let t = "";
-                    t = n(e) ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>'; return t }(e.ocr.object.warning)) + '</div></div><div class="item"><div class="label-cus">Chất lượng số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { let t = JSON.parse(e); if (n(t)) return '<div style="color: red;">Mờ nhòe</div>'; for (var i = 0; i < t.length; i++)
+        function o(e, t) {
+            if (t) {
+                var i = t ? t.split("|") : null,
+                    n = "";
+                return e.split("/").join("") === i[3] ? (console.log("true"), n = "https://ekyc-web.vnpt.vn/img/checked.svg") : n = "https://ekyc-web.vnpt.vn/img/fail.svg", n
+            }
+        }! function() {
+            console.log("ket-qua", e);
+            var a = document.getElementById("vnpt_ekyc"),
+                c = '<div class="step-4" id="ekyc-step-4"><ul class="progressbar" id="progressbar" style="width:45%;margin-bottom: 27px"><li class="complete" id="progress-step0">Mặt trước</li><li  class="complete" id="progress-step1">Mặt sau</li><li  class="complete" id="progress-step2">Chân dung</li><li  class="complete" id="progress-step3">Kết quả</li></ul><div class="info-wrap"><div class="tabs"><div id="validation" class="tab"><ul class="nav nav-tabs"><li id="info-tab"><div>Thông tin cá nhân</div></li><li id="validation-tab" class="active"><div>Validation</div></li><li id="qr-code-tab"><div>QR Code</div></li></ul><div class="block-left" id="tab2-content"><div class="item"><div class="label-cus">Loại giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? '<div style="color:red;">Không hợp lệ</div>' : '<div style="color:green;">Hợp lệ</div>') + '</div></div><div class="item"><div class="label-cus">Mặt trước, sau giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? function(e) {
+                    let t = "";
+                    t = n(e && e.errors.find(e => "Dau vao mat truoc va sau khong cung loai" == e)) ? "" : '<div style="color:red;">Không cùng loại</div>';
+                    return t
+                }(e.orc_err) : function(e, t) {
+                    let i = "";
+                    i = e == t ? '<div style="color: green;">Cùng loại</div>' : '<div style="color: red;">Không cùng loại</div>';
+                    return i
+                }(e.ocr.object.back_type_id, e.ocr.object.type_id)) + '</div></div><div class="item"><div class="label-cus">Giấy tờ mờ nhòe/mất góc</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) {
+                    let t = "";
+                    t = n(e) ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>';
+                    return t
+                }(e.ocr.object.warning)) + '</div></div><div class="item"><div class="label-cus">Chất lượng số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) {
+                    let t = JSON.parse(e);
+                    if (n(t)) return '<div style="color: red;">Mờ nhòe</div>';
+                    for (var i = 0; i < t.length; i++)
                         if (t[i] < .93) return '<div style="color: red;">Mờ nhòe</div>';
-                    return '<div style="color: green;">Tốt</div>' }(e.ocr.object.id_probs)) + '</div></div><div class="item"><div class="label-cus">Chất lượng ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { if (e < .93) return '<div style="color: red;">Mờ nhòe</div>'; return '<div style="color: green;">Tốt</div>' }(e.ocr.object.issue_date_prob)) + '</div></div><div class="item"><div class="label-cus">Hạn giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { let t = "";
-                    t = "no" == e ? '<div style="color:green;">Còn hạn</div>' : '<div style="color:red;">Hết hạn</div>'; return t }(e.ocr.object.expire_warning)) + '</div></div><div class="item"><div class="label-cus">Xác thực giấy tờ</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_back) || n(e.liveness_card_front.object) || n(e.liveness_card_back.object) ? "" : function(e, t) { let i = "";
-                    i = e || t ? '<div style="color:red;">Không chụp trực tiếp</div>' : '<div style="color:green;">Chụp trực tiếp</div>'; return i }(e.liveness_card_front.object.fake_liveness, e.liveness_card_back.object.fake_liveness)) + '</div></div><div class="item"><div class="label-cus">Cảnh báo trường thông tin</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { const t = { id_sua_xoa: "Số ID bị sửa xóa", id_ko_hop_le: "Số ID không hợp lệ", id_dob_ko_khop: "Mã năm sinh không khớp", id_gender_ko_khop: "Mã giới tính không khớp", id_post_code_ko_khop: "Mã tỉnh/TP không khớp", invalid_dob: "Mã ngày sinh không hợp lệ", den_trang_ko_hop_le: "Giấy tờ photo", fake_printing: "Giấy tờ không hợp lệ", id_invalid_length: "Số ID không hợp lệ" }; let i = "",
+                    return '<div style="color: green;">Tốt</div>'
+                }(e.ocr.object.id_probs)) + '</div></div><div class="item"><div class="label-cus">Chất lượng ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) { if (e < .93) return '<div style="color: red;">Mờ nhòe</div>'; return '<div style="color: green;">Tốt</div>' }(e.ocr.object.issue_date_prob)) + '</div></div><div class="item"><div class="label-cus">Hạn giấy tờ</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) {
+                    let t = "";
+                    t = "no" == e ? '<div style="color:green;">Còn hạn</div>' : '<div style="color:red;">Hết hạn</div>';
+                    return t
+                }(e.ocr.object.expire_warning)) + '</div></div><div class="item"><div class="label-cus">Xác thực giấy tờ</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_back) || n(e.liveness_card_front.object) || n(e.liveness_card_back.object) ? "" : function(e, t) {
+                    let i = "";
+                    i = e || t ? '<div style="color:red;">Không chụp trực tiếp</div>' : '<div style="color:green;">Chụp trực tiếp</div>';
+                    return i
+                }(e.liveness_card_front.object.fake_liveness, e.liveness_card_back.object.fake_liveness)) + '</div></div><div class="item"><div class="label-cus">Cảnh báo trường thông tin</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : function(e) {
+                    const t = { id_sua_xoa: "Số ID bị sửa xóa", id_ko_hop_le: "Số ID không hợp lệ", id_dob_ko_khop: "Mã năm sinh không khớp", id_gender_ko_khop: "Mã giới tính không khớp", id_post_code_ko_khop: "Mã tỉnh/TP không khớp", invalid_dob: "Mã ngày sinh không hợp lệ", den_trang_ko_hop_le: "Giấy tờ photo", fake_printing: "Giấy tờ không hợp lệ", id_invalid_length: "Số ID không hợp lệ" };
+                    let i = "",
                         n = [],
-                        o = []; for (var a = 0; a < e.length; a++) "id_ko_hop_le" == e[a] || "id_dob_ko_khop" == e[a] || "id_gender_ko_khop" == e[a] || "id_post_code_ko_khop" == e[a] || "invalid_dob" == e[a] ? n.push(e[a]) : o.push(e[a]); if (n.length > 0)
+                        o = [];
+                    for (var a = 0; a < e.length; a++) "id_ko_hop_le" == e[a] || "id_dob_ko_khop" == e[a] || "id_gender_ko_khop" == e[a] || "id_post_code_ko_khop" == e[a] || "invalid_dob" == e[a] ? n.push(e[a]) : o.push(e[a]);
+                    if (n.length > 0)
                         for (a = 0; a < n.length; a++) i += '<div style="color:#ff7f00;">' + t[e[a]] + "</div>";
                     else if (o.length > 0)
                         for (a = 0; a < o.length; a++) i += '<div style="color:#ff7f00;">' + t[e[a]] + "</div>";
-                    else i = '<div style="color:green;">Hợp lệ</div>'; return i }(e.ocr.object.tampering.warning)) + '</div></div><div class="item"><div class="label-cus">Dán đè ảnh</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_front.object) ? "" : function(e) { let t = "";
-                    t = e ? '<div style="color:red;">Có</div>' : '<div style="color:green;">Không</div>'; return t }(e.liveness_card_front.object.face_swapping)) + '</div></div><div class="item"><div class="label-cus">Mở mắt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) { let t = "";
-                    t = "yes" == e ? '<div style="color:green;">Có</div>' : '<div style="color:red;">Không</div>'; return t }(e.liveness_face.object.is_eye_open)) + '</div></div><div class="item"><div class="label-cus">Mờ mặt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) { let t = "";
-                    t = "no" == e ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>'; return t }(e.liveness_face.object.blur_face)) + '</div></div><div class="item"><div class="label-cus">Xác thực chân dung</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) { let t = "";
-                    t = "success" == e ? '<div style="color:green;">Người thật</div>' : '<div style="color:red;">Không phải người thật</div>'; return t }(e.liveness_face.object.liveness)) + '</div></div><div class="item"><div class="label-cus">Mặt bị che</div><div class="item-content">' + (n(e) || n(e.masked) ? "" : function(e) { let t = "";
-                    t = "yes" == e.masked ? '<div style="color:red;">Có</div>' : '<div style="color:green;">Không</div>'; return t }(e.masked.object)) + '</div></div></div></div><div id="qr-code" class="tab"><ul class="nav nav-tabs"><li id="info-tab2"><div>Thông tin cá nhân</div></li><li id="validation-tab2"><div>Validation</div></li><li id="qr-code-tab2" class="active"><div>QR Code</div></li></ul><div class="block-left"><div class="item"><div class="label-cus"><b>Thông tin QR</b></div></div><div class="result-qr-block"><span id="result-qr-data">' + (n(e) ? "" : e.qr_code) + '</span></div><div class="item"><span>Đối chiếu thông tin trên ảnh chụp giấy tờ</span></div><div class="item"><div class="label-cus">Số CMND</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.id) + '</div><img src="' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "https://ekyc-web.vnpt.vn/img/fail.svg" : t(e.ocr.object.id, e.qr_code)) + '" width="20px" height="20px"></div><div class="item"><div class="label-cus">Họ và tên</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.name) + '</div><img src="' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "https://ekyc-web.vnpt.vn/img/fail.svg" : i(e.ocr.object.name, e.qr_code)) + '" width="20px" height="20px"></div><div class="item"><div class="label-cus">Ngày sinh</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.birth_day) + '</div><img src="' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "https://ekyc-web.vnpt.vn/img/fail.svg" : o(e.ocr.object.birth_day, e.qr_code)) + '" width="20px" height="20px"></div></div></div><div id="info" class="tab"><ul class="nav nav-tabs"><li id="info-tab1" class="active"><div>Thông tin cá nhân</div></li><li id="validation-tab1"><div>Validation</div></li><li id="qr-code-tab1"><div>QR Code</div></li></ul><div class="block-left"><div class="item"><div class="label-cus">Giấy tờ</div><div class="item-content">' + function() { let t = '<div style="color:green;" class="check-info-doc">Hợp lệ</div>';
-                    n(e) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data empty")) : (n(e.ocr) || n(e.ocr.object) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("ocr || obj empty")) : n(e.ocr.object.expire_warning) || "yes" == e.ocr.object.expire_warning && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.ocr.object.expire_warning")), n(e.liveness_card_front) || n(e.liveness_card_back) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("liveness_card_front || liveness_card_back")) : (e.liveness_card_front.face_swapping && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.face_swapping")), e.liveness_card_front.fake_liveness && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_liveness")), e.liveness_card_front.fake_print_photo && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_print_photo")), e.liveness_card_back.face_swapping && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.face_swapping")), e.liveness_card_back.fake_liveness && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.face_swapping")), e.liveness_card_back.fake_print_photo && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.fake_print_photo")))); if (!(n(e) || n(e.ocr) || n(e.ocr.object) || n(e.ocr.object.warning_msg))) { let n = e.ocr.object.warning_msg;
-                        t = ""; for (var i = 0; i < n.length; i++) t += '<div style="color:#ff7f00;">' + n[i] + "</div>";
-                        console.log("data.ocr.object.warning", t) } return t }() + '</div></div><div class="item"><div class="label-cus">Số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.id) + '</div></div><div class="item"><div class="label-cus">Họ và tên</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.name) + '</div></div><div class="item"><div class="label-cus">Ngày sinh</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.birth_day) + '</div></div><div class="item"><div class="label-cus">Nơi ĐKHK TT</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.recent_location) + '</div></div><div class="item"><div class="label-cus">Giới tính</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.gender) + '</div></div><div class="item"><div class="label-cus">Ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_date) + '</div></div><div class="item"><div class="label-cus">Có giá trị đến</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.valid_date) + '</div></div><div class="item"><div class="label-cus">Nơi cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_place) + '</div></div><div class="item"><div class="label-cus">So sánh</div><div class="item-content">' + (n(e) || n(e.compare) || n(e.compare.object) ? '<div style="color: red;"> Không tìm thấy khuôn mặt </div>' : function(e) { let t = "";
-                    t = "NOMATCH" == e.msg ? '<div style="color: red;">' + e.result + "</div>" : '<div style="color: green;">' + e.result + "</div>"; return t }(e.compare.object)) + '</div></div><div class="item"><div class="label-cus">Kết quả</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) || t(e.ocr.object.id, e.qr_code) !== o(e.ocr.object.birth_day, e.qr_code) || o(e.ocr.object.birth_day, e.qr_code) !== i(e.ocr.object.name, e.qr_code) || "https://ekyc-web.vnpt.vn/img/checked.svg" !== i(e.ocr.object.name, e.qr_code) ? '<div style="color: red;"> OCR không khớp QR code </div>' : '<div style="color: green;"> OCR khớp QR code </div>') + '</div></div></div></div></div><div class="images-block"><img class="image-result" src="' + (!n(e) && !n(e.base64_doc_img) && e.base64_doc_img.img_front) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_doc_img) && e.base64_doc_img.img_back) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_far) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_near) + '"/></div></div><div class="btn-redemo" id="btn-redemo"><img src="https://ekyc-web.vnpt.vn/images/refresh_icon.png" style="width: 20px; height: 20px; margin-right: 5px"/><span>THỰC HIỆN LẠI</span></div></div>';
+                    else i = '<div style="color:green;">Hợp lệ</div>';
+                    return i
+                }(e.ocr.object.tampering.warning)) + '</div></div><div class="item"><div class="label-cus">Dán đè ảnh</div><div class="item-content">' + (n(e) || n(e.liveness_card_front) || n(e.liveness_card_front.object) ? "" : function(e) {
+                    let t = "";
+                    t = e ? '<div style="color:red;">Có</div>' : '<div style="color:green;">Không</div>';
+                    return t
+                }(e.liveness_card_front.object.face_swapping)) + '</div></div><div class="item"><div class="label-cus">Mở mắt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) {
+                    let t = "";
+                    t = "yes" == e ? '<div style="color:green;">Có</div>' : '<div style="color:red;">Không</div>';
+                    return t
+                }(e.liveness_face.object.is_eye_open)) + '</div></div><div class="item"><div class="label-cus">Mờ mặt</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) {
+                    let t = "";
+                    t = "no" == e ? '<div style="color:green;">Không</div>' : '<div style="color:red;">Có</div>';
+                    return t
+                }(e.liveness_face.object.blur_face)) + '</div></div><div class="item"><div class="label-cus">Xác thực chân dung</div><div class="item-content">' + (n(e) || n(e.liveness_face) || n(e.liveness_face.object) ? "" : function(e) {
+                    let t = "";
+                    t = "success" == e ? '<div style="color:green;">Người thật</div>' : '<div style="color:red;">Không phải người thật</div>';
+                    return t
+                }(e.liveness_face.object.liveness)) + '</div></div><div class="item"><div class="label-cus">Mặt bị che</div><div class="item-content">' + (n(e) || n(e.masked) ? "" : function(e) {
+                    let t = "";
+                    t = "yes" == e.masked ? '<div style="color:red;">Có</div>' : '<div style="color:green;">Không</div>';
+                    return t
+                }(e.masked.object)) + '</div></div></div></div><div id="qr-code" class="tab"><ul class="nav nav-tabs"><li id="info-tab2"><div>Thông tin cá nhân</div></li><li id="validation-tab2"><div>Validation</div></li><li id="qr-code-tab2" class="active"><div>QR Code</div></li></ul><div class="block-left"><div class="item"><div class="label-cus"><b>Thông tin QR</b></div></div><div class="result-qr-block"><span id="result-qr-data">' + (n(e) ? "" : e.qr_code) + '</span></div><div class="item"><span>Đối chiếu thông tin trên ảnh chụp giấy tờ</span></div><div class="item"><div class="label-cus">Số CMND</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.id) + '</div><img src="' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "https://ekyc-web.vnpt.vn/img/fail.svg" : t(e.ocr.object.id, e.qr_code)) + '" width="20px" height="20px"></div><div class="item"><div class="label-cus">Họ và tên</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.name) + '</div><img src="' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "https://ekyc-web.vnpt.vn/img/fail.svg" : i(e.ocr.object.name, e.qr_code)) + '" width="20px" height="20px"></div><div class="item"><div class="label-cus">Ngày sinh</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.birth_day) + '</div><img src="' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "https://ekyc-web.vnpt.vn/img/fail.svg" : o(e.ocr.object.birth_day, e.qr_code)) + '" width="20px" height="20px"></div></div></div><div id="info" class="tab"><ul class="nav nav-tabs"><li id="info-tab1" class="active"><div>Thông tin cá nhân</div></li><li id="validation-tab1"><div>Validation</div></li><li id="qr-code-tab1"><div>QR Code</div></li></ul><div class="block-left"><div class="item"><div class="label-cus">Giấy tờ</div><div class="item-content">' + function() {
+                    let t = '<div style="color:green;" class="check-info-doc">Hợp lệ</div>';
+                    n(e) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data empty")) : (n(e.ocr) || n(e.ocr.object) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("ocr || obj empty")) : n(e.ocr.object.expire_warning) || "yes" == e.ocr.object.expire_warning && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.ocr.object.expire_warning")), n(e.liveness_card_front) || n(e.liveness_card_back) ? (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("liveness_card_front || liveness_card_back")) : (e.liveness_card_front.face_swapping && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.face_swapping")), e.liveness_card_front.fake_liveness && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_liveness")), e.liveness_card_front.fake_print_photo && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_front.fake_print_photo")), e.liveness_card_back.face_swapping && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.face_swapping")), e.liveness_card_back.fake_liveness && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.face_swapping")), e.liveness_card_back.fake_print_photo && (t = '<div style="color:red;" class="check-info-doc">Không hợp lệ</div>', console.log("data.liveness_card_back.fake_print_photo"))));
+                    if (!(n(e) || n(e.ocr) || n(e.ocr.object) || n(e.ocr.object.warning_msg))) {
+                        let n = e.ocr.object.warning_msg;
+                        t = "";
+                        for (var i = 0; i < n.length; i++) t += '<div style="color:#ff7f00;">' + n[i] + "</div>";
+                        console.log("data.ocr.object.warning", t)
+                    }
+                    return t
+                }() + '</div></div><div class="item"><div class="label-cus">Số ID</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.id) + '</div></div><div class="item"><div class="label-cus">Họ và tên</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.name) + '</div></div><div class="item"><div class="label-cus">Ngày sinh</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.birth_day) + '</div></div><div class="item"><div class="label-cus">Nơi ĐKHK TT</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.recent_location) + '</div></div><div class="item"><div class="label-cus">Giới tính</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.gender) + '</div></div><div class="item"><div class="label-cus">Ngày cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_date) + '</div></div><div class="item"><div class="label-cus">Có giá trị đến</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.valid_date) + '</div></div><div class="item"><div class="label-cus">Nơi cấp</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) ? "" : e.ocr.object.issue_place) + '</div></div><div class="item"><div class="label-cus">So sánh</div><div class="item-content">' + (n(e) || n(e.compare) || n(e.compare.object) ? '<div style="color: red;"> Không tìm thấy khuôn mặt </div>' : function(e) {
+                    let t = "";
+                    t = "NOMATCH" == e.msg ? '<div style="color: red;">' + e.result + "</div>" : '<div style="color: green;">' + e.result + "</div>";
+                    return t
+                }(e.compare.object)) + '</div></div><div class="item"><div class="label-cus">Kết quả</div><div class="item-content">' + (n(e) || n(e.ocr) || n(e.ocr.object) || t(e.ocr.object.id, e.qr_code) !== o(e.ocr.object.birth_day, e.qr_code) || o(e.ocr.object.birth_day, e.qr_code) !== i(e.ocr.object.name, e.qr_code) || "https://ekyc-web.vnpt.vn/img/checked.svg" !== i(e.ocr.object.name, e.qr_code) ? '<div style="color: red;"> OCR không khớp QR code </div>' : '<div style="color: green;"> OCR khớp QR code </div>') + '</div></div></div></div></div><div class="images-block"><img class="image-result" src="' + (!n(e) && !n(e.base64_doc_img) && e.base64_doc_img.img_front) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_doc_img) && e.base64_doc_img.img_back) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_far) + '"/><img class="image-result" src="' + (!n(e) && !n(e.base64_face_img) && e.base64_face_img.img_face_near) + '"/></div></div><div class="btn-redemo" id="btn-redemo"><img src="https://ekyc-web.vnpt.vn/images/refresh_icon.png" style="width: 20px; height: 20px; margin-right: 5px"/><span>THỰC HIỆN LẠI</span></div></div>';
             a.insertAdjacentHTML("beforeend", c), document.getElementById("btn-redemo").addEventListener("click", (function() { location.reload() })),
-                function() { let e = document.getElementById("validation"),
+                function() {
+                    let e = document.getElementById("validation"),
                         t = document.getElementById("info"),
                         i = document.getElementById("qr-code");
-                    document.getElementById("info-tab").addEventListener("click", (function() { e.style.display = "none", t.style.display = "block", i.style.display = "none" })), document.getElementById("info-tab1").addEventListener("click", (function() { e.style.display = "none", t.style.display = "block", i.style.display = "none" })), document.getElementById("info-tab2").addEventListener("click", (function() { e.style.display = "none", t.style.display = "block", i.style.display = "none" })), document.getElementById("validation-tab").addEventListener("click", (function() { e.style.display = "block", t.style.display = "none", i.style.display = "none" })), document.getElementById("validation-tab1").addEventListener("click", (function() { e.style.display = "block", t.style.display = "none", i.style.display = "none" })), document.getElementById("validation-tab2").addEventListener("click", (function() { e.style.display = "block", t.style.display = "none", i.style.display = "none" })), document.getElementById("qr-code-tab").addEventListener("click", (function() { e.style.display = "none", t.style.display = "none", i.style.display = "block" })), document.getElementById("qr-code-tab1").addEventListener("click", (function() { e.style.display = "none", t.style.display = "none", i.style.display = "block" })), document.getElementById("qr-code-tab2").addEventListener("click", (function() { e.style.display = "none", t.style.display = "none", i.style.display = "block" })) }() }() }
+                    document.getElementById("info-tab").addEventListener("click", (function() { e.style.display = "none", t.style.display = "block", i.style.display = "none" })), document.getElementById("info-tab1").addEventListener("click", (function() { e.style.display = "none", t.style.display = "block", i.style.display = "none" })), document.getElementById("info-tab2").addEventListener("click", (function() { e.style.display = "none", t.style.display = "block", i.style.display = "none" })), document.getElementById("validation-tab").addEventListener("click", (function() { e.style.display = "block", t.style.display = "none", i.style.display = "none" })), document.getElementById("validation-tab1").addEventListener("click", (function() { e.style.display = "block", t.style.display = "none", i.style.display = "none" })), document.getElementById("validation-tab2").addEventListener("click", (function() { e.style.display = "block", t.style.display = "none", i.style.display = "none" })), document.getElementById("qr-code-tab").addEventListener("click", (function() { e.style.display = "none", t.style.display = "none", i.style.display = "block" })), document.getElementById("qr-code-tab1").addEventListener("click", (function() { e.style.display = "none", t.style.display = "none", i.style.display = "block" })), document.getElementById("qr-code-tab2").addEventListener("click", (function() { e.style.display = "none", t.style.display = "none", i.style.display = "block" }))
+                }()
+        }()
+    }
 
-    function q(e, t, i) { let n = null;
-        e.client_session ? K(e, t, i) : (n = X(e.VERSION, e.TOKEN_ID), K({...e, client_session: n }, t, i)) }
+    function q(e, t, i) {
+        let n = null;
+        e.client_session ? K(e, t, i) : (n = X(e.VERSION, e.TOKEN_ID), K({...e, client_session: n }, t, i))
+    }
 
     function J(e) { return null !== localStorage.getItem(e) && (localStorage.removeItem(e), !0) }
 
-    function X(e) { const t = (new Date).getTime(),
-            i = e; let n = null; return n = "WEB-SDK_" + navigator.sayswho + "_" + i + "_" + (localStorage.getItem("ekyc_uuid") ? localStorage.getItem("ekyc_uuid") : function() { const e = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, e => (e ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> e / 4).toString(16)); return localStorage.setItem("ekyc_uuid", e), e }()) + "_" + t, n }
+    function X(e) {
+        const t = (new Date).getTime(),
+            i = e;
+        let n = null;
+        return n = "WEB-SDK_" + navigator.sayswho + "_" + i + "_" + (localStorage.getItem("ekyc_uuid") ? localStorage.getItem("ekyc_uuid") : function() { const e = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, e => (e ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> e / 4).toString(16)); return localStorage.setItem("ekyc_uuid", e), e }()) + "_" + t, n
+    }
 
-    function Q(e, t, i) { let n = document.getElementById("vnpt_ekyc"),
+    function Q(e, t, i) {
+        let n = document.getElementById("vnpt_ekyc"),
             o = X(e.VERSION);
-        n && n.parentNode.removeChild(n), q({...e, client_session: o }, t, i) }
+        n && n.parentNode.removeChild(n), q({...e, client_session: o }, t, i)
+    }
 
     function z(e, t) { 9 === e && V(t), -1 !== e && 7 !== e || $(t), 5 != e && 6 !== e || W(t) }
-    navigator.sayswho = (x = navigator.userAgent, Y = x.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [], /trident/i.test(Y[1]) ? "IE " + ((F = /\brv[ :]+(\d+)/g.exec(x) || [])[1] || "") : "Chrome" === Y[1] && null != (F = x.match(/\b(OPR|Edge)\/(\d+)/)) ? F.slice(1).join(" ").replace("OPR", "Opera") : (Y = Y[2] ? [Y[1], Y[2]] : [navigator.appName, navigator.appVersion, "-?"], null != (F = x.match(/version\/(\d+)/i)) && Y.splice(1, 1, F[1]), Y.join("-"))) }]);
+    navigator.sayswho = (x = navigator.userAgent, Y = x.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [], /trident/i.test(Y[1]) ? "IE " + ((F = /\brv[ :]+(\d+)/g.exec(x) || [])[1] || "") : "Chrome" === Y[1] && null != (F = x.match(/\b(OPR|Edge)\/(\d+)/)) ? F.slice(1).join(" ").replace("OPR", "Opera") : (Y = Y[2] ? [Y[1], Y[2]] : [navigator.appName, navigator.appVersion, "-?"], null != (F = x.match(/version\/(\d+)/i)) && Y.splice(1, 1, F[1]), Y.join("-")))
+}]);

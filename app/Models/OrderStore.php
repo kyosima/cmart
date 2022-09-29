@@ -20,12 +20,12 @@ class OrderStore extends Model
 	protected $table = 'order_stores';
 
 	protected $casts = [
-		'id_order' => 'int'
+		'order_id' => 'int'
 	];
 
 	protected $fillable = [
-		'id_order',
-		'id_store',
+		'order_id',
+		'store_id',
 		'order_store_code',
 		'shipping_code',
 		'shipping_total',
@@ -33,26 +33,31 @@ class OrderStore extends Model
 		'vat_services',
 		'discount_products',
 		'discount_services',
+		'transpot_service_id',
+		'transpot_type',
+		'transpot_price',
+		'transpot_distance',
+		'transpot_weight',
 		'shipping_method',
 		'remaining_m_point',
 		'shipping_weight',
 		'shipping_type',
 		'tax',
-		'c_point',
-		'm_point',
+		'cpoint',
+		'mpoint',
 		'sub_total',
 		'total'
 	];
 
 	public function order(){
-		return $this->belongsTo(Order::class,  'id_order', 'id');
+		return $this->belongsTo(Order::class,  'order_id', 'id');
 
 	}
 	public function order_products(){
-		return $this->hasMany(OrderProduct::class, 'id_order_store');
+		return $this->hasMany(OrderProduct::class, 'order_store_id');
 	}
 
 	public function store(){
-		return $this->belongsTo(Store::class,  'id_store', 'id');
+		return $this->belongsTo(Store::class,  'store_id', 'id');
 	}
 }

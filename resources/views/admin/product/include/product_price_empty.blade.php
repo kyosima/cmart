@@ -1,0 +1,1 @@
+<p class="text-center">Chọn loại sản phẩm</p>

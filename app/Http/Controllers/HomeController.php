@@ -3,52 +3,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductCategory;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Ward;
+use App\Models\Order;
+use App\Models\PointC;
+use App\Models\PointM;
+use App\Models\District;
+use App\Models\Province;
 use Illuminate\Http\Request;
+use App\Models\PointCHistory;
+use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use App\Models\Order;
-use App\Models\Province;
-use App\Models\District;
-use App\Models\Ward;
-use Carbon\Carbon;
-use App\Models\PointC;
-use App\Models\PointM;
-use App\Models\PointCHistory;
-use App\Http\Controllers\AddressController;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\EkycController;
 use App\Http\Controllers\NoticeController;
-use App\Http\Controllers\HistoryPointController;
+use App\Http\Controllers\AddressController;
 
-use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\HistoryPointController;
+use App\Http\Traits\getCategoryWithProduct;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 class HomeController extends Controller
 {
+    use getCategoryWithProduct;
     public function home()
     {
-    
-        $categories = ProductCategory::where('category_parent', 0)
-            ->where('id', '!=', 1)
-            ->with(['childrenCategories.products', 'products'])
-            ->get();
-        if (Auth::check()) {
-            if (Auth::user()->is_ekyc == 0) {
-                return redirect()->route('vnpt.index');
-            }
-        }
-        if(Auth::check()){
-            $user = Auth::user();
-            if($user->status == 0){
-                Auth::logout();
-               return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
-            }
-        }
+        
+        $categories = $this->getAllCategoriesWithProduct();
      
         return view('home', compact('categories'));
     }
+
+    
 
     public function __construct()
     {
@@ -82,22 +71,24 @@ class HomeController extends Controller
             'password.max' => 'Mật khẩu bạn nhập không chính xác',
         ]);
 
-        if (Auth::attempt(['phone' => $request->phone, 'password' => $request->password])) {
+        if (Auth::guard('user')->attempt(['phone' => $request->phone, 'password' => $request->password])) {
           
-            $user = Auth::user();
+            $user = Auth::guard('user')->user();
             if($user->status == 0){
                 Auth::logout();
-               return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
+               return redirect('tai-khoan')->with('thongbao', 'Hồ Sơ Khách Hàng ngưng hoạt động');
             }
-            if (Auth::check()) {
-                if (Auth::user()->is_ekyc == 0) {
+                if ($user->is_ekyc == 0) {
                     return redirect()->route('vnpt.index');
+                }elseif($user->is_econtract == 0 ){
+                    return redirect()->route('econtract.index');
+
                 }
-            }
+            
             
             return redirect('/');
         } else {
-            return redirect('tai-khoan')->with('thongbao', 'Hồ sơ Khách Hàng không tồn tại');
+            return redirect('tai-khoan')->with('thongbao', 'Hồ Sơ Khách Hàng không tồn tại');
         }
     }
 

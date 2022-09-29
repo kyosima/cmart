@@ -1,119 +1,59 @@
-var urlHome = jQuery('meta[name="url-home-customer"]').attr('content');
+var urlHome = jQuery('meta[name="url-home"]').attr('content') + '/admin';
 
-var token = jQuery('meta[name="csrf-token"]').attr('content');
-$(document).on('change', 'select[name="sel_province_to"]', function(event) {
+var token = jQuery('meta[name="csrf-token"]').attr('content') + '/admin';;
 
+
+$(document).on('change', 'select[name="sel_province"]', function(event) {
     event.preventDefault();
+    /* Act on the event */
     flag = false;
+    $('select[name="sel_district"]').html('<option value="">Cấp quận</option>');
 
     $.ajax({
-            url: urlHome + '/lay-dia-chi/cap-huyen',
-            type: 'GET',
-            dataType: 'json',
-            data: { province_id: $(this).val() },
-        })
-        .done(function(data) {
-            var html = '<option value="">Cấp huyện</option>';
-            $.each(data, function(index, value) {
-                html += '<option value="' + value.DISTRICT_ID + '">' + value.DISTRICT_NAME + '</option>';
-            });
-
-
-            $('select[name="sel_district_to"]').html(html);
-            $('select[name="sel_ward_to"]').html('<option value="">Cấp xã</option>');
-
-        });
-});
-
-
-$(document).on('change', 'select[name="sel_district_to"]', function(event) {
-    event.preventDefault();
-    flag = false;
-
-    $.ajax({
-            url: urlHome + '/lay-dia-chi/cap-xa',
-            type: 'GET',
-            dataType: 'json',
-            data: { district_id: $(this).val() },
-        })
-        .done(function(data) {
-            var html = '<option value="">Cấp xã</option>';
-            $.each(data, function(index, value) {
-                html += '<option value="' + value.WARDS_ID + '">' + value.WARDS_NAME + '</option>';
-            });
-            $('select[name="sel_ward_to"]').html(html);
-
-        });
-
-});
-
-$(document).ready(function() {
-    $.ajax({
-            url: urlHome + '/lay-dia-chi/cap-tinh',
+            url: urlHome + '/lay-quan-huyen-theo-tinh-thanh',
             type: 'GET',
             dataType: 'json',
             data: { id: $(this).val() },
         })
-        .fail(function(data) {
-            console.log(data);
-
-        })
         .done(function(data) {
-            console.log(data);
-            $('select[name="sel_province_to"]').prepend('<option value="">Cấp tỉnh</option>');
-            html = '';
+            var html = '<option value="">Cấp huyện</option>';
             $.each(data, function(index, value) {
-                if ($('select[name="sel_province_to"]').val() != value.PROVINCE_ID) {
-                    html += '<option value="' + value.PROVINCE_ID + '">' + value.PROVINCE_NAME + '</option>';
-                }
+                html += '<option value="' + value.maquanhuyen + '">' + value.tenquanhuyen + '</option>';
             });
 
 
-            $('select[name="sel_province_to"]').append(html);
-            if ($('select[name="sel_district_to"]').children().length > 0) {
-                flag = false;
+            $('select[name="sel_district"]').html(html);
 
-                $.ajax({
-                        url: urlHome + '/lay-dia-chi/cap-huyen',
-                        type: 'GET',
-                        dataType: 'json',
-                        data: { province_id: $('select[name="sel_province_to"]').val() },
-                    })
-                    .done(function(data) {
-                        html = '';
-                        $.each(data, function(index, value) {
-                            if ($('select[name="sel_district_to"]').val() != value.DISTRICT_ID) {
-                                html += '<option value="' + value.DISTRICT_ID + '">' + value.DISTRICT_NAME + '</option>';
-                            }
-                        });
-                        $('select[name="sel_district_to"]').append(html);
-                    });
-            } else {
-                $('select[name="sel_district_to"]').append('<option value="">Cấp huyện</option>');
+        });
 
-            }
-            if ($('select[name="sel_ward_to"]').children().length > 0) {
-                flag = false;
+});
 
-                $.ajax({
-                        url: urlHome + '/lay-dia-chi/cap-xa',
-                        type: 'GET',
-                        dataType: 'json',
-                        data: { district_id: $('select[name="sel_district_to"]').val() },
-                    })
-                    .done(function(data) {
-                        html = '';
-                        $.each(data, function(index, value) {
-                            if ($('select[name="sel_ward_to"]').val() != value.WARDS_ID) {
-                                html += '<option value="' + value.WARDS_ID + '">' + value.WARDS_NAME + '</option>';
-                            }
-                        });
-                        $('select[name="sel_ward_to"]').append(html);
-                    });
-            } else {
-                $('select[name="sel_ward_to"]').append('<option value="">Cấp xã</option>');
+$(document).on('change', 'select[name="sel_district"]', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    flag = false;
+    // sendAjax();
+    var district = $(this).val();
+    // if($(this).val() == ''){
+    //     RecieveAjax();
+    //     return;
+    // }
+    $.ajax({
+            url: urlHome + '/lay-phuong-xa-theo-quan-huyen',
+            type: 'GET',
+            dataType: 'json',
+            data: { id: district },
+        })
+        .done(function(data) {
+            var html = '<option value="">Cấp xã</option>';
+            $.each(data, function(index, value) {
+                html += '<option value="' + value.maphuongxa + '">' + value.tenphuongxa + '</option>';
+            });
 
-            }
+            $('select[name="sel_ward"]').html(html);
+
+
+
         });
 
 });

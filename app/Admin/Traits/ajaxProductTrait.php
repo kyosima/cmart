@@ -6,9 +6,8 @@ use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
 
 trait ajaxProductTrait {
-    public function ajaxGetProduct($search, $id = 0) {
-        $products = Product::where('id', '!=', $id)
-            ->where('name', 'LIKE', '%'.$search.'%')
+    public function ajaxGetProduct($search) {
+        $products = Product::select('id','title')->where('title', 'LIKE', '%'.$search.'%')
             ->orWhere('sku', 'LIKE', '%'.$search.'%')
             ->limit(25)
             ->get();

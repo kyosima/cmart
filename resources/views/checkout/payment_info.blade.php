@@ -19,14 +19,14 @@
                         </div>
                         <hr>
                         <div class="list-stores-body">
-                            @foreach ($order->order_stores()->get() as $order_store)
+                            @foreach ($order->order_stores as $order_store)
                                 {{-- @php
                                         $cart = Cart::instance($store_id);
                                         $store = App\Models\Store::whereId($store_id)->first();
                                     @endphp --}}
                                 <div class="store-block" id="store{{ $order_store->id_store }}">
                                     <div class="store-title ">
-                                        <h4>Cửa hàng {{ $order_store->store()->value('name') }}</h4>
+                                        <h4>Cửa hàng {{ $order_store->store->title }}</h4>
                                         <h5> {{ formatMethod($order_store->shipping_method) }} <span
                                                 class="pl-1">
                                                 {{formatType($order_store->shipping_type)}}
@@ -69,7 +69,7 @@
                                                             <tr>
                                                                 <td>{{ $order_product->sku }}</td>
                                                                 <td>{{ $order_product->name }}
-                                                                    @if ($order_vat->vat_company != null)
+                                                                    @if (isset($order_vat->vat_company) )
                                                                         <br>
                                                                         {{ $order_vat->vat_email }} <br>
                                                                         {{ $order_vat->vat_company }} <br>
@@ -112,7 +112,7 @@
                                             <div class="text-center">
                                                 <p>Phí Vận chuyển</p>
                                                 <p><small>(Chưa bao gồm thuế VAT 8%)</small></p>
-                                                <p>{{ formatPrice($order_store->shipping_total) }}</p>
+                                                <p>{{ formatPrice($order_store->transpot_price) }}</p>
                                             </div>
                                             <div class="text-center">
                                                 <p>Phí DV GTGT</p>
@@ -140,7 +140,7 @@
                             <div class="text-center mr-4">
                                 <p>Tổng phí vận chuyển</p>
                                 <p><small>(Chưa bao gồm thuế VAT 8%)</small></p>
-                                <p>{{ formatPrice($order->shipping_total) }}</p>
+                                <p>{{ formatPrice($order->transpot_price_total) }}</p>
                             </div>
                             <div class="text-center">
                                 <p>Tổng phí DV GTGT</p>
