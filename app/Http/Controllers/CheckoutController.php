@@ -33,6 +33,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Controllers\ViettelPostController;
 use App\Http\Controllers\HistoryPointController;
 use App\Http\Controllers\PaymentPaymeController;
+use App\Http\Traits\paymentTrait;
 use stdClass;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
@@ -40,13 +41,12 @@ class CheckoutController extends Controller
 {
     //
     use TranspotTrait;
-    public function __construct()
-    {
-        $this->api_key = 'VuBqJVkHv1wiBSdJArMeq5rhSCC6q12e3cVeVxmc';
-    }
+    use paymentTrait;
+
     public function index()
     {
         $user = Auth::guard('user')->user();
+        $this->deleteOrderNoPayment($user);
         if($user->status == 0){
             Auth::guard('user')->logout();
             return redirect('tai-khoan')->with('thongbao', 'Hồ sơ khách hàng đã ngưng hoạt động');
@@ -201,6 +201,8 @@ class CheckoutController extends Controller
     public function postOrder(Request $request)
     {
         $user = Auth::guard('user')->user();
+        $this->deleteOrderNoPayment($user);
+
         $user->level = $user->user_level()->first();
         $carts = $user->carts()->where('accept_checkout', 1)->with(['cart_item.product.product_type', 'cart_item.product.product_price',
         'cart_item.product.product_detail',
@@ -276,6 +278,7 @@ class CheckoutController extends Controller
                     'order_id' => $order->id,
                     'product_id' => $value->product->id,
                     'product_variation_id' => $value->variation_id,
+                    'store_product_id' => $value->store_product_id,
                     'sku' => $value->product->sku,
                     'name' => $value->product->title,
                     'slug' => $value->product->slug,
@@ -286,6 +289,8 @@ class CheckoutController extends Controller
                     ? $value->price
                     : ($value->product->is_variation == 1 ? $value->variation->product_price_detail->price: $value->product->product_price->product_price_detail->price)),
                     'discount' => 0,
+                    'tax' => $value->product->product_price->tax_gtgt,
+                    'process_fee'=> $value->product->product_price->fee_process,
                     'cpoint' => $value->product->product_price->cpoint,
                     'mpoint' => $value->product->product_price->mpoint
                 ]);
@@ -318,6 +323,8 @@ class CheckoutController extends Controller
                 'weight' => 0,
                 'price' => 300,
                 'discount' => 0,
+                'tax' =>0,
+                'process_fee'=>0,
                 'c_point' => 0,
                 'm_point' => 0,
             ]);

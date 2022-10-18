@@ -258,6 +258,26 @@ if (!function_exists('formatTax')) {
     }
 }
 
+if (!function_exists('formatStatusEkyc')) {
+    function formatStatusEkyc($is_ekyc)
+    {
+        if ($is_ekyc == 0) {
+            return '<span class="text-secondary">Chưa xác minh</span>';
+        } else {
+            return '<span class="text-success">Đã xác minh</span>';
+        }
+    }
+}
+if (!function_exists('formatStatusEcontract')) {
+    function formatStatusEcontract($is_econtract)
+    {
+        if ($is_econtract == 0) {
+            return '<span class="text-secondary">Chưa ký</span>';
+        } else {
+            return '<span class="text-success">Đã ký</span>';
+        }
+    }
+}
 
 if (!function_exists('getPriceOfLevelVariation')) {
     function getPriceOfLevelVariation($variation)

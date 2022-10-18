@@ -26,7 +26,7 @@
         </div>
         <div class="modal fade" id="share-cbill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <form id="form-share-cbill" action="{{ route('share.CBill') }}" method="post">
                         <div class="modal-header">

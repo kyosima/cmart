@@ -67,7 +67,8 @@ section {
     box-shadow: -1px 1px 4px 0px rgb(137 152 172 / 30%);
 }
 
-.page-title.shop-page-title .breadcrumbs a {
+.page-title.shop-page-title .breadcrumbs a,
+.page-title.shop-page-title .breadcrumbs .divider {
     color: #999;
 }
 
@@ -78,7 +79,16 @@ section {
     font-weight: 600;
 }
 
+.category-header {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-shadow: -1px 1px 4px 0px rgb(137 152 172 / 30%);
+}
+
 .product-box {
+    background-color: #fff;
+    margin-bottom: 30px;
     border: 1px solid #dddd;
 }
 
@@ -101,7 +111,7 @@ section {
 
 .page-title.shop-page-title .breadcrumbs a.active,
 .page-title.shop-page-title .breadcrumbs a:hover,
-.page-title.shop-page-title .breadcrumbs span {
+.page-title.shop-page-title .breadcrumbs span.active {
     color: #007aff;
 }
 
@@ -521,10 +531,7 @@ section {
 
 /* Bộ lọc sản phẩm */
 
-.filter-cate {
-    padding: 0 10px 10px;
-    border-bottom: 1px solid #F0F3F7;
-}
+.filter-cate {}
 
 .filter-cate ul {
     padding: 0;

@@ -2,7 +2,7 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('public/css/home.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/css/danhmucsanpham.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/category.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/pagination.css') }}">
 
     {!! SEOMeta::generate() !!}
@@ -17,7 +17,7 @@
         <div class="page-title shop-page-title">
             <div class="page-title-inner container">
                 <nav class="breadcrumbs">
-                    <a href="{{url('/')}}">Trang chủ</a>
+                    <a href="{{ url('/') }}">Trang chủ</a>
                     <span class="divider">/</span>
                     @if (isset($proCat))
                         @if ($proCat->parents != null)
@@ -26,8 +26,7 @@
                                     href="{{ route('proCat.index', $proCat->parents->categories->slug) }}">{{ $proCat->parents->categories->name }}</a>
                                 <span class="divider">/</span>
                             @endif
-                            <a
-                                href="{{ route('proCat.index', $proCat->parents->slug) }}">{{ $proCat->parents->name }}</a>
+                            <a href="{{ route('proCat.index', $proCat->parents->slug) }}">{{ $proCat->parents->name }}</a>
                             <span class="divider">/</span>
                             <span class="active">{{ $proCat->name }}</span>
                         @else
@@ -72,7 +71,8 @@
                                                     <a
                                                         href="{{ route('proCat.index', $item->slug) }}">{{ $item->name }}</a>
                                                 @endif
-                                                <button class="toggle" data-id="{{ $item->id }}" data-url="{{route('proCat.getCatChild')}}"
+                                                <button class="toggle" data-id="{{ $item->id }}"
+                                                    data-url="{{ route('proCat.getCatChild') }}"
                                                     onclick="getCategoryChild(this)">
                                                     <i class="fa fa-angle-down" aria-hidden="true"></i>
                                                 </button>
@@ -108,81 +108,52 @@
                 <!-- bên phải -->
                 <div class="shop-container col-lg-9 col-md-12 col-sm-12">
                     <div class="shop-container-inner">
-                        @foreach ($categories as $key => $proCat)
-                            {{-- BANNER --}}
-                            @if ($proCat->feature_img != null)
+                        @foreach ($categories as $category)
+                            @if ($category->feature_img != null)
                                 <div class="banner row">
                                     <div class="col-12">
-                                        <a href="{{ route('proCat.index', $proCat->slug) }}" class="box-big-img"
-                                            title="{{ $proCat->name }}">
-                                            <img src="{{ $proCat->feature_img }}" alt="{{ $proCat->name }}">
+                                        <a href="{{ route('proCat.index', $category->slug) }}" class="box-big-img"
+                                            title="{{ $category->name }}">
+                                            <img src="{{ $category->feature_img }}" alt="{{ $category->name }}">
                                         </a>
                                     </div>
                                 </div>
                             @endif
-                            <div class="row d-flex align-items-center">
-                                <div class="col col-12">
-                                    <div class="section-title-container px-2">
-                                        <p class="section-title section-title-normal">
-                                            <b></b>
-                                            <span class="section-title-main" style="color:rgb(54, 53, 51); ">
-                                                <a href="{{ route('proCat.index', $proCat->slug) }}">
-                                                    {{ $proCat->name }}
+                            <div class="product-block bg-white p-2">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col col-12">
+                                        <div class="section-title-container">
+                                            <p class="section-title section-title-normal">
+                                                <span class="section-title-main" style="color:rgb(54, 53, 51);">
+                                                    <a
+                                                        href="{{ isset($category->slug) ? route('proCat.index', $category->slug) : '' }}">
+                                                        {{ isset($category->name) ? $category->name : '' }}
+                                                    </a>
+                                                </span>
+                                                <a href="{{ isset($category->slug) ? route('proCat.index', $category->slug) : '' }}"
+                                                    class="view-more  text-right">
+                                                    Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                                 </a>
-                                            </span>
-                                            <b></b>
-                                            <a href="{{ route('proCat.index', $proCat->slug) }}"
-                                                class="view-more text-dark text-right">
-                                                Xem thêm <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                            </a>
-                                        </p>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- SẢN PHẨM -->
-                            <div class="product-p c">
-                                <div class="silder-product-1">
-                                    <div class="items">
-                                        @foreach ($arrProducts[$key] as $item)
-                                            <div class="sp">
-                                                <div class="box3item">
-                                                    <div class="box-img">
-                                                        <a href="{{ route('san-pham.show', $item->slug) }}"
-                                                            title="{{ $item->name }}" tabindex="0">
-                                                            <img src="{{ asset($item->feature_img) }}"
-                                                                alt="{{ $item->name }}">
-                                                        </a>
-                                                        @if ($item->productPrice->shock_price != null || $item->productPrice->shock_price != 0)
-                                                            @php
-                                                                $percent = (1 - $item->productPrice->shock_price / $item->productPrice->regular_price) * 100;
-                                                            @endphp
-                                                            <div class="block-sale">
-                                                                <img alt="{{ $item->slug }}"
-                                                                    src="{{ asset('public/image/bg-sale.png') }}">
-                                                                <span class="sale">-{{ round($percent) }}%</span>
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                    <div class="detail">
-                                                        <h3 class="title">
-                                                            <a href="{{ route('san-pham.show', $item->slug) }}"
-                                                                title="{{ $item->name }}" tabindex="0">
-                                                                {{ $item->name }}</a>
-                                                        </h3>
-                                                        <ul class="box-price">
-
-                                                            <li class="price">
-                                                                <span>{{ formatPriceOfLevel($item) }}</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                <div class="row">
+                                    <div class="col col-12 col-lg-12">
+                                        <div class="product-p c">
+                                            <div class="silder-product-1">
+                                                <div class="items">
+                                                    @include('include.recursive_product', [
+                                                        'parent' => $category,
+                                                    ])
                                                 </div>
                                             </div>
-                                        @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+                       
                     </div>
                 </div>
             </div>

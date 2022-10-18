@@ -12,7 +12,6 @@
         font-size: 25px;
         color: white;
     }
-
 </style>
 
 <!-- Pc -->
@@ -64,7 +63,7 @@
                                                 <li class="nav-item" style="align-self: center;">
                                                     <div class="btn-group">
                                                         <a class="btn btn-light text-dark"
-                                                            href="{{ url('/xac-thuc-ho-so') }}"><i
+                                                            href="{{ route('account.getProfile') }}"><i
                                                                 class="fas fa-user text-dark"></i>
                                                             {{ Auth::guard('user')->user()->phone }}</a>
                                                         <button type="button"
@@ -75,10 +74,10 @@
                                                         </button>
                                                         <div class="dropdown-menu text-dark">
                                                             <a class="dropdown-item text-dark"
-                                                                href="{{ url('/xac-thuc-ho-so') }}">Thông tin
+                                                                href="{{ route('account.getProfile') }}">Thông tin
                                                                 HSKH</a>
                                                             <a class="dropdown-item text-dark"
-                                                                href="{{ route('order.history') }}">Lịch sử
+                                                                href="{{ route('account.getOrder') }}">Lịch sử
                                                                 đơn
                                                                 hàng</a>
                                                             <a class="dropdown-item text-dark"
@@ -129,11 +128,11 @@
                                         </a>
                                     </div>
                                     <div class="cart d-flex align-items-center">
-                                     
+
                                         <a rel="nofollow" class="number-cart" href="{{ url('/gio-hang') }}"
                                             title="Giỏ hàng">
                                             <img src="{{ asset('/public/image/iconcart.png') }}" alt="">
-                                            <sup class="count-giohang">{{getCountCart()}}</sup>
+                                            <sup class="count-giohang">{{ getCountCart() }}</sup>
                                         </a>
                                         <a rel="nofollow" href="{{ url('/gio-hang') }}" title="Giỏ hàng">
 
@@ -254,16 +253,18 @@
                 <div class="cart-nav cart">
                     <a class="number-cart" rel="nofollow" href="{{ url('/gio-hang') }}" title="giỏ hàng">
                         <i class="icon-2020 icon-cart-2020"></i>
-                        <sup class="count-item count-giohang">{{getCountCart() }}</sup>
+                        <sup class="count-item count-giohang">{{ getCountCart() }}</sup>
                     </a>
                 </div>
             </div>
-            <form method="GET" id="search-mobile-form" name="frm" id="frm" action="{{ route('search') }}" enctype="multipart/form-data"
-                class="form-search">
+            <form method="GET" id="search-mobile-form" name="frm" id="frm"
+                action="{{ route('search') }}" enctype="multipart/form-data" class="form-search">
                 <div class="header-search">
-                    <i class="fas fa-search"  onclick="document.getElementById('search-mobile-form').submit();"></i>
-                    <input class="form-control ipt-search"  onkeyup="showSearchSuggestMobile(this)" data-url="{{ route('search.suggest') }}" type="text"
-                        placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." id="search-input-mobile" name="keyword">
+                    <i class="fas fa-search" onclick="document.getElementById('search-mobile-form').submit();"></i>
+                    <input class="form-control ipt-search" onkeyup="showSearchSuggestMobile(this)"
+                        data-url="{{ route('search.suggest') }}" type="text"
+                        placeholder="Mời nhập tên hoặc mã sản phẩm cần tìm..." id="search-input-mobile"
+                        name="keyword">
                     <div id="showsearchmobile">
                         <ul></ul>
                     </div>
@@ -358,13 +359,10 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('/lich-su-don-hang') }}">
+                                    <a href="{{ route('account.getOrder') }}">
                                         <i class="fas fa-history"></i><span>Lịch sử đơn hàng</span>
                                     </a>
                                 </li>
-                          
-                             
-                                
                             @else
                                 <li><a id="register-btn" href="{{ url('/tai-khoan') }}" title="title"><i
                                             class="fas fa-user"></i><span>Đăng ký tài khoản</span></a></li>
@@ -402,8 +400,7 @@
                                     @foreach ($pages as $page)
                                         <li>
                                             <h4 class="title">
-                                                <a rel="nofollow"
-                                                    href="{{ route('chinh-sach.show', $page->slug) }}"
+                                                <a rel="nofollow" href="{{ route('chinh-sach.show', $page->slug) }}"
                                                     title="{{ $page->name }}">{{ $page->name }}
                                                 </a>
                                             </h4>
@@ -422,7 +419,8 @@
                                         <i class="fas fas-custom fa-angle-right"></i>
                                     </span>
                                 </button>
-                                <ul id="dieukhoanchinhsach" class="sub-nav collapse acc-menu-dropdown" style="">
+                                <ul id="dieukhoanchinhsach" class="sub-nav collapse acc-menu-dropdown"
+                                    style="">
                                     @php
                                         $pages = App\Models\InfoCompany::whereType('policy')
                                             ->orderBy('sort', 'asc')
@@ -432,8 +430,7 @@
                                     @foreach ($pages as $page)
                                         <li>
                                             <h4 class="title">
-                                                <a rel="nofollow"
-                                                    href="{{ route('chinh-sach.show', $page->slug) }}"
+                                                <a rel="nofollow" href="{{ route('chinh-sach.show', $page->slug) }}"
                                                     title="{{ $page->name }}">{{ $page->name }}
                                                 </a>
                                             </h4>
@@ -503,7 +500,7 @@
             </div>
             <div class="text-center">
                 <h5 class="store-system-hello"><a
-                        href="{{route('chinh-sach.show', 'he-thong-kenh-cua-hang-cstore')}}"><b> Hệ
+                        href="{{ route('chinh-sach.show', 'he-thong-kenh-cua-hang-cstore') }}"><b> Hệ
                             thống các kênh Cửa hàng CSTORE </b></a></h5>
                 <p>chưa phát triển chức năng hỗ trợ dịch vụ Khách Hàng</p>
             </div>
@@ -610,6 +607,3 @@
 
     // DOMContentLoaded  end
 </script>
-
-
-

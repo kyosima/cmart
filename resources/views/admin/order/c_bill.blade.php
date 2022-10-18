@@ -147,17 +147,6 @@
                         <p class="font-20 text-center  text-bold text-up">
                             C-MART
                         </p>
-                        @php
-                            $user = $order->user()->first();
-                            $order_address = $order->order_address()->first();
-                            $order_info = $order->order_info()->first();
-                            $order_products = $order->order_products()->get();
-                            $addressController = new App\Http\Controllers\AddressController();
-                            $order_province = $addressController->getProvinceDetail($order_address->id_province);
-                            $order_district = $addressController->getDistrictDetail($order_address->id_province, $order_address->id_district);
-                            $order_ward = $addressController->getWardDetail($order_address->id_district, $order_address->id_ward);
-                            $order_vat = $order->order_vat()->first();
-                        @endphp
                         <p class="text-center font-italic">“Tất cả trong Một”</p>
                         <p class="text-center">
                             ○○○○○○○○○○○○○○○○○○○○○○○
@@ -171,33 +160,32 @@
                     <div class="col-md-12 col-12">
                         <ul class="info-order">
                             <li>Thời gian đặt hàng: {{ date('H:i:s d/m/Y', strtotime($order->created_at)) }}</li>
-                            <li>Người đặt: {{ $user->hoten }} - {{ $user->phone }} -
-                                {{ formatLevel($user->level) }}
+                            <li>Người đặt: {{ $order->user->user_info->fullname }} - {{ $order->user->phone }} - {{$order->user->user_level->name}}
                             </li>
                             <li>Người nhận:
                                 <div>
                                     <table class="table table-bordered text-center">
                                         <tr>
-                                            <td>Họ và tên: {{ $order_info->fullname }}</td>
+                                            <td>Họ và tên: {{ $order->order_info->fullname }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Số điện thoại: {{ $order_info->phone }}</td>
+                                            <td>Số điện thoại: {{ $order->order_info->phone }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Địa chỉ chi tiết: {{ $order_address->address }}</td>
+                                            <td>Địa chỉ chi tiết: {{ $order->order_address->address }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Cấp tỉnh: {{ $order_province->PROVINCE_NAME }}</td>
+                                            <td>Cấp tỉnh: {{ $order->order_address->province->tentinhthanh }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Cấp huyện: {{ $order_district->DISTRICT_NAME }}</td>
+                                            <td>Cấp huyện: {{ $order->order_address->district->tenquanhuyen }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Cấp xã: {{ $order_ward->WARDS_NAME }}</td>
+                                            <td>Cấp xã: {{ $order->order_address->ward->tenphuongxa }}</td>
                                         </tr>
                                     </table>
                             </li>
-                            <li style=" word-wrap: break-word;">Ghi chú: <span>{{ $order_info->note }}</span></li>
+                            <li style=" word-wrap: break-word;">Ghi chú: <span>{{ $order->order_info->note }}</span></li>
                         </ul>
 
                     </div>
@@ -206,15 +194,15 @@
                     <div class="col-md-12 col-12">
                         <div class="c-bill-orders mt-0">
                             <div class="c-bill-orders-body">
-                                @foreach ($order->order_stores()->get() as $order_store)
+                                @foreach ($order->order_stores as $order_store)
                                     <hr>
                                     <div class="c-bill-order" id="store{{ $order_store->id_store }}">
                                         <div class="order-title ">
                                             <h5 class="text-cap">cửa hàng
-                                                {{ $order_store->store()->value('name') }}</h5>
-                                            <h5> {{ formatMethod($order_store->shipping_method) }}
+                                                {{ $order_store->store->title }}</h5>
+                                            <h5> {{ $order_store->transpot_service->title }}
 
-                                                {{ formatType($order_store->shipping_type) }}
+                                                {{ $order->transpot_type == 1 ? "Tiêu chuẩn" : "Tốc độ"  }}
                                             </h5>
                                         </div>
                                         <div class="order-head">
@@ -240,45 +228,42 @@
                                                         <th>SL</th>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($order_store->order_products()->get() as $order_product)
+                                                        @foreach ($order_store->order_products as $order_product)
                                                             @if ($order_product->sku != null)
                                                                 <tr>
                                                                     <td>{{ $order_product->sku }}</td>
                                                                     <td>{{ $order_product->name }}</td>
-                                                                    <td>{{ formatNumber($order_product->c_point) }}
+                                                                    <td>{{ formatNumber($order_product->cpoint) }}
                                                                     </td>
-                                                                    <td>{{ formatNumber($order_product->m_point) }}
+                                                                    <td>{{ formatNumber($order_product->mpoint) }}
                                                                     </td>
                                                                     <td>{{ formatPrice($order_product->price) }}</td>
                                                                     <td>{{ formatPrice($order_product->discount) }}
                                                                     </td>
                                                                     <td>
-                                                                        @if ($order_product->product()->first() != null)
-                                                                            {{ formatTax($order_product->product()->first()->productPrice()->value('tax')) }}
-                                                                        @endif
+                                                                        {{ formatTax($order_product->tax) }}
                                                                     </td>
                                                                     <td>
-                                                                        @if ($order_product->product()->first() != null)
-                                                                        {{ formatPrice($order_product->product()->first()->productPrice()->value('phi_xuly') ) }}
-                                                                        @endif
+                                                                        {{ formatPrice($order_product->process_fee) }}
+
                                                                     </td>
-                                                                    <td>{{ $order_product->weight }}g</td>
+                                                                    <td>{{ formatNumber($order_product->weight) }}g</td>
                                                                     <td>{{ $order_product->quantity }}</td>
 
                                                                 </tr>
                                                             @else
                                                                 <tr>
                                                                     <td>{{ $order_product->sku }}</td>
-                                                                    <td>{{ $order_product->name }}@if ($order_vat->vat_company != null)
+                                                                    <td>{{ $order_product->name }}@if (isset($order->order_vat->vat_company))
                                                                             <br>
-                                                                            {{ $order_vat->vat_email }} <br>
-                                                                            {{ $order_vat->vat_company }} <br>
-                                                                            {{ $order_vat->vat_mst }}<br>
-                                                                            {{ $order_vat->vat_address }}
+                                                                            {{ $order->order_vat->vat_email }} <br>
+                                                                            {{ $order->order_vat->vat_company }} <br>
+                                                                            {{ $order->order_vat->vat_mst }}<br>
+                                                                            {{ $order->order_vat->vat_address }}
                                                                         @endif
                                                                     </td>
-                                                                    <td>{{ $order_product->c_point }}</td>
-                                                                    <td>{{ $order_product->m_point }}</td>
+                                                                    <td>{{ $order_product->cpoint }}</td>
+                                                                    <td>{{ $order_product->mpoint }}</td>
                                                                     <td>{{ formatPrice($order_product->price) }}</td>
                                                                     <td>{{ formatPrice($order_product->discount) }}
                                                                     </td>
@@ -421,7 +406,7 @@
                         </div>
                         <div class="">
                             <ul>
-                                <li>Tổng chiết khấu C: <b>{{ formatPrice($order->c_point) }}</b></li>
+                                <li>Tổng chiết khấu C: <b>{{ formatPrice($order->cpoint) }}</b></li>
                                 <li>Tổng Giá trị Sản phẩm: <b>{{ formatPrice($order->sub_total) }}</b></li>
                                 <li>Tổng Giảm giá Sản phẩm: <b>{{ formatPrice($order->discount_products) }}</b></li>
                                 <li>Tổng Phí DV Vận chuyển: <b>{{ formatPrice($order->shipping_total) }}</b></li>
@@ -439,9 +424,10 @@
                                     <b>{{ formatPrice($order->total_tax_services) }}</b>
                                 </li>
                                 <li>Hình thức thanh toán:
-                                    <b>{{ App\Models\PaymentMethod::whereId($order->payment_method)->value('name') }}</b>
+                                    <b>{{$order->get_payment_method->name }}</b>
                                 </li>
                                 <li>Tổng giá trị Giao dịch: <b>{{ formatPrice($order->total) }}</b></li>
+
 
                             </ul>
                         </div>

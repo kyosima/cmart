@@ -17,17 +17,13 @@ class EkycVNPTController extends Controller
     }
     public function index(Request $request){
 
-        if(Auth::check()){
-            $user = Auth::user();
+            $user = Auth::guard('user')->user();
             if($user->change_ekyc == 1 || $user->is_ekyc  == 0){
                 return view('ekyc_vnpt.index');
             }else{
                 return redirect()->route('home');
             }
-        }else{
-            return redirect()->route('account');
-
-        }
+  
     }
     public function getRequestChangeEkyc(Request $request){
         if(Auth::check()){
@@ -51,7 +47,8 @@ class EkycVNPTController extends Controller
     }
 
     public function postResult(Request $request){
-        $user = Auth::user();
+        $user = Auth::guard('user')->user();
+        $user_info = $user->user_info()->first();
         $result = ($request->result);
         if(count($result['ocr']['object']['tampering']['warning']) > 0){
             return response()->json(['<div class="btn-redemo  bg-danger" id=""><span>KHÔNG THÀNH CÔNG</span></div>'] ,200);
@@ -64,13 +61,14 @@ class EkycVNPTController extends Controller
         }elseif( $result['compare']['object']['msg'] == 'MATCH'){
             $user->is_ekyc = 1;
             $user->change_ekyc = 0;
-            $user->hoten = $result['ocr']['object']['name'];
-            $user->cmnd = $result['ocr']['object']['id'];
-            $user->type_cmnd = $result['ocr']['object']['card_type'];
-            $user->cmnd_image = $result['base64_doc_img']['img_front'];
-            $user->cmnd_image2 = $result['base64_doc_img']['img_back'];
-            $user->avatar = $result['base64_face_img']['img_face_near'];
-            $user->save();            
+            $user_info->fullname = $result['ocr']['object']['name'];
+            $user_info->identity_number = $result['ocr']['object']['id'];
+            $user_info->identity_type = $result['ocr']['object']['card_type'];
+            $user_info->identity_front = $result['base64_doc_img']['img_front'];
+            $user_info->identity_back = $result['base64_doc_img']['img_back'];
+            $user_info->identity_avatar = $result['base64_face_img']['img_face_near'];
+            $user->save();   
+            $user_info->update();           
             return response()->json([
                 '<div class="btn-redemo bg-success" id=""><a href="'.route('vnpt.confirmResult').'">'.'<span>THÀNH CÔNG, Chuyển tới bước tiếp theo</span></a></div>',
                 ] ,200);

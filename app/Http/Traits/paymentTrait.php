@@ -22,4 +22,18 @@ trait paymentTrait {
         $payment_method_avai = array_unique($payment_method_avai);
         return $payment_method_avai;
     }
+
+    function deleteOrderNoPayment($user){
+        $orders = $user->orders()->where('is_payment',0)->get();
+        foreach($orders as $order){
+            if($order->is_payment == 0){
+                $order->order_address()->delete();
+                $order->order_products()->delete();
+                $order->order_stores()->delete();
+                $order->order_info()->delete();
+                $order->order_vat()->delete();
+                $order->delete();
+            }
+        }   
+    }
 }

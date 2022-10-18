@@ -58,9 +58,9 @@ class OrderAddress extends Model
         return $this->belongsto(Province::class, 'province_id', 'matinhthanh');
     } 
 	public function district() {
-        return $this->belongsto(District::class, 'id_district', 'maquanhuyen');
+        return $this->belongsto(District::class, 'district_id', 'maquanhuyen');
     } 
 	public function ward() {
-        return $this->belongsto(Ward::class, 'id_ward', 'maphuongxa');
+        return $this->belongsto(Ward::class, 'ward_id', 'maphuongxa');
     } 
 }

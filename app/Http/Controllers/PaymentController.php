@@ -195,7 +195,7 @@ class PaymentController extends Controller
 
     public function getInfoPaymentOption(Request $request)
     {
-
+        
         $payment_method = PaymentMethod::whereId($request->method_id)->first();
         $payment_option = PaymentMethodOption::whereId($request->option_id)->first();
         if ($payment_option->qr_image != null) {
@@ -206,8 +206,9 @@ class PaymentController extends Controller
 
     public function orderSuccess(Request $request)
     {
-        $order = Order::whereOrderCode($request->order_code)->with('order_stores.order_products', 'order_address', 'order_info')->first();
-        return ($order);
+        $order = Order::whereOrderCode($request->order_code)->with('order_stores.order_products.product.product_price','order_stores.transpot_service',
+         'order_address', 'order_address.province', 'order_address.district', 'order_address.ward',
+        'order_info', 'user.user_info','user.user_level', 'order_vat','get_payment_method')->first();
         if (!$request->order_code || $order == null || $order->is_payment == 0) {
             return redirect('/');
         }
@@ -224,6 +225,19 @@ class PaymentController extends Controller
         foreach ($order->order_stores()->get() as $order_store) {
             $order_store->shipping_code = $order_store->order_store_code;
             $order_store->save();
+            foreach($order_store->order_products()->whereNotNull('product_id')->get() as $order_product) {
+                $store_product = $order_product->store_product()->first();
+                if($store_product){
+                    $store_product->quantity -= $order_product->quantity;
+                    $store_product->save();
+                }
+              
+            }
+        }
+        $carts = $user->carts()->whereIn('store_id', $order->order_stores()->pluck('store_id')->toArray())->get();
+        foreach($carts as $cart){
+            $cart->cart_item()->delete();
+            $cart->delete();
         }
         if ($order->payment_method == 1) {
             

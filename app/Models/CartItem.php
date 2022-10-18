@@ -18,6 +18,7 @@ class CartItem extends Model
 		'quantity',
 		'price',
 		'is_ecard',
+		'store_product_id'
 	];
 
 

@@ -48,6 +48,8 @@
         @endif --}}
     @include('layout.header')
                 @include('layout.include.loading')
+                @include('layout.include.notice')
+
     @yield('content')
 
     @include('layout.footer')

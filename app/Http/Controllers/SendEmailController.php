@@ -13,7 +13,9 @@ class SendEmailController extends Controller
 
     public function sendemail(Request $request)
     {
-        $order = Order::whereOrderCode($_POST['order_code'])->first();
+        $order = Order::whereOrderCode($_POST['order_code'])->with('order_stores.order_products.product.product_price','order_stores.transpot_service',
+        'order_address', 'order_address.province', 'order_address.district', 'order_address.ward',
+       'order_info', 'user.user_info','user.user_level', 'order_vat','get_payment_method')->first();
 
         $data["email"] = $_POST['email'];
         $data["subject"] = 'C-Bill Hóa đơn C-mart';

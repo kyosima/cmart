@@ -60,4 +60,7 @@ class OrderStore extends Model
 	public function store(){
 		return $this->belongsTo(Store::class,  'store_id', 'id');
 	}
+	function transpot_service(){
+		return $this->belongsTo(TranspotService::class, 'transpot_service_id', 'id');
+	}
 }

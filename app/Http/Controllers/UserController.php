@@ -45,6 +45,7 @@ class UserController extends Controller
         $getday =  $dt->format("Ymd") * 10000;
         $userID = $getday + $count_user+1;
         $data_user = $request->only('phone', 'is_company');
+        $data_user['code'] = $userID; 
         $data_user['password'] = Hash::make($request->password);
         $user = User::create($data_user);
         $data_user_info = $request->only('province_id', 'district_id', 'ward_id', 'address',);

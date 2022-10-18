@@ -49,6 +49,9 @@ class OrderProduct extends Model
 		'weight',
 		'discount',
 		'price',
+		'tax',
+		'process_fee',
+		'store_product_id'
 	];
 
 	public function order()
@@ -57,10 +60,14 @@ class OrderProduct extends Model
 	}
 	public function order_store()
 	{
-		return $this->belongsTo(OrderStỏe::class, 'order_store_id');
+		return $this->belongsTo(OrderStore::class, 'order_store_id');
 	}
 	public function product()
 	{
 		return $this->belongsTo(Product::class, 'product_id');
+	}
+
+	public function store_product(){
+		return $this->hasOne(StoreProduct::class, 'id', 'store_product_id');
 	}
 }

@@ -92,7 +92,9 @@ class Order extends Model
 	{
 		return $this->hasOne(OrderPayme::class, 'order_id');
 	}
-
+	public function get_payment_method(){
+		return $this->hasOne(PaymentMethod::class, 'id','payment_method');
+	}
 	public function products()
 	{
 		return $this->belongsToMany(Product::class, 'order_products', 'order_id', 'product_id')

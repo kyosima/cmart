@@ -15,7 +15,7 @@ class ProductCategory extends Model
 
     public function parent()
     {
-        return $this->belongsTo(ProductCategory::class,'id', 'category_parent');
+        return $this->belongsTo(ProductCategory::class, 'category_parent');
     }
 
     public function children()

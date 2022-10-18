@@ -11,7 +11,7 @@ trait getCategoryWithProduct {
         if(Auth::guard('user')->check()){
             $user = Auth::guard('user')->user();
             $user->level = $user->user_level()->first();
-            $categories = ProductCategory::where('category_parent', 0)->with(['products','products.product_detail', 'products.product_price', 'products.product_price.product_price_details' => function($query) use ($user) {
+            $categories = ProductCategory::where('category_parent', 0)->with(['products' ,'products.product_detail', 'products.product_price', 'products.product_price.product_price_details' => function($query) use ($user) {
                 $query->where('user_price_id', '=', $user->level->user_price_id); 
                 
             },
@@ -47,7 +47,7 @@ trait getCategoryWithProduct {
         if(Auth::guard('user')->check()){
             $user = Auth::guard('user')->user();
             $user->level = $user->user_level()->first();
-            $category = ProductCategory::where('slug', $slug)->with(['products','products.product_detail', 'products.product_price', 'products.product_price.product_price_details' => function($query) use ($user) {
+            $category = ProductCategory::where('slug', $slug)->with(['products.stores','products','products.product_detail', 'products.product_price', 'products.product_price.product_price_detail' => function($query) use ($user) {
                 $query->where('user_price_id', '=', $user->level->user_price_id); 
                 
             },
@@ -55,23 +55,23 @@ trait getCategoryWithProduct {
                 $query->where('user_price_id', '=', $user->level->user_price_id); 
                 
             }
-            ,'childrenRecursive.products', 'childrenRecursive.products.product_detail','childrenRecursive.products.product_price','childrenRecursive.products.product_price.product_price_details' => function($query) use ($user) {
+            ,'childrenRecursive.products', 'childrenRecursive.products.product_detail','childrenRecursive.products.product_price','childrenRecursive.products.product_price.product_price_detail' => function($query) use ($user) {
                 $query->where('user_price_id', '=', $user->level->user_price_id);
-            },'childrenRecursive.products.product_variations.product_price_details' => function($query) use ($user) {
+            },'childrenRecursive.products.product_variations.product_price_detail' => function($query) use ($user) {
                 $query->where('user_price_id', '=', $user->level->user_price_id);
             }
             ])->first();
         }else{
-            $category = ProductCategory::where('slug', $slug)->with(['products','products.product_detail', 'products.product_price', 'products.product_price.product_price_details' => function($query) {
+            $category = ProductCategory::where('slug', $slug)->with(['products','products.product_detail', 'products.product_price', 'products.product_price.product_price_detail' => function($query) {
                 $query->where('user_price_id', '=', 1); 
                 
-            }, 'products.product_variations.product_price_details' => function($query) {
+            }, 'products.product_variations.product_price_detail' => function($query) {
                 $query->where('user_price_id', '=', 1); 
                 
             }
-            ,'childrenRecursive.products', 'childrenRecursive.products.product_detail','childrenRecursive.products.product_price','childrenRecursive.products.product_price.product_price_details' => function($query) {
+            ,'childrenRecursive.products', 'childrenRecursive.products.product_detail','childrenRecursive.products.product_price','childrenRecursive.products.product_price.product_price_detail' => function($query) {
                 $query->where('user_price_id', '=', 1);
-            },'childrenRecursive.products.product_variations.product_price_details' => function($query) {
+            },'childrenRecursive.products.product_variations.product_price_detail' => function($query) {
                 $query->where('user_price_id', '=', 1);
             }])->first();
         }

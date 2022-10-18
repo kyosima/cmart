@@ -125,7 +125,13 @@
                     {
                         targets: 5,
                         render: function(data, type, row) {
-                            return formatNum(row.product_price.fee_process, '.', ',');
+                            if(row.product_price.fee_process != null){
+                                return formatNum(row.product_price.fee_process , '.', ',');
+
+                            }else{
+                                return formatNum( 0, '.', ',');
+
+                            }
 
                         }
                     },

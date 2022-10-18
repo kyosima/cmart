@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\AccountController;
 use App\Models\ProductCategory;
 
 use Psy\VersionUpdater\Checker;
@@ -134,10 +136,11 @@ Route::group(['middleware' => ['user']], function () {
         Route::post('chuyen-tien', [PaymentController::class, 'postPaymentSend'])->name('payment.postSend');
         Route::get('nap-tien', [PaymentController::class, 'getPaymentDeposit'])->name('payment.Deposit');
         Route::post('nap-tien', [PaymentController::class, 'postPaymentDeposit'])->name('payment.postDeposit');
-        Route::get('thanh-toan/thanh-cong', [PaymentController::class, 'orderSuccess'])->name('checkout.orderSuccess');
+        Route::get('thanh-cong', [PaymentController::class, 'orderSuccess'])->name('checkout.orderSuccess');
 
         Route::get('lay-thong-tin-ngan-hang', [PaymentController::class, 'getInfoPaymentOption'])->name('payment.getInfo');
-    
+        Route::post('send-email-pdf', [SendEmailController::class, 'sendemail'])->name('share.CBill');
+
     });
 });
 
@@ -157,6 +160,19 @@ Route::get('tim-kiem/goi-y', [ProductCategoryController::class, 'getSearchSugges
 // Route::post('tai-khoan/yeu-cau-thay-doi-thong-tin', [EkycController::class, 'getRequestChangeEkyc'])->name('ekyc.change');
 
 Route::prefix('tai-khoan')->group(function () {
+    Route::get('thong-tin-tai-khoan', [AccountController::class, 'getProfile'])->name('account.getProfile');
+    Route::post('thong-tin-tai-khoan', [AccountController::class, 'postProfile'])->name('account.postProfile');
+
+    Route::get('don-hang', [AccountController::class, 'getOrder'])->name('account.getOrder');
+
+    Route::get('/lich-su-don-hang/c-bill', [OrderController::class, 'viewPdf'])->name('order.viewPdf');
+    
+    Route::prefix('/lich-su-tien-tich-luy')->group(function () {
+        Route::get('/', [CPointController::class, 'index'])->name('account.cpoint_history');
+    });
+    
+
+
     Route::get('ekyc', [EkycVNPTController::class, 'index'])->name('vnpt.index');
     Route::post('post-ekyc', [EkycVNPTController::class, 'postResult'])->name('vnpt.postResult');
     Route::get('confirm-ekyc', [EkycVNPTController::class, 'confirmResult'])->name('vnpt.confirmResult');
@@ -186,7 +202,6 @@ Route::post('/nhap-mat-khau-moi', [HomeController::class, 'postResetPassword'])-
 //     'san-pham' => ProductController::class
 // ]);
 
-Route::post('send-email-pdf', [SendEmailController::class, 'sendemail'])->name('share.CBill');
 
 Route::prefix('san-pham')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('san-pham.index');
@@ -233,15 +248,6 @@ Route::get('lay-phuong-xa-theo-quan-huyen', [ShippingController::class, 'wardOfD
 
 
 
-Route::get('/xac-thuc-ho-so', [HomeController::class, 'getXacthuc']);
-
-Route::get('/lich-su-don-hang', [HomeController::class, 'getLichsu'])->name('order.history');
-
-Route::get('/lich-su-don-hang/c-bill', [OrderController::class, 'viewPdf'])->name('order.viewPdf');
-
-Route::prefix('/lich-su-tien-tich-luy')->group(function () {
-    Route::get('/', [CPointController::class, 'index'])->name('account.cpoint_history');
-});
 
 Route::get('/test-api', [CheckoutController::class, 'getDistance']);
 

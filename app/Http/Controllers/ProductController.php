@@ -131,19 +131,5 @@ class ProductController extends Controller
     }
 
 
-    public function postRating(Request $request)
-    {
-        $phone = $_POST['phone'];
-        $value = $_POST['value'];
-        $fullname = $_POST['fullname'];
-        $comment = $_POST['comment'];
-        $product_id = $_POST['product_id'];
-        $check = ProductRating::wherePhone($phone)->whereProductId($product_id)->first();
-        if ($check == null) {
-            ProductRating::insert(['phone' => $phone, 'fullname' => $fullname, 'value' => $value, 'product_id' => $product_id, 'comment' => $comment]);
-            return 'Gửi đánh giá thành công';
-        } else {
-            return  'Bạn đã đánh giá sản phẩm này rồi';
-        }
-    }
+  
 }

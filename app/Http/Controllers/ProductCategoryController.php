@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Brand;
+use App\Models\Store;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Traits\getProduct;
 use App\Models\ProductCategory;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -21,13 +23,64 @@ class ProductCategoryController extends Controller
 {
     //
     use getCategoryWithProduct;
+    use getProduct;
+
     public function index($slug, Request $request){
         $category = $this->getProductofCategory($slug);
         $products =  new Collection();
-
+        $subcategory = $category->children()->get();
         $products = $products->merge($category->products);
-        $products = $this->getAllProduct($category, $products)->paginate(3);
-        return view('proCat.show', compact('category','products'));
+        $products = $this->getAllProduct($category, $products);
+        $stores = $products->pluck('stores')->collapse();
+        $stores = Store::whereIn('id', array_unique($stores->pluck('id')->toArray()))->get();
+        if($request->has('id_stores')){
+            $products = $products->filter(function ($value) use($request) {
+                if(count(array_intersect($value->stores->pluck('id')->toArray(), $request->id_stores)) >0){
+                    return $value;
+                }
+            });
+            
+        }
+        if ($request->order != null || $request->order != '') {
+            $order = explode(' ', $request->order);
+            if ($order[0] == 'name') {
+                setlocale(LC_COLLATE, 'vi-VN.UTF8', 'vi.UTF8');
+                if ($order[1] == 'asc') {
+
+                    $products = $products->sortBy('title');
+                } else {
+                    $products = $products->sortByDesc('title');
+                }
+            }
+            $order = explode(' ', $request->order);
+            if ($order[0] == 'name') {
+                setlocale(LC_COLLATE, 'vi-VN.UTF8', 'vi.UTF8');
+                if ($order[1] == 'asc') {
+
+                    $products = $products->sortBy('title');
+                } else {
+                    $products = $products->sortByDesc('title');
+                }
+            }
+            if ($order[0] == 'cpoint') {
+                if ($order[1] == 'asc') {
+                    $products = $products->sortBy('product_price.cpoint');
+                } else {
+                    $products = $products->sortByDesc('product_price.cpoint');
+                }
+            }
+            if ($order[0] == 'mpoint') {
+                if ($order[1] == 'asc') {
+                    $products = $products->sortBy('product_price.mpoint');
+                } else {
+                    $products = $products->sortByDesc('product_price.mpoint');
+                }
+            }
+        }
+
+        $products = $products->paginate(9);
+
+        return view('proCat.show', compact('category','products', 'subcategory','stores'));
     }
 
     public function getAllProduct($parent,$products){
@@ -246,12 +299,7 @@ class ProductCategoryController extends Controller
     {
 
         $categories_root = ProductCategory::whereCategoryParent(0)->whereStatus(1)->orderBy('priority')->get();
-        $categories = ProductCategory::where('category_parent', 0)
-            ->where('id', '!=', 1)
-            ->where('status', 1)
-            ->with(['childrenCategories.products', 'products'])
-            ->orderBy('priority')
-            ->get();
+        $categories = $this->getAllCategoriesWithProduct();
 
         $arrProducts = [];
         foreach ($categories as $proCat) {
@@ -268,8 +316,7 @@ class ProductCategoryController extends Controller
             ->where('id', '!=', 1)
             ->with(['childrenCategories.products', 'products'])
             ->get();
-        $products = Product::where('title', 'LIKE', '%' . $keyword . '%')->orWhere('sku', 'LIKE', '%' . $keyword . '%')->whereStatus(1)->get();
-
+        $products = $this->getProductsWithPrice($keyword);
         return view('proCat.search', compact('categories', 'products', 'keyword'));
     }
 
@@ -280,7 +327,7 @@ class ProductCategoryController extends Controller
         return view('proCat.search_suggest', ['products' => $products])->render();
     }
 
-    public function getMenuCategoryChild(Request $request){
+    public function getMenuCategoryChild(Request $request){     
         $category = ProductCategory::whereId($request->id_cat)->first();
         $child_categories = $category->childrenCategoriesOnly()->get();
         $html = view('proCat.sidebar.menu_child', ['child_categories'=>$child_categories]);

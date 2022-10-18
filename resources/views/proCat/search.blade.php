@@ -2,7 +2,7 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('public/css/home.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/css/danhmucsanpham.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/category.css') }}">
     <link rel="stylesheet" href="{{ asset('public/css/pagination.css') }}">
 
     {!! SEOMeta::generate() !!}
@@ -54,7 +54,7 @@
                                                     <i class="fa fa-angle-down" aria-hidden="true"></i>
                                                 </button>
                                                 @include('proCat.danhmuc-sidebar', [
-                                                'child_categories' => $item->childrenCategories,
+                                                    'child_categories' => $item->childrenCategories,
                                                 ])
                                             </li>
                                         @else
@@ -78,91 +78,43 @@
 
                 <!-- bên phải -->
                 <div class="shop-container col-lg-9 col-md-12 col-sm-12">
-                    <div class="shop-container-inner">
-                        <!-- TITLE -->
-                        @if (count($products) > 0)
-                            <h2 class="title-filter d-none d-lg-block text-uppercase"><span>
+                    <!-- TITLE -->
+                    @if (count($products) > 0)
+                        <div class="category-header">
+
+                            <h3 class="category-title"><span>
                                     Có ({{ count($products) }}
                                     sản
                                     phẩm) với từ khóa <b>{{ $keyword }}</b>
 
-                                </span></h2>
-                        @else
+                                </span></h3>
+                        </div>
+                        <div class="row">
+                            @foreach ($products as $item)
+                                @include('proCat.include.product_box', $item)
+                            @endforeach
+                        </div>
+                        <div class="text-center">
+                            <div class="nav_pager">
+                                {{ $products->appends(request()->input())->links('product.include.pagination') }}
+                            </div>
+                        </div>
+                    @else
+                        <div class="category-header">
+
                             <h2 class="title-filter d-none d-lg-block text-center"><span>
                                     Không tìm thấy sản phẩm.<br /> Quý Khách
                                     Hàng vui lòng liên hệ đến các kênh kết nối chính thức của C-Mart để được hỗ trợ ngay và
                                     luôn.
                                 </span></h2>
-                        @endif
-                        <!-- Bộ lọc -->
-                        {{-- <div class="filter-cate">
-                            <ul>
-                                <li class="d-lg-inline d-none">Sắp xếp theo:</li>
-                                <li class="li-filter-cate">
-                                    <a href="javascript:order();" class="active">Mặc định</a>
-                                </li>
-                                <li class="li-filter-cate">
-                                    <a href="javascript:order('regular_price desc');" class="">Giá cao</a>
-                                </li>
-                                <li class="li-filter-cate">
-                                    <a href="javascript:order('regular_price asc');" class="">Giá thấp</a>
-                                </li>
-                                <li class="li-filter-cate">
-                                    <a href="javascript:order('name asc');" class="">A-z</a>
-                                </li>
-                                <li class="li-filter-cate">
-                                    <a href="javascript:sale('2');" class="">Sale</a>
-                                </li>
-                                <li class="
-                                d-lg-none">
-                                    <a href="javascript:void(0)" class="filter-btn" onclick="openSidebar()">Lọc</a>
-                                </li>
-                            </ul>
-                        </div> --}}
-
-                        <!-- SẢN PHẨM -->
-                        <div class="products">
-                            @foreach ($products as $item)
-                                <div class="item">
-                                    <div class="product-box row">
-                                        <div class="box-image col-lg-12 col-md-4 col-4">
-                                            <div class="image-cover">
-                                                <a href="{{ route('san-pham.show', $item->slug) }}">
-                                                    <img src="{{ asset($item->feature_img) }}" alt="">
-                                                </a>
-                                            </div>
-                                            {!! getTagSale($item) !!}
-
-                                        </div>
-                                        <div class="box-text col-lg-12 col-md-8 col-8">
-                                            <div class="title-wrapper">
-                                                <a href="{{ route('san-pham.show', $item->slug) }}">
-                                                    <p class="product-title">{{ $item->name }}</p>
-                                                </a>
-                                            </div>
-                                            <div class="price-wrapper">
-                                                <span class="price">
-                                                    <span class="amount">
-                                                        {{ formatPriceOfLevel($item) }}
-                                                    </span>
-
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
                         </div>
+                    @endif
 
-                        <!-- Pagination -->
-                        {{-- <div class="text-center">
-                            <div class="nav_pager">
-                                {{ $products->links('product.include.pagination') }}
-                            </div>
-                        </div> --}}
-                    </div>
+
+
                 </div>
             </div>
+        </div>
         </div>
 
     </section>

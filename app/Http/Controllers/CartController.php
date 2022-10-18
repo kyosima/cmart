@@ -61,14 +61,15 @@ class CartController extends Controller
                 if($item_exist){
                     if($request->has('price')){
                         $cart->cart_item()->updateOrCreate(['product_id'=>$request->product_id, 
-                        'variation_id'=> $request->variation_id, 'price'=>$request->price], ['quantity' =>$item_exist->quantity + $request->quantity]);
+                        'variation_id'=> $request->variation_id, 'price'=>$request->price], ['store_product_id' => $store_product->id,'quantity' =>$item_exist->quantity + $request->quantity]);
 
                     }else{
                         $cart->cart_item()->updateOrCreate(['product_id'=>$request->product_id, 
-                        'variation_id'=> $request->variation_id], ['quantity' =>$item_exist->quantity + $request->quantity]);
+                        'variation_id'=> $request->variation_id], ['store_product_id' => $store_product->id,'quantity' =>$item_exist->quantity + $request->quantity]);
 
                     }
                 }else{
+                    $data['store_product_id'] = $store_product->id;
                     $cart->cart_item()->create($data);
                 }
                 return response()->json(['status'=>true, 'message' => 'Thêm sản phẩm vào giỏ hàng thành công']);

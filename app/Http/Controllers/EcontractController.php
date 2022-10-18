@@ -8,9 +8,15 @@ use Illuminate\Support\Facades\Auth;
 class EcontractController extends Controller
 {
     //
-
+    public function __construct()
+    {
+        $this->endpoint_prefix = 'https://apigateway-econtract.vnptit3.vn';
+        $this->domain = 'econtract.vnpt.vn';
+        $this->client_secret = '4VMVY6KT1aGV2zpF8gfXxMoATgg3H6Uv';
+        $this->client_id = 'cmart.client@econtract.vnpt.vn';
+    }
     public function index(Request $request){
-        $user = Auth::user();
+        $user = Auth::guard('user')->user();
         if($user->is_econtract == 0){
             if($user->econtract_id == null){
                 $contractId  = $this->sendContract($request);
@@ -24,15 +30,15 @@ class EcontractController extends Controller
     }
 
     public function signSuccess(Request $request){
-        $user = Auth::user();
+        $user = Auth::guard('user')->user();
         $user->is_econtract = 1;
         $user->save();
         return redirect()->route('account.info')->with('success', 'Ký thành công hợp đồng giao dịch');
     }
     public function getToken(Request $request){
-        $endPoint = 'https://apigateway-econtract-demo.vnptit3.vn/auth-service/oauth/token';
-        $client_id = 'cmart.client@econtract.vnpt.vn';
-        $client_secret = 'JZynPTg7TuD56dJGA32qQNcxZU9GCdQb';
+        $endPoint = $this->endpoint_prefix.'/auth-service/oauth/token';
+        $client_id = $this->client_id;
+        $client_secret = $this->client_secret;
         $data = [
             'client_id' => $client_id,
             'client_secret' => $client_secret,
@@ -59,17 +65,17 @@ class EcontractController extends Controller
 
     }
     public function getAccesstokenAccount(Request $request){
-        $endPoint = 'https://apigateway-econtract-demo.vnptit3.vn/auth-service/oauth/token';
-        $client_id = 'cmart.client@econtract.vnpt.vn';
-        $client_secret = 'JZynPTg7TuD56dJGA32qQNcxZU9GCdQb';
-        $user = Auth::user();
+        $endPoint = $this->endpoint_prefix.'/auth-service/oauth/token';
+        $client_id = $this->client_id;
+        $client_secret = $this->client_secret;
+        $user = Auth::guard('user')->user();
         $data = [
             'client_id' => $client_id,
             'client_secret' => $client_secret,
             'username' =>'0316959402',
             'password' => 'Abc@12345',
             'grant_type' => 'password',
-            'domain' => 'econtract-demo.vnptit3.vn',
+            'domain' => $this->domain,
         ];
         $ch = curl_init($endPoint);
         $headers = array(
@@ -90,7 +96,7 @@ class EcontractController extends Controller
 
     public function getListContract(Request $request){
         $template_id = '62be942ccf717cfd274ab40c';
-        $endPoint = 'https://apigateway-econtract-demo.vnptit3.vn/template-service/api/templates/v1/'.$template_id.'/all-config';
+        $endPoint = $this->endpoint_prefix.'/template-service/api/templates/v1/'.$template_id.'/all-config';
         $ch = curl_init($endPoint);
         $token =  $request->session()->get('token');
         $headers = array(
@@ -108,9 +114,10 @@ class EcontractController extends Controller
     }
 
     public function renderContract(Request $request){
-        $user = Auth::user();
-        $template_id = '62c68476931048a04d4c26e5';
-        $endPoint = 'https://apigateway-econtract-demo.vnptit3.vn/template-service/api/templates/app/v1/'.$template_id.'/render';
+        $user = Auth::guard('user')->user();
+        $user_info = $user->user_info()->first();
+        $template_id = '621701090fb6397b52e87bc9';
+        $endPoint = $this->endpoint_prefix.'/template-service/api/templates/app/v1/'.$template_id.'/render';
         $domain = 'econtract-demo.vnptit3.vn';
         $this->getToken($request);
         $token =  $request->session()->get('token');
@@ -120,10 +127,10 @@ class EcontractController extends Controller
             '${ngay}' => date('d'),
             '${thang}' => date('m'),
             '${nam}' => date('Y'),
-            '${tenB}' => $user->hoten,
-            '${giaytoB}' => $user->type_cmnd.'-'.$user->cmnd,
+            '${tenB}' => $user_info->fullname,
+            '${giaytoB}' => $user_info->identity_type.'-'.$user_info->identity_numbẻ,
             '${sdtB}' => $user->phone,
-            '${daidienB}' => $user->hoten,
+            '${daidienB}' => $user_info->fullname,
             
         ];
         $ch = curl_init($endPoint);
@@ -141,22 +148,23 @@ class EcontractController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
         $result = json_decode($result, TRUE);
+        
         return $result['object']['urlDownload'];
     }
     
 
     public function createContract(Request $request){
-        $user = Auth::user();
-        $endPoint = 'https://apigateway-econtract-demo.vnptit3.vn/esolution-service/contracts/create-draft-from-file-raw';
+        $user = Auth::guard('user')->user();
+        $endPoint = $this->endpoint_prefix.'/esolution-service/contracts/create-draft-from-file-raw';
         $fields = array();
         $customer = [
-            "email"=> "",
-            "sdt"=> $user->phone,
+            "email"=> "kira.sourcecode@gmail.com",
+            "sdt"=>"0338927451",
             "userType"=> "CONSUMER",
             "ten"=> "Nguyễn Chính Hưng",
             "noiCap"=> "da nang",
             "tenToChuc"=> "to chuc test ne",
-            "mst"=> "09924523234",
+            "mst"=> "0992452112332234",
             "loaiGtId"=> "1",
             "noiCap"=> "",
             "soDkdn"=> "",
@@ -187,14 +195,13 @@ class EcontractController extends Controller
             "signForm"=> [
                 "NO_AUTHEN",
             ],
-            "templateId"=> "62c68476931048a04d4c26e5",
+            "templateId"=> "621701090fb6397b52e87bc9",
             "title"=> "Hợp đồng nguyên tắc giao dịch số HĐ ".$user->code_customer,
             "validDate"=> "2022-7-17",
             "verificationType"=> "NONE"
         
         ];
         $token =  $request->session()->get('token');
-
         $cFile = new \CURLFile($this->renderContract($request), 'application/pdf', 'receipt');
         
         $data = [
@@ -226,7 +233,7 @@ class EcontractController extends Controller
     
     public function sendContract(Request $request){
         $contractId = $this->createContract($request);
-        $endPoint = 'https://apigateway-econtract-demo.vnptit3.vn/esolution-service/contracts/'.$contractId.'/submit-contract';
+        $endPoint = $this->endpoint_prefix.'/esolution-service/contracts/'.$contractId.'/submit-contract';
         $ch = curl_init($endPoint);
         $token =  $request->session()->get('token');
 
@@ -250,7 +257,7 @@ class EcontractController extends Controller
     }
 
     public function requestSignContract($contractId, Request $request){
-        $endPoint = 'https://apigateway-econtract-demo.vnptit3.vn/esolution-service/contracts/'.$contractId.'/electronic-sign';
+        $endPoint = $this->endpoint_prefix.'/esolution-service/contracts/'.$contractId.'/electronic-sign';
         $ch = curl_init($endPoint);
         $token =  $request->session()->get('token');
         $headers = [
